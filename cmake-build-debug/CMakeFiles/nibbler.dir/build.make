@@ -57,165 +57,105 @@ include CMakeFiles/nibbler.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/nibbler.dir/flags.make
 
-CMakeFiles/nibbler.dir/class/main.cpp.o: CMakeFiles/nibbler.dir/flags.make
-CMakeFiles/nibbler.dir/class/main.cpp.o: ../class/main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/nibbler.dir/class/main.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/main.cpp.o -c /Users/alexandreroulin/work/nibbler/class/main.cpp
+CMakeFiles/nibbler.dir/class/KNU/utils/Signature.cpp.o: CMakeFiles/nibbler.dir/flags.make
+CMakeFiles/nibbler.dir/class/KNU/utils/Signature.cpp.o: ../class/KNU/utils/Signature.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/nibbler.dir/class/KNU/utils/Signature.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/KNU/utils/Signature.cpp.o -c /Users/alexandreroulin/work/nibbler/class/KNU/utils/Signature.cpp
 
-CMakeFiles/nibbler.dir/class/main.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/main.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/alexandreroulin/work/nibbler/class/main.cpp > CMakeFiles/nibbler.dir/class/main.cpp.i
+CMakeFiles/nibbler.dir/class/KNU/utils/Signature.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/KNU/utils/Signature.cpp.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/alexandreroulin/work/nibbler/class/KNU/utils/Signature.cpp > CMakeFiles/nibbler.dir/class/KNU/utils/Signature.cpp.i
 
-CMakeFiles/nibbler.dir/class/main.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/main.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/alexandreroulin/work/nibbler/class/main.cpp -o CMakeFiles/nibbler.dir/class/main.cpp.s
+CMakeFiles/nibbler.dir/class/KNU/utils/Signature.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/KNU/utils/Signature.cpp.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/alexandreroulin/work/nibbler/class/KNU/utils/Signature.cpp -o CMakeFiles/nibbler.dir/class/KNU/utils/Signature.cpp.s
 
-CMakeFiles/nibbler.dir/class/components/ComponentMask.cpp.o: CMakeFiles/nibbler.dir/flags.make
-CMakeFiles/nibbler.dir/class/components/ComponentMask.cpp.o: ../class/components/ComponentMask.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/nibbler.dir/class/components/ComponentMask.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/components/ComponentMask.cpp.o -c /Users/alexandreroulin/work/nibbler/class/components/ComponentMask.cpp
+CMakeFiles/nibbler.dir/class/cores/main.cpp.o: CMakeFiles/nibbler.dir/flags.make
+CMakeFiles/nibbler.dir/class/cores/main.cpp.o: ../class/cores/main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/nibbler.dir/class/cores/main.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/cores/main.cpp.o -c /Users/alexandreroulin/work/nibbler/class/cores/main.cpp
 
-CMakeFiles/nibbler.dir/class/components/ComponentMask.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/components/ComponentMask.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/alexandreroulin/work/nibbler/class/components/ComponentMask.cpp > CMakeFiles/nibbler.dir/class/components/ComponentMask.cpp.i
+CMakeFiles/nibbler.dir/class/cores/main.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/cores/main.cpp.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/alexandreroulin/work/nibbler/class/cores/main.cpp > CMakeFiles/nibbler.dir/class/cores/main.cpp.i
 
-CMakeFiles/nibbler.dir/class/components/ComponentMask.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/components/ComponentMask.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/alexandreroulin/work/nibbler/class/components/ComponentMask.cpp -o CMakeFiles/nibbler.dir/class/components/ComponentMask.cpp.s
+CMakeFiles/nibbler.dir/class/cores/main.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/cores/main.cpp.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/alexandreroulin/work/nibbler/class/cores/main.cpp -o CMakeFiles/nibbler.dir/class/cores/main.cpp.s
 
-CMakeFiles/nibbler.dir/class/ECS.cpp.o: CMakeFiles/nibbler.dir/flags.make
-CMakeFiles/nibbler.dir/class/ECS.cpp.o: ../class/ECS.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/nibbler.dir/class/ECS.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/ECS.cpp.o -c /Users/alexandreroulin/work/nibbler/class/ECS.cpp
+CMakeFiles/nibbler.dir/class/KNU/component/Component.cpp.o: CMakeFiles/nibbler.dir/flags.make
+CMakeFiles/nibbler.dir/class/KNU/component/Component.cpp.o: ../class/KNU/component/Component.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/nibbler.dir/class/KNU/component/Component.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/KNU/component/Component.cpp.o -c /Users/alexandreroulin/work/nibbler/class/KNU/component/Component.cpp
 
-CMakeFiles/nibbler.dir/class/ECS.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/ECS.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/alexandreroulin/work/nibbler/class/ECS.cpp > CMakeFiles/nibbler.dir/class/ECS.cpp.i
+CMakeFiles/nibbler.dir/class/KNU/component/Component.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/KNU/component/Component.cpp.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/alexandreroulin/work/nibbler/class/KNU/component/Component.cpp > CMakeFiles/nibbler.dir/class/KNU/component/Component.cpp.i
 
-CMakeFiles/nibbler.dir/class/ECS.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/ECS.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/alexandreroulin/work/nibbler/class/ECS.cpp -o CMakeFiles/nibbler.dir/class/ECS.cpp.s
+CMakeFiles/nibbler.dir/class/KNU/component/Component.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/KNU/component/Component.cpp.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/alexandreroulin/work/nibbler/class/KNU/component/Component.cpp -o CMakeFiles/nibbler.dir/class/KNU/component/Component.cpp.s
 
-CMakeFiles/nibbler.dir/class/managers/SystemManager.cpp.o: CMakeFiles/nibbler.dir/flags.make
-CMakeFiles/nibbler.dir/class/managers/SystemManager.cpp.o: ../class/managers/SystemManager.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/nibbler.dir/class/managers/SystemManager.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/managers/SystemManager.cpp.o -c /Users/alexandreroulin/work/nibbler/class/managers/SystemManager.cpp
+CMakeFiles/nibbler.dir/class/KNU/component/TransformComponent.cpp.o: CMakeFiles/nibbler.dir/flags.make
+CMakeFiles/nibbler.dir/class/KNU/component/TransformComponent.cpp.o: ../class/KNU/component/TransformComponent.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/nibbler.dir/class/KNU/component/TransformComponent.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/KNU/component/TransformComponent.cpp.o -c /Users/alexandreroulin/work/nibbler/class/KNU/component/TransformComponent.cpp
 
-CMakeFiles/nibbler.dir/class/managers/SystemManager.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/managers/SystemManager.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/alexandreroulin/work/nibbler/class/managers/SystemManager.cpp > CMakeFiles/nibbler.dir/class/managers/SystemManager.cpp.i
+CMakeFiles/nibbler.dir/class/KNU/component/TransformComponent.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/KNU/component/TransformComponent.cpp.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/alexandreroulin/work/nibbler/class/KNU/component/TransformComponent.cpp > CMakeFiles/nibbler.dir/class/KNU/component/TransformComponent.cpp.i
 
-CMakeFiles/nibbler.dir/class/managers/SystemManager.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/managers/SystemManager.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/alexandreroulin/work/nibbler/class/managers/SystemManager.cpp -o CMakeFiles/nibbler.dir/class/managers/SystemManager.cpp.s
+CMakeFiles/nibbler.dir/class/KNU/component/TransformComponent.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/KNU/component/TransformComponent.cpp.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/alexandreroulin/work/nibbler/class/KNU/component/TransformComponent.cpp -o CMakeFiles/nibbler.dir/class/KNU/component/TransformComponent.cpp.s
 
-CMakeFiles/nibbler.dir/class/managers/ComponentManager.cpp.o: CMakeFiles/nibbler.dir/flags.make
-CMakeFiles/nibbler.dir/class/managers/ComponentManager.cpp.o: ../class/managers/ComponentManager.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/nibbler.dir/class/managers/ComponentManager.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/managers/ComponentManager.cpp.o -c /Users/alexandreroulin/work/nibbler/class/managers/ComponentManager.cpp
+CMakeFiles/nibbler.dir/class/KNU/managers/ComponentManager.cpp.o: CMakeFiles/nibbler.dir/flags.make
+CMakeFiles/nibbler.dir/class/KNU/managers/ComponentManager.cpp.o: ../class/KNU/managers/ComponentManager.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/nibbler.dir/class/KNU/managers/ComponentManager.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/KNU/managers/ComponentManager.cpp.o -c /Users/alexandreroulin/work/nibbler/class/KNU/managers/ComponentManager.cpp
 
-CMakeFiles/nibbler.dir/class/managers/ComponentManager.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/managers/ComponentManager.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/alexandreroulin/work/nibbler/class/managers/ComponentManager.cpp > CMakeFiles/nibbler.dir/class/managers/ComponentManager.cpp.i
+CMakeFiles/nibbler.dir/class/KNU/managers/ComponentManager.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/KNU/managers/ComponentManager.cpp.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/alexandreroulin/work/nibbler/class/KNU/managers/ComponentManager.cpp > CMakeFiles/nibbler.dir/class/KNU/managers/ComponentManager.cpp.i
 
-CMakeFiles/nibbler.dir/class/managers/ComponentManager.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/managers/ComponentManager.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/alexandreroulin/work/nibbler/class/managers/ComponentManager.cpp -o CMakeFiles/nibbler.dir/class/managers/ComponentManager.cpp.s
+CMakeFiles/nibbler.dir/class/KNU/managers/ComponentManager.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/KNU/managers/ComponentManager.cpp.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/alexandreroulin/work/nibbler/class/KNU/managers/ComponentManager.cpp -o CMakeFiles/nibbler.dir/class/KNU/managers/ComponentManager.cpp.s
 
-CMakeFiles/nibbler.dir/class/managers/EntitiesManager.cpp.o: CMakeFiles/nibbler.dir/flags.make
-CMakeFiles/nibbler.dir/class/managers/EntitiesManager.cpp.o: ../class/managers/EntitiesManager.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/nibbler.dir/class/managers/EntitiesManager.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/managers/EntitiesManager.cpp.o -c /Users/alexandreroulin/work/nibbler/class/managers/EntitiesManager.cpp
+CMakeFiles/nibbler.dir/class/KNU/managers/Pool.cpp.o: CMakeFiles/nibbler.dir/flags.make
+CMakeFiles/nibbler.dir/class/KNU/managers/Pool.cpp.o: ../class/KNU/managers/Pool.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/nibbler.dir/class/KNU/managers/Pool.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/KNU/managers/Pool.cpp.o -c /Users/alexandreroulin/work/nibbler/class/KNU/managers/Pool.cpp
 
-CMakeFiles/nibbler.dir/class/managers/EntitiesManager.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/managers/EntitiesManager.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/alexandreroulin/work/nibbler/class/managers/EntitiesManager.cpp > CMakeFiles/nibbler.dir/class/managers/EntitiesManager.cpp.i
+CMakeFiles/nibbler.dir/class/KNU/managers/Pool.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/KNU/managers/Pool.cpp.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/alexandreroulin/work/nibbler/class/KNU/managers/Pool.cpp > CMakeFiles/nibbler.dir/class/KNU/managers/Pool.cpp.i
 
-CMakeFiles/nibbler.dir/class/managers/EntitiesManager.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/managers/EntitiesManager.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/alexandreroulin/work/nibbler/class/managers/EntitiesManager.cpp -o CMakeFiles/nibbler.dir/class/managers/EntitiesManager.cpp.s
-
-CMakeFiles/nibbler.dir/class/systems/MotionSystem.cpp.o: CMakeFiles/nibbler.dir/flags.make
-CMakeFiles/nibbler.dir/class/systems/MotionSystem.cpp.o: ../class/systems/MotionSystem.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/nibbler.dir/class/systems/MotionSystem.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/systems/MotionSystem.cpp.o -c /Users/alexandreroulin/work/nibbler/class/systems/MotionSystem.cpp
-
-CMakeFiles/nibbler.dir/class/systems/MotionSystem.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/systems/MotionSystem.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/alexandreroulin/work/nibbler/class/systems/MotionSystem.cpp > CMakeFiles/nibbler.dir/class/systems/MotionSystem.cpp.i
-
-CMakeFiles/nibbler.dir/class/systems/MotionSystem.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/systems/MotionSystem.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/alexandreroulin/work/nibbler/class/systems/MotionSystem.cpp -o CMakeFiles/nibbler.dir/class/systems/MotionSystem.cpp.s
-
-CMakeFiles/nibbler.dir/class/factories/EntityFactory.cpp.o: CMakeFiles/nibbler.dir/flags.make
-CMakeFiles/nibbler.dir/class/factories/EntityFactory.cpp.o: ../class/factories/EntityFactory.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/nibbler.dir/class/factories/EntityFactory.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/factories/EntityFactory.cpp.o -c /Users/alexandreroulin/work/nibbler/class/factories/EntityFactory.cpp
-
-CMakeFiles/nibbler.dir/class/factories/EntityFactory.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/factories/EntityFactory.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/alexandreroulin/work/nibbler/class/factories/EntityFactory.cpp > CMakeFiles/nibbler.dir/class/factories/EntityFactory.cpp.i
-
-CMakeFiles/nibbler.dir/class/factories/EntityFactory.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/factories/EntityFactory.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/alexandreroulin/work/nibbler/class/factories/EntityFactory.cpp -o CMakeFiles/nibbler.dir/class/factories/EntityFactory.cpp.s
-
-CMakeFiles/nibbler.dir/class/systems/TransformSystem.cpp.o: CMakeFiles/nibbler.dir/flags.make
-CMakeFiles/nibbler.dir/class/systems/TransformSystem.cpp.o: ../class/systems/TransformSystem.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/nibbler.dir/class/systems/TransformSystem.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/systems/TransformSystem.cpp.o -c /Users/alexandreroulin/work/nibbler/class/systems/TransformSystem.cpp
-
-CMakeFiles/nibbler.dir/class/systems/TransformSystem.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/systems/TransformSystem.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/alexandreroulin/work/nibbler/class/systems/TransformSystem.cpp > CMakeFiles/nibbler.dir/class/systems/TransformSystem.cpp.i
-
-CMakeFiles/nibbler.dir/class/systems/TransformSystem.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/systems/TransformSystem.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/alexandreroulin/work/nibbler/class/systems/TransformSystem.cpp -o CMakeFiles/nibbler.dir/class/systems/TransformSystem.cpp.s
-
-CMakeFiles/nibbler.dir/class/factories/SystemFactory.cpp.o: CMakeFiles/nibbler.dir/flags.make
-CMakeFiles/nibbler.dir/class/factories/SystemFactory.cpp.o: ../class/factories/SystemFactory.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/nibbler.dir/class/factories/SystemFactory.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/factories/SystemFactory.cpp.o -c /Users/alexandreroulin/work/nibbler/class/factories/SystemFactory.cpp
-
-CMakeFiles/nibbler.dir/class/factories/SystemFactory.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/factories/SystemFactory.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/alexandreroulin/work/nibbler/class/factories/SystemFactory.cpp > CMakeFiles/nibbler.dir/class/factories/SystemFactory.cpp.i
-
-CMakeFiles/nibbler.dir/class/factories/SystemFactory.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/factories/SystemFactory.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/alexandreroulin/work/nibbler/class/factories/SystemFactory.cpp -o CMakeFiles/nibbler.dir/class/factories/SystemFactory.cpp.s
+CMakeFiles/nibbler.dir/class/KNU/managers/Pool.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/KNU/managers/Pool.cpp.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/alexandreroulin/work/nibbler/class/KNU/managers/Pool.cpp -o CMakeFiles/nibbler.dir/class/KNU/managers/Pool.cpp.s
 
 # Object files for target nibbler
 nibbler_OBJECTS = \
-"CMakeFiles/nibbler.dir/class/main.cpp.o" \
-"CMakeFiles/nibbler.dir/class/components/ComponentMask.cpp.o" \
-"CMakeFiles/nibbler.dir/class/ECS.cpp.o" \
-"CMakeFiles/nibbler.dir/class/managers/SystemManager.cpp.o" \
-"CMakeFiles/nibbler.dir/class/managers/ComponentManager.cpp.o" \
-"CMakeFiles/nibbler.dir/class/managers/EntitiesManager.cpp.o" \
-"CMakeFiles/nibbler.dir/class/systems/MotionSystem.cpp.o" \
-"CMakeFiles/nibbler.dir/class/factories/EntityFactory.cpp.o" \
-"CMakeFiles/nibbler.dir/class/systems/TransformSystem.cpp.o" \
-"CMakeFiles/nibbler.dir/class/factories/SystemFactory.cpp.o"
+"CMakeFiles/nibbler.dir/class/KNU/utils/Signature.cpp.o" \
+"CMakeFiles/nibbler.dir/class/cores/main.cpp.o" \
+"CMakeFiles/nibbler.dir/class/KNU/component/Component.cpp.o" \
+"CMakeFiles/nibbler.dir/class/KNU/component/TransformComponent.cpp.o" \
+"CMakeFiles/nibbler.dir/class/KNU/managers/ComponentManager.cpp.o" \
+"CMakeFiles/nibbler.dir/class/KNU/managers/Pool.cpp.o"
 
 # External object files for target nibbler
 nibbler_EXTERNAL_OBJECTS =
 
-nibbler: CMakeFiles/nibbler.dir/class/main.cpp.o
-nibbler: CMakeFiles/nibbler.dir/class/components/ComponentMask.cpp.o
-nibbler: CMakeFiles/nibbler.dir/class/ECS.cpp.o
-nibbler: CMakeFiles/nibbler.dir/class/managers/SystemManager.cpp.o
-nibbler: CMakeFiles/nibbler.dir/class/managers/ComponentManager.cpp.o
-nibbler: CMakeFiles/nibbler.dir/class/managers/EntitiesManager.cpp.o
-nibbler: CMakeFiles/nibbler.dir/class/systems/MotionSystem.cpp.o
-nibbler: CMakeFiles/nibbler.dir/class/factories/EntityFactory.cpp.o
-nibbler: CMakeFiles/nibbler.dir/class/systems/TransformSystem.cpp.o
-nibbler: CMakeFiles/nibbler.dir/class/factories/SystemFactory.cpp.o
+nibbler: CMakeFiles/nibbler.dir/class/KNU/utils/Signature.cpp.o
+nibbler: CMakeFiles/nibbler.dir/class/cores/main.cpp.o
+nibbler: CMakeFiles/nibbler.dir/class/KNU/component/Component.cpp.o
+nibbler: CMakeFiles/nibbler.dir/class/KNU/component/TransformComponent.cpp.o
+nibbler: CMakeFiles/nibbler.dir/class/KNU/managers/ComponentManager.cpp.o
+nibbler: CMakeFiles/nibbler.dir/class/KNU/managers/Pool.cpp.o
 nibbler: CMakeFiles/nibbler.dir/build.make
 nibbler: CMakeFiles/nibbler.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Linking CXX executable nibbler"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking CXX executable nibbler"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/nibbler.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

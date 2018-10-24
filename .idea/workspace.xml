@@ -24,164 +24,98 @@
     <session id="-670645659">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="2" />
-          <entry key="project.open.time.0" value="2" />
+          <entry key="project.closed" value="4" />
+          <entry key="project.open.time.0" value="3" />
           <entry key="project.open.time.1" value="1" />
-          <entry key="project.opened" value="3" />
+          <entry key="project.open.time.9" value="1" />
+          <entry key="project.opened" value="5" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="Makefile" value="130" />
-          <entry key="cpp" value="3182" />
+          <entry key="Makefile" value="326" />
+          <entry key="cpp" value="3499" />
           <entry key="h" value="180" />
-          <entry key="hpp" value="4715" />
+          <entry key="hpp" value="5868" />
           <entry key="txt" value="43" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="CMakeLists.txt" value="43" />
-          <entry key="ObjectiveC" value="8077" />
-          <entry key="PLAIN_TEXT" value="130" />
+          <entry key="ObjectiveC" value="9547" />
+          <entry key="PLAIN_TEXT" value="326" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="Makefile" value="6" />
-          <entry key="cpp" value="65" />
+          <entry key="Makefile" value="9" />
+          <entry key="cpp" value="77" />
           <entry key="gch" value="1" />
           <entry key="h" value="3" />
-          <entry key="hpp" value="99" />
+          <entry key="hpp" value="113" />
           <entry key="memory" value="1" />
-          <entry key="txt" value="4" />
+          <entry key="txt" value="5" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="CMakeLists.txt" value="4" />
-          <entry key="ObjectiveC" value="168" />
-          <entry key="PLAIN_TEXT" value="7" />
+          <entry key="CMakeLists.txt" value="5" />
+          <entry key="ObjectiveC" value="194" />
+          <entry key="PLAIN_TEXT" value="10" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/class/ECS.hpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="7" selection-start-line="7" selection-end-line="7" />
-              <folding>
-                <element signature="e#104#121#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/class/main.cpp">
+        <entry file="file://$PROJECT_DIR$/Makefile">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="19" selection-start-line="19" selection-end-line="19" />
+            <state relative-caret-position="343">
+              <caret line="50" column="28" selection-start-line="50" selection-start-column="28" selection-end-line="50" selection-end-column="28" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/class/KNU/managers/ComponentManager.hpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="435">
+              <caret line="29" column="5" lean-forward="true" selection-start-line="29" selection-start-column="5" selection-end-line="29" selection-end-column="5" />
               <folding>
-                <element signature="e#207#248#0" expanded="true" />
+                <element signature="e#14#28#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/class/entity/Entity.hpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-46">
-              <caret line="28" column="57" selection-start-line="28" selection-start-column="57" selection-end-line="28" selection-end-column="57" />
-              <folding>
-                <element signature="e#353#392#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/class/managers/EntitiesManager.hpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="222">
-              <caret line="18" selection-start-line="18" selection-end-line="18" />
-              <folding>
-                <element signature="e#127#155#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/class/managers/EntitiesManager.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="45">
-              <caret line="6" selection-start-line="6" selection-end-line="6" />
-              <folding>
-                <element signature="e#53#83#0" expanded="true" />
-                <element signature="e#125#149#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/class/factories/SystemFactory.hpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="10" selection-start-line="10" selection-end-line="10" />
-              <folding>
-                <element signature="e#123#153#0" expanded="true" />
-                <element signature="e#354#378#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/incs/nibbler.hpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="17" selection-start-line="17" selection-end-line="17" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/class/factories/SystemFactory.cpp">
+        <entry file="file://$PROJECT_DIR$/class/KNU/managers/IPool.hpp">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="105">
-              <caret line="7" column="15" selection-start-line="7" selection-start-column="15" selection-end-line="7" selection-end-column="15" />
+              <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/class/components/TransformComponent.hpp">
+        <entry file="file://$PROJECT_DIR$/class/KNU/managers/Pool.hpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="11" column="56" selection-start-line="11" selection-start-column="56" selection-end-line="11" selection-end-column="56" />
+            <state relative-caret-position="497">
+              <caret line="36" selection-start-line="36" selection-end-line="36" />
               <folding>
-                <element signature="e#132#154#0" expanded="true" />
+                <element signature="e#14#31#0" expanded="true" />
+                <element signature="e#141#165#0" expanded="true" />
+                <element signature="e#936#960#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/class/components/MotionComponent.hpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="7" selection-start-line="7" selection-end-line="7" />
-              <folding>
-                <element signature="e#126#150#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
+        <entry file="file://$PROJECT_DIR$/class/KNU/managers/Pool.cpp">
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
     </leaf>
@@ -199,26 +133,35 @@
       <find>-&gt;</find>
       <find>VOID</find>
       <find>unsigned int mask</find>
-      <find>DIR_SRCS</find>
       <find>static ass</find>
       <find>static_assert</find>
       <find>prag</find>
+      <find>ComponentMask</find>
+      <find>nomad</find>
+      <find>Signature</find>
+      <find>KNU::KNU</find>
+      <find>::::</find>
+      <find>DIR_SRCS</find>
+      <find>Pool</find>
     </findStrings>
     <replaceStrings>
       <replace>_id</replace>
       <replace>TransformComponent</replace>
       <replace>.</replace>
+      <replace>Signature</replace>
+      <replace>KNU</replace>
+      <replace>KNU::Signature</replace>
+      <replace>KNU::</replace>
+      <replace>::</replace>
       <replace>DIR_CLASS</replace>
     </replaceStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/class/Component.hpp" />
-        <option value="$PROJECT_DIR$/class/MotionComponent.cpp" />
-        <option value="$PROJECT_DIR$/class/MotionComponent.hpp" />
-        <option value="$PROJECT_DIR$/class/ComponentManager.hpp" />
-        <option value="$PROJECT_DIR$/class/nibbler.hpp" />
         <option value="$PROJECT_DIR$/class/components/SpriteComponent.hpp" />
         <option value="$PROJECT_DIR$/nibbler.hpp" />
         <option value="$PROJECT_DIR$/class/managers/IPool.hpp" />
@@ -249,14 +192,27 @@
         <option value="$PROJECT_DIR$/class/systems/TransformSystem.cpp" />
         <option value="$PROJECT_DIR$/class/managers/SystemManager.hpp" />
         <option value="$PROJECT_DIR$/class/managers/SystemManager.cpp" />
-        <option value="$PROJECT_DIR$/Makefile" />
-        <option value="$PROJECT_DIR$/class/ECS.hpp" />
         <option value="$PROJECT_DIR$/class/components/MotionComponent.hpp" />
         <option value="$PROJECT_DIR$/class/entity/Entity.hpp" />
         <option value="$PROJECT_DIR$/class/managers/EntitiesManager.hpp" />
         <option value="$PROJECT_DIR$/class/managers/EntitiesManager.cpp" />
         <option value="$PROJECT_DIR$/class/factories/SystemFactory.hpp" />
         <option value="$PROJECT_DIR$/class/main.cpp" />
+        <option value="$PROJECT_DIR$/class/ECS.hpp" />
+        <option value="$PROJECT_DIR$/class/KNU/utils/Signature.cpp" />
+        <option value="$PROJECT_DIR$/class/KNU/utils/Signature.hpp" />
+        <option value="$PROJECT_DIR$/class/KNU/component/Component.hpp" />
+        <option value="$PROJECT_DIR$/class/KNU/component/Component.cpp" />
+        <option value="$PROJECT_DIR$/class/KNU/component/TransformComponent.hpp" />
+        <option value="$PROJECT_DIR$/srcs/main.cpp" />
+        <option value="$PROJECT_DIR$/class/KNU/entities/Entity.cpp" />
+        <option value="$PROJECT_DIR$/class/KNU/entities/Entity.hpp" />
+        <option value="$PROJECT_DIR$/Makefile" />
+        <option value="$PROJECT_DIR$/class/cores/main.cpp" />
+        <option value="$PROJECT_DIR$/class/KNU/managers/ComponentManager.cpp" />
+        <option value="$PROJECT_DIR$/class/KNU/managers/Pool.hpp" />
+        <option value="$PROJECT_DIR$/class/KNU/managers/IPool.hpp" />
+        <option value="$PROJECT_DIR$/class/KNU/managers/ComponentManager.hpp" />
       </list>
     </option>
   </component>
@@ -266,11 +222,9 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" fullScreen="true">
-    <option name="x" value="65" />
-    <option name="y" value="23" />
-    <option name="width" value="1375" />
-    <option name="height" value="877" />
+  <component name="ProjectFrameBounds" extendedState="6" fullScreen="true">
+    <option name="width" value="966" />
+    <option name="height" value="900" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -292,12 +246,12 @@
       </profile-state>
     </entry>
   </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -314,56 +268,62 @@
               <item name="nibbler" type="b2602c69:ProjectViewProjectNode" />
               <item name="nibbler" type="462c0819:PsiDirectoryNode" />
               <item name="class" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="cores" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="nibbler" type="b2602c69:ProjectViewProjectNode" />
               <item name="nibbler" type="462c0819:PsiDirectoryNode" />
               <item name="class" type="462c0819:PsiDirectoryNode" />
-              <item name="entity" type="462c0819:PsiDirectoryNode" />
+              <item name="KNU" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="nibbler" type="b2602c69:ProjectViewProjectNode" />
               <item name="nibbler" type="462c0819:PsiDirectoryNode" />
               <item name="class" type="462c0819:PsiDirectoryNode" />
-              <item name="factories" type="462c0819:PsiDirectoryNode" />
+              <item name="KNU" type="462c0819:PsiDirectoryNode" />
+              <item name="component" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="nibbler" type="b2602c69:ProjectViewProjectNode" />
               <item name="nibbler" type="462c0819:PsiDirectoryNode" />
               <item name="class" type="462c0819:PsiDirectoryNode" />
+              <item name="KNU" type="462c0819:PsiDirectoryNode" />
+              <item name="entities" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="nibbler" type="b2602c69:ProjectViewProjectNode" />
+              <item name="nibbler" type="462c0819:PsiDirectoryNode" />
+              <item name="class" type="462c0819:PsiDirectoryNode" />
+              <item name="KNU" type="462c0819:PsiDirectoryNode" />
               <item name="managers" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="nibbler" type="b2602c69:ProjectViewProjectNode" />
               <item name="nibbler" type="462c0819:PsiDirectoryNode" />
               <item name="class" type="462c0819:PsiDirectoryNode" />
-              <item name="systems" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="nibbler" type="b2602c69:ProjectViewProjectNode" />
-              <item name="nibbler" type="462c0819:PsiDirectoryNode" />
-              <item name="incs" type="462c0819:PsiDirectoryNode" />
+              <item name="KNU" type="462c0819:PsiDirectoryNode" />
+              <item name="utils" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.C/C++" />
+    <property name="settings.editor.selected.configurable" value="fileTemplates" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/class/cores" />
       <recent name="$PROJECT_DIR$/class" />
       <recent name="$PROJECT_DIR$/class/factories" />
       <recent name="$PROJECT_DIR$/class/entity" />
       <recent name="$PROJECT_DIR$/incs" />
-      <recent name="$PROJECT_DIR$/class/managers" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -378,7 +338,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.nibbler">
+  <component name="RunManager" selected="Application.Build All">
     <configuration name="Build All" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" CONFIG_NAME="Debug" EXPLICIT_BUILD_TARGET_NAME="all">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -406,21 +366,21 @@
       <updated>1540156690079</updated>
       <workItem from="1540156691395" duration="1975000" />
       <workItem from="1540226307000" duration="151000" />
-      <workItem from="1540232990989" duration="24437000" />
+      <workItem from="1540232990989" duration="25081000" />
+      <workItem from="1540384199918" duration="3940000" />
+      <workItem from="1540388288851" duration="1823000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="26563000" />
+    <option name="totallyTimeSpent" value="32970000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1440" height="900" extended-state="6" />
-    <editor active="true" />
+    <frame x="0" y="0" width="810" height="900" extended-state="6" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25679544" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.359375" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Messages" visible="true" weight="0.32891566" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32891566" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.32891566" />
@@ -433,11 +393,12 @@
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="10" show_stripe_button="false" />
       <window_info anchor="bottom" id="CMake" order="11" weight="0.32891566" />
-      <window_info anchor="right" x="0" y="0" width="310" height="700" id="Documentation" side_tool="true" weight="0.3297568" />
+      <window_info anchor="bottom" id="Messages" order="12" weight="0.32891566" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Database" order="3" />
+      <window_info anchor="right" x="0" y="0" width="310" height="700" id="Documentation" order="4" side_tool="true" weight="0.3297568" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -450,51 +411,10 @@
     <entry file="file://$PROJECT_DIR$/class/Component.cpp" />
     <entry file="file://$PROJECT_DIR$/class/components/IComponent.hpp" />
     <entry file="file://$PROJECT_DIR$/class/components/MotionComponent.cpp" />
-    <entry file="file://$PROJECT_DIR$/incs/nibbler.hpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="8" selection-start-line="9" selection-start-column="8" selection-end-line="9" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/class/components/SpriteComponent.hpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="13" column="14" selection-start-line="13" selection-start-column="12" selection-end-line="13" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/class/entity/Entity.cpp">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/class/managers/IPool.hpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" column="31" selection-start-line="10" selection-start-column="31" selection-end-line="10" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/class/managers/Pool.hpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="274">
-          <caret line="46" column="17" selection-start-line="46" selection-start-column="4" selection-end-line="46" selection-end-column="17" />
-          <folding>
-            <element signature="e#104#121#0" expanded="true" />
-            <element signature="e#562#574#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/class/components/componentMask.h.gch">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="100" selection-start-line="7" selection-start-column="100" selection-end-line="7" selection-end-column="100" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/class/components/SpriteComponent.hpp" />
+    <entry file="file://$PROJECT_DIR$/class/entity/Entity.cpp" />
+    <entry file="file://$PROJECT_DIR$/class/managers/IPool.hpp" />
+    <entry file="file://$PROJECT_DIR$/class/components/componentMask.h.gch" />
     <entry file="file:///Library/Developer/CommandLineTools/usr/include/c++/v1/memory">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="177">
@@ -502,247 +422,139 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/class/factories/EntityFactory.cpp">
+    <entry file="file://$PROJECT_DIR$/class/factories/EntityFactory.cpp" />
+    <entry file="file://$PROJECT_DIR$/class/managers/ComponentManager.cpp" />
+    <entry file="file://$PROJECT_DIR$/class/components/ComponentMask.hpp" />
+    <entry file="file://$PROJECT_DIR$/class/components/ComponentMask.cpp" />
+    <entry file="file://$PROJECT_DIR$/class/components/Component.hpp" />
+    <entry file="file://$PROJECT_DIR$/class/systems/ASystem.hpp" />
+    <entry file="file://$PROJECT_DIR$/class/systems/TransformSystem.hpp" />
+    <entry file="file://$PROJECT_DIR$/class/systems/TransformSystem.cpp" />
+    <entry file="file://$PROJECT_DIR$/class/systems/MotionSystem.cpp" />
+    <entry file="file://$PROJECT_DIR$/class/systems/MotionSystem.hpp" />
+    <entry file="file://$PROJECT_DIR$/class/factories/EntityFactory.hpp" />
+    <entry file="file://$PROJECT_DIR$/class/ECS.cpp" />
+    <entry file="file://$PROJECT_DIR$/class/managers/ComponentManager.hpp" />
+    <entry file="file://$PROJECT_DIR$/class/components/MotionComponent.hpp" />
+    <entry file="file://$PROJECT_DIR$/class/components/TransformComponent.hpp" />
+    <entry file="file://$PROJECT_DIR$/class/entity/Entity.hpp" />
+    <entry file="file://$PROJECT_DIR$/class/managers/EntitiesManager.hpp" />
+    <entry file="file://$PROJECT_DIR$/class/managers/EntitiesManager.cpp" />
+    <entry file="file://$PROJECT_DIR$/class/factories/SystemFactory.cpp" />
+    <entry file="file://$PROJECT_DIR$/class/factories/SystemFactory.hpp" />
+    <entry file="file://$PROJECT_DIR$/incs/nibbler.hpp" />
+    <entry file="file://$PROJECT_DIR$/class/main.cpp" />
+    <entry file="file://$PROJECT_DIR$/class/managers/SystemManager.cpp" />
+    <entry file="file://$PROJECT_DIR$/class/managers/SystemManager.hpp" />
+    <entry file="file://$PROJECT_DIR$/class/managers/Pool.hpp" />
+    <entry file="file://$PROJECT_DIR$/class/ECS.hpp" />
+    <entry file="file://$PROJECT_DIR$/srcs/w.cpp" />
+    <entry file="file://$PROJECT_DIR$/srcs/w.hpp" />
+    <entry file="file://$PROJECT_DIR$/class/KNU/utils/Signature.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" column="55" selection-start-line="17" selection-start-column="55" selection-end-line="17" selection-end-column="55" />
+        <state relative-caret-position="90">
+          <caret line="6" selection-start-line="6" selection-end-line="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/class/KNU/component/TransformComponent.cpp">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="22" selection-start-line="6" selection-start-column="22" selection-end-line="6" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/class/cores/main.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" selection-start-line="4" selection-end-line="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/class/KNU/entities/Entity.hpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="12" selection-start-column="12" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/class/KNU/managers/ComponentManager.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" selection-start-line="3" selection-end-line="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/class/KNU/component/Component.hpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="19" column="19" lean-forward="true" selection-start-line="19" selection-start-column="19" selection-end-line="19" selection-end-column="19" />
           <folding>
-            <element signature="e#53#71#0" expanded="true" />
+            <element signature="e#171#195#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/class/managers/ComponentManager.cpp">
+    <entry file="file://$PROJECT_DIR$/class/KNU/component/Component.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="13" selection-start-line="1" selection-start-column="13" selection-end-line="1" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/class/KNU/component/TransformComponent.hpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
-          <caret line="7" column="18" selection-start-line="7" selection-start-column="18" selection-end-line="7" selection-end-column="18" />
-          <folding>
-            <element signature="e#53#94#0" expanded="true" />
-            <element signature="e#431#455#0" expanded="true" />
-          </folding>
+          <caret line="7" column="48" selection-start-line="7" selection-start-column="39" selection-end-line="7" selection-end-column="48" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/class/components/ComponentMask.hpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="30" column="6" selection-start-line="30" selection-start-column="6" selection-end-line="30" selection-end-column="6" />
-          <folding>
-            <element signature="e#32#67#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/class/components/ComponentMask.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="465">
-          <caret line="31" column="13" selection-start-line="31" selection-start-column="13" selection-end-line="31" selection-end-column="13" />
-          <folding>
-            <element signature="e#172#184#0" expanded="true" />
-            <element signature="e#368#392#0" expanded="true" />
-            <element signature="e#497#521#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/class/components/Component.hpp">
+    <entry file="file://$PROJECT_DIR$/class/KNU/utils/Signature.hpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
-          <caret line="11" column="32" selection-start-line="11" selection-start-column="23" selection-end-line="11" selection-end-column="32" />
+          <caret line="11" column="34" selection-start-line="11" selection-start-column="34" selection-end-line="11" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/class/KNU/managers/Pool.cpp">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/class/KNU/managers/Pool.hpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="497">
+          <caret line="36" selection-start-line="36" selection-end-line="36" />
           <folding>
-            <element signature="e#123#147#0" expanded="true" />
+            <element signature="e#14#31#0" expanded="true" />
+            <element signature="e#141#165#0" expanded="true" />
+            <element signature="e#936#960#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/class/systems/ASystem.hpp">
+    <entry file="file://$PROJECT_DIR$/class/KNU/managers/IPool.hpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="16" column="12" selection-start-line="16" selection-start-column="12" selection-end-line="16" selection-end-column="12" />
+        <state relative-caret-position="105">
+          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/class/KNU/managers/ComponentManager.hpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="435">
+          <caret line="29" column="5" lean-forward="true" selection-start-line="29" selection-start-column="5" selection-end-line="29" selection-end-column="5" />
           <folding>
-            <element signature="e#110#149#0" expanded="true" />
+            <element signature="e#14#28#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/class/managers/SystemManager.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" column="15" selection-start-line="17" selection-start-column="15" selection-end-line="17" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/class/systems/TransformSystem.hpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" selection-start-line="14" selection-end-line="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/class/systems/TransformSystem.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="18" column="49" selection-start-line="18" selection-start-column="49" selection-end-line="18" selection-end-column="49" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Makefile">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="483">
-          <caret line="85" lean-forward="true" selection-start-line="85" selection-end-line="85" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/class/systems/MotionSystem.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" selection-start-line="10" selection-end-line="10" />
-          <folding>
-            <element signature="e#124#148#0" expanded="true" />
-            <element signature="e#231#255#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/class/systems/MotionSystem.hpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="299">
-          <caret line="22" column="21" selection-start-line="22" selection-start-column="9" selection-end-line="22" selection-end-column="21" />
-          <folding>
-            <element signature="e#121#149#0" expanded="true" />
-            <element signature="e#377#401#0" expanded="true" />
-            <element signature="e#435#459#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/class/managers/SystemManager.hpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="6" selection-start-line="11" selection-start-column="6" selection-end-line="11" selection-end-column="6" />
-          <folding>
-            <element signature="e#122#139#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/class/factories/EntityFactory.hpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="10" column="6" selection-start-line="10" selection-start-column="6" selection-end-line="10" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/class/ECS.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" selection-start-line="5" selection-end-line="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/class/managers/ComponentManager.hpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="22" column="29" selection-start-line="22" selection-start-column="13" selection-end-line="22" selection-end-column="29" />
-          <folding>
-            <element signature="e#128#156#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/class/ECS.hpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" selection-start-line="7" selection-end-line="7" />
-          <folding>
-            <element signature="e#104#121#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/class/components/MotionComponent.hpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" selection-start-line="7" selection-end-line="7" />
-          <folding>
-            <element signature="e#126#150#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/class/components/TransformComponent.hpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="56" selection-start-line="11" selection-start-column="56" selection-end-line="11" selection-end-column="56" />
-          <folding>
-            <element signature="e#132#154#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/class/entity/Entity.hpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-46">
-          <caret line="28" column="57" selection-start-line="28" selection-start-column="57" selection-end-line="28" selection-end-column="57" />
-          <folding>
-            <element signature="e#353#392#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/class/managers/EntitiesManager.hpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="222">
-          <caret line="18" selection-start-line="18" selection-end-line="18" />
-          <folding>
-            <element signature="e#127#155#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/class/managers/EntitiesManager.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="6" selection-start-line="6" selection-end-line="6" />
-          <folding>
-            <element signature="e#53#83#0" expanded="true" />
-            <element signature="e#125#149#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/class/factories/SystemFactory.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="15" selection-start-line="7" selection-start-column="15" selection-end-line="7" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/class/factories/SystemFactory.hpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" selection-start-line="10" selection-end-line="10" />
-          <folding>
-            <element signature="e#123#153#0" expanded="true" />
-            <element signature="e#354#378#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/incs/nibbler.hpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" selection-start-line="17" selection-end-line="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/class/main.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="19" selection-start-line="19" selection-end-line="19" />
-          <folding>
-            <element signature="e#207#248#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="343">
+          <caret line="50" column="28" selection-start-line="50" selection-start-column="28" selection-end-line="50" selection-end-column="28" />
         </state>
       </provider>
     </entry>

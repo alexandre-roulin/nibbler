@@ -43,16 +43,12 @@ RM			= rm -rf
 NAME		= nibbler
 
 SRCS = \
-			main.cpp							\
-			ECS.cpp								\
-			components/ComponentMask.cpp\
-			factories/EntityFactory.cpp\
-			factories/SystemFactory.cpp\
-			managers/ComponentManager.cpp\
-			managers/EntitiesManager.cpp\
-			managers/SystemManager.cpp\
-			systems/MotionSystem.cpp\
-			systems/TransformSystem.cpp\
+		cores/main.cpp								\
+		KNU/component/Component.cpp					\
+		KNU/component/TransformComponent.cpp		\
+		KNU/managers/Pool.cpp						\
+		KNU/managers/ComponentManager.cpp			\
+		KNU/utils/Signature.cpp						\
 
 # ---------------------------------------------------------------------------- #
 # /!\ COLOR FOR PRINTF /!\                                                     #
@@ -86,13 +82,13 @@ LDLIBS		= \
 
 CPPFLAGS	= \
 			  -I$(DIR_INCS)							\
-			  -I$(DIR_CLASS)
+			  -I$(DIR_CLASS)							\
 
 CFLAGS		= \
 			-std=c++17						\
-			#-Wall -Werror -Wextra					\
-			#-fsanitize=address					\
-			#-g3							\
+#			-Wall -Werror -Wextra					\
+#			-fsanitize=address					\
+#			-g3							\
 			
 
 # ---------------------------------------------------------------------------- #
