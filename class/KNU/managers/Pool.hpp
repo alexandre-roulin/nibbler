@@ -9,22 +9,18 @@
 
 namespace KNU {
 
-	template<typename ComponentType>
+	template<typename T>
 	class Pool : public  AbstractPool {
 	private:
-		std::vector<ComponentType> _pool;
+		std::vector<T> _pool;
 		unsigned int capacity;
 		unsigned int size;
 	public:
 		virtual void clear();
 
-	private:
-
-		// TODO   v   ENTITY SWITCH !
 		std::map<Entity, unsigned int> _entitiesMap;
-	public:
 
-		virtual void add(Entity &entity, ComponentType &component) {
+		void add(Entity &entity, T &component) {
 			unsigned int newInstance = size;
 			if (size == capacity) {
 				capacity += BASE_COMPONENT_SIZE;
@@ -34,24 +30,31 @@ namespace KNU {
 			_entitiesMap[entity] = newInstance;
 		}
 
+		T &get(Entity &e) {
+			assert(e.id < capacity);
+			unsigned int instance = _entitiesMap[e];
+			assert(instance < capacity);
+			return _pool[instance];
+		}
+
 		Pool();
 		virtual ~Pool();
 	};
 
-	template<typename ComponentType>
-	Pool<ComponentType>::Pool()
-			:_pool(std::vector<ComponentType>(BASE_COMPONENT_SIZE)),
+	template<typename T>
+	Pool<T>::Pool()
+			:_pool(std::vector<T>(BASE_COMPONENT_SIZE)),
 			 capacity(BASE_COMPONENT_SIZE),
 			 size(0) {
 	}
 
-	template<typename ComponentType>
-	Pool<ComponentType>::~Pool() {
+	template<typename T>
+	Pool<T>::~Pool() {
 
 	}
 
-	template<typename ComponentType>
-	void Pool<ComponentType>::clear() {
+	template<typename T>
+	void Pool<T>::clear() {
 
 	}
 

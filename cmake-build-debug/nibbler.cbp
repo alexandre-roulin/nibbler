@@ -126,6 +126,9 @@
 		<Unit filename="/Users/alexandreroulin/work/nibbler/class/cores/main.cpp">
 			<Option target="nibbler"/>
 		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/incs/nibbler.hpp">
+			<Option target="nibbler"/>
+		</Unit>
 		<Unit filename="/Users/alexandreroulin/work/nibbler/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
