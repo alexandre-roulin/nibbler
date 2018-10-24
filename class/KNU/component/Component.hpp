@@ -1,6 +1,4 @@
-#ifndef NIBBLER_COMPONENT_HPP
-#define NIBBLER_COMPONENT_HPP
-
+#pragma once
 
 #include <type_traits>
 
@@ -17,6 +15,7 @@ namespace KNU {
 		}
 	};
 
+
 	// Util method for getting family given type
 	template <typename C>
 	static int getComponentSignature() {
@@ -25,4 +24,3 @@ namespace KNU {
 }
 
 
-#endif //NIBBLER_COMPONENT_HPP

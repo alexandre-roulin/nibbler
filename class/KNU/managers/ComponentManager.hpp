@@ -4,29 +4,43 @@
 #include <typeindex>
 #include "Pool.hpp"
 #include <KNU/entities/Entity.hpp>
-#include <KNU/component/TransformComponent.hpp>
+#include <iostream>
+#include <KNU/component/Component.hpp>
 
 namespace KNU {
 
 	class ComponentManager {
 	private:
-		std::map<std::type_index, IPool *> _pools;
-	public:
-		ComponentManager();
+		std::vector<std::shared_ptr<AbstractPool>> componentPools;
 
-		template<typename ComponentType>
-		void addComponent(Entity &e, ComponentType &component);
+	public:
+		ComponentManager() = default;
+
+		template<typename T>
+		void addComponent(Entity e, T component) {
+			const auto componentId = Component<T>::signature();
+			std::shared_ptr<Pool<T>> componentPool = accommodateComponent<T>();
+		}
+
+		template<typename T>
+		std::shared_ptr<Pool<T>>
+		accommodateComponent() {
+			const auto componentId = Component<T>::signature();
+
+			if (componentId >= componentPools.size()) {
+				componentPools.resize(componentId + 1, nullptr);
+			}
+
+			if (!componentPools[componentId]) {
+				std::shared_ptr<Pool<T>> pool(new Pool<T>());
+				componentPools[componentId] = pool;
+			}
+
+			return std::static_pointer_cast<Pool<T>>(
+					componentPools[componentId]);
+
+		}
 	};
 
-	ComponentManager::ComponentManager() {
-		IPool * pool = new Pool<KNU::TransformComponent>();
-		std::type_index e = typeid(KNU::TransformComponent);
-		_pools[e] = pool;
-	}
-
-	template<typename ComponentType>
-	void ComponentManager::addComponent(Entity &e, ComponentType &component) {
-//		_pools[typeid(ComponentType)];
-	}
 
 }

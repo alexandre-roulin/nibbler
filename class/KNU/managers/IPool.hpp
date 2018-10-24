@@ -1,9 +1,11 @@
-#ifndef NIBBLER_IPOOL_HPP
-#define NIBBLER_IPOOL_HPP
+#pragma once
 
-class IPool {
-public:
-	virtual ~IPool() {};
-};
+namespace KNU {
+	class AbstractPool {
+	public:
+		virtual ~AbstractPool() {}
 
-#endif //NIBBLER_IPOOL_HPP
+		virtual void clear() = 0;
+	};
+
+}

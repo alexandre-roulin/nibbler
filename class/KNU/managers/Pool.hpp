@@ -10,20 +10,22 @@
 namespace KNU {
 
 	template<typename ComponentType>
-	class Pool : public IPool{
+	class Pool : public  AbstractPool {
 	private:
-		typedef unsigned int ComponentInstance;
 		std::vector<ComponentType> _pool;
 		unsigned int capacity;
 		unsigned int size;
+	public:
+		virtual void clear();
 
+	private:
 
 		// TODO   v   ENTITY SWITCH !
-		std::map<Entity, ComponentInstance> _entitiesMap;
+		std::map<Entity, unsigned int> _entitiesMap;
 	public:
 
-		void add(Entity &entity, ComponentType &component) {
-			ComponentInstance newInstance = size;
+		virtual void add(Entity &entity, ComponentType &component) {
+			unsigned int newInstance = size;
 			if (size == capacity) {
 				capacity += BASE_COMPONENT_SIZE;
 				_pool.resize(capacity);
@@ -45,6 +47,11 @@ namespace KNU {
 
 	template<typename ComponentType>
 	Pool<ComponentType>::~Pool() {
+
+	}
+
+	template<typename ComponentType>
+	void Pool<ComponentType>::clear() {
 
 	}
 
