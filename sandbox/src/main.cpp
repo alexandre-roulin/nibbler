@@ -8,18 +8,20 @@ int				main(int argc, char **argv)
 	static_cast<void>(argc);
 	static_cast<void>(argv);
 
-	DisplaySdl sdl("tileset1.png", 32, 10, 10, "lol");
+	DisplaySdl sdl("tileset1.png", 32, 30, 30, "lol");
 
 
-	Grid<int> grid(10, 10);
+	Grid<int> grid(30, 30);
 
 	grid.fill(0);
 	grid.setBorder(1);
 
+	sdl.setBackground(grid);
+
 	while (!sdl.exit())
 	{
 		sdl.update();
-		sdl.drawGrid(grid);
+		//sdl.drawGrid(grid);
 		sdl.drawTile(1, 0, 0);
 		sdl.drawTile(2, 1, 0);
 		sdl.drawTile(3, 2, 0);

@@ -23,42 +23,49 @@ class DisplaySdl : public IDisplay {
 			std::string			_error;
 		};
 
-        DisplaySdl(char const *tileset,
-					unsigned int tile,
-					unsigned int width,
-					unsigned int height,
-					char const * windowName);
-        virtual ~DisplaySdl(void);
+    DisplaySdl(char const *tileset,
+				int tile,
+				int width,
+				int height,
+				char const * windowName);
+    virtual ~DisplaySdl(void);
 
-        bool        exit(void) const;
-        void        render(void);
-        void        update(void);
+    bool        exit(void) const;
+    void        render(void);
+    void        update(void);
 
-		void		drawColorTile(unsigned int indexWidth, unsigned int indexHeight, int color);
-		void		drawTile(unsigned indexTile, unsigned int indexWidth, unsigned int indexHeight);
-		void		drawTile(unsigned indexWidthTile, unsigned indexHeightTile, unsigned int indexWidth, unsigned int indexHeight);
-		void		drawGrid(Grid<int> const &grid);
+	void		drawColorTile(int indexWidth, int indexHeight, int color);
+	void		drawTile(int indexTile, int indexWidth, int indexHeight);
+	void		drawTile(int indexWidthTile, int indexHeightTile, int indexWidth, int indexHeight);
+	void		drawColorTile(SDL_Surface *, int indexWidth, int indexHeight, int color);
+	void		drawTile(SDL_Surface *, int indexTile, int indexWidth, int indexHeight);
+	void		drawTile(SDL_Surface *, int indexWidthTile, int indexHeightTile, int indexWidth, int indexHeight);
 
-    private:
-        bool					_exit;
-		int						_tileSize;
-		Vector2D<int> const		_winTileSize;
-        Vector2D<int> const		_winPixelSize;
+	void		drawGrid(Grid<int> const &grid);
+	void		drawGrid(SDL_Surface *, Grid<int> const &grid);
 
-        SDL_Window				*_win;
-        SDL_Surface				*_rendererSurface;
-        SDL_Texture				*_rendererTexture;
-        SDL_Renderer			*_renderer;
-		SDL_Surface				*_tileset;
-		int						_tilesetWidth;
-        SDL_Event				_ev;
+	void		setBackground(Grid<int> const &grid);
+private:
+    bool					_exit;
+	int						_tileSize;
+	Vector2D<int> const		_winTileSize;
+    Vector2D<int> const		_winPixelSize;
 
-        void                _error(void);
-        void                _clean(void);
+    SDL_Window				*_win;
+    SDL_Surface				*_rendererSurface;
+    SDL_Texture				*_rendererTexture;
+    SDL_Renderer			*_renderer;
+	SDL_Surface				*_tileset;
+	SDL_Surface				*_background;
+	int						_tilesetWidth;
+    SDL_Event				_ev;
 
-        DisplaySdl          &operator=(DisplaySdl const &rhs);
-        DisplaySdl(DisplaySdl const &src);
-        DisplaySdl(void);
+    void                _error(void);
+    void                _clean(void);
 
-		static SDL_Surface * _SdlSurface(unsigned int widht, unsigned int height);
+    DisplaySdl          &operator=(DisplaySdl const &rhs);
+    DisplaySdl(DisplaySdl const &src);
+    DisplaySdl(void);
+
+	static SDL_Surface * _SdlSurface(int widht, int height);
 };
