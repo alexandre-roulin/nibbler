@@ -12,8 +12,7 @@ int main() {
 
 		KNU::Entity entity = world.createEntity();
 		entity.getMask();
-		entity.hasGroup("");
-		entity.hasComponent<TransformComponent>();
+		entity.addComponent(TransformComponent(42, 42));
 	}
 
 
