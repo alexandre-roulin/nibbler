@@ -44,7 +44,11 @@ NAME		= nibbler
 
 SRCS = \
 		cores/main.cpp								\
+													\
 		component/MotionComponent.cpp				\
+													\
+		systems/MotionSystem.cpp					\
+													\
 		KNU/World.cpp								\
 		KNU/entities/Entity.cpp						\
 		KNU/component/Component.cpp					\
@@ -52,8 +56,8 @@ SRCS = \
 		KNU/managers/ComponentManager.cpp			\
 		KNU/managers/EntitiesManager.cpp			\
 		KNU/managers/SystemManager.cpp				\
-		systems/MotionSystem.cpp					\
 		KNU/utils/Signature.cpp						\
+
 
 # ---------------------------------------------------------------------------- #
 # /!\ COLOR FOR PRINTF /!\                                                     #

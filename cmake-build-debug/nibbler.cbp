@@ -105,6 +105,9 @@
 		<Unit filename="/Users/alexandreroulin/work/nibbler/class/KNU/entities/Entity.hpp">
 			<Option target="nibbler"/>
 		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/class/KNU/managers/AbstractPool.cpp">
+			<Option target="nibbler"/>
+		</Unit>
 		<Unit filename="/Users/alexandreroulin/work/nibbler/class/KNU/managers/AbstractPool.hpp">
 			<Option target="nibbler"/>
 		</Unit>

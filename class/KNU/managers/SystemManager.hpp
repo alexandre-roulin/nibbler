@@ -2,7 +2,6 @@
 
 #include <unordered_map>
 #include <typeindex>
-#include <KNU/systems/System.hpp>
 
 namespace KNU {
 	class System;

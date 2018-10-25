@@ -11,6 +11,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/nibbler.dir/class/component/MotionComponent.cpp.o"
   "CMakeFiles/nibbler.dir/class/KNU/systems/System.cpp.o"
   "CMakeFiles/nibbler.dir/class/KNU/entities/Entity.cpp.o"
+  "CMakeFiles/nibbler.dir/class/KNU/managers/AbstractPool.cpp.o"
   "nibbler.pdb"
   "nibbler"
 )

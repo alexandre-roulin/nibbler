@@ -2,7 +2,6 @@
 
 #include <vector>
 #include <map>
-#include <KNU/entities/Entity.hpp>
 #include <iostream>
 #include "AbstractPool.hpp"
 
@@ -23,49 +22,14 @@ namespace KNU {
 
 		Pool();
 
-		void add(Entity &entity, T &component) {
-			unsigned int newInstance = size;
-			if (size == capacity) {
-				capacity += BASE_COMPONENT_SIZE;
-				_pool.resize(capacity);
-			}
-			_pool[newInstance] = component;
-			_entitiesMap[entity] = newInstance;
-			size++;
-		}
+		void add(Entity const &entity, T &component);
 
-		T &get(Entity &e) {
-			unsigned int instance = _entitiesMap.at(e);
-			std::cout << instance << std::endl;
-			assert(instance < capacity);
-			return _pool[instance];
-		}
+		T &get(Entity const &e);
 
-		bool has(Entity &e) {
-			return _entitiesMap.find(e) != _entitiesMap.end();
-		}
+		bool has(Entity const &e);
 
-		void remove(Entity &e) {
-			unsigned int instance = _entitiesMap.at(e);
-			assert(instance < size);
-			_entitiesMap.erase(e);
-			size--;
-			std::swap(_pool[instance], _pool[size]);
-		}
+		void remove(Entity const &e);
 
 		virtual ~Pool();
 	};
-
-	template<typename T>
-	Pool<T>::Pool()
-			:_pool(std::vector<T>(BASE_COMPONENT_SIZE)),
-			 capacity(BASE_COMPONENT_SIZE),
-			 size(0) {
-	}
-
-	template<typename T>
-	Pool<T>::~Pool() {
-
-	}
-
 }

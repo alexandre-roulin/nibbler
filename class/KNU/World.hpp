@@ -1,22 +1,26 @@
 #pragma once
 
 // >>> [ KRYSTAL is NOT UNIX ] <<<
+
+#include <vector>
+#include <KNU/managers/ComponentManager.hpp>
 #include <KNU/managers/EntitiesManager.hpp>
-#include <KNU/managers/SystemManager.hpp>
 
 namespace KNU {
-	class EntitiesManager;
-	class SystemManager;
+	class Entity;
 	class World {
 	private:
 		std::vector<Entity>		_createdEntities;
 		std::vector<Entity>		_destroyedEntities;
-		std::unique_ptr<EntitiesManager> entityManager = nullptr;
-		std::unique_ptr<SystemManager> systemManager = nullptr;
+		std::unique_ptr<EntitiesManager> entityManager;
+		std::unique_ptr<ComponentManager> componentManager;
 //		std::unique_ptr<EventManager> eventManager = nullptr;
 	public:
 		World();
 		Entity &createEntity();
+
+		ComponentManager &getComponentManager() const;
+		EntitiesManager &getEntityManager() const;
 
 	};
 }

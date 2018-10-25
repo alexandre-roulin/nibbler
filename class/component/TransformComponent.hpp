@@ -2,8 +2,7 @@
 
 #include <ostream>
 #include <KNU/utils/Signature.hpp>
-#include "KNU/component/Component.hpp"
-
+#include <KNU/component/Component.hpp>
 
 struct TransformComponent {
 	explicit TransformComponent(int y = 0, int x = 0)

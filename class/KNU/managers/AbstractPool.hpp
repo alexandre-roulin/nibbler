@@ -1,9 +1,11 @@
 #pragma once
 
 namespace KNU {
+
 	class AbstractPool {
 	public:
-		virtual ~AbstractPool() {}
-	};
+		AbstractPool();
 
+		virtual ~AbstractPool() = default;
+	};
 }

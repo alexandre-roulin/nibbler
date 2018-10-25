@@ -5,10 +5,8 @@
 #include <KNU/utils/Signature.hpp>
 
 namespace KNU {
-	class World;
 	class EntitiesManager;
-
-	struct Entity {
+	class Entity {
 	private:
 		int id;
 		Signature mask;
@@ -19,13 +17,14 @@ namespace KNU {
 				  alive(true) {
 		};
 		EntitiesManager *entityManager;
+		EntitiesManager &getEntitiesManager() const;
 
+		friend class EntitiesManager;
 	public:
 		Entity() : id(-1) {};
 
-		friend class EntitiesManager;
 
-		const Signature &getMask();
+		Signature const &getMask();
 
 		bool operator<(const Entity &rhs) const {
 			return id < rhs.id;
@@ -53,7 +52,6 @@ namespace KNU {
 			return !(rhs == *this);
 		}
 
-		EntitiesManager &getEntitiesManager() const;
 
 		void kill();
 

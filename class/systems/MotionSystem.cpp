@@ -1,11 +1,10 @@
+
 #include "MotionSystem.hpp"
 
-
-
-void KNU::MotionSystem::update() {
+void MotionSystem::update() {
 
 }
 
-KNU::MotionSystem::~MotionSystem() {
+MotionSystem::~MotionSystem() {
 
 }

@@ -3,26 +3,54 @@
 //
 
 #include "Signature.hpp"
+#include <KNU/component/Component.hpp>
 
-bool KNU::Signature::matches(KNU::Signature systemMask)const {
-	return ((mask & systemMask.mask) == systemMask.mask);
+namespace KNU {
+
+	bool Signature::matches(Signature systemMask) const {
+		return ((mask & systemMask.mask) == systemMask.mask);
+	}
+
+	unsigned int Signature::getMask() const {
+		return mask;
+	}
+
+	bool Signature::operator==(const Signature &rhs) const {
+		return mask == rhs.mask;
+	}
+
+	bool Signature::operator!=(const Signature &rhs) const {
+		return !(rhs == *this);
+	}
+
+	std::ostream &
+	operator<<(std::ostream &os, const Signature &signature) {
+		os << "mask: " << signature.mask;
+		return os;
+	}
+
+	template<typename ComponentType>
+	void Signature::addComponent() {
+		mask |= (1 << getComponentSignature<ComponentType>());
+	}
+
+	template<typename ComponentType>
+	void Signature::removeComponent() {
+		mask ^= (1 << getComponentSignature<ComponentType>());
+	}
+
+	void Signature::clean() {
+		mask = 0;
+	}
+
+	Signature &Signature::operator=(Signature const &signature) {
+		if (this != &signature) {
+			mask = signature.mask;
+		}
+		return *this;
+	}
+
+	Signature::Signature(unsigned int mask) : mask(mask) {}
+
+
 }
-
-unsigned int KNU::Signature::getMask() const {
-	return mask;
-}
-
-bool KNU::Signature::operator==(const KNU::Signature &rhs) const {
-	return mask == rhs.mask;
-}
-
-bool KNU::Signature::operator!=(const KNU::Signature &rhs) const {
-	return !(rhs == *this);
-}
-
-std::ostream &
-KNU::operator<<(std::ostream &os, const KNU::Signature &signature) {
-	os << "mask: " << signature.mask;
-	return os;
-}
-

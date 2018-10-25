@@ -1,14 +1,19 @@
-#include <nibbler.hpp>
+
+
 #include <iostream>
+#include <KNU/World.hpp>
 #include "EntitiesManager.hpp"
+#include <nibbler.hpp>
+#include <KNU/managers/ComponentManager.hpp>
+#include <KNU/component/Component.hpp>
 
 namespace KNU {
 
 	EntitiesManager::EntitiesManager(World &world)
-			: world(world),
+			: _componentManager(world.getComponentManager()),
+			  world(world),
 			  size(0),
-			  capacity(
-					  BASE_ENTITIES_CAPACITY) {
+			  capacity(BASE_ENTITIES_CAPACITY) {
 		_entitiesMap.resize(capacity);
 	}
 
@@ -43,6 +48,7 @@ namespace KNU {
 	bool EntitiesManager::hasTaggedEntity(std::string &tag) {
 		return _taggedEntity.find(tag) != _taggedEntity.end();
 	}
+
 	void EntitiesManager::tagEntity(Entity &e, std::string &tag) {
 		_taggedEntity.insert(std::make_pair(tag, e));
 	}
@@ -82,6 +88,37 @@ namespace KNU {
 	Entity EntitiesManager::getEntityByTag(std::string const &tag) {
 		assert(hasTag(tag));
 		return _taggedEntity[tag];
+	}
+
+	template<typename T>
+	T &EntitiesManager::getComponent(Entity &e) {
+		assert(e.mask.getMask() & Component<T>::signature());
+		return _componentManager.getComponent<T>(e);
+	}
+
+	template<typename T>
+	bool EntitiesManager::hasComponent(Entity const &e) {
+		return world.getComponentManager().hasComponent<T>(e);
+	}
+
+	template<typename T>
+	EntitiesManager &EntitiesManager::addComponent(Entity &e, T component) {
+		//			e.mask.addComponent<T>();
+		_componentManager.addComponent(e, component);
+		return *this;
+	}
+
+	template<typename T, typename... Args>
+	EntitiesManager &EntitiesManager::addComponent(Entity &e, Args &&... args) {
+		T component(std::forward<Args>(args) ...);
+		addComponent<T>(e, component);
+		return *this;
+	}
+
+	template<typename T>
+	void EntitiesManager::removeComponent(Entity &e) {
+//			e.mask.removeComponent<T>();
+		_componentManager.removeComponent<T>(e);
 	}
 
 

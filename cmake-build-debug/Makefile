@@ -204,6 +204,33 @@ class/KNU/entities/Entity.cpp.s:
 	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/entities/Entity.cpp.s
 .PHONY : class/KNU/entities/Entity.cpp.s
 
+class/KNU/managers/AbstractPool.o: class/KNU/managers/AbstractPool.cpp.o
+
+.PHONY : class/KNU/managers/AbstractPool.o
+
+# target to build an object file
+class/KNU/managers/AbstractPool.cpp.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/managers/AbstractPool.cpp.o
+.PHONY : class/KNU/managers/AbstractPool.cpp.o
+
+class/KNU/managers/AbstractPool.i: class/KNU/managers/AbstractPool.cpp.i
+
+.PHONY : class/KNU/managers/AbstractPool.i
+
+# target to preprocess a source file
+class/KNU/managers/AbstractPool.cpp.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/managers/AbstractPool.cpp.i
+.PHONY : class/KNU/managers/AbstractPool.cpp.i
+
+class/KNU/managers/AbstractPool.s: class/KNU/managers/AbstractPool.cpp.s
+
+.PHONY : class/KNU/managers/AbstractPool.s
+
+# target to generate assembly for a file
+class/KNU/managers/AbstractPool.cpp.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/managers/AbstractPool.cpp.s
+.PHONY : class/KNU/managers/AbstractPool.cpp.s
+
 class/KNU/managers/ComponentManager.o: class/KNU/managers/ComponentManager.cpp.o
 
 .PHONY : class/KNU/managers/ComponentManager.o
@@ -465,6 +492,9 @@ help:
 	@echo "... class/KNU/entities/Entity.o"
 	@echo "... class/KNU/entities/Entity.i"
 	@echo "... class/KNU/entities/Entity.s"
+	@echo "... class/KNU/managers/AbstractPool.o"
+	@echo "... class/KNU/managers/AbstractPool.i"
+	@echo "... class/KNU/managers/AbstractPool.s"
 	@echo "... class/KNU/managers/ComponentManager.o"
 	@echo "... class/KNU/managers/ComponentManager.i"
 	@echo "... class/KNU/managers/ComponentManager.s"

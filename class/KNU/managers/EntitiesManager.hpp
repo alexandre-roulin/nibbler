@@ -1,10 +1,9 @@
 #pragma once
 
-#include <KNU/entities/Entity.hpp>
-#include "ComponentManager.hpp"
 #include <vector>
 #include <unordered_map>
 #include <set>
+#include <KNU/entities/Entity.hpp>
 // [*][*][*]                    [S][S][S][S {0} ]
 //  |  \
 //  |   \
@@ -15,14 +14,15 @@
 //         data
 
 namespace KNU {
-	class World;
 
+	class World;
+	class ComponentManager;
 	class EntitiesManager {
 	private:
 		unsigned int size;
 		unsigned int capacity;
 		World &world;
-		ComponentManager componentManager;
+		ComponentManager const &_componentManager;
 		std::vector<Entity> _entitiesMap;
 		std::unordered_map<std::string, Entity> _taggedEntity;
 		std::unordered_map<std::string, std::set<Entity>> _groupedEntities;
@@ -56,36 +56,21 @@ namespace KNU {
 		void killEntity(Entity &e);
 
 		template<typename T>
-		T &getComponent(Entity &e) {
-			assert(e.mask.getMask() & Component<T>::signature());
-			return componentManager.getComponent<T>(e);
-		}
+		T &getComponent(Entity &e);
 
 		template<typename T>
-		bool hasComponent(Entity &e) {
-			return componentManager.hasComponent<T>(e);
-		}
+		bool hasComponent(Entity const &e);
 
 		template<typename T>
-		EntitiesManager &addComponent(Entity &e, T component) {
-			e.mask.addComponent<T>();
-			componentManager.addComponent(e, component);
-			return *this;
-		}
+		EntitiesManager &addComponent(Entity &e, T component);
 
 		template<typename T, typename ... Args>
-		EntitiesManager &addComponent(Entity &e, Args &&... args) {
-			T component(std::forward<Args>(args) ...);
-			addComponent<T>(e, component);
-			return *this;
-		}
+		EntitiesManager &addComponent(Entity &e, Args &&... args);
 
 		template<typename T>
-		void removeComponent(Entity &e) {
-			e.mask.removeComponent<T>();
-			componentManager.removeComponent<T>(e);
-		}
+		void removeComponent(Entity &e);
 
 	};
 
 }
+

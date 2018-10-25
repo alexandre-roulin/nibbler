@@ -1,13 +1,12 @@
-
 #include "Entity.hpp"
 #include <KNU/managers/EntitiesManager.hpp>
+#include <KNU/utils/Signature.hpp>
 
 namespace KNU {
 
 	const Signature &Entity::getMask() {
 		return mask;
 	}
-
 	void Entity::kill() {
 		getEntitiesManager().killEntity(*this);
 	}
@@ -15,11 +14,10 @@ namespace KNU {
 	bool Entity::isAlive() const {
 		return getEntitiesManager().isEntityAlive(*this);
 	}
+
 	EntitiesManager &Entity::getEntitiesManager() const {
 		return *entityManager;
 	}
-
-
 
 	void Entity::tag(std::string tag) {
 		getEntitiesManager().tagEntity(*this, tag);
@@ -36,10 +34,6 @@ namespace KNU {
 	bool Entity::hasGroup(std::string group) const {
 		return false;
 	}
-	template<typename T>
-	void Entity::addComponent(T component) {
-		getEntitiesManager().addComponent(*this, component);
-	}
 
 	template<typename T, typename... Args>
 	void Entity::addComponent(Args &&... args) {
@@ -51,13 +45,20 @@ namespace KNU {
 		getEntitiesManager().removeComponent<T>(*this);
 	}
 
-	template<typename T>
-	bool Entity::hasComponent() const {
-		return getEntitiesManager().hasComponent<T>(*this);
-	}
 
 	template<typename T>
 	T &Entity::getComponent() const {
 		return getEntitiesManager().getComponent<T>(*this);
 	}
+
+	template<typename T>
+	void Entity::addComponent(T component) {
+		getEntitiesManager().addComponent(*this, component);
+	}
+
+	template<typename T>
+	bool Entity::hasComponent() const {
+		return getEntitiesManager().hasComponent<T>(*this);
+	}
+
 }

@@ -1,12 +1,7 @@
+#pragma once
 #include <utility>
 
-#pragma once
-
-
 #include <ostream>
-#include <nibbler.hpp>
-#include "KNU/component/Component.hpp"
-#include <KNU/utils/Signature.hpp>
 
 
 	struct SpriteComponent {

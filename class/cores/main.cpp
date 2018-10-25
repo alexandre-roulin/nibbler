@@ -1,16 +1,18 @@
 
-#include <KNU/entities/Entity.hpp>
 #include <iostream>
 #include <KNU/World.hpp>
+#include <KNU/entities/Entity.hpp>
 
 int main() {
 
 	{
 		KNU::World world;
 
-		auto &entity = world.createEntity();
-
+		KNU::Entity entity = world.createEntity();
+		entity.getMask();
+		entity.hasGroup("");
 	}
+
 
 }
 

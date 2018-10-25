@@ -1,6 +1,5 @@
 #pragma once
 
-#include <KNU/component/Component.hpp>
 #include <ostream>
 
 namespace KNU {
@@ -9,30 +8,19 @@ namespace KNU {
 	private:
 		unsigned int mask;
 	public:
-		explicit Signature(unsigned int mask = 0) : mask(mask) {};
+		explicit Signature(unsigned int = 0);
 
 		template<typename ComponentType>
-		void addComponent() {
-			mask |= (1 << getComponentSignature<ComponentType>());
-		}
+		void addComponent();
 
 		template<typename ComponentType>
-		void removeComponent() {
-			mask ^= (1 << getComponentSignature<ComponentType>());
-		}
+		void removeComponent();
 
-		void clean() {
-			mask = 0;
-		}
+		void clean();
 
 		bool matches(Signature systemMask) const;
 
-		Signature &operator=(Signature const &signature) {
-			if (this != &signature) {
-				mask = signature.mask;
-			}
-			return *this;
-		}
+		Signature &operator=(Signature const &signature);
 
 		bool operator==(const Signature &rhs) const;
 

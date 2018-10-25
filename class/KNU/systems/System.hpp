@@ -1,23 +1,20 @@
 #pragma once
 
 #include <vector>
+#include <KNU/utils/Signature.hpp>
 #include <KNU/entities/Entity.hpp>
-#include <KNU/World.hpp>
 
 namespace KNU {
 	class SystemManager;
 
 	class World;
-	class Entity;
 
 	class System {
 	public:
 
 		// what component types the system requires of entities (we can use this method in the constructor for example)
 		template<typename T>
-		void requireComponent() {
-			signature.addComponent<T>();
-		}
+		void requireComponent();
 
 		virtual void update() = 0;
 

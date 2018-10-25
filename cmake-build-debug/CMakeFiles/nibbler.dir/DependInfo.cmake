@@ -7,6 +7,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/Users/alexandreroulin/work/nibbler/class/KNU/World.cpp" "/Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles/nibbler.dir/class/KNU/World.cpp.o"
   "/Users/alexandreroulin/work/nibbler/class/KNU/component/Component.cpp" "/Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles/nibbler.dir/class/KNU/component/Component.cpp.o"
   "/Users/alexandreroulin/work/nibbler/class/KNU/entities/Entity.cpp" "/Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles/nibbler.dir/class/KNU/entities/Entity.cpp.o"
+  "/Users/alexandreroulin/work/nibbler/class/KNU/managers/AbstractPool.cpp" "/Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles/nibbler.dir/class/KNU/managers/AbstractPool.cpp.o"
   "/Users/alexandreroulin/work/nibbler/class/KNU/managers/ComponentManager.cpp" "/Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles/nibbler.dir/class/KNU/managers/ComponentManager.cpp.o"
   "/Users/alexandreroulin/work/nibbler/class/KNU/managers/EntitiesManager.cpp" "/Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles/nibbler.dir/class/KNU/managers/EntitiesManager.cpp.o"
   "/Users/alexandreroulin/work/nibbler/class/KNU/managers/Pool.cpp" "/Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles/nibbler.dir/class/KNU/managers/Pool.cpp.o"
