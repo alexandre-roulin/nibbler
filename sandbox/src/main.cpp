@@ -21,7 +21,6 @@ int				main(int argc, char **argv)
 	while (!sdl.exit())
 	{
 		sdl.update();
-		//sdl.drawGrid(grid);
 		sdl.drawTile(1, 0, 0);
 		sdl.drawTile(2, 1, 0);
 		sdl.drawTile(3, 2, 0);
