@@ -1,15 +1,59 @@
 
-#include <iostream>
-#include <KNU/component/TransformComponent.hpp>
 #include <KNU/entities/Entity.hpp>
-#include <KNU/managers/ComponentManager.hpp>
-#include <KNU/component/Component.hpp>
-int main () {
-	auto component = KNU::TransformComponent();
-	KNU::Entity entity = KNU::Entity();
-	std::cout << KNU::Component<KNU::TransformComponent>::signature();
+#include <iostream>
+#include <KNU/World.hpp>
 
-	auto componentManager = KNU::ComponentManager();
+int main() {
 
-	componentManager.addComponent(entity, component);
+	{
+		KNU::World world;
+
+		auto &entity = world.createEntity();
+
+	}
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
