@@ -1,10 +1,10 @@
 cmake_minimum_required(VERSION 3.12)
 project(nibbler)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 
 include_directories(class)
 include_directories(incs)
 
 add_executable(nibbler
-        Makefile class/KNU/utils/Signature.cpp class/KNU/utils/Signature.hpp class/cores/main.cpp class/KNU/component/Component.cpp class/KNU/component/Component.hpp class/KNU/component/TransformComponent.cpp class/KNU/component/TransformComponent.hpp class/KNU/managers/ComponentManager.cpp class/KNU/managers/ComponentManager.hpp class/KNU/managers/Pool.cpp class/KNU/managers/Pool.hpp class/KNU/entities/Entity.hpp class/KNU/managers/IPool.hpp incs/nibbler.hpp)
+        class/component/MotionComponent.hpp Makefile class/KNU/utils/Signature.cpp class/KNU/utils/Signature.hpp class/cores/main.cpp class/KNU/component/Component.cpp class/KNU/component/Component.hpp class/component/TransformComponent.hpp class/KNU/managers/ComponentManager.cpp class/KNU/managers/ComponentManager.hpp class/KNU/managers/Pool.cpp class/KNU/managers/Pool.hpp class/KNU/entities/Entity.hpp class/KNU/managers/AbstractPool.hpp incs/nibbler.hpp class/component/SpriteComponent.hpp class/KNU/managers/EntitiesManager.cpp class/KNU/managers/EntitiesManager.hpp class/KNU/KNU.cpp class/KNU/KNU.hpp class/KNU/managers/SystemManager.cpp class/KNU/managers/SystemManager.hpp class/KNU/systems/MotionSystem.cpp class/KNU/systems/MotionSystem.hpp class/KNU/systems/ISystem.hpp class/component/MotionComponent.cpp)

@@ -1,23 +1,77 @@
 
 #include <iostream>
-#include <KNU/component/TransformComponent.hpp>
-#include <KNU/entities/Entity.hpp>
-#include <KNU/managers/ComponentManager.hpp>
-#include <KNU/component/Component.hpp>
+#include <KNU/managers/EntitiesManager.hpp>
+#include <component/MotionComponent.hpp>
+#include <component/TransformComponent.hpp>
+#include <component/SpriteComponent.hpp>
+
+using namespace KNU;
+
 
 int main() {
-	auto component = KNU::TransformComponent(42, 42);
+	{
 
-	KNU::Entity entity = KNU::Entity();
-	std::cout << "Signature : "
-			  << KNU::Component<KNU::TransformComponent>::signature()
-			  << std::endl;
-	std::cout << component.x << std::endl;
-	auto componentManager = KNU::ComponentManager();
+		auto entitiesManager = KNU::EntitiesManager();
 
-	componentManager.addComponent(entity, component);
-	auto &componentFromComponentManager = componentManager.getComponent<KNU::TransformComponent>(entity);
-	std::cout << componentFromComponentManager.x << std::endl;
-//	std::cout << componentFromComponentManager << std::endl;
+		auto &entity = entitiesManager.createEntity();
+		entitiesManager
+				.addComponent<MotionComponent>(entity, RIGHT, 1)
+				.addComponent<TransformComponent>(entity, 42, 42)
+				.addComponent<SpriteComponent>(entity, "/path/to/sprite");
+
+		std::cout << entity << std::endl;
+		std::cout << entitiesManager.hasComponent<MotionComponent>(entity) << std::endl;
+		std::cout << entitiesManager.hasComponent<TransformComponent>(entity) << std::endl;
+		std::cout << entitiesManager.hasComponent<SpriteComponent>(entity) << std::endl;
+
+		entitiesManager.removeComponent<MotionComponent>(entity);
+
+		std::cout << entity << std::endl;
+		std::cout << entitiesManager.hasComponent<MotionComponent>(entity) << std::endl;
+	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

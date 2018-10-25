@@ -123,6 +123,33 @@ nibbler/fast:
 	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/build
 .PHONY : nibbler/fast
 
+class/KNU/KNU.o: class/KNU/KNU.cpp.o
+
+.PHONY : class/KNU/KNU.o
+
+# target to build an object file
+class/KNU/KNU.cpp.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/KNU.cpp.o
+.PHONY : class/KNU/KNU.cpp.o
+
+class/KNU/KNU.i: class/KNU/KNU.cpp.i
+
+.PHONY : class/KNU/KNU.i
+
+# target to preprocess a source file
+class/KNU/KNU.cpp.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/KNU.cpp.i
+.PHONY : class/KNU/KNU.cpp.i
+
+class/KNU/KNU.s: class/KNU/KNU.cpp.s
+
+.PHONY : class/KNU/KNU.s
+
+# target to generate assembly for a file
+class/KNU/KNU.cpp.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/KNU.cpp.s
+.PHONY : class/KNU/KNU.cpp.s
+
 class/KNU/component/Component.o: class/KNU/component/Component.cpp.o
 
 .PHONY : class/KNU/component/Component.o
@@ -149,33 +176,6 @@ class/KNU/component/Component.s: class/KNU/component/Component.cpp.s
 class/KNU/component/Component.cpp.s:
 	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/component/Component.cpp.s
 .PHONY : class/KNU/component/Component.cpp.s
-
-class/KNU/component/TransformComponent.o: class/KNU/component/TransformComponent.cpp.o
-
-.PHONY : class/KNU/component/TransformComponent.o
-
-# target to build an object file
-class/KNU/component/TransformComponent.cpp.o:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/component/TransformComponent.cpp.o
-.PHONY : class/KNU/component/TransformComponent.cpp.o
-
-class/KNU/component/TransformComponent.i: class/KNU/component/TransformComponent.cpp.i
-
-.PHONY : class/KNU/component/TransformComponent.i
-
-# target to preprocess a source file
-class/KNU/component/TransformComponent.cpp.i:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/component/TransformComponent.cpp.i
-.PHONY : class/KNU/component/TransformComponent.cpp.i
-
-class/KNU/component/TransformComponent.s: class/KNU/component/TransformComponent.cpp.s
-
-.PHONY : class/KNU/component/TransformComponent.s
-
-# target to generate assembly for a file
-class/KNU/component/TransformComponent.cpp.s:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/component/TransformComponent.cpp.s
-.PHONY : class/KNU/component/TransformComponent.cpp.s
 
 class/KNU/managers/ComponentManager.o: class/KNU/managers/ComponentManager.cpp.o
 
@@ -204,6 +204,33 @@ class/KNU/managers/ComponentManager.cpp.s:
 	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/managers/ComponentManager.cpp.s
 .PHONY : class/KNU/managers/ComponentManager.cpp.s
 
+class/KNU/managers/EntitiesManager.o: class/KNU/managers/EntitiesManager.cpp.o
+
+.PHONY : class/KNU/managers/EntitiesManager.o
+
+# target to build an object file
+class/KNU/managers/EntitiesManager.cpp.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/managers/EntitiesManager.cpp.o
+.PHONY : class/KNU/managers/EntitiesManager.cpp.o
+
+class/KNU/managers/EntitiesManager.i: class/KNU/managers/EntitiesManager.cpp.i
+
+.PHONY : class/KNU/managers/EntitiesManager.i
+
+# target to preprocess a source file
+class/KNU/managers/EntitiesManager.cpp.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/managers/EntitiesManager.cpp.i
+.PHONY : class/KNU/managers/EntitiesManager.cpp.i
+
+class/KNU/managers/EntitiesManager.s: class/KNU/managers/EntitiesManager.cpp.s
+
+.PHONY : class/KNU/managers/EntitiesManager.s
+
+# target to generate assembly for a file
+class/KNU/managers/EntitiesManager.cpp.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/managers/EntitiesManager.cpp.s
+.PHONY : class/KNU/managers/EntitiesManager.cpp.s
+
 class/KNU/managers/Pool.o: class/KNU/managers/Pool.cpp.o
 
 .PHONY : class/KNU/managers/Pool.o
@@ -231,6 +258,60 @@ class/KNU/managers/Pool.cpp.s:
 	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/managers/Pool.cpp.s
 .PHONY : class/KNU/managers/Pool.cpp.s
 
+class/KNU/managers/SystemManager.o: class/KNU/managers/SystemManager.cpp.o
+
+.PHONY : class/KNU/managers/SystemManager.o
+
+# target to build an object file
+class/KNU/managers/SystemManager.cpp.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/managers/SystemManager.cpp.o
+.PHONY : class/KNU/managers/SystemManager.cpp.o
+
+class/KNU/managers/SystemManager.i: class/KNU/managers/SystemManager.cpp.i
+
+.PHONY : class/KNU/managers/SystemManager.i
+
+# target to preprocess a source file
+class/KNU/managers/SystemManager.cpp.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/managers/SystemManager.cpp.i
+.PHONY : class/KNU/managers/SystemManager.cpp.i
+
+class/KNU/managers/SystemManager.s: class/KNU/managers/SystemManager.cpp.s
+
+.PHONY : class/KNU/managers/SystemManager.s
+
+# target to generate assembly for a file
+class/KNU/managers/SystemManager.cpp.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/managers/SystemManager.cpp.s
+.PHONY : class/KNU/managers/SystemManager.cpp.s
+
+class/KNU/systems/MotionSystem.o: class/KNU/systems/MotionSystem.cpp.o
+
+.PHONY : class/KNU/systems/MotionSystem.o
+
+# target to build an object file
+class/KNU/systems/MotionSystem.cpp.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/systems/MotionSystem.cpp.o
+.PHONY : class/KNU/systems/MotionSystem.cpp.o
+
+class/KNU/systems/MotionSystem.i: class/KNU/systems/MotionSystem.cpp.i
+
+.PHONY : class/KNU/systems/MotionSystem.i
+
+# target to preprocess a source file
+class/KNU/systems/MotionSystem.cpp.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/systems/MotionSystem.cpp.i
+.PHONY : class/KNU/systems/MotionSystem.cpp.i
+
+class/KNU/systems/MotionSystem.s: class/KNU/systems/MotionSystem.cpp.s
+
+.PHONY : class/KNU/systems/MotionSystem.s
+
+# target to generate assembly for a file
+class/KNU/systems/MotionSystem.cpp.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/systems/MotionSystem.cpp.s
+.PHONY : class/KNU/systems/MotionSystem.cpp.s
+
 class/KNU/utils/Signature.o: class/KNU/utils/Signature.cpp.o
 
 .PHONY : class/KNU/utils/Signature.o
@@ -257,6 +338,33 @@ class/KNU/utils/Signature.s: class/KNU/utils/Signature.cpp.s
 class/KNU/utils/Signature.cpp.s:
 	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/utils/Signature.cpp.s
 .PHONY : class/KNU/utils/Signature.cpp.s
+
+class/component/MotionComponent.o: class/component/MotionComponent.cpp.o
+
+.PHONY : class/component/MotionComponent.o
+
+# target to build an object file
+class/component/MotionComponent.cpp.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/component/MotionComponent.cpp.o
+.PHONY : class/component/MotionComponent.cpp.o
+
+class/component/MotionComponent.i: class/component/MotionComponent.cpp.i
+
+.PHONY : class/component/MotionComponent.i
+
+# target to preprocess a source file
+class/component/MotionComponent.cpp.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/component/MotionComponent.cpp.i
+.PHONY : class/component/MotionComponent.cpp.i
+
+class/component/MotionComponent.s: class/component/MotionComponent.cpp.s
+
+.PHONY : class/component/MotionComponent.s
+
+# target to generate assembly for a file
+class/component/MotionComponent.cpp.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/component/MotionComponent.cpp.s
+.PHONY : class/component/MotionComponent.cpp.s
 
 class/cores/main.o: class/cores/main.cpp.o
 
@@ -294,21 +402,33 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... nibbler"
+	@echo "... class/KNU/KNU.o"
+	@echo "... class/KNU/KNU.i"
+	@echo "... class/KNU/KNU.s"
 	@echo "... class/KNU/component/Component.o"
 	@echo "... class/KNU/component/Component.i"
 	@echo "... class/KNU/component/Component.s"
-	@echo "... class/KNU/component/TransformComponent.o"
-	@echo "... class/KNU/component/TransformComponent.i"
-	@echo "... class/KNU/component/TransformComponent.s"
 	@echo "... class/KNU/managers/ComponentManager.o"
 	@echo "... class/KNU/managers/ComponentManager.i"
 	@echo "... class/KNU/managers/ComponentManager.s"
+	@echo "... class/KNU/managers/EntitiesManager.o"
+	@echo "... class/KNU/managers/EntitiesManager.i"
+	@echo "... class/KNU/managers/EntitiesManager.s"
 	@echo "... class/KNU/managers/Pool.o"
 	@echo "... class/KNU/managers/Pool.i"
 	@echo "... class/KNU/managers/Pool.s"
+	@echo "... class/KNU/managers/SystemManager.o"
+	@echo "... class/KNU/managers/SystemManager.i"
+	@echo "... class/KNU/managers/SystemManager.s"
+	@echo "... class/KNU/systems/MotionSystem.o"
+	@echo "... class/KNU/systems/MotionSystem.i"
+	@echo "... class/KNU/systems/MotionSystem.s"
 	@echo "... class/KNU/utils/Signature.o"
 	@echo "... class/KNU/utils/Signature.i"
 	@echo "... class/KNU/utils/Signature.s"
+	@echo "... class/component/MotionComponent.o"
+	@echo "... class/component/MotionComponent.i"
+	@echo "... class/component/MotionComponent.s"
 	@echo "... class/cores/main.o"
 	@echo "... class/cores/main.i"
 	@echo "... class/cores/main.s"

@@ -1,6 +1,13 @@
 #ifndef NIBBLER_NIBBLER_HPP
 #define NIBBLER_NIBBLER_HPP
 
-#define COMPONENT_MAX 1
+#define COMPONENT_MAX 3
+#define BASE_ENTITIES_CAPACITY 20
+
+enum eDirection {
+	RIGHT,
+	LEFT,
+	NONE
+};
 
 #endif //NIBBLER_NIBBLER_HPP

@@ -21,6 +21,7 @@ namespace KNU {
 
 		template<typename T>
 		void addComponent(Entity e, T component) {
+			assert(e.mask.matches(component.mask));
 			const auto componentId = Component<T>::signature();
 			std::shared_ptr<Pool<T>> componentPool = accommodateComponent<T>();
 			componentPool->add(e, component);
@@ -30,6 +31,17 @@ namespace KNU {
 		T &getComponent(Entity &entity) {
 			std::shared_ptr<Pool<T>> componentPool = accommodateComponent<T>();
 			return componentPool->get(entity);
+		}
+
+		template<typename T>
+		void removeComponent(Entity &entity) {
+			std::shared_ptr<Pool<T>> componentPool = accommodateComponent<T>();
+			componentPool->remove(entity);
+		}
+		template<typename T>
+		bool hasComponent(Entity &entity) {
+			std::shared_ptr<Pool<T>> componentPool = accommodateComponent<T>();
+			return componentPool->has(entity);
 		}
 
 		template<typename T>

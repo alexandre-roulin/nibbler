@@ -3,22 +3,23 @@
 #include <vector>
 #include <map>
 #include <KNU/entities/Entity.hpp>
-#include "IPool.hpp"
+#include <iostream>
+#include "AbstractPool.hpp"
 
 #define BASE_COMPONENT_SIZE 64
 
 namespace KNU {
 
 	template<typename T>
-	class Pool : public  AbstractPool {
+	class Pool : public AbstractPool {
 	private:
 		std::vector<T> _pool;
 		unsigned int capacity;
 		unsigned int size;
-	public:
-		virtual void clear();
-
 		std::map<Entity, unsigned int> _entitiesMap;
+	public:
+
+		Pool();
 
 		void add(Entity &entity, T &component) {
 			unsigned int newInstance = size;
@@ -28,16 +29,28 @@ namespace KNU {
 			}
 			_pool[newInstance] = component;
 			_entitiesMap[entity] = newInstance;
+			size++;
 		}
 
 		T &get(Entity &e) {
-			assert(e.id < capacity);
-			unsigned int instance = _entitiesMap[e];
+			unsigned int instance = _entitiesMap.at(e);
+			std::cout << instance << std::endl;
 			assert(instance < capacity);
 			return _pool[instance];
 		}
 
-		Pool();
+		bool has(Entity &e) {
+			return _entitiesMap.find(e) != _entitiesMap.end();
+		}
+
+		void remove(Entity &e) {
+			assert(e.id < size);
+			unsigned int instance = _entitiesMap.at(e);
+			_entitiesMap.erase(e);
+			size--;
+			std::swap(_pool[instance], _pool[size]);
+		}
+
 		virtual ~Pool();
 	};
 
@@ -50,11 +63,6 @@ namespace KNU {
 
 	template<typename T>
 	Pool<T>::~Pool() {
-
-	}
-
-	template<typename T>
-	void Pool<T>::clear() {
 
 	}
 

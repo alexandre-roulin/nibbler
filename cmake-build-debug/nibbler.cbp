@@ -87,19 +87,22 @@
 		<Unit filename="/Users/alexandreroulin/work/nibbler/Makefile">
 			<Option target="nibbler"/>
 		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/class/KNU/KNU.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/class/KNU/KNU.hpp">
+			<Option target="nibbler"/>
+		</Unit>
 		<Unit filename="/Users/alexandreroulin/work/nibbler/class/KNU/component/Component.cpp">
 			<Option target="nibbler"/>
 		</Unit>
 		<Unit filename="/Users/alexandreroulin/work/nibbler/class/KNU/component/Component.hpp">
 			<Option target="nibbler"/>
 		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/KNU/component/TransformComponent.cpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/KNU/component/TransformComponent.hpp">
-			<Option target="nibbler"/>
-		</Unit>
 		<Unit filename="/Users/alexandreroulin/work/nibbler/class/KNU/entities/Entity.hpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/class/KNU/managers/AbstractPool.hpp">
 			<Option target="nibbler"/>
 		</Unit>
 		<Unit filename="/Users/alexandreroulin/work/nibbler/class/KNU/managers/ComponentManager.cpp">
@@ -108,7 +111,10 @@
 		<Unit filename="/Users/alexandreroulin/work/nibbler/class/KNU/managers/ComponentManager.hpp">
 			<Option target="nibbler"/>
 		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/KNU/managers/IPool.hpp">
+		<Unit filename="/Users/alexandreroulin/work/nibbler/class/KNU/managers/EntitiesManager.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/class/KNU/managers/EntitiesManager.hpp">
 			<Option target="nibbler"/>
 		</Unit>
 		<Unit filename="/Users/alexandreroulin/work/nibbler/class/KNU/managers/Pool.cpp">
@@ -117,10 +123,37 @@
 		<Unit filename="/Users/alexandreroulin/work/nibbler/class/KNU/managers/Pool.hpp">
 			<Option target="nibbler"/>
 		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/class/KNU/managers/SystemManager.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/class/KNU/managers/SystemManager.hpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/class/KNU/systems/ISystem.hpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/class/KNU/systems/MotionSystem.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/class/KNU/systems/MotionSystem.hpp">
+			<Option target="nibbler"/>
+		</Unit>
 		<Unit filename="/Users/alexandreroulin/work/nibbler/class/KNU/utils/Signature.cpp">
 			<Option target="nibbler"/>
 		</Unit>
 		<Unit filename="/Users/alexandreroulin/work/nibbler/class/KNU/utils/Signature.hpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/class/component/MotionComponent.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/class/component/MotionComponent.hpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/class/component/SpriteComponent.hpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/class/component/TransformComponent.hpp">
 			<Option target="nibbler"/>
 		</Unit>
 		<Unit filename="/Users/alexandreroulin/work/nibbler/class/cores/main.cpp">
