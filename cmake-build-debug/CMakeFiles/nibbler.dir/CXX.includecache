@@ -7,9 +7,11 @@
 #IncludeRegexTransform: 
 
 ../class/KNU/World.hpp
-KNU/managers/EntitiesManager.hpp
+vector
 -
-KNU/managers/SystemManager.hpp
+KNU/managers/ComponentManager.hpp
+-
+KNU/managers/EntitiesManager.hpp
 -
 
 ../class/KNU/component/Component.hpp
@@ -23,31 +25,29 @@ ostream
 -
 KNU/utils/Signature.hpp
 -
-KNU/managers/EntitiesManager.hpp
--
 
 ../class/KNU/managers/AbstractPool.hpp
 
 ../class/KNU/managers/ComponentManager.hpp
 map
 -
-Pool.hpp
-../class/KNU/managers/Pool.hpp
 iostream
 -
-KNU/component/Component.hpp
+vector
 -
-nibbler.hpp
--
+Pool.hpp
+../class/KNU/managers/Pool.hpp
+AbstractPool.hpp
+../class/KNU/managers/AbstractPool.hpp
 
 ../class/KNU/managers/EntitiesManager.hpp
-ComponentManager.hpp
-../class/KNU/managers/ComponentManager.hpp
 vector
 -
 unordered_map
 -
 set
+-
+KNU/entities/Entity.hpp
 -
 
 ../class/KNU/managers/Pool.hpp
@@ -60,36 +60,16 @@ iostream
 AbstractPool.hpp
 ../class/KNU/managers/AbstractPool.hpp
 
-../class/KNU/managers/SystemManager.hpp
-unordered_map
--
-typeindex
--
-KNU/systems/System.hpp
--
-
 ../class/KNU/systems/System.hpp
 vector
 -
-KNU/entities/Entity.hpp
+KNU/utils/Signature.hpp
 -
-KNU/World.hpp
+KNU/entities/Entity.hpp
 -
 
 ../class/KNU/utils/Signature.hpp
-KNU/component/Component.hpp
--
 ostream
--
-
-../class/component/MotionComponent.hpp
-ostream
--
-nibbler.hpp
--
-KNU/component/Component.hpp
-../class/component/KNU/component/Component.hpp
-KNU/utils/Signature.hpp
 -
 
 ../class/component/TransformComponent.hpp
@@ -98,7 +78,7 @@ ostream
 KNU/utils/Signature.hpp
 -
 KNU/component/Component.hpp
-../class/component/KNU/component/Component.hpp
+-
 
 ../incs/nibbler.hpp
 
@@ -109,15 +89,27 @@ KNU/managers/EntitiesManager.hpp
 -
 
 /Users/alexandreroulin/work/nibbler/class/KNU/World.hpp
+vector
+-
+KNU/managers/ComponentManager.hpp
+-
 KNU/managers/EntitiesManager.hpp
 -
-KNU/managers/SystemManager.hpp
+
+/Users/alexandreroulin/work/nibbler/class/KNU/component/Component.cpp
+Component.hpp
+/Users/alexandreroulin/work/nibbler/class/KNU/component/Component.hpp
+
+/Users/alexandreroulin/work/nibbler/class/KNU/component/Component.hpp
+type_traits
 -
 
 /Users/alexandreroulin/work/nibbler/class/KNU/entities/Entity.cpp
 Entity.hpp
 /Users/alexandreroulin/work/nibbler/class/KNU/entities/Entity.hpp
 KNU/managers/EntitiesManager.hpp
+-
+KNU/utils/Signature.hpp
 -
 
 /Users/alexandreroulin/work/nibbler/class/KNU/entities/Entity.hpp
@@ -127,42 +119,60 @@ ostream
 -
 KNU/utils/Signature.hpp
 -
-KNU/managers/EntitiesManager.hpp
--
+
+/Users/alexandreroulin/work/nibbler/class/KNU/managers/AbstractPool.cpp
+AbstractPool.hpp
+/Users/alexandreroulin/work/nibbler/class/KNU/managers/AbstractPool.hpp
 
 /Users/alexandreroulin/work/nibbler/class/KNU/managers/AbstractPool.hpp
+
+/Users/alexandreroulin/work/nibbler/class/KNU/managers/ComponentManager.cpp
+KNU/component/Component.hpp
+-
+ComponentManager.hpp
+/Users/alexandreroulin/work/nibbler/class/KNU/managers/ComponentManager.hpp
+nibbler.hpp
+-
 
 /Users/alexandreroulin/work/nibbler/class/KNU/managers/ComponentManager.hpp
 map
 -
+iostream
+-
+vector
+-
 Pool.hpp
 /Users/alexandreroulin/work/nibbler/class/KNU/managers/Pool.hpp
-iostream
--
-KNU/component/Component.hpp
--
-nibbler.hpp
--
+AbstractPool.hpp
+/Users/alexandreroulin/work/nibbler/class/KNU/managers/AbstractPool.hpp
 
 /Users/alexandreroulin/work/nibbler/class/KNU/managers/EntitiesManager.cpp
-nibbler.hpp
--
 iostream
+-
+KNU/World.hpp
 -
 EntitiesManager.hpp
 /Users/alexandreroulin/work/nibbler/class/KNU/managers/EntitiesManager.hpp
-KNU/entities/Entity.hpp
+nibbler.hpp
+-
+KNU/managers/ComponentManager.hpp
+-
+KNU/component/Component.hpp
 -
 
 /Users/alexandreroulin/work/nibbler/class/KNU/managers/EntitiesManager.hpp
-ComponentManager.hpp
-/Users/alexandreroulin/work/nibbler/class/KNU/managers/ComponentManager.hpp
 vector
 -
 unordered_map
 -
 set
 -
+KNU/entities/Entity.hpp
+-
+
+/Users/alexandreroulin/work/nibbler/class/KNU/managers/Pool.cpp
+Pool.hpp
+/Users/alexandreroulin/work/nibbler/class/KNU/managers/Pool.hpp
 
 /Users/alexandreroulin/work/nibbler/class/KNU/managers/Pool.hpp
 vector
@@ -175,37 +185,53 @@ AbstractPool.hpp
 /Users/alexandreroulin/work/nibbler/class/KNU/managers/AbstractPool.hpp
 
 /Users/alexandreroulin/work/nibbler/class/KNU/managers/SystemManager.cpp
-SystemManager.hpp
-/Users/alexandreroulin/work/nibbler/class/KNU/managers/SystemManager.hpp
-
-/Users/alexandreroulin/work/nibbler/class/KNU/managers/SystemManager.hpp
-unordered_map
--
-typeindex
--
-KNU/systems/System.hpp
--
 
 /Users/alexandreroulin/work/nibbler/class/KNU/systems/System.cpp
 System.hpp
 /Users/alexandreroulin/work/nibbler/class/KNU/systems/System.hpp
+KNU/entities/Entity.hpp
+-
 
 /Users/alexandreroulin/work/nibbler/class/KNU/systems/System.hpp
 vector
 -
+KNU/utils/Signature.hpp
+-
 KNU/entities/Entity.hpp
 -
-KNU/World.hpp
+
+/Users/alexandreroulin/work/nibbler/class/KNU/utils/Signature.cpp
+Signature.hpp
+/Users/alexandreroulin/work/nibbler/class/KNU/utils/Signature.hpp
+KNU/component/Component.hpp
+-
+
+/Users/alexandreroulin/work/nibbler/class/KNU/utils/Signature.hpp
+ostream
+-
+
+/Users/alexandreroulin/work/nibbler/class/component/MotionComponent.cpp
+MotionComponent.hpp
+/Users/alexandreroulin/work/nibbler/class/component/MotionComponent.hpp
+KNU/utils/Signature.hpp
+-
+KNU/component/Component.hpp
+-
+
+/Users/alexandreroulin/work/nibbler/class/component/MotionComponent.hpp
+ostream
+-
+nibbler.hpp
+-
+KNU/utils/Signature.hpp
 -
 
 /Users/alexandreroulin/work/nibbler/class/cores/main.cpp
-KNU/entities/Entity.hpp
--
 iostream
 -
 KNU/World.hpp
 -
-component/MotionComponent.hpp
+KNU/entities/Entity.hpp
 -
 component/TransformComponent.hpp
 -
@@ -215,8 +241,6 @@ MotionSystem.hpp
 /Users/alexandreroulin/work/nibbler/class/systems/MotionSystem.hpp
 
 /Users/alexandreroulin/work/nibbler/class/systems/MotionSystem.hpp
-KNU/utils/Signature.hpp
--
 KNU/systems/System.hpp
-/Users/alexandreroulin/work/nibbler/class/systems/KNU/systems/System.hpp
+-
 

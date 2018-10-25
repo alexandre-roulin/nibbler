@@ -4,6 +4,8 @@
 
 namespace KNU {
 
+
+
 	const Signature &Entity::getMask() {
 		return mask;
 	}
