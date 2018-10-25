@@ -4,7 +4,7 @@
 namespace KNU {
 
 	World::World() {
-		entityManager = std::make_unique<EntitiesManager>(*this);
+		entityManager = std::make_unique<EntitiesManager>(*this, *componentManager);
 //		systemManager = std::make_unique<SystemManager>(*this);
 	}
 

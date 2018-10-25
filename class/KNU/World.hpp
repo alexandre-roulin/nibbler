@@ -3,8 +3,7 @@
 // >>> [ KRYSTAL is NOT UNIX ] <<<
 
 #include <vector>
-#include <KNU/managers/ComponentManager.hpp>
-#include <KNU/managers/EntitiesManager.hpp>
+#include <KNU/entities/Entity.hpp>
 
 namespace KNU {
 	class Entity;
