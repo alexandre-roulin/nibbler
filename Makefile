@@ -45,12 +45,14 @@ NAME		= nibbler
 SRCS = \
 		cores/main.cpp								\
 		component/MotionComponent.cpp				\
+		KNU/World.cpp								\
+		KNU/entities/Entity.cpp						\
 		KNU/component/Component.cpp					\
 		KNU/managers/Pool.cpp						\
 		KNU/managers/ComponentManager.cpp			\
 		KNU/managers/EntitiesManager.cpp			\
 		KNU/managers/SystemManager.cpp				\
-		KNU/systems/MotionSystem.cpp				\
+		systems/MotionSystem.cpp					\
 		KNU/utils/Signature.cpp						\
 
 # ---------------------------------------------------------------------------- #

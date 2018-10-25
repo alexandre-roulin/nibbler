@@ -25,7 +25,7 @@ namespace KNU {
 			mask = 0;
 		}
 
-		bool matches(Signature systemMask);
+		bool matches(Signature systemMask) const;
 
 		Signature &operator=(Signature const &signature) {
 			if (this != &signature) {
@@ -40,8 +40,9 @@ namespace KNU {
 
 		unsigned int getMask() const;
 
+		friend std::ostream &
+		operator<<(std::ostream &os, const Signature &signature);
 	};
-	std::ostream &operator<<(std::ostream &os, const Signature &signature);
 
 }
 

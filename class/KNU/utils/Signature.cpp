@@ -4,7 +4,7 @@
 
 #include "Signature.hpp"
 
-bool KNU::Signature::matches(KNU::Signature systemMask) {
+bool KNU::Signature::matches(KNU::Signature systemMask)const {
 	return ((mask & systemMask.mask) == systemMask.mask);
 }
 
@@ -22,6 +22,7 @@ bool KNU::Signature::operator!=(const KNU::Signature &rhs) const {
 
 std::ostream &
 KNU::operator<<(std::ostream &os, const KNU::Signature &signature) {
-	os << "mask: " << signature.getMask();
+	os << "mask: " << signature.mask;
 	return os;
 }
+

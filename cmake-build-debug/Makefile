@@ -123,32 +123,32 @@ nibbler/fast:
 	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/build
 .PHONY : nibbler/fast
 
-class/KNU/KNU.o: class/KNU/KNU.cpp.o
+class/KNU/World.o: class/KNU/World.cpp.o
 
-.PHONY : class/KNU/KNU.o
+.PHONY : class/KNU/World.o
 
 # target to build an object file
-class/KNU/KNU.cpp.o:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/KNU.cpp.o
-.PHONY : class/KNU/KNU.cpp.o
+class/KNU/World.cpp.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/World.cpp.o
+.PHONY : class/KNU/World.cpp.o
 
-class/KNU/KNU.i: class/KNU/KNU.cpp.i
+class/KNU/World.i: class/KNU/World.cpp.i
 
-.PHONY : class/KNU/KNU.i
+.PHONY : class/KNU/World.i
 
 # target to preprocess a source file
-class/KNU/KNU.cpp.i:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/KNU.cpp.i
-.PHONY : class/KNU/KNU.cpp.i
+class/KNU/World.cpp.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/World.cpp.i
+.PHONY : class/KNU/World.cpp.i
 
-class/KNU/KNU.s: class/KNU/KNU.cpp.s
+class/KNU/World.s: class/KNU/World.cpp.s
 
-.PHONY : class/KNU/KNU.s
+.PHONY : class/KNU/World.s
 
 # target to generate assembly for a file
-class/KNU/KNU.cpp.s:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/KNU.cpp.s
-.PHONY : class/KNU/KNU.cpp.s
+class/KNU/World.cpp.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/World.cpp.s
+.PHONY : class/KNU/World.cpp.s
 
 class/KNU/component/Component.o: class/KNU/component/Component.cpp.o
 
@@ -176,6 +176,33 @@ class/KNU/component/Component.s: class/KNU/component/Component.cpp.s
 class/KNU/component/Component.cpp.s:
 	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/component/Component.cpp.s
 .PHONY : class/KNU/component/Component.cpp.s
+
+class/KNU/entities/Entity.o: class/KNU/entities/Entity.cpp.o
+
+.PHONY : class/KNU/entities/Entity.o
+
+# target to build an object file
+class/KNU/entities/Entity.cpp.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/entities/Entity.cpp.o
+.PHONY : class/KNU/entities/Entity.cpp.o
+
+class/KNU/entities/Entity.i: class/KNU/entities/Entity.cpp.i
+
+.PHONY : class/KNU/entities/Entity.i
+
+# target to preprocess a source file
+class/KNU/entities/Entity.cpp.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/entities/Entity.cpp.i
+.PHONY : class/KNU/entities/Entity.cpp.i
+
+class/KNU/entities/Entity.s: class/KNU/entities/Entity.cpp.s
+
+.PHONY : class/KNU/entities/Entity.s
+
+# target to generate assembly for a file
+class/KNU/entities/Entity.cpp.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/entities/Entity.cpp.s
+.PHONY : class/KNU/entities/Entity.cpp.s
 
 class/KNU/managers/ComponentManager.o: class/KNU/managers/ComponentManager.cpp.o
 
@@ -285,32 +312,32 @@ class/KNU/managers/SystemManager.cpp.s:
 	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/managers/SystemManager.cpp.s
 .PHONY : class/KNU/managers/SystemManager.cpp.s
 
-class/KNU/systems/MotionSystem.o: class/KNU/systems/MotionSystem.cpp.o
+class/KNU/systems/System.o: class/KNU/systems/System.cpp.o
 
-.PHONY : class/KNU/systems/MotionSystem.o
+.PHONY : class/KNU/systems/System.o
 
 # target to build an object file
-class/KNU/systems/MotionSystem.cpp.o:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/systems/MotionSystem.cpp.o
-.PHONY : class/KNU/systems/MotionSystem.cpp.o
+class/KNU/systems/System.cpp.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/systems/System.cpp.o
+.PHONY : class/KNU/systems/System.cpp.o
 
-class/KNU/systems/MotionSystem.i: class/KNU/systems/MotionSystem.cpp.i
+class/KNU/systems/System.i: class/KNU/systems/System.cpp.i
 
-.PHONY : class/KNU/systems/MotionSystem.i
+.PHONY : class/KNU/systems/System.i
 
 # target to preprocess a source file
-class/KNU/systems/MotionSystem.cpp.i:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/systems/MotionSystem.cpp.i
-.PHONY : class/KNU/systems/MotionSystem.cpp.i
+class/KNU/systems/System.cpp.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/systems/System.cpp.i
+.PHONY : class/KNU/systems/System.cpp.i
 
-class/KNU/systems/MotionSystem.s: class/KNU/systems/MotionSystem.cpp.s
+class/KNU/systems/System.s: class/KNU/systems/System.cpp.s
 
-.PHONY : class/KNU/systems/MotionSystem.s
+.PHONY : class/KNU/systems/System.s
 
 # target to generate assembly for a file
-class/KNU/systems/MotionSystem.cpp.s:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/systems/MotionSystem.cpp.s
-.PHONY : class/KNU/systems/MotionSystem.cpp.s
+class/KNU/systems/System.cpp.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/systems/System.cpp.s
+.PHONY : class/KNU/systems/System.cpp.s
 
 class/KNU/utils/Signature.o: class/KNU/utils/Signature.cpp.o
 
@@ -393,6 +420,33 @@ class/cores/main.cpp.s:
 	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/cores/main.cpp.s
 .PHONY : class/cores/main.cpp.s
 
+class/systems/MotionSystem.o: class/systems/MotionSystem.cpp.o
+
+.PHONY : class/systems/MotionSystem.o
+
+# target to build an object file
+class/systems/MotionSystem.cpp.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/systems/MotionSystem.cpp.o
+.PHONY : class/systems/MotionSystem.cpp.o
+
+class/systems/MotionSystem.i: class/systems/MotionSystem.cpp.i
+
+.PHONY : class/systems/MotionSystem.i
+
+# target to preprocess a source file
+class/systems/MotionSystem.cpp.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/systems/MotionSystem.cpp.i
+.PHONY : class/systems/MotionSystem.cpp.i
+
+class/systems/MotionSystem.s: class/systems/MotionSystem.cpp.s
+
+.PHONY : class/systems/MotionSystem.s
+
+# target to generate assembly for a file
+class/systems/MotionSystem.cpp.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/systems/MotionSystem.cpp.s
+.PHONY : class/systems/MotionSystem.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -402,12 +456,15 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... nibbler"
-	@echo "... class/KNU/KNU.o"
-	@echo "... class/KNU/KNU.i"
-	@echo "... class/KNU/KNU.s"
+	@echo "... class/KNU/World.o"
+	@echo "... class/KNU/World.i"
+	@echo "... class/KNU/World.s"
 	@echo "... class/KNU/component/Component.o"
 	@echo "... class/KNU/component/Component.i"
 	@echo "... class/KNU/component/Component.s"
+	@echo "... class/KNU/entities/Entity.o"
+	@echo "... class/KNU/entities/Entity.i"
+	@echo "... class/KNU/entities/Entity.s"
 	@echo "... class/KNU/managers/ComponentManager.o"
 	@echo "... class/KNU/managers/ComponentManager.i"
 	@echo "... class/KNU/managers/ComponentManager.s"
@@ -420,9 +477,9 @@ help:
 	@echo "... class/KNU/managers/SystemManager.o"
 	@echo "... class/KNU/managers/SystemManager.i"
 	@echo "... class/KNU/managers/SystemManager.s"
-	@echo "... class/KNU/systems/MotionSystem.o"
-	@echo "... class/KNU/systems/MotionSystem.i"
-	@echo "... class/KNU/systems/MotionSystem.s"
+	@echo "... class/KNU/systems/System.o"
+	@echo "... class/KNU/systems/System.i"
+	@echo "... class/KNU/systems/System.s"
 	@echo "... class/KNU/utils/Signature.o"
 	@echo "... class/KNU/utils/Signature.i"
 	@echo "... class/KNU/utils/Signature.s"
@@ -432,6 +489,9 @@ help:
 	@echo "... class/cores/main.o"
 	@echo "... class/cores/main.i"
 	@echo "... class/cores/main.s"
+	@echo "... class/systems/MotionSystem.o"
+	@echo "... class/systems/MotionSystem.i"
+	@echo "... class/systems/MotionSystem.s"
 .PHONY : help
 
 

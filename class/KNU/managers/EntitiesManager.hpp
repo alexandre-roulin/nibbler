@@ -1,11 +1,10 @@
 #pragma once
 
-#include <vector>
 #include <KNU/entities/Entity.hpp>
+#include "ComponentManager.hpp"
+#include <vector>
 #include <unordered_map>
 #include <set>
-#include "ComponentManager.hpp"
-
 // [*][*][*]                    [S][S][S][S {0} ]
 //  |  \
 //  |   \
@@ -16,17 +15,21 @@
 //         data
 
 namespace KNU {
+	class World;
 
 	class EntitiesManager {
 	private:
 		unsigned int size;
 		unsigned int capacity;
+		World &world;
 		ComponentManager componentManager;
 		std::vector<Entity> _entitiesMap;
 		std::unordered_map<std::string, Entity> _taggedEntity;
 		std::unordered_map<std::string, std::set<Entity>> _groupedEntities;
 	public:
-		EntitiesManager();
+		EntitiesManager() = delete;
+
+		explicit EntitiesManager(World &world);
 
 		Entity &createEntity();
 
@@ -34,9 +37,11 @@ namespace KNU {
 
 		void tagEntity(Entity &e, std::string &tag);
 
-		bool isEntityAlive(Entity &e);
+		bool isEntityAlive(Entity e) const;
 
-		Entity &getEntityByTag(std::string const &tag);
+		Entity getEntityByTag(std::string const &tag);
+
+		bool hasTaggedEntity(std::string &tag);
 
 		bool hasTag(std::string const &tag);
 
@@ -82,4 +87,5 @@ namespace KNU {
 		}
 
 	};
+
 }

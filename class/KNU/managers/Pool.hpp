@@ -10,6 +10,8 @@
 
 namespace KNU {
 
+	class Entity;
+
 	template<typename T>
 	class Pool : public AbstractPool {
 	private:
@@ -44,8 +46,8 @@ namespace KNU {
 		}
 
 		void remove(Entity &e) {
-			assert(e.id < size);
 			unsigned int instance = _entitiesMap.at(e);
+			assert(instance < size);
 			_entitiesMap.erase(e);
 			size--;
 			std::swap(_pool[instance], _pool[size]);
