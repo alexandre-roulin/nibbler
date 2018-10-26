@@ -7,7 +7,7 @@ EXE= nibbler_sfml.so
 #=======COMPILER AND FLAGS======#
 
 CXX= clang++
-CXXFLAGS= -Wall -Wextra -Werror -Wvla -std=c++14 -fsanitize=address -g3 -MMD
+CXXFLAGS= -Wall -Wextra -Werror -Wvla -std=c++14 -fsanitize=address -g3 -fPIC -MMD 
 #============HEADERS============#
 
 HEADER_DIR= ./include/ ../commun/
