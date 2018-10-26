@@ -204,114 +204,6 @@ class/KNU/entities/Entity.cpp.s:
 	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/entities/Entity.cpp.s
 .PHONY : class/KNU/entities/Entity.cpp.s
 
-class/KNU/managers/AbstractPool.o: class/KNU/managers/AbstractPool.cpp.o
-
-.PHONY : class/KNU/managers/AbstractPool.o
-
-# target to build an object file
-class/KNU/managers/AbstractPool.cpp.o:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/managers/AbstractPool.cpp.o
-.PHONY : class/KNU/managers/AbstractPool.cpp.o
-
-class/KNU/managers/AbstractPool.i: class/KNU/managers/AbstractPool.cpp.i
-
-.PHONY : class/KNU/managers/AbstractPool.i
-
-# target to preprocess a source file
-class/KNU/managers/AbstractPool.cpp.i:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/managers/AbstractPool.cpp.i
-.PHONY : class/KNU/managers/AbstractPool.cpp.i
-
-class/KNU/managers/AbstractPool.s: class/KNU/managers/AbstractPool.cpp.s
-
-.PHONY : class/KNU/managers/AbstractPool.s
-
-# target to generate assembly for a file
-class/KNU/managers/AbstractPool.cpp.s:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/managers/AbstractPool.cpp.s
-.PHONY : class/KNU/managers/AbstractPool.cpp.s
-
-class/KNU/managers/ComponentManager.o: class/KNU/managers/ComponentManager.cpp.o
-
-.PHONY : class/KNU/managers/ComponentManager.o
-
-# target to build an object file
-class/KNU/managers/ComponentManager.cpp.o:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/managers/ComponentManager.cpp.o
-.PHONY : class/KNU/managers/ComponentManager.cpp.o
-
-class/KNU/managers/ComponentManager.i: class/KNU/managers/ComponentManager.cpp.i
-
-.PHONY : class/KNU/managers/ComponentManager.i
-
-# target to preprocess a source file
-class/KNU/managers/ComponentManager.cpp.i:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/managers/ComponentManager.cpp.i
-.PHONY : class/KNU/managers/ComponentManager.cpp.i
-
-class/KNU/managers/ComponentManager.s: class/KNU/managers/ComponentManager.cpp.s
-
-.PHONY : class/KNU/managers/ComponentManager.s
-
-# target to generate assembly for a file
-class/KNU/managers/ComponentManager.cpp.s:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/managers/ComponentManager.cpp.s
-.PHONY : class/KNU/managers/ComponentManager.cpp.s
-
-class/KNU/managers/EntitiesManager.o: class/KNU/managers/EntitiesManager.cpp.o
-
-.PHONY : class/KNU/managers/EntitiesManager.o
-
-# target to build an object file
-class/KNU/managers/EntitiesManager.cpp.o:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/managers/EntitiesManager.cpp.o
-.PHONY : class/KNU/managers/EntitiesManager.cpp.o
-
-class/KNU/managers/EntitiesManager.i: class/KNU/managers/EntitiesManager.cpp.i
-
-.PHONY : class/KNU/managers/EntitiesManager.i
-
-# target to preprocess a source file
-class/KNU/managers/EntitiesManager.cpp.i:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/managers/EntitiesManager.cpp.i
-.PHONY : class/KNU/managers/EntitiesManager.cpp.i
-
-class/KNU/managers/EntitiesManager.s: class/KNU/managers/EntitiesManager.cpp.s
-
-.PHONY : class/KNU/managers/EntitiesManager.s
-
-# target to generate assembly for a file
-class/KNU/managers/EntitiesManager.cpp.s:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/managers/EntitiesManager.cpp.s
-.PHONY : class/KNU/managers/EntitiesManager.cpp.s
-
-class/KNU/managers/Pool.o: class/KNU/managers/Pool.cpp.o
-
-.PHONY : class/KNU/managers/Pool.o
-
-# target to build an object file
-class/KNU/managers/Pool.cpp.o:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/managers/Pool.cpp.o
-.PHONY : class/KNU/managers/Pool.cpp.o
-
-class/KNU/managers/Pool.i: class/KNU/managers/Pool.cpp.i
-
-.PHONY : class/KNU/managers/Pool.i
-
-# target to preprocess a source file
-class/KNU/managers/Pool.cpp.i:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/managers/Pool.cpp.i
-.PHONY : class/KNU/managers/Pool.cpp.i
-
-class/KNU/managers/Pool.s: class/KNU/managers/Pool.cpp.s
-
-.PHONY : class/KNU/managers/Pool.s
-
-# target to generate assembly for a file
-class/KNU/managers/Pool.cpp.s:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/managers/Pool.cpp.s
-.PHONY : class/KNU/managers/Pool.cpp.s
-
 class/KNU/managers/SystemManager.o: class/KNU/managers/SystemManager.cpp.o
 
 .PHONY : class/KNU/managers/SystemManager.o
@@ -492,18 +384,6 @@ help:
 	@echo "... class/KNU/entities/Entity.o"
 	@echo "... class/KNU/entities/Entity.i"
 	@echo "... class/KNU/entities/Entity.s"
-	@echo "... class/KNU/managers/AbstractPool.o"
-	@echo "... class/KNU/managers/AbstractPool.i"
-	@echo "... class/KNU/managers/AbstractPool.s"
-	@echo "... class/KNU/managers/ComponentManager.o"
-	@echo "... class/KNU/managers/ComponentManager.i"
-	@echo "... class/KNU/managers/ComponentManager.s"
-	@echo "... class/KNU/managers/EntitiesManager.o"
-	@echo "... class/KNU/managers/EntitiesManager.i"
-	@echo "... class/KNU/managers/EntitiesManager.s"
-	@echo "... class/KNU/managers/Pool.o"
-	@echo "... class/KNU/managers/Pool.i"
-	@echo "... class/KNU/managers/Pool.s"
 	@echo "... class/KNU/managers/SystemManager.o"
 	@echo "... class/KNU/managers/SystemManager.i"
 	@echo "... class/KNU/managers/SystemManager.s"

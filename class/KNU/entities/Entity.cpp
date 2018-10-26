@@ -1,5 +1,4 @@
 #include "Entity.hpp"
-#include <KNU/managers/EntitiesManager.hpp>
 #include <KNU/utils/Signature.hpp>
 
 namespace KNU {

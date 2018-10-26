@@ -22,6 +22,8 @@ namespace KNU {
 
 		Pool();
 
+		virtual void clean();
+
 		void add(Entity const &entity, T &component);
 
 		T &get(Entity const &e);
@@ -81,5 +83,10 @@ namespace KNU {
 	template<typename T>
 	Pool<T>::~Pool() {
 
+	}
+
+	template<typename T>
+	void Pool<T>::clean() {
+		_pool.clear();
 	}
 }

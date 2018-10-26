@@ -132,55 +132,13 @@ namespace KNU {
 
 	};
 
-	template<typename T>
-	void ComponentManager::addComponent(Entity &e, T component) {
-		const auto componentId = Component<T>::signature();
-		std::shared_ptr<Pool<T>>
-				componentPool = accommodateComponent<T>();
-		componentPool->add(e, component);
-	}
-
-	template<typename T>
-	T &ComponentManager::getComponent(Entity &entity) const {
-		std::shared_ptr<Pool<T>>
-				componentPool = accommodateComponent<T>();
-		return componentPool->get(entity);
-
-	}
-
-	template<typename T>
-	void ComponentManager::removeComponent(Entity &entity) {
-
-		std::shared_ptr<Pool<T>>
-				componentPool = accommodateComponent<T>();
-		componentPool->remove(entity);
-	}
-
-	template<typename T>
-	bool ComponentManager::hasComponent(Entity const &entity) const {
-		const auto componentId = Component<T>::signature();
-		auto componentPool = std::static_pointer_cast<Pool<T>>(componentPools[componentId]);
-		return componentPool->has(entity);
-	}
-
-	template<typename T>
-	std::shared_ptr<Pool<T>> ComponentManager::accommodateComponent() {
-		const auto componentId = Component<T>::signature();
-		assert(componentId < COMPONENT_MAX);
-		if (!componentPools[componentId]) {
-			std::shared_ptr<Pool<T>> pool(new Pool<T>());
-			componentPools[componentId] = pool;
-		}
-		return std::static_pointer_cast<Pool<T>>(componentPools[componentId]);
-
-	}
 
 	class EntitiesManager {
 	private:
 		unsigned int size;
 		unsigned int capacity;
 		World &world;
-		ComponentManager const &_componentManager;
+		ComponentManager &_componentManager;
 		std::vector<Entity> _entitiesMap;
 		std::unordered_map<std::string, Entity> _taggedEntity;
 		std::unordered_map<std::string, std::set<Entity>> _groupedEntities;
@@ -230,9 +188,11 @@ namespace KNU {
 
 	};
 
+	/** ENTITY **/
+
 	template<typename T, typename... Args>
 	void Entity::addComponent(Args &&... args) {
-		getEntitiesManager().addComponent(*this, std::forward<Args>(args)...);
+		getEntitiesManager().addComponent<T>(*this, std::forward<Args>(args)...);
 	}
 
 	template<typename T>
@@ -262,6 +222,53 @@ namespace KNU {
 		return _componentManager.getComponent<T>(e);
 	}
 
+	/** COMPONENT MANAGER **/
+
+	template<typename T>
+	void ComponentManager::addComponent(Entity &e, T component) {
+		const auto componentId = Component<T>::signature();
+		std::shared_ptr<Pool<T>>
+				componentPool = accommodateComponent<T>();
+		componentPool->add(e, component);
+	}
+
+	template<typename T>
+	T &ComponentManager::getComponent(Entity &entity) const {
+		std::shared_ptr<Pool<T>>
+				componentPool = accommodateComponent<T>();
+		return componentPool->get(entity);
+
+	}
+
+	template<typename T>
+	void ComponentManager::removeComponent(Entity &entity) {
+
+		std::shared_ptr<Pool<T>>
+				componentPool = accommodateComponent<T>();
+		componentPool->remove(entity);
+	}
+
+	template<typename T>
+	bool ComponentManager::hasComponent(Entity const &entity) const {
+		const auto componentId = Component<T>::signature();
+		auto componentPool = std::static_pointer_cast<Pool<T>>(componentPools[componentId]);
+		return componentPool->has(entity);
+	}
+
+	template<typename T>
+	std::shared_ptr<Pool<T>> ComponentManager::accommodateComponent() {
+		const auto componentId = Component<T>::signature();
+		assert(componentId < COMPONENT_MAX);
+		if (!componentPools[componentId]) {
+			std::shared_ptr<Pool<T>> pool(new Pool<T>());
+			componentPools[componentId] = pool;
+		}
+		return std::static_pointer_cast<Pool<T>>(componentPools[componentId]);
+
+	}
+
+	/** ENTITIES MANAGER **/
+
 	template<typename T>
 	bool EntitiesManager::hasComponent(Entity const &e) const {
 		return _componentManager.hasComponent<T>(e);
@@ -269,7 +276,6 @@ namespace KNU {
 
 	template<typename T>
 	EntitiesManager &EntitiesManager::addComponent(Entity &e, T component) {
-		//			e.mask.addComponent<T>();
 		_componentManager.addComponent(e, component);
 		return *this;
 	}

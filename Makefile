@@ -52,9 +52,6 @@ SRCS = \
 		KNU/World.cpp								\
 		KNU/entities/Entity.cpp						\
 		KNU/component/Component.cpp					\
-		KNU/managers/Pool.cpp						\
-		KNU/managers/ComponentManager.cpp			\
-		KNU/managers/EntitiesManager.cpp			\
 		KNU/managers/SystemManager.cpp				\
 		KNU/utils/Signature.cpp						\
 

@@ -12,6 +12,7 @@ int main() {
 
 		KNU::Entity entity = world.createEntity();
 		entity.getMask();
+		entity.addComponent<TransformComponent>(42, 42);
 		std::cout << entity.hasComponent<TransformComponent>() << std::endl;
 	}
 

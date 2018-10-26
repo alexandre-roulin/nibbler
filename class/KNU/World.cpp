@@ -1,5 +1,4 @@
 #include "World.hpp"
-#include <KNU/managers/EntitiesManager.hpp>
 
 namespace KNU {
 

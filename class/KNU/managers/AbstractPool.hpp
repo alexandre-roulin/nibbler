@@ -4,8 +4,7 @@ namespace KNU {
 
 	class AbstractPool {
 	public:
-		AbstractPool();
-
+		virtual void clean() = 0;
 		virtual ~AbstractPool() = default;
 	};
 }
