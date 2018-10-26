@@ -54,7 +54,7 @@ namespace KNU {
 		explicit SystemManager(World &world);
 
 		void addToSystems(Entity &entity);
-
+		void removeToSystems(Entity &entity);
 		template<typename T>
 		void removeSystem() {
 			if (hasSystem<T>())
@@ -84,4 +84,10 @@ namespace KNU {
 					_systems.end());
 		}
 	};
+
+	template<typename T>
+	void System::requireComponent() {
+		signature.addComponent<T>();
+	}
+
 }

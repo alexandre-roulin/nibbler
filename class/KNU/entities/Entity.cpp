@@ -1,3 +1,5 @@
+#include <utility>
+
 #include "Entity.hpp"
 #include <KNU/utils/Signature.hpp>
 #include <KNU/World.hpp>
@@ -34,7 +36,7 @@ namespace KNU {
 	}
 
 	bool Entity::hasGroup(std::string group) const {
-		return getEntitiesManager().hasEntityInGroup(*this, group);
+		return getEntitiesManager().hasEntityInGroup(*this, std::move(group));
 	}
 
 	EntitiesManager::EntitiesManager(World &world,

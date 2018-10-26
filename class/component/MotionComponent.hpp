@@ -7,9 +7,9 @@
 
 class MotionComponent {
 public:
-	explicit MotionComponent(eDirection direction = NORTH,
-							 unsigned int speed = 1)
-			;
+	explicit MotionComponent(
+			eDirection direction = NORTH,
+			unsigned int speed = 1);
 
 	eDirection direction;
 
@@ -22,11 +22,3 @@ public:
 	friend std::ostream &
 	operator<<(std::ostream &os, const MotionComponent &component);
 };
-
-//	std::ostream &
-//	operator<<(std::ostream &os, const TransformComponent &component) {
-//		os << "y: " << component.y << " x: " << component.x;
-//		return os;
-//	}
-
-

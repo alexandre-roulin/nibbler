@@ -29,16 +29,17 @@ namespace KNU {
 		return entities;
 	}
 
-	template<typename T>
-	void System::requireComponent() {
-		signature.addComponent<T>();
-	}
+
 
 	void SystemManager::addToSystems(Entity &entity) {
-		for (auto &system : _systems) {
-			auto sys = system.second;
-			if (entity.getMask().matches(sys->getSignature()))
-				sys->addEntity(entity);
+		std::cout << "SystemManager::addToSystems"  << _systems.size() << std::endl;
+		for (auto &systemMap : _systems) {
+			auto system = systemMap.second;
+			std::cout << "e : " << entity.getMask() << "sys : " << system->getSignature() <<  std::endl;
+
+			if (entity.getMask().matches(system->getSignature())) {
+				system->addEntity(entity);
+			}
 		}
 	}
 
@@ -46,6 +47,13 @@ namespace KNU {
 			: _world(world) {
 
 	}
+
+	void SystemManager::removeToSystems(Entity & entity) {
+		for (auto &systemMap : _systems) {
+			auto system = systemMap.second;
+			if (entity.getMask().matches(system->getSignature()))
+				system->removeEntity(entity);
+		}	}
 
 
 }

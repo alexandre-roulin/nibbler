@@ -1,6 +1,7 @@
 #pragma once
 
 #include <ostream>
+#include <KNU/component/Component.hpp>
 
 namespace KNU {
 
@@ -31,6 +32,15 @@ namespace KNU {
 		friend std::ostream &
 		operator<<(std::ostream &os, const Signature &signature);
 	};
+	template<typename ComponentType>
+	void Signature::addComponent() {
+		mask |= (1 << getComponentSignature<ComponentType>());
+	}
+
+	template<typename ComponentType>
+	void Signature::removeComponent() {
+		mask ^= (1 << getComponentSignature<ComponentType>());
+	}
 
 }
 

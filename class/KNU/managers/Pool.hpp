@@ -60,7 +60,6 @@ namespace KNU {
 	template<typename T>
 	T &Pool<T>::get(Entity const &e) {
 		unsigned int instance = _entitiesMap.at(e);
-		std::cout << instance << std::endl;
 		assert(instance < capacity);
 		return _pool[instance];
 	}

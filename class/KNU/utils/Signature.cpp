@@ -29,16 +29,6 @@ namespace KNU {
 		return os;
 	}
 
-	template<typename ComponentType>
-	void Signature::addComponent() {
-		mask |= (1 << getComponentSignature<ComponentType>());
-	}
-
-	template<typename ComponentType>
-	void Signature::removeComponent() {
-		mask ^= (1 << getComponentSignature<ComponentType>());
-	}
-
 	void Signature::clean() {
 		mask = 0;
 	}

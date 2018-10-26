@@ -107,10 +107,13 @@ namespace KNU {
 
 	public:
 		ComponentManager() {
-			componentPools.resize(COMPONENT_MAX);
+			std::cout << "call resize !! " << std::endl;
+			componentPools.resize(COMPONENT_MAX, nullptr);
+			componentPools.size();
 		}
 
 		ComponentManager(ComponentManager const &) {
+			std::cout << "toi ki e kol !! " << std::endl;
 
 		}
 
@@ -118,7 +121,7 @@ namespace KNU {
 		void addComponent(Entity &e, T component);
 
 		template<typename T>
-		T &getComponent(Entity &entity) const;
+		T &getComponent(Entity const &entity) const;
 
 		template<typename T>
 		void removeComponent(Entity &entity);
@@ -145,7 +148,8 @@ namespace KNU {
 	public:
 		EntitiesManager() = delete;
 
-		explicit EntitiesManager(World &world, ComponentManager &componentManager);
+		explicit EntitiesManager(World &world,
+								 ComponentManager &componentManager);
 
 		Entity &createEntity();
 
@@ -174,7 +178,7 @@ namespace KNU {
 		void killEntity(Entity &entity);
 
 		template<typename T>
-		T &getComponent(Entity &entity) const;
+		T &getComponent(Entity const &entity) const;
 
 		template<typename T>
 		bool hasComponent(Entity const &entity) const;
@@ -194,7 +198,8 @@ namespace KNU {
 
 	template<typename T, typename... Args>
 	void Entity::addComponent(Args &&... args) {
-		getEntitiesManager().addComponent<T>(*this, std::forward<Args>(args)...);
+		getEntitiesManager().addComponent<T>(*this,
+											 std::forward<Args>(args)...);
 	}
 
 	template<typename T>
@@ -219,8 +224,8 @@ namespace KNU {
 	}
 
 	template<typename T>
-	T &EntitiesManager::getComponent(Entity &entity) const {
-		assert(entity.mask.getMask() & Component<T>::signature());
+	T &EntitiesManager::getComponent(Entity const &entity) const {
+//		assert(entity.mask.getMask() & Component<T>::signature());
 		return _componentManager.getComponent<T>(entity);
 	}
 
@@ -228,15 +233,15 @@ namespace KNU {
 
 	template<typename T>
 	void ComponentManager::addComponent(Entity &entity, T component) {
-		std::shared_ptr<Pool<T>>
-				componentPool = accommodateComponent<T>();
+		std::shared_ptr<Pool<T>> componentPool = accommodateComponent<T>();
 		componentPool->add(entity, component);
 	}
 
 	template<typename T>
-	T &ComponentManager::getComponent(Entity &entity) const {
-		std::shared_ptr<Pool<T>>
-				componentPool = accommodateComponent<T>();
+	T &ComponentManager::getComponent(Entity const &entity) const {
+		const auto componentId = Component<T>::signature();
+		auto componentPool = std::static_pointer_cast<Pool<T>>(
+				componentPools[componentId]);
 		return componentPool->get(entity);
 
 	}
@@ -252,15 +257,17 @@ namespace KNU {
 	template<typename T>
 	bool ComponentManager::hasComponent(Entity const &entity) const {
 		const auto componentId = Component<T>::signature();
-		auto componentPool = std::static_pointer_cast<Pool<T>>(componentPools[componentId]);
+		auto componentPool = std::static_pointer_cast<Pool<T>>(
+				componentPools[componentId]);
 		return componentPool->has(entity);
 	}
 
 	template<typename T>
 	std::shared_ptr<Pool<T>> ComponentManager::accommodateComponent() {
 		const auto componentId = Component<T>::signature();
-		assert(componentId < COMPONENT_MAX);
-		if (!componentPools[componentId]) {
+		std::cout << "Bonjour je suis l'ID : " << componentId << std::endl;
+
+		if (componentPools[componentId] == nullptr) {
 			std::shared_ptr<Pool<T>> pool(new Pool<T>());
 			componentPools[componentId] = pool;
 		}
@@ -278,13 +285,16 @@ namespace KNU {
 	}
 
 	template<typename T>
-	EntitiesManager &EntitiesManager::addComponent(Entity &entity, T component) {
+	EntitiesManager &
+	EntitiesManager::addComponent(Entity &entity, T component) {
+		entity.mask.addComponent<T>();
 		_componentManager.addComponent(entity, component);
 		return *this;
 	}
 
 	template<typename T, typename... Args>
-	EntitiesManager &EntitiesManager::addComponent(Entity &entity, Args &&... args) {
+	EntitiesManager &
+	EntitiesManager::addComponent(Entity &entity, Args &&... args) {
 		T component(std::forward<Args>(args) ...);
 		addComponent<T>(entity, component);
 		return *this;

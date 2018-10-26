@@ -17,7 +17,7 @@ namespace KNU {
 
 	public:
 		World();
-
+		void update();
 		Entity &createEntity();
 
 		ComponentManager &getComponentManager() const;
