@@ -50,64 +50,100 @@ void DisplaySfml::render(void)
 	this->_win.draw(this->_spriteBackground);
 }
 
-sf::VertexArray		DisplaySfml::_getQuadTile(int indexWidthTile, int indexHeightTile,
-										int indexWidthGrid, int indexHeightGrid)
+sf::VertexArray		DisplaySfml::_getQuadTilePixel(int indexWidthTile, int indexHeightTile,
+												int indexWidthPixel, int indexHeightPixel)
 {
 	sf::VertexArray		quad(sf::Quads, 4);
-	quad[0].position = sf::Vector2f(((indexWidthGrid) * this->_tileSize),
-								((indexHeightGrid) * this->_tileSize));
+	quad[0].position = sf::Vector2f(((indexWidthPixel)), ((indexHeightPixel)));
 	quad[1].position = sf::Vector2f(this->_tileSize, 0.f) + quad[0].position;
 
-	quad[2].position = sf::Vector2f(((indexWidthGrid + 1) * this->_tileSize),
-								((indexHeightGrid + 1) * this->_tileSize));
+	quad[2].position = sf::Vector2f(((indexWidthPixel + this->_tileSize)), ((indexHeightPixel + this->_tileSize)));
 	quad[3].position = quad[2].position - sf::Vector2f(this->_tileSize, 0.f);
 
-	quad[0].texCoords = sf::Vector2f((this->_tileSize) * (indexWidthTile),
-								(this->_tileSize) * (indexHeightTile));
+	quad[0].texCoords = sf::Vector2f((this->_tileSize) * (indexWidthTile), (this->_tileSize) * (indexHeightTile));
 	quad[1].texCoords = sf::Vector2f(this->_tileSize, 0.f) + quad[0].texCoords;
 
-	quad[2].texCoords = sf::Vector2f((this->_tileSize) * (indexWidthTile + 1),
-								(this->_tileSize) * (indexHeightTile + 1));
+	quad[2].texCoords = sf::Vector2f((this->_tileSize) * (indexWidthTile + 1), (this->_tileSize) * (indexHeightTile + 1));
 	quad[3].texCoords = quad[2].texCoords - sf::Vector2f(this->_tileSize, 0.f);
 	return (quad);
 }
 
-void			DisplaySfml::drawTile(int indexTile,
+/*
+**####################ID_TILE
+*/
+
+void			DisplaySfml::drawTileGrid(int indexTile, int indexWidthGrid, int indexHeightGrid)
+{
+	this->_win.draw(	this->_getQuadTilePixel(indexTile % this->_tilesetWidth,
+												indexTile / this->_tilesetWidth,
+												indexWidthGrid * this->_tileSize,
+												indexHeightGrid * this->_tileSize),
+						&this->_tileset);
+}
+void			DisplaySfml::_drawTileGrid(sf::RenderTarget &target, int indexTile,
 										int indexWidthGrid, int indexHeightGrid)
 {
-	this->_win.draw( this->_getQuadTile(indexTile % this->_tilesetWidth, indexTile / this->_tilesetWidth, indexWidthGrid, indexHeightGrid), &this->_tileset);
+	target.draw(	this->_getQuadTilePixel(indexTile % this->_tilesetWidth,
+											indexTile / this->_tilesetWidth,
+											indexWidthGrid * this->_tileSize,
+											indexHeightGrid * this->_tileSize),
+					&this->_tileset);
+}
+void			DisplaySfml::drawTilePixel(int indexTile, int indexWidthPixel, int indexHeightPixel)
+{
+	this->_win.draw(	this->_getQuadTilePixel(indexTile % this->_tilesetWidth,
+												indexTile / this->_tilesetWidth,
+												indexWidthPixel,
+												indexHeightPixel),
+					&this->_tileset);
 }
 
-void			DisplaySfml::_drawTile(sf::RenderTarget &target,
-										int indexTile,
-										int indexWidthGrid, int indexHeightGrid)
-{
-	target.draw( this->_getQuadTile(indexTile % this->_tilesetWidth, indexTile / this->_tilesetWidth, indexWidthGrid, indexHeightGrid), &this->_tileset);
-}
+/*
+**####################INDEX_TILE X Y
+*/
 
-void			DisplaySfml::drawTile(int indexWidthTile, int indexHeightTile,
+void			DisplaySfml::drawTileGrid(int indexWidthTile, int indexHeightTile,
 										int indexWidthGrid, int indexHeightGrid)
 {
-	this->_win.draw(this->_getQuadTile(indexWidthTile, indexHeightTile, indexWidthGrid, indexHeightGrid), &this->_tileset);
+	this->_win.draw(this->_getQuadTilePixel(indexWidthTile,
+											indexHeightTile,
+											indexWidthGrid * this->_tileSize,
+											indexHeightGrid * this->_tileSize),
+					&this->_tileset);
 }
-void			DisplaySfml::_drawTile(sf::RenderTarget &target,
+void			DisplaySfml::_drawTileGrid(sf::RenderTarget &target,
 										int indexWidthTile, int indexHeightTile,
 										int indexWidthGrid, int indexHeightGrid)
 {
-	target.draw( this->_getQuadTile(indexWidthTile, indexHeightTile, indexWidthGrid, indexHeightGrid), &this->_tileset);
+	target.draw(this->_getQuadTilePixel(indexWidthTile,
+										indexHeightTile,
+										indexWidthGrid * this->_tileSize,
+										indexHeightGrid * this->_tileSize),
+				&this->_tileset);
 }
+void			DisplaySfml::drawTilePixel(int indexWidthTile, int indexHeightTile, int indexWidthPixel, int indexHeightPixel)
+{
+	this->_win.draw(this->_getQuadTilePixel(indexWidthTile,
+										indexHeightTile,
+										indexWidthPixel,
+										indexHeightPixel),
+				&this->_tileset);
+}
+/*
+**####################DRAW_GRID
+*/
 
 void			DisplaySfml::drawGrid(Grid<int> const &grid)
 {
 	for (int y = 0; y < this->_winTileSize.getY(); y++)
 		for (int x = 0; x < this->_winTileSize.getX(); x++)
-			this->drawTile(grid(x, y), x, y);
+			this->drawTileGrid(grid(x, y), x, y);
 }
 void			DisplaySfml::drawGrid(sf::RenderTarget &target, Grid<int> const &grid)
 {
 	for (int y = 0; y < this->_winTileSize.getY(); y++)
 		for (int x = 0; x < this->_winTileSize.getX(); x++)
-			this->_drawTile(target, grid(x, y), x, y);
+			this->_drawTileGrid(target, grid(x, y), x, y);
 }
 
 void		DisplaySfml::setBackground(Grid<int> const &grid)

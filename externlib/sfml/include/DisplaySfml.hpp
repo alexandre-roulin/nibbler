@@ -32,8 +32,11 @@ class DisplaySfml : public IDisplay {
     void        render(void);
     void        update(void);
 
-	void		drawTile(int indexTile, int indexWidthGrid, int indexHeightGrid);
-	void		drawTile(int indexWidthTile, int indexHeightTile, int indexWidthGrid, int indexHeightGrid);
+	void		drawTileGrid(int indexTile, int indexWidthGrid, int indexHeightGrid);
+	void		drawTileGrid(int indexWidthTile, int indexHeightTile, int indexWidthGrid, int indexHeightGrid);
+
+    void		drawTilePixel(int indexTile, int indexWidthPixel, int indexHeightPixel);
+	void		drawTilePixel(int indexWidthTile, int indexHeightTile, int indexWidthPixel, int indexHeightPixel);
 
 	void		drawGrid(Grid<int> const &grid);
 	void		drawGrid(sf::RenderTarget &, Grid<int> const &grid);
@@ -56,14 +59,14 @@ private:
 	int						_tilesetWidth;
     sf::Event               _ev;
 
-    void		_drawTile(sf::RenderTarget &, int indexTile, int indexWidthGrid, int indexHeightGrid);
-	void		_drawTile(sf::RenderTarget &, int indexWidthTile, int indexHeightTile, int indexWidthGrid, int indexHeightGrid);
+    void		_drawTileGrid(sf::RenderTarget &, int indexTile, int indexWidthGrid, int indexHeightGrid);
+	void		_drawTileGrid(sf::RenderTarget &, int indexWidthTile, int indexHeightTile, int indexWidthGrid, int indexHeightGrid);
 
 
     void                _error(std::string);
     void                _clean(void);
 
-    sf::VertexArray		_getQuadTile(int indexWidthTile, int indexHeightTile, int indexWidthGrid, int indexHeightGrid);
+    sf::VertexArray		_getQuadTilePixel(int indexWidthTile, int indexHeightTile, int indexWidthGrid, int indexHeightGrid);
 
     DisplaySfml          &operator=(DisplaySfml const &rhs);
     DisplaySfml(DisplaySfml const &src);

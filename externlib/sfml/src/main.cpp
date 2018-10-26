@@ -16,9 +16,10 @@ int         main(int argc, char **argv)
     while (!sfml.exit())
     {
         sfml.update();
-        sfml.drawTile(0, 0, 0);
-        sfml.drawTile(1, 1, 1);
-        sfml.drawTile(2, 2, 2);
+        sfml.drawTileGrid(0, 0, 0);
+        sfml.drawTileGrid(1, 1, 1);
+        sfml.drawTileGrid(2, 2, 2);
+        sfml.drawTilePixel(12, 2*32+16, 2*32+16);
         sfml.render();
     }
 /*
