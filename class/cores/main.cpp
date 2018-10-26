@@ -31,7 +31,7 @@ int main() {
 		}
 		std::cout << entity.getComponent<TransformComponent>() << std::endl;
 	}
-
+ 
 
 }
 
