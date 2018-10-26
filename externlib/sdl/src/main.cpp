@@ -26,6 +26,7 @@ int				main(int argc, char **argv)
 		sdl.drawTile(3, 2, 0);
 		sdl.drawTile(4, 3, 0);
 		sdl.drawTile(5, 4, 0);
+		sdl.drawTilePixel(8, 1*32+16, 1*32-16);
 		sdl.render();
 	}
 	return (0);

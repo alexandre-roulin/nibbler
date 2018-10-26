@@ -93,75 +93,72 @@ void DisplaySdl::render(void) {
     SDL_BlitSurface(this->_background, NULL, this->_rendererSurface, NULL);
 }
 
-//
+SDL_Rect	DisplaySdl::_getRectTile(int width, int height)
+{
+	SDL_Rect rect = { this->_tileSize * width, this->_tileSize * height, this->_tileSize, this->_tileSize };
+	return (rect);
+}
+SDL_Rect	DisplaySdl::_getRectTilePixel(int width, int height)
+{
+	SDL_Rect rect = { width, height, this->_tileSize, this->_tileSize };
+	return (rect);
+}
+
+/*
+**####################ID_TILE
+*/
+
 void			DisplaySdl::drawTile(int indexTile,
-										int indexWidth, int indexHeight)
+										int indexWidthGrid, int indexHeightGrid)
 {
-	SDL_Rect rectToDraw = {
-		((indexWidth) * this->_tileSize),	((indexHeight) * this->_tileSize),
-		(this->_tileSize),					(this->_tileSize) };
-	SDL_Rect rectTilset = {
-		(this->_tileSize) * (indexTile % this->_tilesetWidth),
-		(this->_tileSize) * (indexTile / this->_tilesetWidth),
-		(this->_tileSize),	(this->_tileSize)};
+	SDL_Rect rectToDraw = this->_getRectTile(indexWidthGrid, indexHeightGrid);
+	SDL_Rect rectTilset = this->_getRectTile(indexTile % this->_tilesetWidth, indexTile / this->_tilesetWidth);
 	SDL_BlitSurface(this->_tileset, &rectTilset, this->_rendererSurface, &rectToDraw);
 }
-void			DisplaySdl::drawTile(SDL_Surface *surface,
+void			DisplaySdl::_drawTile(SDL_Surface *surface,
 										int indexTile,
-										int indexWidth, int indexHeight)
+										int indexWidthGrid, int indexHeightGrid)
 {
-	SDL_Rect rectToDraw = {
-		((indexWidth) * this->_tileSize),	((indexHeight) * this->_tileSize),
-		(this->_tileSize),					(this->_tileSize) };
-	SDL_Rect rectTilset = {
-		(this->_tileSize) * (indexTile % this->_tilesetWidth),
-		(this->_tileSize) * (indexTile / this->_tilesetWidth),
-		(this->_tileSize),	(this->_tileSize)};
+	SDL_Rect rectToDraw = this->_getRectTile(indexWidthGrid, indexHeightGrid);
+	SDL_Rect rectTilset = this->_getRectTile(indexTile % this->_tilesetWidth, indexTile / this->_tilesetWidth);
 	SDL_BlitSurface(this->_tileset, &rectTilset, surface, &rectToDraw);
 }
-
-//
-void			DisplaySdl::drawTile(int indexWidthTile, int indexHeightTile,
-										int indexWidth, int indexHeight)
+void			DisplaySdl::drawTilePixel(int indexTile, int indexWidthPixel, int indexHeightPixel)
 {
-	SDL_Rect rectToDraw = {
-		((indexWidth) * this->_tileSize),	((indexHeight) * this->_tileSize),
-		(this->_tileSize),					(this->_tileSize) };
-	SDL_Rect rectTilset = {
-		(this->_tileSize) * indexWidthTile,	(this->_tileSize) * indexHeightTile,
-		(this->_tileSize),					(this->_tileSize) };
+	SDL_Rect rectToDraw = this->_getRectTilePixel(indexWidthPixel, indexHeightPixel);
+	SDL_Rect rectTilset = this->_getRectTile(indexTile % this->_tilesetWidth, indexTile / this->_tilesetWidth);
 	SDL_BlitSurface(this->_tileset, &rectTilset, this->_rendererSurface, &rectToDraw);
 }
-void			DisplaySdl::drawTile(SDL_Surface *surface,
-										int indexWidthTile, int indexHeightTile,
-										int indexWidth, int indexHeight)
+
+/*
+**####################INDEX_TILE X Y
+*/
+void			DisplaySdl::drawTile(int indexWidthTile, int indexHeightTile,
+										int indexWidthGrid, int indexHeightGrid)
 {
-	SDL_Rect rectToDraw = {
-		((indexWidth) * this->_tileSize),	((indexHeight) * this->_tileSize),
-		(this->_tileSize),					(this->_tileSize) };
-	SDL_Rect rectTilset = {
-		(this->_tileSize) * indexWidthTile,	(this->_tileSize) * indexHeightTile,
-		(this->_tileSize),					(this->_tileSize) };
+	SDL_Rect rectToDraw = this->_getRectTile(indexWidthGrid, indexHeightGrid);
+	SDL_Rect rectTilset = this->_getRectTile(indexWidthTile, indexHeightTile);
+	SDL_BlitSurface(this->_tileset, &rectTilset, this->_rendererSurface, &rectToDraw);
+}
+void			DisplaySdl::_drawTile(SDL_Surface *surface,
+										int indexWidthTile, int indexHeightTile,
+										int indexWidthGrid, int indexHeightGrid)
+{
+	SDL_Rect rectToDraw = this->_getRectTile(indexWidthGrid, indexHeightGrid);
+	SDL_Rect rectTilset = this->_getRectTile(indexWidthTile, indexHeightTile);
 	SDL_BlitSurface(this->_tileset, &rectTilset, surface, &rectToDraw);
 }
-
-//
-void			DisplaySdl::drawColorTile(int indexWidth, int indexHeight, int color)
+void			DisplaySdl::drawTilePixel(int indexWidthTile, int indexHeightTile,
+											int indexWidthPixel, int indexHeightPixel)
 {
-	SDL_Rect r = {
-		((indexWidth) * this->_tileSize),	((indexHeight) * this->_tileSize),
-		(this->_tileSize),					(this->_tileSize) };
-	SDL_FillRect(this->_rendererSurface, &r, color);
-}
-void			DisplaySdl::drawColorTile(SDL_Surface *surface,
-										int indexWidth, int indexHeight, int color)
-{
-	SDL_Rect r = {
-		((indexWidth) * this->_tileSize),	((indexHeight) * this->_tileSize),
-		(this->_tileSize),					(this->_tileSize) };
-	SDL_FillRect(surface, &r, color);
+	SDL_Rect rectToDraw = this->_getRectTilePixel(indexWidthPixel, indexHeightPixel);
+	SDL_Rect rectTilset = this->_getRectTile(indexWidthTile, indexHeightTile);
+	SDL_BlitSurface(this->_tileset, &rectTilset, this->_rendererSurface, &rectToDraw);
 }
 
+/*
+**####################DRAW_GRID
+*/
 
 void			DisplaySdl::drawGrid(Grid<int> const &grid)
 {
@@ -169,16 +166,16 @@ void			DisplaySdl::drawGrid(Grid<int> const &grid)
 		for (int x = 0; x < this->_winTileSize.getX(); x++)
 			this->drawTile(grid(x, y), x, y);
 }
-void			DisplaySdl::drawGrid(SDL_Surface *surface, Grid<int> const &grid)
+void			DisplaySdl::_drawGrid(SDL_Surface *surface, Grid<int> const &grid)
 {
 	for (int y = 0; y < this->_winTileSize.getY(); y++)
 		for (int x = 0; x < this->_winTileSize.getX(); x++)
-			this->drawTile(surface, grid(x, y), x, y);
+			this->_drawTile(surface, grid(x, y), x, y);
 }
 
 void		DisplaySdl::setBackground(Grid<int> const &grid)
 {
-	this->drawGrid(this->_background, grid);
+	this->_drawGrid(this->_background, grid);
 }
 
 void			DisplaySdl::update(void)
