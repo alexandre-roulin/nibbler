@@ -39,6 +39,10 @@ namespace KNU {
 		return entityManager->getEntitySignature(*this);
 	}
 
+	Entity::ID Entity::getId() const {
+		return getEntitiesManager().getEntityId(*this);
+	}
+
 	EntitiesManager::EntitiesManager(World &world,
 									 ComponentManager &componentManager)
 			: size(0),
@@ -77,10 +81,7 @@ namespace KNU {
 	void EntitiesManager::destroyEntity(Entity &entity) {
 		assert(entity.id < static_cast<int>(size));
 		assert(entity == _entitiesMap[entity.id]);
-		size--;
-		_entitiesMap[entity.id] = _entitiesMap[size];
-		_poolSignature[entity.id] = _poolSignature[size];
-
+		freeIds.push(entity.getId());
 	}
 
 	void EntitiesManager::killEntity(Entity &entity) {
@@ -148,5 +149,8 @@ namespace KNU {
 
 	Signature &EntitiesManager::getEntitySignature(Entity &entity) {
 		return _poolSignature[entity.id];
+	}
+	Entity::ID EntitiesManager::getEntityId(Entity const &e) const {
+		return e.id;
 	}
 }

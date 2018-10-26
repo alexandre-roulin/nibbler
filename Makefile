@@ -55,6 +55,12 @@ SRCS = \
 		KNU/systems/System.cpp						\
 		KNU/utils/Signature.cpp						\
 		logger/display/logger_debug.cpp				\
+		logger/display/logger_error.cpp				\
+		logger/display/logger_fatal.cpp				\
+		logger/display/logger_info.cpp				\
+		logger/display/logger_success.cpp			\
+		logger/display/logger_trace.cpp				\
+		logger/display/logger_warn.cpp				\
 		logger/logger/logger_init.cpp				\
 		logger/utils/logger_init_open_file.cpp		\
 		logger/utils/logger_get_time.cpp			\
@@ -92,7 +98,6 @@ LDLIBS		= \
 CPPFLAGS	= \
 			  -I$(DIR_INCS)							\
 			  -I$(DIR_CLASS)						\
-			  -Ilogger/incs							\
 
 CFLAGS		= \
 			-std=c++17						\

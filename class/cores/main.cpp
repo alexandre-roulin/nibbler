@@ -10,26 +10,51 @@
 
 #include <logger.h>
 
+void init(KNU::World &world, std::string s) {
+	auto &entity = world.createEntity();
+	entity.group("snake");
+	entity.tag(s);
+	entity.addComponent<TransformComponent>(42, 42);
+	entity.addComponent<MotionComponent>(NORTH, 1);
+	entity.addComponent<SpriteComponent>("/vers/l'infini/et/l'au/delà");
+}
+
 int main() {
 	char path[] = "/tmp/log.out";
 	logger_init(path);
 	{
 		KNU::World world;
 
-		auto &entity = world.createEntity();
-
-		entity.addComponent<TransformComponent>(42, 42);
-		entity.addComponent<MotionComponent>(NORTH, 1);
-		entity.addComponent<SpriteComponent>("/vers/l'infini/et/l'au/delà");
+		init(world, "snake1");
+		init(world, "snake2");
+		init(world, "snake3");
+		init(world, "snake4");
 		world.getSystemManager().addSystem<MotionSystem>();
-		for (int index =0 ; index < 10 ; ++index) {
+		for (int index = 0; index < 2; ++index) {
 			world.update();
 			world.getSystemManager().getSystem<MotionSystem>()->update();
-			auto &position = entity.getComponent<TransformComponent>();
-			log_debug("x : %d y : %d", position.x, position.y);
-			std::cout << position << std::endl;
+			auto position = world.getEntityManager().getEntitiesByGroup(
+					"snake");
+			for (const auto &item : position) {
+				auto &pos = item.getComponent<TransformComponent>();
+				log_debug("ID: %d x : %d y : %d", item.getId(), pos.x, pos.y);
+			}
 		}
-		std::cout << entity.getComponent<TransformComponent>() << std::endl;
+
+		auto entitySnake1 = world.getEntityManager().getEntityByTag("snake1");
+
+		entitySnake1.kill();
+
+		for (int index = 0; index < 2; ++index) {
+			world.update();
+			world.getSystemManager().getSystem<MotionSystem>()->update();
+			auto position = world.getEntityManager().getEntitiesByGroup(
+					"snake");
+			for (const auto &item : position) {
+				auto &pos = item.getComponent<TransformComponent>();
+				log_debug("Tag : %d x : %d y : %d", item.getId(), pos.x, pos.y);
+			}
+		}
 	}
 
 
