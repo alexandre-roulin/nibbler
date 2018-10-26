@@ -7,10 +7,6 @@
 namespace KNU {
 
 
-	const Signature &Entity::getMask() {
-		return mask;
-	}
-
 	void Entity::kill() {
 		getEntitiesManager().killEntity(*this);
 	}
@@ -39,6 +35,10 @@ namespace KNU {
 		return getEntitiesManager().hasEntityInGroup(*this, std::move(group));
 	}
 
+	Signature &Entity::getSignature() {
+		return entityManager->getEntitySignature(*this);
+	}
+
 	EntitiesManager::EntitiesManager(World &world,
 									 ComponentManager &componentManager)
 			: size(0),
@@ -54,13 +54,20 @@ namespace KNU {
 
 	Entity &
 	EntitiesManager::createEntity() {
-		if (size == capacity) {
-			capacity += BASE_ENTITIES_CAPACITY;
-			_entitiesMap.resize(capacity);
+		Entity::ID instance_entity;
+		if (!freeIds.empty()) {
+			instance_entity = freeIds.front();
+		} else {
+			if (size == capacity) {
+				capacity += BASE_ENTITIES_CAPACITY;
+				_entitiesMap.resize(capacity);
+			}
+			instance_entity = static_cast<short>(size);
+			size++;
 		}
-		unsigned int instance_entity = size;
-		size++;
+
 		_entitiesMap[instance_entity] = Entity(instance_entity);
+		_poolSignature[instance_entity] = Signature();
 		_entitiesMap[instance_entity].entityManager = this;
 		return _entitiesMap[instance_entity];
 	}
@@ -79,6 +86,7 @@ namespace KNU {
 	}
 
 /** Tag/Group Management **/
+
 	bool EntitiesManager::hasTaggedEntity(std::string &tag) {
 		return _taggedEntity.find(tag) != _taggedEntity.end();
 	}
@@ -115,7 +123,8 @@ namespace KNU {
 		return _groupedEntities.find(group) != _groupedEntities.end();
 	}
 
-	bool EntitiesManager::hasEntityInGroup(Entity const &entity, std::string group) {
+	bool
+	EntitiesManager::hasEntityInGroup(Entity const &entity, std::string group) {
 		auto it = _groupedEntities.find(group);
 		if (it != _groupedEntities.end()) {
 			if (it->second.find(entity.id) != it->second.end()) {
@@ -132,5 +141,9 @@ namespace KNU {
 	Entity EntitiesManager::getEntityByTag(std::string const &tag) {
 		assert(hasTag(tag));
 		return _taggedEntity[tag];
+	}
+
+	Signature &EntitiesManager::getEntitySignature(Entity &entity) {
+		return _poolSignature[entity.id];
 	}
 }

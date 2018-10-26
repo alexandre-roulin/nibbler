@@ -1,19 +1,18 @@
 
 #include "System.hpp"
-
 namespace KNU {
 
-	void System::addEntity(Entity e) {
-		assert(e.getMask().matches(signature));
-
+	void System::addEntity(Entity &entity) {
+		assert(entity.getSignature().matches(signature));
+		entities.push_back(entity);
 	}
 
-	void System::removeEntity(Entity e) {
+	void System::removeEntity(Entity entity) {
 		entities.erase(
 				std::remove_if(
 						entities.begin(),
 						entities.end(),
-						[&e](Entity other) { return e == other; }),
+						[&entity](Entity other) { return entity == other; }),
 				entities.end());
 	}
 
@@ -35,9 +34,9 @@ namespace KNU {
 		std::cout << "SystemManager::addToSystems"  << _systems.size() << std::endl;
 		for (auto &systemMap : _systems) {
 			auto system = systemMap.second;
-			std::cout << "e : " << entity.getMask() << "sys : " << system->getSignature() <<  std::endl;
+			std::cout << "entity : " << entity.getSignature() << "sys : " << system->getSignature() <<  std::endl;
 
-			if (entity.getMask().matches(system->getSignature())) {
+			if (entity.getSignature().matches(system->getSignature())) {
 				system->addEntity(entity);
 			}
 		}
@@ -51,7 +50,7 @@ namespace KNU {
 	void SystemManager::removeToSystems(Entity & entity) {
 		for (auto &systemMap : _systems) {
 			auto system = systemMap.second;
-			if (entity.getMask().matches(system->getSignature()))
+			if (entity.getSignature().matches(system->getSignature()))
 				system->removeEntity(entity);
 		}	}
 

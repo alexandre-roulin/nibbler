@@ -15,7 +15,6 @@ void MotionSystem::update() {
 		auto &transformComponent = entity.getComponent<TransformComponent>();
 		auto &motionComponent = entity.getComponent<MotionComponent>();
 		switch (motionComponent.direction) {
-
 			case NORTH:
 				transformComponent.y--;
 				break;

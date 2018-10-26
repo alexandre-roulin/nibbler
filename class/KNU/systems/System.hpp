@@ -2,32 +2,27 @@
 
 #include <vector>
 #include <KNU/utils/Signature.hpp>
-#include <KNU/entities/Entity.hpp>
 #include <unordered_map>
 #include <typeindex>
+#include <KNU/entities/Entity.hpp>
 
 namespace KNU {
 	class SystemManager;
-
 	class World;
 
 	class System {
 	public:
 
-		// what component types the system requires of entities (we can use this method in the constructor for example)
 		template<typename T>
 		void requireComponent();
 
 		virtual void update() = 0;
 
-		// returns a list of entities that the system should process each frame
 		std::vector<Entity> getEntities();
 
-		// adds an entity of interest
-		void addEntity(Entity e);
+		void addEntity(Entity &entity);
 
-		// if the entity is not alive anymore (during processing), the entity should be removed
-		void removeEntity(Entity e);
+		void removeEntity(Entity entity);
 
 		const Signature &getSignature() const;
 
@@ -38,14 +33,14 @@ namespace KNU {
 
 	private:
 		friend class SystemManager;
-		// which components an entity must have in order for the system to process the entity
+
 		Signature signature;
 
-		// vector of all entities that the system is interested in
 		std::vector<Entity> entities;
 		World *world = nullptr;
 
 	};
+
 	class SystemManager {
 	protected:
 		std::unordered_map<std::type_index, std::shared_ptr<System>> _systems;
@@ -54,7 +49,9 @@ namespace KNU {
 		explicit SystemManager(World &world);
 
 		void addToSystems(Entity &entity);
+
 		void removeToSystems(Entity &entity);
+
 		template<typename T>
 		void removeSystem() {
 			if (hasSystem<T>())
@@ -74,8 +71,7 @@ namespace KNU {
 			assert(!hasSystem<T>());
 			std::shared_ptr<T> system(new T(std::forward<Args>(args) ...));
 			system->world = &_world;
-			_systems.insert(
-					std::make_pair(std::type_index(typeid(T)), system));
+			_systems.insert(std::make_pair(std::type_index(typeid(T)), system));
 		}
 
 		template<typename T>

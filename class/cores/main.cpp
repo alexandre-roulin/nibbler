@@ -1,7 +1,7 @@
 
 #include <iostream>
-#include <KNU/World.hpp>
 #include <KNU/entities/Entity.hpp>
+#include <KNU/World.hpp>
 #include <component/TransformComponent.hpp>
 #include <component/MotionComponent.hpp>
 #include <component/SpriteComponent.hpp>
@@ -20,8 +20,8 @@ int main() {
 		entity.addComponent<SpriteComponent>("/vers/l'infini/et/l'au/delà");
 
 		world.getSystemManager().addSystem<MotionSystem>();
-		std::cout << "Match System" << entity.getMask().matches(world.getSystemManager().getSystem<MotionSystem>()->getSignature()) << std::endl;
-		std::cout << "Signature Entity : " << entity.getMask() << std::endl;
+		std::cout << "Match System" << entity.getSignature().matches(world.getSystemManager().getSystem<MotionSystem>()->getSignature()) << std::endl;
+		std::cout << "Signature Entity : " << entity.getSignature() << std::endl;
 		std::cout << "System signature : " <<world.getSystemManager().getSystem<MotionSystem>()->getSignature() << std::endl;
 		for (int index =0 ; index < 10 ; ++index) {
 			world.update();
@@ -31,7 +31,7 @@ int main() {
 		}
 		std::cout << entity.getComponent<TransformComponent>() << std::endl;
 	}
- 
+
 
 }
 

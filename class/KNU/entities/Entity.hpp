@@ -11,19 +11,18 @@
 #include <KNU/managers/Pool.hpp>
 #include <unordered_map>
 #include <set>
-
+#include <queue>
 namespace KNU {
-	class EntitiesManager;
 
+	class EntitiesManager;
 	class World;
 
 	class Entity {
 	private:
-		int id;
-		Signature mask;
+		typedef int16_t ID;
+		ID id;
 		bool alive;
-
-		Entity(unsigned int id)
+		Entity(ID id)
 				: id(id),
 				  alive(true) {
 		};
@@ -35,9 +34,6 @@ namespace KNU {
 
 	public:
 		Entity() : id(-1) {};
-
-
-		Signature const &getMask();
 
 		bool operator<(const Entity &rhs) const {
 			return id < rhs.id;
@@ -57,7 +53,6 @@ namespace KNU {
 
 		bool operator==(const Entity &rhs) const {
 			return id == rhs.id &&
-				   mask == rhs.mask &&
 				   alive == rhs.alive;
 		}
 
@@ -85,6 +80,8 @@ namespace KNU {
 		template<typename T>
 		T &getComponent() const;
 
+		Signature &getSignature();
+
 		void tag(std::string tag);
 
 		bool hasTag(std::string tag) const;
@@ -95,7 +92,7 @@ namespace KNU {
 
 		friend std::ostream &
 		operator<<(std::ostream &os, const Entity &entity) {
-			os << "id: " << entity.id << " " << entity.mask << " alive: "
+			os << "id: " << entity.id << " " << " alive: "
 			   << entity.alive;
 			return os;
 		}
@@ -142,7 +139,10 @@ namespace KNU {
 		unsigned int capacity;
 		World &world;
 		ComponentManager &_componentManager;
+		std::queue<Entity::ID>	freeIds;
 		std::vector<Entity> _entitiesMap;
+		std::vector<Signature> _poolSignature;
+
 		std::unordered_map<std::string, Entity> _taggedEntity;
 		std::unordered_map<std::string, std::set<Entity>> _groupedEntities;
 	public:
@@ -172,6 +172,8 @@ namespace KNU {
 		void groupEntity(Entity &entity, std::string &group);
 
 		std::vector<Entity> getEntitiesByGroup(std::string const &group);
+
+		Signature &getEntitySignature(Entity &entity);
 
 		unsigned long getGroupSize(std::string group);
 
@@ -287,7 +289,7 @@ namespace KNU {
 	template<typename T>
 	EntitiesManager &
 	EntitiesManager::addComponent(Entity &entity, T component) {
-		entity.mask.addComponent<T>();
+		_poolSignature[entity.id].addComponent<T>();
 		_componentManager.addComponent(entity, component);
 		return *this;
 	}
@@ -306,4 +308,10 @@ namespace KNU {
 		_componentManager.removeComponent<T>(entity);
 	}
 
+
 }
+
+
+
+//E > [1]
+//I > [1]
