@@ -43,10 +43,10 @@ ifeq ($(UNAME), Linux)
 ADDITIONNAL_LIB += $(shell sdl2-config --cflags --libs) -lSDL2_image
 HEADER_DIR += $(shell sdl2-config --cflags)
 endif
-#ifeq ($(UNAME), OSX)
-#ADDITIONNAL_LIB +=-L ~/.brew/lib/ -lSDL2 -lSDL2_image
-#HEADER_DIR += ~/.brew/include/
-#endif
+ifeq ($(UNAME), Darwin)
+ADDITIONNAL_LIB +=-L ~/.brew/lib/ -lSDL2 -lSDL2_image
+HEADER_DIR += ~/.brew/include/
+endif
 
 #=============RULES=============#
 

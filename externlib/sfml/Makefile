@@ -43,10 +43,10 @@ ifeq ($(UNAME), Linux)
 ADDITIONNAL_LIB += -L /usr/lib/ -lsfml-graphics -lsfml-window -lsfml-system
 HEADER_DIR += -I /usr/include/
 endif
-#ifeq ($(UNAME), OSX)
-#ADDITIONNAL_LIB +=-L ~/.brew/lib/ -lSDL2 -lSDL2_image
-#HEADER_DIR += ~/.brew/include/
-#endif
+ifeq ($(UNAME), Darwin)
+ADDITIONNAL_LIB +=-L ~/.brew/lib/ -lsfml-graphics -lsfml-window -lsfml-system -rpath ~/.brew/lib
+HEADER_DIR += ~/.brew/include/
+endif
 
 #=============RULES=============#
 
