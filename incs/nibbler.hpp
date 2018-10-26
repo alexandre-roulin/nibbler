@@ -6,6 +6,7 @@
 
 
 enum eDirection {
+	NONE,
 	NORTH,
 	SOUTH,
 	EAST,

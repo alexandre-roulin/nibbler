@@ -34,19 +34,18 @@ class DisplaySdl : public IDisplay {
     void        render(void);
     void        update(void);
 
-	void		drawTile(int indexTile, int indexWidth, int indexHeight);
-	void		drawTile(int indexWidthTile, int indexHeightTile, int indexWidth, int indexHeight);
-	void		_drawTile(SDL_Surface *, int indexTile, int indexWidth, int indexHeight);
-	void		_drawTile(SDL_Surface *, int indexWidthTile, int indexHeightTile, int indexWidth, int indexHeight);
+	void		drawTileGrid(int indexTile, int indexWidth, int indexHeight);
+	void		drawTileGrid(int indexWidthTile, int indexHeightTile, int indexWidth, int indexHeight);
     void		drawTilePixel(int indexTile, int indexWidthPixel, int indexHeightPixel);
 	void		drawTilePixel(int indexWidthTile, int indexHeightTile, int indexWidthPixel, int indexHeightPixel);
-
 	void		drawGrid(Grid<int> const &grid);
-	void		_drawGrid(SDL_Surface *, Grid<int> const &grid);
-
 	void		setBackground(Grid<int> const &grid);
+
+    eDirection  getDirection(void) const;
+
 private:
     bool					_exit;
+    eDirection              _direction;
 	int						_tileSize;
 	Vector2D<int> const		_winTileSize;
     Vector2D<int> const		_winPixelSize;
@@ -58,13 +57,16 @@ private:
 	SDL_Surface				*_tileset;
 	SDL_Surface				*_background;
 	int						_tilesetWidth;
-    SDL_Event				_ev;
+    SDL_Event               _ev;
 
-    SDL_Rect	           _getRectTile(int width, int height);
-    SDL_Rect	           _getRectTilePixel(int width, int height);
+    void	                _drawGrid(SDL_Surface *, Grid<int> const &grid);
+    void                    _drawTileGrid(SDL_Surface *, int indexWidthTile, int indexHeightTile, int indexWidth, int indexHeight);
+    void	                _drawTileGrid(SDL_Surface *, int indexTile, int indexWidth, int indexHeight);
+    SDL_Rect	            _getRectTile(int width, int height);
+    SDL_Rect	            _getRectTilePixel(int width, int height);
 
-    void                _error(void);
-    void                _clean(void);
+    void                  _error(void);
+    void                    _clean(void);
 
     DisplaySdl          &operator=(DisplaySdl const &rhs);
     DisplaySdl(DisplaySdl const &src);

@@ -34,17 +34,16 @@ class DisplaySfml : public IDisplay {
 
 	void		drawTileGrid(int indexTile, int indexWidthGrid, int indexHeightGrid);
 	void		drawTileGrid(int indexWidthTile, int indexHeightTile, int indexWidthGrid, int indexHeightGrid);
-
     void		drawTilePixel(int indexTile, int indexWidthPixel, int indexHeightPixel);
 	void		drawTilePixel(int indexWidthTile, int indexHeightTile, int indexWidthPixel, int indexHeightPixel);
-
 	void		drawGrid(Grid<int> const &grid);
-	void		drawGrid(sf::RenderTarget &, Grid<int> const &grid);
-
+	void		_drawGrid(sf::RenderTarget &, Grid<int> const &grid);
 	void		setBackground(Grid<int> const &grid);
 
+    eDirection  getDirection(void) const;
 private:
     bool					_exit;
+    eDirection              _direction;
 	int						_tileSize;
 	Vector2D<int> const		_winTileSize;
     Vector2D<int> const		_winPixelSize;

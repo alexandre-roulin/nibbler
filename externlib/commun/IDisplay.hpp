@@ -1,6 +1,6 @@
 #pragma once
 
-enum { RIGHT = 1, LEFT, UP, DOWN };
+enum eDirection { NONE, NORTH, SOUTH, EAST, WEST };
 
 class IDisplay {
 };

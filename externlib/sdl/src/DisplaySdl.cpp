@@ -108,14 +108,14 @@ SDL_Rect	DisplaySdl::_getRectTilePixel(int width, int height)
 **####################ID_TILE
 */
 
-void			DisplaySdl::drawTile(int indexTile,
+void			DisplaySdl::drawTileGrid(int indexTile,
 										int indexWidthGrid, int indexHeightGrid)
 {
 	SDL_Rect rectToDraw = this->_getRectTile(indexWidthGrid, indexHeightGrid);
 	SDL_Rect rectTilset = this->_getRectTile(indexTile % this->_tilesetWidth, indexTile / this->_tilesetWidth);
 	SDL_BlitSurface(this->_tileset, &rectTilset, this->_rendererSurface, &rectToDraw);
 }
-void			DisplaySdl::_drawTile(SDL_Surface *surface,
+void			DisplaySdl::_drawTileGrid(SDL_Surface *surface,
 										int indexTile,
 										int indexWidthGrid, int indexHeightGrid)
 {
@@ -133,14 +133,14 @@ void			DisplaySdl::drawTilePixel(int indexTile, int indexWidthPixel, int indexHe
 /*
 **####################INDEX_TILE X Y
 */
-void			DisplaySdl::drawTile(int indexWidthTile, int indexHeightTile,
+void			DisplaySdl::drawTileGrid(int indexWidthTile, int indexHeightTile,
 										int indexWidthGrid, int indexHeightGrid)
 {
 	SDL_Rect rectToDraw = this->_getRectTile(indexWidthGrid, indexHeightGrid);
 	SDL_Rect rectTilset = this->_getRectTile(indexWidthTile, indexHeightTile);
 	SDL_BlitSurface(this->_tileset, &rectTilset, this->_rendererSurface, &rectToDraw);
 }
-void			DisplaySdl::_drawTile(SDL_Surface *surface,
+void			DisplaySdl::_drawTileGrid(SDL_Surface *surface,
 										int indexWidthTile, int indexHeightTile,
 										int indexWidthGrid, int indexHeightGrid)
 {
@@ -164,13 +164,13 @@ void			DisplaySdl::drawGrid(Grid<int> const &grid)
 {
 	for (int y = 0; y < this->_winTileSize.getY(); y++)
 		for (int x = 0; x < this->_winTileSize.getX(); x++)
-			this->drawTile(grid(x, y), x, y);
+			this->drawTileGrid(grid(x, y), x, y);
 }
 void			DisplaySdl::_drawGrid(SDL_Surface *surface, Grid<int> const &grid)
 {
 	for (int y = 0; y < this->_winTileSize.getY(); y++)
 		for (int x = 0; x < this->_winTileSize.getX(); x++)
-			this->_drawTile(surface, grid(x, y), x, y);
+			this->_drawTileGrid(surface, grid(x, y), x, y);
 }
 
 void		DisplaySdl::setBackground(Grid<int> const &grid)
@@ -180,13 +180,30 @@ void		DisplaySdl::setBackground(Grid<int> const &grid)
 
 void			DisplaySdl::update(void)
 {
-
+	this->_direction = NONE;
     while (SDL_PollEvent(&this->_ev))
 	{
         if (this->_ev.window.event == SDL_WINDOWEVENT_CLOSE)
             this->_exit = true;
+		if (this->_ev.type == SDL_KEYDOWN)
+		{
+			if (this->_ev.key.keysym.scancode == SDL_SCANCODE_Q)
+				this->_direction = WEST;
+			else if (this->_ev.key.keysym.scancode == SDL_SCANCODE_D)
+				this->_direction = EAST;
+			else if (this->_ev.key.keysym.scancode == SDL_SCANCODE_W)
+				this->_direction = SOUTH;
+			else if (this->_ev.key.keysym.scancode == SDL_SCANCODE_S)
+				this->_direction = NORTH;
+		}
     }
 }
+
+eDirection  	DisplaySdl::getDirection(void) const
+{
+	return (this->_direction);
+}
+
 
 bool			DisplaySdl::exit(void) const
 {

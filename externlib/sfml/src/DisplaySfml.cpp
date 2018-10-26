@@ -139,7 +139,7 @@ void			DisplaySfml::drawGrid(Grid<int> const &grid)
 		for (int x = 0; x < this->_winTileSize.getX(); x++)
 			this->drawTileGrid(grid(x, y), x, y);
 }
-void			DisplaySfml::drawGrid(sf::RenderTarget &target, Grid<int> const &grid)
+void			DisplaySfml::_drawGrid(sf::RenderTarget &target, Grid<int> const &grid)
 {
 	for (int y = 0; y < this->_winTileSize.getY(); y++)
 		for (int x = 0; x < this->_winTileSize.getX(); x++)
@@ -148,18 +148,35 @@ void			DisplaySfml::drawGrid(sf::RenderTarget &target, Grid<int> const &grid)
 
 void		DisplaySfml::setBackground(Grid<int> const &grid)
 {
-	this->drawGrid(this->_textureBackground, grid);
+	this->_drawGrid(this->_textureBackground, grid);
 	this->_textureBackground.display();
 	this->_spriteBackground = sf::Sprite(this->_textureBackground.getTexture());
 }
 
 void			DisplaySfml::update(void)
 {
+	this->_direction = NONE;
     while (this->_win.pollEvent(this->_ev))
     {
         if (this->_ev.type == sf::Event::Closed)
             this->_exit = true;
+		if (this->_ev.type == sf::Event::KeyPressed)
+		{
+			if (this->_ev.key.code == sf::Keyboard::Q)
+				this->_direction = WEST;
+			else if (this->_ev.key.code == sf::Keyboard::D)
+				this->_direction = EAST;
+			else if (this->_ev.key.code == sf::Keyboard::W)
+				this->_direction = SOUTH;
+			else if (this->_ev.key.code == sf::Keyboard::S)
+				this->_direction = NORTH;
+		}
     }
+}
+
+eDirection  	DisplaySfml::getDirection(void) const
+{
+	return (this->_direction);
 }
 
 bool			DisplaySfml::exit(void) const
