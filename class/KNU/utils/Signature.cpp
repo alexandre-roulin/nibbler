@@ -4,6 +4,7 @@
 
 #include "Signature.hpp"
 #include <KNU/component/Component.hpp>
+#include <iostream>
 
 namespace KNU {
 
@@ -34,6 +35,8 @@ namespace KNU {
 	}
 
 	Signature &Signature::operator=(Signature const &signature) {
+		std::cout << *this << std::endl;
+		std::cout << signature << std::endl;
 		if (this != &signature) {
 			mask = signature.mask;
 		}

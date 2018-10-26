@@ -12,14 +12,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a7dbd8d7-b982-44a5-9ef8-5b2ba8f88fe0" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/class/KNU/entities/Entity.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/class/KNU/entities/Entity.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/class/KNU/entities/Entity.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/class/KNU/entities/Entity.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/class/KNU/systems/System.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/class/KNU/systems/System.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/class/KNU/systems/System.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/class/KNU/systems/System.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/class/cores/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/class/cores/main.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/class/systems/MotionSystem.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/class/systems/MotionSystem.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/class/systems/MotionSystem.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/class/systems/MotionSystem.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/class/KNU/utils/Signature.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/class/KNU/utils/Signature.cpp" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -59,9 +53,9 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="Makefile" value="527" />
-          <entry key="cpp" value="9675" />
+          <entry key="cpp" value="9735" />
           <entry key="h" value="180" />
-          <entry key="hpp" value="13173" />
+          <entry key="hpp" value="13174" />
           <entry key="json" value="78" />
           <entry key="txt" value="65" />
         </counts>
@@ -71,14 +65,14 @@
           <entry key="CMakeLists.txt" value="65" />
           <entry key="Doxygen file" value="1" />
           <entry key="JSON" value="78" />
-          <entry key="ObjectiveC" value="23027" />
+          <entry key="ObjectiveC" value="23088" />
           <entry key="PLAIN_TEXT" value="527" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="Makefile" value="26" />
-          <entry key="cpp" value="180" />
+          <entry key="cpp" value="181" />
           <entry key="d" value="4" />
           <entry key="gch" value="1" />
           <entry key="h" value="3" />
@@ -95,7 +89,7 @@
           <entry key="CMakeLists.txt" value="10" />
           <entry key="Image" value="2" />
           <entry key="JSON" value="2" />
-          <entry key="ObjectiveC" value="441" />
+          <entry key="ObjectiveC" value="442" />
           <entry key="PLAIN_TEXT" value="32" />
         </counts>
       </usages-collector>
@@ -137,7 +131,7 @@
         <entry file="file://$PROJECT_DIR$/class/KNU/systems/System.hpp">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="752">
-              <caret line="88" column="1" lean-forward="true" selection-start-line="88" selection-start-column="1" selection-end-line="88" selection-end-column="1" />
+              <caret line="88" column="1" selection-start-line="88" selection-start-column="1" selection-end-line="88" selection-end-column="1" />
               <folding>
                 <element signature="e#14#31#0" expanded="true" />
                 <element signature="e#2063#2075#0" expanded="true" />
@@ -149,10 +143,22 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/class/KNU/utils/Signature.hpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="540">
-              <caret line="36" selection-start-line="36" selection-end-line="36" />
+            <state relative-caret-position="165">
+              <caret line="11" column="35" selection-start-line="11" selection-start-column="27" selection-end-line="11" selection-end-column="35" />
               <folding>
                 <element signature="e#14#32#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/class/KNU/utils/Signature.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="542">
+              <caret line="37" column="14" lean-forward="true" selection-start-line="37" selection-start-column="14" selection-end-line="37" selection-end-column="14" />
+              <folding>
+                <element signature="e#53#77#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -163,15 +169,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="285">
               <caret line="19" column="21" selection-start-line="19" selection-start-column="21" selection-end-line="19" selection-end-column="21" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/class/KNU/World.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="615">
-              <caret line="41" column="35" selection-start-line="41" selection-start-column="35" selection-end-line="41" selection-end-column="35" />
             </state>
           </provider>
         </entry>
@@ -188,8 +185,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/class/KNU/entities/Entity.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="692">
-              <caret line="147" column="5" selection-start-line="147" selection-start-column="5" selection-end-line="147" selection-end-column="5" />
+            <state relative-caret-position="304">
+              <caret line="81" column="50" selection-start-line="81" selection-start-column="50" selection-end-line="81" selection-end-column="50" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -200,8 +197,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/class/KNU/entities/Entity.hpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="587">
-              <caret line="309" selection-start-line="309" selection-end-line="309" />
+            <state relative-caret-position="260">
+              <caret line="150" column="17" selection-start-line="150" selection-start-column="17" selection-end-line="150" selection-end-column="17" />
               <folding>
                 <element signature="e#14#28#0" expanded="true" />
                 <element signature="e#4748#4760#0" expanded="true" />
@@ -214,7 +211,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>include</find>
       <find>getComponentSignature</find>
       <find>KNU::</find>
       <find>Abstr</find>
@@ -244,6 +240,7 @@
       <find>e</find>
       <find>getS</find>
       <find>getEntitySignature</find>
+      <find>_entitiesMap</find>
     </findStrings>
     <replaceStrings>
       <replace>_id</replace>
@@ -311,8 +308,6 @@
         <option value="$PROJECT_DIR$/class/KNU/managers/SystemManager.hpp" />
         <option value="$PROJECT_DIR$/Makefile" />
         <option value="$PROJECT_DIR$/class/component/MotionComponent.hpp" />
-        <option value="$PROJECT_DIR$/class/KNU/utils/Signature.cpp" />
-        <option value="$PROJECT_DIR$/class/KNU/utils/Signature.hpp" />
         <option value="$PROJECT_DIR$/class/KNU/World.hpp" />
         <option value="$PROJECT_DIR$/class/KNU/World.cpp" />
         <option value="$PROJECT_DIR$/class/systems/MotionSystem.hpp" />
@@ -321,6 +316,8 @@
         <option value="$PROJECT_DIR$/class/KNU/systems/System.cpp" />
         <option value="$PROJECT_DIR$/class/KNU/systems/System.hpp" />
         <option value="$PROJECT_DIR$/class/KNU/entities/Entity.hpp" />
+        <option value="$PROJECT_DIR$/class/KNU/utils/Signature.hpp" />
+        <option value="$PROJECT_DIR$/class/KNU/utils/Signature.cpp" />
         <option value="$PROJECT_DIR$/class/KNU/entities/Entity.cpp" />
       </list>
     </option>
@@ -512,12 +509,12 @@
       <workItem from="1540388288851" duration="10689000" />
       <workItem from="1540399621744" duration="31666000" />
       <workItem from="1540510887056" duration="648000" />
-      <workItem from="1540511573829" duration="9209000" />
+      <workItem from="1540511573829" duration="9485000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="83359000" />
+    <option name="totallyTimeSpent" value="83635000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="6" />
@@ -752,30 +749,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/class/KNU/utils/Signature.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="465">
-          <caret line="31" selection-start-line="31" selection-end-line="31" />
-          <folding>
-            <element signature="e#53#77#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/class/KNU/World.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="615">
           <caret line="41" column="35" selection-start-line="41" selection-start-column="35" selection-end-line="41" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/class/KNU/utils/Signature.hpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="540">
-          <caret line="36" selection-start-line="36" selection-end-line="36" />
-          <folding>
-            <element signature="e#14#32#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -820,7 +797,7 @@
     <entry file="file://$PROJECT_DIR$/class/KNU/systems/System.hpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="752">
-          <caret line="88" column="1" lean-forward="true" selection-start-line="88" selection-start-column="1" selection-end-line="88" selection-end-column="1" />
+          <caret line="88" column="1" selection-start-line="88" selection-start-column="1" selection-end-line="88" selection-end-column="1" />
           <folding>
             <element signature="e#14#31#0" expanded="true" />
             <element signature="e#2063#2075#0" expanded="true" />
@@ -828,10 +805,30 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/class/KNU/utils/Signature.hpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="35" selection-start-line="11" selection-start-column="27" selection-end-line="11" selection-end-column="35" />
+          <folding>
+            <element signature="e#14#32#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/class/KNU/utils/Signature.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="542">
+          <caret line="37" column="14" lean-forward="true" selection-start-line="37" selection-start-column="14" selection-end-line="37" selection-end-column="14" />
+          <folding>
+            <element signature="e#53#77#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/class/KNU/entities/Entity.hpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="587">
-          <caret line="309" selection-start-line="309" selection-end-line="309" />
+        <state relative-caret-position="260">
+          <caret line="150" column="17" selection-start-line="150" selection-start-column="17" selection-end-line="150" selection-end-column="17" />
           <folding>
             <element signature="e#14#28#0" expanded="true" />
             <element signature="e#4748#4760#0" expanded="true" />
@@ -841,8 +838,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/class/KNU/entities/Entity.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="692">
-          <caret line="147" column="5" selection-start-line="147" selection-start-column="5" selection-end-line="147" selection-end-column="5" />
+        <state relative-caret-position="304">
+          <caret line="81" column="50" selection-start-line="81" selection-start-column="50" selection-end-line="81" selection-end-column="50" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>

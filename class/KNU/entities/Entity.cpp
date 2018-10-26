@@ -46,6 +46,7 @@ namespace KNU {
 			  world(world),
 			  _componentManager(componentManager) {
 		_entitiesMap.resize(capacity);
+		_poolSignature.resize(capacity);
 	}
 
 
@@ -61,6 +62,7 @@ namespace KNU {
 			if (size == capacity) {
 				capacity += BASE_ENTITIES_CAPACITY;
 				_entitiesMap.resize(capacity);
+				_poolSignature.resize(capacity);
 			}
 			instance_entity = static_cast<short>(size);
 			size++;
@@ -77,6 +79,7 @@ namespace KNU {
 		assert(entity == _entitiesMap[entity.id]);
 		size--;
 		_entitiesMap[entity.id] = _entitiesMap[size];
+		_poolSignature[entity.id] = _poolSignature[size];
 
 	}
 
