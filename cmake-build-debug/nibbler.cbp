@@ -111,12 +111,6 @@
 		<Unit filename="/Users/alexandreroulin/work/nibbler/class/KNU/managers/Pool.hpp">
 			<Option target="nibbler"/>
 		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/KNU/managers/SystemManager.cpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/KNU/managers/SystemManager.hpp">
-			<Option target="nibbler"/>
-		</Unit>
 		<Unit filename="/Users/alexandreroulin/work/nibbler/class/KNU/systems/System.cpp">
 			<Option target="nibbler"/>
 		</Unit>

@@ -5,6 +5,7 @@
 #include <component/TransformComponent.hpp>
 #include <component/MotionComponent.hpp>
 #include <component/SpriteComponent.hpp>
+#include <systems/MotionSystem.hpp>
 
 
 int main() {
@@ -18,6 +19,8 @@ int main() {
 		entity.addComponent<MotionComponent>(NORTH, 1);
 		entity.addComponent<SpriteComponent>("/vers/l'infini/et/l'au/delà");
 
+		world.getSystemManager().addSystem<MotionSystem>();
+		
 		std::cout << entity.hasComponent<TransformComponent>() << std::endl;
 	}
 

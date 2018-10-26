@@ -204,33 +204,6 @@ class/KNU/entities/Entity.cpp.s:
 	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/entities/Entity.cpp.s
 .PHONY : class/KNU/entities/Entity.cpp.s
 
-class/KNU/managers/SystemManager.o: class/KNU/managers/SystemManager.cpp.o
-
-.PHONY : class/KNU/managers/SystemManager.o
-
-# target to build an object file
-class/KNU/managers/SystemManager.cpp.o:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/managers/SystemManager.cpp.o
-.PHONY : class/KNU/managers/SystemManager.cpp.o
-
-class/KNU/managers/SystemManager.i: class/KNU/managers/SystemManager.cpp.i
-
-.PHONY : class/KNU/managers/SystemManager.i
-
-# target to preprocess a source file
-class/KNU/managers/SystemManager.cpp.i:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/managers/SystemManager.cpp.i
-.PHONY : class/KNU/managers/SystemManager.cpp.i
-
-class/KNU/managers/SystemManager.s: class/KNU/managers/SystemManager.cpp.s
-
-.PHONY : class/KNU/managers/SystemManager.s
-
-# target to generate assembly for a file
-class/KNU/managers/SystemManager.cpp.s:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/managers/SystemManager.cpp.s
-.PHONY : class/KNU/managers/SystemManager.cpp.s
-
 class/KNU/systems/System.o: class/KNU/systems/System.cpp.o
 
 .PHONY : class/KNU/systems/System.o
@@ -384,9 +357,6 @@ help:
 	@echo "... class/KNU/entities/Entity.o"
 	@echo "... class/KNU/entities/Entity.i"
 	@echo "... class/KNU/entities/Entity.s"
-	@echo "... class/KNU/managers/SystemManager.o"
-	@echo "... class/KNU/managers/SystemManager.i"
-	@echo "... class/KNU/managers/SystemManager.s"
 	@echo "... class/KNU/systems/System.o"
 	@echo "... class/KNU/systems/System.i"
 	@echo "... class/KNU/systems/System.s"

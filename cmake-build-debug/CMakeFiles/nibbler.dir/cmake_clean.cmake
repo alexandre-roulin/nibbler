@@ -3,7 +3,6 @@ file(REMOVE_RECURSE
   "CMakeFiles/nibbler.dir/class/cores/main.cpp.o"
   "CMakeFiles/nibbler.dir/class/KNU/component/Component.cpp.o"
   "CMakeFiles/nibbler.dir/class/KNU/World.cpp.o"
-  "CMakeFiles/nibbler.dir/class/KNU/managers/SystemManager.cpp.o"
   "CMakeFiles/nibbler.dir/class/systems/MotionSystem.cpp.o"
   "CMakeFiles/nibbler.dir/class/component/MotionComponent.cpp.o"
   "CMakeFiles/nibbler.dir/class/KNU/systems/System.cpp.o"

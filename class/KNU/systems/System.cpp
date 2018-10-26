@@ -1,6 +1,5 @@
 
 #include "System.hpp"
-#include <KNU/entities/Entity.hpp>
 
 namespace KNU {
 
@@ -26,13 +25,26 @@ namespace KNU {
 		return signature;
 	}
 
-	std::vector <Entity> System::getEntities() {
+	std::vector<Entity> System::getEntities() {
 		return entities;
 	}
 
 	template<typename T>
 	void System::requireComponent() {
 		signature.addComponent<T>();
+	}
+
+	void SystemManager::addToSystems(Entity &entity) {
+		for (auto &system : _systems) {
+			auto sys = system.second;
+			if (entity.getMask().matches(sys->getSignature()))
+				sys->addEntity(entity);
+		}
+	}
+
+	SystemManager::SystemManager(World &world)
+			: _world(world) {
+
 	}
 
 

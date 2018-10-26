@@ -36,13 +36,6 @@ namespace KNU {
 	bool Entity::hasGroup(std::string group) const {
 		return getEntitiesManager().hasEntityInGroup(*this, group);
 	}
-	//		unsigned int size;
-	//		unsigned int capacity;
-	//		World &world;
-	//		ComponentManager &_componentManager;
-	//		std::vector<Entity> _entitiesMap;
-	//		std::unordered_map<std::string, Entity> _taggedEntity;
-	//		std::unordered_map<std::string, std::set<Entity>> _groupedEntities;
 
 	EntitiesManager::EntitiesManager(World &world,
 									 ComponentManager &componentManager)
