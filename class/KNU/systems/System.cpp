@@ -31,10 +31,8 @@ namespace KNU {
 
 
 	void SystemManager::addToSystems(Entity &entity) {
-		std::cout << "SystemManager::addToSystems"  << _systems.size() << std::endl;
 		for (auto &systemMap : _systems) {
 			auto system = systemMap.second;
-			std::cout << "entity : " << entity.getSignature() << "sys : " << system->getSignature() <<  std::endl;
 
 			if (entity.getSignature().matches(system->getSignature())) {
 				system->addEntity(entity);

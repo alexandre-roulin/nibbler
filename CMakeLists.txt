@@ -5,7 +5,6 @@ set(CMAKE_CXX_STANDARD 14)
 
 include_directories(class)
 include_directories(incs)
-include_directories(logger/incs)
 
 add_executable(nibbler
         class/component/MotionComponent.cpp
@@ -25,20 +24,18 @@ add_executable(nibbler
         class/KNU/utils/Signature.hpp
         class/KNU/World.cpp
         class/KNU/World.hpp
+        class/logger/display/logger_debug.cpp
+        class/logger/display/logger_error.cpp
+        class/logger/display/logger_fatal.cpp
+        class/logger/display/logger_info.cpp
+        class/logger/display/logger_success.cpp
+        class/logger/display/logger_trace.cpp
+        class/logger/display/logger_warn.cpp
+        class/logger/logger/logger_init.cpp
+        class/logger/utils/logger_get_time.cpp
+        class/logger/utils/logger_init_open_file.cpp
         class/systems/MotionSystem.cpp
         class/systems/MotionSystem.hpp
-        incs/nibbler.hpp
-        logger/incs/logger.h
-        logger/incs/logger_utils.h
-        logger/srcs/display/logger_debug.c
-        logger/srcs/display/logger_error.c
-        logger/srcs/display/logger_fatal.c
-        logger/srcs/display/logger_info.c
-        logger/srcs/display/logger_success.c
-        logger/srcs/display/logger_trace.c
-        logger/srcs/display/logger_warn.c
-        logger/srcs/logger/logger_close.c
-        logger/srcs/logger/logger_init.c
-        logger/srcs/utils/logger_get_time.c
-        logger/srcs/utils/logger_init_open_file.c
-        logger/test/main.c)
+        incs/logger.h
+        incs/logger_utils.h
+        incs/nibbler.hpp)

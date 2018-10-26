@@ -34,6 +34,7 @@ namespace KNU {
 	void World::update() {
 		for (auto &entity : _createdEntities) {
 			_systemManager->addToSystems(entity);
+
 		}
 		_createdEntities.clear();
 		for (auto &entity : _destroyedEntities) {

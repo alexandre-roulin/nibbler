@@ -12,6 +12,5 @@ int fd(int fd) {
 int	logger_init_open_file(char *log_file)
 {
 	fd(open(log_file, O_WRONLY | O_APPEND | O_CREAT, 0755));
-	std::cout << fd(-1) << std::endl;
 	return fd(-1);
 }

@@ -60,6 +60,7 @@ namespace KNU {
 			return !(rhs == *this);
 		}
 
+		ID getId() const;
 
 		void kill();
 
@@ -104,14 +105,11 @@ namespace KNU {
 
 	public:
 		ComponentManager() {
-			std::cout << "call resize !! " << std::endl;
 			componentPools.resize(COMPONENT_MAX, nullptr);
 			componentPools.size();
 		}
 
 		ComponentManager(ComponentManager const &) {
-			std::cout << "toi ki e kol !! " << std::endl;
-
 		}
 
 		template<typename T>
@@ -152,7 +150,7 @@ namespace KNU {
 								 ComponentManager &componentManager);
 
 		Entity &createEntity();
-
+		Entity::ID getEntityId(Entity const &e) const;
 		void destroyEntity(Entity &entity);
 
 		void tagEntity(Entity &e, std::string &tag);
@@ -267,7 +265,6 @@ namespace KNU {
 	template<typename T>
 	std::shared_ptr<Pool<T>> ComponentManager::accommodateComponent() {
 		const auto componentId = Component<T>::signature();
-		std::cout << "Bonjour je suis l'ID : " << componentId << std::endl;
 
 		if (componentPools[componentId] == nullptr) {
 			std::shared_ptr<Pool<T>> pool(new Pool<T>());
@@ -307,6 +304,8 @@ namespace KNU {
 //			entity.mask.removeComponent<T>();
 		_componentManager.removeComponent<T>(entity);
 	}
+
+
 
 
 }
