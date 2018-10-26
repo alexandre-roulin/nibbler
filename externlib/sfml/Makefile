@@ -10,15 +10,7 @@ CXX= clang++
 CXXFLAGS= -Wall -Wextra -Werror -Wvla -std=c++14 -fsanitize=address -g3 -MMD
 #============HEADERS============#
 
-HEADER_DIR= include/
-HEADER_ALL_DIR= ./include/
-
-HEADER = $(addprefix $(HEADER_DIR), $(HEADER_FILE))
-
-HEADER_FILE = IDisplay.hpp \
-Vector2D.tpp \
-DisplaySdl.hpp \
-stb_image.h \
+HEADER_DIR= ./include/ ../commun/
 
 #============COLORS=============#
 
@@ -31,7 +23,7 @@ EOC=\033[0m
 SRC_DIR = ./src/
 
 SRC_FILE= main.cpp \
-DisplaySdl.cpp
+DisplaySfml.cpp
 
 SRC = $(addprefix $(SRC_DIR), $(SRC_FILE))
 
@@ -48,12 +40,12 @@ UNAME := $(shell uname)
 
 ADDITIONNAL_LIB=
 ifeq ($(UNAME), Linux)
-ADDITIONNAL_LIB += $(shell sdl2-config --cflags --libs) -lSDL2_image
-HEADER_ALL_DIR += $(shell sdl2-config --cflags)
+ADDITIONNAL_LIB += -L /usr/lib/ -lsfml-graphics -lsfml-window -lsfml-system
+HEADER_DIR += -I /usr/include/
 endif
 #ifeq ($(UNAME), OSX)
 #ADDITIONNAL_LIB +=-L ~/.brew/lib/ -lSDL2 -lSDL2_image
-#HEADER_ALL_DIR += ~/.brew/include/
+#HEADER_DIR += ~/.brew/include/
 #endif
 
 #=============RULES=============#
@@ -61,7 +53,7 @@ endif
 all: $(EXE)
 
 lol:
-	@echo $(addprefix "-I ", $(HEADER_ALL_DIR))
+	@echo $(addprefix "-I ", $(HEADER_DIR))
 
 $(EXE): $(OBJ_DIR) $(OBJ)
 	@echo "\t$(EXE)'s objects compiled"
@@ -74,7 +66,7 @@ $(OBJ_DIR) :
 	@mkdir $(OBJ_DIR)/instruction
 
 $(OBJ_DIR)%.o: $(addprefix $(SRC_DIR), %.cpp) Makefile
-	$(CXX) $(CXXFLAGS) -c $< -o $@ $(addprefix -I , $(HEADER_ALL_DIR))
+	$(CXX) $(CXXFLAGS) -c $< -o $@ $(addprefix -I , $(HEADER_DIR))
 	@printf "$(GREEN)+$(EOC)"
 
 clean:
