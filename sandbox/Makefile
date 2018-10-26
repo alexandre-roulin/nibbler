@@ -8,11 +8,10 @@ EXE= td
 
 CXX= clang++
 CXXFLAGS= -Wall -Wextra -Werror -Wvla -std=c++14 -fsanitize=address -g3 -MMD
-BREW_LIB= -L ~/.brew/lib/ -lSDL2 -lSDL2_image
 #============HEADERS============#
 
 HEADER_DIR= include/
-HEADER_ALL_DIR= ./include/ ~/.brew/include/
+HEADER_ALL_DIR= ./include/
 
 HEADER = $(addprefix $(HEADER_DIR), $(HEADER_FILE))
 
@@ -43,6 +42,20 @@ OBJ_FILE= $(SRC_FILE:.cpp=.o)
 
 DEPENDS= $(OBJ:.o=.d)
 
+#==========AGNOSTIC==========#
+
+UNAME := $(shell uname)
+
+ADDITIONNAL_LIB=
+ifeq ($(UNAME), Linux)
+ADDITIONNAL_LIB += $(shell sdl2-config --cflags --libs) -lSDL2_image
+HEADER_ALL_DIR += $(shell sdl2-config --cflags)
+endif
+#ifeq ($(UNAME), OSX)
+#ADDITIONNAL_LIB +=-L ~/.brew/lib/ -lSDL2 -lSDL2_image
+#HEADER_ALL_DIR += ~/.brew/include/
+#endif
+
 #=============RULES=============#
 
 all: $(EXE)
@@ -52,7 +65,7 @@ lol:
 
 $(EXE): $(OBJ_DIR) $(OBJ)
 	@echo "\t$(EXE)'s objects compiled"
-	@$(CXX) $(CXXFLAGS) $(OBJ) $(BREW_LIB) -o $(EXE)
+	$(CXX) $(CXXFLAGS) $(OBJ) $(ADDITIONNAL_LIB) -o $(EXE)
 	@echo "executable $(GREEN)$(EXE)$(EOC) created"
 	@echo "$(GREEN)---------->>>$(EOC)"
 
@@ -61,7 +74,7 @@ $(OBJ_DIR) :
 	@mkdir $(OBJ_DIR)/instruction
 
 $(OBJ_DIR)%.o: $(addprefix $(SRC_DIR), %.cpp) Makefile
-	@$(CXX) $(CXXFLAGS) -c $< -o $@ $(addprefix -I , $(HEADER_ALL_DIR))
+	$(CXX) $(CXXFLAGS) -c $< -o $@ $(addprefix -I , $(HEADER_ALL_DIR))
 	@printf "$(GREEN)+$(EOC)"
 
 clean:
