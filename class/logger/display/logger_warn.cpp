@@ -1,6 +1,6 @@
 #include "logger.h"
 
-void	logger_warn(int fd, char *file, int line, const char *fmt, ...)
+void	logger_warn(int fd, char const *file, int line, const char *fmt, ...)
 {
 	va_list	lst;
 	char	*time;

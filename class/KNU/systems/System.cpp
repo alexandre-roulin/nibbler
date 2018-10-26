@@ -1,5 +1,7 @@
 
+#include <logger.h>
 #include "System.hpp"
+
 namespace KNU {
 
 	void System::addEntity(Entity &entity) {
@@ -12,7 +14,9 @@ namespace KNU {
 				std::remove_if(
 						entities.begin(),
 						entities.end(),
-						[&entity](Entity other) { return entity == other; }),
+						[&entity](Entity other) {
+							return entity == other;
+						}),
 				entities.end());
 	}
 
@@ -27,7 +31,6 @@ namespace KNU {
 	std::vector<Entity> System::getEntities() {
 		return entities;
 	}
-
 
 
 	void SystemManager::addToSystems(Entity &entity) {
@@ -45,12 +48,13 @@ namespace KNU {
 
 	}
 
-	void SystemManager::removeToSystems(Entity & entity) {
+	void SystemManager::removeToSystems(Entity &entity) {
 		for (auto &systemMap : _systems) {
 			auto system = systemMap.second;
 			if (entity.getSignature().matches(system->getSignature()))
 				system->removeEntity(entity);
-		}	}
+		}
+	}
 
 
 }
