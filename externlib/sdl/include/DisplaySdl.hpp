@@ -62,10 +62,11 @@ private:
     void	                _drawGrid(SDL_Surface *, Grid<int> const &grid);
     void                    _drawTileGrid(SDL_Surface *, int indexWidthTile, int indexHeightTile, int indexWidth, int indexHeight);
     void	                _drawTileGrid(SDL_Surface *, int indexTile, int indexWidth, int indexHeight);
+
     SDL_Rect	            _getRectTile(int width, int height);
     SDL_Rect	            _getRectTilePixel(int width, int height);
 
-    void                  _error(void);
+    void                    _error(void);
     void                    _clean(void);
 
     DisplaySdl          &operator=(DisplaySdl const &rhs);

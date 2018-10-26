@@ -37,7 +37,6 @@ class DisplaySfml : public IDisplay {
     void		drawTilePixel(int indexTile, int indexWidthPixel, int indexHeightPixel);
 	void		drawTilePixel(int indexWidthTile, int indexHeightTile, int indexWidthPixel, int indexHeightPixel);
 	void		drawGrid(Grid<int> const &grid);
-	void		_drawGrid(sf::RenderTarget &, Grid<int> const &grid);
 	void		setBackground(Grid<int> const &grid);
 
     eDirection  getDirection(void) const;
@@ -58,14 +57,15 @@ private:
 	int						_tilesetWidth;
     sf::Event               _ev;
 
-    void		_drawTileGrid(sf::RenderTarget &, int indexTile, int indexWidthGrid, int indexHeightGrid);
-	void		_drawTileGrid(sf::RenderTarget &, int indexWidthTile, int indexHeightTile, int indexWidthGrid, int indexHeightGrid);
+    void		        _drawGrid(sf::RenderTarget &, Grid<int> const &grid);
+    void		        _drawTileGrid(sf::RenderTarget &, int indexTile, int indexWidthGrid, int indexHeightGrid);
+	void		        _drawTileGrid(sf::RenderTarget &, int indexWidthTile, int indexHeightTile, int indexWidthGrid, int indexHeightGrid);
 
+    sf::VertexArray		_getQuadTilePixel(int indexWidthTile, int indexHeightTile, int indexWidthGrid, int indexHeightGrid);
 
     void                _error(std::string);
     void                _clean(void);
 
-    sf::VertexArray		_getQuadTilePixel(int indexWidthTile, int indexHeightTile, int indexWidthGrid, int indexHeightGrid);
 
     DisplaySfml          &operator=(DisplaySfml const &rhs);
     DisplaySfml(DisplaySfml const &src);
