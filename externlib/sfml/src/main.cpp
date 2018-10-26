@@ -9,6 +9,9 @@ int         main(int argc, char **argv)
     while (!sfml.exit())
     {
         sfml.update();
+        sfml.drawTile(0, 0, 0);
+        sfml.drawTile(1, 1, 1);
+        sfml.drawTile(2, 2, 2);
         sfml.render();
     }
 /*

@@ -31,19 +31,19 @@ class DisplaySfml : public IDisplay {
     bool        exit(void) const;
     void        render(void);
     void        update(void);
-/*
-	void		drawColorTile(int indexWidth, int indexHeight, int color);
+
+//	void		drawColorTile(int indexWidth, int indexHeight, int color);
 	void		drawTile(int indexTile, int indexWidth, int indexHeight);
-	void		drawTile(int indexWidthTile, int indexHeightTile, int indexWidth, int indexHeight);
-	void		drawColorTile(SDL_Surface *, int indexWidth, int indexHeight, int color);
-	void		drawTile(SDL_Surface *, int indexTile, int indexWidth, int indexHeight);
-	void		drawTile(SDL_Surface *, int indexWidthTile, int indexHeightTile, int indexWidth, int indexHeight);
+//	void		drawTile(int indexWidthTile, int indexHeightTile, int indexWidth, int indexHeight);
+//	void		drawColorTile(SDL_Surface *, int indexWidth, int indexHeight, int color);
+	void		drawTile(sf::RenderTarget &, int indexTile, int indexWidth, int indexHeight);
+//	void		drawTile(SDL_Surface *, int indexWidthTile, int indexHeightTile, int indexWidth, int indexHeight);
 
 	void		drawGrid(Grid<int> const &grid);
-	void		drawGrid(SDL_Surface *, Grid<int> const &grid);
+	void		drawGrid(sf::RenderTarget &, Grid<int> const &grid);
 
 	void		setBackground(Grid<int> const &grid);
-*/
+
 private:
     bool					_exit;
 	int						_tileSize;
@@ -53,7 +53,11 @@ private:
     sf::RenderWindow		_win;
 
     sf::Texture				_tileset;
-    sf::Texture				_background;
+    sf::RenderTexture       _textureRenderer;
+    sf::Sprite              _spriteRenderer;
+    sf::RenderTexture       _textureBackground;
+    sf::Sprite              _spriteBackground;
+
 
 	int						_tilesetWidth;
     sf::Event               _ev;
