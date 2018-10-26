@@ -32,12 +32,8 @@ class DisplaySfml : public IDisplay {
     void        render(void);
     void        update(void);
 
-//	void		drawColorTile(int indexWidth, int indexHeight, int color);
-	void		drawTile(int indexTile, int indexWidth, int indexHeight);
-//	void		drawTile(int indexWidthTile, int indexHeightTile, int indexWidth, int indexHeight);
-//	void		drawColorTile(SDL_Surface *, int indexWidth, int indexHeight, int color);
-	void		drawTile(sf::RenderTarget &, int indexTile, int indexWidth, int indexHeight);
-//	void		drawTile(SDL_Surface *, int indexWidthTile, int indexHeightTile, int indexWidth, int indexHeight);
+	void		drawTile(int indexTile, int indexWidthGrid, int indexHeightGrid);
+	void		drawTile(int indexWidthTile, int indexHeightTile, int indexWidthGrid, int indexHeightGrid);
 
 	void		drawGrid(Grid<int> const &grid);
 	void		drawGrid(sf::RenderTarget &, Grid<int> const &grid);
@@ -53,8 +49,6 @@ private:
     sf::RenderWindow		_win;
 
     sf::Texture				_tileset;
-    sf::RenderTexture       _textureRenderer;
-    sf::Sprite              _spriteRenderer;
     sf::RenderTexture       _textureBackground;
     sf::Sprite              _spriteBackground;
 
@@ -62,8 +56,14 @@ private:
 	int						_tilesetWidth;
     sf::Event               _ev;
 
+    void		_drawTile(sf::RenderTarget &, int indexTile, int indexWidthGrid, int indexHeightGrid);
+	void		_drawTile(sf::RenderTarget &, int indexWidthTile, int indexHeightTile, int indexWidthGrid, int indexHeightGrid);
+
+
     void                _error(std::string);
     void                _clean(void);
+
+    sf::VertexArray		_getQuadTile(int indexWidthTile, int indexHeightTile, int indexWidthGrid, int indexHeightGrid);
 
     DisplaySfml          &operator=(DisplaySfml const &rhs);
     DisplaySfml(DisplaySfml const &src);

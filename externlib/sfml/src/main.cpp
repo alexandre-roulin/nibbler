@@ -6,6 +6,13 @@ int         main(int argc, char **argv)
     static_cast<void>(argv);
     DisplaySfml sfml("../sdl/tileset1.png", 32, 30, 30, "lol");
 
+    Grid<int> grid(30, 30);
+
+	grid.fill(0);
+	grid.setBorder(1);
+
+	sfml.setBackground(grid);
+
     while (!sfml.exit())
     {
         sfml.update();
