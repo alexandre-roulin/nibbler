@@ -35,6 +35,8 @@ namespace KNU {
 	public:
 		Entity() : id(-1) {};
 
+		Entity &operator=(Entity const &);
+
 		bool operator<(const Entity &rhs) const {
 			return id < rhs.id;
 		}

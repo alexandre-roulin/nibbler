@@ -27,14 +27,13 @@ int main() {
 
 		init(world, "snake1");
 		init(world, "snake2");
-		init(world, "snake3");
-		init(world, "snake4");
 		world.getSystemManager().addSystem<MotionSystem>();
+
+
 		for (int index = 0; index < 2; ++index) {
 			world.update();
 			world.getSystemManager().getSystem<MotionSystem>()->update();
-			auto position = world.getEntityManager().getEntitiesByGroup(
-					"snake");
+			auto position = world.getEntityManager().getEntitiesByGroup("snake");
 			for (const auto &item : position) {
 				auto &pos = item.getComponent<TransformComponent>();
 				log_debug("ID: %d x : %d y : %d", item.getId(), pos.x, pos.y);
@@ -44,6 +43,19 @@ int main() {
 		auto entitySnake1 = world.getEntityManager().getEntityByTag("snake1");
 
 		entitySnake1.kill();
+
+		for (int index = 0; index < 2; ++index) {
+			world.update();
+			world.getSystemManager().getSystem<MotionSystem>()->update();
+			auto position = world.getEntityManager().getEntitiesByGroup(
+					"snake");
+			for (const auto &item : position) {
+				auto &pos = item.getComponent<TransformComponent>();
+				log_debug("Tag : %d x : %d y : %d", item.getId(), pos.x, pos.y);
+			}
+		}
+
+		init(world, "snake3");
 
 		for (int index = 0; index < 2; ++index) {
 			world.update();

@@ -1,3 +1,4 @@
+#include <logger.h>
 #include "World.hpp"
 
 namespace KNU {
@@ -28,9 +29,16 @@ namespace KNU {
 	}
 
 	void World::destroyEntity(Entity &e) {
+		log_success("World::destroyEntity [%d]", e.getId());
 		_destroyedEntities.push_back(e);
 	}
+// T 0000 0001
+// M 0000 0010
+// S 0000 0100
 
+// E 0000 0111
+
+// S 0000 0011
 	void World::update() {
 		for (auto &entity : _createdEntities) {
 			_systemManager->addToSystems(entity);
@@ -39,6 +47,7 @@ namespace KNU {
 		_createdEntities.clear();
 		for (auto &entity : _destroyedEntities) {
 			_systemManager->removeToSystems(entity);
+			_entityManager->destroyEntity(entity);
 		}
 		_destroyedEntities.clear();
 	}

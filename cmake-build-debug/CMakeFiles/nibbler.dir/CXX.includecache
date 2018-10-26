@@ -96,13 +96,11 @@ KNU/component/Component.hpp
 KNU/systems/System.hpp
 -
 
-../incs/nibbler.hpp
-
-../logger/incs/logger.h
+../incs/logger.h
 logger_utils.h
-../logger/incs/logger_utils.h
+../incs/logger_utils.h
 
-../logger/incs/logger_utils.h
+../incs/logger_utils.h
 stdarg.h
 -
 stdio.h
@@ -118,7 +116,11 @@ string.h
 unistd.h
 -
 
+../incs/nibbler.hpp
+
 /Users/alexandreroulin/work/nibbler/class/KNU/World.cpp
+logger.h
+-
 World.hpp
 /Users/alexandreroulin/work/nibbler/class/KNU/World.hpp
 
@@ -134,6 +136,8 @@ Entity.hpp
 KNU/utils/Signature.hpp
 -
 KNU/World.hpp
+-
+logger.h
 -
 
 /Users/alexandreroulin/work/nibbler/class/KNU/entities/Entity.hpp
@@ -163,6 +167,8 @@ queue
 -
 
 /Users/alexandreroulin/work/nibbler/class/KNU/systems/System.cpp
+logger.h
+-
 System.hpp
 /Users/alexandreroulin/work/nibbler/class/KNU/systems/System.hpp
 
@@ -192,22 +198,6 @@ ostream
 KNU/component/Component.hpp
 -
 
-/Users/alexandreroulin/work/nibbler/class/component/MotionComponent.cpp
-MotionComponent.hpp
-/Users/alexandreroulin/work/nibbler/class/component/MotionComponent.hpp
-KNU/utils/Signature.hpp
--
-KNU/component/Component.hpp
--
-
-/Users/alexandreroulin/work/nibbler/class/component/MotionComponent.hpp
-ostream
--
-nibbler.hpp
--
-KNU/utils/Signature.hpp
--
-
 /Users/alexandreroulin/work/nibbler/class/cores/main.cpp
 iostream
 -
@@ -224,6 +214,48 @@ component/SpriteComponent.hpp
 systems/MotionSystem.hpp
 -
 logger.h
+-
+
+/Users/alexandreroulin/work/nibbler/class/logger/display/logger_debug.cpp
+logger.h
+-
+
+/Users/alexandreroulin/work/nibbler/class/logger/display/logger_error.cpp
+logger.h
+/Users/alexandreroulin/work/nibbler/class/logger/display/logger.h
+
+/Users/alexandreroulin/work/nibbler/class/logger/display/logger_fatal.cpp
+logger.h
+/Users/alexandreroulin/work/nibbler/class/logger/display/logger.h
+
+/Users/alexandreroulin/work/nibbler/class/logger/display/logger_info.cpp
+logger.h
+/Users/alexandreroulin/work/nibbler/class/logger/display/logger.h
+
+/Users/alexandreroulin/work/nibbler/class/logger/display/logger_success.cpp
+logger.h
+/Users/alexandreroulin/work/nibbler/class/logger/display/logger.h
+
+/Users/alexandreroulin/work/nibbler/class/logger/display/logger_trace.cpp
+logger.h
+/Users/alexandreroulin/work/nibbler/class/logger/display/logger.h
+
+/Users/alexandreroulin/work/nibbler/class/logger/display/logger_warn.cpp
+logger.h
+/Users/alexandreroulin/work/nibbler/class/logger/display/logger.h
+
+/Users/alexandreroulin/work/nibbler/class/logger/logger/logger_init.cpp
+logger.h
+-
+
+/Users/alexandreroulin/work/nibbler/class/logger/utils/logger_get_time.cpp
+logger.h
+/Users/alexandreroulin/work/nibbler/class/logger/utils/logger.h
+
+/Users/alexandreroulin/work/nibbler/class/logger/utils/logger_init_open_file.cpp
+logger.h
+-
+iostream
 -
 
 /Users/alexandreroulin/work/nibbler/class/systems/MotionSystem.cpp

@@ -3,6 +3,7 @@
 #include "Entity.hpp"
 #include <KNU/utils/Signature.hpp>
 #include <KNU/World.hpp>
+#include <logger.h>
 
 namespace KNU {
 
@@ -43,6 +44,15 @@ namespace KNU {
 		return getEntitiesManager().getEntityId(*this);
 	}
 
+	Entity &Entity::operator=(Entity const &entity) {
+		if (this != &entity) {
+			id = entity.id;
+			this->alive = entity.alive;
+			entityManager = entity.entityManager;
+		}
+		return *this;
+	}
+
 	EntitiesManager::EntitiesManager(World &world,
 									 ComponentManager &componentManager)
 			: size(0),
@@ -79,9 +89,17 @@ namespace KNU {
 	}
 
 	void EntitiesManager::destroyEntity(Entity &entity) {
-		assert(entity.id < static_cast<int>(size));
-		assert(entity == _entitiesMap[entity.id]);
+		log_success("EntitiesManager::destroyEntity");
 		freeIds.push(entity.getId());
+		_poolSignature[entity.id].clean();
+		// if tagged, remove entity from tag management
+		for (auto &groupEntity : _groupedEntities) {
+			auto find = groupEntity.second.find(entity);
+			if (find != groupEntity.second.end())
+				groupEntity.second.erase(find);
+		}
+
+		// if in group, remove entity from group management
 	}
 
 	void EntitiesManager::killEntity(Entity &entity) {

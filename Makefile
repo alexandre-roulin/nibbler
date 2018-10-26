@@ -101,10 +101,10 @@ CPPFLAGS	= \
 
 CFLAGS		= \
 			-std=c++17						\
-			-Wall -Werror -Wextra					\
 			-fsanitize=address					\
 			-g3							\
-			
+#			-Wall -Werror -Wextra					\
+
 
 # ---------------------------------------------------------------------------- #
 # /!\ SOURCE NORMALIZATION AND COMPILATION RULES /!\                           #

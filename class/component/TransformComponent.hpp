@@ -13,7 +13,23 @@ struct TransformComponent {
 	};
 
 	int y, x;
+
 	KNU::Signature mask;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	TransformComponent &
 	operator=(TransformComponent const &motionComponent) {
