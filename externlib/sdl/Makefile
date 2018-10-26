@@ -2,7 +2,7 @@
 
 #==========EXECUTABLES==========#
 
-EXE= td
+EXE= nibbler_sdl.so
 
 #=======COMPILER AND FLAGS======#
 
@@ -57,7 +57,7 @@ lol:
 
 $(EXE): $(OBJ_DIR) $(OBJ)
 	@echo "\t$(EXE)'s objects compiled"
-	$(CXX) $(CXXFLAGS) $(OBJ) $(ADDITIONNAL_LIB) -o $(EXE)
+	$(CXX) $(CXXFLAGS) $(OBJ) $(ADDITIONNAL_LIB) -shared -fPIC -o $(EXE)
 	@echo "executable $(GREEN)$(EXE)$(EOC) created"
 	@echo "$(GREEN)---------->>>$(EOC)"
 

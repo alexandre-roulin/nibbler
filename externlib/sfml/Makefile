@@ -2,7 +2,7 @@
 
 #==========EXECUTABLES==========#
 
-EXE= td
+EXE= nibbler_sfml.so
 
 #=======COMPILER AND FLAGS======#
 
@@ -22,8 +22,7 @@ EOC=\033[0m
 
 SRC_DIR = ./src/
 
-SRC_FILE= main.cpp \
-DisplaySfml.cpp
+SRC_FILE= DisplaySfml.cpp
 
 SRC = $(addprefix $(SRC_DIR), $(SRC_FILE))
 
@@ -57,8 +56,8 @@ lol:
 
 $(EXE): $(OBJ_DIR) $(OBJ)
 	@echo "\t$(EXE)'s objects compiled"
-	$(CXX) $(CXXFLAGS) $(OBJ) $(ADDITIONNAL_LIB) -o $(EXE)
-	@echo "executable $(GREEN)$(EXE)$(EOC) created"
+	$(CXX) $(CXXFLAGS) $(OBJ) $(ADDITIONNAL_LIB) -shared -fPIC -o $(EXE)
+	@echo "Dynamic Library $(GREEN)$(EXE)$(EOC) created"
 	@echo "$(GREEN)---------->>>$(EOC)"
 
 $(OBJ_DIR) :

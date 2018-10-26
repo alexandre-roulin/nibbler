@@ -1,6 +1,20 @@
 #include <iostream>
 #include "DisplaySfml.hpp"
 
+IDisplay			*newDisplay(char const *tileset,
+						int tileSize,
+						int width,
+						int height,
+						char const *windowName)
+{
+	return (new DisplaySfml(tileset, tileSize, width, height, windowName));
+}
+
+void				deleteDisplay(IDisplay *display)
+{
+	delete display;
+}
+
 DisplaySfml::DisplaySfml(char const *tileset,
 						int tileSize,
 						int width,
@@ -14,9 +28,9 @@ DisplaySfml::DisplaySfml(char const *tileset,
                         this->_winPixelSize.getY()),
         				windowName)
 {
+	std::cout << "SFML" << std::endl;
     static_cast<void>(tileset);
     this->_win.setFramerateLimit(60);
-
 
     if (!this->_tileset.loadFromFile(tileset))
         this->_error("Tileset cannot be load");

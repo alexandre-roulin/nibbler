@@ -75,3 +75,12 @@ private:
 
 	static SDL_Surface * _SdlSurface(int widht, int height);
 };
+
+extern "C" {
+    IDisplay			*newDisplay(char const *tileset,
+    						int tileSize,
+    						int width,
+    						int height,
+    						char const *windowName);
+    void				deleteDisplay(IDisplay *display);
+}

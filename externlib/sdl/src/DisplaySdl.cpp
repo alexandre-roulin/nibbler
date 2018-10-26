@@ -1,6 +1,20 @@
 #include <iostream>
 #include "DisplaySdl.hpp"
 
+IDisplay			*newDisplay(char const *tileset,
+						int tileSize,
+						int width,
+						int height,
+						char const *windowName)
+{
+	return (new DisplaySdl(tileset, tileSize, width, height, windowName));
+}
+
+void				deleteDisplay(IDisplay *display)
+{
+	delete display;
+}
+
 DisplaySdl::DisplaySdl(char const *tileset,
 						int tileSize,
 						int width,
@@ -15,6 +29,7 @@ DisplaySdl::DisplaySdl(char const *tileset,
     _rendererTexture(NULL),
     _renderer(NULL)
 {
+	std::cout << "SDL" << std::endl;
     if (SDL_Init(SDL_INIT_VIDEO) < 0 || IMG_Init(IMG_INIT_PNG) < 0)
         this->_error();
 

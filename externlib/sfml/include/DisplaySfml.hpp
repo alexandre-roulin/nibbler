@@ -4,7 +4,6 @@
 #include <exception>
 #include "IDisplay.hpp"
 #include "Vector2D.tpp"
-#include "Grid.tpp"
 
 class DisplaySfml : public IDisplay {
     public:
@@ -71,3 +70,12 @@ private:
     DisplaySfml(DisplaySfml const &src);
     DisplaySfml(void);
 };
+
+extern "C" {
+    IDisplay			*newDisplay(char const *tileset,
+    						int tileSize,
+    						int width,
+    						int height,
+    						char const *windowName);
+    void				deleteDisplay(IDisplay *display);
+}
