@@ -339,6 +339,330 @@ class/systems/MotionSystem.cpp.s:
 	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/systems/MotionSystem.cpp.s
 .PHONY : class/systems/MotionSystem.cpp.s
 
+logger/srcs/display/logger_debug.o: logger/srcs/display/logger_debug.c.o
+
+.PHONY : logger/srcs/display/logger_debug.o
+
+# target to build an object file
+logger/srcs/display/logger_debug.c.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/logger/srcs/display/logger_debug.c.o
+.PHONY : logger/srcs/display/logger_debug.c.o
+
+logger/srcs/display/logger_debug.i: logger/srcs/display/logger_debug.c.i
+
+.PHONY : logger/srcs/display/logger_debug.i
+
+# target to preprocess a source file
+logger/srcs/display/logger_debug.c.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/logger/srcs/display/logger_debug.c.i
+.PHONY : logger/srcs/display/logger_debug.c.i
+
+logger/srcs/display/logger_debug.s: logger/srcs/display/logger_debug.c.s
+
+.PHONY : logger/srcs/display/logger_debug.s
+
+# target to generate assembly for a file
+logger/srcs/display/logger_debug.c.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/logger/srcs/display/logger_debug.c.s
+.PHONY : logger/srcs/display/logger_debug.c.s
+
+logger/srcs/display/logger_error.o: logger/srcs/display/logger_error.c.o
+
+.PHONY : logger/srcs/display/logger_error.o
+
+# target to build an object file
+logger/srcs/display/logger_error.c.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/logger/srcs/display/logger_error.c.o
+.PHONY : logger/srcs/display/logger_error.c.o
+
+logger/srcs/display/logger_error.i: logger/srcs/display/logger_error.c.i
+
+.PHONY : logger/srcs/display/logger_error.i
+
+# target to preprocess a source file
+logger/srcs/display/logger_error.c.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/logger/srcs/display/logger_error.c.i
+.PHONY : logger/srcs/display/logger_error.c.i
+
+logger/srcs/display/logger_error.s: logger/srcs/display/logger_error.c.s
+
+.PHONY : logger/srcs/display/logger_error.s
+
+# target to generate assembly for a file
+logger/srcs/display/logger_error.c.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/logger/srcs/display/logger_error.c.s
+.PHONY : logger/srcs/display/logger_error.c.s
+
+logger/srcs/display/logger_fatal.o: logger/srcs/display/logger_fatal.c.o
+
+.PHONY : logger/srcs/display/logger_fatal.o
+
+# target to build an object file
+logger/srcs/display/logger_fatal.c.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/logger/srcs/display/logger_fatal.c.o
+.PHONY : logger/srcs/display/logger_fatal.c.o
+
+logger/srcs/display/logger_fatal.i: logger/srcs/display/logger_fatal.c.i
+
+.PHONY : logger/srcs/display/logger_fatal.i
+
+# target to preprocess a source file
+logger/srcs/display/logger_fatal.c.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/logger/srcs/display/logger_fatal.c.i
+.PHONY : logger/srcs/display/logger_fatal.c.i
+
+logger/srcs/display/logger_fatal.s: logger/srcs/display/logger_fatal.c.s
+
+.PHONY : logger/srcs/display/logger_fatal.s
+
+# target to generate assembly for a file
+logger/srcs/display/logger_fatal.c.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/logger/srcs/display/logger_fatal.c.s
+.PHONY : logger/srcs/display/logger_fatal.c.s
+
+logger/srcs/display/logger_info.o: logger/srcs/display/logger_info.c.o
+
+.PHONY : logger/srcs/display/logger_info.o
+
+# target to build an object file
+logger/srcs/display/logger_info.c.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/logger/srcs/display/logger_info.c.o
+.PHONY : logger/srcs/display/logger_info.c.o
+
+logger/srcs/display/logger_info.i: logger/srcs/display/logger_info.c.i
+
+.PHONY : logger/srcs/display/logger_info.i
+
+# target to preprocess a source file
+logger/srcs/display/logger_info.c.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/logger/srcs/display/logger_info.c.i
+.PHONY : logger/srcs/display/logger_info.c.i
+
+logger/srcs/display/logger_info.s: logger/srcs/display/logger_info.c.s
+
+.PHONY : logger/srcs/display/logger_info.s
+
+# target to generate assembly for a file
+logger/srcs/display/logger_info.c.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/logger/srcs/display/logger_info.c.s
+.PHONY : logger/srcs/display/logger_info.c.s
+
+logger/srcs/display/logger_success.o: logger/srcs/display/logger_success.c.o
+
+.PHONY : logger/srcs/display/logger_success.o
+
+# target to build an object file
+logger/srcs/display/logger_success.c.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/logger/srcs/display/logger_success.c.o
+.PHONY : logger/srcs/display/logger_success.c.o
+
+logger/srcs/display/logger_success.i: logger/srcs/display/logger_success.c.i
+
+.PHONY : logger/srcs/display/logger_success.i
+
+# target to preprocess a source file
+logger/srcs/display/logger_success.c.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/logger/srcs/display/logger_success.c.i
+.PHONY : logger/srcs/display/logger_success.c.i
+
+logger/srcs/display/logger_success.s: logger/srcs/display/logger_success.c.s
+
+.PHONY : logger/srcs/display/logger_success.s
+
+# target to generate assembly for a file
+logger/srcs/display/logger_success.c.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/logger/srcs/display/logger_success.c.s
+.PHONY : logger/srcs/display/logger_success.c.s
+
+logger/srcs/display/logger_trace.o: logger/srcs/display/logger_trace.c.o
+
+.PHONY : logger/srcs/display/logger_trace.o
+
+# target to build an object file
+logger/srcs/display/logger_trace.c.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/logger/srcs/display/logger_trace.c.o
+.PHONY : logger/srcs/display/logger_trace.c.o
+
+logger/srcs/display/logger_trace.i: logger/srcs/display/logger_trace.c.i
+
+.PHONY : logger/srcs/display/logger_trace.i
+
+# target to preprocess a source file
+logger/srcs/display/logger_trace.c.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/logger/srcs/display/logger_trace.c.i
+.PHONY : logger/srcs/display/logger_trace.c.i
+
+logger/srcs/display/logger_trace.s: logger/srcs/display/logger_trace.c.s
+
+.PHONY : logger/srcs/display/logger_trace.s
+
+# target to generate assembly for a file
+logger/srcs/display/logger_trace.c.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/logger/srcs/display/logger_trace.c.s
+.PHONY : logger/srcs/display/logger_trace.c.s
+
+logger/srcs/display/logger_warn.o: logger/srcs/display/logger_warn.c.o
+
+.PHONY : logger/srcs/display/logger_warn.o
+
+# target to build an object file
+logger/srcs/display/logger_warn.c.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/logger/srcs/display/logger_warn.c.o
+.PHONY : logger/srcs/display/logger_warn.c.o
+
+logger/srcs/display/logger_warn.i: logger/srcs/display/logger_warn.c.i
+
+.PHONY : logger/srcs/display/logger_warn.i
+
+# target to preprocess a source file
+logger/srcs/display/logger_warn.c.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/logger/srcs/display/logger_warn.c.i
+.PHONY : logger/srcs/display/logger_warn.c.i
+
+logger/srcs/display/logger_warn.s: logger/srcs/display/logger_warn.c.s
+
+.PHONY : logger/srcs/display/logger_warn.s
+
+# target to generate assembly for a file
+logger/srcs/display/logger_warn.c.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/logger/srcs/display/logger_warn.c.s
+.PHONY : logger/srcs/display/logger_warn.c.s
+
+logger/srcs/logger/logger_close.o: logger/srcs/logger/logger_close.c.o
+
+.PHONY : logger/srcs/logger/logger_close.o
+
+# target to build an object file
+logger/srcs/logger/logger_close.c.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/logger/srcs/logger/logger_close.c.o
+.PHONY : logger/srcs/logger/logger_close.c.o
+
+logger/srcs/logger/logger_close.i: logger/srcs/logger/logger_close.c.i
+
+.PHONY : logger/srcs/logger/logger_close.i
+
+# target to preprocess a source file
+logger/srcs/logger/logger_close.c.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/logger/srcs/logger/logger_close.c.i
+.PHONY : logger/srcs/logger/logger_close.c.i
+
+logger/srcs/logger/logger_close.s: logger/srcs/logger/logger_close.c.s
+
+.PHONY : logger/srcs/logger/logger_close.s
+
+# target to generate assembly for a file
+logger/srcs/logger/logger_close.c.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/logger/srcs/logger/logger_close.c.s
+.PHONY : logger/srcs/logger/logger_close.c.s
+
+logger/srcs/logger/logger_init.o: logger/srcs/logger/logger_init.c.o
+
+.PHONY : logger/srcs/logger/logger_init.o
+
+# target to build an object file
+logger/srcs/logger/logger_init.c.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/logger/srcs/logger/logger_init.c.o
+.PHONY : logger/srcs/logger/logger_init.c.o
+
+logger/srcs/logger/logger_init.i: logger/srcs/logger/logger_init.c.i
+
+.PHONY : logger/srcs/logger/logger_init.i
+
+# target to preprocess a source file
+logger/srcs/logger/logger_init.c.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/logger/srcs/logger/logger_init.c.i
+.PHONY : logger/srcs/logger/logger_init.c.i
+
+logger/srcs/logger/logger_init.s: logger/srcs/logger/logger_init.c.s
+
+.PHONY : logger/srcs/logger/logger_init.s
+
+# target to generate assembly for a file
+logger/srcs/logger/logger_init.c.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/logger/srcs/logger/logger_init.c.s
+.PHONY : logger/srcs/logger/logger_init.c.s
+
+logger/srcs/utils/logger_get_time.o: logger/srcs/utils/logger_get_time.c.o
+
+.PHONY : logger/srcs/utils/logger_get_time.o
+
+# target to build an object file
+logger/srcs/utils/logger_get_time.c.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/logger/srcs/utils/logger_get_time.c.o
+.PHONY : logger/srcs/utils/logger_get_time.c.o
+
+logger/srcs/utils/logger_get_time.i: logger/srcs/utils/logger_get_time.c.i
+
+.PHONY : logger/srcs/utils/logger_get_time.i
+
+# target to preprocess a source file
+logger/srcs/utils/logger_get_time.c.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/logger/srcs/utils/logger_get_time.c.i
+.PHONY : logger/srcs/utils/logger_get_time.c.i
+
+logger/srcs/utils/logger_get_time.s: logger/srcs/utils/logger_get_time.c.s
+
+.PHONY : logger/srcs/utils/logger_get_time.s
+
+# target to generate assembly for a file
+logger/srcs/utils/logger_get_time.c.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/logger/srcs/utils/logger_get_time.c.s
+.PHONY : logger/srcs/utils/logger_get_time.c.s
+
+logger/srcs/utils/logger_init_open_file.o: logger/srcs/utils/logger_init_open_file.c.o
+
+.PHONY : logger/srcs/utils/logger_init_open_file.o
+
+# target to build an object file
+logger/srcs/utils/logger_init_open_file.c.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/logger/srcs/utils/logger_init_open_file.c.o
+.PHONY : logger/srcs/utils/logger_init_open_file.c.o
+
+logger/srcs/utils/logger_init_open_file.i: logger/srcs/utils/logger_init_open_file.c.i
+
+.PHONY : logger/srcs/utils/logger_init_open_file.i
+
+# target to preprocess a source file
+logger/srcs/utils/logger_init_open_file.c.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/logger/srcs/utils/logger_init_open_file.c.i
+.PHONY : logger/srcs/utils/logger_init_open_file.c.i
+
+logger/srcs/utils/logger_init_open_file.s: logger/srcs/utils/logger_init_open_file.c.s
+
+.PHONY : logger/srcs/utils/logger_init_open_file.s
+
+# target to generate assembly for a file
+logger/srcs/utils/logger_init_open_file.c.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/logger/srcs/utils/logger_init_open_file.c.s
+.PHONY : logger/srcs/utils/logger_init_open_file.c.s
+
+logger/test/main.o: logger/test/main.c.o
+
+.PHONY : logger/test/main.o
+
+# target to build an object file
+logger/test/main.c.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/logger/test/main.c.o
+.PHONY : logger/test/main.c.o
+
+logger/test/main.i: logger/test/main.c.i
+
+.PHONY : logger/test/main.i
+
+# target to preprocess a source file
+logger/test/main.c.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/logger/test/main.c.i
+.PHONY : logger/test/main.c.i
+
+logger/test/main.s: logger/test/main.c.s
+
+.PHONY : logger/test/main.s
+
+# target to generate assembly for a file
+logger/test/main.c.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/logger/test/main.c.s
+.PHONY : logger/test/main.c.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -372,6 +696,42 @@ help:
 	@echo "... class/systems/MotionSystem.o"
 	@echo "... class/systems/MotionSystem.i"
 	@echo "... class/systems/MotionSystem.s"
+	@echo "... logger/srcs/display/logger_debug.o"
+	@echo "... logger/srcs/display/logger_debug.i"
+	@echo "... logger/srcs/display/logger_debug.s"
+	@echo "... logger/srcs/display/logger_error.o"
+	@echo "... logger/srcs/display/logger_error.i"
+	@echo "... logger/srcs/display/logger_error.s"
+	@echo "... logger/srcs/display/logger_fatal.o"
+	@echo "... logger/srcs/display/logger_fatal.i"
+	@echo "... logger/srcs/display/logger_fatal.s"
+	@echo "... logger/srcs/display/logger_info.o"
+	@echo "... logger/srcs/display/logger_info.i"
+	@echo "... logger/srcs/display/logger_info.s"
+	@echo "... logger/srcs/display/logger_success.o"
+	@echo "... logger/srcs/display/logger_success.i"
+	@echo "... logger/srcs/display/logger_success.s"
+	@echo "... logger/srcs/display/logger_trace.o"
+	@echo "... logger/srcs/display/logger_trace.i"
+	@echo "... logger/srcs/display/logger_trace.s"
+	@echo "... logger/srcs/display/logger_warn.o"
+	@echo "... logger/srcs/display/logger_warn.i"
+	@echo "... logger/srcs/display/logger_warn.s"
+	@echo "... logger/srcs/logger/logger_close.o"
+	@echo "... logger/srcs/logger/logger_close.i"
+	@echo "... logger/srcs/logger/logger_close.s"
+	@echo "... logger/srcs/logger/logger_init.o"
+	@echo "... logger/srcs/logger/logger_init.i"
+	@echo "... logger/srcs/logger/logger_init.s"
+	@echo "... logger/srcs/utils/logger_get_time.o"
+	@echo "... logger/srcs/utils/logger_get_time.i"
+	@echo "... logger/srcs/utils/logger_get_time.s"
+	@echo "... logger/srcs/utils/logger_init_open_file.o"
+	@echo "... logger/srcs/utils/logger_init_open_file.i"
+	@echo "... logger/srcs/utils/logger_init_open_file.s"
+	@echo "... logger/test/main.o"
+	@echo "... logger/test/main.i"
+	@echo "... logger/test/main.s"
 .PHONY : help
 
 

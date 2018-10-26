@@ -57,18 +57,18 @@ include CMakeFiles/nibbler.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/nibbler.dir/flags.make
 
-CMakeFiles/nibbler.dir/class/KNU/utils/Signature.cpp.o: CMakeFiles/nibbler.dir/flags.make
-CMakeFiles/nibbler.dir/class/KNU/utils/Signature.cpp.o: ../class/KNU/utils/Signature.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/nibbler.dir/class/KNU/utils/Signature.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/KNU/utils/Signature.cpp.o -c /Users/alexandreroulin/work/nibbler/class/KNU/utils/Signature.cpp
+CMakeFiles/nibbler.dir/class/component/MotionComponent.cpp.o: CMakeFiles/nibbler.dir/flags.make
+CMakeFiles/nibbler.dir/class/component/MotionComponent.cpp.o: ../class/component/MotionComponent.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/nibbler.dir/class/component/MotionComponent.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/component/MotionComponent.cpp.o -c /Users/alexandreroulin/work/nibbler/class/component/MotionComponent.cpp
 
-CMakeFiles/nibbler.dir/class/KNU/utils/Signature.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/KNU/utils/Signature.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/alexandreroulin/work/nibbler/class/KNU/utils/Signature.cpp > CMakeFiles/nibbler.dir/class/KNU/utils/Signature.cpp.i
+CMakeFiles/nibbler.dir/class/component/MotionComponent.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/component/MotionComponent.cpp.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/alexandreroulin/work/nibbler/class/component/MotionComponent.cpp > CMakeFiles/nibbler.dir/class/component/MotionComponent.cpp.i
 
-CMakeFiles/nibbler.dir/class/KNU/utils/Signature.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/KNU/utils/Signature.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/alexandreroulin/work/nibbler/class/KNU/utils/Signature.cpp -o CMakeFiles/nibbler.dir/class/KNU/utils/Signature.cpp.s
+CMakeFiles/nibbler.dir/class/component/MotionComponent.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/component/MotionComponent.cpp.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/alexandreroulin/work/nibbler/class/component/MotionComponent.cpp -o CMakeFiles/nibbler.dir/class/component/MotionComponent.cpp.s
 
 CMakeFiles/nibbler.dir/class/cores/main.cpp.o: CMakeFiles/nibbler.dir/flags.make
 CMakeFiles/nibbler.dir/class/cores/main.cpp.o: ../class/cores/main.cpp
@@ -96,9 +96,48 @@ CMakeFiles/nibbler.dir/class/KNU/component/Component.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/KNU/component/Component.cpp.s"
 	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/alexandreroulin/work/nibbler/class/KNU/component/Component.cpp -o CMakeFiles/nibbler.dir/class/KNU/component/Component.cpp.s
 
+CMakeFiles/nibbler.dir/class/KNU/entities/Entity.cpp.o: CMakeFiles/nibbler.dir/flags.make
+CMakeFiles/nibbler.dir/class/KNU/entities/Entity.cpp.o: ../class/KNU/entities/Entity.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/nibbler.dir/class/KNU/entities/Entity.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/KNU/entities/Entity.cpp.o -c /Users/alexandreroulin/work/nibbler/class/KNU/entities/Entity.cpp
+
+CMakeFiles/nibbler.dir/class/KNU/entities/Entity.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/KNU/entities/Entity.cpp.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/alexandreroulin/work/nibbler/class/KNU/entities/Entity.cpp > CMakeFiles/nibbler.dir/class/KNU/entities/Entity.cpp.i
+
+CMakeFiles/nibbler.dir/class/KNU/entities/Entity.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/KNU/entities/Entity.cpp.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/alexandreroulin/work/nibbler/class/KNU/entities/Entity.cpp -o CMakeFiles/nibbler.dir/class/KNU/entities/Entity.cpp.s
+
+CMakeFiles/nibbler.dir/class/KNU/systems/System.cpp.o: CMakeFiles/nibbler.dir/flags.make
+CMakeFiles/nibbler.dir/class/KNU/systems/System.cpp.o: ../class/KNU/systems/System.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/nibbler.dir/class/KNU/systems/System.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/KNU/systems/System.cpp.o -c /Users/alexandreroulin/work/nibbler/class/KNU/systems/System.cpp
+
+CMakeFiles/nibbler.dir/class/KNU/systems/System.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/KNU/systems/System.cpp.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/alexandreroulin/work/nibbler/class/KNU/systems/System.cpp > CMakeFiles/nibbler.dir/class/KNU/systems/System.cpp.i
+
+CMakeFiles/nibbler.dir/class/KNU/systems/System.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/KNU/systems/System.cpp.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/alexandreroulin/work/nibbler/class/KNU/systems/System.cpp -o CMakeFiles/nibbler.dir/class/KNU/systems/System.cpp.s
+
+CMakeFiles/nibbler.dir/class/KNU/utils/Signature.cpp.o: CMakeFiles/nibbler.dir/flags.make
+CMakeFiles/nibbler.dir/class/KNU/utils/Signature.cpp.o: ../class/KNU/utils/Signature.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/nibbler.dir/class/KNU/utils/Signature.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/KNU/utils/Signature.cpp.o -c /Users/alexandreroulin/work/nibbler/class/KNU/utils/Signature.cpp
+
+CMakeFiles/nibbler.dir/class/KNU/utils/Signature.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/KNU/utils/Signature.cpp.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/alexandreroulin/work/nibbler/class/KNU/utils/Signature.cpp > CMakeFiles/nibbler.dir/class/KNU/utils/Signature.cpp.i
+
+CMakeFiles/nibbler.dir/class/KNU/utils/Signature.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/KNU/utils/Signature.cpp.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/alexandreroulin/work/nibbler/class/KNU/utils/Signature.cpp -o CMakeFiles/nibbler.dir/class/KNU/utils/Signature.cpp.s
+
 CMakeFiles/nibbler.dir/class/KNU/World.cpp.o: CMakeFiles/nibbler.dir/flags.make
 CMakeFiles/nibbler.dir/class/KNU/World.cpp.o: ../class/KNU/World.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/nibbler.dir/class/KNU/World.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/nibbler.dir/class/KNU/World.cpp.o"
 	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/KNU/World.cpp.o -c /Users/alexandreroulin/work/nibbler/class/KNU/World.cpp
 
 CMakeFiles/nibbler.dir/class/KNU/World.cpp.i: cmake_force
@@ -111,7 +150,7 @@ CMakeFiles/nibbler.dir/class/KNU/World.cpp.s: cmake_force
 
 CMakeFiles/nibbler.dir/class/systems/MotionSystem.cpp.o: CMakeFiles/nibbler.dir/flags.make
 CMakeFiles/nibbler.dir/class/systems/MotionSystem.cpp.o: ../class/systems/MotionSystem.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/nibbler.dir/class/systems/MotionSystem.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/nibbler.dir/class/systems/MotionSystem.cpp.o"
 	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/systems/MotionSystem.cpp.o -c /Users/alexandreroulin/work/nibbler/class/systems/MotionSystem.cpp
 
 CMakeFiles/nibbler.dir/class/systems/MotionSystem.cpp.i: cmake_force
@@ -122,70 +161,211 @@ CMakeFiles/nibbler.dir/class/systems/MotionSystem.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/systems/MotionSystem.cpp.s"
 	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/alexandreroulin/work/nibbler/class/systems/MotionSystem.cpp -o CMakeFiles/nibbler.dir/class/systems/MotionSystem.cpp.s
 
-CMakeFiles/nibbler.dir/class/component/MotionComponent.cpp.o: CMakeFiles/nibbler.dir/flags.make
-CMakeFiles/nibbler.dir/class/component/MotionComponent.cpp.o: ../class/component/MotionComponent.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/nibbler.dir/class/component/MotionComponent.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/component/MotionComponent.cpp.o -c /Users/alexandreroulin/work/nibbler/class/component/MotionComponent.cpp
+CMakeFiles/nibbler.dir/logger/srcs/display/logger_debug.c.o: CMakeFiles/nibbler.dir/flags.make
+CMakeFiles/nibbler.dir/logger/srcs/display/logger_debug.c.o: ../logger/srcs/display/logger_debug.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building C object CMakeFiles/nibbler.dir/logger/srcs/display/logger_debug.c.o"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/nibbler.dir/logger/srcs/display/logger_debug.c.o   -c /Users/alexandreroulin/work/nibbler/logger/srcs/display/logger_debug.c
 
-CMakeFiles/nibbler.dir/class/component/MotionComponent.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/component/MotionComponent.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/alexandreroulin/work/nibbler/class/component/MotionComponent.cpp > CMakeFiles/nibbler.dir/class/component/MotionComponent.cpp.i
+CMakeFiles/nibbler.dir/logger/srcs/display/logger_debug.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/nibbler.dir/logger/srcs/display/logger_debug.c.i"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/alexandreroulin/work/nibbler/logger/srcs/display/logger_debug.c > CMakeFiles/nibbler.dir/logger/srcs/display/logger_debug.c.i
 
-CMakeFiles/nibbler.dir/class/component/MotionComponent.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/component/MotionComponent.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/alexandreroulin/work/nibbler/class/component/MotionComponent.cpp -o CMakeFiles/nibbler.dir/class/component/MotionComponent.cpp.s
+CMakeFiles/nibbler.dir/logger/srcs/display/logger_debug.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/nibbler.dir/logger/srcs/display/logger_debug.c.s"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/alexandreroulin/work/nibbler/logger/srcs/display/logger_debug.c -o CMakeFiles/nibbler.dir/logger/srcs/display/logger_debug.c.s
 
-CMakeFiles/nibbler.dir/class/KNU/systems/System.cpp.o: CMakeFiles/nibbler.dir/flags.make
-CMakeFiles/nibbler.dir/class/KNU/systems/System.cpp.o: ../class/KNU/systems/System.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/nibbler.dir/class/KNU/systems/System.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/KNU/systems/System.cpp.o -c /Users/alexandreroulin/work/nibbler/class/KNU/systems/System.cpp
+CMakeFiles/nibbler.dir/logger/srcs/display/logger_error.c.o: CMakeFiles/nibbler.dir/flags.make
+CMakeFiles/nibbler.dir/logger/srcs/display/logger_error.c.o: ../logger/srcs/display/logger_error.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building C object CMakeFiles/nibbler.dir/logger/srcs/display/logger_error.c.o"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/nibbler.dir/logger/srcs/display/logger_error.c.o   -c /Users/alexandreroulin/work/nibbler/logger/srcs/display/logger_error.c
 
-CMakeFiles/nibbler.dir/class/KNU/systems/System.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/KNU/systems/System.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/alexandreroulin/work/nibbler/class/KNU/systems/System.cpp > CMakeFiles/nibbler.dir/class/KNU/systems/System.cpp.i
+CMakeFiles/nibbler.dir/logger/srcs/display/logger_error.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/nibbler.dir/logger/srcs/display/logger_error.c.i"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/alexandreroulin/work/nibbler/logger/srcs/display/logger_error.c > CMakeFiles/nibbler.dir/logger/srcs/display/logger_error.c.i
 
-CMakeFiles/nibbler.dir/class/KNU/systems/System.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/KNU/systems/System.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/alexandreroulin/work/nibbler/class/KNU/systems/System.cpp -o CMakeFiles/nibbler.dir/class/KNU/systems/System.cpp.s
+CMakeFiles/nibbler.dir/logger/srcs/display/logger_error.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/nibbler.dir/logger/srcs/display/logger_error.c.s"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/alexandreroulin/work/nibbler/logger/srcs/display/logger_error.c -o CMakeFiles/nibbler.dir/logger/srcs/display/logger_error.c.s
 
-CMakeFiles/nibbler.dir/class/KNU/entities/Entity.cpp.o: CMakeFiles/nibbler.dir/flags.make
-CMakeFiles/nibbler.dir/class/KNU/entities/Entity.cpp.o: ../class/KNU/entities/Entity.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/nibbler.dir/class/KNU/entities/Entity.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/KNU/entities/Entity.cpp.o -c /Users/alexandreroulin/work/nibbler/class/KNU/entities/Entity.cpp
+CMakeFiles/nibbler.dir/logger/srcs/display/logger_fatal.c.o: CMakeFiles/nibbler.dir/flags.make
+CMakeFiles/nibbler.dir/logger/srcs/display/logger_fatal.c.o: ../logger/srcs/display/logger_fatal.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building C object CMakeFiles/nibbler.dir/logger/srcs/display/logger_fatal.c.o"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/nibbler.dir/logger/srcs/display/logger_fatal.c.o   -c /Users/alexandreroulin/work/nibbler/logger/srcs/display/logger_fatal.c
 
-CMakeFiles/nibbler.dir/class/KNU/entities/Entity.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/KNU/entities/Entity.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/alexandreroulin/work/nibbler/class/KNU/entities/Entity.cpp > CMakeFiles/nibbler.dir/class/KNU/entities/Entity.cpp.i
+CMakeFiles/nibbler.dir/logger/srcs/display/logger_fatal.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/nibbler.dir/logger/srcs/display/logger_fatal.c.i"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/alexandreroulin/work/nibbler/logger/srcs/display/logger_fatal.c > CMakeFiles/nibbler.dir/logger/srcs/display/logger_fatal.c.i
 
-CMakeFiles/nibbler.dir/class/KNU/entities/Entity.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/KNU/entities/Entity.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/alexandreroulin/work/nibbler/class/KNU/entities/Entity.cpp -o CMakeFiles/nibbler.dir/class/KNU/entities/Entity.cpp.s
+CMakeFiles/nibbler.dir/logger/srcs/display/logger_fatal.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/nibbler.dir/logger/srcs/display/logger_fatal.c.s"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/alexandreroulin/work/nibbler/logger/srcs/display/logger_fatal.c -o CMakeFiles/nibbler.dir/logger/srcs/display/logger_fatal.c.s
+
+CMakeFiles/nibbler.dir/logger/srcs/display/logger_info.c.o: CMakeFiles/nibbler.dir/flags.make
+CMakeFiles/nibbler.dir/logger/srcs/display/logger_info.c.o: ../logger/srcs/display/logger_info.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building C object CMakeFiles/nibbler.dir/logger/srcs/display/logger_info.c.o"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/nibbler.dir/logger/srcs/display/logger_info.c.o   -c /Users/alexandreroulin/work/nibbler/logger/srcs/display/logger_info.c
+
+CMakeFiles/nibbler.dir/logger/srcs/display/logger_info.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/nibbler.dir/logger/srcs/display/logger_info.c.i"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/alexandreroulin/work/nibbler/logger/srcs/display/logger_info.c > CMakeFiles/nibbler.dir/logger/srcs/display/logger_info.c.i
+
+CMakeFiles/nibbler.dir/logger/srcs/display/logger_info.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/nibbler.dir/logger/srcs/display/logger_info.c.s"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/alexandreroulin/work/nibbler/logger/srcs/display/logger_info.c -o CMakeFiles/nibbler.dir/logger/srcs/display/logger_info.c.s
+
+CMakeFiles/nibbler.dir/logger/srcs/display/logger_success.c.o: CMakeFiles/nibbler.dir/flags.make
+CMakeFiles/nibbler.dir/logger/srcs/display/logger_success.c.o: ../logger/srcs/display/logger_success.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building C object CMakeFiles/nibbler.dir/logger/srcs/display/logger_success.c.o"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/nibbler.dir/logger/srcs/display/logger_success.c.o   -c /Users/alexandreroulin/work/nibbler/logger/srcs/display/logger_success.c
+
+CMakeFiles/nibbler.dir/logger/srcs/display/logger_success.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/nibbler.dir/logger/srcs/display/logger_success.c.i"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/alexandreroulin/work/nibbler/logger/srcs/display/logger_success.c > CMakeFiles/nibbler.dir/logger/srcs/display/logger_success.c.i
+
+CMakeFiles/nibbler.dir/logger/srcs/display/logger_success.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/nibbler.dir/logger/srcs/display/logger_success.c.s"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/alexandreroulin/work/nibbler/logger/srcs/display/logger_success.c -o CMakeFiles/nibbler.dir/logger/srcs/display/logger_success.c.s
+
+CMakeFiles/nibbler.dir/logger/srcs/display/logger_trace.c.o: CMakeFiles/nibbler.dir/flags.make
+CMakeFiles/nibbler.dir/logger/srcs/display/logger_trace.c.o: ../logger/srcs/display/logger_trace.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building C object CMakeFiles/nibbler.dir/logger/srcs/display/logger_trace.c.o"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/nibbler.dir/logger/srcs/display/logger_trace.c.o   -c /Users/alexandreroulin/work/nibbler/logger/srcs/display/logger_trace.c
+
+CMakeFiles/nibbler.dir/logger/srcs/display/logger_trace.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/nibbler.dir/logger/srcs/display/logger_trace.c.i"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/alexandreroulin/work/nibbler/logger/srcs/display/logger_trace.c > CMakeFiles/nibbler.dir/logger/srcs/display/logger_trace.c.i
+
+CMakeFiles/nibbler.dir/logger/srcs/display/logger_trace.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/nibbler.dir/logger/srcs/display/logger_trace.c.s"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/alexandreroulin/work/nibbler/logger/srcs/display/logger_trace.c -o CMakeFiles/nibbler.dir/logger/srcs/display/logger_trace.c.s
+
+CMakeFiles/nibbler.dir/logger/srcs/display/logger_warn.c.o: CMakeFiles/nibbler.dir/flags.make
+CMakeFiles/nibbler.dir/logger/srcs/display/logger_warn.c.o: ../logger/srcs/display/logger_warn.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building C object CMakeFiles/nibbler.dir/logger/srcs/display/logger_warn.c.o"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/nibbler.dir/logger/srcs/display/logger_warn.c.o   -c /Users/alexandreroulin/work/nibbler/logger/srcs/display/logger_warn.c
+
+CMakeFiles/nibbler.dir/logger/srcs/display/logger_warn.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/nibbler.dir/logger/srcs/display/logger_warn.c.i"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/alexandreroulin/work/nibbler/logger/srcs/display/logger_warn.c > CMakeFiles/nibbler.dir/logger/srcs/display/logger_warn.c.i
+
+CMakeFiles/nibbler.dir/logger/srcs/display/logger_warn.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/nibbler.dir/logger/srcs/display/logger_warn.c.s"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/alexandreroulin/work/nibbler/logger/srcs/display/logger_warn.c -o CMakeFiles/nibbler.dir/logger/srcs/display/logger_warn.c.s
+
+CMakeFiles/nibbler.dir/logger/srcs/logger/logger_close.c.o: CMakeFiles/nibbler.dir/flags.make
+CMakeFiles/nibbler.dir/logger/srcs/logger/logger_close.c.o: ../logger/srcs/logger/logger_close.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building C object CMakeFiles/nibbler.dir/logger/srcs/logger/logger_close.c.o"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/nibbler.dir/logger/srcs/logger/logger_close.c.o   -c /Users/alexandreroulin/work/nibbler/logger/srcs/logger/logger_close.c
+
+CMakeFiles/nibbler.dir/logger/srcs/logger/logger_close.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/nibbler.dir/logger/srcs/logger/logger_close.c.i"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/alexandreroulin/work/nibbler/logger/srcs/logger/logger_close.c > CMakeFiles/nibbler.dir/logger/srcs/logger/logger_close.c.i
+
+CMakeFiles/nibbler.dir/logger/srcs/logger/logger_close.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/nibbler.dir/logger/srcs/logger/logger_close.c.s"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/alexandreroulin/work/nibbler/logger/srcs/logger/logger_close.c -o CMakeFiles/nibbler.dir/logger/srcs/logger/logger_close.c.s
+
+CMakeFiles/nibbler.dir/logger/srcs/logger/logger_init.c.o: CMakeFiles/nibbler.dir/flags.make
+CMakeFiles/nibbler.dir/logger/srcs/logger/logger_init.c.o: ../logger/srcs/logger/logger_init.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building C object CMakeFiles/nibbler.dir/logger/srcs/logger/logger_init.c.o"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/nibbler.dir/logger/srcs/logger/logger_init.c.o   -c /Users/alexandreroulin/work/nibbler/logger/srcs/logger/logger_init.c
+
+CMakeFiles/nibbler.dir/logger/srcs/logger/logger_init.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/nibbler.dir/logger/srcs/logger/logger_init.c.i"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/alexandreroulin/work/nibbler/logger/srcs/logger/logger_init.c > CMakeFiles/nibbler.dir/logger/srcs/logger/logger_init.c.i
+
+CMakeFiles/nibbler.dir/logger/srcs/logger/logger_init.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/nibbler.dir/logger/srcs/logger/logger_init.c.s"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/alexandreroulin/work/nibbler/logger/srcs/logger/logger_init.c -o CMakeFiles/nibbler.dir/logger/srcs/logger/logger_init.c.s
+
+CMakeFiles/nibbler.dir/logger/srcs/utils/logger_get_time.c.o: CMakeFiles/nibbler.dir/flags.make
+CMakeFiles/nibbler.dir/logger/srcs/utils/logger_get_time.c.o: ../logger/srcs/utils/logger_get_time.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building C object CMakeFiles/nibbler.dir/logger/srcs/utils/logger_get_time.c.o"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/nibbler.dir/logger/srcs/utils/logger_get_time.c.o   -c /Users/alexandreroulin/work/nibbler/logger/srcs/utils/logger_get_time.c
+
+CMakeFiles/nibbler.dir/logger/srcs/utils/logger_get_time.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/nibbler.dir/logger/srcs/utils/logger_get_time.c.i"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/alexandreroulin/work/nibbler/logger/srcs/utils/logger_get_time.c > CMakeFiles/nibbler.dir/logger/srcs/utils/logger_get_time.c.i
+
+CMakeFiles/nibbler.dir/logger/srcs/utils/logger_get_time.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/nibbler.dir/logger/srcs/utils/logger_get_time.c.s"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/alexandreroulin/work/nibbler/logger/srcs/utils/logger_get_time.c -o CMakeFiles/nibbler.dir/logger/srcs/utils/logger_get_time.c.s
+
+CMakeFiles/nibbler.dir/logger/srcs/utils/logger_init_open_file.c.o: CMakeFiles/nibbler.dir/flags.make
+CMakeFiles/nibbler.dir/logger/srcs/utils/logger_init_open_file.c.o: ../logger/srcs/utils/logger_init_open_file.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building C object CMakeFiles/nibbler.dir/logger/srcs/utils/logger_init_open_file.c.o"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/nibbler.dir/logger/srcs/utils/logger_init_open_file.c.o   -c /Users/alexandreroulin/work/nibbler/logger/srcs/utils/logger_init_open_file.c
+
+CMakeFiles/nibbler.dir/logger/srcs/utils/logger_init_open_file.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/nibbler.dir/logger/srcs/utils/logger_init_open_file.c.i"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/alexandreroulin/work/nibbler/logger/srcs/utils/logger_init_open_file.c > CMakeFiles/nibbler.dir/logger/srcs/utils/logger_init_open_file.c.i
+
+CMakeFiles/nibbler.dir/logger/srcs/utils/logger_init_open_file.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/nibbler.dir/logger/srcs/utils/logger_init_open_file.c.s"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/alexandreroulin/work/nibbler/logger/srcs/utils/logger_init_open_file.c -o CMakeFiles/nibbler.dir/logger/srcs/utils/logger_init_open_file.c.s
+
+CMakeFiles/nibbler.dir/logger/test/main.c.o: CMakeFiles/nibbler.dir/flags.make
+CMakeFiles/nibbler.dir/logger/test/main.c.o: ../logger/test/main.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building C object CMakeFiles/nibbler.dir/logger/test/main.c.o"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/nibbler.dir/logger/test/main.c.o   -c /Users/alexandreroulin/work/nibbler/logger/test/main.c
+
+CMakeFiles/nibbler.dir/logger/test/main.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/nibbler.dir/logger/test/main.c.i"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/alexandreroulin/work/nibbler/logger/test/main.c > CMakeFiles/nibbler.dir/logger/test/main.c.i
+
+CMakeFiles/nibbler.dir/logger/test/main.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/nibbler.dir/logger/test/main.c.s"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/alexandreroulin/work/nibbler/logger/test/main.c -o CMakeFiles/nibbler.dir/logger/test/main.c.s
 
 # Object files for target nibbler
 nibbler_OBJECTS = \
-"CMakeFiles/nibbler.dir/class/KNU/utils/Signature.cpp.o" \
+"CMakeFiles/nibbler.dir/class/component/MotionComponent.cpp.o" \
 "CMakeFiles/nibbler.dir/class/cores/main.cpp.o" \
 "CMakeFiles/nibbler.dir/class/KNU/component/Component.cpp.o" \
+"CMakeFiles/nibbler.dir/class/KNU/entities/Entity.cpp.o" \
+"CMakeFiles/nibbler.dir/class/KNU/systems/System.cpp.o" \
+"CMakeFiles/nibbler.dir/class/KNU/utils/Signature.cpp.o" \
 "CMakeFiles/nibbler.dir/class/KNU/World.cpp.o" \
 "CMakeFiles/nibbler.dir/class/systems/MotionSystem.cpp.o" \
-"CMakeFiles/nibbler.dir/class/component/MotionComponent.cpp.o" \
-"CMakeFiles/nibbler.dir/class/KNU/systems/System.cpp.o" \
-"CMakeFiles/nibbler.dir/class/KNU/entities/Entity.cpp.o"
+"CMakeFiles/nibbler.dir/logger/srcs/display/logger_debug.c.o" \
+"CMakeFiles/nibbler.dir/logger/srcs/display/logger_error.c.o" \
+"CMakeFiles/nibbler.dir/logger/srcs/display/logger_fatal.c.o" \
+"CMakeFiles/nibbler.dir/logger/srcs/display/logger_info.c.o" \
+"CMakeFiles/nibbler.dir/logger/srcs/display/logger_success.c.o" \
+"CMakeFiles/nibbler.dir/logger/srcs/display/logger_trace.c.o" \
+"CMakeFiles/nibbler.dir/logger/srcs/display/logger_warn.c.o" \
+"CMakeFiles/nibbler.dir/logger/srcs/logger/logger_close.c.o" \
+"CMakeFiles/nibbler.dir/logger/srcs/logger/logger_init.c.o" \
+"CMakeFiles/nibbler.dir/logger/srcs/utils/logger_get_time.c.o" \
+"CMakeFiles/nibbler.dir/logger/srcs/utils/logger_init_open_file.c.o" \
+"CMakeFiles/nibbler.dir/logger/test/main.c.o"
 
 # External object files for target nibbler
 nibbler_EXTERNAL_OBJECTS =
 
-nibbler: CMakeFiles/nibbler.dir/class/KNU/utils/Signature.cpp.o
+nibbler: CMakeFiles/nibbler.dir/class/component/MotionComponent.cpp.o
 nibbler: CMakeFiles/nibbler.dir/class/cores/main.cpp.o
 nibbler: CMakeFiles/nibbler.dir/class/KNU/component/Component.cpp.o
+nibbler: CMakeFiles/nibbler.dir/class/KNU/entities/Entity.cpp.o
+nibbler: CMakeFiles/nibbler.dir/class/KNU/systems/System.cpp.o
+nibbler: CMakeFiles/nibbler.dir/class/KNU/utils/Signature.cpp.o
 nibbler: CMakeFiles/nibbler.dir/class/KNU/World.cpp.o
 nibbler: CMakeFiles/nibbler.dir/class/systems/MotionSystem.cpp.o
-nibbler: CMakeFiles/nibbler.dir/class/component/MotionComponent.cpp.o
-nibbler: CMakeFiles/nibbler.dir/class/KNU/systems/System.cpp.o
-nibbler: CMakeFiles/nibbler.dir/class/KNU/entities/Entity.cpp.o
+nibbler: CMakeFiles/nibbler.dir/logger/srcs/display/logger_debug.c.o
+nibbler: CMakeFiles/nibbler.dir/logger/srcs/display/logger_error.c.o
+nibbler: CMakeFiles/nibbler.dir/logger/srcs/display/logger_fatal.c.o
+nibbler: CMakeFiles/nibbler.dir/logger/srcs/display/logger_info.c.o
+nibbler: CMakeFiles/nibbler.dir/logger/srcs/display/logger_success.c.o
+nibbler: CMakeFiles/nibbler.dir/logger/srcs/display/logger_trace.c.o
+nibbler: CMakeFiles/nibbler.dir/logger/srcs/display/logger_warn.c.o
+nibbler: CMakeFiles/nibbler.dir/logger/srcs/logger/logger_close.c.o
+nibbler: CMakeFiles/nibbler.dir/logger/srcs/logger/logger_init.c.o
+nibbler: CMakeFiles/nibbler.dir/logger/srcs/utils/logger_get_time.c.o
+nibbler: CMakeFiles/nibbler.dir/logger/srcs/utils/logger_init_open_file.c.o
+nibbler: CMakeFiles/nibbler.dir/logger/test/main.c.o
 nibbler: CMakeFiles/nibbler.dir/build.make
 nibbler: CMakeFiles/nibbler.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Linking CXX executable nibbler"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Linking CXX executable nibbler"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/nibbler.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

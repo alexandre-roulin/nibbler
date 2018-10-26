@@ -9,9 +9,7 @@ MotionSystem::MotionSystem() {
 }
 
 void MotionSystem::update() {
-	std::cout << "MotionSystem::Update" << std::endl;
 	for (auto &entity : getEntities()) {
-		std::cout << "MotionSystem::Update::Entity" << std::endl;
 		auto &transformComponent = entity.getComponent<TransformComponent>();
 		auto &motionComponent = entity.getComponent<MotionComponent>();
 		switch (motionComponent.direction) {

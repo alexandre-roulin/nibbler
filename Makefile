@@ -54,7 +54,10 @@ SRCS = \
 		KNU/component/Component.cpp					\
 		KNU/systems/System.cpp						\
 		KNU/utils/Signature.cpp						\
-
+		logger/display/logger_debug.cpp				\
+		logger/logger/logger_init.cpp				\
+		logger/utils/logger_init_open_file.cpp		\
+		logger/utils/logger_get_time.cpp			\
 
 # ---------------------------------------------------------------------------- #
 # /!\ COLOR FOR PRINTF /!\                                                     #
@@ -88,7 +91,8 @@ LDLIBS		= \
 
 CPPFLAGS	= \
 			  -I$(DIR_INCS)							\
-			  -I$(DIR_CLASS)							\
+			  -I$(DIR_CLASS)						\
+			  -Ilogger/incs							\
 
 CFLAGS		= \
 			-std=c++17						\

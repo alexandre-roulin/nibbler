@@ -4,6 +4,7 @@
 #define COMPONENT_MAX 3
 #define BASE_ENTITIES_CAPACITY 20
 
+
 enum eDirection {
 	NORTH,
 	SOUTH,

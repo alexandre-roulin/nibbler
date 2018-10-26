@@ -8,8 +8,11 @@
 #include <systems/MotionSystem.hpp>
 
 
-int main() {
+#include <logger.h>
 
+int main() {
+	char path[] = "/tmp/log.out";
+	logger_init(path);
 	{
 		KNU::World world;
 
@@ -18,15 +21,12 @@ int main() {
 		entity.addComponent<TransformComponent>(42, 42);
 		entity.addComponent<MotionComponent>(NORTH, 1);
 		entity.addComponent<SpriteComponent>("/vers/l'infini/et/l'au/delà");
-
 		world.getSystemManager().addSystem<MotionSystem>();
-		std::cout << "Match System" << entity.getSignature().matches(world.getSystemManager().getSystem<MotionSystem>()->getSignature()) << std::endl;
-		std::cout << "Signature Entity : " << entity.getSignature() << std::endl;
-		std::cout << "System signature : " <<world.getSystemManager().getSystem<MotionSystem>()->getSignature() << std::endl;
 		for (int index =0 ; index < 10 ; ++index) {
 			world.update();
 			world.getSystemManager().getSystem<MotionSystem>()->update();
 			auto &position = entity.getComponent<TransformComponent>();
+			log_debug("x : %d y : %d", position.x, position.y);
 			std::cout << position << std::endl;
 		}
 		std::cout << entity.getComponent<TransformComponent>() << std::endl;

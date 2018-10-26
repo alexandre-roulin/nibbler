@@ -12,8 +12,52 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a7dbd8d7-b982-44a5-9ef8-5b2ba8f88fe0" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/class/KNU/entities/Entity.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/class/KNU/entities/Entity.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/class/KNU/utils/Signature.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/class/KNU/utils/Signature.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/class/cores/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/class/cores/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/class/systems/MotionSystem.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/class/systems/MotionSystem.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/count.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/count.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nibbler.dir/CXX.includecache" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nibbler.dir/CXX.includecache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nibbler.dir/DependInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nibbler.dir/DependInfo.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nibbler.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nibbler.dir/build.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nibbler.dir/class/KNU/World.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nibbler.dir/class/KNU/World.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nibbler.dir/class/KNU/entities/Entity.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nibbler.dir/class/KNU/entities/Entity.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nibbler.dir/class/KNU/managers/AbstractPool.cpp.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nibbler.dir/class/KNU/managers/ComponentManager.cpp.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nibbler.dir/class/KNU/managers/EntitiesManager.cpp.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nibbler.dir/class/KNU/managers/Pool.cpp.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nibbler.dir/class/KNU/managers/SystemManager.cpp.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nibbler.dir/class/KNU/systems/System.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nibbler.dir/class/KNU/systems/System.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nibbler.dir/class/KNU/utils/Signature.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nibbler.dir/class/KNU/utils/Signature.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nibbler.dir/class/component/MotionComponent.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nibbler.dir/class/component/MotionComponent.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nibbler.dir/class/cores/main.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nibbler.dir/class/cores/main.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nibbler.dir/class/systems/MotionSystem.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nibbler.dir/class/systems/MotionSystem.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nibbler.dir/cmake_clean.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nibbler.dir/cmake_clean.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nibbler.dir/depend.internal" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nibbler.dir/depend.internal" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nibbler.dir/depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nibbler.dir/depend.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nibbler.dir/flags.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nibbler.dir/flags.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nibbler.dir/link.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nibbler.dir/link.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nibbler.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nibbler.dir/progress.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/progress.marks" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/progress.marks" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/nibbler.cbp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/nibbler.cbp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/incs/nibbler.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/incs/nibbler.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logger/incs/logger.h" beforeDir="false" afterPath="$PROJECT_DIR$/logger/incs/logger.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logger/incs/logger_utils.h" beforeDir="false" afterPath="$PROJECT_DIR$/logger/incs/logger_utils.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logger/srcs/display/logger_debug.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logger/srcs/display/logger_error.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logger/srcs/display/logger_fatal.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logger/srcs/display/logger_info.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logger/srcs/display/logger_success.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logger/srcs/display/logger_trace.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logger/srcs/display/logger_warn.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logger/srcs/logger/logger_close.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logger/srcs/logger/logger_init.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logger/srcs/utils/logger_get_time.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logger/srcs/utils/logger_init_open_file.c" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -41,42 +85,44 @@
     <session id="-670645659">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="7" />
+          <entry key="project.closed" value="8" />
           <entry key="project.open.time.0" value="3" />
-          <entry key="project.open.time.1" value="1" />
+          <entry key="project.open.time.1" value="2" />
           <entry key="project.open.time.10" value="1" />
           <entry key="project.open.time.8" value="2" />
           <entry key="project.open.time.9" value="1" />
-          <entry key="project.opened" value="8" />
+          <entry key="project.opened" value="9" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="Makefile" value="527" />
-          <entry key="cpp" value="9735" />
-          <entry key="h" value="180" />
-          <entry key="hpp" value="13174" />
+          <entry key="Makefile" value="691" />
+          <entry key="c" value="12" />
+          <entry key="cpp" value="10071" />
+          <entry key="h" value="216" />
+          <entry key="hpp" value="13206" />
           <entry key="json" value="78" />
-          <entry key="txt" value="65" />
+          <entry key="txt" value="72" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="CMakeLists.txt" value="65" />
+          <entry key="CMakeLists.txt" value="72" />
           <entry key="Doxygen file" value="1" />
           <entry key="JSON" value="78" />
-          <entry key="ObjectiveC" value="23088" />
-          <entry key="PLAIN_TEXT" value="527" />
+          <entry key="ObjectiveC" value="23504" />
+          <entry key="PLAIN_TEXT" value="691" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="Makefile" value="26" />
-          <entry key="cpp" value="181" />
+          <entry key="Makefile" value="28" />
+          <entry key="c" value="3" />
+          <entry key="cpp" value="183" />
           <entry key="d" value="4" />
           <entry key="gch" value="1" />
-          <entry key="h" value="3" />
-          <entry key="hpp" value="256" />
+          <entry key="h" value="5" />
+          <entry key="hpp" value="257" />
           <entry key="json" value="2" />
           <entry key="memory" value="2" />
           <entry key="png" value="2" />
@@ -89,8 +135,8 @@
           <entry key="CMakeLists.txt" value="10" />
           <entry key="Image" value="2" />
           <entry key="JSON" value="2" />
-          <entry key="ObjectiveC" value="442" />
-          <entry key="PLAIN_TEXT" value="32" />
+          <entry key="ObjectiveC" value="450" />
+          <entry key="PLAIN_TEXT" value="34" />
         </counts>
       </usages-collector>
     </session>
@@ -100,96 +146,82 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/class/cores/main.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="30">
-              <caret line="2" column="20" selection-start-line="2" selection-start-column="20" selection-end-line="2" selection-end-column="20" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/class/systems/MotionSystem.hpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/class/systems/MotionSystem.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="45">
-              <caret line="3" column="27" selection-start-line="3" selection-start-column="27" selection-end-line="3" selection-end-column="27" />
+            <state relative-caret-position="210">
+              <caret line="14" column="16" selection-start-line="14" selection-start-column="16" selection-end-line="14" selection-end-column="16" />
               <folding>
-                <element signature="e#1#44#0" expanded="true" />
+                <element signature="e#1#20#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/class/KNU/systems/System.hpp">
+        <entry file="file://$PROJECT_DIR$/logger/incs/logger.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="752">
-              <caret line="88" column="1" selection-start-line="88" selection-start-column="1" selection-end-line="88" selection-end-column="1" />
+            <state relative-caret-position="557">
+              <caret line="53" column="20" selection-start-line="53" selection-start-column="20" selection-end-line="53" selection-end-column="20" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/logger/incs/logger_utils.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="345">
+              <caret line="23" selection-start-line="23" selection-end-line="23" />
               <folding>
-                <element signature="e#14#31#0" expanded="true" />
-                <element signature="e#2063#2075#0" expanded="true" />
+                <element signature="e#90#109#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/class/KNU/utils/Signature.hpp">
+        <entry file="file://$PROJECT_DIR$/Makefile">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="11" column="35" selection-start-line="11" selection-start-column="27" selection-end-line="11" selection-end-column="35" />
-              <folding>
-                <element signature="e#14#32#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/class/KNU/utils/Signature.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="542">
-              <caret line="37" column="14" lean-forward="true" selection-start-line="37" selection-start-column="14" selection-end-line="37" selection-end-column="14" />
-              <folding>
-                <element signature="e#53#77#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/class/KNU/World.hpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="19" column="21" selection-start-line="19" selection-start-column="21" selection-end-line="19" selection-end-column="21" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/class/KNU/systems/System.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="30">
-              <caret line="2" selection-start-line="2" selection-end-line="2" />
+            <state relative-caret-position="780">
+              <caret line="59" column="44" selection-start-line="59" selection-start-column="44" selection-end-line="59" selection-end-column="44" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/class/KNU/entities/Entity.cpp">
+        <entry file="file://$PROJECT_DIR$/class/logger/utils/logger_init_open_file.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="304">
-              <caret line="81" column="50" selection-start-line="81" selection-start-column="50" selection-end-line="81" selection-end-column="50" />
-              <folding>
-                <element signature="e#0#18#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="210">
+              <caret line="14" column="37" selection-start-line="14" selection-start-column="37" selection-end-line="14" selection-end-column="37" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/class/logger/logger/logger_init.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="135">
+              <caret line="9" column="18" selection-start-line="9" selection-start-column="18" selection-end-line="9" selection-end-column="18" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/class/logger/utils/logger_get_time.cpp">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/class/logger/display/logger_debug.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="315">
+              <caret line="21" column="34" selection-start-line="21" selection-start-column="34" selection-end-line="21" selection-end-column="34" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="75">
+              <caret line="5" column="25" selection-start-line="5" selection-start-column="25" selection-end-line="5" selection-end-column="25" />
             </state>
           </provider>
         </entry>
@@ -197,7 +229,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/class/KNU/entities/Entity.hpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="260">
+            <state relative-caret-position="2250">
               <caret line="150" column="17" selection-start-line="150" selection-start-column="17" selection-end-line="150" selection-end-column="17" />
               <folding>
                 <element signature="e#14#28#0" expanded="true" />
@@ -211,12 +243,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>getComponentSignature</find>
-      <find>KNU::</find>
-      <find>Abstr</find>
-      <find>AbstractPool.cpp</find>
-      <find>AbstractPool</find>
-      <find>ComponentManager::</find>
       <find>Entity::</find>
       <find>const</find>
       <find>A</find>
@@ -241,6 +267,12 @@
       <find>getS</find>
       <find>getEntitySignature</find>
       <find>_entitiesMap</find>
+      <find>logger_de</find>
+      <find>fd</find>
+      <find>g_log_fd</find>
+      <find>g_lo</find>
+      <find>g</find>
+      <find>lvl</find>
     </findStrings>
     <replaceStrings>
       <replace>_id</replace>
@@ -260,6 +292,7 @@
       <replace>_groupedEntities</replace>
       <replace>&amp;entity</replace>
       <replace>entity</replace>
+      <replace>fd(-1)</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -268,20 +301,12 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/class/systems/TransformSystem.cpp" />
-        <option value="$PROJECT_DIR$/class/managers/SystemManager.hpp" />
-        <option value="$PROJECT_DIR$/class/managers/SystemManager.cpp" />
-        <option value="$PROJECT_DIR$/class/components/MotionComponent.hpp" />
-        <option value="$PROJECT_DIR$/class/entity/Entity.hpp" />
-        <option value="$PROJECT_DIR$/class/managers/EntitiesManager.hpp" />
-        <option value="$PROJECT_DIR$/class/managers/EntitiesManager.cpp" />
         <option value="$PROJECT_DIR$/class/factories/SystemFactory.hpp" />
         <option value="$PROJECT_DIR$/class/main.cpp" />
         <option value="$PROJECT_DIR$/class/ECS.hpp" />
         <option value="$PROJECT_DIR$/srcs/main.cpp" />
         <option value="$PROJECT_DIR$/class/KNU/component/Component.hpp" />
         <option value="$PROJECT_DIR$/class/KNU/managers/IPool.hpp" />
-        <option value="$PROJECT_DIR$/CMakeLists.txt" />
         <option value="$PROJECT_DIR$/class/KNU/component/SpriteComponent.hpp" />
         <option value="$PROJECT_DIR$/class/KNU/KNU.hpp" />
         <option value="$PROJECT_DIR$/class/KNU/KNU.cpp" />
@@ -303,22 +328,30 @@
         <option value="$PROJECT_DIR$/class/KNU/managers/Pool.cpp" />
         <option value="$PROJECT_DIR$/class/KNU/managers/AbstractPool.hpp" />
         <option value="$PROJECT_DIR$/class/KNU/managers/Pool.hpp" />
-        <option value="$PROJECT_DIR$/incs/nibbler.hpp" />
         <option value="$PROJECT_DIR$/class/KNU/managers/SystemManager.cpp" />
         <option value="$PROJECT_DIR$/class/KNU/managers/SystemManager.hpp" />
-        <option value="$PROJECT_DIR$/Makefile" />
         <option value="$PROJECT_DIR$/class/component/MotionComponent.hpp" />
         <option value="$PROJECT_DIR$/class/KNU/World.hpp" />
         <option value="$PROJECT_DIR$/class/KNU/World.cpp" />
         <option value="$PROJECT_DIR$/class/systems/MotionSystem.hpp" />
-        <option value="$PROJECT_DIR$/class/cores/main.cpp" />
-        <option value="$PROJECT_DIR$/class/systems/MotionSystem.cpp" />
         <option value="$PROJECT_DIR$/class/KNU/systems/System.cpp" />
         <option value="$PROJECT_DIR$/class/KNU/systems/System.hpp" />
         <option value="$PROJECT_DIR$/class/KNU/entities/Entity.hpp" />
         <option value="$PROJECT_DIR$/class/KNU/utils/Signature.hpp" />
         <option value="$PROJECT_DIR$/class/KNU/utils/Signature.cpp" />
         <option value="$PROJECT_DIR$/class/KNU/entities/Entity.cpp" />
+        <option value="$PROJECT_DIR$/class/systems/MotionSystem.cpp" />
+        <option value="$PROJECT_DIR$/incs/nibbler.hpp" />
+        <option value="$PROJECT_DIR$/CMakeLists.txt" />
+        <option value="$PROJECT_DIR$/class/logger/display/logger_debug.c" />
+        <option value="$PROJECT_DIR$/class/logger/logger/logger_init.c" />
+        <option value="$PROJECT_DIR$/Makefile" />
+        <option value="$PROJECT_DIR$/class/logger/display/logger_debug.cpp" />
+        <option value="$PROJECT_DIR$/class/cores/main.cpp" />
+        <option value="$PROJECT_DIR$/logger/incs/logger.h" />
+        <option value="$PROJECT_DIR$/class/logger/logger/logger_init.cpp" />
+        <option value="$PROJECT_DIR$/logger/incs/logger_utils.h" />
+        <option value="$PROJECT_DIR$/class/logger/utils/logger_init_open_file.cpp" />
       </list>
     </option>
   </component>
@@ -328,7 +361,7 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6" fullScreen="true">
+  <component name="ProjectFrameBounds" fullScreen="true">
     <option name="x" value="65" />
     <option name="y" value="23" />
     <option name="width" value="1375" />
@@ -379,53 +412,27 @@
               <item name="nibbler" type="b2602c69:ProjectViewProjectNode" />
               <item name="nibbler" type="462c0819:PsiDirectoryNode" />
               <item name="class" type="462c0819:PsiDirectoryNode" />
-              <item name="component" type="462c0819:PsiDirectoryNode" />
+              <item name="logger" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="nibbler" type="b2602c69:ProjectViewProjectNode" />
               <item name="nibbler" type="462c0819:PsiDirectoryNode" />
               <item name="class" type="462c0819:PsiDirectoryNode" />
-              <item name="cores" type="462c0819:PsiDirectoryNode" />
+              <item name="logger" type="462c0819:PsiDirectoryNode" />
+              <item name="display" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="nibbler" type="b2602c69:ProjectViewProjectNode" />
               <item name="nibbler" type="462c0819:PsiDirectoryNode" />
               <item name="class" type="462c0819:PsiDirectoryNode" />
-              <item name="KNU" type="462c0819:PsiDirectoryNode" />
+              <item name="logger" type="462c0819:PsiDirectoryNode" />
+              <item name="logger" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="nibbler" type="b2602c69:ProjectViewProjectNode" />
               <item name="nibbler" type="462c0819:PsiDirectoryNode" />
               <item name="class" type="462c0819:PsiDirectoryNode" />
-              <item name="KNU" type="462c0819:PsiDirectoryNode" />
-              <item name="component" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="nibbler" type="b2602c69:ProjectViewProjectNode" />
-              <item name="nibbler" type="462c0819:PsiDirectoryNode" />
-              <item name="class" type="462c0819:PsiDirectoryNode" />
-              <item name="KNU" type="462c0819:PsiDirectoryNode" />
-              <item name="entities" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="nibbler" type="b2602c69:ProjectViewProjectNode" />
-              <item name="nibbler" type="462c0819:PsiDirectoryNode" />
-              <item name="class" type="462c0819:PsiDirectoryNode" />
-              <item name="KNU" type="462c0819:PsiDirectoryNode" />
-              <item name="managers" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="nibbler" type="b2602c69:ProjectViewProjectNode" />
-              <item name="nibbler" type="462c0819:PsiDirectoryNode" />
-              <item name="class" type="462c0819:PsiDirectoryNode" />
-              <item name="KNU" type="462c0819:PsiDirectoryNode" />
-              <item name="systems" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="nibbler" type="b2602c69:ProjectViewProjectNode" />
-              <item name="nibbler" type="462c0819:PsiDirectoryNode" />
-              <item name="class" type="462c0819:PsiDirectoryNode" />
-              <item name="KNU" type="462c0819:PsiDirectoryNode" />
+              <item name="logger" type="462c0819:PsiDirectoryNode" />
               <item name="utils" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -437,7 +444,19 @@
             <path>
               <item name="nibbler" type="b2602c69:ProjectViewProjectNode" />
               <item name="nibbler" type="462c0819:PsiDirectoryNode" />
+              <item name="logger" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="nibbler" type="b2602c69:ProjectViewProjectNode" />
+              <item name="nibbler" type="462c0819:PsiDirectoryNode" />
+              <item name="logger" type="462c0819:PsiDirectoryNode" />
               <item name="incs" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="nibbler" type="b2602c69:ProjectViewProjectNode" />
+              <item name="nibbler" type="462c0819:PsiDirectoryNode" />
+              <item name="logger" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -509,18 +528,19 @@
       <workItem from="1540388288851" duration="10689000" />
       <workItem from="1540399621744" duration="31666000" />
       <workItem from="1540510887056" duration="648000" />
-      <workItem from="1540511573829" duration="9485000" />
+      <workItem from="1540511573829" duration="9898000" />
+      <workItem from="1540528346289" duration="1595000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="83635000" />
+    <option name="totallyTimeSpent" value="85643000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1440" height="900" extended-state="6" />
+    <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2081545" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.21101573" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -549,14 +569,18 @@
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/class/logger/display/logger_debug.cpp</url>
+          <line>15</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/class/factories/SystemFactory.cpp" />
-    <entry file="file://$PROJECT_DIR$/class/factories/SystemFactory.hpp" />
-    <entry file="file://$PROJECT_DIR$/class/main.cpp" />
-    <entry file="file://$PROJECT_DIR$/class/managers/SystemManager.cpp" />
-    <entry file="file://$PROJECT_DIR$/class/managers/SystemManager.hpp" />
-    <entry file="file://$PROJECT_DIR$/class/managers/Pool.hpp" />
-    <entry file="file://$PROJECT_DIR$/class/ECS.hpp" />
     <entry file="file://$PROJECT_DIR$/srcs/w.cpp" />
     <entry file="file://$PROJECT_DIR$/srcs/w.hpp" />
     <entry file="file://$PROJECT_DIR$/class/KNU/component/TransformComponent.cpp" />
@@ -610,13 +634,6 @@
     <entry file="file://$PROJECT_DIR$/sandbox/src/main.cpp">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="27" selection-start-column="27" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/class/component/TransformComponent.hpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="163">
@@ -637,54 +654,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/class/KNU/managers/ComponentManager.hpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" selection-start-line="2" selection-end-line="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/class/KNU/managers/ComponentManager.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" selection-start-line="5" selection-end-line="5" />
-          <folding>
-            <element signature="e#1#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/class/KNU/managers/EntitiesManager.hpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" selection-start-line="2" selection-end-line="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/class/KNU/managers/EntitiesManager.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" selection-start-line="11" selection-end-line="11" />
-          <folding>
-            <element signature="e#2#21#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/class/KNU/managers/Pool.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" selection-start-line="4" selection-end-line="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/class/KNU/managers/AbstractPool.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" selection-start-line="2" selection-end-line="7" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/class/KNU/managers/ComponentManager.hpp" />
+    <entry file="file://$PROJECT_DIR$/class/KNU/managers/ComponentManager.cpp" />
+    <entry file="file://$PROJECT_DIR$/class/KNU/managers/EntitiesManager.hpp" />
+    <entry file="file://$PROJECT_DIR$/class/KNU/managers/EntitiesManager.cpp" />
+    <entry file="file://$PROJECT_DIR$/class/KNU/managers/Pool.cpp" />
+    <entry file="file://$PROJECT_DIR$/class/KNU/managers/AbstractPool.cpp" />
     <entry file="file://$PROJECT_DIR$/class/KNU/managers/AbstractPool.hpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
@@ -704,34 +679,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/incs/nibbler.hpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" selection-start-line="11" selection-end-line="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/class/KNU/managers/SystemManager.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" selection-start-line="4" selection-end-line="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/class/KNU/managers/SystemManager.hpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" selection-start-line="3" selection-end-line="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Makefile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="610">
-          <caret line="96" selection-start-line="96" selection-end-line="96" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/class/KNU/managers/SystemManager.cpp" />
+    <entry file="file://$PROJECT_DIR$/class/KNU/managers/SystemManager.hpp" />
     <entry file="file://$PROJECT_DIR$/class/component/MotionComponent.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="375">
@@ -763,30 +712,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/class/cores/main.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="20" selection-start-line="2" selection-start-column="20" selection-end-line="2" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/class/systems/MotionSystem.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="27" selection-start-line="3" selection-start-column="27" selection-end-line="3" selection-end-column="27" />
-          <folding>
-            <element signature="e#1#44#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/class/systems/MotionSystem.hpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/class/KNU/systems/System.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
@@ -805,6 +730,33 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/logger/srcs/logger/logger_init.c">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/class/systems/MotionSystem.hpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/class/systems/MotionSystem.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="12" selection-start-line="12" selection-end-line="12" />
+          <folding>
+            <element signature="e#1#44#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/incs/nibbler.hpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" selection-start-line="7" selection-end-line="7" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/class/KNU/utils/Signature.hpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
@@ -817,17 +769,27 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/class/KNU/utils/Signature.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="542">
-          <caret line="37" column="14" lean-forward="true" selection-start-line="37" selection-start-column="14" selection-end-line="37" selection-end-column="14" />
+        <state relative-caret-position="555">
+          <caret line="37" column="14" selection-start-line="37" selection-start-column="14" selection-end-line="37" selection-end-column="14" />
           <folding>
             <element signature="e#53#77#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/class/KNU/entities/Entity.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1095">
+          <caret line="73" column="43" selection-start-line="73" selection-start-column="28" selection-end-line="73" selection-end-column="43" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/class/KNU/entities/Entity.hpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="260">
+        <state relative-caret-position="2250">
           <caret line="150" column="17" selection-start-line="150" selection-start-column="17" selection-end-line="150" selection-end-column="17" />
           <folding>
             <element signature="e#14#28#0" expanded="true" />
@@ -836,13 +798,68 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/class/KNU/entities/Entity.cpp">
+    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="81" column="50" selection-start-line="81" selection-start-column="50" selection-end-line="81" selection-end-column="50" />
+        <state relative-caret-position="75">
+          <caret line="5" column="25" selection-start-line="5" selection-start-column="25" selection-end-line="5" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Makefile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="780">
+          <caret line="59" column="44" selection-start-line="59" selection-start-column="44" selection-end-line="59" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/class/cores/main.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="14" column="16" selection-start-line="14" selection-start-column="16" selection-end-line="14" selection-end-column="16" />
           <folding>
-            <element signature="e#0#18#0" expanded="true" />
+            <element signature="e#1#20#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/class/logger/utils/logger_get_time.cpp">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/logger/incs/logger.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="557">
+          <caret line="53" column="20" selection-start-line="53" selection-start-column="20" selection-end-line="53" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/logger/incs/logger_utils.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="23" selection-start-line="23" selection-end-line="23" />
+          <folding>
+            <element signature="e#90#109#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/class/logger/logger/logger_init.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="18" selection-start-line="9" selection-start-column="18" selection-end-line="9" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/class/logger/display/logger_debug.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="21" column="34" selection-start-line="21" selection-start-column="34" selection-end-line="21" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/class/logger/utils/logger_init_open_file.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="14" column="37" selection-start-line="14" selection-start-column="37" selection-end-line="14" selection-end-column="37" />
         </state>
       </provider>
     </entry>

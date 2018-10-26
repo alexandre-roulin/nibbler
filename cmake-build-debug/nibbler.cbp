@@ -46,6 +46,7 @@
 				<Compiler>
 					<Add directory="/Users/alexandreroulin/work/nibbler/class"/>
 					<Add directory="/Users/alexandreroulin/work/nibbler/incs"/>
+					<Add directory="/Users/alexandreroulin/work/nibbler/logger/incs"/>
 					<Add directory="/Library/Developer/CommandLineTools/usr/include/c++/v1"/>
 					<Add directory="/usr/local/include"/>
 					<Add directory="/Library/Developer/CommandLineTools/usr/lib/clang/10.0.0/include"/>
@@ -69,6 +70,7 @@
 				<Compiler>
 					<Add directory="/Users/alexandreroulin/work/nibbler/class"/>
 					<Add directory="/Users/alexandreroulin/work/nibbler/incs"/>
+					<Add directory="/Users/alexandreroulin/work/nibbler/logger/incs"/>
 					<Add directory="/Library/Developer/CommandLineTools/usr/include/c++/v1"/>
 					<Add directory="/usr/local/include"/>
 					<Add directory="/Library/Developer/CommandLineTools/usr/lib/clang/10.0.0/include"/>
@@ -84,9 +86,6 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/Makefile">
-			<Option target="nibbler"/>
-		</Unit>
 		<Unit filename="/Users/alexandreroulin/work/nibbler/class/KNU/World.cpp">
 			<Option target="nibbler"/>
 		</Unit>
@@ -145,6 +144,48 @@
 			<Option target="nibbler"/>
 		</Unit>
 		<Unit filename="/Users/alexandreroulin/work/nibbler/incs/nibbler.hpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/logger/incs/logger.h">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/logger/incs/logger_utils.h">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/logger/srcs/display/logger_debug.c">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/logger/srcs/display/logger_error.c">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/logger/srcs/display/logger_fatal.c">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/logger/srcs/display/logger_info.c">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/logger/srcs/display/logger_success.c">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/logger/srcs/display/logger_trace.c">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/logger/srcs/display/logger_warn.c">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/logger/srcs/logger/logger_close.c">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/logger/srcs/logger/logger_init.c">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/logger/srcs/utils/logger_get_time.c">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/logger/srcs/utils/logger_init_open_file.c">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/logger/test/main.c">
 			<Option target="nibbler"/>
 		</Unit>
 		<Unit filename="/Users/alexandreroulin/work/nibbler/CMakeLists.txt">
