@@ -92,7 +92,7 @@ CPPFLAGS	= \
 
 CFLAGS		= \
 			-std=c++17						\
-#			-Wall -Werror -Wextra					\
+			-Wall -Werror -Wextra					\
 #			-fsanitize=address					\
 #			-g3							\
 			

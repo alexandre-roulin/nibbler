@@ -1,13 +1,14 @@
 #include "Entity.hpp"
 #include <KNU/utils/Signature.hpp>
+#include <KNU/World.hpp>
 
 namespace KNU {
-
 
 
 	const Signature &Entity::getMask() {
 		return mask;
 	}
+
 	void Entity::kill() {
 		getEntitiesManager().killEntity(*this);
 	}
@@ -29,23 +30,32 @@ namespace KNU {
 	}
 
 	void Entity::group(std::string group) {
-
+		getEntitiesManager().groupEntity(*this, group);
 	}
 
 	bool Entity::hasGroup(std::string group) const {
-		return false;
+		return getEntitiesManager().hasEntityInGroup(*this, group);
 	}
+	//		unsigned int size;
+	//		unsigned int capacity;
+	//		World &world;
+	//		ComponentManager &_componentManager;
+	//		std::vector<Entity> _entitiesMap;
+	//		std::unordered_map<std::string, Entity> _taggedEntity;
+	//		std::unordered_map<std::string, std::set<Entity>> _groupedEntities;
 
-	EntitiesManager::EntitiesManager(World &world, ComponentManager &componentManager)
-			: _componentManager(componentManager),
+	EntitiesManager::EntitiesManager(World &world,
+									 ComponentManager &componentManager)
+			: size(0),
+			  capacity(BASE_ENTITIES_CAPACITY),
 			  world(world),
-			  size(0),
-			  capacity(BASE_ENTITIES_CAPACITY) {
+			  _componentManager(componentManager) {
 		_entitiesMap.resize(capacity);
 	}
 
 
 /** Entities Managements **/
+
 
 	Entity &
 	EntitiesManager::createEntity() {
@@ -61,14 +71,16 @@ namespace KNU {
 	}
 
 	void EntitiesManager::destroyEntity(Entity &entity) {
-		assert(entity.id < size);
+		assert(entity.id < static_cast<int>(size));
 		assert(entity == _entitiesMap[entity.id]);
 		size--;
 		_entitiesMap[entity.id] = _entitiesMap[size];
+
 	}
 
-	void EntitiesManager::killEntity(Entity &e) {
-		e.alive = false;
+	void EntitiesManager::killEntity(Entity &entity) {
+		world.destroyEntity(entity);
+		entity.alive = false;
 	}
 
 /** Tag/Group Management **/
@@ -76,15 +88,15 @@ namespace KNU {
 		return _taggedEntity.find(tag) != _taggedEntity.end();
 	}
 
-	void EntitiesManager::tagEntity(Entity &e, std::string &tag) {
-		_taggedEntity.insert(std::make_pair(tag, e));
+	void EntitiesManager::tagEntity(Entity &entity, std::string &tag) {
+		_taggedEntity.insert(std::make_pair(tag, entity));
 	}
 
-	void EntitiesManager::groupEntity(Entity &e, std::string &group) {
+	void EntitiesManager::groupEntity(Entity &entity, std::string &group) {
 		if (!hasGroup(group)) {
 			_groupedEntities.emplace(std::make_pair(group, std::set<Entity>()));
 		}
-		_groupedEntities[group].emplace(e);
+		_groupedEntities[group].emplace(entity);
 	}
 
 
@@ -97,7 +109,7 @@ namespace KNU {
 	}
 
 	unsigned long EntitiesManager::getGroupSize(std::string group) {
-		return _groupedEntities.size();
+		return _groupedEntities[group].size();
 	}
 
 	bool EntitiesManager::hasTag(std::string const &tag) {
@@ -108,15 +120,22 @@ namespace KNU {
 		return _groupedEntities.find(group) != _groupedEntities.end();
 	}
 
-	bool EntitiesManager::isEntityAlive(const Entity e) const {
-		return e.alive;
+	bool EntitiesManager::hasEntityInGroup(Entity const &entity, std::string group) {
+		auto it = _groupedEntities.find(group);
+		if (it != _groupedEntities.end()) {
+			if (it->second.find(entity.id) != it->second.end()) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	bool EntitiesManager::isEntityAlive(Entity const &entity) const {
+		return entity.alive;
 	}
 
 	Entity EntitiesManager::getEntityByTag(std::string const &tag) {
 		assert(hasTag(tag));
 		return _taggedEntity[tag];
 	}
-
-
-
 }

@@ -5,9 +5,10 @@
 #define BASE_ENTITIES_CAPACITY 20
 
 enum eDirection {
-	RIGHT,
-	LEFT,
-	NONE
+	NORTH,
+	SOUTH,
+	EAST,
+	WEST
 };
 
 #endif //NIBBLER_NIBBLER_HPP

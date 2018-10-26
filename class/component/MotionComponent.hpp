@@ -7,7 +7,7 @@
 
 class MotionComponent {
 public:
-	explicit MotionComponent(eDirection direction = NONE,
+	explicit MotionComponent(eDirection direction = NORTH,
 							 unsigned int speed = 1)
 			;
 

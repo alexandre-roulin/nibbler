@@ -153,7 +153,7 @@ namespace KNU {
 
 		void tagEntity(Entity &e, std::string &tag);
 
-		bool isEntityAlive(Entity e) const;
+		bool isEntityAlive(Entity const &entity) const;
 
 		Entity getEntityByTag(std::string const &tag);
 
@@ -163,28 +163,30 @@ namespace KNU {
 
 		bool hasGroup(std::string const &group);
 
-		void groupEntity(Entity &e, std::string &group);
+		bool hasEntityInGroup(Entity const &entity, std::string group);
+
+		void groupEntity(Entity &entity, std::string &group);
 
 		std::vector<Entity> getEntitiesByGroup(std::string const &group);
 
 		unsigned long getGroupSize(std::string group);
 
-		void killEntity(Entity &e);
+		void killEntity(Entity &entity);
 
 		template<typename T>
-		T &getComponent(Entity &e) const;
+		T &getComponent(Entity &entity) const;
 
 		template<typename T>
-		bool hasComponent(Entity const &e) const;
+		bool hasComponent(Entity const &entity) const;
 
 		template<typename T>
-		EntitiesManager &addComponent(Entity &e, T component);
+		EntitiesManager &addComponent(Entity &entity, T component);
 
 		template<typename T, typename ... Args>
-		EntitiesManager &addComponent(Entity &e, Args &&... args);
+		EntitiesManager &addComponent(Entity &entity, Args &&... args);
 
 		template<typename T>
-		void removeComponent(Entity &e);
+		void removeComponent(Entity &entity);
 
 	};
 
@@ -217,19 +219,18 @@ namespace KNU {
 	}
 
 	template<typename T>
-	T &EntitiesManager::getComponent(Entity &e) const {
-		assert(e.mask.getMask() & Component<T>::signature());
-		return _componentManager.getComponent<T>(e);
+	T &EntitiesManager::getComponent(Entity &entity) const {
+		assert(entity.mask.getMask() & Component<T>::signature());
+		return _componentManager.getComponent<T>(entity);
 	}
 
 	/** COMPONENT MANAGER **/
 
 	template<typename T>
-	void ComponentManager::addComponent(Entity &e, T component) {
-		const auto componentId = Component<T>::signature();
+	void ComponentManager::addComponent(Entity &entity, T component) {
 		std::shared_ptr<Pool<T>>
 				componentPool = accommodateComponent<T>();
-		componentPool->add(e, component);
+		componentPool->add(entity, component);
 	}
 
 	template<typename T>
@@ -269,27 +270,30 @@ namespace KNU {
 
 	/** ENTITIES MANAGER **/
 
+
+
 	template<typename T>
-	bool EntitiesManager::hasComponent(Entity const &e) const {
-		return _componentManager.hasComponent<T>(e);
+	bool EntitiesManager::hasComponent(Entity const &entity) const {
+		return _componentManager.hasComponent<T>(entity);
 	}
 
 	template<typename T>
-	EntitiesManager &EntitiesManager::addComponent(Entity &e, T component) {
-		_componentManager.addComponent(e, component);
+	EntitiesManager &EntitiesManager::addComponent(Entity &entity, T component) {
+		_componentManager.addComponent(entity, component);
 		return *this;
 	}
 
 	template<typename T, typename... Args>
-	EntitiesManager &EntitiesManager::addComponent(Entity &e, Args &&... args) {
+	EntitiesManager &EntitiesManager::addComponent(Entity &entity, Args &&... args) {
 		T component(std::forward<Args>(args) ...);
-		addComponent<T>(e, component);
+		addComponent<T>(entity, component);
 		return *this;
 	}
 
 	template<typename T>
-	void EntitiesManager::removeComponent(Entity &e) {
-//			e.mask.removeComponent<T>();
-		_componentManager.removeComponent<T>(e);
+	void EntitiesManager::removeComponent(Entity &entity) {
+//			entity.mask.removeComponent<T>();
+		_componentManager.removeComponent<T>(entity);
 	}
+
 }

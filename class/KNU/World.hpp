@@ -4,6 +4,7 @@
 
 #include <vector>
 #include <KNU/entities/Entity.hpp>
+#include <KNU/managers/SystemManager.hpp>
 
 namespace KNU {
 	class Entity;
@@ -11,9 +12,9 @@ namespace KNU {
 	private:
 		std::vector<Entity>		_createdEntities;
 		std::vector<Entity>		_destroyedEntities;
-		std::unique_ptr<EntitiesManager> entityManager;
-		std::unique_ptr<ComponentManager> componentManager;
-//		std::unique_ptr<EventManager> eventManager = nullptr;
+		std::unique_ptr<EntitiesManager> _entityManager;
+		std::unique_ptr<ComponentManager> _componentManager;
+		std::unique_ptr<SystemManager> _systemManager;
 	public:
 		World();
 		Entity &createEntity();
@@ -21,5 +22,7 @@ namespace KNU {
 		ComponentManager &getComponentManager() const;
 		EntitiesManager &getEntityManager() const;
 
+		SystemManager &getSystemManager() const;
+		void destroyEntity(Entity &e);
 	};
 }
