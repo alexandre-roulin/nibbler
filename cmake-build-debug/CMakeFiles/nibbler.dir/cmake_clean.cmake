@@ -25,6 +25,10 @@ file(REMOVE_RECURSE
   "CMakeFiles/nibbler.dir/class/KNU/events/EventManager.cpp.o"
   "CMakeFiles/nibbler.dir/class/events/JoystickEvent.cpp.o"
   "CMakeFiles/nibbler.dir/class/systems/FollowSystem.cpp.o"
+  "CMakeFiles/nibbler.dir/class/component/CollectComponent.cpp.o"
+  "CMakeFiles/nibbler.dir/class/systems/CollisionSystem.cpp.o"
+  "CMakeFiles/nibbler.dir/class/events/FoodEvent.cpp.o"
+  "CMakeFiles/nibbler.dir/class/systems/FoodSystem.cpp.o"
   "nibbler.pdb"
   "nibbler"
 )

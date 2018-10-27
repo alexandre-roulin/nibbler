@@ -8,8 +8,10 @@ SpriteComponent::SpriteComponent(std::string path)
 
 SpriteComponent &
 SpriteComponent::operator=(SpriteComponent const &motionComponent) {
-	if (this != &motionComponent) {
-		path = motionComponent.path;
+	{
+		if (this != &motionComponent) {
+			path = motionComponent.path;
+		}
+		return *this;
 	}
-	return *this;
 }

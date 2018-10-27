@@ -6,7 +6,7 @@
 
 struct PositionComponent {
 	explicit PositionComponent(int y = 0, int x = 0);
-
+	PositionComponent(PositionComponent const &);
 	int y, x;
 
 	PositionComponent &
@@ -17,6 +17,10 @@ struct PositionComponent {
 		}
 		return *this;
 	}
+
+	bool operator==(const PositionComponent &rhs) const;
+
+	bool operator!=(const PositionComponent &rhs) const;
 
 	friend std::ostream &
 	operator<<(std::ostream &os, const PositionComponent &component) {

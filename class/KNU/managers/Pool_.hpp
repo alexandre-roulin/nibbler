@@ -11,7 +11,6 @@ namespace KNU {
 	class Pool_ : public AbstractPool {
 	public:
 		Pool_(int size = BASE_COMPONENT_SIZE) {
-			resize(size);
 		}
 
 		virtual ~Pool_() {}

@@ -1,11 +1,13 @@
 #include "FollowComponent.hpp"
 
-FollowComponent::FollowComponent(KNU::Entity::ID id)
-	:_idFollowed(id) {
+FollowComponent::FollowComponent(KNU::Entity::ID id, bool skip)
+		: _idFollowed(id),
+		  skip(skip) {
 
 }
 
-FollowComponent &FollowComponent::operator=(FollowComponent const &followComponent) {
+FollowComponent &
+FollowComponent::operator=(FollowComponent const &followComponent) {
 	if (this != &followComponent) {
 		_idFollowed = followComponent._idFollowed;
 	}

@@ -395,6 +395,58 @@ CMakeFiles/nibbler.dir/class/systems/FollowSystem.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/systems/FollowSystem.cpp.s"
 	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/alexandreroulin/work/nibbler/class/systems/FollowSystem.cpp -o CMakeFiles/nibbler.dir/class/systems/FollowSystem.cpp.s
 
+CMakeFiles/nibbler.dir/class/component/CollectComponent.cpp.o: CMakeFiles/nibbler.dir/flags.make
+CMakeFiles/nibbler.dir/class/component/CollectComponent.cpp.o: ../class/component/CollectComponent.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_27) "Building CXX object CMakeFiles/nibbler.dir/class/component/CollectComponent.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/component/CollectComponent.cpp.o -c /Users/alexandreroulin/work/nibbler/class/component/CollectComponent.cpp
+
+CMakeFiles/nibbler.dir/class/component/CollectComponent.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/component/CollectComponent.cpp.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/alexandreroulin/work/nibbler/class/component/CollectComponent.cpp > CMakeFiles/nibbler.dir/class/component/CollectComponent.cpp.i
+
+CMakeFiles/nibbler.dir/class/component/CollectComponent.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/component/CollectComponent.cpp.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/alexandreroulin/work/nibbler/class/component/CollectComponent.cpp -o CMakeFiles/nibbler.dir/class/component/CollectComponent.cpp.s
+
+CMakeFiles/nibbler.dir/class/systems/CollisionSystem.cpp.o: CMakeFiles/nibbler.dir/flags.make
+CMakeFiles/nibbler.dir/class/systems/CollisionSystem.cpp.o: ../class/systems/CollisionSystem.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_28) "Building CXX object CMakeFiles/nibbler.dir/class/systems/CollisionSystem.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/systems/CollisionSystem.cpp.o -c /Users/alexandreroulin/work/nibbler/class/systems/CollisionSystem.cpp
+
+CMakeFiles/nibbler.dir/class/systems/CollisionSystem.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/systems/CollisionSystem.cpp.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/alexandreroulin/work/nibbler/class/systems/CollisionSystem.cpp > CMakeFiles/nibbler.dir/class/systems/CollisionSystem.cpp.i
+
+CMakeFiles/nibbler.dir/class/systems/CollisionSystem.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/systems/CollisionSystem.cpp.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/alexandreroulin/work/nibbler/class/systems/CollisionSystem.cpp -o CMakeFiles/nibbler.dir/class/systems/CollisionSystem.cpp.s
+
+CMakeFiles/nibbler.dir/class/events/FoodEvent.cpp.o: CMakeFiles/nibbler.dir/flags.make
+CMakeFiles/nibbler.dir/class/events/FoodEvent.cpp.o: ../class/events/FoodEvent.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_29) "Building CXX object CMakeFiles/nibbler.dir/class/events/FoodEvent.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/events/FoodEvent.cpp.o -c /Users/alexandreroulin/work/nibbler/class/events/FoodEvent.cpp
+
+CMakeFiles/nibbler.dir/class/events/FoodEvent.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/events/FoodEvent.cpp.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/alexandreroulin/work/nibbler/class/events/FoodEvent.cpp > CMakeFiles/nibbler.dir/class/events/FoodEvent.cpp.i
+
+CMakeFiles/nibbler.dir/class/events/FoodEvent.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/events/FoodEvent.cpp.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/alexandreroulin/work/nibbler/class/events/FoodEvent.cpp -o CMakeFiles/nibbler.dir/class/events/FoodEvent.cpp.s
+
+CMakeFiles/nibbler.dir/class/systems/FoodSystem.cpp.o: CMakeFiles/nibbler.dir/flags.make
+CMakeFiles/nibbler.dir/class/systems/FoodSystem.cpp.o: ../class/systems/FoodSystem.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_30) "Building CXX object CMakeFiles/nibbler.dir/class/systems/FoodSystem.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/systems/FoodSystem.cpp.o -c /Users/alexandreroulin/work/nibbler/class/systems/FoodSystem.cpp
+
+CMakeFiles/nibbler.dir/class/systems/FoodSystem.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/systems/FoodSystem.cpp.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/alexandreroulin/work/nibbler/class/systems/FoodSystem.cpp > CMakeFiles/nibbler.dir/class/systems/FoodSystem.cpp.i
+
+CMakeFiles/nibbler.dir/class/systems/FoodSystem.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/systems/FoodSystem.cpp.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/alexandreroulin/work/nibbler/class/systems/FoodSystem.cpp -o CMakeFiles/nibbler.dir/class/systems/FoodSystem.cpp.s
+
 # Object files for target nibbler
 nibbler_OBJECTS = \
 "CMakeFiles/nibbler.dir/class/component/MotionComponent.cpp.o" \
@@ -422,7 +474,11 @@ nibbler_OBJECTS = \
 "CMakeFiles/nibbler.dir/class/systems/JoystickSystem.cpp.o" \
 "CMakeFiles/nibbler.dir/class/KNU/events/EventManager.cpp.o" \
 "CMakeFiles/nibbler.dir/class/events/JoystickEvent.cpp.o" \
-"CMakeFiles/nibbler.dir/class/systems/FollowSystem.cpp.o"
+"CMakeFiles/nibbler.dir/class/systems/FollowSystem.cpp.o" \
+"CMakeFiles/nibbler.dir/class/component/CollectComponent.cpp.o" \
+"CMakeFiles/nibbler.dir/class/systems/CollisionSystem.cpp.o" \
+"CMakeFiles/nibbler.dir/class/events/FoodEvent.cpp.o" \
+"CMakeFiles/nibbler.dir/class/systems/FoodSystem.cpp.o"
 
 # External object files for target nibbler
 nibbler_EXTERNAL_OBJECTS =
@@ -453,9 +509,13 @@ nibbler: CMakeFiles/nibbler.dir/class/systems/JoystickSystem.cpp.o
 nibbler: CMakeFiles/nibbler.dir/class/KNU/events/EventManager.cpp.o
 nibbler: CMakeFiles/nibbler.dir/class/events/JoystickEvent.cpp.o
 nibbler: CMakeFiles/nibbler.dir/class/systems/FollowSystem.cpp.o
+nibbler: CMakeFiles/nibbler.dir/class/component/CollectComponent.cpp.o
+nibbler: CMakeFiles/nibbler.dir/class/systems/CollisionSystem.cpp.o
+nibbler: CMakeFiles/nibbler.dir/class/events/FoodEvent.cpp.o
+nibbler: CMakeFiles/nibbler.dir/class/systems/FoodSystem.cpp.o
 nibbler: CMakeFiles/nibbler.dir/build.make
 nibbler: CMakeFiles/nibbler.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_27) "Linking CXX executable nibbler"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_31) "Linking CXX executable nibbler"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/nibbler.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

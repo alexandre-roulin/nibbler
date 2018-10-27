@@ -5,7 +5,7 @@
 #include <iostream>
 #include "AbstractPool.hpp"
 
-#define BASE_COMPONENT_SIZE 64
+#define BASE_COMPONENT_SIZE 10
 
 namespace KNU {
 

@@ -285,6 +285,33 @@ class/KNU/utils/Signature.cpp.s:
 	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/utils/Signature.cpp.s
 .PHONY : class/KNU/utils/Signature.cpp.s
 
+class/component/CollectComponent.o: class/component/CollectComponent.cpp.o
+
+.PHONY : class/component/CollectComponent.o
+
+# target to build an object file
+class/component/CollectComponent.cpp.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/component/CollectComponent.cpp.o
+.PHONY : class/component/CollectComponent.cpp.o
+
+class/component/CollectComponent.i: class/component/CollectComponent.cpp.i
+
+.PHONY : class/component/CollectComponent.i
+
+# target to preprocess a source file
+class/component/CollectComponent.cpp.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/component/CollectComponent.cpp.i
+.PHONY : class/component/CollectComponent.cpp.i
+
+class/component/CollectComponent.s: class/component/CollectComponent.cpp.s
+
+.PHONY : class/component/CollectComponent.s
+
+# target to generate assembly for a file
+class/component/CollectComponent.cpp.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/component/CollectComponent.cpp.s
+.PHONY : class/component/CollectComponent.cpp.s
+
 class/component/FollowComponent.o: class/component/FollowComponent.cpp.o
 
 .PHONY : class/component/FollowComponent.o
@@ -446,6 +473,33 @@ class/cores/main.s: class/cores/main.cpp.s
 class/cores/main.cpp.s:
 	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/cores/main.cpp.s
 .PHONY : class/cores/main.cpp.s
+
+class/events/FoodEvent.o: class/events/FoodEvent.cpp.o
+
+.PHONY : class/events/FoodEvent.o
+
+# target to build an object file
+class/events/FoodEvent.cpp.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/events/FoodEvent.cpp.o
+.PHONY : class/events/FoodEvent.cpp.o
+
+class/events/FoodEvent.i: class/events/FoodEvent.cpp.i
+
+.PHONY : class/events/FoodEvent.i
+
+# target to preprocess a source file
+class/events/FoodEvent.cpp.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/events/FoodEvent.cpp.i
+.PHONY : class/events/FoodEvent.cpp.i
+
+class/events/FoodEvent.s: class/events/FoodEvent.cpp.s
+
+.PHONY : class/events/FoodEvent.s
+
+# target to generate assembly for a file
+class/events/FoodEvent.cpp.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/events/FoodEvent.cpp.s
+.PHONY : class/events/FoodEvent.cpp.s
 
 class/events/JoystickEvent.o: class/events/JoystickEvent.cpp.o
 
@@ -744,6 +798,33 @@ class/logger/utils/logger_init_open_file.cpp.s:
 	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/logger/utils/logger_init_open_file.cpp.s
 .PHONY : class/logger/utils/logger_init_open_file.cpp.s
 
+class/systems/CollisionSystem.o: class/systems/CollisionSystem.cpp.o
+
+.PHONY : class/systems/CollisionSystem.o
+
+# target to build an object file
+class/systems/CollisionSystem.cpp.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/systems/CollisionSystem.cpp.o
+.PHONY : class/systems/CollisionSystem.cpp.o
+
+class/systems/CollisionSystem.i: class/systems/CollisionSystem.cpp.i
+
+.PHONY : class/systems/CollisionSystem.i
+
+# target to preprocess a source file
+class/systems/CollisionSystem.cpp.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/systems/CollisionSystem.cpp.i
+.PHONY : class/systems/CollisionSystem.cpp.i
+
+class/systems/CollisionSystem.s: class/systems/CollisionSystem.cpp.s
+
+.PHONY : class/systems/CollisionSystem.s
+
+# target to generate assembly for a file
+class/systems/CollisionSystem.cpp.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/systems/CollisionSystem.cpp.s
+.PHONY : class/systems/CollisionSystem.cpp.s
+
 class/systems/FollowSystem.o: class/systems/FollowSystem.cpp.o
 
 .PHONY : class/systems/FollowSystem.o
@@ -770,6 +851,33 @@ class/systems/FollowSystem.s: class/systems/FollowSystem.cpp.s
 class/systems/FollowSystem.cpp.s:
 	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/systems/FollowSystem.cpp.s
 .PHONY : class/systems/FollowSystem.cpp.s
+
+class/systems/FoodSystem.o: class/systems/FoodSystem.cpp.o
+
+.PHONY : class/systems/FoodSystem.o
+
+# target to build an object file
+class/systems/FoodSystem.cpp.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/systems/FoodSystem.cpp.o
+.PHONY : class/systems/FoodSystem.cpp.o
+
+class/systems/FoodSystem.i: class/systems/FoodSystem.cpp.i
+
+.PHONY : class/systems/FoodSystem.i
+
+# target to preprocess a source file
+class/systems/FoodSystem.cpp.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/systems/FoodSystem.cpp.i
+.PHONY : class/systems/FoodSystem.cpp.i
+
+class/systems/FoodSystem.s: class/systems/FoodSystem.cpp.s
+
+.PHONY : class/systems/FoodSystem.s
+
+# target to generate assembly for a file
+class/systems/FoodSystem.cpp.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/systems/FoodSystem.cpp.s
+.PHONY : class/systems/FoodSystem.cpp.s
 
 class/systems/JoystickSystem.o: class/systems/JoystickSystem.cpp.o
 
@@ -852,6 +960,9 @@ help:
 	@echo "... class/KNU/utils/Signature.o"
 	@echo "... class/KNU/utils/Signature.i"
 	@echo "... class/KNU/utils/Signature.s"
+	@echo "... class/component/CollectComponent.o"
+	@echo "... class/component/CollectComponent.i"
+	@echo "... class/component/CollectComponent.s"
 	@echo "... class/component/FollowComponent.o"
 	@echo "... class/component/FollowComponent.i"
 	@echo "... class/component/FollowComponent.s"
@@ -870,6 +981,9 @@ help:
 	@echo "... class/cores/main.o"
 	@echo "... class/cores/main.i"
 	@echo "... class/cores/main.s"
+	@echo "... class/events/FoodEvent.o"
+	@echo "... class/events/FoodEvent.i"
+	@echo "... class/events/FoodEvent.s"
 	@echo "... class/events/JoystickEvent.o"
 	@echo "... class/events/JoystickEvent.i"
 	@echo "... class/events/JoystickEvent.s"
@@ -903,9 +1017,15 @@ help:
 	@echo "... class/logger/utils/logger_init_open_file.o"
 	@echo "... class/logger/utils/logger_init_open_file.i"
 	@echo "... class/logger/utils/logger_init_open_file.s"
+	@echo "... class/systems/CollisionSystem.o"
+	@echo "... class/systems/CollisionSystem.i"
+	@echo "... class/systems/CollisionSystem.s"
 	@echo "... class/systems/FollowSystem.o"
 	@echo "... class/systems/FollowSystem.i"
 	@echo "... class/systems/FollowSystem.s"
+	@echo "... class/systems/FoodSystem.o"
+	@echo "... class/systems/FoodSystem.i"
+	@echo "... class/systems/FoodSystem.s"
 	@echo "... class/systems/JoystickSystem.o"
 	@echo "... class/systems/JoystickSystem.i"
 	@echo "... class/systems/JoystickSystem.s"

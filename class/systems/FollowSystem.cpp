@@ -19,6 +19,12 @@ void FollowSystem::update() {
 		auto positionComponentFollowed = getWorld().getEntityManager()
 				.getEntityById(followComponent._idFollowed)
 				.getComponent<PositionComponent>();
-		positionComponent = positionComponentFollowed;
+		if (followComponent.skip) {
+			followComponent.skip = false;
+			log_info("Skip [%d] -> from pos y : %d, x : %d SkipAfter [%d]",item.getId(), positionComponent.y, positionComponent.x, item.getComponent<FollowComponent>().skip);
+
+		}
+		else
+			positionComponent = positionComponentFollowed;
 	}
 }
