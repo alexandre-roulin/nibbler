@@ -2,8 +2,8 @@
 
 
 struct CollisionComponent {
-	explicit CollisionComponent(bool isCollectable = false);
-	bool isCollectable;
+	explicit CollisionComponent(bool is_wall = true);
+	bool isWall;
 };
 
 

@@ -12,31 +12,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a7dbd8d7-b982-44a5-9ef8-5b2ba8f88fe0" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/class/component/CollisionComponent.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/class/component/CollisionComponent.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/class/component/WallComponent.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/class/component/WallComponent.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.todo/tasks" beforeDir="false" afterPath="$PROJECT_DIR$/.todo/tasks" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/class/component/CollectComponent.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/class/component/CollectComponent.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/class/component/MotionComponent.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/class/component/MotionComponent.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/class/component/CollisionComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/class/component/CollisionComponent.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/class/component/CollisionComponent.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/class/component/CollisionComponent.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/class/cores/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/class/cores/main.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/class/events/FoodEvent.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/class/events/FoodEvent.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/class/systems/CollisionSystem.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/class/systems/CollisionSystem.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/class/systems/CollisionSystem.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/class/systems/CollisionSystem.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/class/systems/FoodSystem.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/class/systems/FoodSystem.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nibbler.dir/DependInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nibbler.dir/DependInfo.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nibbler.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nibbler.dir/build.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nibbler.dir/cmake_clean.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nibbler.dir/cmake_clean.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nibbler.dir/link.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nibbler.dir/link.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nibbler.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nibbler.dir/progress.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/progress.marks" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/progress.marks" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/nibbler.cbp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/nibbler.cbp" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -79,10 +58,10 @@
         <counts>
           <entry key="Makefile" value="831" />
           <entry key="c" value="12" />
-          <entry key="cpp" value="16155" />
+          <entry key="cpp" value="16210" />
           <entry key="gitignore" value="7" />
           <entry key="h" value="227" />
-          <entry key="hpp" value="14507" />
+          <entry key="hpp" value="14530" />
           <entry key="json" value="78" />
           <entry key="txt" value="83" />
         </counts>
@@ -92,7 +71,7 @@
           <entry key="CMakeLists.txt" value="83" />
           <entry key="Doxygen file" value="1" />
           <entry key="JSON" value="78" />
-          <entry key="ObjectiveC" value="30900" />
+          <entry key="ObjectiveC" value="30978" />
           <entry key="PLAIN_TEXT" value="838" />
         </counts>
       </usages-collector>
@@ -132,17 +111,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/class/component/CollisionComponent.hpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="144">
-              <caret line="9" selection-start-line="9" selection-end-line="9" />
+            <state relative-caret-position="64">
+              <caret line="4" column="51" selection-start-line="4" selection-start-column="51" selection-end-line="4" selection-end-column="51" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/class/cores/main.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="784">
-              <caret line="70" selection-start-line="70" selection-end-line="70" />
+            <state relative-caret-position="452">
+              <caret line="69" column="47" selection-start-line="69" selection-start-column="47" selection-end-line="69" selection-end-column="47" />
             </state>
           </provider>
         </entry>
@@ -183,11 +162,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/class/systems/CollisionSystem.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="400">
-              <caret line="25" column="47" selection-start-line="25" selection-start-column="47" selection-end-line="25" selection-end-column="47" />
+            <state relative-caret-position="448">
+              <caret line="28" selection-start-line="28" selection-end-line="28" />
               <folding>
                 <element signature="e#0#42#0" expanded="true" />
               </folding>
@@ -334,14 +313,14 @@
         <option value="$PROJECT_DIR$/class/component/CollectComponent.cpp" />
         <option value="$PROJECT_DIR$/class/component/MotionComponent.hpp" />
         <option value="$PROJECT_DIR$/class/component/WallComponent.hpp" />
-        <option value="$PROJECT_DIR$/class/component/CollisionComponent.hpp" />
         <option value="$PROJECT_DIR$/class/component/CollisionComponent.cpp" />
         <option value="$PROJECT_DIR$/class/events/FoodEvent.hpp" />
         <option value="$PROJECT_DIR$/Makefile" />
         <option value="$PROJECT_DIR$/class/systems/CollisionSystem.hpp" />
-        <option value="$PROJECT_DIR$/class/cores/main.cpp" />
         <option value="$PROJECT_DIR$/class/systems/FoodSystem.cpp" />
         <option value="$PROJECT_DIR$/class/systems/CollisionSystem.cpp" />
+        <option value="$PROJECT_DIR$/class/component/CollisionComponent.hpp" />
+        <option value="$PROJECT_DIR$/class/cores/main.cpp" />
       </list>
     </option>
   </component>
@@ -547,12 +526,12 @@
       <workItem from="1540528346289" duration="1890000" />
       <workItem from="1540574039636" duration="1561000" />
       <workItem from="1540575776510" duration="25174000" />
-      <workItem from="1540663974538" duration="2821000" />
+      <workItem from="1540663974538" duration="3388000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="115494000" />
+    <option name="totallyTimeSpent" value="116061000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
@@ -922,24 +901,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/class/systems/CollisionSystem.hpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="32">
-          <caret line="2" selection-start-line="2" selection-end-line="2" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/class/component/CollisionComponent.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="64">
           <caret line="4" selection-start-line="4" selection-end-line="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/class/cores/main.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="784">
-          <caret line="70" selection-start-line="70" selection-end-line="70" />
         </state>
       </provider>
     </entry>
@@ -957,20 +922,34 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/class/component/CollisionComponent.hpp">
+    <entry file="file://$PROJECT_DIR$/class/systems/CollisionSystem.hpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="9" selection-start-line="9" selection-end-line="9" />
+        <state relative-caret-position="32">
+          <caret line="2" selection-start-line="2" selection-end-line="2" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/class/systems/CollisionSystem.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="400">
-          <caret line="25" column="47" selection-start-line="25" selection-start-column="47" selection-end-line="25" selection-end-column="47" />
+        <state relative-caret-position="448">
+          <caret line="28" selection-start-line="28" selection-end-line="28" />
           <folding>
             <element signature="e#0#42#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/class/component/CollisionComponent.hpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="64">
+          <caret line="4" column="51" selection-start-line="4" selection-start-column="51" selection-end-line="4" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/class/cores/main.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="452">
+          <caret line="69" column="47" selection-start-line="69" selection-start-column="47" selection-end-line="69" selection-end-column="47" />
         </state>
       </provider>
     </entry>

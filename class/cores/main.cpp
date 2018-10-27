@@ -38,7 +38,8 @@ void init(KNU::World &world) {
 			new_snake->addComponent<FollowComponent>(snake_follow->getId());
 		snake_follow = new_snake;
 	}
-	new_snake->tag(TAG_TAIL_SNAKE);
+	if (new_snake)
+		new_snake->tag(TAG_TAIL_SNAKE);
 
 }
 
@@ -66,7 +67,7 @@ int main() {
 
 	auto &food = world.createEntity();
 	food.addComponent<PositionComponent>(7, 8);
-	food.addComponent<CollisionComponent>(true);
+	food.addComponent<CollisionComponent>(false);
 	food.tag("food");
 
 	display(world);

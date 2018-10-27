@@ -1,6 +1,6 @@
 #include "CollisionComponent.hpp"
 
-CollisionComponent::CollisionComponent(bool isCollectable)
-		: isCollectable(isCollectable) {
+CollisionComponent::CollisionComponent(bool is_wall)
+		: isWall(is_wall) {
 
 }
