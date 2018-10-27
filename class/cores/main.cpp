@@ -22,27 +22,24 @@
 #include <systems/FoodSystem.hpp>
 
 void init(KNU::World &world) {
-	auto &snake_tail = world.createEntity();
-	snake_tail.addComponent<PositionComponent>(7, 10);
-	snake_tail.group(GROUP_SNAKE);
-	snake_tail.tag(TAG_TAIL_SNAKE);
-
-	auto snake_follow = snake_tail;
-	for (int index = 0; index < 2; ++index) {
-		auto &snake_body = world.createEntity();
-		snake_body.addComponent<PositionComponent>(8 + index, 10);
-		snake_body.group(GROUP_SNAKE);
-		snake_follow.addComponent<FollowComponent>(snake_body.getId());
-		snake_follow = snake_body;
+	KNU::Entity *snake_follow = nullptr;
+	KNU::Entity *new_snake = nullptr;
+	for (int index = 0; index < 4; ++index) {
+		new_snake = &world.createEntity();
+		if (index == 0) {
+			new_snake->tag(TAG_HEAD_SNAKE);
+			new_snake->addComponent<JoystickComponent>();
+			new_snake->addComponent<MotionComponent>();
+			new_snake->addComponent<CollectComponent>();
+		}
+		new_snake->addComponent<PositionComponent>(7 + index, 10);
+		new_snake->group(GROUP_SNAKE);
+		if (snake_follow != nullptr)
+			new_snake->addComponent<FollowComponent>(snake_follow->getId());
+		snake_follow = new_snake;
 	}
-	auto &snake_head = world.createEntity();
-	snake_head.addComponent<PositionComponent>(10, 10);
-	snake_head.addComponent<JoystickComponent>();
-	snake_head.addComponent<MotionComponent>();
-	snake_head.addComponent<CollectComponent>();
-	snake_head.group(GROUP_SNAKE);
-	snake_head.tag(TAG_HEAD_SNAKE);
-	snake_follow.addComponent<FollowComponent>(snake_head.getId());
+	new_snake->tag(TAG_TAIL_SNAKE);
+
 }
 
 void display(KNU::World &world) {
@@ -65,24 +62,25 @@ int main() {
 	world.getSystemManager().addSystem<CollisionSystem>();
 	world.getSystemManager().addSystem<FoodSystem>();
 	auto &food = world.createEntity();
-	food.addComponent<PositionComponent>(12, 10);
+	food.addComponent<PositionComponent>(7, 8);
 	food.addComponent<CollectComponent>();
 	food.tag("food");
 	display(world);
 	for (int index = 0; index < 2; ++index) {
-		world.update();
-		world.getEventManager().emitEvent<JoystickEvent>(ARROW_DOWN);
+		world.update();                                                         //WORLD			-> Distribute/Destroy entity to System/EntityManager
+		world.getEventManager().emitEvent<JoystickEvent>(ARROW_LEFT);
 
-		world.getSystemManager().getSystem<FollowSystem>()->update();			//FOLLOW
-		world.getSystemManager().getSystem<JoystickSystem>()->update();			//JOYSTICK
-		world.getSystemManager().getSystem<MotionSystem>()->update();			//MOTION
-		world.getSystemManager().getSystem<CollisionSystem>()->update();		//COLLISION
-		world.getSystemManager().getSystem<FoodSystem>()->update();				//FOOD
+		world.getSystemManager().getSystem<FollowSystem>()->update();           //FOLLOW		-> Save Next position
+		world.getSystemManager().getSystem<JoystickSystem>()->update();         //JOYSTICK		-> Move Joystick 's position component
+		world.getSystemManager().getSystem<MotionSystem>()->update();           //MOTION		-> Move Motion Component
+		world.getSystemManager().getSystem<CollisionSystem>()->update();        //COLLISION		-> Check Collision with CollectComponent
+		world.getSystemManager().getSystem<FoodSystem>()->update();             //FOOD			-> Check FoodEvent and add Snake if needed
 		display(world);
 	}
+
 	for (int index = 0; index < 2; ++index) {
 		world.update();
-		world.getEventManager().emitEvent<JoystickEvent>(ARROW_RIGHT);
+		world.getEventManager().emitEvent<JoystickEvent>(ARROW_UP);
 		world.getSystemManager().getSystem<FollowSystem>()->update();
 		world.getSystemManager().getSystem<JoystickSystem>()->update();
 		world.getSystemManager().getSystem<MotionSystem>()->update();
