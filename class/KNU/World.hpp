@@ -3,6 +3,7 @@
 // >>> [ KRYSTAL is NOT UNIX ] <<<
 
 #include <KNU/systems/System.hpp>
+#include <KNU/events/EventManager.hpp>
 
 namespace KNU {
 	class Entity;
@@ -11,8 +12,9 @@ namespace KNU {
 	private:
 		std::vector<Entity> _createdEntities;
 		std::vector<Entity> _destroyedEntities;
+
 		std::unique_ptr<EntitiesManager> _entityManager;
-		std::unique_ptr<ComponentManager> _componentManager;
+		std::unique_ptr<EventManager> _eventManager;
 		std::unique_ptr<SystemManager> _systemManager;
 
 	public:
@@ -20,9 +22,9 @@ namespace KNU {
 		void update();
 		Entity &createEntity();
 
-		ComponentManager &getComponentManager() const;
-
 		EntitiesManager &getEntityManager() const;
+
+		EventManager &getEventManager() const;
 
 		SystemManager &getSystemManager() const;
 

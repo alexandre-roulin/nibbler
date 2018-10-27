@@ -2,7 +2,6 @@
 #include <iostream>
 int fd(int fd) {
 	static int g_log_fd;
-
 	if (fd > 0) {
 		g_log_fd = fd;
 	}

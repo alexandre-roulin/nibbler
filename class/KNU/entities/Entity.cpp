@@ -53,12 +53,11 @@ namespace KNU {
 		return *this;
 	}
 
-	EntitiesManager::EntitiesManager(World &world,
-									 ComponentManager &componentManager)
+	EntitiesManager::EntitiesManager(World &world)
 			: size(0),
 			  capacity(BASE_ENTITIES_CAPACITY),
 			  world(world),
-			  _componentManager(componentManager) {
+			  _componentManager(ComponentManager()) {
 		_entitiesMap.resize(capacity);
 		_poolSignature.resize(capacity);
 	}
@@ -108,6 +107,11 @@ namespace KNU {
 	}
 
 /** Tag/Group Management **/
+
+	Entity EntitiesManager::getEntityById(Entity::ID id) const {
+		return _entitiesMap[id];
+	}
+
 
 	bool EntitiesManager::hasTaggedEntity(std::string &tag) {
 		return _taggedEntity.find(tag) != _taggedEntity.end();

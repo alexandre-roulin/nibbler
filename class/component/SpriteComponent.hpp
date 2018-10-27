@@ -1,29 +1,22 @@
 #pragma once
+
 #include <utility>
 
 #include <ostream>
 
 
-	struct SpriteComponent {
+struct SpriteComponent {
 
-		explicit SpriteComponent(std::string path = "")
-				: path(std::move(path)),
-				  mask(KNU::Signature(
-						  1 << KNU::Component<SpriteComponent>::signature())) {};
+	explicit SpriteComponent(std::string path = "");
 
-		std::string path;
-		KNU::Signature mask;
+	std::string path;
 
-		SpriteComponent &operator=(SpriteComponent const &motionComponent) {
-			if (this != &motionComponent) {
-				mask = motionComponent.mask;
-			}
-			return *this;
-		}
+	SpriteComponent &operator=(SpriteComponent const &motionComponent);
 
-		friend std::ostream &
-		operator<<(std::ostream &os, const SpriteComponent &component) {
-			os << "path: " << component.path << " mask: " << component.mask;
-			return os;
-		}
-	};
+	friend std::ostream &
+	operator<<(std::ostream &os, const SpriteComponent &component) {
+		os << "path: " << component.path;
+		return os;
+	}
+};
+

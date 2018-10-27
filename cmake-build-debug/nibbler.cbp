@@ -102,10 +102,19 @@
 		<Unit filename="/Users/alexandreroulin/work/nibbler/class/KNU/entities/Entity.hpp">
 			<Option target="nibbler"/>
 		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/class/KNU/events/EventManager.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/class/KNU/events/EventManager.hpp">
+			<Option target="nibbler"/>
+		</Unit>
 		<Unit filename="/Users/alexandreroulin/work/nibbler/class/KNU/managers/AbstractPool.hpp">
 			<Option target="nibbler"/>
 		</Unit>
 		<Unit filename="/Users/alexandreroulin/work/nibbler/class/KNU/managers/Pool.hpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/class/KNU/managers/Pool_.hpp">
 			<Option target="nibbler"/>
 		</Unit>
 		<Unit filename="/Users/alexandreroulin/work/nibbler/class/KNU/systems/System.cpp">
@@ -120,19 +129,43 @@
 		<Unit filename="/Users/alexandreroulin/work/nibbler/class/KNU/utils/Signature.hpp">
 			<Option target="nibbler"/>
 		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/class/component/FollowComponent.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/class/component/FollowComponent.hpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/class/component/JoystickComponent.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/class/component/JoystickComponent.hpp">
+			<Option target="nibbler"/>
+		</Unit>
 		<Unit filename="/Users/alexandreroulin/work/nibbler/class/component/MotionComponent.cpp">
 			<Option target="nibbler"/>
 		</Unit>
 		<Unit filename="/Users/alexandreroulin/work/nibbler/class/component/MotionComponent.hpp">
 			<Option target="nibbler"/>
 		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/class/component/PositionComponent.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/class/component/PositionComponent.hpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/class/component/SpriteComponent.cpp">
+			<Option target="nibbler"/>
+		</Unit>
 		<Unit filename="/Users/alexandreroulin/work/nibbler/class/component/SpriteComponent.hpp">
 			<Option target="nibbler"/>
 		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/component/TransformComponent.hpp">
+		<Unit filename="/Users/alexandreroulin/work/nibbler/class/cores/main.cpp">
 			<Option target="nibbler"/>
 		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/cores/main.cpp">
+		<Unit filename="/Users/alexandreroulin/work/nibbler/class/events/JoystickEvent.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/class/events/JoystickEvent.hpp">
 			<Option target="nibbler"/>
 		</Unit>
 		<Unit filename="/Users/alexandreroulin/work/nibbler/class/logger/display/logger_debug.cpp">
@@ -163,6 +196,18 @@
 			<Option target="nibbler"/>
 		</Unit>
 		<Unit filename="/Users/alexandreroulin/work/nibbler/class/logger/utils/logger_init_open_file.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/class/systems/FollowSystem.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/class/systems/FollowSystem.hpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/class/systems/JoystickSystem.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/class/systems/JoystickSystem.hpp">
 			<Option target="nibbler"/>
 		</Unit>
 		<Unit filename="/Users/alexandreroulin/work/nibbler/class/systems/MotionSystem.cpp">

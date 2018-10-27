@@ -4,8 +4,8 @@
 namespace KNU {
 
 	World::World() {
-		_componentManager = std::make_unique<ComponentManager>();
-		_entityManager = std::make_unique<EntitiesManager>(*this, *_componentManager);
+		_entityManager = std::make_unique<EntitiesManager>(*this);
+		_eventManager = std::make_unique<EventManager>(*this);
 		_systemManager = std::make_unique<SystemManager>(*this);
 	}
 
@@ -23,17 +23,14 @@ namespace KNU {
 		return *_systemManager;
 	}
 
-	ComponentManager &
-	World::getComponentManager() const {
-		return *_componentManager;
+	EventManager &World::getEventManager() const {
+		return *_eventManager;
 	}
-
 	void World::destroyEntity(Entity &e) {
 		log_success("World::destroyEntity [%d]", e.getId());
 		_destroyedEntities.push_back(e);
 	}
-// T 0000 0001
-// M 0000 0010
+
 // S 0000 0100
 
 // E 0000 0111

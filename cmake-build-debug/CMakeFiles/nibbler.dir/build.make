@@ -291,6 +291,110 @@ CMakeFiles/nibbler.dir/class/systems/MotionSystem.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/systems/MotionSystem.cpp.s"
 	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/alexandreroulin/work/nibbler/class/systems/MotionSystem.cpp -o CMakeFiles/nibbler.dir/class/systems/MotionSystem.cpp.s
 
+CMakeFiles/nibbler.dir/class/component/SpriteComponent.cpp.o: CMakeFiles/nibbler.dir/flags.make
+CMakeFiles/nibbler.dir/class/component/SpriteComponent.cpp.o: ../class/component/SpriteComponent.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object CMakeFiles/nibbler.dir/class/component/SpriteComponent.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/component/SpriteComponent.cpp.o -c /Users/alexandreroulin/work/nibbler/class/component/SpriteComponent.cpp
+
+CMakeFiles/nibbler.dir/class/component/SpriteComponent.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/component/SpriteComponent.cpp.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/alexandreroulin/work/nibbler/class/component/SpriteComponent.cpp > CMakeFiles/nibbler.dir/class/component/SpriteComponent.cpp.i
+
+CMakeFiles/nibbler.dir/class/component/SpriteComponent.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/component/SpriteComponent.cpp.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/alexandreroulin/work/nibbler/class/component/SpriteComponent.cpp -o CMakeFiles/nibbler.dir/class/component/SpriteComponent.cpp.s
+
+CMakeFiles/nibbler.dir/class/component/PositionComponent.cpp.o: CMakeFiles/nibbler.dir/flags.make
+CMakeFiles/nibbler.dir/class/component/PositionComponent.cpp.o: ../class/component/PositionComponent.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building CXX object CMakeFiles/nibbler.dir/class/component/PositionComponent.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/component/PositionComponent.cpp.o -c /Users/alexandreroulin/work/nibbler/class/component/PositionComponent.cpp
+
+CMakeFiles/nibbler.dir/class/component/PositionComponent.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/component/PositionComponent.cpp.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/alexandreroulin/work/nibbler/class/component/PositionComponent.cpp > CMakeFiles/nibbler.dir/class/component/PositionComponent.cpp.i
+
+CMakeFiles/nibbler.dir/class/component/PositionComponent.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/component/PositionComponent.cpp.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/alexandreroulin/work/nibbler/class/component/PositionComponent.cpp -o CMakeFiles/nibbler.dir/class/component/PositionComponent.cpp.s
+
+CMakeFiles/nibbler.dir/class/component/FollowComponent.cpp.o: CMakeFiles/nibbler.dir/flags.make
+CMakeFiles/nibbler.dir/class/component/FollowComponent.cpp.o: ../class/component/FollowComponent.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building CXX object CMakeFiles/nibbler.dir/class/component/FollowComponent.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/component/FollowComponent.cpp.o -c /Users/alexandreroulin/work/nibbler/class/component/FollowComponent.cpp
+
+CMakeFiles/nibbler.dir/class/component/FollowComponent.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/component/FollowComponent.cpp.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/alexandreroulin/work/nibbler/class/component/FollowComponent.cpp > CMakeFiles/nibbler.dir/class/component/FollowComponent.cpp.i
+
+CMakeFiles/nibbler.dir/class/component/FollowComponent.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/component/FollowComponent.cpp.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/alexandreroulin/work/nibbler/class/component/FollowComponent.cpp -o CMakeFiles/nibbler.dir/class/component/FollowComponent.cpp.s
+
+CMakeFiles/nibbler.dir/class/component/JoystickComponent.cpp.o: CMakeFiles/nibbler.dir/flags.make
+CMakeFiles/nibbler.dir/class/component/JoystickComponent.cpp.o: ../class/component/JoystickComponent.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building CXX object CMakeFiles/nibbler.dir/class/component/JoystickComponent.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/component/JoystickComponent.cpp.o -c /Users/alexandreroulin/work/nibbler/class/component/JoystickComponent.cpp
+
+CMakeFiles/nibbler.dir/class/component/JoystickComponent.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/component/JoystickComponent.cpp.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/alexandreroulin/work/nibbler/class/component/JoystickComponent.cpp > CMakeFiles/nibbler.dir/class/component/JoystickComponent.cpp.i
+
+CMakeFiles/nibbler.dir/class/component/JoystickComponent.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/component/JoystickComponent.cpp.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/alexandreroulin/work/nibbler/class/component/JoystickComponent.cpp -o CMakeFiles/nibbler.dir/class/component/JoystickComponent.cpp.s
+
+CMakeFiles/nibbler.dir/class/systems/JoystickSystem.cpp.o: CMakeFiles/nibbler.dir/flags.make
+CMakeFiles/nibbler.dir/class/systems/JoystickSystem.cpp.o: ../class/systems/JoystickSystem.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Building CXX object CMakeFiles/nibbler.dir/class/systems/JoystickSystem.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/systems/JoystickSystem.cpp.o -c /Users/alexandreroulin/work/nibbler/class/systems/JoystickSystem.cpp
+
+CMakeFiles/nibbler.dir/class/systems/JoystickSystem.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/systems/JoystickSystem.cpp.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/alexandreroulin/work/nibbler/class/systems/JoystickSystem.cpp > CMakeFiles/nibbler.dir/class/systems/JoystickSystem.cpp.i
+
+CMakeFiles/nibbler.dir/class/systems/JoystickSystem.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/systems/JoystickSystem.cpp.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/alexandreroulin/work/nibbler/class/systems/JoystickSystem.cpp -o CMakeFiles/nibbler.dir/class/systems/JoystickSystem.cpp.s
+
+CMakeFiles/nibbler.dir/class/KNU/events/EventManager.cpp.o: CMakeFiles/nibbler.dir/flags.make
+CMakeFiles/nibbler.dir/class/KNU/events/EventManager.cpp.o: ../class/KNU/events/EventManager.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building CXX object CMakeFiles/nibbler.dir/class/KNU/events/EventManager.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/KNU/events/EventManager.cpp.o -c /Users/alexandreroulin/work/nibbler/class/KNU/events/EventManager.cpp
+
+CMakeFiles/nibbler.dir/class/KNU/events/EventManager.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/KNU/events/EventManager.cpp.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/alexandreroulin/work/nibbler/class/KNU/events/EventManager.cpp > CMakeFiles/nibbler.dir/class/KNU/events/EventManager.cpp.i
+
+CMakeFiles/nibbler.dir/class/KNU/events/EventManager.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/KNU/events/EventManager.cpp.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/alexandreroulin/work/nibbler/class/KNU/events/EventManager.cpp -o CMakeFiles/nibbler.dir/class/KNU/events/EventManager.cpp.s
+
+CMakeFiles/nibbler.dir/class/events/JoystickEvent.cpp.o: CMakeFiles/nibbler.dir/flags.make
+CMakeFiles/nibbler.dir/class/events/JoystickEvent.cpp.o: ../class/events/JoystickEvent.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Building CXX object CMakeFiles/nibbler.dir/class/events/JoystickEvent.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/events/JoystickEvent.cpp.o -c /Users/alexandreroulin/work/nibbler/class/events/JoystickEvent.cpp
+
+CMakeFiles/nibbler.dir/class/events/JoystickEvent.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/events/JoystickEvent.cpp.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/alexandreroulin/work/nibbler/class/events/JoystickEvent.cpp > CMakeFiles/nibbler.dir/class/events/JoystickEvent.cpp.i
+
+CMakeFiles/nibbler.dir/class/events/JoystickEvent.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/events/JoystickEvent.cpp.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/alexandreroulin/work/nibbler/class/events/JoystickEvent.cpp -o CMakeFiles/nibbler.dir/class/events/JoystickEvent.cpp.s
+
+CMakeFiles/nibbler.dir/class/systems/FollowSystem.cpp.o: CMakeFiles/nibbler.dir/flags.make
+CMakeFiles/nibbler.dir/class/systems/FollowSystem.cpp.o: ../class/systems/FollowSystem.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_26) "Building CXX object CMakeFiles/nibbler.dir/class/systems/FollowSystem.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/systems/FollowSystem.cpp.o -c /Users/alexandreroulin/work/nibbler/class/systems/FollowSystem.cpp
+
+CMakeFiles/nibbler.dir/class/systems/FollowSystem.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/systems/FollowSystem.cpp.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/alexandreroulin/work/nibbler/class/systems/FollowSystem.cpp > CMakeFiles/nibbler.dir/class/systems/FollowSystem.cpp.i
+
+CMakeFiles/nibbler.dir/class/systems/FollowSystem.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/systems/FollowSystem.cpp.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/alexandreroulin/work/nibbler/class/systems/FollowSystem.cpp -o CMakeFiles/nibbler.dir/class/systems/FollowSystem.cpp.s
+
 # Object files for target nibbler
 nibbler_OBJECTS = \
 "CMakeFiles/nibbler.dir/class/component/MotionComponent.cpp.o" \
@@ -310,7 +414,15 @@ nibbler_OBJECTS = \
 "CMakeFiles/nibbler.dir/class/logger/logger/logger_init.cpp.o" \
 "CMakeFiles/nibbler.dir/class/logger/utils/logger_get_time.cpp.o" \
 "CMakeFiles/nibbler.dir/class/logger/utils/logger_init_open_file.cpp.o" \
-"CMakeFiles/nibbler.dir/class/systems/MotionSystem.cpp.o"
+"CMakeFiles/nibbler.dir/class/systems/MotionSystem.cpp.o" \
+"CMakeFiles/nibbler.dir/class/component/SpriteComponent.cpp.o" \
+"CMakeFiles/nibbler.dir/class/component/PositionComponent.cpp.o" \
+"CMakeFiles/nibbler.dir/class/component/FollowComponent.cpp.o" \
+"CMakeFiles/nibbler.dir/class/component/JoystickComponent.cpp.o" \
+"CMakeFiles/nibbler.dir/class/systems/JoystickSystem.cpp.o" \
+"CMakeFiles/nibbler.dir/class/KNU/events/EventManager.cpp.o" \
+"CMakeFiles/nibbler.dir/class/events/JoystickEvent.cpp.o" \
+"CMakeFiles/nibbler.dir/class/systems/FollowSystem.cpp.o"
 
 # External object files for target nibbler
 nibbler_EXTERNAL_OBJECTS =
@@ -333,9 +445,17 @@ nibbler: CMakeFiles/nibbler.dir/class/logger/logger/logger_init.cpp.o
 nibbler: CMakeFiles/nibbler.dir/class/logger/utils/logger_get_time.cpp.o
 nibbler: CMakeFiles/nibbler.dir/class/logger/utils/logger_init_open_file.cpp.o
 nibbler: CMakeFiles/nibbler.dir/class/systems/MotionSystem.cpp.o
+nibbler: CMakeFiles/nibbler.dir/class/component/SpriteComponent.cpp.o
+nibbler: CMakeFiles/nibbler.dir/class/component/PositionComponent.cpp.o
+nibbler: CMakeFiles/nibbler.dir/class/component/FollowComponent.cpp.o
+nibbler: CMakeFiles/nibbler.dir/class/component/JoystickComponent.cpp.o
+nibbler: CMakeFiles/nibbler.dir/class/systems/JoystickSystem.cpp.o
+nibbler: CMakeFiles/nibbler.dir/class/KNU/events/EventManager.cpp.o
+nibbler: CMakeFiles/nibbler.dir/class/events/JoystickEvent.cpp.o
+nibbler: CMakeFiles/nibbler.dir/class/systems/FollowSystem.cpp.o
 nibbler: CMakeFiles/nibbler.dir/build.make
 nibbler: CMakeFiles/nibbler.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Linking CXX executable nibbler"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_27) "Linking CXX executable nibbler"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/nibbler.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

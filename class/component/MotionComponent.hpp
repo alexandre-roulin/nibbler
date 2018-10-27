@@ -15,8 +15,6 @@ public:
 
 	unsigned int speed;
 
-	KNU::Signature mask;
-
 	MotionComponent &operator=(MotionComponent const &motionComponent);
 
 	friend std::ostream &

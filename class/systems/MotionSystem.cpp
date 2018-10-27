@@ -1,18 +1,18 @@
 
-#include <component/TransformComponent.hpp>
+#include <component/PositionComponent.hpp>
 #include <component/MotionComponent.hpp>
 #include <logger.h>
 #include "MotionSystem.hpp"
 
 MotionSystem::MotionSystem() {
-	requireComponent<TransformComponent>();
+	requireComponent<PositionComponent>();
 	requireComponent<MotionComponent>();
 }
 
 void MotionSystem::update() {
 	log_success("MotionSystem::update SizeEntities [%d]", getEntities().size());
 	for (auto &entity : getEntities()) {
-		auto &transformComponent = entity.getComponent<TransformComponent>();
+		auto &transformComponent = entity.getComponent<PositionComponent>();
 		auto &motionComponent = entity.getComponent<MotionComponent>();
 		switch (motionComponent.direction) {
 			case NORTH:

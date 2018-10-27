@@ -204,6 +204,33 @@ class/KNU/entities/Entity.cpp.s:
 	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/entities/Entity.cpp.s
 .PHONY : class/KNU/entities/Entity.cpp.s
 
+class/KNU/events/EventManager.o: class/KNU/events/EventManager.cpp.o
+
+.PHONY : class/KNU/events/EventManager.o
+
+# target to build an object file
+class/KNU/events/EventManager.cpp.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/events/EventManager.cpp.o
+.PHONY : class/KNU/events/EventManager.cpp.o
+
+class/KNU/events/EventManager.i: class/KNU/events/EventManager.cpp.i
+
+.PHONY : class/KNU/events/EventManager.i
+
+# target to preprocess a source file
+class/KNU/events/EventManager.cpp.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/events/EventManager.cpp.i
+.PHONY : class/KNU/events/EventManager.cpp.i
+
+class/KNU/events/EventManager.s: class/KNU/events/EventManager.cpp.s
+
+.PHONY : class/KNU/events/EventManager.s
+
+# target to generate assembly for a file
+class/KNU/events/EventManager.cpp.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/events/EventManager.cpp.s
+.PHONY : class/KNU/events/EventManager.cpp.s
+
 class/KNU/systems/System.o: class/KNU/systems/System.cpp.o
 
 .PHONY : class/KNU/systems/System.o
@@ -258,6 +285,60 @@ class/KNU/utils/Signature.cpp.s:
 	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/utils/Signature.cpp.s
 .PHONY : class/KNU/utils/Signature.cpp.s
 
+class/component/FollowComponent.o: class/component/FollowComponent.cpp.o
+
+.PHONY : class/component/FollowComponent.o
+
+# target to build an object file
+class/component/FollowComponent.cpp.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/component/FollowComponent.cpp.o
+.PHONY : class/component/FollowComponent.cpp.o
+
+class/component/FollowComponent.i: class/component/FollowComponent.cpp.i
+
+.PHONY : class/component/FollowComponent.i
+
+# target to preprocess a source file
+class/component/FollowComponent.cpp.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/component/FollowComponent.cpp.i
+.PHONY : class/component/FollowComponent.cpp.i
+
+class/component/FollowComponent.s: class/component/FollowComponent.cpp.s
+
+.PHONY : class/component/FollowComponent.s
+
+# target to generate assembly for a file
+class/component/FollowComponent.cpp.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/component/FollowComponent.cpp.s
+.PHONY : class/component/FollowComponent.cpp.s
+
+class/component/JoystickComponent.o: class/component/JoystickComponent.cpp.o
+
+.PHONY : class/component/JoystickComponent.o
+
+# target to build an object file
+class/component/JoystickComponent.cpp.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/component/JoystickComponent.cpp.o
+.PHONY : class/component/JoystickComponent.cpp.o
+
+class/component/JoystickComponent.i: class/component/JoystickComponent.cpp.i
+
+.PHONY : class/component/JoystickComponent.i
+
+# target to preprocess a source file
+class/component/JoystickComponent.cpp.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/component/JoystickComponent.cpp.i
+.PHONY : class/component/JoystickComponent.cpp.i
+
+class/component/JoystickComponent.s: class/component/JoystickComponent.cpp.s
+
+.PHONY : class/component/JoystickComponent.s
+
+# target to generate assembly for a file
+class/component/JoystickComponent.cpp.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/component/JoystickComponent.cpp.s
+.PHONY : class/component/JoystickComponent.cpp.s
+
 class/component/MotionComponent.o: class/component/MotionComponent.cpp.o
 
 .PHONY : class/component/MotionComponent.o
@@ -285,6 +366,60 @@ class/component/MotionComponent.cpp.s:
 	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/component/MotionComponent.cpp.s
 .PHONY : class/component/MotionComponent.cpp.s
 
+class/component/PositionComponent.o: class/component/PositionComponent.cpp.o
+
+.PHONY : class/component/PositionComponent.o
+
+# target to build an object file
+class/component/PositionComponent.cpp.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/component/PositionComponent.cpp.o
+.PHONY : class/component/PositionComponent.cpp.o
+
+class/component/PositionComponent.i: class/component/PositionComponent.cpp.i
+
+.PHONY : class/component/PositionComponent.i
+
+# target to preprocess a source file
+class/component/PositionComponent.cpp.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/component/PositionComponent.cpp.i
+.PHONY : class/component/PositionComponent.cpp.i
+
+class/component/PositionComponent.s: class/component/PositionComponent.cpp.s
+
+.PHONY : class/component/PositionComponent.s
+
+# target to generate assembly for a file
+class/component/PositionComponent.cpp.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/component/PositionComponent.cpp.s
+.PHONY : class/component/PositionComponent.cpp.s
+
+class/component/SpriteComponent.o: class/component/SpriteComponent.cpp.o
+
+.PHONY : class/component/SpriteComponent.o
+
+# target to build an object file
+class/component/SpriteComponent.cpp.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/component/SpriteComponent.cpp.o
+.PHONY : class/component/SpriteComponent.cpp.o
+
+class/component/SpriteComponent.i: class/component/SpriteComponent.cpp.i
+
+.PHONY : class/component/SpriteComponent.i
+
+# target to preprocess a source file
+class/component/SpriteComponent.cpp.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/component/SpriteComponent.cpp.i
+.PHONY : class/component/SpriteComponent.cpp.i
+
+class/component/SpriteComponent.s: class/component/SpriteComponent.cpp.s
+
+.PHONY : class/component/SpriteComponent.s
+
+# target to generate assembly for a file
+class/component/SpriteComponent.cpp.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/component/SpriteComponent.cpp.s
+.PHONY : class/component/SpriteComponent.cpp.s
+
 class/cores/main.o: class/cores/main.cpp.o
 
 .PHONY : class/cores/main.o
@@ -311,6 +446,33 @@ class/cores/main.s: class/cores/main.cpp.s
 class/cores/main.cpp.s:
 	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/cores/main.cpp.s
 .PHONY : class/cores/main.cpp.s
+
+class/events/JoystickEvent.o: class/events/JoystickEvent.cpp.o
+
+.PHONY : class/events/JoystickEvent.o
+
+# target to build an object file
+class/events/JoystickEvent.cpp.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/events/JoystickEvent.cpp.o
+.PHONY : class/events/JoystickEvent.cpp.o
+
+class/events/JoystickEvent.i: class/events/JoystickEvent.cpp.i
+
+.PHONY : class/events/JoystickEvent.i
+
+# target to preprocess a source file
+class/events/JoystickEvent.cpp.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/events/JoystickEvent.cpp.i
+.PHONY : class/events/JoystickEvent.cpp.i
+
+class/events/JoystickEvent.s: class/events/JoystickEvent.cpp.s
+
+.PHONY : class/events/JoystickEvent.s
+
+# target to generate assembly for a file
+class/events/JoystickEvent.cpp.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/events/JoystickEvent.cpp.s
+.PHONY : class/events/JoystickEvent.cpp.s
 
 class/logger/display/logger_debug.o: class/logger/display/logger_debug.cpp.o
 
@@ -582,6 +744,60 @@ class/logger/utils/logger_init_open_file.cpp.s:
 	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/logger/utils/logger_init_open_file.cpp.s
 .PHONY : class/logger/utils/logger_init_open_file.cpp.s
 
+class/systems/FollowSystem.o: class/systems/FollowSystem.cpp.o
+
+.PHONY : class/systems/FollowSystem.o
+
+# target to build an object file
+class/systems/FollowSystem.cpp.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/systems/FollowSystem.cpp.o
+.PHONY : class/systems/FollowSystem.cpp.o
+
+class/systems/FollowSystem.i: class/systems/FollowSystem.cpp.i
+
+.PHONY : class/systems/FollowSystem.i
+
+# target to preprocess a source file
+class/systems/FollowSystem.cpp.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/systems/FollowSystem.cpp.i
+.PHONY : class/systems/FollowSystem.cpp.i
+
+class/systems/FollowSystem.s: class/systems/FollowSystem.cpp.s
+
+.PHONY : class/systems/FollowSystem.s
+
+# target to generate assembly for a file
+class/systems/FollowSystem.cpp.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/systems/FollowSystem.cpp.s
+.PHONY : class/systems/FollowSystem.cpp.s
+
+class/systems/JoystickSystem.o: class/systems/JoystickSystem.cpp.o
+
+.PHONY : class/systems/JoystickSystem.o
+
+# target to build an object file
+class/systems/JoystickSystem.cpp.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/systems/JoystickSystem.cpp.o
+.PHONY : class/systems/JoystickSystem.cpp.o
+
+class/systems/JoystickSystem.i: class/systems/JoystickSystem.cpp.i
+
+.PHONY : class/systems/JoystickSystem.i
+
+# target to preprocess a source file
+class/systems/JoystickSystem.cpp.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/systems/JoystickSystem.cpp.i
+.PHONY : class/systems/JoystickSystem.cpp.i
+
+class/systems/JoystickSystem.s: class/systems/JoystickSystem.cpp.s
+
+.PHONY : class/systems/JoystickSystem.s
+
+# target to generate assembly for a file
+class/systems/JoystickSystem.cpp.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/systems/JoystickSystem.cpp.s
+.PHONY : class/systems/JoystickSystem.cpp.s
+
 class/systems/MotionSystem.o: class/systems/MotionSystem.cpp.o
 
 .PHONY : class/systems/MotionSystem.o
@@ -627,18 +843,36 @@ help:
 	@echo "... class/KNU/entities/Entity.o"
 	@echo "... class/KNU/entities/Entity.i"
 	@echo "... class/KNU/entities/Entity.s"
+	@echo "... class/KNU/events/EventManager.o"
+	@echo "... class/KNU/events/EventManager.i"
+	@echo "... class/KNU/events/EventManager.s"
 	@echo "... class/KNU/systems/System.o"
 	@echo "... class/KNU/systems/System.i"
 	@echo "... class/KNU/systems/System.s"
 	@echo "... class/KNU/utils/Signature.o"
 	@echo "... class/KNU/utils/Signature.i"
 	@echo "... class/KNU/utils/Signature.s"
+	@echo "... class/component/FollowComponent.o"
+	@echo "... class/component/FollowComponent.i"
+	@echo "... class/component/FollowComponent.s"
+	@echo "... class/component/JoystickComponent.o"
+	@echo "... class/component/JoystickComponent.i"
+	@echo "... class/component/JoystickComponent.s"
 	@echo "... class/component/MotionComponent.o"
 	@echo "... class/component/MotionComponent.i"
 	@echo "... class/component/MotionComponent.s"
+	@echo "... class/component/PositionComponent.o"
+	@echo "... class/component/PositionComponent.i"
+	@echo "... class/component/PositionComponent.s"
+	@echo "... class/component/SpriteComponent.o"
+	@echo "... class/component/SpriteComponent.i"
+	@echo "... class/component/SpriteComponent.s"
 	@echo "... class/cores/main.o"
 	@echo "... class/cores/main.i"
 	@echo "... class/cores/main.s"
+	@echo "... class/events/JoystickEvent.o"
+	@echo "... class/events/JoystickEvent.i"
+	@echo "... class/events/JoystickEvent.s"
 	@echo "... class/logger/display/logger_debug.o"
 	@echo "... class/logger/display/logger_debug.i"
 	@echo "... class/logger/display/logger_debug.s"
@@ -669,6 +903,12 @@ help:
 	@echo "... class/logger/utils/logger_init_open_file.o"
 	@echo "... class/logger/utils/logger_init_open_file.i"
 	@echo "... class/logger/utils/logger_init_open_file.s"
+	@echo "... class/systems/FollowSystem.o"
+	@echo "... class/systems/FollowSystem.i"
+	@echo "... class/systems/FollowSystem.s"
+	@echo "... class/systems/JoystickSystem.o"
+	@echo "... class/systems/JoystickSystem.i"
+	@echo "... class/systems/JoystickSystem.s"
 	@echo "... class/systems/MotionSystem.o"
 	@echo "... class/systems/MotionSystem.i"
 	@echo "... class/systems/MotionSystem.s"

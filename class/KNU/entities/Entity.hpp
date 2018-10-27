@@ -12,16 +12,22 @@
 #include <unordered_map>
 #include <set>
 #include <queue>
+#include <logger.h>
+
 namespace KNU {
 
 	class EntitiesManager;
+
 	class World;
 
 	class Entity {
-	private:
+	public:
 		typedef int16_t ID;
+
+	private:
 		ID id;
 		bool alive;
+
 		Entity(ID id)
 				: id(id),
 				  alive(true) {
@@ -99,6 +105,7 @@ namespace KNU {
 			   << entity.alive;
 			return os;
 		}
+
 	};
 
 	class ComponentManager {
@@ -138,8 +145,8 @@ namespace KNU {
 		unsigned int size;
 		unsigned int capacity;
 		World &world;
-		ComponentManager &_componentManager;
-		std::queue<Entity::ID>	freeIds;
+		ComponentManager _componentManager;
+		std::queue<Entity::ID> freeIds;
 		std::vector<Entity> _entitiesMap;
 		std::vector<Signature> _poolSignature;
 
@@ -148,11 +155,14 @@ namespace KNU {
 	public:
 		EntitiesManager() = delete;
 
-		explicit EntitiesManager(World &world,
-								 ComponentManager &componentManager);
+		explicit EntitiesManager(World &world);
 
 		Entity &createEntity();
+
 		Entity::ID getEntityId(Entity const &e) const;
+
+		Entity getEntityById(Entity::ID id) const;
+
 		void destroyEntity(Entity &entity);
 
 		void tagEntity(Entity &e, std::string &tag);
@@ -235,6 +245,7 @@ namespace KNU {
 
 	template<typename T>
 	void ComponentManager::addComponent(Entity &entity, T component) {
+
 		std::shared_ptr<Pool<T>> componentPool = accommodateComponent<T>();
 		componentPool->add(entity, component);
 	}
@@ -267,6 +278,7 @@ namespace KNU {
 	template<typename T>
 	std::shared_ptr<Pool<T>> ComponentManager::accommodateComponent() {
 		const auto componentId = Component<T>::signature();
+		assert(componentId < COMPONENT_MAX);
 
 		if (componentPools[componentId] == nullptr) {
 			std::shared_ptr<Pool<T>> pool(new Pool<T>());
@@ -306,8 +318,6 @@ namespace KNU {
 //			entity.mask.removeComponent<T>();
 		_componentManager.removeComponent<T>(entity);
 	}
-
-
 
 
 }

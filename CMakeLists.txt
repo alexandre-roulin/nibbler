@@ -10,7 +10,7 @@ add_executable(nibbler
         class/component/MotionComponent.cpp
         class/component/MotionComponent.hpp
         class/component/SpriteComponent.hpp
-        class/component/TransformComponent.hpp
+        class/component/PositionComponent.hpp
         class/cores/main.cpp
         class/KNU/component/Component.cpp
         class/KNU/component/Component.hpp
@@ -38,4 +38,4 @@ add_executable(nibbler
         class/systems/MotionSystem.hpp
         incs/logger.h
         incs/logger_utils.h
-        incs/nibbler.hpp)
+        incs/nibbler.hpp class/component/SpriteComponent.cpp class/component/PositionComponent.cpp class/component/FollowComponent.cpp class/component/FollowComponent.hpp class/component/JoystickComponent.cpp class/component/JoystickComponent.hpp class/systems/JoystickSystem.cpp class/systems/JoystickSystem.hpp class/KNU/events/EventManager.cpp class/KNU/events/EventManager.hpp class/events/JoystickEvent.cpp class/events/JoystickEvent.hpp class/KNU/managers/Pool_.hpp class/systems/FollowSystem.cpp class/systems/FollowSystem.hpp)

@@ -46,14 +46,24 @@ SRCS = \
 		cores/main.cpp								\
 													\
 		component/MotionComponent.cpp				\
+		component/SpriteComponent.cpp				\
+		component/FollowComponent.cpp				\
+		component/JoystickComponent.cpp				\
+		component/PositionComponent.cpp				\
 													\
 		systems/MotionSystem.cpp					\
+		systems/JoystickSystem.cpp					\
+		systems/FollowSystem.cpp					\
+													\
+		events/JoystickEvent.cpp					\
 													\
 		KNU/World.cpp								\
 		KNU/entities/Entity.cpp						\
 		KNU/component/Component.cpp					\
 		KNU/systems/System.cpp						\
 		KNU/utils/Signature.cpp						\
+		KNU/events/EventManager.cpp					\
+													\
 		logger/display/logger_debug.cpp				\
 		logger/display/logger_error.cpp				\
 		logger/display/logger_fatal.cpp				\
