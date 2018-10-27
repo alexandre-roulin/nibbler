@@ -1,4 +1,4 @@
-#include <component/CollectComponent.hpp>
+#include <component/CollisionComponent.hpp>
 #include "FoodSystem.hpp"
 #include <KNU/World.hpp>
 #include <events/FoodEvent.hpp>
@@ -21,8 +21,8 @@ void FoodSystem::update() {
 			auto newEntity = getWorld().createEntity();
 			auto &followComponent = entityTail.getComponent<FollowComponent>(); //SNAKE TAIL WITH ID FOLLOW
 			auto &positionComponent = entityTail.getComponent<PositionComponent>(); //SNAKE TAIL WITH ID FOLLOW
-			newEntity.addComponent<FollowComponent>(
-					followComponent._idFollowed);
+			newEntity
+			.addComponent<FollowComponent>(followComponent._idFollowed);
 			newEntity.addComponent<PositionComponent>(positionComponent);
 			newEntity.group(GROUP_SNAKE);
 			followComponent._idFollowed = newEntity.getId();

@@ -17,7 +17,7 @@
 #include <random>
 #include <component/FollowComponent.hpp>
 #include <systems/FollowSystem.hpp>
-#include <component/CollectComponent.hpp>
+#include <component/CollisionComponent.hpp>
 #include <systems/CollisionSystem.hpp>
 #include <systems/FoodSystem.hpp>
 
@@ -30,7 +30,7 @@ void init(KNU::World &world) {
 			new_snake->tag(TAG_HEAD_SNAKE);
 			new_snake->addComponent<JoystickComponent>();
 			new_snake->addComponent<MotionComponent>();
-			new_snake->addComponent<CollectComponent>();
+			new_snake->addComponent<CollisionComponent>();
 		}
 		new_snake->addComponent<PositionComponent>(7 + index, 10);
 		new_snake->group(GROUP_SNAKE);
@@ -54,17 +54,21 @@ void display(KNU::World &world) {
 int main() {
 	char path[] = "/tmp/log.out";
 	logger_init(path);
+
 	KNU::World world;
 	init(world);
+
 	world.getSystemManager().addSystem<MotionSystem>();
 	world.getSystemManager().addSystem<JoystickSystem>();
 	world.getSystemManager().addSystem<FollowSystem>();
 	world.getSystemManager().addSystem<CollisionSystem>();
 	world.getSystemManager().addSystem<FoodSystem>();
+
 	auto &food = world.createEntity();
 	food.addComponent<PositionComponent>(7, 8);
-	food.addComponent<CollectComponent>();
+	food.addComponent<CollisionComponent>(true);
 	food.tag("food");
+
 	display(world);
 	for (int index = 0; index < 2; ++index) {
 		world.update();                                                         //WORLD			-> Distribute/Destroy entity to System/EntityManager
@@ -73,7 +77,7 @@ int main() {
 		world.getSystemManager().getSystem<FollowSystem>()->update();           //FOLLOW		-> Save Next position
 		world.getSystemManager().getSystem<JoystickSystem>()->update();         //JOYSTICK		-> Move Joystick 's position component
 		world.getSystemManager().getSystem<MotionSystem>()->update();           //MOTION		-> Move Motion Component
-		world.getSystemManager().getSystem<CollisionSystem>()->update();        //COLLISION		-> Check Collision with CollectComponent
+		world.getSystemManager().getSystem<CollisionSystem>()->update();        //COLLISION		-> Check Collision with CollisionComponent
 		world.getSystemManager().getSystem<FoodSystem>()->update();             //FOOD			-> Check FoodEvent and add Snake if needed
 		display(world);
 	}

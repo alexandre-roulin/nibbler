@@ -129,10 +129,10 @@
 		<Unit filename="/Users/alexandreroulin/work/nibbler/class/KNU/utils/Signature.hpp">
 			<Option target="nibbler"/>
 		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/component/CollectComponent.cpp">
+		<Unit filename="/Users/alexandreroulin/work/nibbler/class/component/CollisionComponent.cpp">
 			<Option target="nibbler"/>
 		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/component/CollectComponent.hpp">
+		<Unit filename="/Users/alexandreroulin/work/nibbler/class/component/CollisionComponent.hpp">
 			<Option target="nibbler"/>
 		</Unit>
 		<Unit filename="/Users/alexandreroulin/work/nibbler/class/component/FollowComponent.cpp">
@@ -163,6 +163,12 @@
 			<Option target="nibbler"/>
 		</Unit>
 		<Unit filename="/Users/alexandreroulin/work/nibbler/class/component/SpriteComponent.hpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/class/component/WallComponent.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/class/component/WallComponent.hpp">
 			<Option target="nibbler"/>
 		</Unit>
 		<Unit filename="/Users/alexandreroulin/work/nibbler/class/cores/main.cpp">

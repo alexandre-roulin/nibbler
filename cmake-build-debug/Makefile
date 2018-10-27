@@ -285,32 +285,32 @@ class/KNU/utils/Signature.cpp.s:
 	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/utils/Signature.cpp.s
 .PHONY : class/KNU/utils/Signature.cpp.s
 
-class/component/CollectComponent.o: class/component/CollectComponent.cpp.o
+class/component/CollisionComponent.o: class/component/CollisionComponent.cpp.o
 
-.PHONY : class/component/CollectComponent.o
+.PHONY : class/component/CollisionComponent.o
 
 # target to build an object file
-class/component/CollectComponent.cpp.o:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/component/CollectComponent.cpp.o
-.PHONY : class/component/CollectComponent.cpp.o
+class/component/CollisionComponent.cpp.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/component/CollisionComponent.cpp.o
+.PHONY : class/component/CollisionComponent.cpp.o
 
-class/component/CollectComponent.i: class/component/CollectComponent.cpp.i
+class/component/CollisionComponent.i: class/component/CollisionComponent.cpp.i
 
-.PHONY : class/component/CollectComponent.i
+.PHONY : class/component/CollisionComponent.i
 
 # target to preprocess a source file
-class/component/CollectComponent.cpp.i:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/component/CollectComponent.cpp.i
-.PHONY : class/component/CollectComponent.cpp.i
+class/component/CollisionComponent.cpp.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/component/CollisionComponent.cpp.i
+.PHONY : class/component/CollisionComponent.cpp.i
 
-class/component/CollectComponent.s: class/component/CollectComponent.cpp.s
+class/component/CollisionComponent.s: class/component/CollisionComponent.cpp.s
 
-.PHONY : class/component/CollectComponent.s
+.PHONY : class/component/CollisionComponent.s
 
 # target to generate assembly for a file
-class/component/CollectComponent.cpp.s:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/component/CollectComponent.cpp.s
-.PHONY : class/component/CollectComponent.cpp.s
+class/component/CollisionComponent.cpp.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/component/CollisionComponent.cpp.s
+.PHONY : class/component/CollisionComponent.cpp.s
 
 class/component/FollowComponent.o: class/component/FollowComponent.cpp.o
 
@@ -446,6 +446,33 @@ class/component/SpriteComponent.s: class/component/SpriteComponent.cpp.s
 class/component/SpriteComponent.cpp.s:
 	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/component/SpriteComponent.cpp.s
 .PHONY : class/component/SpriteComponent.cpp.s
+
+class/component/WallComponent.o: class/component/WallComponent.cpp.o
+
+.PHONY : class/component/WallComponent.o
+
+# target to build an object file
+class/component/WallComponent.cpp.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/component/WallComponent.cpp.o
+.PHONY : class/component/WallComponent.cpp.o
+
+class/component/WallComponent.i: class/component/WallComponent.cpp.i
+
+.PHONY : class/component/WallComponent.i
+
+# target to preprocess a source file
+class/component/WallComponent.cpp.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/component/WallComponent.cpp.i
+.PHONY : class/component/WallComponent.cpp.i
+
+class/component/WallComponent.s: class/component/WallComponent.cpp.s
+
+.PHONY : class/component/WallComponent.s
+
+# target to generate assembly for a file
+class/component/WallComponent.cpp.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/component/WallComponent.cpp.s
+.PHONY : class/component/WallComponent.cpp.s
 
 class/cores/main.o: class/cores/main.cpp.o
 
@@ -960,9 +987,9 @@ help:
 	@echo "... class/KNU/utils/Signature.o"
 	@echo "... class/KNU/utils/Signature.i"
 	@echo "... class/KNU/utils/Signature.s"
-	@echo "... class/component/CollectComponent.o"
-	@echo "... class/component/CollectComponent.i"
-	@echo "... class/component/CollectComponent.s"
+	@echo "... class/component/CollisionComponent.o"
+	@echo "... class/component/CollisionComponent.i"
+	@echo "... class/component/CollisionComponent.s"
 	@echo "... class/component/FollowComponent.o"
 	@echo "... class/component/FollowComponent.i"
 	@echo "... class/component/FollowComponent.s"
@@ -978,6 +1005,9 @@ help:
 	@echo "... class/component/SpriteComponent.o"
 	@echo "... class/component/SpriteComponent.i"
 	@echo "... class/component/SpriteComponent.s"
+	@echo "... class/component/WallComponent.o"
+	@echo "... class/component/WallComponent.i"
+	@echo "... class/component/WallComponent.s"
 	@echo "... class/cores/main.o"
 	@echo "... class/cores/main.i"
 	@echo "... class/cores/main.s"

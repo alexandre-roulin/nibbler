@@ -3,7 +3,7 @@
 
 class FoodEvent {
 public:
-	explicit FoodEvent(bool consume = true) : consume(consume) {};
+	explicit FoodEvent(bool consume) : consume(consume) {};
 	bool consume;
 };
 

@@ -1,30 +1,40 @@
 #include <component/PositionComponent.hpp>
-#include <component/CollectComponent.hpp>
+#include <component/CollisionComponent.hpp>
 #include "CollisionSystem.hpp"
 #include "KNU/World.hpp"
 #include <events/FoodEvent.hpp>
 
 CollisionSystem::CollisionSystem() {
-	requireComponent<CollectComponent>();
+	requireComponent<CollisionComponent>();
 	requireComponent<PositionComponent>();
 }
+
 
 void CollisionSystem::update() {
 	std::vector<KNU::Entity> v = getEntities();
 	auto &world = getWorld();
-	auto snake_head = getWorld().getEntityManager()
-			.getEntityByTag(TAG_HEAD_SNAKE);
-	if (std::any_of(v.begin(), v.end(), [snake_head](KNU::Entity &entity) {
-
-		if (entity != snake_head &&
-			(snake_head.getComponent<PositionComponent>() ==
-			 entity.getComponent<PositionComponent>())) {
-			log_success("update [FOOD]");
-			entity.kill();
-			return true;
-		}
-		return false;
-	})) {
-		world.getEventManager().emitEvent<FoodEvent>(false);
+	for (auto &entity : getEntities()) {
+		auto isCollectable = entity.getComponent<CollisionComponent>()
+				.isCollectable;
+		if (entity != world.getEntityManager().getEntityByTag(TAG_HEAD_SNAKE))
+			std::for_each(v.begin(), v.end(),
+						  [&world, isCollectable](KNU::Entity &entity) {
+							  auto snake_head = world.getEntityManager()
+									  .getEntityByTag(TAG_HEAD_SNAKE);
+							  if (entity != snake_head &&
+								  (snake_head.getComponent<PositionComponent>() ==
+								   entity.getComponent<PositionComponent>())) {
+								  if (isCollectable) {
+									  entity.kill();
+									  world.getEventManager()
+											  .emitEvent<FoodEvent>(false);
+								  } else {
+									  snake_head.kill();
+								  }
+							  }
+						  });
 	}
+
 }
+
+

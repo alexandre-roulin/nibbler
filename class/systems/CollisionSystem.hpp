@@ -6,7 +6,6 @@
 class CollisionSystem : public KNU::System {
 public:
 	CollisionSystem();
-
 	virtual void update();
 };
 

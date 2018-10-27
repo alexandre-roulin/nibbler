@@ -4,8 +4,7 @@
 #include <nibbler.hpp>
 #include <KNU/utils/Signature.hpp>
 
-
-class MotionComponent {
+struct MotionComponent {
 public:
 	explicit MotionComponent(
 			eDirection direction = NORTH,

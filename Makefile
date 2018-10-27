@@ -50,7 +50,7 @@ SRCS = \
 		component/FollowComponent.cpp				\
 		component/JoystickComponent.cpp				\
 		component/PositionComponent.cpp				\
-		component/CollectComponent.cpp				\
+		component/CollisionComponent.cpp			\
 													\
 		systems/MotionSystem.cpp					\
 		systems/JoystickSystem.cpp					\
