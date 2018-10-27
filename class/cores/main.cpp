@@ -59,9 +59,19 @@ int main() {
 	world.getSystemManager().addSystem<MotionSystem>();
 	world.getSystemManager().addSystem<JoystickSystem>();
 	world.getSystemManager().addSystem<FollowSystem>();
+
+
 	for (int index = 0; index < 4; ++index) {
 		world.update();
 		world.getEventManager().emitEvent<JoystickEvent>(ARROW_DOWN);
+		world.getSystemManager().getSystem<FollowSystem>()->update();
+		world.getSystemManager().getSystem<JoystickSystem>()->update();
+		world.getSystemManager().getSystem<MotionSystem>()->update();
+		display(world);
+	}
+	for (int index = 0; index < 4; ++index) {
+		world.update();
+		world.getEventManager().emitEvent<JoystickEvent>(ARROW_RIGHT);
 		world.getSystemManager().getSystem<FollowSystem>()->update();
 		world.getSystemManager().getSystem<JoystickSystem>()->update();
 		world.getSystemManager().getSystem<MotionSystem>()->update();
