@@ -4,7 +4,6 @@
 #include <exception>
 #include "IDisplay.hpp"
 #include "Vector2D.tpp"
-#include "Grid.tpp"
 
 class DisplaySfml : public IDisplay {
     public:
@@ -32,20 +31,17 @@ class DisplaySfml : public IDisplay {
     void        render(void);
     void        update(void);
 
-//	void		drawColorTile(int indexWidth, int indexHeight, int color);
-	void		drawTile(int indexTile, int indexWidth, int indexHeight);
-//	void		drawTile(int indexWidthTile, int indexHeightTile, int indexWidth, int indexHeight);
-//	void		drawColorTile(SDL_Surface *, int indexWidth, int indexHeight, int color);
-	void		drawTile(sf::RenderTarget &, int indexTile, int indexWidth, int indexHeight);
-//	void		drawTile(SDL_Surface *, int indexWidthTile, int indexHeightTile, int indexWidth, int indexHeight);
-
+	void		drawTileGrid(int indexTile, int indexWidthGrid, int indexHeightGrid);
+	void		drawTileGrid(int indexWidthTile, int indexHeightTile, int indexWidthGrid, int indexHeightGrid);
+    void		drawTilePixel(int indexTile, int indexWidthPixel, int indexHeightPixel);
+	void		drawTilePixel(int indexWidthTile, int indexHeightTile, int indexWidthPixel, int indexHeightPixel);
 	void		drawGrid(Grid<int> const &grid);
-	void		drawGrid(sf::RenderTarget &, Grid<int> const &grid);
-
 	void		setBackground(Grid<int> const &grid);
 
+    eDirection  getDirection(void) const;
 private:
     bool					_exit;
+    eDirection              _direction;
 	int						_tileSize;
 	Vector2D<int> const		_winTileSize;
     Vector2D<int> const		_winPixelSize;
@@ -53,8 +49,6 @@ private:
     sf::RenderWindow		_win;
 
     sf::Texture				_tileset;
-    sf::RenderTexture       _textureRenderer;
-    sf::Sprite              _spriteRenderer;
     sf::RenderTexture       _textureBackground;
     sf::Sprite              _spriteBackground;
 
@@ -62,10 +56,26 @@ private:
 	int						_tilesetWidth;
     sf::Event               _ev;
 
+    void		        _drawGrid(sf::RenderTarget &, Grid<int> const &grid);
+    void		        _drawTileGrid(sf::RenderTarget &, int indexTile, int indexWidthGrid, int indexHeightGrid);
+	void		        _drawTileGrid(sf::RenderTarget &, int indexWidthTile, int indexHeightTile, int indexWidthGrid, int indexHeightGrid);
+
+    sf::VertexArray		_getQuadTilePixel(int indexWidthTile, int indexHeightTile, int indexWidthGrid, int indexHeightGrid);
+
     void                _error(std::string);
     void                _clean(void);
+
 
     DisplaySfml          &operator=(DisplaySfml const &rhs);
     DisplaySfml(DisplaySfml const &src);
     DisplaySfml(void);
 };
+
+extern "C" {
+    IDisplay			*newDisplay(char const *tileset,
+    						int tileSize,
+    						int width,
+    						int height,
+    						char const *windowName);
+    void				deleteDisplay(IDisplay *display);
+}

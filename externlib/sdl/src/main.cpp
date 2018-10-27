@@ -8,7 +8,7 @@ int				main(int argc, char **argv)
 	static_cast<void>(argc);
 	static_cast<void>(argv);
 
-	DisplaySdl sdl("tileset1.png", 32, 30, 30, "lol");
+	DisplaySdl sdl("../commun/tileset1.png", 32, 30, 30, "lol");
 
 
 	Grid<int> grid(30, 30);
@@ -21,11 +21,13 @@ int				main(int argc, char **argv)
 	while (!sdl.exit())
 	{
 		sdl.update();
-		sdl.drawTile(1, 0, 0);
-		sdl.drawTile(2, 1, 0);
-		sdl.drawTile(3, 2, 0);
-		sdl.drawTile(4, 3, 0);
-		sdl.drawTile(5, 4, 0);
+		std::cout << sdl.getDirection() << std::endl;
+		sdl.drawTileGrid(1, 0, 0);
+		sdl.drawTileGrid(2, 1, 0);
+		sdl.drawTileGrid(3, 2, 0);
+		sdl.drawTileGrid(4, 3, 0);
+		sdl.drawTileGrid(5, 4, 0);
+		sdl.drawTilePixel(8, 1*32+16, 1*32-16);
 		sdl.render();
 	}
 	return (0);

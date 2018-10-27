@@ -8,6 +8,7 @@
 #define TAG_TAIL_SNAKE "snake_tail"
 
 enum eDirection {
+	NONE,
 	NORTH,
 	SOUTH,
 	EAST,
