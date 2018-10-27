@@ -47,6 +47,7 @@ namespace KNU {
 			_entityManager->destroyEntity(entity);
 		}
 		_destroyedEntities.clear();
+		_eventManager->destroyEvents();
 	}
 
 }

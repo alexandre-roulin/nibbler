@@ -65,18 +65,19 @@ int main() {
 	world.getSystemManager().addSystem<CollisionSystem>();
 	world.getSystemManager().addSystem<FoodSystem>();
 	auto &food = world.createEntity();
-	food.addComponent<PositionComponent>(11, 10);
+	food.addComponent<PositionComponent>(12, 10);
 	food.addComponent<CollectComponent>();
 	food.tag("food");
 	display(world);
 	for (int index = 0; index < 2; ++index) {
 		world.update();
 		world.getEventManager().emitEvent<JoystickEvent>(ARROW_DOWN);
-		world.getSystemManager().getSystem<FollowSystem>()->update();
-		world.getSystemManager().getSystem<JoystickSystem>()->update();
-		world.getSystemManager().getSystem<MotionSystem>()->update();
-		world.getSystemManager().getSystem<CollisionSystem>()->update();
-		world.getSystemManager().getSystem<FoodSystem>()->update();
+
+		world.getSystemManager().getSystem<FollowSystem>()->update();			//FOLLOW
+		world.getSystemManager().getSystem<JoystickSystem>()->update();			//JOYSTICK
+		world.getSystemManager().getSystem<MotionSystem>()->update();			//MOTION
+		world.getSystemManager().getSystem<CollisionSystem>()->update();		//COLLISION
+		world.getSystemManager().getSystem<FoodSystem>()->update();				//FOOD
 		display(world);
 	}
 	for (int index = 0; index < 2; ++index) {
@@ -90,3 +91,5 @@ int main() {
 		display(world);
 	}
 }
+
+//

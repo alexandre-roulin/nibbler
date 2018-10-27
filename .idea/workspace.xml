@@ -12,37 +12,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a7dbd8d7-b982-44a5-9ef8-5b2ba8f88fe0" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/class/component/CollectComponent.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/class/component/CollectComponent.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/class/events/FoodEvent.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/class/events/FoodEvent.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/class/systems/CollisionSystem.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/class/systems/CollisionSystem.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/class/systems/FoodSystem.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/class/systems/FoodSystem.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/class/KNU/events/EventManager.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/class/KNU/events/EventManager.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/class/KNU/managers/Pool.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/class/KNU/managers/Pool.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/class/KNU/managers/Pool_.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/class/KNU/managers/Pool_.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/class/KNU/World.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/class/KNU/World.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/class/KNU/events/EventManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/class/KNU/events/EventManager.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/class/component/FollowComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/class/component/FollowComponent.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/class/component/FollowComponent.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/class/component/FollowComponent.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/class/component/PositionComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/class/component/PositionComponent.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/class/component/PositionComponent.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/class/component/PositionComponent.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/class/component/SpriteComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/class/component/SpriteComponent.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/class/cores/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/class/cores/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/class/systems/CollisionSystem.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/class/systems/CollisionSystem.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/class/systems/FollowSystem.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/class/systems/FollowSystem.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nibbler.dir/DependInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nibbler.dir/DependInfo.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nibbler.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nibbler.dir/build.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nibbler.dir/cmake_clean.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nibbler.dir/cmake_clean.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nibbler.dir/link.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nibbler.dir/link.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nibbler.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nibbler.dir/progress.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/progress.marks" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/progress.marks" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/nibbler.cbp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/nibbler.cbp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/incs/nibbler.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/incs/nibbler.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/class/systems/FoodSystem.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/class/systems/FoodSystem.cpp" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -84,10 +61,10 @@
         <counts>
           <entry key="Makefile" value="828" />
           <entry key="c" value="12" />
-          <entry key="cpp" value="14865" />
+          <entry key="cpp" value="15241" />
           <entry key="gitignore" value="7" />
           <entry key="h" value="227" />
-          <entry key="hpp" value="14377" />
+          <entry key="hpp" value="14395" />
           <entry key="json" value="78" />
           <entry key="txt" value="83" />
         </counts>
@@ -97,7 +74,7 @@
           <entry key="CMakeLists.txt" value="83" />
           <entry key="Doxygen file" value="1" />
           <entry key="JSON" value="78" />
-          <entry key="ObjectiveC" value="29480" />
+          <entry key="ObjectiveC" value="29874" />
           <entry key="PLAIN_TEXT" value="835" />
         </counts>
       </usages-collector>
@@ -105,12 +82,12 @@
         <counts>
           <entry key="Makefile" value="42" />
           <entry key="c" value="5" />
-          <entry key="cpp" value="292" />
+          <entry key="cpp" value="295" />
           <entry key="d" value="4" />
           <entry key="gch" value="1" />
           <entry key="gitignore" value="2" />
           <entry key="h" value="11" />
-          <entry key="hpp" value="349" />
+          <entry key="hpp" value="351" />
           <entry key="json" value="3" />
           <entry key="memory" value="3" />
           <entry key="plist" value="1" />
@@ -126,7 +103,7 @@
           <entry key="CMakeLists.txt" value="14" />
           <entry key="Image" value="3" />
           <entry key="JSON" value="3" />
-          <entry key="ObjectiveC" value="660" />
+          <entry key="ObjectiveC" value="665" />
           <entry key="PLAIN_TEXT" value="52" />
         </counts>
       </usages-collector>
@@ -135,19 +112,28 @@
   <component name="FileEditorManager">
     <leaf>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/class/cores/main.cpp">
+        <entry file="file://$PROJECT_DIR$/class/systems/MotionSystem.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="34" column="49" selection-start-line="34" selection-start-column="34" selection-end-line="34" selection-end-column="49" />
+            <state relative-caret-position="165">
+              <caret line="14" column="72" selection-start-line="14" selection-start-column="55" selection-end-line="14" selection-end-column="72" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/class/cores/main.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="559">
+              <caret line="79" column="86" selection-start-line="79" selection-start-column="86" selection-end-line="79" selection-end-column="86" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/class/systems/FoodSystem.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="18" column="22" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="22" />
+            <state relative-caret-position="435">
+              <caret line="29" column="33" selection-start-line="29" selection-start-column="33" selection-end-line="29" selection-end-column="33" />
               <folding>
                 <element signature="e#0#41#0" expanded="true" />
               </folding>
@@ -156,15 +142,43 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/class/events/FoodEvent.cpp">
-          <provider selected="true" editor-type-id="text-editor" />
+        <entry file="file://$PROJECT_DIR$/class/KNU/events/EventManager.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="75">
+              <caret line="5" column="33" selection-start-line="5" selection-start-column="33" selection-end-line="5" selection-end-column="33" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/class/KNU/managers/Pool_.hpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="187">
+              <caret line="13" selection-start-line="13" selection-end-line="13" />
+              <folding>
+                <element signature="e#14#31#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/class/KNU/World.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="663">
+              <caret line="49" column="39" selection-start-line="49" selection-start-column="39" selection-end-line="49" selection-end-column="39" />
+              <folding>
+                <element signature="e#0#19#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/class/systems/CollisionSystem.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="20" column="51" selection-start-line="20" selection-start-column="51" selection-end-line="20" selection-end-column="51" />
+            <state relative-caret-position="450">
+              <caret line="30" selection-start-line="30" selection-end-line="30" />
               <folding>
                 <element signature="e#0#42#0" expanded="true" />
               </folding>
@@ -172,20 +186,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/class/systems/FollowSystem.hpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="12" selection-start-line="12" selection-end-line="12" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/class/systems/FollowSystem.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="22" column="40" selection-start-line="22" selection-start-column="35" selection-end-line="22" selection-end-column="40" />
+            <state relative-caret-position="345">
+              <caret line="23" column="16" selection-start-line="23" selection-start-column="16" selection-end-line="23" selection-end-column="16" />
               <folding>
                 <element signature="e#2#42#0" expanded="true" />
               </folding>
@@ -194,19 +199,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/class/systems/FoodSystem.hpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="8" selection-start-line="8" selection-end-line="8" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/class/component/FollowComponent.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="60">
-              <caret line="4" column="19" selection-start-line="4" selection-start-column="19" selection-end-line="4" selection-end-column="19" />
+            <state relative-caret-position="180">
+              <caret line="12" column="34" selection-start-line="12" selection-start-column="34" selection-end-line="12" selection-end-column="34" />
             </state>
           </provider>
         </entry>
@@ -214,19 +210,10 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/class/component/FollowComponent.hpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="6" column="28" selection-start-line="6" selection-start-column="28" selection-end-line="6" selection-end-column="28" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/class/KNU/managers/Pool_.hpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
-              <caret line="13" selection-start-line="13" selection-end-line="13" />
+            <state relative-caret-position="135">
+              <caret line="9" column="40" selection-start-line="9" selection-start-column="40" selection-end-line="9" selection-end-column="40" />
               <folding>
-                <element signature="e#14#31#0" expanded="true" />
+                <element signature="e#15#49#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -310,8 +297,6 @@
         <option value="$PROJECT_DIR$/class/component/TransformComponent.hpp" />
         <option value="$PROJECT_DIR$/class/component/JoystickComponent.hpp" />
         <option value="$PROJECT_DIR$/class/component/JoystickComponent.cpp" />
-        <option value="$PROJECT_DIR$/class/KNU/events/EventManager.cpp" />
-        <option value="$PROJECT_DIR$/class/KNU/World.cpp" />
         <option value="$PROJECT_DIR$/class/KNU/World.hpp" />
         <option value="$PROJECT_DIR$/class/JoystickEvent.hpp" />
         <option value="$PROJECT_DIR$/class/JoystickEvent.cpp" />
@@ -345,9 +330,11 @@
         <option value="$PROJECT_DIR$/class/KNU/events/EventManager.hpp" />
         <option value="$PROJECT_DIR$/class/KNU/managers/Pool_.hpp" />
         <option value="$PROJECT_DIR$/class/systems/CollisionSystem.cpp" />
-        <option value="$PROJECT_DIR$/class/component/FollowComponent.hpp" />
         <option value="$PROJECT_DIR$/class/component/FollowComponent.cpp" />
+        <option value="$PROJECT_DIR$/class/KNU/World.cpp" />
         <option value="$PROJECT_DIR$/class/systems/FoodSystem.cpp" />
+        <option value="$PROJECT_DIR$/class/KNU/events/EventManager.cpp" />
+        <option value="$PROJECT_DIR$/class/component/FollowComponent.hpp" />
         <option value="$PROJECT_DIR$/class/cores/main.cpp" />
         <option value="$PROJECT_DIR$/class/systems/FollowSystem.cpp" />
       </list>
@@ -536,12 +523,12 @@
       <workItem from="1540511573829" duration="9898000" />
       <workItem from="1540528346289" duration="1890000" />
       <workItem from="1540574039636" duration="1561000" />
-      <workItem from="1540575776510" duration="22488000" />
+      <workItem from="1540575776510" duration="23970000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="109987000" />
+    <option name="totallyTimeSpent" value="111469000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
@@ -621,16 +608,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/class/systems/JoystickSystem.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="29" selection-start-line="29" selection-end-line="29" />
-          <folding>
-            <element signature="e#0#42#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/class/systems/JoystickSystem.hpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
@@ -751,13 +728,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/class/systems/MotionSystem.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="14" column="72" selection-start-line="14" selection-start-column="55" selection-end-line="14" selection-end-column="72" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/class/component/SpriteComponent.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
@@ -838,15 +808,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/class/KNU/World.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-64">
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/class/systems/CollisionSystem.hpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
@@ -895,34 +856,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/class/KNU/managers/Pool_.hpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="13" selection-start-line="13" selection-end-line="13" />
-          <folding>
-            <element signature="e#14#31#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/class/systems/FoodSystem.hpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
           <caret line="8" selection-start-line="8" selection-end-line="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/class/component/FollowComponent.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="19" selection-start-line="4" selection-start-column="19" selection-end-line="4" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/class/component/FollowComponent.hpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="28" selection-start-line="6" selection-start-column="28" selection-end-line="6" selection-end-column="28" />
         </state>
       </provider>
     </entry>
@@ -936,39 +873,90 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/class/cores/main.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="34" column="49" selection-start-line="34" selection-start-column="34" selection-end-line="34" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/class/systems/CollisionSystem.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="20" column="51" selection-start-line="20" selection-start-column="51" selection-end-line="20" selection-end-column="51" />
+        <state relative-caret-position="450">
+          <caret line="30" selection-start-line="30" selection-end-line="30" />
           <folding>
             <element signature="e#0#42#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/class/systems/FollowSystem.cpp">
+    <entry file="file://$PROJECT_DIR$/class/systems/MotionSystem.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="22" column="40" selection-start-line="22" selection-start-column="35" selection-end-line="22" selection-end-column="40" />
+        <state relative-caret-position="165">
+          <caret line="14" column="72" selection-start-line="14" selection-start-column="55" selection-end-line="14" selection-end-column="72" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/class/KNU/World.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="663">
+          <caret line="49" column="39" selection-start-line="49" selection-start-column="39" selection-end-line="49" selection-end-column="39" />
           <folding>
-            <element signature="e#2#42#0" expanded="true" />
+            <element signature="e#0#19#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/class/KNU/events/EventManager.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="33" selection-start-line="5" selection-start-column="33" selection-end-line="5" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/class/KNU/managers/Pool_.hpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="13" selection-start-line="13" selection-end-line="13" />
+          <folding>
+            <element signature="e#14#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/class/component/FollowComponent.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="12" column="34" selection-start-line="12" selection-start-column="34" selection-end-line="12" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/class/component/FollowComponent.hpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="40" selection-start-line="9" selection-start-column="40" selection-end-line="9" selection-end-column="40" />
+          <folding>
+            <element signature="e#15#49#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/class/cores/main.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="559">
+          <caret line="79" column="86" selection-start-line="79" selection-start-column="86" selection-end-line="79" selection-end-column="86" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/class/systems/FoodSystem.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="18" column="22" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="22" />
+        <state relative-caret-position="435">
+          <caret line="29" column="33" selection-start-line="29" selection-start-column="33" selection-end-line="29" selection-end-column="33" />
           <folding>
             <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/class/systems/FollowSystem.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="23" column="16" selection-start-line="23" selection-start-column="16" selection-end-line="23" selection-end-column="16" />
+          <folding>
+            <element signature="e#2#42#0" expanded="true" />
           </folding>
         </state>
       </provider>

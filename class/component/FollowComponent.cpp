@@ -10,6 +10,7 @@ FollowComponent &
 FollowComponent::operator=(FollowComponent const &followComponent) {
 	if (this != &followComponent) {
 		_idFollowed = followComponent._idFollowed;
+		skip= followComponent.skip;
 	}
 	return *this;
 }

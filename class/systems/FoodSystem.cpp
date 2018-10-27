@@ -13,16 +13,21 @@ FoodSystem::FoodSystem() {
 void FoodSystem::update() {
 	auto events = getWorld().getEventManager().getEvents<FoodEvent>();
 
-	if (!events.empty()) {
-		auto entityTail = getWorld().getEntityManager()
-				.getEntityByTag(TAG_TAIL_SNAKE);
-		auto newEntity = getWorld().createEntity();
-		auto &followComponent = entityTail.getComponent<FollowComponent>(); //SNAKE TAIL WITH ID FOLLOW
-		auto &positionComponent = entityTail.getComponent<PositionComponent>(); //SNAKE TAIL WITH ID FOLLOW
-		newEntity.addComponent<FollowComponent>(followComponent._idFollowed);
-		newEntity.addComponent<PositionComponent>(positionComponent);
-		newEntity.group(GROUP_SNAKE);
-		followComponent._idFollowed = newEntity.getId();
-		followComponent.skip = true;
+	for (auto &event : events) {
+		if (!event.consume) {
+			log_success("Food Find Events size %d", events.size());
+			auto entityTail = getWorld().getEntityManager()
+					.getEntityByTag(TAG_TAIL_SNAKE);
+			auto newEntity = getWorld().createEntity();
+			auto &followComponent = entityTail.getComponent<FollowComponent>(); //SNAKE TAIL WITH ID FOLLOW
+			auto &positionComponent = entityTail.getComponent<PositionComponent>(); //SNAKE TAIL WITH ID FOLLOW
+			newEntity.addComponent<FollowComponent>(
+					followComponent._idFollowed);
+			newEntity.addComponent<PositionComponent>(positionComponent);
+			newEntity.group(GROUP_SNAKE);
+			followComponent._idFollowed = newEntity.getId();
+			followComponent.skip = true;
+			event.consume = true;
+		}
 	}
 }

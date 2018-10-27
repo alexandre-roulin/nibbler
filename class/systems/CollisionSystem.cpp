@@ -16,9 +16,15 @@ void CollisionSystem::update() {
 			.getEntityByTag(TAG_HEAD_SNAKE);
 	if (std::any_of(v.begin(), v.end(), [snake_head](KNU::Entity &entity) {
 
-		if (entity != snake_head && (snake_head.getComponent<PositionComponent>() == entity.getComponent<PositionComponent>())) {
-		entity.kill(); return true; } return false; })) {
-		log_success("CollisionSystem::update [FOOD]");
+		if (entity != snake_head &&
+			(snake_head.getComponent<PositionComponent>() ==
+			 entity.getComponent<PositionComponent>())) {
+			log_success("update [FOOD]");
+			entity.kill();
+			return true;
+		}
+		return false;
+	})) {
 		world.getEventManager().emitEvent<FoodEvent>(false);
 	}
 }
