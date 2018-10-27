@@ -3,67 +3,90 @@
 #include <unistd.h>
 #include <ctime>
 
+using namespace std::chrono_literals;
+
 typedef struct      t_TimeEvent {
-    std::chrono::milliseconds   _deltaUpdate;
+	std::chrono::milliseconds   _deltaUpdate;
 }                   TimeEvent;
 
 class               Time {
 public:
 
-private:
-    std::chrono::nanoseconds                            _lag;
-    std::chrono::milliseconds                           _time;
-    std::chrono::high_resolution_clock::time_point      _currentTime;
-    std::chrono::high_resolution_clock::time_point      _pastTime;
-}
+	Time() :
+	_lag(0),
+	_currentTime(std::chrono::high_resolution_clock::now()),
+	_loops(0) {}
+	~Time() {}
 
-using namespace std::chrono_literals;
+	void							update(void)
+	{
+		this->_deltaTime = std::chrono::high_resolution_clock::now() - this->_currentTime;
+		this->_currentTime = std::chrono::high_resolution_clock::now();
+		this->_lag += std::chrono::duration_cast<std::chrono::nanoseconds>(this->_deltaTime);
+		this->_time += std::chrono::duration_cast<std::chrono::milliseconds>(this->_deltaTime);
+	}
+	bool							haveLag(void) const
+	{
+		return (this->_lag >= Time::timestep);
+	}
+	void							updateLag(void)
+	{
+		this->_lag -= Time::timestep;
+		this->_loops++;
+		if (this->_loops > 5)
+			this->_lag = 0ns;
+	}
+
+	static std::chrono::nanoseconds const				timestep;
+private:
+	std::chrono::nanoseconds							_lag;
+	std::chrono::milliseconds							_time;
+	std::chrono::high_resolution_clock::time_point		_currentTime;
+	std::chrono::high_resolution_clock::time_point		_pastTime;
+	std::chrono::duration<double>						_deltaTime;
+	int													_loops;
+
+
+};
+std::chrono::nanoseconds const Time::timestep = 16ms;
+
 
 // we use a fixed timestep of 1 / (60 fps) = 16 milliseconds
-constexpr std::chrono::nanoseconds timestep(16ms);
-
 bool handle_events() {
-  // poll for events
-
-  return false; // true if the user wants to quit the game
+	return false; // true if the user wants to quit the game
 }
 
 long update(void)
 {
-    long i;
-    for (i = 0; i < 1000000000; i+=2)
-        i--;
-    return (i);
+	long i;
+	for (i = 0; i < 1000000; i+=2)
+		i--;
+	return (i);
 }
 
 void render() {
-  // render stuff here
+	// render stuff here
 }
 
 int main()
 {
-    std::chrono::nanoseconds lag(0);
-    std::chrono::high_resolution_clock::time_point time_start = std::chrono::high_resolution_clock::now();
-    bool quit_game = false;
-    int loops;
+	bool quit_game = false;
 
-    while(!quit_game)
-    {
-        std::chrono::duration<double> delta_time = std::chrono::high_resolution_clock::now() - time_start;
-        time_start = std::chrono::high_resolution_clock::now();
-        lag += std::chrono::duration_cast<std::chrono::nanoseconds>(delta_time);
+	Time time;
 
-        quit_game = handle_events();
+	while(!quit_game)
+	{
+		time.update();
+		quit_game = handle_events();
 
-        // update game logic as lag permits
-        loops = 0;
-        while(lag >= timestep && loops < 5)
-        {
-            std::cout << lag.count() / timestep.count() << std::endl;
-            lag -= timestep;
-            update(); // update at a fixed rate each time
-            loops++;
-        }
-        render();
-    }
+		// update game logic as lag permits
+		while(time.haveLag())
+		{
+			update(); // update at a fixed rate each time
+			time.updateLag();
+		//	std::cout << "Update" << std::endl;
+		}
+		//std::cout << "Render" << std::endl;
+		render();
+	}
 }
