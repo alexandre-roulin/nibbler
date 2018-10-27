@@ -6,7 +6,8 @@
 using namespace std::chrono_literals;
 
 typedef struct      t_TimeEvent {
-	std::chrono::milliseconds   _deltaUpdate;
+	std::chrono::milliseconds   lastUpdate;
+	std::chrono::milliseconds   deltaUpdate;
 }                   TimeEvent;
 
 class               Time {
@@ -36,6 +37,15 @@ public:
 		if (this->_loops > 5)
 			this->_lag = 0ns;
 	}
+	bool							update(TimeEvent &e)
+	{
+		if (this->_time - e.lastUpdate > e.deltaUpdate)
+		{
+			e.lastUpdate = this->_time;
+			return (true);
+		}
+		return (false);
+	}
 
 	static std::chrono::nanoseconds const				timestep;
 private:
@@ -56,8 +66,10 @@ bool handle_events() {
 	return false; // true if the user wants to quit the game
 }
 
-long update(void)
+long update(Time &time, TimeEvent &te)
 {
+	if (time.update(te))
+		std::cout << "UPDATE" << std::endl;
 	long i;
 	for (i = 0; i < 1000000; i+=2)
 		i--;
@@ -65,6 +77,7 @@ long update(void)
 }
 
 void render() {
+
 	// render stuff here
 }
 
@@ -73,7 +86,9 @@ int main()
 	bool quit_game = false;
 
 	Time time;
-
+	TimeEvent te;
+	te.lastUpdate = 0ms;
+	te.deltaUpdate = 2000ms;
 	while(!quit_game)
 	{
 		time.update();
@@ -82,7 +97,7 @@ int main()
 		// update game logic as lag permits
 		while(time.haveLag())
 		{
-			update(); // update at a fixed rate each time
+			update(time, te); // update at a fixed rate each time
 			time.updateLag();
 		//	std::cout << "Update" << std::endl;
 		}
