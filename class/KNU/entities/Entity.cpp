@@ -108,8 +108,9 @@ namespace KNU {
 	Json::Value EntitiesManager::serializeKNU() const {
 		Json::Value root;
 		std::for_each(_entitiesMap.begin(), _entitiesMap.end(),
-					  [&root](Entity const &entity) {
+					  [&root, this](Entity const &entity) {
 						  if (entity.getId() != -1) {
+
 							  if (entity.hasComponent<CollisionComponent>()) {
 								  auto collisionComponent = entity.getComponent<CollisionComponent>();
 								  root[std::to_string(entity.getId())]
@@ -140,10 +141,10 @@ namespace KNU {
 								  [PositionComponent::NAME_COMPONENT]
 										  = positionComponent.serializeComponent();
 							  }
-//							  if (entity.hasComponent<SpriteComponent>()) {
-//								  auto collisionComponent = entity.getComponent<SpriteComponent>();
-//								  root[std::to_string(entity.getId())] = collisionComponent.serializeComponent();
-//							  }
+							  root[std::to_string(entity.getId())]["tag"] =
+									  getTagOfEntity(entity);
+							  root[std::to_string(entity.getId())]["group"] =
+									  getGroupOfEntity(entity);
 						  }
 					  });
 		return root;

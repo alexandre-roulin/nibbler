@@ -13,13 +13,6 @@
   <component name="ChangeListManager">
     <list default="true" id="a7dbd8d7-b982-44a5-9ef8-5b2ba8f88fe0" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/class/KNU/entities/Entity.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/class/KNU/entities/Entity.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/class/KNU/entities/Entity.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/class/KNU/entities/Entity.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/class/component/CollisionComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/class/component/CollisionComponent.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/class/component/FollowComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/class/component/FollowComponent.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/class/component/JoystickComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/class/component/JoystickComponent.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/class/component/MotionComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/class/component/MotionComponent.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/class/component/PositionComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/class/component/PositionComponent.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/class/cores/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/class/cores/main.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/jsoncpp" beforeDir="false" afterPath="$PROJECT_DIR$/jsoncpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/jsoncpp/include/json/version.h" beforeDir="false" afterPath="$PROJECT_DIR$/jsoncpp/include/json/version.h" afterDir="false" />
     </list>
@@ -64,7 +57,7 @@
         <counts>
           <entry key="Makefile" value="890" />
           <entry key="c" value="12" />
-          <entry key="cpp" value="20294" />
+          <entry key="cpp" value="20409" />
           <entry key="gitignore" value="7" />
           <entry key="h" value="227" />
           <entry key="hpp" value="15214" />
@@ -77,7 +70,7 @@
           <entry key="CMakeLists.txt" value="100" />
           <entry key="Doxygen file" value="2" />
           <entry key="JSON" value="78" />
-          <entry key="ObjectiveC" value="35745" />
+          <entry key="ObjectiveC" value="35860" />
           <entry key="PLAIN_TEXT" value="897" />
         </counts>
       </usages-collector>
@@ -117,8 +110,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/class/cores/main.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-82">
-              <caret line="56" column="24" selection-start-line="56" selection-start-column="24" selection-end-line="56" selection-end-column="24" />
+            <state relative-caret-position="430">
+              <caret line="88" column="70" selection-start-line="88" selection-start-column="70" selection-end-line="88" selection-end-column="70" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -129,8 +122,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/class/KNU/entities/Entity.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="492">
-              <caret line="134" column="88" selection-start-line="134" selection-start-column="88" selection-end-line="134" selection-end-column="88" />
+            <state relative-caret-position="585">
+              <caret line="145" column="73" selection-start-line="145" selection-start-column="73" selection-end-line="145" selection-end-column="73" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -255,13 +248,13 @@
       <find>seria</find>
       <find>root</find>
       <find>WallC</find>
-      <find>.append(</find>
-      <find>());</find>
       <find>[std::to_string(entity.getId())].</find>
       <find>log_error</find>
       <find>createEntity</find>
       <find>hasTag</find>
       <find>[NAME_COMPONENT]</find>
+      <find>.append(</find>
+      <find>());</find>
     </findStrings>
     <replaceStrings>
       <replace>_id</replace>
@@ -289,10 +282,10 @@
       <replace>Pool_</replace>
       <replace>new_snake</replace>
       <replace>-&gt;</replace>
-      <replace>=</replace>
-      <replace>();</replace>
       <replace>.append(std::to_string(entity.getId())).</replace>
       <replace />
+      <replace>=</replace>
+      <replace>();</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -347,10 +340,10 @@
         <option value="$PROJECT_DIR$/class/component/JoystickComponent.cpp" />
         <option value="$PROJECT_DIR$/class/component/MotionComponent.cpp" />
         <option value="$PROJECT_DIR$/class/component/PositionComponent.cpp" />
-        <option value="$PROJECT_DIR$/class/cores/main.cpp" />
         <option value="$PROJECT_DIR$/class/KNU/entities/Entity.hpp" />
         <option value="$PROJECT_DIR$/class/component/CollisionComponent.cpp" />
         <option value="$PROJECT_DIR$/class/component/FollowComponent.cpp" />
+        <option value="$PROJECT_DIR$/class/cores/main.cpp" />
         <option value="$PROJECT_DIR$/class/KNU/entities/Entity.cpp" />
       </list>
     </option>
@@ -531,12 +524,12 @@
       <workItem from="1540574039636" duration="1561000" />
       <workItem from="1540575776510" duration="25174000" />
       <workItem from="1540663974538" duration="6075000" />
-      <workItem from="1540734937104" duration="13031000" />
+      <workItem from="1540734937104" duration="13386000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="131779000" />
+    <option name="totallyTimeSpent" value="132134000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
@@ -914,16 +907,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/class/cores/main.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-82">
-          <caret line="56" column="24" selection-start-line="56" selection-start-column="24" selection-end-line="56" selection-end-column="24" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/class/KNU/World.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="773">
@@ -981,10 +964,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/class/cores/main.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="430">
+          <caret line="88" column="70" selection-start-line="88" selection-start-column="70" selection-end-line="88" selection-end-column="70" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/class/KNU/entities/Entity.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="492">
-          <caret line="134" column="88" selection-start-line="134" selection-start-column="88" selection-end-line="134" selection-end-column="88" />
+        <state relative-caret-position="585">
+          <caret line="145" column="73" selection-start-line="145" selection-start-column="73" selection-end-line="145" selection-end-column="73" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
