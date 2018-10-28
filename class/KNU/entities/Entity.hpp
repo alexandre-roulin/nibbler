@@ -143,6 +143,11 @@ namespace KNU {
 		unsigned int size;
 		unsigned int capacity;
 		World &world;
+
+		static std::string const TAG;
+		static std::string const GROUP;
+
+
 		ComponentManager _componentManager;
 		std::queue<Entity::ID> freeIds;
 		std::vector<Entity> _entitiesMap;
@@ -164,7 +169,7 @@ namespace KNU {
 
 		void destroyEntity(Entity &entity);
 
-		void tagEntity(Entity &e, std::string &tag);
+		void tagEntity(Entity &e, std::string tag);
 
 		bool isEntityAlive(Entity const &entity) const;
 
@@ -183,7 +188,7 @@ namespace KNU {
 
 		bool hasEntityInGroup(Entity const &entity, std::string group);
 
-		void groupEntity(Entity &entity, std::string &group);
+		void groupEntity(Entity &entity, std::string group);
 
 		std::vector<Entity> getEntitiesByGroup(std::string const &group);
 

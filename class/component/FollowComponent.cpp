@@ -37,6 +37,6 @@ FollowComponent::FollowComponent(Json::Value json) {
 
 	skip = json.get(SKIP, false).asBool();
 	idFollowed = json.get(ID_FOLLOWED, -1).asInt();
-	positionComponent = PositionComponent(json.get(POSITION_COMPONENT, {0, 0})[PositionComponent::NAME_COMPONENT]);
+	positionComponent = PositionComponent(json.get(POSITION_COMPONENT, {0, 0}));
 
 }

@@ -1,122 +1,99 @@
 {
 	"0" : 
-	[
+	{
+		"collisionComponent" : 
 		{
-			"collisionComponent" : 
-			{
-				"isWall" : true
-			}
+			"isWall" : true
 		},
+		"group" : "snake_group",
+		"joystickComponent" : 
 		{
-			"joystickComponent" : 
-			{
-				"joystick" : 4
-			}
+			"joystick" : 4
 		},
+		"motionComponent" : 
 		{
-			"motionComponent" : 
-			{
-				"direction" : 0,
-				"speed" : 1
-			}
+			"direction" : 0,
+			"speed" : 1
 		},
+		"positionComponent" : 
 		{
-			"positionComponent" : 
-			{
-				"x" : 10,
-				"y" : 7
-			}
-		}
-	],
+			"x" : 10,
+			"y" : 7
+		},
+		"tag" : "snake_head"
+	},
 	"1" : 
-	[
+	{
+		"followComponent" : 
 		{
-			"followComponent" : 
-			{
-				"idFollowed" : 0,
-				"positionComponent" : 
-				{
-					"positionComponent" : 
-					{
-						"x" : 0,
-						"y" : 0
-					}
-				},
-				"skip" : false
-			}
-		},
-		{
+			"idFollowed" : 0,
 			"positionComponent" : 
 			{
-				"x" : 10,
-				"y" : 8
-			}
-		}
-	],
+				"x" : 0,
+				"y" : 0
+			},
+			"skip" : false
+		},
+		"group" : "snake_group",
+		"positionComponent" : 
+		{
+			"x" : 10,
+			"y" : 8
+		},
+		"tag" : ""
+	},
 	"2" : 
-	[
+	{
+		"followComponent" : 
 		{
-			"followComponent" : 
-			{
-				"idFollowed" : 1,
-				"positionComponent" : 
-				{
-					"positionComponent" : 
-					{
-						"x" : 0,
-						"y" : 0
-					}
-				},
-				"skip" : false
-			}
-		},
-		{
+			"idFollowed" : 1,
 			"positionComponent" : 
 			{
-				"x" : 10,
-				"y" : 9
-			}
-		}
-	],
+				"x" : 0,
+				"y" : 0
+			},
+			"skip" : false
+		},
+		"group" : "snake_group",
+		"positionComponent" : 
+		{
+			"x" : 10,
+			"y" : 9
+		},
+		"tag" : ""
+	},
 	"3" : 
-	[
+	{
+		"followComponent" : 
 		{
-			"followComponent" : 
-			{
-				"idFollowed" : 2,
-				"positionComponent" : 
-				{
-					"positionComponent" : 
-					{
-						"x" : 0,
-						"y" : 0
-					}
-				},
-				"skip" : false
-			}
-		},
-		{
+			"idFollowed" : 2,
 			"positionComponent" : 
 			{
-				"x" : 10,
-				"y" : 10
-			}
-		}
-	],
+				"x" : 0,
+				"y" : 0
+			},
+			"skip" : false
+		},
+		"group" : "snake_group",
+		"positionComponent" : 
+		{
+			"x" : 10,
+			"y" : 10
+		},
+		"tag" : "snake_tail"
+	},
 	"4" : 
-	[
+	{
+		"collisionComponent" : 
 		{
-			"collisionComponent" : 
-			{
-				"isWall" : false
-			}
+			"isWall" : false
 		},
+		"group" : "",
+		"positionComponent" : 
 		{
-			"positionComponent" : 
-			{
-				"x" : 8,
-				"y" : 7
-			}
-		}
-	]
+			"x" : 8,
+			"y" : 7
+		},
+		"tag" : "food"
+	}
 }

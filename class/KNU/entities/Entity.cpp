@@ -59,6 +59,9 @@ namespace KNU {
 		return *this;
 	}
 
+	std::string const EntitiesManager::TAG = "tag";
+	std::string const EntitiesManager::GROUP = "group";
+
 	EntitiesManager::EntitiesManager(World &world)
 			: size(0),
 			  capacity(BASE_ENTITIES_CAPACITY),
@@ -81,21 +84,21 @@ namespace KNU {
 									   (std::stoi(ite.key().asString())));
 			for (auto itc = json[ite.name()].begin();
 				 itc != json[ite.name()].end(); ++itc) {
-				for (auto itca = json[ite.name()][itc.index()].begin();
-					 itca != json[ite.name()][itc.index()].end(); ++itca) {
-					auto json_component = json[ite.name()][itc.index()][itca.name()];
-					if (itca.name() == CollisionComponent::NAME_COMPONENT)
-						entity.addComponent(CollisionComponent(json_component));
-					if (itca.name() == FollowComponent::NAME_COMPONENT)
-						entity.addComponent(FollowComponent(json_component));
-					if (itca.name() == JoystickComponent::NAME_COMPONENT)
-						entity.addComponent(JoystickComponent(json_component));
-					if (itca.name() == MotionComponent::NAME_COMPONENT)
-						entity.addComponent(MotionComponent(json_component));
-					if (itca.name() == PositionComponent::NAME_COMPONENT)
-						entity.addComponent(PositionComponent(json_component));
-				}
-
+				auto value = json[ite.name()][itc.name()];
+				if (itc.name() == CollisionComponent::NAME_COMPONENT)
+					entity.addComponent(CollisionComponent(value));
+				else if (itc.name() == FollowComponent::NAME_COMPONENT)
+					entity.addComponent(FollowComponent(value));
+				else if (itc.name() == JoystickComponent::NAME_COMPONENT)
+					entity.addComponent(JoystickComponent(value));
+				else if (itc.name() == MotionComponent::NAME_COMPONENT)
+					entity.addComponent(MotionComponent(value));
+				else if (itc.name() == PositionComponent::NAME_COMPONENT)
+					entity.addComponent(PositionComponent(value));
+				else if (itc.name() == EntitiesManager::TAG)
+					tagEntity(entity, value.asString());
+				else if (itc.name() == EntitiesManager::GROUP)
+					groupEntity(entity, value.asString());
 			}
 			world._createdEntities.push_back(entity);
 		}
@@ -141,9 +144,11 @@ namespace KNU {
 								  [PositionComponent::NAME_COMPONENT]
 										  = positionComponent.serializeComponent();
 							  }
-							  root[std::to_string(entity.getId())]["tag"] =
+							  root[std::to_string(
+									  entity.getId())][EntitiesManager::TAG] =
 									  getTagOfEntity(entity);
-							  root[std::to_string(entity.getId())]["group"] =
+							  root[std::to_string(
+									  entity.getId())][EntitiesManager::GROUP] =
 									  getGroupOfEntity(entity);
 						  }
 					  });
@@ -229,11 +234,11 @@ namespace KNU {
 		return _taggedEntity.find(tag) != _taggedEntity.end();
 	}
 
-	void EntitiesManager::tagEntity(Entity &entity, std::string &tag) {
+	void EntitiesManager::tagEntity(Entity &entity, std::string tag) {
 		_taggedEntity.insert(std::make_pair(tag, entity));
 	}
 
-	void EntitiesManager::groupEntity(Entity &entity, std::string &group) {
+	void EntitiesManager::groupEntity(Entity &entity, std::string group) {
 		if (!hasGroup(group)) {
 			_groupedEntities.emplace(std::make_pair(group, std::set<Entity>()));
 		}
