@@ -447,33 +447,6 @@ class/component/SpriteComponent.cpp.s:
 	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/component/SpriteComponent.cpp.s
 .PHONY : class/component/SpriteComponent.cpp.s
 
-class/component/WallComponent.o: class/component/WallComponent.cpp.o
-
-.PHONY : class/component/WallComponent.o
-
-# target to build an object file
-class/component/WallComponent.cpp.o:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/component/WallComponent.cpp.o
-.PHONY : class/component/WallComponent.cpp.o
-
-class/component/WallComponent.i: class/component/WallComponent.cpp.i
-
-.PHONY : class/component/WallComponent.i
-
-# target to preprocess a source file
-class/component/WallComponent.cpp.i:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/component/WallComponent.cpp.i
-.PHONY : class/component/WallComponent.cpp.i
-
-class/component/WallComponent.s: class/component/WallComponent.cpp.s
-
-.PHONY : class/component/WallComponent.s
-
-# target to generate assembly for a file
-class/component/WallComponent.cpp.s:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/component/WallComponent.cpp.s
-.PHONY : class/component/WallComponent.cpp.s
-
 class/cores/main.o: class/cores/main.cpp.o
 
 .PHONY : class/cores/main.o
@@ -960,6 +933,303 @@ class/systems/MotionSystem.cpp.s:
 	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/systems/MotionSystem.cpp.s
 .PHONY : class/systems/MotionSystem.cpp.s
 
+externlib/sandbox/main.o: externlib/sandbox/main.cpp.o
+
+.PHONY : externlib/sandbox/main.o
+
+# target to build an object file
+externlib/sandbox/main.cpp.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/externlib/sandbox/main.cpp.o
+.PHONY : externlib/sandbox/main.cpp.o
+
+externlib/sandbox/main.i: externlib/sandbox/main.cpp.i
+
+.PHONY : externlib/sandbox/main.i
+
+# target to preprocess a source file
+externlib/sandbox/main.cpp.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/externlib/sandbox/main.cpp.i
+.PHONY : externlib/sandbox/main.cpp.i
+
+externlib/sandbox/main.s: externlib/sandbox/main.cpp.s
+
+.PHONY : externlib/sandbox/main.s
+
+# target to generate assembly for a file
+externlib/sandbox/main.cpp.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/externlib/sandbox/main.cpp.s
+.PHONY : externlib/sandbox/main.cpp.s
+
+externlib/sdl/src/DisplaySdl.o: externlib/sdl/src/DisplaySdl.cpp.o
+
+.PHONY : externlib/sdl/src/DisplaySdl.o
+
+# target to build an object file
+externlib/sdl/src/DisplaySdl.cpp.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/externlib/sdl/src/DisplaySdl.cpp.o
+.PHONY : externlib/sdl/src/DisplaySdl.cpp.o
+
+externlib/sdl/src/DisplaySdl.i: externlib/sdl/src/DisplaySdl.cpp.i
+
+.PHONY : externlib/sdl/src/DisplaySdl.i
+
+# target to preprocess a source file
+externlib/sdl/src/DisplaySdl.cpp.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/externlib/sdl/src/DisplaySdl.cpp.i
+.PHONY : externlib/sdl/src/DisplaySdl.cpp.i
+
+externlib/sdl/src/DisplaySdl.s: externlib/sdl/src/DisplaySdl.cpp.s
+
+.PHONY : externlib/sdl/src/DisplaySdl.s
+
+# target to generate assembly for a file
+externlib/sdl/src/DisplaySdl.cpp.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/externlib/sdl/src/DisplaySdl.cpp.s
+.PHONY : externlib/sdl/src/DisplaySdl.cpp.s
+
+externlib/sdl/src/main.o: externlib/sdl/src/main.cpp.o
+
+.PHONY : externlib/sdl/src/main.o
+
+# target to build an object file
+externlib/sdl/src/main.cpp.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/externlib/sdl/src/main.cpp.o
+.PHONY : externlib/sdl/src/main.cpp.o
+
+externlib/sdl/src/main.i: externlib/sdl/src/main.cpp.i
+
+.PHONY : externlib/sdl/src/main.i
+
+# target to preprocess a source file
+externlib/sdl/src/main.cpp.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/externlib/sdl/src/main.cpp.i
+.PHONY : externlib/sdl/src/main.cpp.i
+
+externlib/sdl/src/main.s: externlib/sdl/src/main.cpp.s
+
+.PHONY : externlib/sdl/src/main.s
+
+# target to generate assembly for a file
+externlib/sdl/src/main.cpp.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/externlib/sdl/src/main.cpp.s
+.PHONY : externlib/sdl/src/main.cpp.s
+
+externlib/sfml/src/DisplaySfml.o: externlib/sfml/src/DisplaySfml.cpp.o
+
+.PHONY : externlib/sfml/src/DisplaySfml.o
+
+# target to build an object file
+externlib/sfml/src/DisplaySfml.cpp.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/externlib/sfml/src/DisplaySfml.cpp.o
+.PHONY : externlib/sfml/src/DisplaySfml.cpp.o
+
+externlib/sfml/src/DisplaySfml.i: externlib/sfml/src/DisplaySfml.cpp.i
+
+.PHONY : externlib/sfml/src/DisplaySfml.i
+
+# target to preprocess a source file
+externlib/sfml/src/DisplaySfml.cpp.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/externlib/sfml/src/DisplaySfml.cpp.i
+.PHONY : externlib/sfml/src/DisplaySfml.cpp.i
+
+externlib/sfml/src/DisplaySfml.s: externlib/sfml/src/DisplaySfml.cpp.s
+
+.PHONY : externlib/sfml/src/DisplaySfml.s
+
+# target to generate assembly for a file
+externlib/sfml/src/DisplaySfml.cpp.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/externlib/sfml/src/DisplaySfml.cpp.s
+.PHONY : externlib/sfml/src/DisplaySfml.cpp.s
+
+externlib/sfml/src/main.o: externlib/sfml/src/main.cpp.o
+
+.PHONY : externlib/sfml/src/main.o
+
+# target to build an object file
+externlib/sfml/src/main.cpp.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/externlib/sfml/src/main.cpp.o
+.PHONY : externlib/sfml/src/main.cpp.o
+
+externlib/sfml/src/main.i: externlib/sfml/src/main.cpp.i
+
+.PHONY : externlib/sfml/src/main.i
+
+# target to preprocess a source file
+externlib/sfml/src/main.cpp.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/externlib/sfml/src/main.cpp.i
+.PHONY : externlib/sfml/src/main.cpp.i
+
+externlib/sfml/src/main.s: externlib/sfml/src/main.cpp.s
+
+.PHONY : externlib/sfml/src/main.s
+
+# target to generate assembly for a file
+externlib/sfml/src/main.cpp.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/externlib/sfml/src/main.cpp.s
+.PHONY : externlib/sfml/src/main.cpp.s
+
+jsoncpp/src/jsontestrunner/main.o: jsoncpp/src/jsontestrunner/main.cpp.o
+
+.PHONY : jsoncpp/src/jsontestrunner/main.o
+
+# target to build an object file
+jsoncpp/src/jsontestrunner/main.cpp.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/jsoncpp/src/jsontestrunner/main.cpp.o
+.PHONY : jsoncpp/src/jsontestrunner/main.cpp.o
+
+jsoncpp/src/jsontestrunner/main.i: jsoncpp/src/jsontestrunner/main.cpp.i
+
+.PHONY : jsoncpp/src/jsontestrunner/main.i
+
+# target to preprocess a source file
+jsoncpp/src/jsontestrunner/main.cpp.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/jsoncpp/src/jsontestrunner/main.cpp.i
+.PHONY : jsoncpp/src/jsontestrunner/main.cpp.i
+
+jsoncpp/src/jsontestrunner/main.s: jsoncpp/src/jsontestrunner/main.cpp.s
+
+.PHONY : jsoncpp/src/jsontestrunner/main.s
+
+# target to generate assembly for a file
+jsoncpp/src/jsontestrunner/main.cpp.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/jsoncpp/src/jsontestrunner/main.cpp.s
+.PHONY : jsoncpp/src/jsontestrunner/main.cpp.s
+
+jsoncpp/src/lib_json/json_reader.o: jsoncpp/src/lib_json/json_reader.cpp.o
+
+.PHONY : jsoncpp/src/lib_json/json_reader.o
+
+# target to build an object file
+jsoncpp/src/lib_json/json_reader.cpp.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_reader.cpp.o
+.PHONY : jsoncpp/src/lib_json/json_reader.cpp.o
+
+jsoncpp/src/lib_json/json_reader.i: jsoncpp/src/lib_json/json_reader.cpp.i
+
+.PHONY : jsoncpp/src/lib_json/json_reader.i
+
+# target to preprocess a source file
+jsoncpp/src/lib_json/json_reader.cpp.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_reader.cpp.i
+.PHONY : jsoncpp/src/lib_json/json_reader.cpp.i
+
+jsoncpp/src/lib_json/json_reader.s: jsoncpp/src/lib_json/json_reader.cpp.s
+
+.PHONY : jsoncpp/src/lib_json/json_reader.s
+
+# target to generate assembly for a file
+jsoncpp/src/lib_json/json_reader.cpp.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_reader.cpp.s
+.PHONY : jsoncpp/src/lib_json/json_reader.cpp.s
+
+jsoncpp/src/lib_json/json_value.o: jsoncpp/src/lib_json/json_value.cpp.o
+
+.PHONY : jsoncpp/src/lib_json/json_value.o
+
+# target to build an object file
+jsoncpp/src/lib_json/json_value.cpp.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_value.cpp.o
+.PHONY : jsoncpp/src/lib_json/json_value.cpp.o
+
+jsoncpp/src/lib_json/json_value.i: jsoncpp/src/lib_json/json_value.cpp.i
+
+.PHONY : jsoncpp/src/lib_json/json_value.i
+
+# target to preprocess a source file
+jsoncpp/src/lib_json/json_value.cpp.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_value.cpp.i
+.PHONY : jsoncpp/src/lib_json/json_value.cpp.i
+
+jsoncpp/src/lib_json/json_value.s: jsoncpp/src/lib_json/json_value.cpp.s
+
+.PHONY : jsoncpp/src/lib_json/json_value.s
+
+# target to generate assembly for a file
+jsoncpp/src/lib_json/json_value.cpp.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_value.cpp.s
+.PHONY : jsoncpp/src/lib_json/json_value.cpp.s
+
+jsoncpp/src/lib_json/json_writer.o: jsoncpp/src/lib_json/json_writer.cpp.o
+
+.PHONY : jsoncpp/src/lib_json/json_writer.o
+
+# target to build an object file
+jsoncpp/src/lib_json/json_writer.cpp.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_writer.cpp.o
+.PHONY : jsoncpp/src/lib_json/json_writer.cpp.o
+
+jsoncpp/src/lib_json/json_writer.i: jsoncpp/src/lib_json/json_writer.cpp.i
+
+.PHONY : jsoncpp/src/lib_json/json_writer.i
+
+# target to preprocess a source file
+jsoncpp/src/lib_json/json_writer.cpp.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_writer.cpp.i
+.PHONY : jsoncpp/src/lib_json/json_writer.cpp.i
+
+jsoncpp/src/lib_json/json_writer.s: jsoncpp/src/lib_json/json_writer.cpp.s
+
+.PHONY : jsoncpp/src/lib_json/json_writer.s
+
+# target to generate assembly for a file
+jsoncpp/src/lib_json/json_writer.cpp.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_writer.cpp.s
+.PHONY : jsoncpp/src/lib_json/json_writer.cpp.s
+
+jsoncpp/src/test_lib_json/jsontest.o: jsoncpp/src/test_lib_json/jsontest.cpp.o
+
+.PHONY : jsoncpp/src/test_lib_json/jsontest.o
+
+# target to build an object file
+jsoncpp/src/test_lib_json/jsontest.cpp.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/jsontest.cpp.o
+.PHONY : jsoncpp/src/test_lib_json/jsontest.cpp.o
+
+jsoncpp/src/test_lib_json/jsontest.i: jsoncpp/src/test_lib_json/jsontest.cpp.i
+
+.PHONY : jsoncpp/src/test_lib_json/jsontest.i
+
+# target to preprocess a source file
+jsoncpp/src/test_lib_json/jsontest.cpp.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/jsontest.cpp.i
+.PHONY : jsoncpp/src/test_lib_json/jsontest.cpp.i
+
+jsoncpp/src/test_lib_json/jsontest.s: jsoncpp/src/test_lib_json/jsontest.cpp.s
+
+.PHONY : jsoncpp/src/test_lib_json/jsontest.s
+
+# target to generate assembly for a file
+jsoncpp/src/test_lib_json/jsontest.cpp.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/jsontest.cpp.s
+.PHONY : jsoncpp/src/test_lib_json/jsontest.cpp.s
+
+jsoncpp/src/test_lib_json/main.o: jsoncpp/src/test_lib_json/main.cpp.o
+
+.PHONY : jsoncpp/src/test_lib_json/main.o
+
+# target to build an object file
+jsoncpp/src/test_lib_json/main.cpp.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/main.cpp.o
+.PHONY : jsoncpp/src/test_lib_json/main.cpp.o
+
+jsoncpp/src/test_lib_json/main.i: jsoncpp/src/test_lib_json/main.cpp.i
+
+.PHONY : jsoncpp/src/test_lib_json/main.i
+
+# target to preprocess a source file
+jsoncpp/src/test_lib_json/main.cpp.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/main.cpp.i
+.PHONY : jsoncpp/src/test_lib_json/main.cpp.i
+
+jsoncpp/src/test_lib_json/main.s: jsoncpp/src/test_lib_json/main.cpp.s
+
+.PHONY : jsoncpp/src/test_lib_json/main.s
+
+# target to generate assembly for a file
+jsoncpp/src/test_lib_json/main.cpp.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/main.cpp.s
+.PHONY : jsoncpp/src/test_lib_json/main.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -1005,9 +1275,6 @@ help:
 	@echo "... class/component/SpriteComponent.o"
 	@echo "... class/component/SpriteComponent.i"
 	@echo "... class/component/SpriteComponent.s"
-	@echo "... class/component/WallComponent.o"
-	@echo "... class/component/WallComponent.i"
-	@echo "... class/component/WallComponent.s"
 	@echo "... class/cores/main.o"
 	@echo "... class/cores/main.i"
 	@echo "... class/cores/main.s"
@@ -1062,6 +1329,39 @@ help:
 	@echo "... class/systems/MotionSystem.o"
 	@echo "... class/systems/MotionSystem.i"
 	@echo "... class/systems/MotionSystem.s"
+	@echo "... externlib/sandbox/main.o"
+	@echo "... externlib/sandbox/main.i"
+	@echo "... externlib/sandbox/main.s"
+	@echo "... externlib/sdl/src/DisplaySdl.o"
+	@echo "... externlib/sdl/src/DisplaySdl.i"
+	@echo "... externlib/sdl/src/DisplaySdl.s"
+	@echo "... externlib/sdl/src/main.o"
+	@echo "... externlib/sdl/src/main.i"
+	@echo "... externlib/sdl/src/main.s"
+	@echo "... externlib/sfml/src/DisplaySfml.o"
+	@echo "... externlib/sfml/src/DisplaySfml.i"
+	@echo "... externlib/sfml/src/DisplaySfml.s"
+	@echo "... externlib/sfml/src/main.o"
+	@echo "... externlib/sfml/src/main.i"
+	@echo "... externlib/sfml/src/main.s"
+	@echo "... jsoncpp/src/jsontestrunner/main.o"
+	@echo "... jsoncpp/src/jsontestrunner/main.i"
+	@echo "... jsoncpp/src/jsontestrunner/main.s"
+	@echo "... jsoncpp/src/lib_json/json_reader.o"
+	@echo "... jsoncpp/src/lib_json/json_reader.i"
+	@echo "... jsoncpp/src/lib_json/json_reader.s"
+	@echo "... jsoncpp/src/lib_json/json_value.o"
+	@echo "... jsoncpp/src/lib_json/json_value.i"
+	@echo "... jsoncpp/src/lib_json/json_value.s"
+	@echo "... jsoncpp/src/lib_json/json_writer.o"
+	@echo "... jsoncpp/src/lib_json/json_writer.i"
+	@echo "... jsoncpp/src/lib_json/json_writer.s"
+	@echo "... jsoncpp/src/test_lib_json/jsontest.o"
+	@echo "... jsoncpp/src/test_lib_json/jsontest.i"
+	@echo "... jsoncpp/src/test_lib_json/jsontest.s"
+	@echo "... jsoncpp/src/test_lib_json/main.o"
+	@echo "... jsoncpp/src/test_lib_json/main.i"
+	@echo "... jsoncpp/src/test_lib_json/main.s"
 .PHONY : help
 
 

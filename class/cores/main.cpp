@@ -20,6 +20,8 @@
 #include <component/CollisionComponent.hpp>
 #include <systems/CollisionSystem.hpp>
 #include <systems/FoodSystem.hpp>
+#include <json/forwards.h>
+#include <json/json.h>
 
 void init(KNU::World &world) {
 	KNU::Entity *snake_follow = nullptr;
@@ -58,17 +60,17 @@ int main() {
 
 	KNU::World world;
 	init(world);
-
 	world.getSystemManager().addSystem<MotionSystem>();
 	world.getSystemManager().addSystem<JoystickSystem>();
 	world.getSystemManager().addSystem<FollowSystem>();
 	world.getSystemManager().addSystem<CollisionSystem>();
 	world.getSystemManager().addSystem<FoodSystem>();
-
 	auto &food = world.createEntity();
 	food.addComponent<PositionComponent>(7, 8);
 	food.addComponent<CollisionComponent>(false);
 	food.tag("food");
+	auto root = world.getEntityManager().serializeComponent();
+	std::cout << root << std::endl;
 
 	display(world);
 	for (int index = 0; index < 2; ++index) {

@@ -13,7 +13,9 @@
 #include <set>
 #include <queue>
 #include <logger.h>
-
+#include <json/json.h>
+#include <logger.h>
+#include <logger_utils.h>
 namespace KNU {
 
 	class EntitiesManager;
@@ -112,14 +114,10 @@ namespace KNU {
 	private:
 		std::vector<std::shared_ptr<AbstractPool>> componentPools;
 
-	public:
-		ComponentManager() {
-			componentPools.resize(COMPONENT_MAX, nullptr);
-			componentPools.size();
-		}
+		friend class EntitiesManager;
 
-		ComponentManager(ComponentManager const &) {
-		}
+	public:
+		ComponentManager();
 
 		template<typename T>
 		void addComponent(Entity &e, T component);
@@ -176,6 +174,8 @@ namespace KNU {
 		bool hasTag(std::string const &tag);
 
 		bool hasGroup(std::string const &group);
+
+		Json::Value serializeComponent() const;
 
 		bool hasEntityInGroup(Entity const &entity, std::string group);
 
@@ -237,7 +237,6 @@ namespace KNU {
 
 	template<typename T>
 	T &EntitiesManager::getComponent(Entity const &entity) const {
-//		assert(entity.mask.getMask() & Component<T>::signature());
 		return _componentManager.getComponent<T>(entity);
 	}
 
@@ -253,8 +252,8 @@ namespace KNU {
 	template<typename T>
 	T &ComponentManager::getComponent(Entity const &entity) const {
 		const auto componentId = Component<T>::signature();
-		auto componentPool = std::static_pointer_cast<Pool<T>>(
-				componentPools[componentId]);
+		auto componentPool =
+				std::static_pointer_cast<Pool<T>>(componentPools[componentId]);
 		return componentPool->get(entity);
 
 	}
@@ -270,23 +269,24 @@ namespace KNU {
 	template<typename T>
 	bool ComponentManager::hasComponent(Entity const &entity) const {
 		const auto componentId = Component<T>::signature();
-		auto componentPool = std::static_pointer_cast<Pool<T>>(
-				componentPools[componentId]);
-		return componentPool->has(entity);
+		if (componentPools[componentId] == nullptr) {
+			return false;
+		} else
+			return std::static_pointer_cast<Pool<T>>
+					(componentPools[componentId])->has(entity);
 	}
 
 	template<typename T>
 	std::shared_ptr<Pool<T>> ComponentManager::accommodateComponent() {
 		const auto componentId = Component<T>::signature();
 		assert(componentId < COMPONENT_MAX);
-
 		if (componentPools[componentId] == nullptr) {
 			std::shared_ptr<Pool<T>> pool(new Pool<T>());
 			componentPools[componentId] = pool;
 		}
 		return std::static_pointer_cast<Pool<T>>(componentPools[componentId]);
-
 	}
+
 
 	/** ENTITIES MANAGER **/
 

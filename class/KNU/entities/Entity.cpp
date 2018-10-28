@@ -4,6 +4,12 @@
 #include <KNU/utils/Signature.hpp>
 #include <KNU/World.hpp>
 #include <logger.h>
+#include <component/CollisionComponent.hpp>
+#include <component/FollowComponent.hpp>
+#include <component/JoystickComponent.hpp>
+#include <component/MotionComponent.hpp>
+#include <component/PositionComponent.hpp>
+#include <component/SpriteComponent.hpp>
 
 namespace KNU {
 
@@ -62,9 +68,65 @@ namespace KNU {
 		_poolSignature.resize(capacity);
 	}
 
+	ComponentManager::ComponentManager() {
+		log_success("ComponentManager");
+		componentPools.resize(COMPONENT_MAX, nullptr);
+		componentPools.size();
+	}
 
 /** Entities Managements **/
+	Json::Value EntitiesManager::serializeComponent() const {
+		Json::Value root;
+		std::for_each(_entitiesMap.begin(), _entitiesMap.end(),
+					  [&root](Entity const &entity) {
+						  if (entity.getId() != -1) {
+							  log_error("CollisionComponent");
+							  if (entity.hasComponent<CollisionComponent>()) {
+								  auto collisionComponent = entity.getComponent<CollisionComponent>();
+								  root[std::to_string(entity.getId())].append(
+										  collisionComponent.serializeComponent());
+							  }
+							  log_error("FollowComponent");
+							  if (entity.hasComponent<FollowComponent>()) {
+								  auto followComponent = entity.getComponent<FollowComponent>();
+								  root[std::to_string(entity.getId())].append(
+										  followComponent.serializeComponent());
+							  }
+							  log_error("JoystickComponent");
+							  if (entity.hasComponent<JoystickComponent>()) {
+								  auto joystickComponent = entity.getComponent<JoystickComponent>();
+								  root[std::to_string(entity.getId())].append(
+										  joystickComponent.serializeComponent());
+							  }
+							  log_error("MotionComponent");
+							  if (entity.hasComponent<MotionComponent>()) {
+								  auto motionComponent = entity.getComponent<MotionComponent>();
+								  root[std::to_string(entity.getId())].append(
+										  motionComponent.serializeComponent());
+							  }
+							  log_error("PositionComponent");
+							  if (entity.hasComponent<PositionComponent>()) {
+								  log_error("has");
+								  auto positionComponent = entity.getComponent<PositionComponent>();
+								  log_error("get");
+								  root[std::to_string(entity.getId())].append(
+										  positionComponent.serializeComponent());
+								  log_error("append");
+							  }
+							  log_error("SpriteComponent");
 
+//							  if (entity.hasComponent<SpriteComponent>()) {
+//								  auto collisionComponent = entity.getComponent<SpriteComponent>();
+//								  root[std::to_string(entity.getId())] = collisionComponent.serializeComponent();
+//							  }
+						  }
+					  });
+		for (auto json = root.begin(); json != root.end(); ++json) {
+			std::cout << json.key() << std::endl;
+			std::cout << json.name() << std::endl;
+		}
+		return root;
+	}
 
 	Entity &
 	EntitiesManager::createEntity() {
@@ -91,14 +153,14 @@ namespace KNU {
 		log_success("EntitiesManager::destroyEntity");
 		freeIds.push(entity.getId());
 		_poolSignature[entity.id].clean();
-		// if tagged, remove entity from tag management
+		for (auto it = _taggedEntity.begin(); it != _taggedEntity.end();)
+			if (it->second == entity) it = _taggedEntity.erase(it); else ++it;
+
 		for (auto &groupEntity : _groupedEntities) {
 			auto find = groupEntity.second.find(entity);
 			if (find != groupEntity.second.end())
 				groupEntity.second.erase(find);
 		}
-
-		// if in group, remove entity from group management
 	}
 
 	void EntitiesManager::killEntity(Entity &entity) {
@@ -172,6 +234,7 @@ namespace KNU {
 	Signature &EntitiesManager::getEntitySignature(Entity &entity) {
 		return _poolSignature[entity.id];
 	}
+
 	Entity::ID EntitiesManager::getEntityId(Entity const &e) const {
 		return e.id;
 	}

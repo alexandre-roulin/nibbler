@@ -7,7 +7,7 @@ namespace KNU {
 		static int familyCounter;
 	};
 
-	template<typename ComponentType>
+	template<typename>
 	struct Component {
 		static inline int signature() {
 			static int signature = ComponentCounter::familyCounter++;
@@ -16,8 +16,7 @@ namespace KNU {
 	};
 
 
-	// Util method for getting family given type
-	template <typename C>
+	template<typename C>
 	static int getComponentSignature() {
 		return Component<typename std::remove_const<C>::type>::signature();
 	}

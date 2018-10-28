@@ -1,7 +1,7 @@
 #ifndef NIBBLER_NIBBLER_HPP
 #define NIBBLER_NIBBLER_HPP
 
-#define COMPONENT_MAX 6
+#define COMPONENT_MAX 7
 #define BASE_ENTITIES_CAPACITY 20
 #define GROUP_SNAKE "snake_group"
 #define TAG_HEAD_SNAKE "snake_head"

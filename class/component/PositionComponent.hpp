@@ -3,11 +3,19 @@
 #include <ostream>
 #include <KNU/utils/Signature.hpp>
 #include <KNU/component/Component.hpp>
+#include <json/json.h>
 
 struct PositionComponent {
+	static std::string const NAME_COMPONENT;
+	static std::string const POS_Y;
+	static std::string const POS_X;
+
+
 	explicit PositionComponent(int y = 0, int x = 0);
 	PositionComponent(PositionComponent const &);
+
 	int y, x;
+	Json::Value serializeComponent();
 
 	PositionComponent &
 	operator=(PositionComponent const &motionComponent) {

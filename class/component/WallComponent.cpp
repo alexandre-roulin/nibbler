@@ -1,1 +1,0 @@
-#include "WallComponent.hpp"

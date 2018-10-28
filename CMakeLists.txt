@@ -1,23 +1,39 @@
 cmake_minimum_required(VERSION 3.12)
 project(nibbler)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 
 include_directories(class)
 include_directories(incs)
+include_directories(jsoncpp/include)
 
 add_executable(nibbler
+        class/component/CollisionComponent.cpp
+        class/component/CollisionComponent.hpp
+        class/component/FollowComponent.cpp
+        class/component/FollowComponent.hpp
+        class/component/JoystickComponent.cpp
+        class/component/JoystickComponent.hpp
         class/component/MotionComponent.cpp
         class/component/MotionComponent.hpp
-        class/component/SpriteComponent.hpp
+        class/component/PositionComponent.cpp
         class/component/PositionComponent.hpp
+        class/component/SpriteComponent.cpp
+        class/component/SpriteComponent.hpp
         class/cores/main.cpp
+        class/events/FoodEvent.cpp
+        class/events/FoodEvent.hpp
+        class/events/JoystickEvent.cpp
+        class/events/JoystickEvent.hpp
         class/KNU/component/Component.cpp
         class/KNU/component/Component.hpp
         class/KNU/entities/Entity.cpp
         class/KNU/entities/Entity.hpp
+        class/KNU/events/EventManager.cpp
+        class/KNU/events/EventManager.hpp
         class/KNU/managers/AbstractPool.hpp
         class/KNU/managers/Pool.hpp
+        class/KNU/managers/Pool_.hpp
         class/KNU/systems/System.cpp
         class/KNU/systems/System.hpp
         class/KNU/utils/Signature.cpp
@@ -34,8 +50,44 @@ add_executable(nibbler
         class/logger/logger/logger_init.cpp
         class/logger/utils/logger_get_time.cpp
         class/logger/utils/logger_init_open_file.cpp
+        class/systems/CollisionSystem.cpp
+        class/systems/CollisionSystem.hpp
+        class/systems/FollowSystem.cpp
+        class/systems/FollowSystem.hpp
+        class/systems/FoodSystem.cpp
+        class/systems/FoodSystem.hpp
+        class/systems/JoystickSystem.cpp
+        class/systems/JoystickSystem.hpp
         class/systems/MotionSystem.cpp
         class/systems/MotionSystem.hpp
+        externlib/commun/IDisplay.hpp
+        externlib/sandbox/main.cpp
+        externlib/sdl/include/DisplaySdl.hpp
+        externlib/sdl/src/DisplaySdl.cpp
+        externlib/sdl/src/main.cpp
+        externlib/sfml/include/DisplaySfml.hpp
+        externlib/sfml/src/DisplaySfml.cpp
+        externlib/sfml/src/main.cpp
         incs/logger.h
         incs/logger_utils.h
-        incs/nibbler.hpp class/component/SpriteComponent.cpp class/component/PositionComponent.cpp class/component/FollowComponent.cpp class/component/FollowComponent.hpp class/component/JoystickComponent.cpp class/component/JoystickComponent.hpp class/systems/JoystickSystem.cpp class/systems/JoystickSystem.hpp class/KNU/events/EventManager.cpp class/KNU/events/EventManager.hpp class/events/JoystickEvent.cpp class/events/JoystickEvent.hpp class/KNU/managers/Pool_.hpp class/systems/FollowSystem.cpp class/systems/FollowSystem.hpp class/component/CollisionComponent.cpp class/component/CollisionComponent.hpp class/systems/CollisionSystem.cpp class/systems/CollisionSystem.hpp class/events/FoodEvent.cpp class/events/FoodEvent.hpp class/systems/FoodSystem.cpp class/systems/FoodSystem.hpp class/component/WallComponent.cpp class/component/WallComponent.hpp)
+        incs/nibbler.hpp
+        jsoncpp/include/json/allocator.h
+        jsoncpp/include/json/assertions.h
+        jsoncpp/include/json/autolink.h
+        jsoncpp/include/json/config.h
+        jsoncpp/include/json/features.h
+        jsoncpp/include/json/forwards.h
+        jsoncpp/include/json/json.h
+        jsoncpp/include/json/reader.h
+        jsoncpp/include/json/value.h
+        jsoncpp/include/json/version.h
+        jsoncpp/include/json/writer.h
+        jsoncpp/src/jsontestrunner/main.cpp
+        jsoncpp/src/lib_json/json_reader.cpp
+        jsoncpp/src/lib_json/json_tool.h
+        jsoncpp/src/lib_json/json_value.cpp
+        jsoncpp/src/lib_json/json_valueiterator.inl
+        jsoncpp/src/lib_json/json_writer.cpp
+        jsoncpp/src/test_lib_json/jsontest.cpp
+        jsoncpp/src/test_lib_json/jsontest.h
+        jsoncpp/src/test_lib_json/main.cpp)

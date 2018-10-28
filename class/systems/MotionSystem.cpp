@@ -4,6 +4,13 @@
 #include <logger.h>
 #include "MotionSystem.hpp"
 
+//P 0000 0001
+//M 0000 0010
+
+//E 0000 1111
+
+//S 0000 0011
+
 MotionSystem::MotionSystem() {
 	requireComponent<PositionComponent>();
 	requireComponent<MotionComponent>();
