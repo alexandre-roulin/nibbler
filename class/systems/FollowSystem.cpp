@@ -15,7 +15,7 @@ void FollowSystem::update() {
 	for (const auto &entity : getEntities()) {
 		auto &followComponent = entity.getComponent<FollowComponent>();
 		auto entityFollowed = getWorld().getEntityManager()
-				.getEntityById(followComponent._idFollowed);
+				.getEntityById(followComponent.idFollowed);
 		assert(entityFollowed.hasComponent<PositionComponent>());
 		followComponent.positionComponent = entityFollowed.getComponent<PositionComponent>();
 	}

@@ -22,10 +22,10 @@ void FoodSystem::update() {
 			auto &followComponent = entityTail.getComponent<FollowComponent>(); //SNAKE TAIL WITH ID FOLLOW
 			auto &positionComponent = entityTail.getComponent<PositionComponent>(); //SNAKE TAIL WITH ID FOLLOW
 			newEntity
-			.addComponent<FollowComponent>(followComponent._idFollowed);
+			.addComponent<FollowComponent>(followComponent.idFollowed);
 			newEntity.addComponent<PositionComponent>(positionComponent);
 			newEntity.group(GROUP_SNAKE);
-			followComponent._idFollowed = newEntity.getId();
+			followComponent.idFollowed = newEntity.getId();
 			followComponent.skip = true;
 			event.consume = true;
 		}

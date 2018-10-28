@@ -1,3 +1,4 @@
+#include <iostream>
 #include "CollisionComponent.hpp"
 
 std::string const CollisionComponent::NAME_COMPONENT = "collisionComponent";
@@ -12,4 +13,9 @@ Json::Value CollisionComponent::serializeComponent() {
 	Json::Value component;
 	component[CollisionComponent::NAME_COMPONENT][CollisionComponent::IS_WALL] = isWall;
 	return component;
+}
+
+CollisionComponent::CollisionComponent(Json::Value json) {
+	assert(json[IS_WALL].isBool());
+	isWall = json.get(IS_WALL, true).asBool();
 }

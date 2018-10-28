@@ -156,6 +156,7 @@ namespace KNU {
 		explicit EntitiesManager(World &world);
 
 		Entity &createEntity();
+		Entity &createEntity(Entity::ID id);
 
 		Entity::ID getEntityId(Entity const &e) const;
 
@@ -175,7 +176,8 @@ namespace KNU {
 
 		bool hasGroup(std::string const &group);
 
-		Json::Value serializeComponent() const;
+		Json::Value serializeKNU() const;
+		void deserializeKNU(Json::Value);
 
 		bool hasEntityInGroup(Entity const &entity, std::string group);
 
@@ -318,6 +320,8 @@ namespace KNU {
 //			entity.mask.removeComponent<T>();
 		_componentManager.removeComponent<T>(entity);
 	}
+
+
 
 
 }

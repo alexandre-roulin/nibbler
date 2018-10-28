@@ -69,51 +69,72 @@ namespace KNU {
 	}
 
 	ComponentManager::ComponentManager() {
-		log_success("ComponentManager");
 		componentPools.resize(COMPONENT_MAX, nullptr);
 		componentPools.size();
 	}
 
 /** Entities Managements **/
-	Json::Value EntitiesManager::serializeComponent() const {
+
+	void EntitiesManager::deserializeKNU(Json::Value json) {
+		for (auto ite = json.begin(); ite != json.end(); ++ite) {
+			auto entity = createEntity(static_cast<KNU::Entity::ID>
+									   (std::stoi(ite.key().asString())));
+			for (auto itc = json[ite.name()].begin();
+				 itc != json[ite.name()].end(); ++itc) {
+				for (auto itca = json[ite.name()][itc.index()].begin();
+					 itca != json[ite.name()][itc.index()].end(); ++itca) {
+					auto json_component = json[ite.name()][itc.index()][itca.name()];
+					if (itca.name() == CollisionComponent::NAME_COMPONENT)
+						entity.addComponent(CollisionComponent(json_component));
+					if (itca.name() == FollowComponent::NAME_COMPONENT)
+						entity.addComponent(FollowComponent(json_component));
+					if (itca.name() == JoystickComponent::NAME_COMPONENT)
+						entity.addComponent(JoystickComponent(json_component));
+					if (itca.name() == MotionComponent::NAME_COMPONENT)
+						entity.addComponent(MotionComponent(json_component));
+					if (itca.name() == PositionComponent::NAME_COMPONENT)
+						entity.addComponent(PositionComponent(json_component));
+				}
+
+			}
+			world._createdEntities.push_back(entity);
+		}
+		for (int index = 0; index < capacity; ++index) {
+			if (_entitiesMap[index].id == -1)
+				freeIds.push(index);
+		}
+	}
+
+	Json::Value EntitiesManager::serializeKNU() const {
 		Json::Value root;
 		std::for_each(_entitiesMap.begin(), _entitiesMap.end(),
 					  [&root](Entity const &entity) {
 						  if (entity.getId() != -1) {
-							  log_error("CollisionComponent");
 							  if (entity.hasComponent<CollisionComponent>()) {
 								  auto collisionComponent = entity.getComponent<CollisionComponent>();
-								  root[std::to_string(entity.getId())].append(
-										  collisionComponent.serializeComponent());
+								  root[std::to_string(entity.getId())]
+										  .append(collisionComponent.serializeComponent());
 							  }
-							  log_error("FollowComponent");
 							  if (entity.hasComponent<FollowComponent>()) {
 								  auto followComponent = entity.getComponent<FollowComponent>();
-								  root[std::to_string(entity.getId())].append(
-										  followComponent.serializeComponent());
+								  root[std::to_string(entity.getId())]
+										  .append(followComponent.serializeComponent());
 							  }
-							  log_error("JoystickComponent");
 							  if (entity.hasComponent<JoystickComponent>()) {
 								  auto joystickComponent = entity.getComponent<JoystickComponent>();
-								  root[std::to_string(entity.getId())].append(
-										  joystickComponent.serializeComponent());
+								  root[std::to_string(entity.getId())]
+										  .append(joystickComponent.serializeComponent());
 							  }
-							  log_error("MotionComponent");
 							  if (entity.hasComponent<MotionComponent>()) {
 								  auto motionComponent = entity.getComponent<MotionComponent>();
-								  root[std::to_string(entity.getId())].append(
-										  motionComponent.serializeComponent());
+								  root[std::to_string(entity.getId())]
+										  .append(motionComponent.serializeComponent());
 							  }
-							  log_error("PositionComponent");
 							  if (entity.hasComponent<PositionComponent>()) {
-								  log_error("has");
 								  auto positionComponent = entity.getComponent<PositionComponent>();
-								  log_error("get");
-								  root[std::to_string(entity.getId())].append(
-										  positionComponent.serializeComponent());
-								  log_error("append");
+								  root[std::to_string(entity.getId())]
+										  .append(positionComponent.serializeComponent());
 							  }
-							  log_error("SpriteComponent");
 
 //							  if (entity.hasComponent<SpriteComponent>()) {
 //								  auto collisionComponent = entity.getComponent<SpriteComponent>();
@@ -121,10 +142,6 @@ namespace KNU {
 //							  }
 						  }
 					  });
-		for (auto json = root.begin(); json != root.end(); ++json) {
-			std::cout << json.key() << std::endl;
-			std::cout << json.name() << std::endl;
-		}
 		return root;
 	}
 
@@ -141,6 +158,19 @@ namespace KNU {
 			}
 			instance_entity = static_cast<short>(size);
 			size++;
+		}
+
+		_entitiesMap[instance_entity] = Entity(instance_entity);
+		_poolSignature[instance_entity] = Signature();
+		_entitiesMap[instance_entity].entityManager = this;
+		return _entitiesMap[instance_entity];
+	}
+
+	Entity &EntitiesManager::createEntity(Entity::ID instance_entity) {
+		if (instance_entity > capacity) {
+			capacity += BASE_ENTITIES_CAPACITY;
+			_entitiesMap.resize(capacity);
+			_poolSignature.resize(capacity);
 		}
 
 		_entitiesMap[instance_entity] = Entity(instance_entity);

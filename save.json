@@ -1,0 +1,122 @@
+{
+	"0" : 
+	[
+		{
+			"collisionComponent" : 
+			{
+				"isWall" : true
+			}
+		},
+		{
+			"joystickComponent" : 
+			{
+				"joystick" : 4
+			}
+		},
+		{
+			"motionComponent" : 
+			{
+				"direction" : 0,
+				"speed" : 1
+			}
+		},
+		{
+			"positionComponent" : 
+			{
+				"x" : 10,
+				"y" : 7
+			}
+		}
+	],
+	"1" : 
+	[
+		{
+			"followComponent" : 
+			{
+				"idFollowed" : 0,
+				"positionComponent" : 
+				{
+					"positionComponent" : 
+					{
+						"x" : 0,
+						"y" : 0
+					}
+				},
+				"skip" : false
+			}
+		},
+		{
+			"positionComponent" : 
+			{
+				"x" : 10,
+				"y" : 8
+			}
+		}
+	],
+	"2" : 
+	[
+		{
+			"followComponent" : 
+			{
+				"idFollowed" : 1,
+				"positionComponent" : 
+				{
+					"positionComponent" : 
+					{
+						"x" : 0,
+						"y" : 0
+					}
+				},
+				"skip" : false
+			}
+		},
+		{
+			"positionComponent" : 
+			{
+				"x" : 10,
+				"y" : 9
+			}
+		}
+	],
+	"3" : 
+	[
+		{
+			"followComponent" : 
+			{
+				"idFollowed" : 2,
+				"positionComponent" : 
+				{
+					"positionComponent" : 
+					{
+						"x" : 0,
+						"y" : 0
+					}
+				},
+				"skip" : false
+			}
+		},
+		{
+			"positionComponent" : 
+			{
+				"x" : 10,
+				"y" : 10
+			}
+		}
+	],
+	"4" : 
+	[
+		{
+			"collisionComponent" : 
+			{
+				"isWall" : false
+			}
+		},
+		{
+			"positionComponent" : 
+			{
+				"x" : 8,
+				"y" : 7
+			}
+		}
+	]
+}

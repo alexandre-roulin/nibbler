@@ -7,7 +7,7 @@ std::string const FollowComponent::ID_FOLLOWED = "idFollowed";
 std::string const FollowComponent::POSITION_COMPONENT = "positionComponent";
 
 FollowComponent::FollowComponent(KNU::Entity::ID id, bool skip)
-		: _idFollowed(id),
+		: idFollowed(id),
 		  skip(skip) {
 
 }
@@ -15,8 +15,9 @@ FollowComponent::FollowComponent(KNU::Entity::ID id, bool skip)
 FollowComponent &
 FollowComponent::operator=(FollowComponent const &followComponent) {
 	if (this != &followComponent) {
-		_idFollowed = followComponent._idFollowed;
-		skip= followComponent.skip;
+		idFollowed = followComponent.idFollowed;
+		skip = followComponent.skip;
+		positionComponent = followComponent.positionComponent;
 	}
 	return *this;
 }
@@ -24,7 +25,18 @@ FollowComponent::operator=(FollowComponent const &followComponent) {
 Json::Value FollowComponent::serializeComponent() {
 	Json::Value component;
 	component[NAME_COMPONENT][SKIP] = skip;
-	component[NAME_COMPONENT][ID_FOLLOWED]= _idFollowed;
+	component[NAME_COMPONENT][ID_FOLLOWED] = idFollowed;
 	component[NAME_COMPONENT][POSITION_COMPONENT] = positionComponent.serializeComponent();
 	return component;
+}
+
+FollowComponent::FollowComponent(Json::Value json) {
+	assert(json[SKIP].isBool());
+	assert(json[ID_FOLLOWED].isInt());
+	assert(json[POSITION_COMPONENT].isObject());
+
+	skip = json.get(SKIP, false).asBool();
+	idFollowed = json.get(ID_FOLLOWED, -1).asInt();
+	positionComponent = PositionComponent(json.get(POSITION_COMPONENT, {0, 0})[PositionComponent::NAME_COMPONENT]);
+
 }

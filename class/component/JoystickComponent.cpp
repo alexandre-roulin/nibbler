@@ -10,6 +10,11 @@ JoystickComponent::JoystickComponent() : joystick(NONE) {
 
 Json::Value JoystickComponent::serializeComponent() {
 	Json::Value component;
-	component[NAME_COMPONENT][JOYSTICK] = static_cast<int>(joystick) ;
+	component[NAME_COMPONENT][JOYSTICK] = static_cast<int>(joystick);
 	return component;
+}
+
+JoystickComponent::JoystickComponent(Json::Value json) {
+	assert(json[JOYSTICK].isInt());
+	joystick = static_cast<eJoystick >(json.get(JOYSTICK, NONE).asInt());
 }

@@ -16,7 +16,7 @@ namespace KNU {
 		std::unique_ptr<EntitiesManager> _entityManager;
 		std::unique_ptr<EventManager> _eventManager;
 		std::unique_ptr<SystemManager> _systemManager;
-
+		friend class EntitiesManager;
 	public:
 		World();
 		void update();

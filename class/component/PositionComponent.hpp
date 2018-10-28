@@ -6,14 +6,15 @@
 #include <json/json.h>
 
 struct PositionComponent {
-	static std::string const NAME_COMPONENT;
+private:
 	static std::string const POS_Y;
 	static std::string const POS_X;
-
+public:
+	static std::string const NAME_COMPONENT;
 
 	explicit PositionComponent(int y = 0, int x = 0);
 	PositionComponent(PositionComponent const &);
-
+	PositionComponent(Json::Value);
 	int y, x;
 	Json::Value serializeComponent();
 

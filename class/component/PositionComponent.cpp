@@ -1,5 +1,6 @@
 
 #include <logger.h>
+#include <iostream>
 #include "PositionComponent.hpp"
 
 
@@ -25,11 +26,15 @@ PositionComponent::PositionComponent(PositionComponent const &positionComponent)
 
 Json::Value PositionComponent::serializeComponent() {
 	Json::Value component;
-	log_error("POS_Y");
 	component[NAME_COMPONENT][POS_Y] = y;
-	log_error("POS_X");
 	component[NAME_COMPONENT][POS_X] = x;
-	log_error("NAME_COMPONENT");
 	return component;
+}
+
+PositionComponent::PositionComponent(Json::Value json) {
+	assert(json[POS_Y].isInt());
+	assert(json[POS_X].isInt());
+	x = json.get(POS_X, 0).asInt();
+	y = json.get(POS_Y, 0).asInt();
 }
 

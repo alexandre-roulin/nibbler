@@ -6,12 +6,13 @@
 
 struct JoystickComponent {
 private:
-	static std::string const NAME_COMPONENT;
 	static std::string const JOYSTICK;
-
 public:
 
+	static std::string const NAME_COMPONENT;
+
 	explicit JoystickComponent();
+	JoystickComponent(Json::Value);
 	eJoystick joystick;
 	Json::Value serializeComponent();
 };

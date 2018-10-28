@@ -22,6 +22,7 @@
 #include <systems/FoodSystem.hpp>
 #include <json/forwards.h>
 #include <json/json.h>
+#include <fstream>
 
 void init(KNU::World &world) {
 	KNU::Entity *snake_follow = nullptr;
@@ -43,6 +44,12 @@ void init(KNU::World &world) {
 	if (new_snake)
 		new_snake->tag(TAG_TAIL_SNAKE);
 
+	auto &food = world.createEntity();
+	food.addComponent<PositionComponent>(7, 8);
+	food.addComponent<CollisionComponent>(false);
+	food.tag("food");
+
+
 }
 
 void display(KNU::World &world) {
@@ -54,23 +61,30 @@ void display(KNU::World &world) {
 	}
 }
 
+
+
 int main() {
 	char path[] = "/tmp/log.out";
 	logger_init(path);
 
 	KNU::World world;
-	init(world);
+
 	world.getSystemManager().addSystem<MotionSystem>();
 	world.getSystemManager().addSystem<JoystickSystem>();
 	world.getSystemManager().addSystem<FollowSystem>();
 	world.getSystemManager().addSystem<CollisionSystem>();
 	world.getSystemManager().addSystem<FoodSystem>();
-	auto &food = world.createEntity();
-	food.addComponent<PositionComponent>(7, 8);
-	food.addComponent<CollisionComponent>(false);
-	food.tag("food");
-	auto root = world.getEntityManager().serializeComponent();
-	std::cout << root << std::endl;
+
+
+
+
+
+
+	auto root = world.getEntityManager().serializeKNU();
+	std::ifstream file("./save.json");
+	Json::Value input;
+	file >> input;
+	world.getEntityManager().deserializeKNU(input);
 
 	display(world);
 	for (int index = 0; index < 2; ++index) {
