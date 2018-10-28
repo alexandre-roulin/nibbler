@@ -29,8 +29,8 @@ MotionComponent::MotionComponent(eDirection direction, unsigned int speed)
 
 Json::Value MotionComponent::serializeComponent() {
 	Json::Value component;
-	component[NAME_COMPONENT][SPEED] = speed;
-	component[NAME_COMPONENT][DIRECTION] = direction;
+	component[SPEED] = speed;
+	component[DIRECTION] = direction;
 	return component;
 }
 

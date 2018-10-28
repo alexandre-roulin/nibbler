@@ -113,29 +113,33 @@ namespace KNU {
 							  if (entity.hasComponent<CollisionComponent>()) {
 								  auto collisionComponent = entity.getComponent<CollisionComponent>();
 								  root[std::to_string(entity.getId())]
-										  .append(collisionComponent.serializeComponent());
+								  [CollisionComponent::NAME_COMPONENT]
+										  = collisionComponent.serializeComponent();
 							  }
 							  if (entity.hasComponent<FollowComponent>()) {
 								  auto followComponent = entity.getComponent<FollowComponent>();
 								  root[std::to_string(entity.getId())]
-										  .append(followComponent.serializeComponent());
+								  [FollowComponent::NAME_COMPONENT]
+										  = followComponent.serializeComponent();
 							  }
 							  if (entity.hasComponent<JoystickComponent>()) {
 								  auto joystickComponent = entity.getComponent<JoystickComponent>();
 								  root[std::to_string(entity.getId())]
-										  .append(joystickComponent.serializeComponent());
+								  [JoystickComponent::NAME_COMPONENT]
+										  = joystickComponent.serializeComponent();
 							  }
 							  if (entity.hasComponent<MotionComponent>()) {
 								  auto motionComponent = entity.getComponent<MotionComponent>();
 								  root[std::to_string(entity.getId())]
-										  .append(motionComponent.serializeComponent());
+								  [MotionComponent::NAME_COMPONENT]
+										  = motionComponent.serializeComponent();
 							  }
 							  if (entity.hasComponent<PositionComponent>()) {
 								  auto positionComponent = entity.getComponent<PositionComponent>();
 								  root[std::to_string(entity.getId())]
-										  .append(positionComponent.serializeComponent());
+								  [PositionComponent::NAME_COMPONENT]
+										  = positionComponent.serializeComponent();
 							  }
-
 //							  if (entity.hasComponent<SpriteComponent>()) {
 //								  auto collisionComponent = entity.getComponent<SpriteComponent>();
 //								  root[std::to_string(entity.getId())] = collisionComponent.serializeComponent();
@@ -204,6 +208,21 @@ namespace KNU {
 		return _entitiesMap[id];
 	}
 
+	std::string EntitiesManager::getTagOfEntity(Entity const &entity) const {
+		for (auto &pair : _taggedEntity) {
+			if (pair.second == entity)
+				return pair.first;
+		}
+		return "";
+	}
+
+	std::string EntitiesManager::getGroupOfEntity(Entity const &entity) const {
+		for (auto &pair : _groupedEntities) {
+			if (pair.second.find(entity) != pair.second.end())
+				return pair.first;
+		}
+		return "";
+	}
 
 	bool EntitiesManager::hasTaggedEntity(std::string &tag) {
 		return _taggedEntity.find(tag) != _taggedEntity.end();

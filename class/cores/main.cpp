@@ -53,8 +53,8 @@ void init(KNU::World &world) {
 }
 
 void display(KNU::World &world) {
-	for (const auto &entity : world.getEntityManager().getEntitiesByGroup(
-			GROUP_SNAKE)) {
+	for (const auto &entity : world.getEntityManager()
+	.getEntitiesByGroup(GROUP_SNAKE)) {
 		auto positionComponent = entity.getComponent<PositionComponent>();
 		log_info("ID [%d] Position [y:%d|x:%d]", entity.getId(),
 				 positionComponent.y, positionComponent.x);
@@ -81,11 +81,12 @@ int main() {
 
 
 	auto root = world.getEntityManager().serializeKNU();
-	std::ifstream file("./save.json");
-	Json::Value input;
-	file >> input;
-	world.getEntityManager().deserializeKNU(input);
-
+	init(world);
+//	std::ifstream file("./save.json");
+//	Json::Value input;
+//	file >> input;
+//	world.getEntityManager().deserializeKNU(input);
+	std::cout << world.getEntityManager().serializeKNU() << std::endl;
 	display(world);
 	for (int index = 0; index < 2; ++index) {
 		world.update();                                                         //WORLD			-> Distribute/Destroy entity to System/EntityManager

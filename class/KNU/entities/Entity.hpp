@@ -169,6 +169,8 @@ namespace KNU {
 		bool isEntityAlive(Entity const &entity) const;
 
 		Entity getEntityByTag(std::string const &tag);
+		std::string getTagOfEntity(Entity const &entity) const;
+		std::string getGroupOfEntity(Entity const &entity) const;
 
 		bool hasTaggedEntity(std::string &tag);
 

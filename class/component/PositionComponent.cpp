@@ -26,8 +26,8 @@ PositionComponent::PositionComponent(PositionComponent const &positionComponent)
 
 Json::Value PositionComponent::serializeComponent() {
 	Json::Value component;
-	component[NAME_COMPONENT][POS_Y] = y;
-	component[NAME_COMPONENT][POS_X] = x;
+	component[POS_Y] = y;
+	component[POS_X] = x;
 	return component;
 }
 

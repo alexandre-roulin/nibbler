@@ -10,7 +10,7 @@ JoystickComponent::JoystickComponent() : joystick(NONE) {
 
 Json::Value JoystickComponent::serializeComponent() {
 	Json::Value component;
-	component[NAME_COMPONENT][JOYSTICK] = static_cast<int>(joystick);
+	component[JOYSTICK] = static_cast<int>(joystick);
 	return component;
 }
 

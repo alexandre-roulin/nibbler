@@ -11,7 +11,7 @@ CollisionComponent::CollisionComponent(bool is_wall)
 
 Json::Value CollisionComponent::serializeComponent() {
 	Json::Value component;
-	component[CollisionComponent::NAME_COMPONENT][CollisionComponent::IS_WALL] = isWall;
+	component[CollisionComponent::IS_WALL] = isWall;
 	return component;
 }
 

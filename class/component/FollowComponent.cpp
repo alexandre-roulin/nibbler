@@ -24,9 +24,9 @@ FollowComponent::operator=(FollowComponent const &followComponent) {
 
 Json::Value FollowComponent::serializeComponent() {
 	Json::Value component;
-	component[NAME_COMPONENT][SKIP] = skip;
-	component[NAME_COMPONENT][ID_FOLLOWED] = idFollowed;
-	component[NAME_COMPONENT][POSITION_COMPONENT] = positionComponent.serializeComponent();
+	component[SKIP] = skip;
+	component[ID_FOLLOWED] = idFollowed;
+	component[POSITION_COMPONENT] = positionComponent.serializeComponent();
 	return component;
 }
 
