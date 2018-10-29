@@ -12,9 +12,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a7dbd8d7-b982-44a5-9ef8-5b2ba8f88fe0" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/class/component/PositionComponent.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/class/component/PositionComponent.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/class/cores/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/class/cores/main.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/class/systems/MotionSystem.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/class/systems/MotionSystem.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/jsoncpp" beforeDir="false" afterPath="$PROJECT_DIR$/jsoncpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/jsoncpp/include/json/version.h" beforeDir="false" afterPath="$PROJECT_DIR$/jsoncpp/include/json/version.h" afterDir="false" />
     </list>
@@ -59,10 +56,10 @@
         <counts>
           <entry key="Makefile" value="890" />
           <entry key="c" value="12" />
-          <entry key="cpp" value="20823" />
+          <entry key="cpp" value="20824" />
           <entry key="gitignore" value="7" />
           <entry key="h" value="227" />
-          <entry key="hpp" value="15261" />
+          <entry key="hpp" value="15312" />
           <entry key="json" value="78" />
           <entry key="txt" value="100" />
         </counts>
@@ -72,7 +69,7 @@
           <entry key="CMakeLists.txt" value="100" />
           <entry key="Doxygen file" value="2" />
           <entry key="JSON" value="78" />
-          <entry key="ObjectiveC" value="36321" />
+          <entry key="ObjectiveC" value="36373" />
           <entry key="PLAIN_TEXT" value="897" />
         </counts>
       </usages-collector>
@@ -85,7 +82,7 @@
           <entry key="gch" value="1" />
           <entry key="gitignore" value="3" />
           <entry key="h" value="13" />
-          <entry key="hpp" value="401" />
+          <entry key="hpp" value="402" />
           <entry key="json" value="3" />
           <entry key="memory" value="3" />
           <entry key="plist" value="1" />
@@ -101,7 +98,7 @@
           <entry key="CMakeLists.txt" value="16" />
           <entry key="Image" value="3" />
           <entry key="JSON" value="3" />
-          <entry key="ObjectiveC" value="766" />
+          <entry key="ObjectiveC" value="767" />
           <entry key="PLAIN_TEXT" value="59" />
         </counts>
       </usages-collector>
@@ -118,13 +115,25 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/class/cores/main.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="470">
-              <caret line="82" selection-start-line="82" selection-end-line="82" />
+            <state relative-caret-position="254">
+              <caret line="80" column="43" selection-start-line="80" selection-start-column="29" selection-end-line="80" selection-end-column="43" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/class/KNU/managers/Pool.hpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-34">
+              <caret line="46" selection-start-line="46" selection-end-line="46" />
+              <folding>
+                <element signature="e#14#31#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -146,7 +155,7 @@
         <entry file="file://$PROJECT_DIR$/class/component/PositionComponent.hpp">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="288">
-              <caret line="18" column="11" lean-forward="true" selection-start-line="18" selection-end-line="19" />
+              <caret line="18" column="11" selection-start-line="18" selection-end-line="19" />
               <folding>
                 <element signature="e#14#32#0" expanded="true" />
               </folding>
@@ -166,7 +175,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/class/KNU/entities/Entity.hpp">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="140">
@@ -174,15 +183,6 @@
               <folding>
                 <element signature="e#14#28#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/class/component/FollowComponent.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="624">
-              <caret line="39" column="78" selection-start-line="39" selection-start-column="78" selection-end-line="39" selection-end-column="78" />
             </state>
           </provider>
         </entry>
@@ -311,7 +311,6 @@
         <option value="$PROJECT_DIR$/class/systems/CollectSystem.hpp" />
         <option value="$PROJECT_DIR$/class/systems/CollectSystem.cpp" />
         <option value="$PROJECT_DIR$/class/systems/FoodSystem.hpp" />
-        <option value="$PROJECT_DIR$/class/KNU/managers/Pool.hpp" />
         <option value="$PROJECT_DIR$/class/KNU/events/EventManager.hpp" />
         <option value="$PROJECT_DIR$/class/KNU/managers/Pool_.hpp" />
         <option value="$PROJECT_DIR$/class/KNU/World.cpp" />
@@ -342,9 +341,10 @@
         <option value="$PROJECT_DIR$/class/KNU/entities/Entity.hpp" />
         <option value="$PROJECT_DIR$/class/KNU/entities/Entity.cpp" />
         <option value="$PROJECT_DIR$/class/component/PositionComponent.cpp" />
-        <option value="$PROJECT_DIR$/class/cores/main.cpp" />
         <option value="$PROJECT_DIR$/class/component/PositionComponent.hpp" />
         <option value="$PROJECT_DIR$/class/systems/MotionSystem.hpp" />
+        <option value="$PROJECT_DIR$/class/KNU/managers/Pool.hpp" />
+        <option value="$PROJECT_DIR$/class/cores/main.cpp" />
       </list>
     </option>
   </component>
@@ -542,12 +542,12 @@
       <workItem from="1540574039636" duration="1561000" />
       <workItem from="1540575776510" duration="25174000" />
       <workItem from="1540663974538" duration="6075000" />
-      <workItem from="1540734937104" duration="15841000" />
+      <workItem from="1540734937104" duration="16095000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="134589000" />
+    <option name="totallyTimeSpent" value="134843000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
@@ -650,16 +650,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
           <caret line="9" column="1" selection-start-line="9" selection-start-column="1" selection-end-line="9" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/class/KNU/managers/Pool.hpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="30" selection-start-line="7" selection-start-column="30" selection-end-line="7" selection-end-column="30" />
-          <folding>
-            <element signature="e#14#31#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -928,20 +918,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/class/cores/main.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="470">
-          <caret line="82" selection-start-line="82" selection-end-line="82" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/class/component/PositionComponent.hpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="288">
-          <caret line="18" column="11" lean-forward="true" selection-start-line="18" selection-end-line="19" />
+          <caret line="18" column="11" selection-start-line="18" selection-end-line="19" />
           <folding>
             <element signature="e#14#32#0" expanded="true" />
           </folding>
@@ -998,6 +978,26 @@
           <caret line="141" column="12" selection-start-line="141" selection-start-column="11" selection-end-line="141" selection-end-column="12" />
           <folding>
             <element signature="e#14#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/class/KNU/managers/Pool.hpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-34">
+          <caret line="46" selection-start-line="46" selection-end-line="46" />
+          <folding>
+            <element signature="e#14#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/class/cores/main.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="254">
+          <caret line="80" column="43" selection-start-line="80" selection-start-column="29" selection-end-line="80" selection-end-column="43" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
           </folding>
         </state>
       </provider>
