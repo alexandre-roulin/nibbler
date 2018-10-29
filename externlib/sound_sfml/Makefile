@@ -2,12 +2,12 @@
 
 #==========EXECUTABLES==========#
 
-EXE= nibbler_sdl.so
+EXE= sound_sfml.so
 
 #=======COMPILER AND FLAGS======#
 
 CXX= clang++
-CXXFLAGS= -Wall -Wextra -Werror -Wvla -std=c++14 -fsanitize=address -g3 -fPIC -MMD
+CXXFLAGS= -Wall -Wextra -Werror -Wvla -std=c++14 -fsanitize=address -g3 -MMD
 #============HEADERS============#
 
 HEADER_DIR= ./include/ ../commun/
@@ -23,7 +23,7 @@ EOC=\033[0m
 SRC_DIR = ./src/
 
 SRC_FILE= main.cpp \
-DisplaySdl.cpp
+SoundSfml.cpp
 
 SRC = $(addprefix $(SRC_DIR), $(SRC_FILE))
 
@@ -40,11 +40,11 @@ UNAME := $(shell uname)
 
 ADDITIONNAL_LIB=
 ifeq ($(UNAME), Linux)
-ADDITIONNAL_LIB += $(shell sdl2-config --cflags --libs) -lSDL2_image
-HEADER_DIR += $(shell sdl2-config --cflags)
+ADDITIONNAL_LIB += -L /usr/lib/ -lsfml-graphics -lsfml-window -lsfml-system
+HEADER_DIR += -I /usr/include/
 endif
 ifeq ($(UNAME), Darwin)
-ADDITIONNAL_LIB +=-L ~/.brew/lib/ -lSDL2 -lSDL2_image
+ADDITIONNAL_LIB +=-L ~/.brew/lib/ -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio -rpath ~/.brew/lib
 HEADER_DIR += ~/.brew/include/
 endif
 
@@ -57,8 +57,8 @@ lol:
 
 $(EXE): $(OBJ_DIR) $(OBJ)
 	@echo "\t$(EXE)'s objects compiled"
-	$(CXX) $(CXXFLAGS) $(OBJ) $(ADDITIONNAL_LIB) -shared -fPIC -o $(EXE)
-	@echo "executable $(GREEN)$(EXE)$(EOC) created"
+	$(CXX) $(CXXFLAGS) $(OBJ) $(ADDITIONNAL_LIB) -o $(EXE)
+	@echo "Dynamic Library $(GREEN)$(EXE)$(EOC) created"
 	@echo "$(GREEN)---------->>>$(EOC)"
 
 $(OBJ_DIR) :

@@ -2,15 +2,15 @@
 
 #==========EXECUTABLES==========#
 
-EXE= nibbler_sfml.so
+EXE= time
 
 #=======COMPILER AND FLAGS======#
 
 CXX= clang++
-CXXFLAGS= -Wall -Wextra -Werror -Wvla -std=c++14 -fsanitize=address -g3 -fPIC -MMD 
+CXXFLAGS= -Wall -Wextra -Werror -Wvla -std=c++14 -fsanitize=address -g3 -MMD
 #============HEADERS============#
 
-HEADER_DIR= ./include/ ../commun/
+HEADER_DIR= ./include/
 
 #============COLORS=============#
 
@@ -22,7 +22,7 @@ EOC=\033[0m
 
 SRC_DIR = ./src/
 
-SRC_FILE= DisplaySfml.cpp
+SRC_FILE= main.cpp
 
 SRC = $(addprefix $(SRC_DIR), $(SRC_FILE))
 
@@ -37,13 +37,13 @@ DEPENDS= $(OBJ:.o=.d)
 
 UNAME := $(shell uname)
 
-ADDITIONNAL_LIB=
+ADDITIONNAL_LIB= -lboost_system-mt -lboost_thread-mt
 ifeq ($(UNAME), Linux)
-ADDITIONNAL_LIB += -L /usr/lib/ -lsfml-graphics -lsfml-window -lsfml-system
-HEADER_DIR += -I /usr/include/
+ADDITIONNAL_LIB += $(shell sdl2-config --cflags --libs) -lSDL2_image
+HEADER_DIR += $(shell sdl2-config --cflags)
 endif
 ifeq ($(UNAME), Darwin)
-ADDITIONNAL_LIB +=-L ~/.brew/lib/ -lsfml-graphics -lsfml-window -lsfml-system -rpath ~/.brew/lib
+ADDITIONNAL_LIB +=-L ~/.brew/lib/ -lSDL2 -lSDL2_image
 HEADER_DIR += ~/.brew/include/
 endif
 
@@ -56,8 +56,8 @@ lol:
 
 $(EXE): $(OBJ_DIR) $(OBJ)
 	@echo "\t$(EXE)'s objects compiled"
-	$(CXX) $(CXXFLAGS) $(OBJ) $(ADDITIONNAL_LIB) -shared -fPIC -o $(EXE)
-	@echo "Dynamic Library $(GREEN)$(EXE)$(EOC) created"
+	$(CXX) $(CXXFLAGS) $(OBJ) $(ADDITIONNAL_LIB) -o $(EXE)
+	@echo "executable $(GREEN)$(EXE)$(EOC) created"
 	@echo "$(GREEN)---------->>>$(EOC)"
 
 $(OBJ_DIR) :
