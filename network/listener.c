@@ -9,7 +9,7 @@
 #include <zconf.h>
 #include <arpa/inet.h>
 
-#define MYPORT 4950    /* Le port de connection pour l'utilisateur */
+#define MYPORT 4242    /* Le port de connection pour l'utilisateur */
 
 #define MAXBUFLEN 100
 
