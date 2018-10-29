@@ -1,15 +1,24 @@
 cmake_minimum_required(VERSION 3.12)
 project(nibbler)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 14)
 
-include_directories(class)
+include_directories(class/component)
+include_directories(class/events)
+include_directories(class/KNU)
+include_directories(class/KNU/component)
+include_directories(class/KNU/entities)
+include_directories(class/KNU/events)
+include_directories(class/KNU/managers)
+include_directories(class/KNU/systems)
+include_directories(class/KNU/utils)
+include_directories(class/systems)
+include_directories(externlib/commun)
+include_directories(externlib/sdl/include)
+include_directories(externlib/sfml/include)
 include_directories(incs)
-include_directories(jsoncpp/include)
 
 add_executable(nibbler
-        network/talker.c
-        network/listener.c
         class/component/CollisionComponent.cpp
         class/component/CollisionComponent.hpp
         class/component/FollowComponent.cpp
@@ -73,23 +82,6 @@ add_executable(nibbler
         incs/logger.h
         incs/logger_utils.h
         incs/nibbler.hpp
-        jsoncpp/include/json/allocator.h
-        jsoncpp/include/json/assertions.h
-        jsoncpp/include/json/autolink.h
-        jsoncpp/include/json/config.h
-        jsoncpp/include/json/features.h
-        jsoncpp/include/json/forwards.h
-        jsoncpp/include/json/json.h
-        jsoncpp/include/json/reader.h
-        jsoncpp/include/json/value.h
-        jsoncpp/include/json/version.h
-        jsoncpp/include/json/writer.h
-        jsoncpp/src/jsontestrunner/main.cpp
-        jsoncpp/src/lib_json/json_reader.cpp
-        jsoncpp/src/lib_json/json_tool.h
-        jsoncpp/src/lib_json/json_value.cpp
-        jsoncpp/src/lib_json/json_valueiterator.inl
-        jsoncpp/src/lib_json/json_writer.cpp
-        jsoncpp/src/test_lib_json/jsontest.cpp
-        jsoncpp/src/test_lib_json/jsontest.h
-        jsoncpp/src/test_lib_json/main.cpp network/talker2.c)
+        network/listener.c
+        network/talker.c
+        network/talker2.c class/network/Network.cpp class/network/Network.hpp)

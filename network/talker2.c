@@ -4,7 +4,7 @@
 #include <strings.h>
 
 #define PORT 4950
-#define DEST_IP   "10.11.255.255"
+#define DEST_IP   "10.11.7.20"
 
 int main(int a, char **v) {
 	printf("yo\n");
@@ -14,8 +14,8 @@ int main(int a, char **v) {
 	printf("init\n");
 
 	my_addr.sin_family = AF_INET;
-	my_addr.sin_port = 0;
-	my_addr.sin_addr.s_addr = INADDR_ANY;
+	my_addr.sin_port = PORT;
+	my_addr.sin_addr.s_addr = DEST_IP;
 	printf("my_addr\n");
 
 	dest_addr.sin_family = AF_INET;
@@ -43,4 +43,5 @@ int main(int a, char **v) {
 	}
 
 	printf("> %d %d\n", my_addr.sin_port, sockfd);
+    return 1;
 }

@@ -1,6 +1,4 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/nibbler.dir/network/talker.c.o"
-  "CMakeFiles/nibbler.dir/network/listener.c.o"
   "CMakeFiles/nibbler.dir/class/component/CollisionComponent.cpp.o"
   "CMakeFiles/nibbler.dir/class/component/FollowComponent.cpp.o"
   "CMakeFiles/nibbler.dir/class/component/JoystickComponent.cpp.o"
@@ -36,13 +34,10 @@ file(REMOVE_RECURSE
   "CMakeFiles/nibbler.dir/externlib/sdl/src/main.cpp.o"
   "CMakeFiles/nibbler.dir/externlib/sfml/src/DisplaySfml.cpp.o"
   "CMakeFiles/nibbler.dir/externlib/sfml/src/main.cpp.o"
-  "CMakeFiles/nibbler.dir/jsoncpp/src/jsontestrunner/main.cpp.o"
-  "CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_reader.cpp.o"
-  "CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_value.cpp.o"
-  "CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_writer.cpp.o"
-  "CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/jsontest.cpp.o"
-  "CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/main.cpp.o"
+  "CMakeFiles/nibbler.dir/network/listener.c.o"
+  "CMakeFiles/nibbler.dir/network/talker.c.o"
   "CMakeFiles/nibbler.dir/network/talker2.c.o"
+  "CMakeFiles/nibbler.dir/class/network/Network.cpp.o"
   "nibbler.pdb"
   "nibbler"
 )

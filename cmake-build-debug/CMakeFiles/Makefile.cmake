@@ -32,9 +32,9 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.12/Modules/Platform/UnixPaths.cmake"
   "/Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.12/Modules/ProcessorCount.cmake"
   "../CMakeLists.txt"
-  "CMakeFiles/3.12.3/CMakeCCompiler.cmake"
-  "CMakeFiles/3.12.3/CMakeCXXCompiler.cmake"
-  "CMakeFiles/3.12.3/CMakeSystem.cmake"
+  "CMakeFiles/3.12.1/CMakeCCompiler.cmake"
+  "CMakeFiles/3.12.1/CMakeCXXCompiler.cmake"
+  "CMakeFiles/3.12.1/CMakeSystem.cmake"
   )
 
 # The corresponding makefile is:

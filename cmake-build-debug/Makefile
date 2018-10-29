@@ -48,10 +48,10 @@ RM = /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/alexandreroulin/work/nibbler
+CMAKE_SOURCE_DIR = /Users/aroulin/nibbler
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/alexandreroulin/work/nibbler/cmake-build-debug
+CMAKE_BINARY_DIR = /Users/aroulin/nibbler/cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +80,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles /Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/aroulin/nibbler/cmake-build-debug/CMakeFiles /Users/aroulin/nibbler/cmake-build-debug/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/aroulin/nibbler/cmake-build-debug/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -798,6 +798,33 @@ class/logger/utils/logger_init_open_file.cpp.s:
 	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/logger/utils/logger_init_open_file.cpp.s
 .PHONY : class/logger/utils/logger_init_open_file.cpp.s
 
+class/network/Network.o: class/network/Network.cpp.o
+
+.PHONY : class/network/Network.o
+
+# target to build an object file
+class/network/Network.cpp.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/network/Network.cpp.o
+.PHONY : class/network/Network.cpp.o
+
+class/network/Network.i: class/network/Network.cpp.i
+
+.PHONY : class/network/Network.i
+
+# target to preprocess a source file
+class/network/Network.cpp.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/network/Network.cpp.i
+.PHONY : class/network/Network.cpp.i
+
+class/network/Network.s: class/network/Network.cpp.s
+
+.PHONY : class/network/Network.s
+
+# target to generate assembly for a file
+class/network/Network.cpp.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/network/Network.cpp.s
+.PHONY : class/network/Network.cpp.s
+
 class/systems/CollisionSystem.o: class/systems/CollisionSystem.cpp.o
 
 .PHONY : class/systems/CollisionSystem.o
@@ -1068,168 +1095,6 @@ externlib/sfml/src/main.cpp.s:
 	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/externlib/sfml/src/main.cpp.s
 .PHONY : externlib/sfml/src/main.cpp.s
 
-jsoncpp/src/jsontestrunner/main.o: jsoncpp/src/jsontestrunner/main.cpp.o
-
-.PHONY : jsoncpp/src/jsontestrunner/main.o
-
-# target to build an object file
-jsoncpp/src/jsontestrunner/main.cpp.o:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/jsoncpp/src/jsontestrunner/main.cpp.o
-.PHONY : jsoncpp/src/jsontestrunner/main.cpp.o
-
-jsoncpp/src/jsontestrunner/main.i: jsoncpp/src/jsontestrunner/main.cpp.i
-
-.PHONY : jsoncpp/src/jsontestrunner/main.i
-
-# target to preprocess a source file
-jsoncpp/src/jsontestrunner/main.cpp.i:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/jsoncpp/src/jsontestrunner/main.cpp.i
-.PHONY : jsoncpp/src/jsontestrunner/main.cpp.i
-
-jsoncpp/src/jsontestrunner/main.s: jsoncpp/src/jsontestrunner/main.cpp.s
-
-.PHONY : jsoncpp/src/jsontestrunner/main.s
-
-# target to generate assembly for a file
-jsoncpp/src/jsontestrunner/main.cpp.s:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/jsoncpp/src/jsontestrunner/main.cpp.s
-.PHONY : jsoncpp/src/jsontestrunner/main.cpp.s
-
-jsoncpp/src/lib_json/json_reader.o: jsoncpp/src/lib_json/json_reader.cpp.o
-
-.PHONY : jsoncpp/src/lib_json/json_reader.o
-
-# target to build an object file
-jsoncpp/src/lib_json/json_reader.cpp.o:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_reader.cpp.o
-.PHONY : jsoncpp/src/lib_json/json_reader.cpp.o
-
-jsoncpp/src/lib_json/json_reader.i: jsoncpp/src/lib_json/json_reader.cpp.i
-
-.PHONY : jsoncpp/src/lib_json/json_reader.i
-
-# target to preprocess a source file
-jsoncpp/src/lib_json/json_reader.cpp.i:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_reader.cpp.i
-.PHONY : jsoncpp/src/lib_json/json_reader.cpp.i
-
-jsoncpp/src/lib_json/json_reader.s: jsoncpp/src/lib_json/json_reader.cpp.s
-
-.PHONY : jsoncpp/src/lib_json/json_reader.s
-
-# target to generate assembly for a file
-jsoncpp/src/lib_json/json_reader.cpp.s:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_reader.cpp.s
-.PHONY : jsoncpp/src/lib_json/json_reader.cpp.s
-
-jsoncpp/src/lib_json/json_value.o: jsoncpp/src/lib_json/json_value.cpp.o
-
-.PHONY : jsoncpp/src/lib_json/json_value.o
-
-# target to build an object file
-jsoncpp/src/lib_json/json_value.cpp.o:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_value.cpp.o
-.PHONY : jsoncpp/src/lib_json/json_value.cpp.o
-
-jsoncpp/src/lib_json/json_value.i: jsoncpp/src/lib_json/json_value.cpp.i
-
-.PHONY : jsoncpp/src/lib_json/json_value.i
-
-# target to preprocess a source file
-jsoncpp/src/lib_json/json_value.cpp.i:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_value.cpp.i
-.PHONY : jsoncpp/src/lib_json/json_value.cpp.i
-
-jsoncpp/src/lib_json/json_value.s: jsoncpp/src/lib_json/json_value.cpp.s
-
-.PHONY : jsoncpp/src/lib_json/json_value.s
-
-# target to generate assembly for a file
-jsoncpp/src/lib_json/json_value.cpp.s:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_value.cpp.s
-.PHONY : jsoncpp/src/lib_json/json_value.cpp.s
-
-jsoncpp/src/lib_json/json_writer.o: jsoncpp/src/lib_json/json_writer.cpp.o
-
-.PHONY : jsoncpp/src/lib_json/json_writer.o
-
-# target to build an object file
-jsoncpp/src/lib_json/json_writer.cpp.o:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_writer.cpp.o
-.PHONY : jsoncpp/src/lib_json/json_writer.cpp.o
-
-jsoncpp/src/lib_json/json_writer.i: jsoncpp/src/lib_json/json_writer.cpp.i
-
-.PHONY : jsoncpp/src/lib_json/json_writer.i
-
-# target to preprocess a source file
-jsoncpp/src/lib_json/json_writer.cpp.i:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_writer.cpp.i
-.PHONY : jsoncpp/src/lib_json/json_writer.cpp.i
-
-jsoncpp/src/lib_json/json_writer.s: jsoncpp/src/lib_json/json_writer.cpp.s
-
-.PHONY : jsoncpp/src/lib_json/json_writer.s
-
-# target to generate assembly for a file
-jsoncpp/src/lib_json/json_writer.cpp.s:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_writer.cpp.s
-.PHONY : jsoncpp/src/lib_json/json_writer.cpp.s
-
-jsoncpp/src/test_lib_json/jsontest.o: jsoncpp/src/test_lib_json/jsontest.cpp.o
-
-.PHONY : jsoncpp/src/test_lib_json/jsontest.o
-
-# target to build an object file
-jsoncpp/src/test_lib_json/jsontest.cpp.o:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/jsontest.cpp.o
-.PHONY : jsoncpp/src/test_lib_json/jsontest.cpp.o
-
-jsoncpp/src/test_lib_json/jsontest.i: jsoncpp/src/test_lib_json/jsontest.cpp.i
-
-.PHONY : jsoncpp/src/test_lib_json/jsontest.i
-
-# target to preprocess a source file
-jsoncpp/src/test_lib_json/jsontest.cpp.i:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/jsontest.cpp.i
-.PHONY : jsoncpp/src/test_lib_json/jsontest.cpp.i
-
-jsoncpp/src/test_lib_json/jsontest.s: jsoncpp/src/test_lib_json/jsontest.cpp.s
-
-.PHONY : jsoncpp/src/test_lib_json/jsontest.s
-
-# target to generate assembly for a file
-jsoncpp/src/test_lib_json/jsontest.cpp.s:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/jsontest.cpp.s
-.PHONY : jsoncpp/src/test_lib_json/jsontest.cpp.s
-
-jsoncpp/src/test_lib_json/main.o: jsoncpp/src/test_lib_json/main.cpp.o
-
-.PHONY : jsoncpp/src/test_lib_json/main.o
-
-# target to build an object file
-jsoncpp/src/test_lib_json/main.cpp.o:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/main.cpp.o
-.PHONY : jsoncpp/src/test_lib_json/main.cpp.o
-
-jsoncpp/src/test_lib_json/main.i: jsoncpp/src/test_lib_json/main.cpp.i
-
-.PHONY : jsoncpp/src/test_lib_json/main.i
-
-# target to preprocess a source file
-jsoncpp/src/test_lib_json/main.cpp.i:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/main.cpp.i
-.PHONY : jsoncpp/src/test_lib_json/main.cpp.i
-
-jsoncpp/src/test_lib_json/main.s: jsoncpp/src/test_lib_json/main.cpp.s
-
-.PHONY : jsoncpp/src/test_lib_json/main.s
-
-# target to generate assembly for a file
-jsoncpp/src/test_lib_json/main.cpp.s:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/main.cpp.s
-.PHONY : jsoncpp/src/test_lib_json/main.cpp.s
-
 network/listener.o: network/listener.c.o
 
 .PHONY : network/listener.o
@@ -1395,6 +1260,9 @@ help:
 	@echo "... class/logger/utils/logger_init_open_file.o"
 	@echo "... class/logger/utils/logger_init_open_file.i"
 	@echo "... class/logger/utils/logger_init_open_file.s"
+	@echo "... class/network/Network.o"
+	@echo "... class/network/Network.i"
+	@echo "... class/network/Network.s"
 	@echo "... class/systems/CollisionSystem.o"
 	@echo "... class/systems/CollisionSystem.i"
 	@echo "... class/systems/CollisionSystem.s"
@@ -1425,24 +1293,6 @@ help:
 	@echo "... externlib/sfml/src/main.o"
 	@echo "... externlib/sfml/src/main.i"
 	@echo "... externlib/sfml/src/main.s"
-	@echo "... jsoncpp/src/jsontestrunner/main.o"
-	@echo "... jsoncpp/src/jsontestrunner/main.i"
-	@echo "... jsoncpp/src/jsontestrunner/main.s"
-	@echo "... jsoncpp/src/lib_json/json_reader.o"
-	@echo "... jsoncpp/src/lib_json/json_reader.i"
-	@echo "... jsoncpp/src/lib_json/json_reader.s"
-	@echo "... jsoncpp/src/lib_json/json_value.o"
-	@echo "... jsoncpp/src/lib_json/json_value.i"
-	@echo "... jsoncpp/src/lib_json/json_value.s"
-	@echo "... jsoncpp/src/lib_json/json_writer.o"
-	@echo "... jsoncpp/src/lib_json/json_writer.i"
-	@echo "... jsoncpp/src/lib_json/json_writer.s"
-	@echo "... jsoncpp/src/test_lib_json/jsontest.o"
-	@echo "... jsoncpp/src/test_lib_json/jsontest.i"
-	@echo "... jsoncpp/src/test_lib_json/jsontest.s"
-	@echo "... jsoncpp/src/test_lib_json/main.o"
-	@echo "... jsoncpp/src/test_lib_json/main.i"
-	@echo "... jsoncpp/src/test_lib_json/main.s"
 	@echo "... network/listener.o"
 	@echo "... network/listener.i"
 	@echo "... network/listener.s"
