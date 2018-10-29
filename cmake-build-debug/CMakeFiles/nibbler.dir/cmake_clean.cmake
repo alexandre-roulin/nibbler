@@ -42,7 +42,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_writer.cpp.o"
   "CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/jsontest.cpp.o"
   "CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/main.cpp.o"
-  "CMakeFiles/nibbler.dir/network/listener2.c.o"
+  "CMakeFiles/nibbler.dir/network/talker2.c.o"
   "nibbler.pdb"
   "nibbler"
 )

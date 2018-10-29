@@ -1257,33 +1257,6 @@ network/listener.c.s:
 	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/network/listener.c.s
 .PHONY : network/listener.c.s
 
-network/listener2.o: network/listener2.c.o
-
-.PHONY : network/listener2.o
-
-# target to build an object file
-network/listener2.c.o:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/network/listener2.c.o
-.PHONY : network/listener2.c.o
-
-network/listener2.i: network/listener2.c.i
-
-.PHONY : network/listener2.i
-
-# target to preprocess a source file
-network/listener2.c.i:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/network/listener2.c.i
-.PHONY : network/listener2.c.i
-
-network/listener2.s: network/listener2.c.s
-
-.PHONY : network/listener2.s
-
-# target to generate assembly for a file
-network/listener2.c.s:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/network/listener2.c.s
-.PHONY : network/listener2.c.s
-
 network/talker.o: network/talker.c.o
 
 .PHONY : network/talker.o
@@ -1310,6 +1283,33 @@ network/talker.s: network/talker.c.s
 network/talker.c.s:
 	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/network/talker.c.s
 .PHONY : network/talker.c.s
+
+network/talker2.o: network/talker2.c.o
+
+.PHONY : network/talker2.o
+
+# target to build an object file
+network/talker2.c.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/network/talker2.c.o
+.PHONY : network/talker2.c.o
+
+network/talker2.i: network/talker2.c.i
+
+.PHONY : network/talker2.i
+
+# target to preprocess a source file
+network/talker2.c.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/network/talker2.c.i
+.PHONY : network/talker2.c.i
+
+network/talker2.s: network/talker2.c.s
+
+.PHONY : network/talker2.s
+
+# target to generate assembly for a file
+network/talker2.c.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/network/talker2.c.s
+.PHONY : network/talker2.c.s
 
 # Help Target
 help:
@@ -1446,12 +1446,12 @@ help:
 	@echo "... network/listener.o"
 	@echo "... network/listener.i"
 	@echo "... network/listener.s"
-	@echo "... network/listener2.o"
-	@echo "... network/listener2.i"
-	@echo "... network/listener2.s"
 	@echo "... network/talker.o"
 	@echo "... network/talker.i"
 	@echo "... network/talker.s"
+	@echo "... network/talker2.o"
+	@echo "... network/talker2.i"
+	@echo "... network/talker2.s"
 .PHONY : help
 
 

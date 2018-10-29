@@ -6,8 +6,8 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
   "/Users/alexandreroulin/work/nibbler/network/listener.c" "/Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles/nibbler.dir/network/listener.c.o"
-  "/Users/alexandreroulin/work/nibbler/network/listener2.c" "/Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles/nibbler.dir/network/listener2.c.o"
   "/Users/alexandreroulin/work/nibbler/network/talker.c" "/Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles/nibbler.dir/network/talker.c.o"
+  "/Users/alexandreroulin/work/nibbler/network/talker2.c" "/Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles/nibbler.dir/network/talker2.c.o"
   )
 set(CMAKE_C_COMPILER_ID "AppleClang")
 

@@ -338,10 +338,10 @@
 		<Unit filename="/Users/alexandreroulin/work/nibbler/network/listener.c">
 			<Option target="nibbler"/>
 		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/network/listener2.c">
+		<Unit filename="/Users/alexandreroulin/work/nibbler/network/talker.c">
 			<Option target="nibbler"/>
 		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/network/talker.c">
+		<Unit filename="/Users/alexandreroulin/work/nibbler/network/talker2.c">
 			<Option target="nibbler"/>
 		</Unit>
 		<Unit filename="/Users/alexandreroulin/work/nibbler/CMakeLists.txt">

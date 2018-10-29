@@ -616,18 +616,18 @@ CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/main.cpp.s"
 	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/alexandreroulin/work/nibbler/jsoncpp/src/test_lib_json/main.cpp -o CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/main.cpp.s
 
-CMakeFiles/nibbler.dir/network/listener2.c.o: CMakeFiles/nibbler.dir/flags.make
-CMakeFiles/nibbler.dir/network/listener2.c.o: ../network/listener2.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_44) "Building C object CMakeFiles/nibbler.dir/network/listener2.c.o"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/nibbler.dir/network/listener2.c.o   -c /Users/alexandreroulin/work/nibbler/network/listener2.c
+CMakeFiles/nibbler.dir/network/talker2.c.o: CMakeFiles/nibbler.dir/flags.make
+CMakeFiles/nibbler.dir/network/talker2.c.o: ../network/talker2.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_44) "Building C object CMakeFiles/nibbler.dir/network/talker2.c.o"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/nibbler.dir/network/talker2.c.o   -c /Users/alexandreroulin/work/nibbler/network/talker2.c
 
-CMakeFiles/nibbler.dir/network/listener2.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/nibbler.dir/network/listener2.c.i"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/alexandreroulin/work/nibbler/network/listener2.c > CMakeFiles/nibbler.dir/network/listener2.c.i
+CMakeFiles/nibbler.dir/network/talker2.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/nibbler.dir/network/talker2.c.i"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/alexandreroulin/work/nibbler/network/talker2.c > CMakeFiles/nibbler.dir/network/talker2.c.i
 
-CMakeFiles/nibbler.dir/network/listener2.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/nibbler.dir/network/listener2.c.s"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/alexandreroulin/work/nibbler/network/listener2.c -o CMakeFiles/nibbler.dir/network/listener2.c.s
+CMakeFiles/nibbler.dir/network/talker2.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/nibbler.dir/network/talker2.c.s"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/alexandreroulin/work/nibbler/network/talker2.c -o CMakeFiles/nibbler.dir/network/talker2.c.s
 
 # Object files for target nibbler
 nibbler_OBJECTS = \
@@ -674,7 +674,7 @@ nibbler_OBJECTS = \
 "CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_writer.cpp.o" \
 "CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/jsontest.cpp.o" \
 "CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/main.cpp.o" \
-"CMakeFiles/nibbler.dir/network/listener2.c.o"
+"CMakeFiles/nibbler.dir/network/talker2.c.o"
 
 # External object files for target nibbler
 nibbler_EXTERNAL_OBJECTS =
@@ -722,7 +722,7 @@ nibbler: CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_value.cpp.o
 nibbler: CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_writer.cpp.o
 nibbler: CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/jsontest.cpp.o
 nibbler: CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/main.cpp.o
-nibbler: CMakeFiles/nibbler.dir/network/listener2.c.o
+nibbler: CMakeFiles/nibbler.dir/network/talker2.c.o
 nibbler: CMakeFiles/nibbler.dir/build.make
 nibbler: CMakeFiles/nibbler.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_45) "Linking CXX executable nibbler"
