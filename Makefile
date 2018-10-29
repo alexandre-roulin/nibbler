@@ -116,7 +116,7 @@ LDLIBS		= \
 CPPFLAGS	= \
 			  -I$(DIR_INCS)							\
 			  -I$(DIR_CLASS)						\
-			  -I./jsoncpp/include/					\
+			  -I./json_cpp/include/					\
 
 CFLAGS		= \
 			-std=c++17						\
