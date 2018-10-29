@@ -20,7 +20,7 @@ int main()
 	ssfml.addNoise("../commun/yes-2.wav");
 	for (long int i = 0; i < 10000000000; i++)
 	{
-		if (!(i % 10000000))
+		if (!(i % 100000000))
 			ssfml.playNoise(0);
 	}
     return 0;
