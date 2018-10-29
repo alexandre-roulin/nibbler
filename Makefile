@@ -104,10 +104,10 @@ RST   =		\x1B[0m
 # ---------------------------------------------------------------------------- #
 
 LIBS		= \
-			./json_cpp/src/lib_json/libjsoncpp.a		\
+			./jsoncpp/src/lib_json/libjsoncpp.a		\
 
 LDFLAGS		= \
-			-L ./json_cpp/src/lib_json/
+			-L ./jsoncpp/src/lib_json/
 
 LDLIBS		= \
 			-ljsoncpp								\
@@ -116,7 +116,7 @@ LDLIBS		= \
 CPPFLAGS	= \
 			  -I$(DIR_INCS)							\
 			  -I$(DIR_CLASS)						\
-			  -I./json_cpp/include/					\
+			  -I./jsoncpp/include/					\
 
 CFLAGS		= \
 			-std=c++1z						\
