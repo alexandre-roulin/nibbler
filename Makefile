@@ -104,10 +104,10 @@ RST   =		\x1B[0m
 # ---------------------------------------------------------------------------- #
 
 LIBS		= \
-			./jsoncpp/src/lib_json/libjsoncpp.a		\
+			./json_cpp/src/lib_json/libjsoncpp.a		\
 
 LDFLAGS		= \
-			-L ./jsoncpp/src/lib_json/
+			-L ./json_cpp/src/lib_json/
 
 LDLIBS		= \
 			-ljsoncpp								\
