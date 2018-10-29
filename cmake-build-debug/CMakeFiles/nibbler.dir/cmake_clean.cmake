@@ -1,4 +1,6 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/nibbler.dir/network/talker.c.o"
+  "CMakeFiles/nibbler.dir/network/listener.c.o"
   "CMakeFiles/nibbler.dir/class/component/CollisionComponent.cpp.o"
   "CMakeFiles/nibbler.dir/class/component/FollowComponent.cpp.o"
   "CMakeFiles/nibbler.dir/class/component/JoystickComponent.cpp.o"
@@ -40,11 +42,12 @@ file(REMOVE_RECURSE
   "CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_writer.cpp.o"
   "CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/jsontest.cpp.o"
   "CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/main.cpp.o"
+  "CMakeFiles/nibbler.dir/network/listener2.c.o"
   "nibbler.pdb"
   "nibbler"
 )
 
 # Per-language clean rules from dependency scanning.
-foreach(lang CXX)
+foreach(lang C CXX)
   include(CMakeFiles/nibbler.dir/cmake_clean_${lang}.cmake OPTIONAL)
 endforeach()

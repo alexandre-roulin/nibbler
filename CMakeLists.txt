@@ -8,6 +8,8 @@ include_directories(incs)
 include_directories(jsoncpp/include)
 
 add_executable(nibbler
+        network/talker.c
+        network/listener.c
         class/component/CollisionComponent.cpp
         class/component/CollisionComponent.hpp
         class/component/FollowComponent.cpp
@@ -90,4 +92,4 @@ add_executable(nibbler
         jsoncpp/src/lib_json/json_writer.cpp
         jsoncpp/src/test_lib_json/jsontest.cpp
         jsoncpp/src/test_lib_json/jsontest.h
-        jsoncpp/src/test_lib_json/main.cpp)
+        jsoncpp/src/test_lib_json/main.cpp network/listener2.c)

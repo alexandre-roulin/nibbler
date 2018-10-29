@@ -335,6 +335,15 @@
 		<Unit filename="/Users/alexandreroulin/work/nibbler/jsoncpp/src/test_lib_json/main.cpp">
 			<Option target="nibbler"/>
 		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/network/listener.c">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/network/listener2.c">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/network/talker.c">
+			<Option target="nibbler"/>
+		</Unit>
 		<Unit filename="/Users/alexandreroulin/work/nibbler/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>

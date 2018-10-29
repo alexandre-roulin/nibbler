@@ -37,13 +37,11 @@ main() {
 	}
 
 	addr_len = sizeof(struct sockaddr);
-	if ((numbytes = (int) recvfrom(sock_fd, buf, MAXBUFLEN, 0, \
-							   (struct sockaddr *) &their_addr, &addr_len)) == -1) {
+	if ((numbytes = (int) recv(sock_fd, buf, MAXBUFLEN, 0)) == -1) {
 		perror("recvfrom");
 		exit(1);
 	}
 	system("say \"Call Krystal\"");
-	printf("recieve from %s\n", inet_ntoa(their_addr.sin_addr));
 	printf(" [%d] bytes \n", numbytes);
 	buf[numbytes] = '\0';
 	printf("Packet is [%s]\n", buf);

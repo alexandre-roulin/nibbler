@@ -1230,6 +1230,87 @@ jsoncpp/src/test_lib_json/main.cpp.s:
 	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/main.cpp.s
 .PHONY : jsoncpp/src/test_lib_json/main.cpp.s
 
+network/listener.o: network/listener.c.o
+
+.PHONY : network/listener.o
+
+# target to build an object file
+network/listener.c.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/network/listener.c.o
+.PHONY : network/listener.c.o
+
+network/listener.i: network/listener.c.i
+
+.PHONY : network/listener.i
+
+# target to preprocess a source file
+network/listener.c.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/network/listener.c.i
+.PHONY : network/listener.c.i
+
+network/listener.s: network/listener.c.s
+
+.PHONY : network/listener.s
+
+# target to generate assembly for a file
+network/listener.c.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/network/listener.c.s
+.PHONY : network/listener.c.s
+
+network/listener2.o: network/listener2.c.o
+
+.PHONY : network/listener2.o
+
+# target to build an object file
+network/listener2.c.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/network/listener2.c.o
+.PHONY : network/listener2.c.o
+
+network/listener2.i: network/listener2.c.i
+
+.PHONY : network/listener2.i
+
+# target to preprocess a source file
+network/listener2.c.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/network/listener2.c.i
+.PHONY : network/listener2.c.i
+
+network/listener2.s: network/listener2.c.s
+
+.PHONY : network/listener2.s
+
+# target to generate assembly for a file
+network/listener2.c.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/network/listener2.c.s
+.PHONY : network/listener2.c.s
+
+network/talker.o: network/talker.c.o
+
+.PHONY : network/talker.o
+
+# target to build an object file
+network/talker.c.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/network/talker.c.o
+.PHONY : network/talker.c.o
+
+network/talker.i: network/talker.c.i
+
+.PHONY : network/talker.i
+
+# target to preprocess a source file
+network/talker.c.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/network/talker.c.i
+.PHONY : network/talker.c.i
+
+network/talker.s: network/talker.c.s
+
+.PHONY : network/talker.s
+
+# target to generate assembly for a file
+network/talker.c.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/network/talker.c.s
+.PHONY : network/talker.c.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -1362,6 +1443,15 @@ help:
 	@echo "... jsoncpp/src/test_lib_json/main.o"
 	@echo "... jsoncpp/src/test_lib_json/main.i"
 	@echo "... jsoncpp/src/test_lib_json/main.s"
+	@echo "... network/listener.o"
+	@echo "... network/listener.i"
+	@echo "... network/listener.s"
+	@echo "... network/listener2.o"
+	@echo "... network/listener2.i"
+	@echo "... network/listener2.s"
+	@echo "... network/talker.o"
+	@echo "... network/talker.i"
+	@echo "... network/talker.s"
 .PHONY : help
 
 
