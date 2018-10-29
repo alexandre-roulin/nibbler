@@ -3,85 +3,101 @@ project(nibbler)
 
 set(CMAKE_CXX_STANDARD 14)
 
-include_directories(class/component)
-include_directories(class/events)
-include_directories(class/KNU)
-include_directories(class/KNU/component)
-include_directories(class/KNU/entities)
-include_directories(class/KNU/events)
-include_directories(class/KNU/managers)
-include_directories(class/KNU/systems)
-include_directories(class/KNU/utils)
-include_directories(class/systems)
-include_directories(externlib/commun)
-include_directories(externlib/sdl/include)
-include_directories(externlib/sfml/include)
+include_directories(class)
 include_directories(incs)
+include_directories(jsoncpp/include)
 
 add_executable(nibbler
-        class/component/CollisionComponent.cpp
-        class/component/CollisionComponent.hpp
-        class/component/FollowComponent.cpp
-        class/component/FollowComponent.hpp
-        class/component/JoystickComponent.cpp
-        class/component/JoystickComponent.hpp
-        class/component/MotionComponent.cpp
-        class/component/MotionComponent.hpp
-        class/component/PositionComponent.cpp
-        class/component/PositionComponent.hpp
-        class/component/SpriteComponent.cpp
-        class/component/SpriteComponent.hpp
-        class/cores/main.cpp
-        class/events/FoodEvent.cpp
-        class/events/FoodEvent.hpp
-        class/events/JoystickEvent.cpp
-        class/events/JoystickEvent.hpp
-        class/KNU/component/Component.cpp
-        class/KNU/component/Component.hpp
-        class/KNU/entities/Entity.cpp
-        class/KNU/entities/Entity.hpp
-        class/KNU/events/EventManager.cpp
-        class/KNU/events/EventManager.hpp
-        class/KNU/managers/AbstractPool.hpp
-        class/KNU/managers/Pool.hpp
-        class/KNU/managers/Pool_.hpp
-        class/KNU/systems/System.cpp
-        class/KNU/systems/System.hpp
-        class/KNU/utils/Signature.cpp
-        class/KNU/utils/Signature.hpp
-        class/KNU/World.cpp
-        class/KNU/World.hpp
-        class/logger/display/logger_debug.cpp
-        class/logger/display/logger_error.cpp
-        class/logger/display/logger_fatal.cpp
-        class/logger/display/logger_info.cpp
-        class/logger/display/logger_success.cpp
-        class/logger/display/logger_trace.cpp
-        class/logger/display/logger_warn.cpp
-        class/logger/logger/logger_init.cpp
-        class/logger/utils/logger_get_time.cpp
-        class/logger/utils/logger_init_open_file.cpp
-        class/systems/CollisionSystem.cpp
-        class/systems/CollisionSystem.hpp
-        class/systems/FollowSystem.cpp
-        class/systems/FollowSystem.hpp
-        class/systems/FoodSystem.cpp
-        class/systems/FoodSystem.hpp
-        class/systems/JoystickSystem.cpp
-        class/systems/JoystickSystem.hpp
-        class/systems/MotionSystem.cpp
-        class/systems/MotionSystem.hpp
-        externlib/commun/IDisplay.hpp
-        externlib/sandbox/main.cpp
-        externlib/sdl/include/DisplaySdl.hpp
-        externlib/sdl/src/DisplaySdl.cpp
-        externlib/sdl/src/main.cpp
-        externlib/sfml/include/DisplaySfml.hpp
-        externlib/sfml/src/DisplaySfml.cpp
-        externlib/sfml/src/main.cpp
-        incs/logger.h
-        incs/logger_utils.h
-        incs/nibbler.hpp
-        network/listener.c
-        network/talker.c
-        network/talker2.c class/network/Network.cpp class/network/Network.hpp)
+    class/component/CollisionComponent.cpp
+    class/component/CollisionComponent.hpp
+    class/component/FollowComponent.cpp
+    class/component/FollowComponent.hpp
+    class/component/JoystickComponent.cpp
+    class/component/JoystickComponent.hpp
+    class/component/MotionComponent.cpp
+    class/component/MotionComponent.hpp
+    class/component/PositionComponent.cpp
+    class/component/PositionComponent.hpp
+    class/component/SpriteComponent.cpp
+    class/component/SpriteComponent.hpp
+    class/cores/main.cpp
+    class/events/FoodEvent.cpp
+    class/events/FoodEvent.hpp
+    class/events/JoystickEvent.cpp
+    class/events/JoystickEvent.hpp
+    class/KNU/component/Component.cpp
+    class/KNU/component/Component.hpp
+    class/KNU/entities/Entity.cpp
+    class/KNU/entities/Entity.hpp
+    class/KNU/events/EventManager.cpp
+    class/KNU/events/EventManager.hpp
+    class/KNU/managers/AbstractPool.hpp
+    class/KNU/managers/Pool.hpp
+    class/KNU/managers/Pool_.hpp
+    class/KNU/systems/System.cpp
+    class/KNU/systems/System.hpp
+    class/KNU/utils/Signature.cpp
+    class/KNU/utils/Signature.hpp
+    class/KNU/World.cpp
+    class/KNU/World.hpp
+    class/logger/display/logger_debug.cpp
+    class/logger/display/logger_error.cpp
+    class/logger/display/logger_fatal.cpp
+    class/logger/display/logger_info.cpp
+    class/logger/display/logger_success.cpp
+    class/logger/display/logger_trace.cpp
+    class/logger/display/logger_warn.cpp
+    class/logger/logger/logger_init.cpp
+    class/logger/utils/logger_get_time.cpp
+    class/logger/utils/logger_init_open_file.cpp
+    class/network/Network.cpp
+    class/network/Network.hpp
+    class/systems/CollisionSystem.cpp
+    class/systems/CollisionSystem.hpp
+    class/systems/FollowSystem.cpp
+    class/systems/FollowSystem.hpp
+    class/systems/FoodSystem.cpp
+    class/systems/FoodSystem.hpp
+    class/systems/JoystickSystem.cpp
+    class/systems/JoystickSystem.hpp
+    class/systems/MotionSystem.cpp
+    class/systems/MotionSystem.hpp
+    externlib/commun/IDisplay.hpp
+    externlib/commun/ISound.hpp
+    externlib/display_sdl/include/DisplaySdl.hpp
+    externlib/display_sdl/src/DisplaySdl.cpp
+    externlib/display_sdl/src/main.cpp
+    externlib/display_sfml/include/DisplaySfml.hpp
+    externlib/display_sfml/src/DisplaySfml.cpp
+    externlib/display_sfml/src/main.cpp
+    externlib/sandbox/main.cpp
+    externlib/sound_sfml/include/SoundSfml.hpp
+    externlib/sound_sfml/src/main.cpp
+    externlib/sound_sfml/src/SoundSfml.cpp
+    incs/logger.h
+    incs/logger_utils.h
+    incs/nibbler.hpp
+    jsoncpp/include/json/allocator.h
+    jsoncpp/include/json/assertions.h
+    jsoncpp/include/json/autolink.h
+    jsoncpp/include/json/config.h
+    jsoncpp/include/json/features.h
+    jsoncpp/include/json/forwards.h
+    jsoncpp/include/json/json.h
+    jsoncpp/include/json/reader.h
+    jsoncpp/include/json/value.h
+    jsoncpp/include/json/version.h
+    jsoncpp/include/json/writer.h
+    jsoncpp/src/jsontestrunner/main.cpp
+    jsoncpp/src/lib_json/json_reader.cpp
+    jsoncpp/src/lib_json/json_tool.h
+    jsoncpp/src/lib_json/json_value.cpp
+    jsoncpp/src/lib_json/json_valueiterator.inl
+    jsoncpp/src/lib_json/json_writer.cpp
+    jsoncpp/src/test_lib_json/jsontest.cpp
+    jsoncpp/src/test_lib_json/jsontest.h
+    jsoncpp/src/test_lib_json/main.cpp
+    network/listener.c
+    network/talker.c
+    network/talker2.c
+    Time/src/main.cpp)

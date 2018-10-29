@@ -60,6 +60,8 @@ SRCS = \
 													\
 		events/JoystickEvent.cpp					\
 													\
+		network/Network.cpp							\
+													\
 		KNU/World.cpp								\
 		KNU/entities/Entity.cpp						\
 		KNU/component/Component.cpp					\

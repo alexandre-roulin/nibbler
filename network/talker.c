@@ -10,7 +10,7 @@
 #include <unistd.h>
 #include <arpa/inet.h>
 
-#define MYPORT 4950    /* Le port de connection */
+#define MYPORT 4242    /* Le port de connection */
 
 int main(int argc, char *argv[]) {
 	int sockfd;

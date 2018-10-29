@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <strings.h>
 
-#define PORT 4950
+#define PORT 4242
 #define DEST_IP   "10.11.7.20"
 
 int main(int a, char **v) {

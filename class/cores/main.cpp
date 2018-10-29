@@ -23,6 +23,7 @@
 #include <json/forwards.h>
 #include <json/json.h>
 #include <fstream>
+#include <network/Network.hpp>
 
 void init(KNU::World &world) {
 	KNU::Entity *snake_follow = nullptr;
@@ -63,7 +64,15 @@ void display(KNU::World &world) {
 
 
 
-int main() {
+int main(int ac, char**av) {
+	Network net;
+
+	if (ac == 2) {
+		net.recvfrom_socket();
+	} else {
+		net.sendto_socket();
+	}
+	return 1;
 	char path[] = "/tmp/log.out";
 	logger_init(path);
 
