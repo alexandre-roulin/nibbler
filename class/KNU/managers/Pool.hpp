@@ -17,6 +17,7 @@ namespace KNU {
 		std::vector<T> _pool;
 		unsigned int capacity;
 		unsigned int size;
+		std::vector<Entity> v;
 		std::map<Entity, unsigned int> _entitiesMap;
 	public:
 

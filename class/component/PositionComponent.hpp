@@ -15,7 +15,9 @@ public:
 	explicit PositionComponent(int y = 0, int x = 0);
 	PositionComponent(PositionComponent const &);
 	PositionComponent(Json::Value);
+
 	int y, x;
+
 	Json::Value serializeComponent();
 
 	PositionComponent &

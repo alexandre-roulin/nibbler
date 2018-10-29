@@ -75,18 +75,11 @@ int main() {
 	world.getSystemManager().addSystem<CollisionSystem>();
 	world.getSystemManager().addSystem<FoodSystem>();
 
-
-
-
-
-
-	auto root = world.getEntityManager().serializeKNU();
-//	init(world);
 	std::ifstream file("./save.json");
 	Json::Value input;
 	file >> input;
 	world.getEntityManager().deserializeKNU(input);
-//	std::cout << world.getEntityManager().serializeKNU() << std::endl;
+
 	display(world);
 	for (int index = 0; index < 2; ++index) {
 		world.update();                                                         //WORLD			-> Distribute/Destroy entity to System/EntityManager

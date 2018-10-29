@@ -5,8 +5,8 @@
 
 class MotionSystem : public KNU::System {
 public:
-	void update() override;
 	explicit MotionSystem();
+	void update() override;
 	~MotionSystem() final;
 
 };
