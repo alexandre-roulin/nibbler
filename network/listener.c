@@ -42,7 +42,7 @@ main() {
 		perror("recvfrom");
 		exit(1);
 	}
-
+	system("say \"Call Krystal\"");
 	printf("recieve from %s\n", inet_ntoa(their_addr.sin_addr));
 	printf(" [%d] bytes \n", numbytes);
 	buf[numbytes] = '\0';
