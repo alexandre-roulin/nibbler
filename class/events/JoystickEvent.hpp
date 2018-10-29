@@ -7,5 +7,3 @@ struct JoystickEvent {
 	explicit JoystickEvent(eJoystick = NONE);
 	eJoystick joystick;
 };
-
-
