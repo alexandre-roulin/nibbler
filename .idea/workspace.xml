@@ -12,16 +12,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a7dbd8d7-b982-44a5-9ef8-5b2ba8f88fe0" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nibbler.dir/DependInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nibbler.dir/DependInfo.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nibbler.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nibbler.dir/build.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nibbler.dir/cmake_clean.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nibbler.dir/cmake_clean.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nibbler.dir/link.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nibbler.dir/link.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/nibbler.cbp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/nibbler.cbp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/jsoncpp" beforeDir="false" afterPath="$PROJECT_DIR$/jsoncpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/jsoncpp/include/json/version.h" beforeDir="false" afterPath="$PROJECT_DIR$/jsoncpp/include/json/version.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/network/listener2.c" beforeDir="false" afterPath="$PROJECT_DIR$/network/talker2.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/network/talker2.c" beforeDir="false" afterPath="$PROJECT_DIR$/network/talker2.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/network/talker_krystalz" beforeDir="false" afterPath="$PROJECT_DIR$/network/talker_krystalz" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -63,7 +57,7 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="Makefile" value="890" />
-          <entry key="c" value="648" />
+          <entry key="c" value="652" />
           <entry key="cpp" value="20824" />
           <entry key="gitignore" value="7" />
           <entry key="h" value="227" />
@@ -77,7 +71,7 @@
           <entry key="CMakeLists.txt" value="122" />
           <entry key="Doxygen file" value="2" />
           <entry key="JSON" value="78" />
-          <entry key="ObjectiveC" value="37009" />
+          <entry key="ObjectiveC" value="37013" />
           <entry key="PLAIN_TEXT" value="897" />
         </counts>
       </usages-collector>
@@ -117,8 +111,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/network/listener.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="192">
-              <caret line="21" column="14" selection-start-line="21" selection-start-column="14" selection-end-line="21" selection-end-column="14" />
+            <state relative-caret-position="352">
+              <caret line="31" column="40" selection-start-line="31" selection-start-column="30" selection-end-line="31" selection-end-column="40" />
             </state>
           </provider>
         </entry>
@@ -138,8 +132,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/network/talker2.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="512">
-              <caret line="32" column="19" selection-start-line="32" selection-start-column="12" selection-end-line="32" selection-end-column="19" />
+            <state relative-caret-position="352">
+              <caret line="22" column="43" selection-start-line="22" selection-start-column="43" selection-end-line="22" selection-end-column="43" />
               <folding>
                 <element signature="e#0#22#0" expanded="true" />
               </folding>
@@ -188,8 +182,8 @@
       <find>tagEntity</find>
       <find>MYPORT</find>
       <find>he</find>
-      <find>&quot;);</find>
       <find>sockfd</find>
+      <find>&quot;);</find>
     </findStrings>
     <replaceStrings>
       <replace>.</replace>
@@ -230,7 +224,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/class/systems/JoystickSystem.cpp" />
         <option value="$PROJECT_DIR$/class/cores/EntityFactory.hpp" />
         <option value="$PROJECT_DIR$/class/systems/FollowSystem.hpp" />
@@ -281,6 +274,7 @@
         <option value="$PROJECT_DIR$/network/talker.c" />
         <option value="$PROJECT_DIR$/network/listener2.c" />
         <option value="$PROJECT_DIR$/network/listener.c" />
+        <option value="$PROJECT_DIR$/network/talker2.c" />
       </list>
     </option>
   </component>
@@ -483,12 +477,12 @@
       <workItem from="1540574039636" duration="1561000" />
       <workItem from="1540575776510" duration="25174000" />
       <workItem from="1540663974538" duration="6075000" />
-      <workItem from="1540734937104" duration="21002000" />
+      <workItem from="1540734937104" duration="22028000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="139750000" />
+    <option name="totallyTimeSpent" value="140776000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="765" height="900" extended-state="6" />
@@ -939,15 +933,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/network/listener.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="192">
-          <caret line="21" column="14" selection-start-line="21" selection-start-column="14" selection-end-line="21" selection-end-column="14" />
+        <state relative-caret-position="352">
+          <caret line="31" column="40" selection-start-line="31" selection-start-column="30" selection-end-line="31" selection-end-column="40" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/network/talker2.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="512">
-          <caret line="32" column="19" selection-start-line="32" selection-start-column="12" selection-end-line="32" selection-end-column="19" />
+        <state relative-caret-position="352">
+          <caret line="22" column="43" selection-start-line="22" selection-start-column="43" selection-end-line="22" selection-end-column="43" />
           <folding>
             <element signature="e#0#22#0" expanded="true" />
           </folding>

@@ -20,7 +20,7 @@ int main(int a, char **v) {
 
 	dest_addr.sin_family = AF_INET;
 	dest_addr.sin_port = htons(PORT);
-	dest_addr.sin_addr.s_addr = inet_addr(DEST_IP);
+	dest_addr.sin_addr.s_addr = INADDR_ANY;
 	bzero(&(dest_addr.sin_zero), 8);
 	printf("dest\n");
 
