@@ -5,7 +5,7 @@
 namespace KNU {
 
 	void System::addEntity(Entity &entity) {
-		assert(entity.getSignature().matches(signature));
+//		assert(entity.getSignature().matches(signature));
 		entities.push_back(entity);
 	}
 

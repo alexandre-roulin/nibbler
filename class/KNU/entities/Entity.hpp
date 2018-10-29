@@ -288,7 +288,7 @@ namespace KNU {
 	template<typename T>
 	std::shared_ptr<Pool<T>> ComponentManager::accommodateComponent() {
 		const auto componentId = Component<T>::signature();
-		assert(componentId < COMPONENT_MAX);
+//		assert(componentId < COMPONENT_MAX);
 		if (componentPools[componentId] == nullptr) {
 			std::shared_ptr<Pool<T>> pool(new Pool<T>());
 			componentPools[componentId] = pool;

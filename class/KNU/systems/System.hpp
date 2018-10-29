@@ -68,7 +68,7 @@ namespace KNU {
 
 		template<typename T, typename ... Args>
 		void addSystem(Args ... args) {
-			assert(!hasSystem<T>());
+//			assert(!hasSystem<T>());
 			std::shared_ptr<T> system(new T(std::forward<Args>(args) ...));
 			system->world = &_world;
 			_systems.insert(std::make_pair(std::type_index(typeid(T)), system));

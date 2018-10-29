@@ -282,7 +282,7 @@ namespace KNU {
 	}
 
 	Entity EntitiesManager::getEntityByTag(std::string const &tag) {
-		assert(hasTag(tag));
+//		assert(hasTag(tag));
 		return _taggedEntity[tag];
 	}
 

@@ -61,7 +61,7 @@ namespace KNU {
 	template<typename T>
 	T &Pool<T>::get(Entity const &e) {
 		unsigned int instance = _entitiesMap.at(e);
-		assert(instance < capacity);
+//		assert(instance < capacity);
 		return _pool[instance];
 	}
 
@@ -74,7 +74,7 @@ namespace KNU {
 	void Pool<T>::remove(Entity const &e) {
 
 		unsigned int instance = _entitiesMap.at(e);
-		assert(instance < size);
+//		assert(instance < size);
 		_entitiesMap.erase(e);
 		size--;
 		std::swap(_pool[instance], _pool[size]);

@@ -36,13 +36,13 @@ namespace KNU {
 		}
 
 		bool set(unsigned int index, T object) {
-			assert(index < getSize());
+//			assert(index < getSize());
 			data[index] = object;
 			return true;
 		}
 
 		T &get(unsigned int index) {
-			assert(index < getSize());
+//			assert(index < getSize());
 			return static_cast<T &>(data[index]);
 		}
 

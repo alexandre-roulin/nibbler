@@ -119,7 +119,7 @@ CPPFLAGS	= \
 			  -I./json_cpp/include/					\
 
 CFLAGS		= \
-			-std=c++17						\
+			-std=c++1z						\
 			-fsanitize=address					\
 			-g3							\
 #			-Wall -Werror -Wextra					\
