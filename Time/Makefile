@@ -37,7 +37,7 @@ DEPENDS= $(OBJ:.o=.d)
 
 UNAME := $(shell uname)
 
-ADDITIONNAL_LIB=
+ADDITIONNAL_LIB= -lboost_system-mt -lboost_thread-mt
 ifeq ($(UNAME), Linux)
 ADDITIONNAL_LIB += $(shell sdl2-config --cflags --libs) -lSDL2_image
 HEADER_DIR += $(shell sdl2-config --cflags)

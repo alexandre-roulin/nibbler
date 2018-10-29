@@ -25,6 +25,7 @@ public:
 		this->_currentTime = std::chrono::high_resolution_clock::now();
 		this->_lag += std::chrono::duration_cast<std::chrono::nanoseconds>(this->_deltaTime);
 		this->_time += std::chrono::duration_cast<std::chrono::milliseconds>(this->_deltaTime);
+		this->_loops = 0;
 	}
 	bool							haveLag(void) const
 	{
@@ -39,6 +40,7 @@ public:
 	}
 	bool							update(TimeEvent &e)
 	{
+		std::cout << "Time : " << this->_time.count() << std::endl;
 		if (this->_time - e.lastUpdate > e.deltaUpdate)
 		{
 			e.lastUpdate = this->_time;
@@ -52,7 +54,6 @@ private:
 	std::chrono::nanoseconds							_lag;
 	std::chrono::milliseconds							_time;
 	std::chrono::high_resolution_clock::time_point		_currentTime;
-	std::chrono::high_resolution_clock::time_point		_pastTime;
 	std::chrono::duration<double>						_deltaTime;
 	int													_loops;
 
@@ -71,7 +72,7 @@ long update(Time &time, TimeEvent &te)
 	if (time.update(te))
 		std::cout << "UPDATE" << std::endl;
 	long i;
-	for (i = 0; i < 1000000; i+=2)
+	for (i = 0; i < 5000000; i+=2)
 		i--;
 	return (i);
 }
@@ -104,4 +105,49 @@ int main()
 		//std::cout << "Render" << std::endl;
 		render();
 	}
+}
+*/
+/*
+#include <iostream>
+#include <boost/asio.hpp>
+#include <boost/bind.hpp>
+class printer
+{
+public:
+printer(boost::asio::io_context& io)
+	: timer_(io, boost::asio::chrono::seconds(1)),
+count_(0)
+{
+	timer_.async_wait(boost::bind(&printer::print, this));
+}
+
+~printer()
+{
+	std::cout << "Final count is " << count_ << std::endl;
+}
+
+void print()
+{
+	if (count_ < 5)
+	{
+		std::cout << count_ << std::endl;
+		++count_;
+
+		timer_.expires_at(timer_.expiry() + boost::asio::chrono::seconds(1));
+		timer_.async_wait(boost::bind(&printer::print, this));
+	}
+}
+
+private:
+	  boost::asio::steady_timer timer_;
+	  int count_;
+};
+
+int main()
+{
+	  boost::asio::io_context io;
+	  printer p(io);
+	  io.run();
+
+	  return 0;
 }
