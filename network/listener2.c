@@ -6,7 +6,7 @@
 #define PORT 4950
 #define DEST_IP   "10.11.255.255"
 
-int main() {
+int main(int a, char **v) {
 	printf("yo\n");
 	int sockfd; // Socket
 	struct sockaddr_in my_addr; //My addr
