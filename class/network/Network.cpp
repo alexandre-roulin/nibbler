@@ -111,7 +111,7 @@ void Network::send_all_socket() {
 void Network::recv_socket() {
 	char buff[MAX_BUFF_LEN];
 	for (int index = 0; index < read_fds.size(); ++index) {
-		int read = recv(my_network.sock_fd, buff, MAX_BUFF_LEN, 0);
+		int read = recv(read_fds[index], buff, MAX_BUFF_LEN, 0);
 		if (read != -1) {
 			buff[read] = '\0';
 			std::cout << buff << std::endl;
