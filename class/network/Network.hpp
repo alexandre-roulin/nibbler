@@ -17,15 +17,18 @@
 #include <vector>
 
 class Network {
-	int _sock_fd;
-	std::vector<int> fds;
+	struct network {
+		int sock_fd;
+		struct sockaddr_in	 address;
+
+	};
+	network my_network;
+
 	socklen_t addr_len;
-	std::vector<struct sockaddr_in> address;
-	struct sockaddr_in	 my_address;
+	std::vector<int> fds;
 public:
 	Network();
 
-	void listen_socket();
 	void accept_socket();
 	void connect_socket();
 	void recvfrom_socket();
@@ -33,4 +36,5 @@ public:
 	void send_all_socket();
 	void recv_socket();
 	void send_socket();
+	network get_network();
 };

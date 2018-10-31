@@ -77,8 +77,6 @@ int main(int ac, char **av) {
 			net.recvfrom_socket();
 		if (buffer == "accept")
 			net.accept_socket();
-		if (buffer == "listen")
-			net.listen_socket();
 		if (buffer == "sendall")
 			net.send_all_socket();
 		if (buffer == "recv")
