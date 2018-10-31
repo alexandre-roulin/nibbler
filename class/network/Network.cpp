@@ -79,6 +79,8 @@ void Network::connect_socket() {
 	if (connect(_sock_fd, reinterpret_cast<struct sockaddr *>(&dest_addr),
 				addr_len) != -1) {
 		std::cout << "Connect Good !" << std::endl;
+	} else {
+		perror("connect");
 	}
 }
 
