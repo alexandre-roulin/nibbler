@@ -38,8 +38,7 @@ Network::Network() {
 			 reinterpret_cast<struct sockaddr const *>(&my_addr),
 			 sizeof(struct sockaddr)) == -1)
 		perror("bind");
-	std::cout << my_addr.sin_addr.s_addr << std::endl;
-	std::cout << inet_ntoa(my_addr.sin_addr) << std::endl;
+	std::cout << "Connection ready ! " << std::endl;
 
 }
 
@@ -75,7 +74,8 @@ void Network::connect_socket() {
 			return;
 		}
 	}
-	std::cout << "Trying to connect" << inet_ntoa(dest_addr.sin_addr) << std::endl;
+	bzero(&(dest_addr.sin_zero), 8);
+	std::cout << "Trying to connect " << inet_ntoa(dest_addr.sin_addr) << std::endl;
 	if (connect(_sock_fd, reinterpret_cast<struct sockaddr *>(&dest_addr),
 				addr_len) != -1) {
 		std::cout << "Connect Good !" << std::endl;
@@ -84,11 +84,10 @@ void Network::connect_socket() {
 
 void Network::accept_socket() {
 	struct sockaddr_in new_element;
-	socklen_t len;
 	int fildes;
 	fildes = accept(_sock_fd,
 					reinterpret_cast<struct sockaddr *>(&new_element),
-					&len);
+					&addr_len);
 	std::cout << fildes;
 	std::cout << inet_ntoa(new_element.sin_addr);
 
