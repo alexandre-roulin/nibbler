@@ -75,12 +75,14 @@ void Network::connect_socket() {
 		}
 	}
 	bzero(&(dest_addr.sin_zero), 8);
-	std::cout << "Trying to connect " << inet_ntoa(dest_addr.sin_addr) << std::endl;
+	std::cout << "Trying to connect " << inet_ntoa(dest_addr.sin_addr)
+			  << std::endl;
 	if (connect(_sock_fd, reinterpret_cast<struct sockaddr *>(&dest_addr),
 				addr_len) != -1) {
 		std::cout << "Connect Good !" << std::endl;
 	} else {
-		std::cout << strerror(errno) << " " << inet_ntoa(dest_addr.sin_addr) << std::endl;
+		std::cout << strerror(errno) << " " << inet_ntoa(dest_addr.sin_addr)
+				  << std::endl;
 
 	}
 }
@@ -88,11 +90,18 @@ void Network::connect_socket() {
 void Network::accept_socket() {
 	struct sockaddr_in new_element;
 	int fildes;
+	std::cout << "Trying to accept" << std::endl;
 	fildes = accept(_sock_fd,
 					reinterpret_cast<struct sockaddr *>(&new_element),
 					&addr_len);
-	std::cout << fildes;
-	std::cout << inet_ntoa(new_element.sin_addr);
+	if (fildes == -1) {
+		std::cout << strerror(errno) << " " << inet_ntoa(new_element.sin_addr)
+				  << std::endl;
+	} else {
+		std::cout << "Accept successfully : "
+				  << inet_ntoa(new_element.sin_addr) << std::endl;
+
+	}
 
 }
 
