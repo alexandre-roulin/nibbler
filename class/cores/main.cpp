@@ -67,6 +67,7 @@ int main(int ac, char **av) {
 	Network net;
 	std::string buffer;
 	for (;;) {
+		std::cout << "New command : ";
 		std::getline(std::cin, buffer);
 		if (buffer == "sendto")
 			net.sendto_socket();
