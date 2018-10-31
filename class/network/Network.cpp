@@ -80,7 +80,8 @@ void Network::connect_socket() {
 				addr_len) != -1) {
 		std::cout << "Connect Good !" << std::endl;
 	} else {
-		perror("connect");
+		std::cout << strerror(errno) << " " << inet_ntoa(dest_addr.sin_addr) << std::endl;
+
 	}
 }
 
