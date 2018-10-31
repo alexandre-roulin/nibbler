@@ -28,8 +28,6 @@ DisplaySfml::DisplaySfml(char const *tileset,
                         this->_winPixelSize.getY()),
         				windowName)
 {
-	std::cout << "SFML" << std::endl;
-    static_cast<void>(tileset);
     this->_win.setFramerateLimit(60);
 
     if (!this->_tileset.loadFromFile(tileset))

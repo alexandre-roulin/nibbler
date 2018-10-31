@@ -29,7 +29,6 @@ DisplaySdl::DisplaySdl(char const *tileset,
     _rendererTexture(NULL),
     _renderer(NULL)
 {
-	std::cout << "SDL" << std::endl;
     if (SDL_Init(SDL_INIT_VIDEO) < 0 || IMG_Init(IMG_INIT_PNG) < 0)
         this->_error();
 
