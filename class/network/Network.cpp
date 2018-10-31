@@ -26,7 +26,7 @@ Network::Network() {
 	//Create own struct addr
 
 	my_network.address.sin_family = AF_INET;
-	my_network.address.sin_port = htons(PORT);
+	my_network.address.sin_port = htons(PORT_LISTEN);
 	my_network.address.sin_addr.s_addr = INADDR_ANY;
 
 	bzero(&(my_network.address.sin_zero), 8);
@@ -54,7 +54,7 @@ void Network::connect_socket() {
 	std::getline(std::cin, buffer);
 	std::string const buff_regex = buffer;
 	new_network.address.sin_family = AF_INET;
-	new_network.address.sin_port = htons(PORT);
+	new_network.address.sin_port = htons(PORT_CONNECT);
 	if (std::regex_search(buff_regex.begin(), buff_regex.end(), match, regex)) {
 		std::cout << "Match Regex" << std::endl;
 		new_network.address.sin_addr.s_addr = inet_addr(buffer.c_str());
@@ -133,7 +133,7 @@ void Network::sendto_socket() {
 	std::getline(std::cin, buffer);
 	std::string const buff_regex = buffer;
 	dest_addr.sin_family = AF_INET;
-	dest_addr.sin_port = htons(PORT);
+	dest_addr.sin_port = htons(0);
 	if (std::regex_search(buff_regex.begin(), buff_regex.end(), match, regex)) {
 		std::cout << "Match Regex" << std::endl;
 		dest_addr.sin_addr.s_addr = inet_addr(buffer.c_str());
@@ -175,7 +175,7 @@ void Network::recvfrom_socket() {
 }
 
 Network::network Network::get_network() {
-	static int port = 4242;
+	static int port = PORT_CONNECT;
 	network net;
 	if ((net.sock_fd = socket(AF_INET, SOCK_STREAM, 0)) == -1) {
 		perror("socket");
@@ -183,7 +183,7 @@ Network::network Network::get_network() {
 	fcntl(net.sock_fd, F_SETFL, fcntl(net.sock_fd, F_GETFL, 0) | O_NONBLOCK);
 
 	net.address.sin_family = AF_INET;
-	net.address.sin_port = 0;
+	net.address.sin_port = htons(++port);
 	net.address.sin_addr.s_addr = INADDR_ANY;
 
 	bzero(&(net.address.sin_zero), 8);

@@ -11,7 +11,8 @@
 #include <arpa/inet.h>
 
 
-#define PORT 4242
+#define PORT_LISTEN 4242
+#define PORT_CONNECT 4243
 #define MAX_BUFF_LEN 100
 #define BACK_LOG 20
 #include <vector>
