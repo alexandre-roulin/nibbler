@@ -15,7 +15,7 @@ int main(int a, char **v) {
 
 	my_addr.sin_family = AF_INET;
 	my_addr.sin_port = PORT;
-	my_addr.sin_addr.s_addr = DEST_IP;
+	my_addr.sin_addr.s_addr = 0;
 	printf("my_addr\n");
 
 	dest_addr.sin_family = AF_INET;

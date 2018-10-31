@@ -3,6 +3,7 @@
 //
 #include <iostream>
 #include <fcntl.h>
+#include <regex>
 #include "Network.hpp"
 
 //SOCK_STREAM Listen sur un port
@@ -80,11 +81,23 @@ void Network::recvfrom_socket() {
 void Network::sendto_socket() {
 //    int sendto(int sockfd, const void *msg, int len, unsigned int flags,
 //               const struct sockaddr *to, int tolen);
+	std::regex regex(R"(^[0-9]{2}\.[0-9]{2}\.[0-9]{2}\.[0-9]{2}$)");
+	std::smatch match;
+	struct sockaddr_in dest_addr;
+
 	std::string buffer;
 	std::getline(std::cin, buffer);
-	for (int index = 1; index < address.size(); ++index) {
-		sendto(_sock_fd, buffer.c_str(), buffer.size(), 0,
-			   reinterpret_cast<struct sockaddr const *>(&(address[index])),
-			   addr_len);
+	std::string const buff_regex = buffer;
+	if (std::regex_search(buff_regex.begin(), buff_regex.end(), match, regex)) {
+		dest_addr.sin_family = AF_INET;
+		dest_addr.sin_port = PORT;
+		dest_addr.sin_addr.s_addr = inet_addr(buffer.c_str());
 	}
+	std::getline(std::cin, buffer);
+	sendto(_sock_fd, buffer.c_str(), buffer.size(), 0, reinterpret_cast<struct sockaddr const *>(&dest_addr), addr_len);
+//	for (int index = 1; index < address.size(); ++index) {
+//		sendto(_sock_fd, buffer.c_str(), buffer.size(), 0,
+//			   reinterpret_cast<struct sockaddr const *>(&(address[index])),
+//			   addr_len);
+//	}
 }
