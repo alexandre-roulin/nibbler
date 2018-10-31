@@ -183,7 +183,7 @@ Network::network Network::get_network() {
 	fcntl(net.sock_fd, F_SETFL,  fcntl(net.sock_fd, F_GETFL, 0) | O_NONBLOCK);
 
 	net.address.sin_family = AF_INET;
-	net.address.sin_port = htons(++port);
+	net.address.sin_port = 0;
 	net.address.sin_addr.s_addr = INADDR_ANY;
 
 	bzero(&(net.address.sin_zero), 8);
