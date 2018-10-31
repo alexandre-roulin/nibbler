@@ -102,11 +102,11 @@ void Network::accept_socket() {
 
 void Network::send_all_socket() {
 	std::string s;
-	std::cout << "read_fds : ";
-	std::getline(std::cin, s);
-	for (int index = 0; index < read_fds.size(); ++index) {
-		send(read_fds[index], s.c_str(), s.size(), 0);
-	}
+//	std::cout << "read_fds : ";
+//	std::getline(std::cin, s);
+//	for (int index = 0; index < read_fds.size(); ++index) {
+//		send(read_fds[index], s.c_str(), s.size(), 0);
+//	}
 	std::cout << "write_fds : ";
 	std::getline(std::cin, s);
 	for (int index = 0; index < write_fds.size(); ++index) {
@@ -124,14 +124,14 @@ void Network::recv_socket() {
 			std::cout << buff << std::endl;
 		}
 	}
-	std::cout << "write_fds : ";
-	for (int index = 0; index < write_fds.size(); ++index) {
-		int read = recv(write_fds[index], buff, MAX_BUFF_LEN, 0);
-		if (read != -1) {
-			buff[read] = '\0';
-			std::cout << buff << std::endl;
-		}
-	}
+//	std::cout << "write_fds : ";
+//	for (int index = 0; index < write_fds.size(); ++index) {
+//		int read = recv(write_fds[index], buff, MAX_BUFF_LEN, 0);
+//		if (read != -1) {
+//			buff[read] = '\0';
+//			std::cout << buff << std::endl;
+//		}
+//	}
 }
 
 void Network::send_socket() {
