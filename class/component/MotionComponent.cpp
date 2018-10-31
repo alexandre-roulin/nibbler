@@ -3,6 +3,7 @@
 #include "MotionComponent.hpp"
 #include <KNU/utils/Signature.hpp>
 #include <KNU/component/Component.hpp>
+#include <cassert>
 
 std::string const MotionComponent::NAME_COMPONENT = "motionComponent";
 std::string const MotionComponent::SPEED = "speed";

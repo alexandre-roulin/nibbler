@@ -1,3 +1,4 @@
+#include <cassert>
 
 #include <logger.h>
 #include <iostream>
