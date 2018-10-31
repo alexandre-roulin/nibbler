@@ -54,7 +54,7 @@ void Network::connect_socket() {
 	std::getline(std::cin, buffer);
 	std::string const buff_regex = buffer;
 	new_network.address.sin_family = AF_INET;
-	new_network.address.sin_port = htons(PORT);
+	new_network.address.sin_port = 0;
 	if (std::regex_search(buff_regex.begin(), buff_regex.end(), match, regex)) {
 		std::cout << "Match Regex" << std::endl;
 		new_network.address.sin_addr.s_addr = inet_addr(buffer.c_str());
@@ -98,18 +98,26 @@ void Network::accept_socket() {
 
 }
 
-void Network::recvfrom_socket() {
+void Network::send_all_socket() {
+	std::string s;
+	std::getline(std::cin, s);
+	for (int index = 0; index < fds.size(); ++index) {
+		send(fds[index], s.c_str(), s.size(), 0);
+	}
+}
+
+void Network::recv_socket() {
 	char buff[MAX_BUFF_LEN];
-	struct sockaddr_in new_element;
-	size_t bytes_recv;
-// int recvfrom(int sockfd, void *buf, int len, unsigned int flags
-//                 struct sockaddr *from, int *fromlen);
-	bytes_recv = recvfrom(my_network.sock_fd, buff, MAX_BUFF_LEN, 0,
-						  reinterpret_cast<struct sockaddr *>(&new_element),
-						  &addr_len);
-	if (bytes_recv != -1) {
-		buff[bytes_recv] = '\0';
-		std::cout << buff << std::endl;
+	int numbytes = recv(my_network.sock_fd, buff, MAX_BUFF_LEN, 0);
+	if (numbytes == -1) {
+		std::cout << "Nothing recv from " << my_network.sock_fd << std::endl;
+	} else {
+		std::cout << "recv from " << my_network.sock_fd << " : " << buff << std::endl;
+	}
+}
+
+void Network::send_socket() {
+	for (int i = 0; i < fds.size(); ++i) {
 	}
 }
 
@@ -151,26 +159,18 @@ void Network::sendto_socket() {
 //	}
 }
 
-void Network::send_all_socket() {
-	std::string s;
-	std::getline(std::cin, s);
-	for (int index = 0; index < fds.size(); ++index) {
-		send(fds[index], s.c_str(), s.size(), 0);
-	}
-}
-
-void Network::recv_socket() {
+void Network::recvfrom_socket() {
 	char buff[MAX_BUFF_LEN];
-	int numbytes = recv(my_network.sock_fd, buff, MAX_BUFF_LEN, 0);
-	if (numbytes == -1) {
-		std::cout << "Nothing recv from " << my_network.sock_fd << std::endl;
-	} else {
-		std::cout << "recv from " << my_network.sock_fd << " : " << buff << std::endl;
-	}
-}
-
-void Network::send_socket() {
-	for (int i = 0; i < fds.size(); ++i) {
+	struct sockaddr_in new_element;
+	size_t bytes_recv;
+// int recvfrom(int sockfd, void *buf, int len, unsigned int flags
+//                 struct sockaddr *from, int *fromlen);
+	bytes_recv = recvfrom(my_network.sock_fd, buff, MAX_BUFF_LEN, 0,
+						  reinterpret_cast<struct sockaddr *>(&new_element),
+						  &addr_len);
+	if (bytes_recv != -1) {
+		buff[bytes_recv] = '\0';
+		std::cout << buff << std::endl;
 	}
 }
 
@@ -180,7 +180,7 @@ Network::network Network::get_network() {
 	if ((net.sock_fd = socket(AF_INET, SOCK_STREAM, 0)) == -1) {
 		perror("socket");
 	}
-	fcntl(net.sock_fd, F_SETFL,  fcntl(net.sock_fd, F_GETFL, 0) | O_NONBLOCK);
+	fcntl(net.sock_fd, F_SETFL, fcntl(net.sock_fd, F_GETFL, 0) | O_NONBLOCK);
 
 	net.address.sin_family = AF_INET;
 	net.address.sin_port = 0;
