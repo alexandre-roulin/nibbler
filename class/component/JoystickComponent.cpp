@@ -1,4 +1,5 @@
 #include "JoystickComponent.hpp"
+#include <cassert>
 
 
 std::string const JoystickComponent::NAME_COMPONENT = "joystickComponent";

@@ -1,4 +1,5 @@
 #include "FollowComponent.hpp"
+#include <cassert>
 
 
 std::string const FollowComponent::NAME_COMPONENT = "followComponent";
