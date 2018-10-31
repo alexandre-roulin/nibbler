@@ -53,8 +53,7 @@ void Network::connect_socket() {
 	std::string buffer;
 	std::getline(std::cin, buffer);
 	std::string const buff_regex = buffer;
-	new_network.address.sin_family = AF_INET;
-	new_network.address.sin_port = htons(PORT_CONNECT);
+	
 	if (std::regex_search(buff_regex.begin(), buff_regex.end(), match, regex)) {
 		std::cout << "Match Regex" << std::endl;
 		new_network.address.sin_addr.s_addr = inet_addr(buffer.c_str());
