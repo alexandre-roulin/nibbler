@@ -53,7 +53,8 @@ void Network::connect_socket() {
 	std::string buffer;
 	std::getline(std::cin, buffer);
 	std::string const buff_regex = buffer;
-	
+	new_network.address.sin_family = AF_INET;
+	new_network.address.sin_port = htons(PORT_LISTEN);
 	if (std::regex_search(buff_regex.begin(), buff_regex.end(), match, regex)) {
 		std::cout << "Match Regex" << std::endl;
 		new_network.address.sin_addr.s_addr = inet_addr(buffer.c_str());
@@ -120,6 +121,28 @@ void Network::send_socket() {
 	}
 }
 
+Network::network Network::get_network() {
+	static int port = PORT_CONNECT;
+	network net;
+	if ((net.sock_fd = socket(AF_INET, SOCK_STREAM, 0)) == -1) {
+		perror("socket");
+	}
+	fcntl(net.sock_fd, F_SETFL, fcntl(net.sock_fd, F_GETFL, 0) | O_NONBLOCK);
+
+	net.address.sin_family = AF_INET;
+	net.address.sin_port = htons(++port);
+	net.address.sin_addr.s_addr = INADDR_ANY;
+
+	bzero(&(net.address.sin_zero), 8);
+
+	if (bind(net.sock_fd,
+			 reinterpret_cast<struct sockaddr const *>(&net.address),
+			 sizeof(struct sockaddr)) == -1)
+		perror("bind");
+	std::cout << "New network ready ! " << std::endl;
+	return net;
+}
+
 void Network::sendto_socket() {
 //    int sendto(int sockfd, const void *msg, int len, unsigned int flags,
 //               const struct sockaddr *to, int tolen);
@@ -131,8 +154,7 @@ void Network::sendto_socket() {
 	std::string buffer;
 	std::getline(std::cin, buffer);
 	std::string const buff_regex = buffer;
-	dest_addr.sin_family = AF_INET;
-	dest_addr.sin_port = htons(0);
+	dest_addr.sin_port = htons(PORT_LISTEN);
 	if (std::regex_search(buff_regex.begin(), buff_regex.end(), match, regex)) {
 		std::cout << "Match Regex" << std::endl;
 		dest_addr.sin_addr.s_addr = inet_addr(buffer.c_str());
@@ -171,26 +193,4 @@ void Network::recvfrom_socket() {
 		buff[bytes_recv] = '\0';
 		std::cout << buff << std::endl;
 	}
-}
-
-Network::network Network::get_network() {
-	static int port = PORT_CONNECT;
-	network net;
-	if ((net.sock_fd = socket(AF_INET, SOCK_STREAM, 0)) == -1) {
-		perror("socket");
-	}
-	fcntl(net.sock_fd, F_SETFL, fcntl(net.sock_fd, F_GETFL, 0) | O_NONBLOCK);
-
-	net.address.sin_family = AF_INET;
-	net.address.sin_port = htons(++port);
-	net.address.sin_addr.s_addr = INADDR_ANY;
-
-	bzero(&(net.address.sin_zero), 8);
-
-	if (bind(net.sock_fd,
-			 reinterpret_cast<struct sockaddr const *>(&net.address),
-			 sizeof(struct sockaddr)) == -1)
-		perror("bind");
-	std::cout << "New network ready ! " << std::endl;
-	return net;
 }
