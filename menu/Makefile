@@ -23,7 +23,7 @@ EOC=\033[0m
 SRC_DIR = ./src/
 
 SRC_FILE= main.cpp \
-ImguiMenu.cpp
+Core.cpp
 
 SRC = $(addprefix $(SRC_DIR), $(SRC_FILE))
 

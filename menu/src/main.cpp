@@ -1,4 +1,4 @@
-#include "ImguiMenu.hpp"
+#include "Core.hpp"
 #include "IDisplay.hpp"
 #include <dlfcn.h>
 #include <iostream>
@@ -51,7 +51,7 @@ bool game(int argc, char **argv)
 
 int main(int argc, char **argv)
 {
-	ImguiMenu menu;
+	Core menu;
 
 	menu.aState();
 	return (0);

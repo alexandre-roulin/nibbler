@@ -1,16 +1,42 @@
-#include "ImguiMenu.hpp"
+#include "Core.hpp"
 
-ImguiMenu::ImguiMenu(void) :
+Core::Core(void) :
 _win(sf::VideoMode(640, 480), "ImGui + SFML = <3")
 
 {
 	if (!this->_background.loadFromFile("ecran_titre.png"))
-		(throw(ImguiMenu::ImguiMenuConstructorException("Cannot load background")));
+		(throw(Core::CoreConstructorException("Cannot load background")));
 	this->_win.setFramerateLimit(60);
 	ImGui::SFML::Init(this->_win);
 }
 
-void			ImguiMenu::aState(void)
+bool			Core::TitleScreen(void)
+{
+	while (this->_win.isOpen())
+	{
+		sf::Event event;
+		while (this->_win.pollEvent(event))
+		{
+			ImGui::SFML::ProcessEvent(event);
+
+			if (event.type == sf::Event::Closed)
+			{
+				this->_win.close();
+			}
+		}
+
+		ImGui::Image(this->_background);
+
+		ImGui::End();
+
+		this->_win.clear();
+		ImGui::SFML::Render(this->_win);
+		this->_win.display();
+	}
+	return (true);
+}
+
+void			Core::aState(void)
 {
 	while (this->_win.isOpen())
 	{
@@ -59,19 +85,19 @@ void			ImguiMenu::aState(void)
 	}
 }
 
-ImguiMenu::~ImguiMenu(void)
+Core::~Core(void)
 {
 	ImGui::SFML::Shutdown();
 }
 
 
-ImguiMenu::ImguiMenuConstructorException::~ImguiMenuConstructorException(void) throw(){}
-ImguiMenu::ImguiMenuConstructorException::ImguiMenuConstructorException(void) throw() :
-	_error("Error on ImguiMenu constructor") {}
-ImguiMenu::ImguiMenuConstructorException::ImguiMenuConstructorException(std::string s) throw() :
+Core::CoreConstructorException::~CoreConstructorException(void) throw(){}
+Core::CoreConstructorException::CoreConstructorException(void) throw() :
+	_error("Error on Core constructor") {}
+Core::CoreConstructorException::CoreConstructorException(std::string s) throw() :
 	_error(s) { }
-ImguiMenu::ImguiMenuConstructorException::ImguiMenuConstructorException(ImguiMenu::ImguiMenuConstructorException const &src) throw() :
+Core::CoreConstructorException::CoreConstructorException(Core::CoreConstructorException const &src) throw() :
 	_error(src._error)
 	{ this->_error = src._error; }
-const char	*ImguiMenu::ImguiMenuConstructorException::what() const throw()
+const char	*Core::CoreConstructorException::what() const throw()
 	{ return (this->_error.c_str()); }
