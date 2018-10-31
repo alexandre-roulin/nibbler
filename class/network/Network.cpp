@@ -20,8 +20,8 @@ Network::Network() {
 
 	//Flag O_NONBLOCK then accept isnot blocking
 
-//	int flags = fcntl(_sock_fd, F_GETFL, 0);
-//	fcntl(_sock_fd, F_SETFL, flags | O_NONBLOCK);
+	int flags = fcntl(_sock_fd, F_GETFL, 0);
+	fcntl(_sock_fd, F_SETFL, flags | O_NONBLOCK);
 
 	//Create own struct addr
 	struct sockaddr_in my_addr;
