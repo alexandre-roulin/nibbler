@@ -96,12 +96,18 @@ void Network::sendto_socket() {
 		std::cout << "Match Regex" << std::endl;
 		dest_addr.sin_addr.s_addr = inet_addr(buffer.c_str());
 	} else {
-		std::cout << "Match host" << std::endl;
-		he = gethostbyname(buffer.c_str());
-		dest_addr.sin_addr = *((struct in_addr *) he->h_addr);
+		if ((he = gethostbyname(buffer.c_str())) != NULL) {
+			std::cout << "Match host" << std::endl;
+			dest_addr.sin_addr = *((struct in_addr *) he->h_addr);
+		}
+		else {
+			std::cout << "No match" << std::endl;
+			return;
+		}
 	}
 	std::getline(std::cin, buffer);
-	sendto(_sock_fd, buffer.c_str(), buffer.size(), 0, reinterpret_cast<struct sockaddr const *>(&dest_addr), addr_len);
+	int numbytes = sendto(_sock_fd, buffer.c_str(), buffer.size(), 0, reinterpret_cast<struct sockaddr const *>(&dest_addr), addr_len);
+	std::cout << "Send [" << numbytes << "] to " << inet_ntoa(dest_addr.sin_addr) << std::endl;
 //	for (int index = 1; index < address.size(); ++index) {
 //		sendto(_sock_fd, buffer.c_str(), buffer.size(), 0,
 //			   reinterpret_cast<struct sockaddr const *>(&(address[index])),
