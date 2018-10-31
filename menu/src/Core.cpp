@@ -1,7 +1,7 @@
 #include "Core.hpp"
 
 Core::Core(void) :
-_win(sf::VideoMode(640, 480), "ImGui + SFML = <3")
+_win(sf::VideoMode(900, 800), "ImGui + SFML = <3")
 
 {
 	if (!this->_background.loadFromFile("ecran_titre.png"))
@@ -10,28 +10,27 @@ _win(sf::VideoMode(640, 480), "ImGui + SFML = <3")
 	ImGui::SFML::Init(this->_win);
 }
 
-bool			Core::TitleScreen(void)
+bool			Core::titleScreen(void)
 {
-	while (this->_win.isOpen())
+	sf::Event	event;
+	bool		titleScreen = true;
+
+	while (this->_win.isOpen() && titleScreen)
 	{
-		sf::Event event;
 		while (this->_win.pollEvent(event))
 		{
 			ImGui::SFML::ProcessEvent(event);
 
 			if (event.type == sf::Event::Closed)
-			{
 				this->_win.close();
-			}
+			else if (event.type == sf::Event::KeyPressed)
+				titleScreen = false;
 		}
-
+		ImGui::SFML::Update(this->_win, this->_deltaClock.restart());
+		ImGui::Begin("My First Tool", NULL, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoMove);
 		ImGui::Image(this->_background);
-
 		ImGui::End();
-
-		this->_win.clear();
-		ImGui::SFML::Render(this->_win);
-		this->_win.display();
+		this->_render();
 	}
 	return (true);
 }
@@ -78,11 +77,15 @@ void			Core::aState(void)
 			ImGui::Text("%04d: Some text", n);
 		ImGui::EndChild();
 		ImGui::End();
-
-		this->_win.clear();
-		ImGui::SFML::Render(this->_win);
-		this->_win.display();
+		this->_render();
 	}
+}
+
+void				Core::_render(void)
+{
+	this->_win.clear();
+	ImGui::SFML::Render(this->_win);
+	this->_win.display();
 }
 
 Core::~Core(void)

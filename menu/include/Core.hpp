@@ -23,7 +23,7 @@ class Core {
 
 	Core(void);
 	~Core(void);
-	bool		TitleScreen(void);
+	bool		titleScreen(void);
 	void		aState(void);
 
 private:
@@ -31,6 +31,8 @@ private:
 	bool					_my_tool_active;
 	sf::Texture				_background;
 	sf::Clock				_deltaClock;
+
+	void					_render(void);
 
 	Core          &operator=(Core const &rhs);
 	Core(Core const &src);
