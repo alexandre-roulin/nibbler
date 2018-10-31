@@ -55,7 +55,7 @@ void init(KNU::World &world) {
 
 void display(KNU::World &world) {
 	for (const auto &entity : world.getEntityManager()
-	.getEntitiesByGroup(GROUP_SNAKE)) {
+			.getEntitiesByGroup(GROUP_SNAKE)) {
 		auto positionComponent = entity.getComponent<PositionComponent>();
 		log_info("ID [%d] Position [y:%d|x:%d]", entity.getId(),
 				 positionComponent.y, positionComponent.x);
@@ -63,15 +63,21 @@ void display(KNU::World &world) {
 }
 
 
-
-int main(int ac, char**av) {
+int main(int ac, char **av) {
 	Network net;
-
+	std::string buffer;
 	for (;;) {
-		std::cout << "recvfrom_socket"<< std::endl;
-		net.recvfrom_socket();
-		std::cout << "sendto_socket"<< std::endl;
-		net.sendto_socket();
+		std::getline(std::cin, buffer);
+		if (buffer == "sendto")
+			net.sendto_socket();
+		if (buffer == "connect")
+			net.connect_socket();
+		if (buffer == "recvfrom")
+			net.recvfrom_socket();
+		if (buffer == "accept")
+			net.accept_socket();
+		if (buffer == "listen")
+			net.listen_socket();
 	}
 	return 1;
 	char path[] = "/tmp/log.out";

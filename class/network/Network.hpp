@@ -25,6 +25,7 @@ public:
 	std::vector<struct sockaddr_in> address;
 	void listen_socket();
 	void accept_socket();
+	void connect_socket();
 	void recvfrom_socket();
 	void sendto_socket();
 };
