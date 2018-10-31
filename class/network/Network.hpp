@@ -26,7 +26,8 @@ class Network {
 	network my_network;
 
 	socklen_t addr_len;
-	std::vector<int> fds;
+	std::vector<int> read_fds;
+	std::vector<int> write_fds;
 public:
 	Network();
 

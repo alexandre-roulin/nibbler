@@ -74,6 +74,7 @@ void Network::connect_socket() {
 	if (connect(sock, reinterpret_cast<struct sockaddr *>(&dest),
 				addr_len) != -1) {
 		std::cout << "Connect Good !" << std::endl;
+		write_fds.push_back(sock);
 	} else {
 		std::cout << strerror(errno) << " " << inet_ntoa(dest.sin_addr)
 				  << std::endl;
@@ -92,7 +93,7 @@ void Network::accept_socket() {
 		std::cout << strerror(errno) << " " << inet_ntoa(new_element.sin_addr)
 				  << std::endl;
 	} else {
-		fds.push_back(fildes);
+		read_fds.push_back(fildes);
 		std::cout << "Accept successfully : "
 				  << inet_ntoa(new_element.sin_addr) << std::endl;
 	}
@@ -102,24 +103,24 @@ void Network::accept_socket() {
 void Network::send_all_socket() {
 	std::string s;
 	std::getline(std::cin, s);
-	for (int index = 0; index < fds.size(); ++index) {
-		send(fds[index], s.c_str(), s.size(), 0);
+	for (int index = 0; index < read_fds.size(); ++index) {
+		send(read_fds[index], s.c_str(), s.size(), 0);
 	}
 }
 
 void Network::recv_socket() {
 	char buff[MAX_BUFF_LEN];
-	int numbytes = recv(my_network.sock_fd, buff, MAX_BUFF_LEN, 0);
-	if (numbytes == -1) {
-		std::cout << "Nothing recv from " << my_network.sock_fd << std::endl;
-	} else {
-		std::cout << "recv from " << my_network.sock_fd << " : " << buff
-				  << std::endl;
+	for (int index = 0; index < read_fds.size(); ++index) {
+		int read = recv(my_network.sock_fd, buff, MAX_BUFF_LEN, 0);
+		if (read != -1) {
+			buff[read] = '\0';
+			std::cout << buff << std::endl;
+		}
 	}
 }
 
 void Network::send_socket() {
-	for (int i = 0; i < fds.size(); ++i) {
+	for (int i = 0; i < read_fds.size(); ++i) {
 	}
 }
 
