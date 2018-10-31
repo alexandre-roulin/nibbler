@@ -31,4 +31,6 @@ public:
 	void recvfrom_socket();
 	void sendto_socket();
 	void send_all_socket();
+	void recv_socket();
+	void send_socket();
 };

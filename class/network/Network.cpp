@@ -159,8 +159,23 @@ void Network::sendto_socket() {
 
 void Network::send_all_socket() {
 	std::string s;
-	for (int index  = 0; index  < fds.size(); ++index) {
+	for (int index = 0; index < fds.size(); ++index) {
 		std::getline(std::cin, s);
 		send(fds[index], s.c_str(), s.size(), 0);
+	}
+}
+
+void Network::recv_socket() {
+	char buff[MAX_BUFF_LEN];
+	int numbytes = recv(_sock_fd, buff, MAX_BUFF_LEN, 0);
+	if (numbytes == -1) {
+		std::cout << "Nothing recv from " << _sock_fd << std::endl;
+	} else {
+		std::cout << "recv from " << _sock_fd << " : " << buff << std::endl;
+	}
+}
+
+void Network::send_socket() {
+	for (int i = 0; i < fds.size(); ++i) {
 	}
 }

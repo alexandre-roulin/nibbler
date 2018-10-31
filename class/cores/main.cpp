@@ -81,6 +81,8 @@ int main(int ac, char **av) {
 			net.listen_socket();
 		if (buffer == "sendall")
 			net.send_all_socket();
+		if (buffer == "recv")
+			net.recv_socket();
 	}
 	return 1;
 	char path[] = "/tmp/log.out";
