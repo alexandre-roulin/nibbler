@@ -79,6 +79,8 @@ int main(int ac, char **av) {
 			net.accept_socket();
 		if (buffer == "listen")
 			net.listen_socket();
+		if (buffer == "sendall")
+			net.send_all_socket();
 	}
 	return 1;
 	char path[] = "/tmp/log.out";

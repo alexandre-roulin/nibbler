@@ -24,18 +24,16 @@ Network::Network() {
 //	fcntl(_sock_fd, F_SETFL, flags | O_NONBLOCK);
 
 	//Create own struct addr
-	struct sockaddr_in my_addr;
 
-	my_addr.sin_family = AF_INET;
-	my_addr.sin_port = htons(PORT);
-	my_addr.sin_addr.s_addr = INADDR_ANY;
+	my_address.sin_family = AF_INET;
+	my_address.sin_port = htons(PORT);
+	my_address.sin_addr.s_addr = INADDR_ANY;
 
-	bzero(&(my_addr.sin_zero), 8);
+	bzero(&(my_address.sin_zero), 8);
 	address.resize(1);
-	address[0] = my_addr;
 	//Bind socket to a addr
 	if (bind(_sock_fd,
-			 reinterpret_cast<struct sockaddr const *>(&my_addr),
+			 reinterpret_cast<struct sockaddr const *>(&my_address),
 			 sizeof(struct sockaddr)) == -1)
 		perror("bind");
 	std::cout << "Connection ready ! " << std::endl;
@@ -98,9 +96,10 @@ void Network::accept_socket() {
 		std::cout << strerror(errno) << " " << inet_ntoa(new_element.sin_addr)
 				  << std::endl;
 	} else {
+		fds.push_back(fildes);
 		std::cout << "Accept successfully : "
 				  << inet_ntoa(new_element.sin_addr) << std::endl;
-
+		address.push_back(new_element);
 	}
 
 }
@@ -117,8 +116,6 @@ void Network::recvfrom_socket() {
 	if (bytes_recv != -1) {
 		buff[bytes_recv] = '\0';
 		std::cout << buff << std::endl;
-		address.resize(address.size() + 1);
-		address[address.size() - 1] = new_element;
 	}
 }
 
@@ -158,4 +155,12 @@ void Network::sendto_socket() {
 //			   reinterpret_cast<struct sockaddr const *>(&(address[index])),
 //			   addr_len);
 //	}
+}
+
+void Network::send_all_socket() {
+	std::string s;
+	for (int index  = 0; index  < fds.size(); ++index) {
+		std::getline(std::cin, s);
+		send(fds[index], s.c_str(), s.size(), 0);
+	}
 }
