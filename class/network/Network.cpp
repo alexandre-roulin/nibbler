@@ -48,6 +48,8 @@ void Network::listen_socket() {
 	//listen to specify socket
 	if (listen(_sock_fd, BACK_LOG) == -1)
 		perror("listen");
+	else
+		std::cout << "Listen successfully" << std::endl;
 }
 
 void Network::connect_socket() {
@@ -73,6 +75,7 @@ void Network::connect_socket() {
 			return;
 		}
 	}
+	std::cout << "Trying to connect" << inet_ntoa(dest_addr.sin_addr) << std::endl;
 	if (connect(_sock_fd, reinterpret_cast<struct sockaddr *>(&dest_addr),
 				addr_len) != -1) {
 		std::cout << "Connect Good !" << std::endl;
@@ -83,13 +86,12 @@ void Network::accept_socket() {
 	struct sockaddr_in new_element;
 	socklen_t len;
 	int fildes;
-	for (; (fildes = accept(_sock_fd,
-							reinterpret_cast<struct sockaddr *>(&new_element),
-							&len)) != -1;) {
-		std::cout << fildes;
-		std::cout << new_element.sin_addr.s_addr;
+	fildes = accept(_sock_fd,
+					reinterpret_cast<struct sockaddr *>(&new_element),
+					&len);
+	std::cout << fildes;
+	std::cout << inet_ntoa(new_element.sin_addr);
 
-	}
 }
 
 void Network::recvfrom_socket() {
