@@ -74,8 +74,8 @@ void Network::connect_socket() {
 	if (connect(sock, reinterpret_cast<struct sockaddr *>(&dest),
 				addr_len) != -1) {
 		std::cout << "Connect Good !" << std::endl;
-		write_fds.push_back(sock);
 	} else {
+		write_fds.push_back(sock);
 		std::cout << strerror(errno) << " " << inet_ntoa(dest.sin_addr)
 				  << std::endl;
 
