@@ -67,9 +67,10 @@ void display(KNU::World &world) {
 int main(int ac, char**av) {
 	Network net;
 
-	if (ac == 2) {
+	for (;;) {
+		std::cout << "recvfrom_socket"<< std::endl;
 		net.recvfrom_socket();
-	} else {
+		std::cout << "sendto_socket"<< std::endl;
 		net.sendto_socket();
 	}
 	return 1;

@@ -66,21 +66,24 @@ void Network::recvfrom_socket() {
 	size_t bytes_recv;
 // int recvfrom(int sockfd, void *buf, int len, unsigned int flags
 //                 struct sockaddr *from, int *fromlen);
-	for (; (bytes_recv = recvfrom(_sock_fd, buff, MAX_BUFF_LEN, 0,
-								  reinterpret_cast<struct sockaddr *>(&new_element),
-								  &addr_len)) != -1;) {
+	bytes_recv = recvfrom(_sock_fd, buff, MAX_BUFF_LEN, 0,
+						  reinterpret_cast<struct sockaddr *>(&new_element),
+						  &addr_len);
+	if (bytes_recv != -1) {
 		buff[bytes_recv] = '\0';
 		std::cout << buff << std::endl;
-
+		address.resize(address.size() + 1);
+		address[address.size() - 1] = new_element;
 	}
 }
 
 void Network::sendto_socket() {
 //    int sendto(int sockfd, const void *msg, int len, unsigned int flags,
 //               const struct sockaddr *to, int tolen);
-	char string[] = "Coucou, ceci est un test";
+	std::string buffer;
+	std::getline(std::cin, buffer);
 	for (int index = 1; index < address.size(); ++index) {
-		sendto(_sock_fd, string, strlen(string), 0,
+		sendto(_sock_fd, buffer.c_str(), buffer.size(), 0,
 			   reinterpret_cast<struct sockaddr const *>(&(address[index])),
 			   addr_len);
 	}

@@ -4,7 +4,7 @@
 #include <strings.h>
 
 #define PORT 4242
-#define DEST_IP   "10.11.7.20"
+#define DEST_IP   "127.0.0.1"
 
 int main(int a, char **v) {
 	printf("yo\n");

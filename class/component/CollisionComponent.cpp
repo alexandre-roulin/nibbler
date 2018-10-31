@@ -16,6 +16,6 @@ Json::Value CollisionComponent::serializeComponent() {
 }
 
 CollisionComponent::CollisionComponent(Json::Value json) {
-//	assert(json[IS_WALL].isBool());
+	assert(json[IS_WALL].isBool());
 	isWall = json.get(IS_WALL, true).asBool();
 }

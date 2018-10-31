@@ -15,6 +15,6 @@ Json::Value JoystickComponent::serializeComponent() {
 }
 
 JoystickComponent::JoystickComponent(Json::Value json) {
-//	assert(json[JOYSTICK].isInt());
+	assert(json[JOYSTICK].isInt());
 	joystick = static_cast<eJoystick >(json.get(JOYSTICK, NONE).asInt());
 }
