@@ -21,7 +21,8 @@ Network::Network() {
 
 	//Flag O_NONBLOCK then accept isnot blocking
 
-	fcntl(my_network.sock_fd, F_SETFL,  fcntl(my_network.sock_fd, F_GETFL, 0) | O_NONBLOCK);
+	fcntl(my_network.sock_fd, F_SETFL,
+		  fcntl(my_network.sock_fd, F_GETFL, 0) | O_NONBLOCK);
 
 	//Create own struct addr
 
@@ -47,34 +48,34 @@ Network::Network() {
 void Network::connect_socket() {
 	std::regex regex(R"(^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$)");
 	std::smatch match;
-	network new_network = get_network();
 	struct hostent *he;
+	struct sockaddr_in dest;
+	int sock = socket(AF_INET, SOCK_STREAM, 0);
+
+	fcntl(sock, F_SETFL, fcntl(sock, F_GETFL, 0) | O_NONBLOCK);
 
 	std::string buffer;
 	std::getline(std::cin, buffer);
 	std::string const buff_regex = buffer;
-	new_network.address.sin_family = AF_INET;
-	new_network.address.sin_port = htons(PORT_LISTEN);
+
+	dest.sin_family = AF_INET;
+	dest.sin_port = htons(PORT_LISTEN);
+
 	if (std::regex_search(buff_regex.begin(), buff_regex.end(), match, regex)) {
-		std::cout << "Match Regex" << std::endl;
-		new_network.address.sin_addr.s_addr = inet_addr(buffer.c_str());
-	} else {
-		if ((he = gethostbyname(buffer.c_str())) != NULL) {
-			std::cout << "Match host" << std::endl;
-			new_network.address.sin_addr = *((struct in_addr *) he->h_addr);
-		} else {
-			std::cout << "No match" << std::endl;
-			return;
-		}
-	}
-	bzero(&(new_network.address.sin_zero), 8);
-	std::cout << "Trying to connect " << inet_ntoa(new_network.address.sin_addr)
+		dest.sin_addr.s_addr = inet_addr(buffer.c_str());
+	} else if ((he = gethostbyname(buffer.c_str())) != NULL)
+		dest.sin_addr = *((struct in_addr *) he->h_addr);
+
+	bzero(&(dest.sin_zero), 8);
+
+	std::cout << "Trying to connect " << inet_ntoa(dest.sin_addr)
 			  << std::endl;
-	if (connect(new_network.sock_fd, reinterpret_cast<struct sockaddr *>(&new_network.address),
+
+	if (connect(sock, reinterpret_cast<struct sockaddr *>(&dest),
 				addr_len) != -1) {
 		std::cout << "Connect Good !" << std::endl;
 	} else {
-		std::cout << strerror(errno) << " " << inet_ntoa(new_network.address.sin_addr)
+		std::cout << strerror(errno) << " " << inet_ntoa(dest.sin_addr)
 				  << std::endl;
 
 	}
@@ -112,7 +113,8 @@ void Network::recv_socket() {
 	if (numbytes == -1) {
 		std::cout << "Nothing recv from " << my_network.sock_fd << std::endl;
 	} else {
-		std::cout << "recv from " << my_network.sock_fd << " : " << buff << std::endl;
+		std::cout << "recv from " << my_network.sock_fd << " : " << buff
+				  << std::endl;
 	}
 }
 
@@ -122,7 +124,6 @@ void Network::send_socket() {
 }
 
 Network::network Network::get_network() {
-	static int port = PORT_CONNECT;
 	network net;
 	if ((net.sock_fd = socket(AF_INET, SOCK_STREAM, 0)) == -1) {
 		perror("socket");
@@ -130,8 +131,8 @@ Network::network Network::get_network() {
 	fcntl(net.sock_fd, F_SETFL, fcntl(net.sock_fd, F_GETFL, 0) | O_NONBLOCK);
 
 	net.address.sin_family = AF_INET;
-	net.address.sin_port = htons(++port);
-	net.address.sin_addr.s_addr = INADDR_ANY;
+	net.address.sin_port = 0;
+	net.address.sin_addr.s_addr = 0;
 
 	bzero(&(net.address.sin_zero), 8);
 
