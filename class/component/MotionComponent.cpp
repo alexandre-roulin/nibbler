@@ -3,6 +3,7 @@
 #include "MotionComponent.hpp"
 #include <KNU/utils/Signature.hpp>
 #include <KNU/component/Component.hpp>
+#include <cassert>
 
 std::string const MotionComponent::NAME_COMPONENT = "motionComponent";
 std::string const MotionComponent::SPEED = "speed";
@@ -35,8 +36,8 @@ Json::Value MotionComponent::serializeComponent() {
 }
 
 MotionComponent::MotionComponent(Json::Value json) {
-//	assert(json[SPEED].isInt());
-//	assert(json[DIRECTION].isInt());
+	assert(json[SPEED].isInt());
+	assert(json[DIRECTION].isInt());
 	speed = json.get(SPEED, 1).asInt();
 	direction = static_cast<eDirection>(json.get(DIRECTION, NORTH).asInt());
 }

@@ -4,7 +4,7 @@
 #include <strings.h>
 
 #define PORT 4242
-#define DEST_IP   "10.11.7.20"
+#define DEST_IP   "127.0.0.1"
 
 int main(int a, char **v) {
 	printf("yo\n");
@@ -15,12 +15,12 @@ int main(int a, char **v) {
 
 	my_addr.sin_family = AF_INET;
 	my_addr.sin_port = PORT;
-	my_addr.sin_addr.s_addr = DEST_IP;
+	my_addr.sin_addr.s_addr = 0;
 	printf("my_addr\n");
 
 	dest_addr.sin_family = AF_INET;
 	dest_addr.sin_port = htons(PORT);
-	dest_addr.sin_addr.s_addr = INADDR_ANY;
+	dest_addr.sin_addr.s_addr = inet_ntoa();
 	bzero(&(dest_addr.sin_zero), 8);
 	printf("dest\n");
 

@@ -1,4 +1,5 @@
 #include "FollowComponent.hpp"
+#include <cassert>
 
 
 std::string const FollowComponent::NAME_COMPONENT = "followComponent";
@@ -31,9 +32,9 @@ Json::Value FollowComponent::serializeComponent() {
 }
 
 FollowComponent::FollowComponent(Json::Value json) {
-//	assert(json[SKIP].isBool());
-//	assert(json[ID_FOLLOWED].isInt());
-//	assert(json[POSITION_COMPONENT].isObject());
+	assert(json[SKIP].isBool());
+	assert(json[ID_FOLLOWED].isInt());
+	assert(json[POSITION_COMPONENT].isObject());
 
 	skip = json.get(SKIP, false).asBool();
 	idFollowed = json.get(ID_FOLLOWED, -1).asInt();

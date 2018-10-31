@@ -1,3 +1,4 @@
+#include <cassert>
 
 #include <logger.h>
 #include <iostream>
@@ -32,8 +33,8 @@ Json::Value PositionComponent::serializeComponent() {
 }
 
 PositionComponent::PositionComponent(Json::Value json) {
-//	assert(json[POS_Y].isInt());
-//	assert(json[POS_X].isInt());
+	assert(json[POS_Y].isInt());
+	assert(json[POS_X].isInt());
 	x = json.get(POS_X, 0).asInt();
 	y = json.get(POS_Y, 0).asInt();
 }
