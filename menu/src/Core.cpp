@@ -1,6 +1,8 @@
 #include "Core.hpp"
 #include "WidgetExit.hpp"
 #include "WidgetSnake.hpp"
+#include <vector>
+#include <iostream>
 
 Core::Core(void) :
 _winSize(sf::Vector2<unsigned int>(900, 800)),
@@ -79,7 +81,15 @@ void			callbackExit(void *ptr)
 void			Core::aState(void)
 {
 	WidgetExit wexit(&callbackExit, this);
-	WidgetSnake snake;
+	std::vector< WidgetSnake * > snake;
+	snake.push_back(new WidgetSnake("Jack O'Lantern"));
+	snake.push_back(new WidgetSnake("Eden"));
+	snake.push_back(new WidgetSnake("Jacky"));
+	snake.push_back(new WidgetSnake("Emerald"));
+	snake.push_back(new WidgetSnake("Broutille"));
+	snake.push_back(new WidgetSnake("Veggie-vie"));
+	snake.push_back(new WidgetSnake("mprevot"));
+	snake.push_back(new WidgetSnake("Dota c nul"));
 
 	while (this->_win.isOpen())
 	{
@@ -96,10 +106,13 @@ void			Core::aState(void)
 		ImGui::SetNextWindowSize(this->positionByPercent(sf::Vector2<unsigned int>(100, 50)));
 		this->_chat.render();
 
-
-		ImGui::SetNextWindowPos(this->positionByPercent(sf::Vector2<unsigned int>(0, 5)));
-		ImGui::SetNextWindowSize(this->positionByPercent(sf::Vector2<unsigned int>(100 / (MAX_SNAKE / 2), 45 / 2)));
-		snake.render();
+		for (unsigned int i = 0; i < MAX_SNAKE; i++)
+		{
+			sf::Vector2<unsigned int> ab = sf::Vector2<unsigned int>((100 / (MAX_SNAKE / 2)) * (i % 4), 25 * ((i && i <= 4)));
+			ImGui::SetNextWindowPos(this->positionByPercent(ab));
+			ImGui::SetNextWindowSize(this->positionByPercent(sf::Vector2<unsigned int>(100 / (MAX_SNAKE / 2), 50 / 2)));
+			snake[i]->render();
+		}
 
 
 		static double last_time = -1.0;
@@ -115,6 +128,10 @@ void			Core::aState(void)
 		wexit.render();
 
 		this->_render();
+	}
+	for (unsigned int i = 0; i < MAX_SNAKE; i++)
+	{
+		delete snake[i];
 	}
 }
 

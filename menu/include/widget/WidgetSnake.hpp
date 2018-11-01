@@ -7,8 +7,7 @@
 
 class WidgetSnake : public AWidget {
 public:
-	WidgetSnake(void);
-	WidgetSnake(void (*callback)(void *), void *ptr);
+	WidgetSnake(std::string const &);
 	~WidgetSnake(void);
 
 
@@ -23,4 +22,5 @@ private:
 
 	WidgetSnake &operator=(const WidgetSnake&);
 	WidgetSnake(const WidgetSnake&);
+	WidgetSnake(void);
 };

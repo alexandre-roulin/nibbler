@@ -1,7 +1,9 @@
 #include "WidgetSnake.hpp"
 #include <iostream>
-WidgetSnake::WidgetSnake(void) :
+WidgetSnake::WidgetSnake(std::string const &str) :
 AWidget(),
+_name(str),
+_indexColor(0),
 _isReady(false)
 {
 	this->_color.emplace_back("snake_1");
@@ -12,9 +14,6 @@ _isReady(false)
 	this->_texture.emplace_back();
 	if (!(this->_texture.back().loadFromFile("snake_2.png")))
 		throw(AWidget::Constructor(std::string("WidgetSnake: Cant load [") + "snake_2.png" + "]"));
-
-
-	this->_name = "Jack O'Lantern";
 }
 
 WidgetSnake::~WidgetSnake(void)
@@ -24,7 +23,7 @@ void			WidgetSnake::render(void)
 {
 	unsigned int		sizeTexture;
 
-	ImGui::Begin("Snake", NULL, 0);
+	ImGui::Begin(this->_name.c_str(), NULL, 0);
 
 	if (ImGui::GetWindowSize().x < ImGui::GetWindowSize().y - ImGui::GetFrameHeightWithSpacing() * 3)
 		sizeTexture = ImGui::GetWindowSize().x * 0.8;
