@@ -19,6 +19,7 @@ private:
 	std::vector<sf::Texture>					_texture;
 	std::vector<std::string>					_color;
 	unsigned int								_indexColor;
+	bool										_isReady;
 
 	WidgetSnake &operator=(const WidgetSnake&);
 	WidgetSnake(const WidgetSnake&);

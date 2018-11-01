@@ -1,7 +1,8 @@
 #include "WidgetSnake.hpp"
 #include <iostream>
 WidgetSnake::WidgetSnake(void) :
-AWidget()
+AWidget(),
+_isReady(false)
 {
 	this->_color.emplace_back("snake_1");
 	this->_texture.emplace_back();
@@ -40,9 +41,29 @@ void			WidgetSnake::render(void)
 	ImGui::SetCursorPosX((ImGui::GetWindowSize().x - sizeTexture) / 2);
 	ImGui::Image(this->_texture[this->_indexColor], sf::Vector2f(sizeTexture, sizeTexture));
 
-	ImGui::PushItemWidth(sizeTexture);
-	ImGui::SetCursorPosX((ImGui::GetWindowSize().x - sizeTexture) / 2);
 
+	ImGui::SetCursorPosX((ImGui::GetWindowSize().x - sizeTexture) / 2);
+	ImGui::PushID(0);
+	if (!this->_isReady)
+	{
+		ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor::HSV(0.0f, 0.7f, 0.7f));
+		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4)ImColor::HSV(0.0f, 0.8f, 0.8f));
+		ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)ImColor::HSV(0.0f, 0.9f, 0.9f));
+		if (ImGui::Button("Ready ?", sf::Vector2f(sizeTexture, ImGui::GetFrameHeight())))
+			this->_isReady = true;
+	}
+	else
+	{
+		ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor::HSV(0.33f, 0.7f, 0.7f));
+		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4)ImColor::HSV(0.33f, 0.8f, 0.8f));
+		ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)ImColor::HSV(0.33f, 0.9f, 0.9f));
+		if (ImGui::Button("Ready !", sf::Vector2f(sizeTexture, ImGui::GetFrameHeight())))
+			this->_isReady = false;
+	}
+	ImGui::PopStyleColor(3);
+	ImGui::PopID();
+
+	ImGui::SetCursorPosX((ImGui::GetWindowSize().x - sizeTexture) / 2);
 	if (ImGui::BeginCombo("", this->_color[this->_indexColor].c_str(), ImGuiComboFlags_NoArrowButton))
 	{
 		unsigned int i = 0;

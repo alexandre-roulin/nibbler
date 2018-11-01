@@ -97,7 +97,6 @@ void			Core::aState(void)
 		this->_chat.render();
 
 
-
 		ImGui::SetNextWindowPos(this->positionByPercent(sf::Vector2<unsigned int>(0, 5)));
 		ImGui::SetNextWindowSize(this->positionByPercent(sf::Vector2<unsigned int>(100 / (MAX_SNAKE / 2), 45 / 2)));
 		snake.render();
