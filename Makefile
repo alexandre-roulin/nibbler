@@ -109,7 +109,8 @@ LIBS		= \
 			./jsoncpp/src/lib_json/libjsoncpp.a		\
 
 LDFLAGS		= \
-			-L ./jsoncpp/src/lib_json/ -L ~/.brew/lib/
+			-L ./jsoncpp/src/lib_json/				\
+			-L ~/.brew/lib/							\
 
 LDLIBS		= \
 			-ljsoncpp								\

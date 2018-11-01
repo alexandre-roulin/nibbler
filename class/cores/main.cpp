@@ -72,18 +72,21 @@ void f(boost::asio::io_service &io){
 
 }
 int main(int ac, char **av) {
+	char path[] = "/tmp/log.out";
+	logger_init(path);
+
 	std::string buffer;
 	boost::asio::io_service io_server;
 	boost::asio::io_service io_client;
-
+	ServerTCP *serverTCP;
 	try {
 		for (;;) {
 			std::cout << "$> ";
 			std::getline(std::cin, buffer);
 			if (buffer == "server") {
-				new ServerTCP(io_server);
+				serverTCP = new ServerTCP(io_server);
 				boost::thread t(boost::bind(&boost::asio::io_service::run, &io_server));
-				t.join();
+				t.detach();
 			}
 			if (buffer == "client") {
 				std::cout << "Hostname : ";
@@ -91,6 +94,9 @@ int main(int ac, char **av) {
 				new ClientTCP(io_client, buffer);
 				boost::thread t(boost::bind(&boost::asio::io_service::run, &io_client));
 				t.join();
+			}
+			if (buffer == "info") {
+				std::cout << serverTCP->size_pointers() << std::endl;
 			}
 
 		}
@@ -115,8 +121,7 @@ int main(int ac, char **av) {
 //			net.recv_socket();
 //	}
 //	return 1;
-	char path[] = "/tmp/log.out";
-	logger_init(path);
+
 
 	KNU::World world;
 

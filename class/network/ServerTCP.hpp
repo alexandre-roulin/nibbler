@@ -8,36 +8,20 @@
 #include <boost/enable_shared_from_this.hpp>
 #include <boost/asio.hpp>
 #include <boost/asio/ip/tcp.hpp>
+#include <boost/thread/thread.hpp>
 
 #define PORT "4242"
 using boost::asio::ip::tcp;
 
-class TCPConnection
-		: public boost::enable_shared_from_this<TCPConnection> {
+class TCPConnection : public boost::enable_shared_from_this<TCPConnection> {
 public:
 	typedef boost::shared_ptr<TCPConnection> pointer;
 
-	static pointer create(boost::asio::io_service &io_service) {
-		return pointer(new TCPConnection(io_service));
-	}
+	static pointer create(boost::asio::io_service &io_service);
 
-	tcp::socket &socket() {
-		return socket_;
-	}
+	tcp::socket &getSocket();
 
-	void start() {
-		for (;;) {
-			std::string message_;
-			std::cout << "Message to deliver : ";
-			std::getline(std::cin, message_);
-			boost::asio::async_write(socket_, boost::asio::buffer(message_),
-									 boost::bind(&TCPConnection::handle_write,
-												 shared_from_this(),
-												 boost::asio::placeholders::error,
-												 boost::asio::placeholders::bytes_transferred));
-		}
-
-	}
+	void start();
 
 private:
 	TCPConnection(boost::asio::io_service &io_service)
@@ -55,30 +39,12 @@ private:
 
 class ServerTCP {
 public:
-	ServerTCP(boost::asio::io_service &io_service) :
-			acceptor_(io_service, tcp::endpoint(tcp::v4(), 4242)) {
-		start_accept();
-	}
+	ServerTCP(boost::asio::io_service &io_service);
 
+	int size_pointers();
 private:
-	void start_accept() {
-		TCPConnection::pointer new_connection =
-				TCPConnection::create(acceptor_.get_io_service());
-
-		acceptor_.async_accept(new_connection->socket(),
-							   boost::bind(&ServerTCP::handle_accept, this,
-										   new_connection,
-										   boost::asio::placeholders::error));
-	}
-
-	void handle_accept(TCPConnection::pointer new_connection,
-					   const boost::system::error_code &error) {
-		if (!error) {
-			new_connection->start();
-		}
-
-		start_accept();
-	}
+	std::vector<TCPConnection::pointer> pointers;
+	void start_accept();
 
 	tcp::acceptor acceptor_;
 };
