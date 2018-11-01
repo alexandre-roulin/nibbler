@@ -1,7 +1,7 @@
 #include "WidgetChat.hpp"
 
 WidgetChat::WidgetChat(void) :
-_active(true)
+AWidget()
 {}
 
 WidgetChat::~WidgetChat(void)

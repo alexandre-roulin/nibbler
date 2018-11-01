@@ -27,7 +27,8 @@ Core.cpp \
 imgui_demo.cpp \
 widget/WidgetChat.cpp \
 widget/WidgetExit.cpp \
-widget/WidgetSnake.cpp
+widget/WidgetSnake.cpp \
+widget/AWidget.cpp
 
 SRC = $(addprefix $(SRC_DIR), $(SRC_FILE))
 

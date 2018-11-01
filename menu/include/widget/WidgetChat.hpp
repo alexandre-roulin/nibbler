@@ -1,7 +1,7 @@
 #pragma once
-#include "IWidget.hpp"
+#include "AWidget.hpp"
 
-class WidgetChat : public IWidget {
+class WidgetChat : public AWidget {
 public:
 	WidgetChat(void);
 	~WidgetChat(void);
@@ -13,7 +13,6 @@ public:
 	void	clear(void);
 
 private:
-	bool					_active;
 	ImGuiTextBuffer			_bufferChat;
 	bool					_scrollChat;
 	char					_bufferMessage[128];

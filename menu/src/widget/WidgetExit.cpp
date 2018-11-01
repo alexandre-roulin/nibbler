@@ -1,12 +1,12 @@
 #include "WidgetExit.hpp"
 
 WidgetExit::WidgetExit(void) :
-_active(true),
+AWidget(),
 _callback(nullptr),
 _ptr(nullptr)
 {}
 WidgetExit::WidgetExit(void (*callback)(void *), void *ptr = nullptr) :
-_active(true),
+AWidget(),
 _callback(callback),
 _ptr(ptr)
 {}

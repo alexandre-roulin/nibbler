@@ -1,7 +1,7 @@
 #include "WidgetSnake.hpp"
 
 WidgetSnake::WidgetSnake(void) :
-_active(true)
+AWidget()
 {
 	this->_color.emplace_back("Normal");
 	this->_texture.emplace_back();

@@ -1,7 +1,7 @@
 #pragma once
-#include "IWidget.hpp"
+#include "AWidget.hpp"
 
-class WidgetExit : public IWidget {
+class WidgetExit : public AWidget {
 public:
 	WidgetExit(void);
 	WidgetExit(void (*callback)(void *), void *ptr);
@@ -11,7 +11,6 @@ public:
 	void	render(void);
 
 private:
-	bool					_active;
 	void					(*_callback)(void *);
 	void					*_ptr;
 
