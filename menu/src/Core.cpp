@@ -1,7 +1,8 @@
 #include "Core.hpp"
 
 Core::Core(void) :
-_win(sf::VideoMode(900, 800), "ImGui + SFML = <3"),
+_winSize(sf::Vector2<unsigned int>(900, 800)),
+_win(sf::VideoMode(this->_winSize.x, this->_winSize.y), "Project Sanke"),
 _io(this->_createContext())
 {
 	if (!this->_background.loadFromFile("ecran_titre.png"))
@@ -15,6 +16,11 @@ ImGuiIO			&Core::_createContext(void)
 	ImGui::SFML::Init(this->_win);
 	ImGui::CreateContext();
 	return (ImGui::GetIO());
+}
+
+Core::~Core(void)
+{
+	ImGui::SFML::Shutdown();
 }
 
 bool			Core::titleScreen(void)
@@ -62,6 +68,8 @@ void			Core::demo(void)
 	}
 }
 
+
+
 void			Core::aState(void)
 {
 	while (this->_win.isOpen())
@@ -69,13 +77,14 @@ void			Core::aState(void)
 		sf::Event event;
 		while (this->_win.pollEvent(event))
 		{
+			this->_processEvent(event);
 			ImGui::SFML::ProcessEvent(event);
-
-			if (event.type == sf::Event::Closed)
-				this->_win.close();
 		}
 
 		ImGui::SFML::Update(this->_win, this->_deltaClock.restart());
+
+		ImGui::SetNextWindowPos(this->positionByPercent(sf::Vector2<unsigned int>(0, 50)));
+		ImGui::SetNextWindowSize(this->positionByPercent(sf::Vector2<unsigned int>(100, 50)));
 		this->_chat.render();
 		static double last_time = -1.0;
 	    double time = ImGui::GetTime();
@@ -97,9 +106,18 @@ void				Core::_render(void)
 	this->_win.display();
 }
 
-Core::~Core(void)
+sf::Vector2<unsigned int>	Core::positionByPercent(sf::Vector2<unsigned int> const &percent)
 {
-	ImGui::SFML::Shutdown();
+	return (sf::Vector2<unsigned int>(this->_winSize.x * percent.x / 100,
+										this->_winSize.y * percent.y / 100));
+}
+
+void					Core::_processEvent(sf::Event const &event)
+{
+	if (event.type == sf::Event::Resized)
+		this->_winSize = sf::Vector2<unsigned int>(event.size.width, event.size.height);
+	else if (event.type == sf::Event::Closed)
+		this->_win.close();
 }
 
 

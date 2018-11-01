@@ -8,6 +8,7 @@ public:
 
 
 	void	addLog(const char* fmt, ...);
+
 	void	render(void);
 	void	clear(void);
 

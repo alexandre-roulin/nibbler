@@ -26,7 +26,6 @@ void			WidgetChat::clear(void)
 
 void			WidgetChat::render(void)
 {
-	ImGui::SetNextWindowPosCenter();
 	ImGui::Begin("Chat", &this->_active, ImGuiWindowFlags_MenuBar);
 
 	ImGui::TextColored(ImVec4(1,1,0,1), "Chat");
