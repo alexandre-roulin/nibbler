@@ -14,7 +14,7 @@ int main(int ac, char *av[]) {
 		boost::asio::io_service io;
 		tcp::resolver resolver(io);
 
-		tcp::resolver::query query(av[1], "daytime");
+		tcp::resolver::query query(av[1], "4242");
 
 		tcp::resolver::iterator it = resolver.resolve(query);
 
