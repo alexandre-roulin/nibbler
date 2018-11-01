@@ -6,6 +6,8 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/enable_shared_from_this.hpp>
 #include <boost/asio.hpp>
+#include <network/ServerTCP.hpp>
+
 
 using boost::asio::ip::tcp;
 
@@ -24,7 +26,7 @@ public:
 		return pointer(new TCPConnection(io_service));
 	}
 
-	tcp::socket &socket() {
+	tcp::socket &getSocket() {
 		return socket_;
 	}
 
@@ -63,7 +65,7 @@ private:
 		TCPConnection::pointer new_connection =
 				TCPConnection::create(acceptor_.get_io_service());
 
-		acceptor_.async_accept(new_connection->socket(),
+		acceptor_.async_accept(new_connection->getSocket(),
 							   boost::bind(&tcp_server::handle_accept, this,
 										   new_connection,
 										   boost::asio::placeholders::error));
@@ -93,3 +95,4 @@ int main() {
 
 	return 0;
 }
+
