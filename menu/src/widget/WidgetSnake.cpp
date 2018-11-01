@@ -3,14 +3,17 @@
 WidgetSnake::WidgetSnake(void) :
 AWidget()
 {
-	this->_color.emplace_back("Normal");
+	this->_color.emplace_back("snake_1");
 	this->_texture.emplace_back();
-	if (!(this->_texture.back().loadFromFile("ecran_titre.png")))
-		throw(AWidget::Constructor(std::string("WidgetSnake: Cant load [") + "ecran_titre.png" + "]"));
-	this->_color.emplace_back("Normal 2 LOL");
+	if (!(this->_texture.back().loadFromFile("snake_1.png")))
+		throw(AWidget::Constructor(std::string("WidgetSnake: Cant load [") + "snake_1.png" + "]"));
+	this->_color.emplace_back("snake_2");
 	this->_texture.emplace_back();
-	if (!(this->_texture.back().loadFromFile("ecran_titre.png")))
-		throw(AWidget::Constructor(std::string("WidgetSnake: Cant load [") + "ecran_titre.png" + "]"));
+	if (!(this->_texture.back().loadFromFile("snake_2.png")))
+		throw(AWidget::Constructor(std::string("WidgetSnake: Cant load [") + "snake_2.png" + "]"));
+
+
+	this->_name = "Jack O'Lantern";
 }
 
 WidgetSnake::~WidgetSnake(void)
@@ -22,13 +25,20 @@ void			WidgetSnake::render(void)
 
 	ImGui::Begin("Snake", NULL, 0);
 
-	if (ImGui::GetWindowSize().x < ImGui::GetWindowSize().y - ImGui::GetFrameHeightWithSpacing())
+	if (ImGui::GetWindowSize().x < ImGui::GetWindowSize().y - ImGui::GetFrameHeightWithSpacing() * 3)
 		sizeTexture = ImGui::GetWindowSize().x * 0.8;
 	else
-		sizeTexture = ImGui::GetWindowSize().y * 0.8 - ImGui::GetFrameHeightWithSpacing();
+		sizeTexture = ImGui::GetWindowSize().y * 0.8 - ImGui::GetFrameHeightWithSpacing() * 3;
+
+
+
+	ImGui::PushItemWidth(sizeTexture);
+	ImGui::SetCursorPosX(4);
+	ImGui::LabelText(this->_name.c_str(), "Name : ");
+
 
 	ImGui::SetCursorPosX((ImGui::GetWindowSize().x - sizeTexture) / 2);
-	ImGui::Image(this->_texture.back(), sf::Vector2f(sizeTexture, sizeTexture));
+	ImGui::Image(this->_texture[this->_indexColor], sf::Vector2f(sizeTexture, sizeTexture));
 
 	ImGui::PushItemWidth(sizeTexture);
 	ImGui::SetCursorPosX((ImGui::GetWindowSize().x - sizeTexture) / 2);

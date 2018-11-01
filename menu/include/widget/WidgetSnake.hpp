@@ -15,6 +15,7 @@ public:
 	void	render(void);
 
 private:
+	std::string									_name;
 	std::vector<sf::Texture>					_texture;
 	std::vector<std::string>					_color;
 	unsigned int								_indexColor;
