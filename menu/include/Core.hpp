@@ -7,6 +7,8 @@
 #include <SFML/Graphics.hpp>
 #include "WidgetChat.hpp"
 
+# define MAX_SNAKE 8
+
 class Core {
 	public:
 
