@@ -1,6 +1,8 @@
 #include "JoystickEvent.hpp"
 
-JoystickEvent::JoystickEvent(eJoystick input)
-		: joystick(input) {
+
+JoystickEvent::JoystickEvent(eJoystick input, std::string tag_player)
+		: joystick(input),
+		  tag_player(tag_player) {
 
 }

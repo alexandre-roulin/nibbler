@@ -16,6 +16,7 @@ private:
 	bool					_active;
 	ImGuiTextBuffer			_bufferChat;
 	bool					_scrollChat;
+	char					_bufferMessage[128];
 
 	WidgetChat &operator=(const WidgetChat&);
 	WidgetChat(const WidgetChat&);

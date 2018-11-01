@@ -48,10 +48,10 @@ RM = /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/aroulin/nibbler
+CMAKE_SOURCE_DIR = /Users/alexandreroulin/work/nibbler
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/aroulin/nibbler/cmake-build-debug
+CMAKE_BINARY_DIR = /Users/alexandreroulin/work/nibbler/cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +80,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/aroulin/nibbler/cmake-build-debug/CMakeFiles /Users/aroulin/nibbler/cmake-build-debug/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles /Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/aroulin/nibbler/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/alexandreroulin/work/nibbler/cmake-build-debug/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -149,6 +149,168 @@ Time/src/main.s: Time/src/main.cpp.s
 Time/src/main.cpp.s:
 	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/Time/src/main.cpp.s
 .PHONY : Time/src/main.cpp.s
+
+asio/srcs/class.o: asio/srcs/class.cpp.o
+
+.PHONY : asio/srcs/class.o
+
+# target to build an object file
+asio/srcs/class.cpp.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/asio/srcs/class.cpp.o
+.PHONY : asio/srcs/class.cpp.o
+
+asio/srcs/class.i: asio/srcs/class.cpp.i
+
+.PHONY : asio/srcs/class.i
+
+# target to preprocess a source file
+asio/srcs/class.cpp.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/asio/srcs/class.cpp.i
+.PHONY : asio/srcs/class.cpp.i
+
+asio/srcs/class.s: asio/srcs/class.cpp.s
+
+.PHONY : asio/srcs/class.s
+
+# target to generate assembly for a file
+asio/srcs/class.cpp.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/asio/srcs/class.cpp.s
+.PHONY : asio/srcs/class.cpp.s
+
+asio/srcs/server_async.o: asio/srcs/server_async.cpp.o
+
+.PHONY : asio/srcs/server_async.o
+
+# target to build an object file
+asio/srcs/server_async.cpp.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/asio/srcs/server_async.cpp.o
+.PHONY : asio/srcs/server_async.cpp.o
+
+asio/srcs/server_async.i: asio/srcs/server_async.cpp.i
+
+.PHONY : asio/srcs/server_async.i
+
+# target to preprocess a source file
+asio/srcs/server_async.cpp.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/asio/srcs/server_async.cpp.i
+.PHONY : asio/srcs/server_async.cpp.i
+
+asio/srcs/server_async.s: asio/srcs/server_async.cpp.s
+
+.PHONY : asio/srcs/server_async.s
+
+# target to generate assembly for a file
+asio/srcs/server_async.cpp.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/asio/srcs/server_async.cpp.s
+.PHONY : asio/srcs/server_async.cpp.s
+
+asio/srcs/tcp_client.o: asio/srcs/tcp_client.cpp.o
+
+.PHONY : asio/srcs/tcp_client.o
+
+# target to build an object file
+asio/srcs/tcp_client.cpp.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/asio/srcs/tcp_client.cpp.o
+.PHONY : asio/srcs/tcp_client.cpp.o
+
+asio/srcs/tcp_client.i: asio/srcs/tcp_client.cpp.i
+
+.PHONY : asio/srcs/tcp_client.i
+
+# target to preprocess a source file
+asio/srcs/tcp_client.cpp.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/asio/srcs/tcp_client.cpp.i
+.PHONY : asio/srcs/tcp_client.cpp.i
+
+asio/srcs/tcp_client.s: asio/srcs/tcp_client.cpp.s
+
+.PHONY : asio/srcs/tcp_client.s
+
+# target to generate assembly for a file
+asio/srcs/tcp_client.cpp.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/asio/srcs/tcp_client.cpp.s
+.PHONY : asio/srcs/tcp_client.cpp.s
+
+asio/srcs/tcp_server.o: asio/srcs/tcp_server.cpp.o
+
+.PHONY : asio/srcs/tcp_server.o
+
+# target to build an object file
+asio/srcs/tcp_server.cpp.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/asio/srcs/tcp_server.cpp.o
+.PHONY : asio/srcs/tcp_server.cpp.o
+
+asio/srcs/tcp_server.i: asio/srcs/tcp_server.cpp.i
+
+.PHONY : asio/srcs/tcp_server.i
+
+# target to preprocess a source file
+asio/srcs/tcp_server.cpp.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/asio/srcs/tcp_server.cpp.i
+.PHONY : asio/srcs/tcp_server.cpp.i
+
+asio/srcs/tcp_server.s: asio/srcs/tcp_server.cpp.s
+
+.PHONY : asio/srcs/tcp_server.s
+
+# target to generate assembly for a file
+asio/srcs/tcp_server.cpp.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/asio/srcs/tcp_server.cpp.s
+.PHONY : asio/srcs/tcp_server.cpp.s
+
+asio/srcs/timer_async.o: asio/srcs/timer_async.cpp.o
+
+.PHONY : asio/srcs/timer_async.o
+
+# target to build an object file
+asio/srcs/timer_async.cpp.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/asio/srcs/timer_async.cpp.o
+.PHONY : asio/srcs/timer_async.cpp.o
+
+asio/srcs/timer_async.i: asio/srcs/timer_async.cpp.i
+
+.PHONY : asio/srcs/timer_async.i
+
+# target to preprocess a source file
+asio/srcs/timer_async.cpp.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/asio/srcs/timer_async.cpp.i
+.PHONY : asio/srcs/timer_async.cpp.i
+
+asio/srcs/timer_async.s: asio/srcs/timer_async.cpp.s
+
+.PHONY : asio/srcs/timer_async.s
+
+# target to generate assembly for a file
+asio/srcs/timer_async.cpp.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/asio/srcs/timer_async.cpp.s
+.PHONY : asio/srcs/timer_async.cpp.s
+
+asio/srcs/timer_sync.o: asio/srcs/timer_sync.cpp.o
+
+.PHONY : asio/srcs/timer_sync.o
+
+# target to build an object file
+asio/srcs/timer_sync.cpp.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/asio/srcs/timer_sync.cpp.o
+.PHONY : asio/srcs/timer_sync.cpp.o
+
+asio/srcs/timer_sync.i: asio/srcs/timer_sync.cpp.i
+
+.PHONY : asio/srcs/timer_sync.i
+
+# target to preprocess a source file
+asio/srcs/timer_sync.cpp.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/asio/srcs/timer_sync.cpp.i
+.PHONY : asio/srcs/timer_sync.cpp.i
+
+asio/srcs/timer_sync.s: asio/srcs/timer_sync.cpp.s
+
+.PHONY : asio/srcs/timer_sync.s
+
+# target to generate assembly for a file
+asio/srcs/timer_sync.cpp.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/asio/srcs/timer_sync.cpp.s
+.PHONY : asio/srcs/timer_sync.cpp.s
 
 class/KNU/World.o: class/KNU/World.cpp.o
 
@@ -1122,6 +1284,60 @@ externlib/sandbox/main.cpp.s:
 	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/externlib/sandbox/main.cpp.s
 .PHONY : externlib/sandbox/main.cpp.s
 
+externlib/sound_sdl/src/SoundSdl.o: externlib/sound_sdl/src/SoundSdl.cpp.o
+
+.PHONY : externlib/sound_sdl/src/SoundSdl.o
+
+# target to build an object file
+externlib/sound_sdl/src/SoundSdl.cpp.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/externlib/sound_sdl/src/SoundSdl.cpp.o
+.PHONY : externlib/sound_sdl/src/SoundSdl.cpp.o
+
+externlib/sound_sdl/src/SoundSdl.i: externlib/sound_sdl/src/SoundSdl.cpp.i
+
+.PHONY : externlib/sound_sdl/src/SoundSdl.i
+
+# target to preprocess a source file
+externlib/sound_sdl/src/SoundSdl.cpp.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/externlib/sound_sdl/src/SoundSdl.cpp.i
+.PHONY : externlib/sound_sdl/src/SoundSdl.cpp.i
+
+externlib/sound_sdl/src/SoundSdl.s: externlib/sound_sdl/src/SoundSdl.cpp.s
+
+.PHONY : externlib/sound_sdl/src/SoundSdl.s
+
+# target to generate assembly for a file
+externlib/sound_sdl/src/SoundSdl.cpp.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/externlib/sound_sdl/src/SoundSdl.cpp.s
+.PHONY : externlib/sound_sdl/src/SoundSdl.cpp.s
+
+externlib/sound_sdl/src/main.o: externlib/sound_sdl/src/main.cpp.o
+
+.PHONY : externlib/sound_sdl/src/main.o
+
+# target to build an object file
+externlib/sound_sdl/src/main.cpp.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/externlib/sound_sdl/src/main.cpp.o
+.PHONY : externlib/sound_sdl/src/main.cpp.o
+
+externlib/sound_sdl/src/main.i: externlib/sound_sdl/src/main.cpp.i
+
+.PHONY : externlib/sound_sdl/src/main.i
+
+# target to preprocess a source file
+externlib/sound_sdl/src/main.cpp.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/externlib/sound_sdl/src/main.cpp.i
+.PHONY : externlib/sound_sdl/src/main.cpp.i
+
+externlib/sound_sdl/src/main.s: externlib/sound_sdl/src/main.cpp.s
+
+.PHONY : externlib/sound_sdl/src/main.s
+
+# target to generate assembly for a file
+externlib/sound_sdl/src/main.cpp.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/externlib/sound_sdl/src/main.cpp.s
+.PHONY : externlib/sound_sdl/src/main.cpp.s
+
 externlib/sound_sfml/src/SoundSfml.o: externlib/sound_sfml/src/SoundSfml.cpp.o
 
 .PHONY : externlib/sound_sfml/src/SoundSfml.o
@@ -1338,6 +1554,114 @@ jsoncpp/src/test_lib_json/main.cpp.s:
 	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/main.cpp.s
 .PHONY : jsoncpp/src/test_lib_json/main.cpp.s
 
+menu/src/Core.o: menu/src/Core.cpp.o
+
+.PHONY : menu/src/Core.o
+
+# target to build an object file
+menu/src/Core.cpp.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/menu/src/Core.cpp.o
+.PHONY : menu/src/Core.cpp.o
+
+menu/src/Core.i: menu/src/Core.cpp.i
+
+.PHONY : menu/src/Core.i
+
+# target to preprocess a source file
+menu/src/Core.cpp.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/menu/src/Core.cpp.i
+.PHONY : menu/src/Core.cpp.i
+
+menu/src/Core.s: menu/src/Core.cpp.s
+
+.PHONY : menu/src/Core.s
+
+# target to generate assembly for a file
+menu/src/Core.cpp.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/menu/src/Core.cpp.s
+.PHONY : menu/src/Core.cpp.s
+
+menu/src/imgui_demo.o: menu/src/imgui_demo.cpp.o
+
+.PHONY : menu/src/imgui_demo.o
+
+# target to build an object file
+menu/src/imgui_demo.cpp.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/menu/src/imgui_demo.cpp.o
+.PHONY : menu/src/imgui_demo.cpp.o
+
+menu/src/imgui_demo.i: menu/src/imgui_demo.cpp.i
+
+.PHONY : menu/src/imgui_demo.i
+
+# target to preprocess a source file
+menu/src/imgui_demo.cpp.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/menu/src/imgui_demo.cpp.i
+.PHONY : menu/src/imgui_demo.cpp.i
+
+menu/src/imgui_demo.s: menu/src/imgui_demo.cpp.s
+
+.PHONY : menu/src/imgui_demo.s
+
+# target to generate assembly for a file
+menu/src/imgui_demo.cpp.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/menu/src/imgui_demo.cpp.s
+.PHONY : menu/src/imgui_demo.cpp.s
+
+menu/src/main.o: menu/src/main.cpp.o
+
+.PHONY : menu/src/main.o
+
+# target to build an object file
+menu/src/main.cpp.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/menu/src/main.cpp.o
+.PHONY : menu/src/main.cpp.o
+
+menu/src/main.i: menu/src/main.cpp.i
+
+.PHONY : menu/src/main.i
+
+# target to preprocess a source file
+menu/src/main.cpp.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/menu/src/main.cpp.i
+.PHONY : menu/src/main.cpp.i
+
+menu/src/main.s: menu/src/main.cpp.s
+
+.PHONY : menu/src/main.s
+
+# target to generate assembly for a file
+menu/src/main.cpp.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/menu/src/main.cpp.s
+.PHONY : menu/src/main.cpp.s
+
+menu/src/widget/WidgetChat.o: menu/src/widget/WidgetChat.cpp.o
+
+.PHONY : menu/src/widget/WidgetChat.o
+
+# target to build an object file
+menu/src/widget/WidgetChat.cpp.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/menu/src/widget/WidgetChat.cpp.o
+.PHONY : menu/src/widget/WidgetChat.cpp.o
+
+menu/src/widget/WidgetChat.i: menu/src/widget/WidgetChat.cpp.i
+
+.PHONY : menu/src/widget/WidgetChat.i
+
+# target to preprocess a source file
+menu/src/widget/WidgetChat.cpp.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/menu/src/widget/WidgetChat.cpp.i
+.PHONY : menu/src/widget/WidgetChat.cpp.i
+
+menu/src/widget/WidgetChat.s: menu/src/widget/WidgetChat.cpp.s
+
+.PHONY : menu/src/widget/WidgetChat.s
+
+# target to generate assembly for a file
+menu/src/widget/WidgetChat.cpp.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/menu/src/widget/WidgetChat.cpp.s
+.PHONY : menu/src/widget/WidgetChat.cpp.s
+
 network/listener.o: network/listener.c.o
 
 .PHONY : network/listener.o
@@ -1431,6 +1755,24 @@ help:
 	@echo "... Time/src/main.o"
 	@echo "... Time/src/main.i"
 	@echo "... Time/src/main.s"
+	@echo "... asio/srcs/class.o"
+	@echo "... asio/srcs/class.i"
+	@echo "... asio/srcs/class.s"
+	@echo "... asio/srcs/server_async.o"
+	@echo "... asio/srcs/server_async.i"
+	@echo "... asio/srcs/server_async.s"
+	@echo "... asio/srcs/tcp_client.o"
+	@echo "... asio/srcs/tcp_client.i"
+	@echo "... asio/srcs/tcp_client.s"
+	@echo "... asio/srcs/tcp_server.o"
+	@echo "... asio/srcs/tcp_server.i"
+	@echo "... asio/srcs/tcp_server.s"
+	@echo "... asio/srcs/timer_async.o"
+	@echo "... asio/srcs/timer_async.i"
+	@echo "... asio/srcs/timer_async.s"
+	@echo "... asio/srcs/timer_sync.o"
+	@echo "... asio/srcs/timer_sync.i"
+	@echo "... asio/srcs/timer_sync.s"
 	@echo "... class/KNU/World.o"
 	@echo "... class/KNU/World.i"
 	@echo "... class/KNU/World.s"
@@ -1539,6 +1881,12 @@ help:
 	@echo "... externlib/sandbox/main.o"
 	@echo "... externlib/sandbox/main.i"
 	@echo "... externlib/sandbox/main.s"
+	@echo "... externlib/sound_sdl/src/SoundSdl.o"
+	@echo "... externlib/sound_sdl/src/SoundSdl.i"
+	@echo "... externlib/sound_sdl/src/SoundSdl.s"
+	@echo "... externlib/sound_sdl/src/main.o"
+	@echo "... externlib/sound_sdl/src/main.i"
+	@echo "... externlib/sound_sdl/src/main.s"
 	@echo "... externlib/sound_sfml/src/SoundSfml.o"
 	@echo "... externlib/sound_sfml/src/SoundSfml.i"
 	@echo "... externlib/sound_sfml/src/SoundSfml.s"
@@ -1563,6 +1911,18 @@ help:
 	@echo "... jsoncpp/src/test_lib_json/main.o"
 	@echo "... jsoncpp/src/test_lib_json/main.i"
 	@echo "... jsoncpp/src/test_lib_json/main.s"
+	@echo "... menu/src/Core.o"
+	@echo "... menu/src/Core.i"
+	@echo "... menu/src/Core.s"
+	@echo "... menu/src/imgui_demo.o"
+	@echo "... menu/src/imgui_demo.i"
+	@echo "... menu/src/imgui_demo.s"
+	@echo "... menu/src/main.o"
+	@echo "... menu/src/main.i"
+	@echo "... menu/src/main.s"
+	@echo "... menu/src/widget/WidgetChat.o"
+	@echo "... menu/src/widget/WidgetChat.i"
+	@echo "... menu/src/widget/WidgetChat.s"
 	@echo "... network/listener.o"
 	@echo "... network/listener.i"
 	@echo "... network/listener.s"

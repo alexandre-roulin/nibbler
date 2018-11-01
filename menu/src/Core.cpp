@@ -86,14 +86,45 @@ void			Core::aState(void)
 		ImGui::SetNextWindowPos(this->positionByPercent(sf::Vector2<unsigned int>(0, 50)));
 		ImGui::SetNextWindowSize(this->positionByPercent(sf::Vector2<unsigned int>(100, 50)));
 		this->_chat.render();
+
+		ImGui::SetNextWindowPos(this->positionByPercent(sf::Vector2<unsigned int>(1, 1)));
+		ImGui::Begin("Exit", NULL, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoBackground);
+		if (ImGui::Button("Exit.."))
+			ImGui::OpenPopup("Exit ?");
+		if (ImGui::BeginPopupModal("Exit ?", NULL, ImGuiWindowFlags_AlwaysAutoResize))
+		{
+			ImGui::Text("Do you want Exit the game ?");
+			ImGui::Separator();
+
+
+			if (ImGui::Button("OK", ImVec2(120, 0)))
+			{
+				ImGui::CloseCurrentPopup();
+				this->_win.close();
+			}
+			ImGui::SetItemDefaultFocus();
+			ImGui::SameLine();
+			if (ImGui::Button("Cancel", ImVec2(120, 0)))
+			{
+				ImGui::CloseCurrentPopup();
+			}
+			ImGui::EndPopup();
+		}
+		ImGui::End();
+
+
+
+
+
+
 		static double last_time = -1.0;
-	    double time = ImGui::GetTime();
-	    if (time - last_time >= 0.20f && !ImGui::GetIO().KeyCtrl)
-	    {
-	        const char* random_words[] = { "system", "info", "warning", "error", "fatal", "notice", "log" };
-	        this->_chat.addLog("[%s] Hello, time is %.1f, frame count is %d\n", random_words[rand() % IM_ARRAYSIZE(random_words)], time, ImGui::GetFrameCount());
-	        last_time = time;
-	    }
+		double time = ImGui::GetTime();
+		if (time - last_time >= 0.90f && !ImGui::GetIO().KeyCtrl)
+		{
+			const char* random_words[] = { "system", "info", "warning", "error", "fatal", "notice", "log" };
+			this->_chat.addLog("[%s] Hello, time is %.1f, frame count is %d\n", random_words[rand() % IM_ARRAYSIZE(random_words)], time, ImGui::GetFrameCount());
+			last_time = time;
+		}
 
 		this->_render();
 	}
