@@ -1,0 +1,24 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/alexandreroulin/work/asio/srcs/timer_async.cpp
+iostream
+-
+boost/asio.hpp
+-
+boost/date_time/posix_time/posix_time.hpp
+-
+
+/Users/alexandreroulin/work/asio/srcs/timer_sync.cpp
+iostream
+-
+boost/asio.hpp
+-
+boost/date_time/posix_time/posix_time.hpp
+-
+

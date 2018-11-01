@@ -1,0 +1,1 @@
+/Library/Developer/CommandLineTools/usr/bin/c++   -Wl,-search_paths_first -Wl,-headerpad_max_install_names  CMakeFiles/asio.dir/srcs/timer_sync.cpp.o CMakeFiles/asio.dir/srcs/timer_async.cpp.o CMakeFiles/asio.dir/srcs/class.cpp.o CMakeFiles/asio.dir/srcs/tcp_client.cpp.o CMakeFiles/asio.dir/srcs/tcp_server.cpp.o CMakeFiles/asio.dir/srcs/server_async.cpp.o  -o asio 

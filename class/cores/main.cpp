@@ -65,20 +65,17 @@ void display(KNU::World &world) {
 
 int main(int ac, char **av) {
 	Network net;
+
 	std::string buffer;
 	for (;;) {
 		std::cout << "New command : ";
 		std::getline(std::cin, buffer);
-		if (buffer == "sendto")
-			net.sendto_socket();
 		if (buffer == "connect")
 			net.connect_socket();
-		if (buffer == "recvfrom")
-			net.recvfrom_socket();
 		if (buffer == "accept")
 			net.accept_socket();
 		if (buffer == "sendall")
-			net.send_all_socket();
+			net.send_socket();
 		if (buffer == "recv")
 			net.recv_socket();
 	}
