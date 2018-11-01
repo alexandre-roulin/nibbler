@@ -1,5 +1,6 @@
 #include "Core.hpp"
 #include "WidgetExit.hpp"
+#include "WidgetSnake.hpp"
 
 Core::Core(void) :
 _winSize(sf::Vector2<unsigned int>(900, 800)),
@@ -78,6 +79,8 @@ void			callbackExit(void *ptr)
 void			Core::aState(void)
 {
 	WidgetExit wexit(&callbackExit, this);
+	WidgetSnake snake;
+
 	while (this->_win.isOpen())
 	{
 		sf::Event event;
@@ -96,6 +99,9 @@ void			Core::aState(void)
 		ImGui::SetNextWindowPos(this->positionByPercent(sf::Vector2<unsigned int>(1, 1)));
 
 		wexit.render();
+
+		snake.render();
+
 
 		static double last_time = -1.0;
 		double time = ImGui::GetTime();
