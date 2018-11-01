@@ -109,7 +109,7 @@ LIBS		= \
 			./jsoncpp/src/lib_json/libjsoncpp.a		\
 
 LDFLAGS		= \
-			-L ./jsoncpp/src/lib_json/
+			-L ./jsoncpp/src/lib_json/ -L ~/.brew/lib/
 
 LDLIBS		= \
 			-ljsoncpp								\
@@ -121,6 +121,7 @@ CPPFLAGS	= \
 			  -I$(DIR_INCS)							\
 			  -I$(DIR_CLASS)						\
 			  -I./jsoncpp/include/					\
+			  -I ~/.brew/include/					\
 
 CFLAGS		= \
 			-std=c++1z						\
