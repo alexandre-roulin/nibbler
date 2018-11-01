@@ -96,9 +96,6 @@ void			Core::aState(void)
 		ImGui::SetNextWindowSize(this->positionByPercent(sf::Vector2<unsigned int>(100, 50)));
 		this->_chat.render();
 
-		ImGui::SetNextWindowPos(this->positionByPercent(sf::Vector2<unsigned int>(0, 0)));
-
-		wexit.render();
 
 
 		ImGui::SetNextWindowPos(this->positionByPercent(sf::Vector2<unsigned int>(0, 5)));
@@ -114,6 +111,9 @@ void			Core::aState(void)
 			this->_chat.addLog("[%s] Hello, time is %.1f, frame count is %d\n", random_words[rand() % IM_ARRAYSIZE(random_words)], time, ImGui::GetFrameCount());
 			last_time = time;
 		}
+
+		ImGui::SetNextWindowPos(this->positionByPercent(sf::Vector2<unsigned int>(95, 0)), 0, sf::Vector2f(0.5f, 0.5f));
+		wexit.render();
 
 		this->_render();
 	}
