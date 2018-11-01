@@ -1,7 +1,9 @@
 #include "Core.hpp"
+#include "WidgetExit.hpp"
 
 Core::Core(void) :
-_win(sf::VideoMode(900, 800), "ImGui + SFML = <3"),
+_winSize(sf::Vector2<unsigned int>(900, 800)),
+_win(sf::VideoMode(this->_winSize.x, this->_winSize.y), "Project Sanke"),
 _io(this->_createContext())
 {
 	if (!this->_background.loadFromFile("ecran_titre.png"))
@@ -15,6 +17,11 @@ ImGuiIO			&Core::_createContext(void)
 	ImGui::SFML::Init(this->_win);
 	ImGui::CreateContext();
 	return (ImGui::GetIO());
+}
+
+Core::~Core(void)
+{
+	ImGui::SFML::Shutdown();
 }
 
 bool			Core::titleScreen(void)
@@ -62,29 +69,42 @@ void			Core::demo(void)
 	}
 }
 
+
+void			callbackExit(void *ptr)
+{
+	static_cast<Core *>(ptr)->exit();
+}
+
 void			Core::aState(void)
 {
+	WidgetExit wexit(&callbackExit, this);
 	while (this->_win.isOpen())
 	{
 		sf::Event event;
 		while (this->_win.pollEvent(event))
 		{
+			this->_processEvent(event);
 			ImGui::SFML::ProcessEvent(event);
-
-			if (event.type == sf::Event::Closed)
-				this->_win.close();
 		}
 
 		ImGui::SFML::Update(this->_win, this->_deltaClock.restart());
+
+		ImGui::SetNextWindowPos(this->positionByPercent(sf::Vector2<unsigned int>(0, 50)));
+		ImGui::SetNextWindowSize(this->positionByPercent(sf::Vector2<unsigned int>(100, 50)));
 		this->_chat.render();
+
+		ImGui::SetNextWindowPos(this->positionByPercent(sf::Vector2<unsigned int>(1, 1)));
+
+		wexit.render();
+
 		static double last_time = -1.0;
-	    double time = ImGui::GetTime();
-	    if (time - last_time >= 0.20f && !ImGui::GetIO().KeyCtrl)
-	    {
-	        const char* random_words[] = { "system", "info", "warning", "error", "fatal", "notice", "log" };
-	        this->_chat.addLog("[%s] Hello, time is %.1f, frame count is %d\n", random_words[rand() % IM_ARRAYSIZE(random_words)], time, ImGui::GetFrameCount());
-	        last_time = time;
-	    }
+		double time = ImGui::GetTime();
+		if (time - last_time >= 0.90f && !ImGui::GetIO().KeyCtrl)
+		{
+			const char* random_words[] = { "system", "info", "warning", "error", "fatal", "notice", "log" };
+			this->_chat.addLog("[%s] Hello, time is %.1f, frame count is %d\n", random_words[rand() % IM_ARRAYSIZE(random_words)], time, ImGui::GetFrameCount());
+			last_time = time;
+		}
 
 		this->_render();
 	}
@@ -96,10 +116,23 @@ void				Core::_render(void)
 	ImGui::SFML::Render(this->_win);
 	this->_win.display();
 }
-
-Core::~Core(void)
+void 				Core::exit(void)
 {
-	ImGui::SFML::Shutdown();
+	this->_win.close();
+}
+
+sf::Vector2<unsigned int>	Core::positionByPercent(sf::Vector2<unsigned int> const &percent)
+{
+	return (sf::Vector2<unsigned int>(this->_winSize.x * percent.x / 100,
+										this->_winSize.y * percent.y / 100));
+}
+
+void					Core::_processEvent(sf::Event const &event)
+{
+	if (event.type == sf::Event::Resized)
+		this->_winSize = sf::Vector2<unsigned int>(event.size.width, event.size.height);
+	else if (event.type == sf::Event::Closed)
+		this->_win.close();
 }
 
 

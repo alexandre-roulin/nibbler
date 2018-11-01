@@ -8,6 +8,7 @@ public:
 
 
 	void	addLog(const char* fmt, ...);
+
 	void	render(void);
 	void	clear(void);
 
@@ -15,6 +16,7 @@ private:
 	bool					_active;
 	ImGuiTextBuffer			_bufferChat;
 	bool					_scrollChat;
+	char					_bufferMessage[128];
 
 	WidgetChat &operator=(const WidgetChat&);
 	WidgetChat(const WidgetChat&);

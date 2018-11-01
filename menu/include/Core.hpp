@@ -29,9 +29,15 @@ class Core {
 	void		aState(void);
 	void		AddLog(const char* fmt, ...);
 
+	void 		exit(void);
+
+	sf::Vector2<unsigned int>	positionByPercent(sf::Vector2<unsigned int> const &percent);
+
 private:
-	sf::RenderWindow		_win;
-	ImGuiIO					&_io;
+	sf::Vector2<unsigned int>	_winSize;
+	sf::RenderWindow			_win;
+	ImGuiIO						&_io;
+
 	bool					_my_tool_active;
 	sf::Texture				_background;
 	sf::Clock				_deltaClock;
@@ -40,6 +46,7 @@ private:
 
 	void					_render(void);
 	ImGuiIO					&_createContext(void);
+	void					_processEvent(sf::Event const &event);
 
 	Core          &operator=(Core const &rhs);
 	Core(Core const &src);

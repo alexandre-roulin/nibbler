@@ -53,9 +53,11 @@ int main(int argc, char **argv)
 {
 	Core menu;
 
-	//menu.demo();
-	//menu.aState();
-	//return (0);
+	if (argc > 1)
+		menu.demo();
+	else
+		menu.aState();
+	return (0);
 	menu.titleScreen();
 	if (!(game(argc, argv)))
 		return (0);
