@@ -3,29 +3,9 @@ project(nibbler)
 
 set(CMAKE_CXX_STANDARD 14)
 
-include_directories(class/component)
-include_directories(class/events)
-include_directories(class/KNU)
-include_directories(class/KNU/component)
-include_directories(class/KNU/entities)
-include_directories(class/KNU/events)
-include_directories(class/KNU/managers)
-include_directories(class/KNU/systems)
-include_directories(class/KNU/utils)
-include_directories(class/network)
-include_directories(class/systems)
-include_directories(externlib/commun)
-include_directories(externlib/display_sdl/include)
-include_directories(externlib/display_sfml/include)
-include_directories(externlib/sound_sdl/include)
-include_directories(externlib/sound_sfml/include)
+include_directories(class)
 include_directories(incs)
 include_directories(jsoncpp/include)
-include_directories(jsoncpp/include/json)
-include_directories(jsoncpp/src/lib_json)
-include_directories(jsoncpp/src/test_lib_json)
-include_directories(menu/include)
-include_directories(menu/include/widget)
 
 add_executable(nibbler
         asio/srcs/class.cpp
@@ -137,4 +117,4 @@ add_executable(nibbler
         network/listener.c
         network/talker.c
         network/talker2.c
-        Time/src/main.cpp)
+        Time/src/main.cpp class/network/ServerTCP.cpp class/network/ServerTCP.hpp class/network/ClientTCP.cpp class/network/ClientTCP.hpp)

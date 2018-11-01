@@ -61,6 +61,8 @@ SRCS = \
 		events/JoystickEvent.cpp					\
 													\
 		network/Network.cpp							\
+		network/ClientTCP.cpp						\
+		network/ServerTCP.cpp						\
 													\
 		KNU/World.cpp								\
 		KNU/entities/Entity.cpp						\
@@ -111,6 +113,8 @@ LDFLAGS		= \
 
 LDLIBS		= \
 			-ljsoncpp								\
+			-lboost_system							\
+			-lboost_thread-mt						\
 #			  -lncurses								\
 
 CPPFLAGS	= \
@@ -120,8 +124,8 @@ CPPFLAGS	= \
 
 CFLAGS		= \
 			-std=c++1z						\
-			-fsanitize=address					\
-			-g3							\
+#			-fsanitize=address					\
+#			-g3							\
 #			-Wall -Werror -Wextra					\
 
 

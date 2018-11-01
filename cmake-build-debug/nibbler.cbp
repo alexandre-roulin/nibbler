@@ -44,29 +44,9 @@
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="/Users/alexandreroulin/work/nibbler/class/component"/>
-					<Add directory="/Users/alexandreroulin/work/nibbler/class/events"/>
-					<Add directory="/Users/alexandreroulin/work/nibbler/class/KNU"/>
-					<Add directory="/Users/alexandreroulin/work/nibbler/class/KNU/component"/>
-					<Add directory="/Users/alexandreroulin/work/nibbler/class/KNU/entities"/>
-					<Add directory="/Users/alexandreroulin/work/nibbler/class/KNU/events"/>
-					<Add directory="/Users/alexandreroulin/work/nibbler/class/KNU/managers"/>
-					<Add directory="/Users/alexandreroulin/work/nibbler/class/KNU/systems"/>
-					<Add directory="/Users/alexandreroulin/work/nibbler/class/KNU/utils"/>
-					<Add directory="/Users/alexandreroulin/work/nibbler/class/network"/>
-					<Add directory="/Users/alexandreroulin/work/nibbler/class/systems"/>
-					<Add directory="/Users/alexandreroulin/work/nibbler/externlib/commun"/>
-					<Add directory="/Users/alexandreroulin/work/nibbler/externlib/display_sdl/include"/>
-					<Add directory="/Users/alexandreroulin/work/nibbler/externlib/display_sfml/include"/>
-					<Add directory="/Users/alexandreroulin/work/nibbler/externlib/sound_sdl/include"/>
-					<Add directory="/Users/alexandreroulin/work/nibbler/externlib/sound_sfml/include"/>
+					<Add directory="/Users/alexandreroulin/work/nibbler/class"/>
 					<Add directory="/Users/alexandreroulin/work/nibbler/incs"/>
 					<Add directory="/Users/alexandreroulin/work/nibbler/jsoncpp/include"/>
-					<Add directory="/Users/alexandreroulin/work/nibbler/jsoncpp/include/json"/>
-					<Add directory="/Users/alexandreroulin/work/nibbler/jsoncpp/src/lib_json"/>
-					<Add directory="/Users/alexandreroulin/work/nibbler/jsoncpp/src/test_lib_json"/>
-					<Add directory="/Users/alexandreroulin/work/nibbler/menu/include"/>
-					<Add directory="/Users/alexandreroulin/work/nibbler/menu/include/widget"/>
 					<Add directory="/Library/Developer/CommandLineTools/usr/include/c++/v1"/>
 					<Add directory="/usr/local/include"/>
 					<Add directory="/Library/Developer/CommandLineTools/usr/lib/clang/10.0.0/include"/>
@@ -89,29 +69,9 @@
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="/Users/alexandreroulin/work/nibbler/class/component"/>
-					<Add directory="/Users/alexandreroulin/work/nibbler/class/events"/>
-					<Add directory="/Users/alexandreroulin/work/nibbler/class/KNU"/>
-					<Add directory="/Users/alexandreroulin/work/nibbler/class/KNU/component"/>
-					<Add directory="/Users/alexandreroulin/work/nibbler/class/KNU/entities"/>
-					<Add directory="/Users/alexandreroulin/work/nibbler/class/KNU/events"/>
-					<Add directory="/Users/alexandreroulin/work/nibbler/class/KNU/managers"/>
-					<Add directory="/Users/alexandreroulin/work/nibbler/class/KNU/systems"/>
-					<Add directory="/Users/alexandreroulin/work/nibbler/class/KNU/utils"/>
-					<Add directory="/Users/alexandreroulin/work/nibbler/class/network"/>
-					<Add directory="/Users/alexandreroulin/work/nibbler/class/systems"/>
-					<Add directory="/Users/alexandreroulin/work/nibbler/externlib/commun"/>
-					<Add directory="/Users/alexandreroulin/work/nibbler/externlib/display_sdl/include"/>
-					<Add directory="/Users/alexandreroulin/work/nibbler/externlib/display_sfml/include"/>
-					<Add directory="/Users/alexandreroulin/work/nibbler/externlib/sound_sdl/include"/>
-					<Add directory="/Users/alexandreroulin/work/nibbler/externlib/sound_sfml/include"/>
+					<Add directory="/Users/alexandreroulin/work/nibbler/class"/>
 					<Add directory="/Users/alexandreroulin/work/nibbler/incs"/>
 					<Add directory="/Users/alexandreroulin/work/nibbler/jsoncpp/include"/>
-					<Add directory="/Users/alexandreroulin/work/nibbler/jsoncpp/include/json"/>
-					<Add directory="/Users/alexandreroulin/work/nibbler/jsoncpp/src/lib_json"/>
-					<Add directory="/Users/alexandreroulin/work/nibbler/jsoncpp/src/test_lib_json"/>
-					<Add directory="/Users/alexandreroulin/work/nibbler/menu/include"/>
-					<Add directory="/Users/alexandreroulin/work/nibbler/menu/include/widget"/>
 					<Add directory="/Library/Developer/CommandLineTools/usr/include/c++/v1"/>
 					<Add directory="/usr/local/include"/>
 					<Add directory="/Library/Developer/CommandLineTools/usr/lib/clang/10.0.0/include"/>
@@ -275,10 +235,22 @@
 		<Unit filename="/Users/alexandreroulin/work/nibbler/class/logger/utils/logger_init_open_file.cpp">
 			<Option target="nibbler"/>
 		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/class/network/ClientTCP.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/class/network/ClientTCP.hpp">
+			<Option target="nibbler"/>
+		</Unit>
 		<Unit filename="/Users/alexandreroulin/work/nibbler/class/network/Network.cpp">
 			<Option target="nibbler"/>
 		</Unit>
 		<Unit filename="/Users/alexandreroulin/work/nibbler/class/network/Network.hpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/class/network/ServerTCP.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/class/network/ServerTCP.hpp">
 			<Option target="nibbler"/>
 		</Unit>
 		<Unit filename="/Users/alexandreroulin/work/nibbler/class/systems/CollisionSystem.cpp">

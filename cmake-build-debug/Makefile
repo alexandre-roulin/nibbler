@@ -987,6 +987,33 @@ class/logger/utils/logger_init_open_file.cpp.s:
 	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/logger/utils/logger_init_open_file.cpp.s
 .PHONY : class/logger/utils/logger_init_open_file.cpp.s
 
+class/network/ClientTCP.o: class/network/ClientTCP.cpp.o
+
+.PHONY : class/network/ClientTCP.o
+
+# target to build an object file
+class/network/ClientTCP.cpp.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/network/ClientTCP.cpp.o
+.PHONY : class/network/ClientTCP.cpp.o
+
+class/network/ClientTCP.i: class/network/ClientTCP.cpp.i
+
+.PHONY : class/network/ClientTCP.i
+
+# target to preprocess a source file
+class/network/ClientTCP.cpp.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/network/ClientTCP.cpp.i
+.PHONY : class/network/ClientTCP.cpp.i
+
+class/network/ClientTCP.s: class/network/ClientTCP.cpp.s
+
+.PHONY : class/network/ClientTCP.s
+
+# target to generate assembly for a file
+class/network/ClientTCP.cpp.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/network/ClientTCP.cpp.s
+.PHONY : class/network/ClientTCP.cpp.s
+
 class/network/Network.o: class/network/Network.cpp.o
 
 .PHONY : class/network/Network.o
@@ -1013,6 +1040,33 @@ class/network/Network.s: class/network/Network.cpp.s
 class/network/Network.cpp.s:
 	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/network/Network.cpp.s
 .PHONY : class/network/Network.cpp.s
+
+class/network/ServerTCP.o: class/network/ServerTCP.cpp.o
+
+.PHONY : class/network/ServerTCP.o
+
+# target to build an object file
+class/network/ServerTCP.cpp.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/network/ServerTCP.cpp.o
+.PHONY : class/network/ServerTCP.cpp.o
+
+class/network/ServerTCP.i: class/network/ServerTCP.cpp.i
+
+.PHONY : class/network/ServerTCP.i
+
+# target to preprocess a source file
+class/network/ServerTCP.cpp.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/network/ServerTCP.cpp.i
+.PHONY : class/network/ServerTCP.cpp.i
+
+class/network/ServerTCP.s: class/network/ServerTCP.cpp.s
+
+.PHONY : class/network/ServerTCP.s
+
+# target to generate assembly for a file
+class/network/ServerTCP.cpp.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/network/ServerTCP.cpp.s
+.PHONY : class/network/ServerTCP.cpp.s
 
 class/systems/CollisionSystem.o: class/systems/CollisionSystem.cpp.o
 
@@ -1848,9 +1902,15 @@ help:
 	@echo "... class/logger/utils/logger_init_open_file.o"
 	@echo "... class/logger/utils/logger_init_open_file.i"
 	@echo "... class/logger/utils/logger_init_open_file.s"
+	@echo "... class/network/ClientTCP.o"
+	@echo "... class/network/ClientTCP.i"
+	@echo "... class/network/ClientTCP.s"
 	@echo "... class/network/Network.o"
 	@echo "... class/network/Network.i"
 	@echo "... class/network/Network.s"
+	@echo "... class/network/ServerTCP.o"
+	@echo "... class/network/ServerTCP.i"
+	@echo "... class/network/ServerTCP.s"
 	@echo "... class/systems/CollisionSystem.o"
 	@echo "... class/systems/CollisionSystem.i"
 	@echo "... class/systems/CollisionSystem.s"
