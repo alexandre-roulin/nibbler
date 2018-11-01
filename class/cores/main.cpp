@@ -3,6 +3,8 @@
 
 #include <iostream>
 #include <KNU/entities/Entity.hpp>
+#include <boost/thread/thread.hpp>
+
 #include <KNU/World.hpp>
 #include <component/PositionComponent.hpp>
 #include <component/MotionComponent.hpp>
@@ -24,6 +26,10 @@
 #include <json/json.h>
 #include <fstream>
 #include <network/Network.hpp>
+#include <boost/asio/io_service.hpp>
+#include <network/ServerTCP.hpp>
+#include <network/ClientTCP.hpp>
+#include <future>
 
 void init(KNU::World &world) {
 	KNU::Entity *snake_follow = nullptr;
@@ -62,24 +68,53 @@ void display(KNU::World &world) {
 	}
 }
 
+void f(boost::asio::io_service &io){
 
+}
 int main(int ac, char **av) {
-	Network net;
-
 	std::string buffer;
-	for (;;) {
-		std::cout << "New command : ";
-		std::getline(std::cin, buffer);
-		if (buffer == "connect")
-			net.connect_socket();
-		if (buffer == "accept")
-			net.accept_socket();
-		if (buffer == "sendall")
-			net.send_socket();
-		if (buffer == "recv")
-			net.recv_socket();
+	boost::asio::io_service io_server;
+	boost::asio::io_service io_client;
+
+	try {
+		for (;;) {
+			std::cout << "$> ";
+			std::getline(std::cin, buffer);
+			if (buffer == "server") {
+				new ServerTCP(io_server);
+				boost::thread t(boost::bind(&boost::asio::io_service::run, &io_server));
+				t.join();
+			}
+			if (buffer == "client") {
+				std::cout << "Hostname : ";
+				std::getline(std::cin, buffer);
+				new ClientTCP(io_client, buffer);
+				boost::thread t(boost::bind(&boost::asio::io_service::run, &io_client));
+				t.join();
+			}
+
+		}
 	}
-	return 1;
+	catch (std::exception &e) {
+		std::cerr << e.what() << std::endl;
+	}
+
+	return 0;
+//	Network net;
+//	std::string buffer;
+//	for (;;) {
+//		std::cout << "New command : ";
+//		std::getline(std::cin, buffer);
+//		if (buffer == "connect")
+//			net.connect_socket();
+//		if (buffer == "accept")
+//			net.accept_socket();
+//		if (buffer == "sendall")
+//			net.send_socket();
+//		if (buffer == "recv")
+//			net.recv_socket();
+//	}
+//	return 1;
 	char path[] = "/tmp/log.out";
 	logger_init(path);
 
