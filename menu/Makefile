@@ -10,7 +10,7 @@ CXX= clang++
 CXXFLAGS= -Wall -Wextra -Werror -Wvla -std=c++14 -fsanitize=address -g3 -MMD
 #============HEADERS============#
 
-HEADER_DIR= ./include/
+HEADER_DIR= ./include/ ./include/widget
 
 #============COLORS=============#
 
@@ -23,7 +23,9 @@ EOC=\033[0m
 SRC_DIR = ./src/
 
 SRC_FILE= main.cpp \
-Core.cpp
+Core.cpp \
+imgui_demo.cpp \
+widget/WidgetChat.cpp
 
 SRC = $(addprefix $(SRC_DIR), $(SRC_FILE))
 
@@ -64,6 +66,7 @@ $(EXE): $(OBJ_DIR) $(OBJ)
 
 $(OBJ_DIR) :
 	@mkdir $(OBJ_DIR)
+	@mkdir $(OBJ_DIR)/widget
 
 $(OBJ_DIR)%.o: $(addprefix $(SRC_DIR), %.cpp) Makefile
 	$(CXX) $(CXXFLAGS) -c $< -o $@ $(addprefix -I , $(HEADER_DIR))

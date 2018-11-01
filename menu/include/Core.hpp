@@ -5,6 +5,7 @@
 #include <SFML/System/Clock.hpp>
 #include <SFML/Window/Event.hpp>
 #include <SFML/Graphics.hpp>
+#include "WidgetChat.hpp"
 
 class Core {
 	public:
@@ -23,16 +24,22 @@ class Core {
 
 	Core(void);
 	~Core(void);
+	void		demo(void);
 	bool		titleScreen(void);
 	void		aState(void);
+	void		AddLog(const char* fmt, ...);
 
 private:
 	sf::RenderWindow		_win;
+	ImGuiIO					&_io;
 	bool					_my_tool_active;
 	sf::Texture				_background;
 	sf::Clock				_deltaClock;
+	ImVec2					_size;
+	WidgetChat				_chat;
 
 	void					_render(void);
+	ImGuiIO					&_createContext(void);
 
 	Core          &operator=(Core const &rhs);
 	Core(Core const &src);
