@@ -1,4 +1,5 @@
 #include "Core.hpp"
+#include "WidgetExit.hpp"
 
 Core::Core(void) :
 _winSize(sf::Vector2<unsigned int>(900, 800)),
@@ -69,9 +70,14 @@ void			Core::demo(void)
 }
 
 
+void			callbackExit(void *ptr)
+{
+	static_cast<Core *>(ptr)->exit();
+}
 
 void			Core::aState(void)
 {
+	WidgetExit wexit(&callbackExit, this);
 	while (this->_win.isOpen())
 	{
 		sf::Event event;
@@ -88,34 +94,8 @@ void			Core::aState(void)
 		this->_chat.render();
 
 		ImGui::SetNextWindowPos(this->positionByPercent(sf::Vector2<unsigned int>(1, 1)));
-		ImGui::Begin("Exit", NULL, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoBackground);
-		if (ImGui::Button("Exit.."))
-			ImGui::OpenPopup("Exit ?");
-		if (ImGui::BeginPopupModal("Exit ?", NULL, ImGuiWindowFlags_AlwaysAutoResize))
-		{
-			ImGui::Text("Do you want Exit the game ?");
-			ImGui::Separator();
 
-
-			if (ImGui::Button("OK", ImVec2(120, 0)))
-			{
-				ImGui::CloseCurrentPopup();
-				this->_win.close();
-			}
-			ImGui::SetItemDefaultFocus();
-			ImGui::SameLine();
-			if (ImGui::Button("Cancel", ImVec2(120, 0)))
-			{
-				ImGui::CloseCurrentPopup();
-			}
-			ImGui::EndPopup();
-		}
-		ImGui::End();
-
-
-
-
-
+		wexit.render();
 
 		static double last_time = -1.0;
 		double time = ImGui::GetTime();
@@ -135,6 +115,10 @@ void				Core::_render(void)
 	this->_win.clear();
 	ImGui::SFML::Render(this->_win);
 	this->_win.display();
+}
+void 				Core::exit(void)
+{
+	this->_win.close();
 }
 
 sf::Vector2<unsigned int>	Core::positionByPercent(sf::Vector2<unsigned int> const &percent)

@@ -25,7 +25,8 @@ SRC_DIR = ./src/
 SRC_FILE= main.cpp \
 Core.cpp \
 imgui_demo.cpp \
-widget/WidgetChat.cpp
+widget/WidgetChat.cpp \
+widget/WidgetExit.cpp
 
 SRC = $(addprefix $(SRC_DIR), $(SRC_FILE))
 

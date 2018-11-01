@@ -29,6 +29,7 @@ class Core {
 	void		aState(void);
 	void		AddLog(const char* fmt, ...);
 
+	void 		exit(void);
 
 	sf::Vector2<unsigned int>	positionByPercent(sf::Vector2<unsigned int> const &percent);
 
