@@ -117,4 +117,4 @@ add_executable(nibbler
         network/listener.c
         network/talker.c
         network/talker2.c
-        Time/src/main.cpp class/network/ServerTCP.cpp class/network/ServerTCP.hpp class/network/ClientTCP.cpp class/network/ClientTCP.hpp)
+        Time/src/main.cpp class/network/ServerTCP.cpp class/network/ServerTCP.hpp class/network/ClientTCP.cpp class/network/ClientTCP.hpp class/network/chat_message.hpp)

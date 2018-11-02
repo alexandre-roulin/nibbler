@@ -79,6 +79,7 @@ int main(int ac, char **av) {
 	boost::asio::io_service io_server;
 	boost::asio::io_service io_client;
 	ServerTCP *serverTCP;
+	ClientTCP::pointer_client clientTCP;
 	try {
 		for (;;) {
 			std::cout << "$> ";
@@ -88,15 +89,23 @@ int main(int ac, char **av) {
 				boost::thread t(boost::bind(&boost::asio::io_service::run, &io_server));
 				t.detach();
 			}
-			if (buffer == "client") {
-				std::cout << "Hostname : ";
-				std::getline(std::cin, buffer);
-				new ClientTCP(io_client, buffer);
+			else if (buffer == "client") {
+//				std::cout << "Hostname : ";
+//				std::getline(std::cin, buffer);
+				clientTCP = ClientTCP::create(io_client, std::string("localhost"));
+				clientTCP->read_socket();
 				boost::thread t(boost::bind(&boost::asio::io_service::run, &io_client));
-				t.join();
+				t.detach();
 			}
-			if (buffer == "info") {
+			else if (buffer == "info") {
 				std::cout << serverTCP->size_pointers() << std::endl;
+			}
+			else if (buffer == "hello") {
+				serverTCP->hello();
+			}
+			else {
+				buffer += '\n';
+				clientTCP->write_socket(buffer);
 			}
 
 		}

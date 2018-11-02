@@ -30,7 +30,7 @@ public:
 		return socket_;
 	}
 
-	void start() {
+	void send_data_to_connection() {
 		message_ = make_daytime_string();
 
 		boost::asio::async_write(socket_, boost::asio::buffer(message_),
@@ -53,6 +53,7 @@ private:
 	std::string message_;
 };
 
+
 class tcp_server {
 public:
 	tcp_server(boost::asio::io_service &io_service)
@@ -74,7 +75,7 @@ private:
 	void handle_accept(TCPConnection::pointer new_connection,
 					   const boost::system::error_code &error) {
 		if (!error) {
-			new_connection->start();
+			new_connection->send_data_to_connection();
 		}
 
 		start_accept();

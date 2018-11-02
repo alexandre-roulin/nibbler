@@ -253,6 +253,9 @@
 		<Unit filename="/Users/alexandreroulin/work/nibbler/class/network/ServerTCP.hpp">
 			<Option target="nibbler"/>
 		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/class/network/chat_message.hpp">
+			<Option target="nibbler"/>
+		</Unit>
 		<Unit filename="/Users/alexandreroulin/work/nibbler/class/systems/CollisionSystem.cpp">
 			<Option target="nibbler"/>
 		</Unit>
