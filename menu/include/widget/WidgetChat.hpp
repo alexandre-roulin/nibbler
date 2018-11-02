@@ -1,5 +1,6 @@
 #pragma once
 #include "AWidget.hpp"
+#include "nibbler.hpp"
 
 class WidgetChat : public AWidget {
 public:
@@ -15,7 +16,7 @@ public:
 private:
 	ImGuiTextBuffer			_bufferChat;
 	bool					_scrollChat;
-	char					_bufferMessage[128];
+	char					_bufferMessage[CHAT_BUFFER];
 
 	WidgetChat &operator=(const WidgetChat&);
 	WidgetChat(const WidgetChat&);

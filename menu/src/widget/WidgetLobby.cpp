@@ -21,9 +21,14 @@ WidgetLobby::~WidgetLobby(void)
 		delete snake;
 }
 
-void			WidgetLobby::addSnake(std::string const &name)
+bool			WidgetLobby::addSnake(std::string const &name)
 {
-	this->_snake.emplace_back(new WidgetSnake(name, this->_texture, this->_color));
+	if (this->_snake.size() < MAX_SNAKE)
+	{
+		this->_snake.emplace_back(new WidgetSnake(name, this->_texture, this->_color));
+		return (true);
+	}
+	return (false);
 }
 
 void			WidgetLobby::render(void)

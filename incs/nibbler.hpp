@@ -3,6 +3,7 @@
 #include <string>
 
 #define MAX_SNAKE 8
+#define CHAT_BUFFER 128
 #define COMPONENT_MAX 7
 #define BASE_ENTITIES_CAPACITY 20
 #define GROUP_SNAKE "snake_group"
@@ -29,6 +30,12 @@ enum eSnakeSprite {
 	VOID,
 	GREEN,
 	RED
+};
+
+enum eHeader {
+	CHAT,
+	SNAKE,
+	FOOD
 };
 
 typedef struct		s_snake
