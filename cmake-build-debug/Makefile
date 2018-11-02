@@ -1689,6 +1689,33 @@ menu/src/main.cpp.s:
 	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/menu/src/main.cpp.s
 .PHONY : menu/src/main.cpp.s
 
+menu/src/widget/AWidget.o: menu/src/widget/AWidget.cpp.o
+
+.PHONY : menu/src/widget/AWidget.o
+
+# target to build an object file
+menu/src/widget/AWidget.cpp.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/menu/src/widget/AWidget.cpp.o
+.PHONY : menu/src/widget/AWidget.cpp.o
+
+menu/src/widget/AWidget.i: menu/src/widget/AWidget.cpp.i
+
+.PHONY : menu/src/widget/AWidget.i
+
+# target to preprocess a source file
+menu/src/widget/AWidget.cpp.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/menu/src/widget/AWidget.cpp.i
+.PHONY : menu/src/widget/AWidget.cpp.i
+
+menu/src/widget/AWidget.s: menu/src/widget/AWidget.cpp.s
+
+.PHONY : menu/src/widget/AWidget.s
+
+# target to generate assembly for a file
+menu/src/widget/AWidget.cpp.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/menu/src/widget/AWidget.cpp.s
+.PHONY : menu/src/widget/AWidget.cpp.s
+
 menu/src/widget/WidgetChat.o: menu/src/widget/WidgetChat.cpp.o
 
 .PHONY : menu/src/widget/WidgetChat.o
@@ -1715,6 +1742,60 @@ menu/src/widget/WidgetChat.s: menu/src/widget/WidgetChat.cpp.s
 menu/src/widget/WidgetChat.cpp.s:
 	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/menu/src/widget/WidgetChat.cpp.s
 .PHONY : menu/src/widget/WidgetChat.cpp.s
+
+menu/src/widget/WidgetExit.o: menu/src/widget/WidgetExit.cpp.o
+
+.PHONY : menu/src/widget/WidgetExit.o
+
+# target to build an object file
+menu/src/widget/WidgetExit.cpp.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/menu/src/widget/WidgetExit.cpp.o
+.PHONY : menu/src/widget/WidgetExit.cpp.o
+
+menu/src/widget/WidgetExit.i: menu/src/widget/WidgetExit.cpp.i
+
+.PHONY : menu/src/widget/WidgetExit.i
+
+# target to preprocess a source file
+menu/src/widget/WidgetExit.cpp.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/menu/src/widget/WidgetExit.cpp.i
+.PHONY : menu/src/widget/WidgetExit.cpp.i
+
+menu/src/widget/WidgetExit.s: menu/src/widget/WidgetExit.cpp.s
+
+.PHONY : menu/src/widget/WidgetExit.s
+
+# target to generate assembly for a file
+menu/src/widget/WidgetExit.cpp.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/menu/src/widget/WidgetExit.cpp.s
+.PHONY : menu/src/widget/WidgetExit.cpp.s
+
+menu/src/widget/WidgetSnake.o: menu/src/widget/WidgetSnake.cpp.o
+
+.PHONY : menu/src/widget/WidgetSnake.o
+
+# target to build an object file
+menu/src/widget/WidgetSnake.cpp.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/menu/src/widget/WidgetSnake.cpp.o
+.PHONY : menu/src/widget/WidgetSnake.cpp.o
+
+menu/src/widget/WidgetSnake.i: menu/src/widget/WidgetSnake.cpp.i
+
+.PHONY : menu/src/widget/WidgetSnake.i
+
+# target to preprocess a source file
+menu/src/widget/WidgetSnake.cpp.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/menu/src/widget/WidgetSnake.cpp.i
+.PHONY : menu/src/widget/WidgetSnake.cpp.i
+
+menu/src/widget/WidgetSnake.s: menu/src/widget/WidgetSnake.cpp.s
+
+.PHONY : menu/src/widget/WidgetSnake.s
+
+# target to generate assembly for a file
+menu/src/widget/WidgetSnake.cpp.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/menu/src/widget/WidgetSnake.cpp.s
+.PHONY : menu/src/widget/WidgetSnake.cpp.s
 
 network/listener.o: network/listener.c.o
 
@@ -1980,9 +2061,18 @@ help:
 	@echo "... menu/src/main.o"
 	@echo "... menu/src/main.i"
 	@echo "... menu/src/main.s"
+	@echo "... menu/src/widget/AWidget.o"
+	@echo "... menu/src/widget/AWidget.i"
+	@echo "... menu/src/widget/AWidget.s"
 	@echo "... menu/src/widget/WidgetChat.o"
 	@echo "... menu/src/widget/WidgetChat.i"
 	@echo "... menu/src/widget/WidgetChat.s"
+	@echo "... menu/src/widget/WidgetExit.o"
+	@echo "... menu/src/widget/WidgetExit.i"
+	@echo "... menu/src/widget/WidgetExit.s"
+	@echo "... menu/src/widget/WidgetSnake.o"
+	@echo "... menu/src/widget/WidgetSnake.i"
+	@echo "... menu/src/widget/WidgetSnake.s"
 	@echo "... network/listener.o"
 	@echo "... network/listener.i"
 	@echo "... network/listener.s"

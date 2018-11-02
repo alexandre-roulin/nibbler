@@ -1,3 +1,0 @@
-/Users/alexandreroulin/work/asio/CMakeFiles/rebuild_cache.dir
-/Users/alexandreroulin/work/asio/CMakeFiles/edit_cache.dir
-/Users/alexandreroulin/work/asio/CMakeFiles/asio.dir
