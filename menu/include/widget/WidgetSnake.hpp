@@ -7,18 +7,20 @@
 
 class WidgetSnake : public AWidget {
 public:
-	WidgetSnake(void);
-	WidgetSnake(void (*callback)(void *), void *ptr);
+	WidgetSnake(std::string const &);
 	~WidgetSnake(void);
 
 
 	void	render(void);
 
 private:
+	std::string									_name;
 	std::vector<sf::Texture>					_texture;
 	std::vector<std::string>					_color;
 	unsigned int								_indexColor;
+	bool										_isReady;
 
 	WidgetSnake &operator=(const WidgetSnake&);
 	WidgetSnake(const WidgetSnake&);
+	WidgetSnake(void);
 };
