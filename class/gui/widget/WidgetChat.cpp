@@ -2,7 +2,9 @@
 
 WidgetChat::WidgetChat(void) :
 AWidget()
-{}
+{
+	bzero(this->_bufferMessage, IM_ARRAYSIZE(this->_bufferMessage));
+}
 
 WidgetChat::~WidgetChat(void)
 {}
@@ -40,6 +42,8 @@ void			WidgetChat::render(void)
 		bufferMessage += "\n";
 		this->_client->add_prefix(CHAT, bufferMessage);
 		this->_client->write_socket(bufferMessage);*/
+		this->addLog("%s\n", this->_bufferMessage);
+
 		bzero(this->_bufferMessage, IM_ARRAYSIZE(this->_bufferMessage));
 	}
 	ImGui::End();
