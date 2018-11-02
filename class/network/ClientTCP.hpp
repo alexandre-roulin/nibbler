@@ -17,7 +17,7 @@ public:
 	ClientTCP(boost::asio::io_service &io, std::string &hostname);
 
 	void read_socket();
-
+	void connect();
 	void write_socket(std::string message);
 
 	void handle_read(const boost::system::error_code &, size_t);
@@ -39,5 +39,3 @@ private:
 	tcp::resolver resolver;
 	tcp::resolver::query query;
 };
-
-

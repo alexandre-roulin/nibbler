@@ -31,6 +31,9 @@
 #include <network/ClientTCP.hpp>
 #include <future>
 
+#include <gui/Core.hpp>
+
+
 void init(KNU::World &world) {
 	KNU::Entity *snake_follow = nullptr;
 	KNU::Entity *new_snake = nullptr;
@@ -72,12 +75,30 @@ int main(int ac, char **av) {
 	char path[] = "/tmp/log.out";
 	logger_init(path);
 
-
 	std::string buffer;
 	boost::asio::io_service io_server;
 	boost::asio::io_service io_client;
 	ServerTCP *serverTCP;
-	ClientTCP::pointer_client clientTCP;
+
+
+	serverTCP = new ServerTCP(io_server);
+	boost::thread t2(boost::bind(&boost::asio::io_service::run, &io_server));
+	t2.detach();
+
+
+	ClientTCP::pointer_client clientTCP = ClientTCP::create(io_client, std::string("localhost"));
+	clientTCP->connect();
+	clientTCP->read_socket();
+	boost::thread t(boost::bind(&boost::asio::io_service::run, &io_client));
+	t.detach();
+
+
+	Core menu;
+	menu.aState();
+
+	return (0);
+
+
 	try {
 		for (;;) {
 			std::cout << "$> ";

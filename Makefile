@@ -43,6 +43,14 @@ RM			= rm -rf
 NAME		= nibbler
 
 SRCS = \
+		gui/Core.cpp 								\
+		gui/imgui_demo.cpp							\
+		gui/widget/WidgetChat.cpp					\
+		gui/widget/WidgetExit.cpp					\
+		gui/widget/WidgetSnake.cpp					\
+		gui/widget/WidgetLobby.cpp					\
+		gui/widget/AWidget.cpp						\
+													\
 		cores/main.cpp								\
 													\
 		component/MotionComponent.cpp				\
@@ -111,23 +119,26 @@ LIBS		= \
 LDFLAGS		= \
 			-L ./jsoncpp/src/lib_json/				\
 			-L ~/.brew/lib/							\
+			-rpath ~/.brew/lib						\
+			-L imgui-sfml/ -limgui-sfml -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio \
 
 LDLIBS		= \
 			-ljsoncpp								\
 			-lboost_system							\
 			-lboost_thread-mt						\
-#			  -lncurses								\
+			-framework Cocoa -framework OpenGL -framework IOKit -framework CoreVideo \
 
 CPPFLAGS	= \
-			  -I$(DIR_INCS)							\
-			  -I$(DIR_CLASS)						\
-			  -I./jsoncpp/include/					\
-			  -I ~/.brew/include/					\
+			-I$(DIR_INCS)							\
+			-I$(DIR_CLASS)							\
+			-I./jsoncpp/include/					\
+			-I ~/.brew/include/						\
+			-I imgui-sfml/ -I ./externlib/commun/	\
 
 CFLAGS		= \
-			-std=c++1z						\
-#			-fsanitize=address					\
-#			-g3							\
+			-std=c++1z							\
+			-fsanitize=address					\
+			-g3									\
 #			-Wall -Werror -Wextra					\
 
 

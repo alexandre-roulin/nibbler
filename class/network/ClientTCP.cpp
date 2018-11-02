@@ -10,11 +10,12 @@ ClientTCP::ClientTCP(boost::asio::io_service &io, std::string &hostname)
 		  query(hostname, "4242"),
 		  socket(io),
 		  timer(io, boost::posix_time::seconds(1)) {
+}
+void ClientTCP::connect() {
 	std::cout << "Trying to connect" << std::endl;
 	tcp::resolver::iterator it = resolver.resolve(query);
 	boost::asio::connect(socket, it);
 }
-
 void ClientTCP::read_socket() {
 	boost::asio::async_read_until(socket, streambuf_, '\n',
 								  boost::bind(&ClientTCP::handle_read,
@@ -34,7 +35,6 @@ void ClientTCP::write_socket(std::string message) {
 void ClientTCP::add_prefix(eHeader header, std::string &message) {
 	char *header_serialized = reinterpret_cast<char *>(&header);
 	message.insert(0, header_serialized, sizeof(eHeader));
-	std::cout << message << std::endl;
 }
 
 void ClientTCP::parse_input(void const *input, size_t len) {
@@ -43,10 +43,12 @@ void ClientTCP::parse_input(void const *input, size_t len) {
 	std::memcpy(&header, input, header_len);
 	switch (header) {
 		case CHAT:
+		{
 			std::cout << std::string(
 					reinterpret_cast<char const *>(streambuf_.data().data()) +
 					header_len, len - header_len);
 			break;
+		}
 		case SNAKE:
 			break;
 		case FOOD:
@@ -56,7 +58,7 @@ void ClientTCP::parse_input(void const *input, size_t len) {
 
 void ClientTCP::handle_read(
 		boost::system::error_code const &error_code, size_t len) {
-	if (error_code == 0 && len > 0) {
+	if (error_code.value() == 0 && len > 0) {
 		parse_input(streambuf_.data().data(), len);
 	}
 	streambuf_.consume(len);

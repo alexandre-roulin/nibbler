@@ -68,7 +68,7 @@ void TCPConnection::async_read() {
 void
 TCPConnection::handle_write(const boost::system::error_code &error_code,
 							size_t len) {
-	if (error_code != 0)
+	if (error_code.value() != 0)
 		std::cout << "Write : " << len
 				  << " Error " << error_code.value() << std::endl;
 }
@@ -76,7 +76,7 @@ TCPConnection::handle_write(const boost::system::error_code &error_code,
 void TCPConnection::handler_read(const boost::system::error_code &error_code,
 								 size_t len) {
 
-	if (error_code == 0 && len > 0) {
+	if (error_code.value() == 0 && len > 0) {
 		serverTCP_.async_write(
 				std::string(
 						reinterpret_cast<char const *>(streambuf_.data().data()),
@@ -101,4 +101,3 @@ TCPConnection::create(boost::asio::io_service &io_service,
 tcp::socket &TCPConnection::socket() {
 	return socket_;
 }
-
