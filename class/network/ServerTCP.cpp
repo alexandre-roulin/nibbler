@@ -1,5 +1,4 @@
 #include "ServerTCP.hpp"
-#include <boost/array.hpp>
 
 ServerTCP::ServerTCP(boost::asio::io_service &io_service)
 		: acceptor_(io_service, tcp::endpoint(tcp::v4(), 4242)),
@@ -10,13 +9,15 @@ ServerTCP::ServerTCP(boost::asio::io_service &io_service)
 
 
 void ServerTCP::start_accept() {
-	std::cout << "start_accept" << std::endl;
 	acceptor_.async_accept([this](std::error_code ec, tcp::socket socket) {
-		std::cout << "async_accept::find" << std::endl;
+
 		if (!ec) {
 			TCPConnection::pointer new_connection =
-					TCPConnection::create(acceptor_.get_io_service());
-			new_connection->socket_ = std::move(socket);
+					TCPConnection::create(acceptor_.get_io_service(), *this);
+			new_connection->socket() = std::move(socket);
+
+			std::cout << "ServerTCP::new_connection > "
+					  << socket.native_handle() << std::endl;
 			new_connection->async_read();
 			pointers.push_back(new_connection);
 		}
@@ -24,32 +25,29 @@ void ServerTCP::start_accept() {
 	});
 }
 
-int ServerTCP::size_pointers() {
-	return pointers.size();
-}
-
-void TCPConnection::handler_read(const boost::system::error_code &error_code,
-								 size_t len) {
-	if (error_code == 0) {
-		std::cout << static_cast<char const *>(b.data().data());
-	}
-	b.consume(b.size());
-	async_read();
-}
-
-void
-TCPConnection::handle_write(const boost::system::error_code &e, size_t len) {
-	std::cout << "Write : " << len << " Error " << e.value() << std::endl;
-}
-
-void ServerTCP::hello() {
+void ServerTCP::async_write(std::string message) {
 	for (auto &pointer : pointers) {
-		pointer->async_write("salut tout le monde\n");
+		pointer->async_write(message);
 	}
+}
+
+void ServerTCP::remove(TCPConnection::pointer remove) {
+	pointers.erase(std::remove_if(pointers.begin(), pointers.end(),
+								  [remove](TCPConnection::pointer pointer) {
+									  std::cout << (remove == pointer)
+												<< std::endl;
+									  return remove == pointer;
+								  }));
 }
 
 /** ---------------------- TCPConnection ---------------------- **/
 
+TCPConnection::TCPConnection(
+		boost::asio::io_service &io_service,
+		ServerTCP &serverTCP)
+		: socket_(io_service),
+		  serverTCP_(serverTCP) {
+}
 
 void TCPConnection::async_write(std::string message) {
 	boost::asio::async_write(socket_, boost::asio::buffer(message),
@@ -60,20 +58,47 @@ void TCPConnection::async_write(std::string message) {
 }
 
 void TCPConnection::async_read() {
-	std::cout << "TCPConnection::async_read " << socket_.is_open() << std::endl;
-	boost::asio::async_read_until(socket_, b, '\n',
+	boost::asio::async_read_until(socket_, streambuf_, '\n',
 								  boost::bind(&TCPConnection::handler_read,
 											  shared_from_this(),
 											  boost::asio::placeholders::error,
 											  boost::asio::placeholders::bytes_transferred));
 }
 
-TCPConnection::pointer
-TCPConnection::create(boost::asio::io_service &io_service) {
-	return pointer(new TCPConnection(io_service));
+void
+TCPConnection::handle_write(const boost::system::error_code &error_code,
+							size_t len) {
+	if (error_code != 0)
+		std::cout << "Write : " << len
+				  << " Error " << error_code.value() << std::endl;
 }
 
-tcp::socket &TCPConnection::getSocket() {
+void TCPConnection::handler_read(const boost::system::error_code &error_code,
+								 size_t len) {
+
+	if (error_code == 0 && len > 0) {
+		serverTCP_.async_write(
+				std::string(
+						reinterpret_cast<char const *>(streambuf_.data().data()),
+						len));
+	} else {
+		serverTCP_.remove(shared_from_this());
+		std::cout << "Read : " << len
+				  << " Error " << error_code.value() << std::endl;
+		return;
+	}
+	streambuf_.consume(len);
+	async_read();
+}
+
+TCPConnection::pointer
+TCPConnection::create(boost::asio::io_service &io_service,
+					  ServerTCP &serverTCP) {
+	return pointer(new TCPConnection(io_service, serverTCP));
+}
+
+
+tcp::socket &TCPConnection::socket() {
 	return socket_;
 }
 

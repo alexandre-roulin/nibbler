@@ -9,33 +9,37 @@
 #include <boost/asio.hpp>
 #include <boost/asio/ip/tcp.hpp>
 #include <boost/thread/thread.hpp>
-
+#include <nibbler.hpp>
+#define BUFFER_LEN 1024
 #define PORT "4242"
+
 using boost::asio::ip::tcp;
 
+class ServerTCP;
+
 class TCPConnection : public boost::enable_shared_from_this<TCPConnection> {
+private:
+	tcp::socket socket_;
+	boost::asio::streambuf streambuf_;
+	bool isReady_;
+	ServerTCP &serverTCP_;
+
+	TCPConnection(boost::asio::io_service &io_service, ServerTCP &serverTCP);
+
+	void handler_read(const boost::system::error_code &, size_t);
+
+	void handle_write(const boost::system::error_code &, size_t);
 public:
 	typedef boost::shared_ptr<TCPConnection> pointer;
 
-	static pointer create(boost::asio::io_service &io_service);
+	static pointer
+	create(boost::asio::io_service &io_service, ServerTCP &serverTCP);
 
-	tcp::socket &getSocket();
+	tcp::socket &socket();
 
 	void async_write(std::string message);
+
 	void async_read();
-
-	void handler_read(const boost::system::error_code &,size_t);
-	void handle_write(const boost::system::error_code &,size_t);
-
-	tcp::socket socket_;
-
-private:
-	TCPConnection(boost::asio::io_service &io_service) : socket_(io_service) {
-
-	}
-	boost::asio::streambuf b;
-
-	bool isReady_;
 };
 
 
@@ -43,10 +47,9 @@ class ServerTCP {
 public:
 	ServerTCP(boost::asio::io_service &io_service);
 
-	void hello();
+	void async_write(std::string message);
 
-	int size_pointers();
-
+	void remove(TCPConnection::pointer);
 private:
 	std::vector<TCPConnection::pointer> pointers;
 
