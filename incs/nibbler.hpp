@@ -1,6 +1,8 @@
-#ifndef NIBBLER_NIBBLER_HPP
-#define NIBBLER_NIBBLER_HPP
+#pragma once
 
+#include <string>
+
+#define MAX_SNAKE 8
 #define COMPONENT_MAX 7
 #define BASE_ENTITIES_CAPACITY 20
 #define GROUP_SNAKE "snake_group"
@@ -15,11 +17,24 @@ enum eDirection {
 };
 
 enum eJoystick {
+	NONE,
 	ARROW_UP,
 	ARROW_DOWN,
 	ARROW_LEFT,
-	ARROW_RIGHT,
-	NONE
+	ARROW_RIGHT
 };
 
-#endif //NIBBLER_NIBBLER_HPP
+
+enum eSnakeSprite {
+	VOID,
+	GREEN,
+	RED
+};
+
+typedef struct		s_snake
+{
+	std::string		name;
+	eSnakeSprite	sprite;
+	bool			isReady;
+	unsigned int	id;
+}					t_snake;

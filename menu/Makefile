@@ -10,7 +10,7 @@ CXX= clang++
 CXXFLAGS= -Wall -Wextra -Werror -Wvla -std=c++14 -fsanitize=address -g3 -MMD
 #============HEADERS============#
 
-HEADER_DIR= ./include/ ./include/widget
+HEADER_DIR= ./include/ ./include/widget ../incs/
 
 #============COLORS=============#
 
@@ -28,6 +28,7 @@ imgui_demo.cpp \
 widget/WidgetChat.cpp \
 widget/WidgetExit.cpp \
 widget/WidgetSnake.cpp \
+widget/WidgetLobby.cpp \
 widget/AWidget.cpp
 
 SRC = $(addprefix $(SRC_DIR), $(SRC_FILE))

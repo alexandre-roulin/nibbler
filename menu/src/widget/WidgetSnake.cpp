@@ -1,19 +1,15 @@
 #include "WidgetSnake.hpp"
 #include <iostream>
-WidgetSnake::WidgetSnake(std::string const &str) :
+WidgetSnake::WidgetSnake(std::string const &str,
+							std::vector<sf::Texture> &texture,
+							std::vector<std::string> &color) :
 AWidget(),
+_texture(texture),
+_color(color),
 _name(str),
 _indexColor(0),
 _isReady(false)
 {
-	this->_color.emplace_back("snake_1");
-	this->_texture.emplace_back();
-	if (!(this->_texture.back().loadFromFile("snake_1.png")))
-		throw(AWidget::Constructor(std::string("WidgetSnake: Cant load [") + "snake_1.png" + "]"));
-	this->_color.emplace_back("snake_2");
-	this->_texture.emplace_back();
-	if (!(this->_texture.back().loadFromFile("snake_2.png")))
-		throw(AWidget::Constructor(std::string("WidgetSnake: Cant load [") + "snake_2.png" + "]"));
 }
 
 WidgetSnake::~WidgetSnake(void)
