@@ -33,7 +33,7 @@ void Univers::create_server() {
 }
 
 void Univers::create_client() {
-	clientTCP_ = ClientTCP::create(*this, io_client, std::string("e3r3p20.42.fr"));
+	clientTCP_ = ClientTCP::create(*this, io_client, std::string("localhost"));
 
 	clientTCP_->connect();
 	clientTCP_->read_socket();

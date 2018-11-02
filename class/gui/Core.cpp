@@ -119,9 +119,9 @@ void			Core::aState(void)
 	}
 }
 
-void				Core::addMessageChat(char const *msg)
+void				Core::addMessageChat(std::string const &msg)
 {
-	this->_chat.addLog(msg);
+	this->_chat.addLog(msg.c_str());
 }
 
 void				Core::_render(void)

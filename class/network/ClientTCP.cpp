@@ -48,8 +48,8 @@ void ClientTCP::parse_input(void const *input, size_t len) {
 	std::memcpy(&header, input, header_len);
 	switch (header) {
 		case CHAT: {
-			this->univers.getCore_().addMessageChat(
-				reinterpret_cast<char const *> (streambuf_.data().data()) + header_len);
+			this->univers.getCore_().addMessageChat(std::string(reinterpret_cast<char const *>
+				(streambuf_.data().data()) + header_len, len - header_len));
 			break;
 		}
 		case SNAKE:

@@ -20,7 +20,10 @@ WidgetSnake::~WidgetSnake(void)
 void			WidgetSnake::render(void)
 {
 	if (!this->_isYourSnake)
+	{
 		this->_renderYourSnake();
+		return ;
+	}
 	unsigned int		sizeTexture;
 
 	ImGui::Begin(this->_name.c_str(), NULL, ImGuiWindowFlags_NoDecoration);
