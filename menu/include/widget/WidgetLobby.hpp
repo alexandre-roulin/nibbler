@@ -13,7 +13,7 @@ public:
 	WidgetLobby(Core const &core);
 	~WidgetLobby(void);
 
-	bool	addSnake(std::string const &);
+	bool	addSnake(std::string const &, bool isYourSnake = false);
 
 	void	render(void);
 

@@ -6,7 +6,7 @@
 
 class WidgetSnake : public AWidget {
 public:
-	WidgetSnake(std::string const &, std::vector<sf::Texture> &, std::vector<std::string> &);
+	WidgetSnake(std::string const &, std::vector<sf::Texture> &, std::vector<std::string> &, bool);
 	~WidgetSnake(void);
 
 
@@ -19,6 +19,9 @@ private:
 	std::string									_name;
 	unsigned int								_indexColor;
 	bool										_isReady;
+	bool										_isYourSnake;
+
+	void		_renderYourSnake(void);
 
 	WidgetSnake &operator=(const WidgetSnake&);
 	WidgetSnake(const WidgetSnake&);

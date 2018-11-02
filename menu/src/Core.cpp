@@ -84,7 +84,7 @@ void			Core::aState(void)
 {
 	WidgetExit wexit(&callbackExit, this);
 	WidgetLobby lobby(*this);
-	lobby.addSnake("Jack O'Lantern");
+	lobby.addSnake("Jack O'Lantern", true);
 	lobby.addSnake("Eden");
 	lobby.addSnake("Jacky");
 	lobby.addSnake("Emerald");
