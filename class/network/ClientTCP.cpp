@@ -4,6 +4,7 @@
 #include <nibbler.hpp>
 #include "asio.hpp"
 #include "ClientTCP.hpp"
+#include <gui/Core.hpp>
 
 ClientTCP::ClientTCP(Univers &univers, boost::asio::io_service &io,
 					 std::string &hostname)
@@ -47,9 +48,8 @@ void ClientTCP::parse_input(void const *input, size_t len) {
 	std::memcpy(&header, input, header_len);
 	switch (header) {
 		case CHAT: {
-			std::cout << std::string(
-					reinterpret_cast<char const *>(streambuf_.data().data()) +
-					header_len, len - header_len);
+			this->univers.getCore_().addMessageChat(
+				reinterpret_cast<char const *> (streambuf_.data().data()) + header_len);
 			break;
 		}
 		case SNAKE:

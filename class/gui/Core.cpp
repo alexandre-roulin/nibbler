@@ -118,6 +118,12 @@ void			Core::aState(void)
 		this->_render();
 	}
 }
+
+void				Core::addMessageChat(char const *msg)
+{
+	this->_chat.addLog(msg);
+}
+
 void				Core::_render(void)
 {
 	this->_win.clear();
