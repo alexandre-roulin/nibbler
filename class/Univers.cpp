@@ -7,6 +7,7 @@ Univers::Univers() {
 	core_ = std::make_unique<Core>(*this);
 	clientTCP_ = nullptr;
 	serverTCP_ = nullptr;
+	core_->aState();
 }
 
 KNU::World &Univers::getWorld_() const {
