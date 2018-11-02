@@ -75,7 +75,6 @@ int main(int ac, char **av) {
 	char path[] = "/tmp/log.out";
 	logger_init(path);
 	Univers univers;
-	univers.create_server();
 	univers.create_client();
 	univers.getCore_().aState();
 	return (0);
