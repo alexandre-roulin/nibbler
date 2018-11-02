@@ -312,6 +312,33 @@ class/KNU/utils/Signature.cpp.s:
 	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/utils/Signature.cpp.s
 .PHONY : class/KNU/utils/Signature.cpp.s
 
+class/Univers.o: class/Univers.cpp.o
+
+.PHONY : class/Univers.o
+
+# target to build an object file
+class/Univers.cpp.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/Univers.cpp.o
+.PHONY : class/Univers.cpp.o
+
+class/Univers.i: class/Univers.cpp.i
+
+.PHONY : class/Univers.i
+
+# target to preprocess a source file
+class/Univers.cpp.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/Univers.cpp.i
+.PHONY : class/Univers.cpp.i
+
+class/Univers.s: class/Univers.cpp.s
+
+.PHONY : class/Univers.s
+
+# target to generate assembly for a file
+class/Univers.cpp.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/Univers.cpp.s
+.PHONY : class/Univers.cpp.s
+
 class/component/CollisionComponent.o: class/component/CollisionComponent.cpp.o
 
 .PHONY : class/component/CollisionComponent.o
@@ -554,6 +581,195 @@ class/events/JoystickEvent.s: class/events/JoystickEvent.cpp.s
 class/events/JoystickEvent.cpp.s:
 	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/events/JoystickEvent.cpp.s
 .PHONY : class/events/JoystickEvent.cpp.s
+
+class/gui/Core.o: class/gui/Core.cpp.o
+
+.PHONY : class/gui/Core.o
+
+# target to build an object file
+class/gui/Core.cpp.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/gui/Core.cpp.o
+.PHONY : class/gui/Core.cpp.o
+
+class/gui/Core.i: class/gui/Core.cpp.i
+
+.PHONY : class/gui/Core.i
+
+# target to preprocess a source file
+class/gui/Core.cpp.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/gui/Core.cpp.i
+.PHONY : class/gui/Core.cpp.i
+
+class/gui/Core.s: class/gui/Core.cpp.s
+
+.PHONY : class/gui/Core.s
+
+# target to generate assembly for a file
+class/gui/Core.cpp.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/gui/Core.cpp.s
+.PHONY : class/gui/Core.cpp.s
+
+class/gui/imgui_demo.o: class/gui/imgui_demo.cpp.o
+
+.PHONY : class/gui/imgui_demo.o
+
+# target to build an object file
+class/gui/imgui_demo.cpp.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/gui/imgui_demo.cpp.o
+.PHONY : class/gui/imgui_demo.cpp.o
+
+class/gui/imgui_demo.i: class/gui/imgui_demo.cpp.i
+
+.PHONY : class/gui/imgui_demo.i
+
+# target to preprocess a source file
+class/gui/imgui_demo.cpp.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/gui/imgui_demo.cpp.i
+.PHONY : class/gui/imgui_demo.cpp.i
+
+class/gui/imgui_demo.s: class/gui/imgui_demo.cpp.s
+
+.PHONY : class/gui/imgui_demo.s
+
+# target to generate assembly for a file
+class/gui/imgui_demo.cpp.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/gui/imgui_demo.cpp.s
+.PHONY : class/gui/imgui_demo.cpp.s
+
+class/gui/widget/AWidget.o: class/gui/widget/AWidget.cpp.o
+
+.PHONY : class/gui/widget/AWidget.o
+
+# target to build an object file
+class/gui/widget/AWidget.cpp.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/gui/widget/AWidget.cpp.o
+.PHONY : class/gui/widget/AWidget.cpp.o
+
+class/gui/widget/AWidget.i: class/gui/widget/AWidget.cpp.i
+
+.PHONY : class/gui/widget/AWidget.i
+
+# target to preprocess a source file
+class/gui/widget/AWidget.cpp.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/gui/widget/AWidget.cpp.i
+.PHONY : class/gui/widget/AWidget.cpp.i
+
+class/gui/widget/AWidget.s: class/gui/widget/AWidget.cpp.s
+
+.PHONY : class/gui/widget/AWidget.s
+
+# target to generate assembly for a file
+class/gui/widget/AWidget.cpp.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/gui/widget/AWidget.cpp.s
+.PHONY : class/gui/widget/AWidget.cpp.s
+
+class/gui/widget/WidgetChat.o: class/gui/widget/WidgetChat.cpp.o
+
+.PHONY : class/gui/widget/WidgetChat.o
+
+# target to build an object file
+class/gui/widget/WidgetChat.cpp.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/gui/widget/WidgetChat.cpp.o
+.PHONY : class/gui/widget/WidgetChat.cpp.o
+
+class/gui/widget/WidgetChat.i: class/gui/widget/WidgetChat.cpp.i
+
+.PHONY : class/gui/widget/WidgetChat.i
+
+# target to preprocess a source file
+class/gui/widget/WidgetChat.cpp.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/gui/widget/WidgetChat.cpp.i
+.PHONY : class/gui/widget/WidgetChat.cpp.i
+
+class/gui/widget/WidgetChat.s: class/gui/widget/WidgetChat.cpp.s
+
+.PHONY : class/gui/widget/WidgetChat.s
+
+# target to generate assembly for a file
+class/gui/widget/WidgetChat.cpp.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/gui/widget/WidgetChat.cpp.s
+.PHONY : class/gui/widget/WidgetChat.cpp.s
+
+class/gui/widget/WidgetExit.o: class/gui/widget/WidgetExit.cpp.o
+
+.PHONY : class/gui/widget/WidgetExit.o
+
+# target to build an object file
+class/gui/widget/WidgetExit.cpp.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/gui/widget/WidgetExit.cpp.o
+.PHONY : class/gui/widget/WidgetExit.cpp.o
+
+class/gui/widget/WidgetExit.i: class/gui/widget/WidgetExit.cpp.i
+
+.PHONY : class/gui/widget/WidgetExit.i
+
+# target to preprocess a source file
+class/gui/widget/WidgetExit.cpp.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/gui/widget/WidgetExit.cpp.i
+.PHONY : class/gui/widget/WidgetExit.cpp.i
+
+class/gui/widget/WidgetExit.s: class/gui/widget/WidgetExit.cpp.s
+
+.PHONY : class/gui/widget/WidgetExit.s
+
+# target to generate assembly for a file
+class/gui/widget/WidgetExit.cpp.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/gui/widget/WidgetExit.cpp.s
+.PHONY : class/gui/widget/WidgetExit.cpp.s
+
+class/gui/widget/WidgetLobby.o: class/gui/widget/WidgetLobby.cpp.o
+
+.PHONY : class/gui/widget/WidgetLobby.o
+
+# target to build an object file
+class/gui/widget/WidgetLobby.cpp.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/gui/widget/WidgetLobby.cpp.o
+.PHONY : class/gui/widget/WidgetLobby.cpp.o
+
+class/gui/widget/WidgetLobby.i: class/gui/widget/WidgetLobby.cpp.i
+
+.PHONY : class/gui/widget/WidgetLobby.i
+
+# target to preprocess a source file
+class/gui/widget/WidgetLobby.cpp.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/gui/widget/WidgetLobby.cpp.i
+.PHONY : class/gui/widget/WidgetLobby.cpp.i
+
+class/gui/widget/WidgetLobby.s: class/gui/widget/WidgetLobby.cpp.s
+
+.PHONY : class/gui/widget/WidgetLobby.s
+
+# target to generate assembly for a file
+class/gui/widget/WidgetLobby.cpp.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/gui/widget/WidgetLobby.cpp.s
+.PHONY : class/gui/widget/WidgetLobby.cpp.s
+
+class/gui/widget/WidgetSnake.o: class/gui/widget/WidgetSnake.cpp.o
+
+.PHONY : class/gui/widget/WidgetSnake.o
+
+# target to build an object file
+class/gui/widget/WidgetSnake.cpp.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/gui/widget/WidgetSnake.cpp.o
+.PHONY : class/gui/widget/WidgetSnake.cpp.o
+
+class/gui/widget/WidgetSnake.i: class/gui/widget/WidgetSnake.cpp.i
+
+.PHONY : class/gui/widget/WidgetSnake.i
+
+# target to preprocess a source file
+class/gui/widget/WidgetSnake.cpp.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/gui/widget/WidgetSnake.cpp.i
+.PHONY : class/gui/widget/WidgetSnake.cpp.i
+
+class/gui/widget/WidgetSnake.s: class/gui/widget/WidgetSnake.cpp.s
+
+.PHONY : class/gui/widget/WidgetSnake.s
+
+# target to generate assembly for a file
+class/gui/widget/WidgetSnake.cpp.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/gui/widget/WidgetSnake.cpp.s
+.PHONY : class/gui/widget/WidgetSnake.cpp.s
 
 class/logger/display/logger_debug.o: class/logger/display/logger_debug.cpp.o
 
@@ -1608,6 +1824,33 @@ menu/src/widget/WidgetExit.cpp.s:
 	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/menu/src/widget/WidgetExit.cpp.s
 .PHONY : menu/src/widget/WidgetExit.cpp.s
 
+menu/src/widget/WidgetLobby.o: menu/src/widget/WidgetLobby.cpp.o
+
+.PHONY : menu/src/widget/WidgetLobby.o
+
+# target to build an object file
+menu/src/widget/WidgetLobby.cpp.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/menu/src/widget/WidgetLobby.cpp.o
+.PHONY : menu/src/widget/WidgetLobby.cpp.o
+
+menu/src/widget/WidgetLobby.i: menu/src/widget/WidgetLobby.cpp.i
+
+.PHONY : menu/src/widget/WidgetLobby.i
+
+# target to preprocess a source file
+menu/src/widget/WidgetLobby.cpp.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/menu/src/widget/WidgetLobby.cpp.i
+.PHONY : menu/src/widget/WidgetLobby.cpp.i
+
+menu/src/widget/WidgetLobby.s: menu/src/widget/WidgetLobby.cpp.s
+
+.PHONY : menu/src/widget/WidgetLobby.s
+
+# target to generate assembly for a file
+menu/src/widget/WidgetLobby.cpp.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/menu/src/widget/WidgetLobby.cpp.s
+.PHONY : menu/src/widget/WidgetLobby.cpp.s
+
 menu/src/widget/WidgetSnake.o: menu/src/widget/WidgetSnake.cpp.o
 
 .PHONY : menu/src/widget/WidgetSnake.o
@@ -1665,6 +1908,9 @@ help:
 	@echo "... class/KNU/utils/Signature.o"
 	@echo "... class/KNU/utils/Signature.i"
 	@echo "... class/KNU/utils/Signature.s"
+	@echo "... class/Univers.o"
+	@echo "... class/Univers.i"
+	@echo "... class/Univers.s"
 	@echo "... class/component/CollisionComponent.o"
 	@echo "... class/component/CollisionComponent.i"
 	@echo "... class/component/CollisionComponent.s"
@@ -1692,6 +1938,27 @@ help:
 	@echo "... class/events/JoystickEvent.o"
 	@echo "... class/events/JoystickEvent.i"
 	@echo "... class/events/JoystickEvent.s"
+	@echo "... class/gui/Core.o"
+	@echo "... class/gui/Core.i"
+	@echo "... class/gui/Core.s"
+	@echo "... class/gui/imgui_demo.o"
+	@echo "... class/gui/imgui_demo.i"
+	@echo "... class/gui/imgui_demo.s"
+	@echo "... class/gui/widget/AWidget.o"
+	@echo "... class/gui/widget/AWidget.i"
+	@echo "... class/gui/widget/AWidget.s"
+	@echo "... class/gui/widget/WidgetChat.o"
+	@echo "... class/gui/widget/WidgetChat.i"
+	@echo "... class/gui/widget/WidgetChat.s"
+	@echo "... class/gui/widget/WidgetExit.o"
+	@echo "... class/gui/widget/WidgetExit.i"
+	@echo "... class/gui/widget/WidgetExit.s"
+	@echo "... class/gui/widget/WidgetLobby.o"
+	@echo "... class/gui/widget/WidgetLobby.i"
+	@echo "... class/gui/widget/WidgetLobby.s"
+	@echo "... class/gui/widget/WidgetSnake.o"
+	@echo "... class/gui/widget/WidgetSnake.i"
+	@echo "... class/gui/widget/WidgetSnake.s"
 	@echo "... class/logger/display/logger_debug.o"
 	@echo "... class/logger/display/logger_debug.i"
 	@echo "... class/logger/display/logger_debug.s"
@@ -1809,6 +2076,9 @@ help:
 	@echo "... menu/src/widget/WidgetExit.o"
 	@echo "... menu/src/widget/WidgetExit.i"
 	@echo "... menu/src/widget/WidgetExit.s"
+	@echo "... menu/src/widget/WidgetLobby.o"
+	@echo "... menu/src/widget/WidgetLobby.i"
+	@echo "... menu/src/widget/WidgetLobby.s"
 	@echo "... menu/src/widget/WidgetSnake.o"
 	@echo "... menu/src/widget/WidgetSnake.i"
 	@echo "... menu/src/widget/WidgetSnake.s"

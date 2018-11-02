@@ -4,6 +4,7 @@
 
 #include <KNU/systems/System.hpp>
 #include <KNU/events/EventManager.hpp>
+class Univers;
 
 namespace KNU {
 	class Entity;
@@ -18,7 +19,8 @@ namespace KNU {
 		std::unique_ptr<SystemManager> _systemManager;
 		friend class EntitiesManager;
 	public:
-		World();
+		World(Univers &);
+
 		void update();
 		Entity &createEntity();
 

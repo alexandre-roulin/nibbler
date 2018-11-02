@@ -1,6 +1,4 @@
 #pragma once
-#include "imgui.h"
-#include "imgui-SFML.h"
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/System/Clock.hpp>
 #include <SFML/Window/Event.hpp>
@@ -23,7 +21,7 @@ class Core {
 		std::string			_error;
 	};
 
-	Core(void);
+	Core(Univers &univers);
 	~Core(void);
 
 	//				GUI				//
@@ -35,6 +33,7 @@ class Core {
 	sf::Vector2<unsigned int>	positionByPercent(sf::Vector2<unsigned int> const &percent) const;
 
 private:
+	Univers &univers_;
 	t_snake						_snake[8];
 	t_snake						&_me;
 	//				GUI				//

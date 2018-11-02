@@ -74,57 +74,7 @@ void display(KNU::World &world) {
 int main(int ac, char **av) {
 	char path[] = "/tmp/log.out";
 	logger_init(path);
-
-	std::string buffer;
-	boost::asio::io_service io_server;
-	boost::asio::io_service io_client;
-	ServerTCP *serverTCP;
-
-
-	serverTCP = new ServerTCP(io_server);
-	boost::thread t2(boost::bind(&boost::asio::io_service::run, &io_server));
-	t2.detach();
-
-
-	ClientTCP::pointer_client clientTCP = ClientTCP::create(io_client, std::string("localhost"));
-	clientTCP->connect();
-	clientTCP->read_socket();
-	boost::thread t(boost::bind(&boost::asio::io_service::run, &io_client));
-	t.detach();
-
-
-	Core menu;
-	menu.aState();
+	Univers univers;
 
 	return (0);
-
-
-	try {
-		for (;;) {
-			std::cout << "$> ";
-			std::getline(std::cin, buffer);
-			if (buffer == "server") {
-				serverTCP = new ServerTCP(io_server);
-				boost::thread t(boost::bind(&boost::asio::io_service::run, &io_server));
-				t.detach();
-			}
-			else if (buffer == "client") {
-				clientTCP = ClientTCP::create(io_client, std::string("localhost"));
-				clientTCP->read_socket();
-				boost::thread t(boost::bind(&boost::asio::io_service::run, &io_client));
-				t.detach();
-			}
-			else {
-				buffer += '\n';
-				clientTCP->add_prefix(CHAT, buffer);
-				clientTCP->write_socket(buffer);
-			}
-
-		}
-	}
-	catch (std::exception &e) {
-		std::cerr << e.what() << std::endl;
-	}
-
-	return 0;
 }

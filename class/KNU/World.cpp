@@ -2,8 +2,7 @@
 #include "World.hpp"
 
 namespace KNU {
-
-	World::World() {
+	World::World(Univers &) {
 		_entityManager = std::make_unique<EntitiesManager>(*this);
 		_eventManager = std::make_unique<EventManager>(*this);
 		_systemManager = std::make_unique<SystemManager>(*this);
@@ -49,5 +48,7 @@ namespace KNU {
 		_destroyedEntities.clear();
 		_eventManager->destroyEvents();
 	}
+
+
 
 }

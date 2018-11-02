@@ -10,6 +10,8 @@
 #include <boost/asio/ip/tcp.hpp>
 #include <boost/thread/thread.hpp>
 #include <nibbler.hpp>
+#include <Univers.hpp>
+
 #define BUFFER_LEN 1024
 #define PORT "4242"
 
@@ -45,7 +47,7 @@ public:
 
 class ServerTCP {
 public:
-	ServerTCP(boost::asio::io_service &io_service);
+	ServerTCP(Univers &univers, boost::asio::io_service &io_service);
 
 	void async_write(std::string message);
 
@@ -54,7 +56,7 @@ private:
 	std::vector<TCPConnection::pointer> pointers;
 
 	void start_accept();
-
+	Univers &univers;
 	boost::thread thread_accept;
 	boost::asio::deadline_timer timer_accept;
 	tcp::acceptor acceptor_;

@@ -5,17 +5,21 @@
 #include "asio.hpp"
 #include "ClientTCP.hpp"
 
-ClientTCP::ClientTCP(boost::asio::io_service &io, std::string &hostname)
-		: resolver(io),
+ClientTCP::ClientTCP(Univers &univers, boost::asio::io_service &io,
+					 std::string &hostname)
+		: univers(univers),
+		  resolver(io),
 		  query(hostname, "4242"),
 		  socket(io),
 		  timer(io, boost::posix_time::seconds(1)) {
 }
+
 void ClientTCP::connect() {
 	std::cout << "Trying to connect" << std::endl;
 	tcp::resolver::iterator it = resolver.resolve(query);
 	boost::asio::connect(socket, it);
 }
+
 void ClientTCP::read_socket() {
 	boost::asio::async_read_until(socket, streambuf_, '\n',
 								  boost::bind(&ClientTCP::handle_read,
@@ -42,8 +46,7 @@ void ClientTCP::parse_input(void const *input, size_t len) {
 	size_t header_len = sizeof(eHeader);
 	std::memcpy(&header, input, header_len);
 	switch (header) {
-		case CHAT:
-		{
+		case CHAT: {
 			std::cout << std::string(
 					reinterpret_cast<char const *>(streambuf_.data().data()) +
 					header_len, len - header_len);
@@ -70,6 +73,7 @@ void ClientTCP::handle_write(const boost::system::error_code &error_code,
 }
 
 ClientTCP::pointer_client
-ClientTCP::create(boost::asio::io_service &io, std::string hostname) {
-	return pointer_client(new ClientTCP(io, hostname));
+ClientTCP::create(Univers &univers, boost::asio::io_service &io,
+				  std::string hostname) {
+	return pointer_client(new ClientTCP(univers, io, hostname));
 }

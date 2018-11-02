@@ -43,6 +43,8 @@ RM			= rm -rf
 NAME		= nibbler
 
 SRCS = \
+		Univers.cpp									\
+													\
 		gui/Core.cpp 								\
 		gui/imgui_demo.cpp							\
 		gui/widget/WidgetChat.cpp					\

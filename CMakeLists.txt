@@ -25,6 +25,19 @@ add_executable(nibbler
         class/events/FoodEvent.hpp
         class/events/JoystickEvent.cpp
         class/events/JoystickEvent.hpp
+        class/gui/widget/AWidget.cpp
+        class/gui/widget/AWidget.hpp
+        class/gui/widget/WidgetChat.cpp
+        class/gui/widget/WidgetChat.hpp
+        class/gui/widget/WidgetExit.cpp
+        class/gui/widget/WidgetExit.hpp
+        class/gui/widget/WidgetLobby.cpp
+        class/gui/widget/WidgetLobby.hpp
+        class/gui/widget/WidgetSnake.cpp
+        class/gui/widget/WidgetSnake.hpp
+        class/gui/Core.cpp
+        class/gui/Core.hpp
+        class/gui/imgui_demo.cpp
         class/KNU/component/Component.cpp
         class/KNU/component/Component.hpp
         class/KNU/entities/Entity.cpp
@@ -67,6 +80,8 @@ add_executable(nibbler
         class/systems/JoystickSystem.hpp
         class/systems/MotionSystem.cpp
         class/systems/MotionSystem.hpp
+        class/Univers.cpp
+        class/Univers.hpp
         externlib/commun/IDisplay.hpp
         externlib/commun/ISound.hpp
         externlib/display_sdl/include/DisplaySdl.hpp
@@ -82,9 +97,11 @@ add_executable(nibbler
         externlib/sound_sfml/include/SoundSfml.hpp
         externlib/sound_sfml/src/main.cpp
         externlib/sound_sfml/src/SoundSfml.cpp
+        incs/IWidget.hpp
         incs/logger.h
         incs/logger_utils.h
         incs/nibbler.hpp
+        incs/stb_image.h
         jsoncpp/include/json/allocator.h
         jsoncpp/include/json/assertions.h
         jsoncpp/include/json/autolink.h
@@ -108,6 +125,7 @@ add_executable(nibbler
         menu/include/widget/AWidget.hpp
         menu/include/widget/WidgetChat.hpp
         menu/include/widget/WidgetExit.hpp
+        menu/include/widget/WidgetLobby.hpp
         menu/include/widget/WidgetSnake.hpp
         menu/include/Core.hpp
         menu/include/IWidget.hpp
@@ -115,6 +133,7 @@ add_executable(nibbler
         menu/src/widget/AWidget.cpp
         menu/src/widget/WidgetChat.cpp
         menu/src/widget/WidgetExit.cpp
+        menu/src/widget/WidgetLobby.cpp
         menu/src/widget/WidgetSnake.cpp
         menu/src/Core.cpp
         menu/src/imgui_demo.cpp

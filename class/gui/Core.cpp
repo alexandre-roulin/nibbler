@@ -5,7 +5,8 @@
 #include <vector>
 #include <iostream>
 
-Core::Core(void) :
+Core::Core(Univers &univers) :
+univers_(univers),
 _me(this->_snake[0]),
 _winSize(sf::Vector2<unsigned int>(900, 800)),
 _win(sf::VideoMode(this->_winSize.x, this->_winSize.y), "Project Sanke"),
@@ -55,6 +56,7 @@ bool			Core::titleScreen(void)
 	return (true);
 }
 
+
 void			Core::demo(void)
 {
 	while (this->_win.isOpen())
@@ -73,7 +75,6 @@ void			Core::demo(void)
 		this->_render();
 	}
 }
-
 
 void			callbackExit(void *ptr)
 {
@@ -116,13 +117,13 @@ void			Core::aState(void)
 		this->_render();
 	}
 }
-
 void				Core::_render(void)
 {
 	this->_win.clear();
 	ImGui::SFML::Render(this->_win);
 	this->_win.display();
 }
+
 void 				Core::exit(void)
 {
 	this->_win.close();

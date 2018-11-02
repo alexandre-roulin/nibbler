@@ -136,6 +136,12 @@
 		<Unit filename="/Users/alexandreroulin/work/nibbler/class/KNU/utils/Signature.hpp">
 			<Option target="nibbler"/>
 		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/class/Univers.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/class/Univers.hpp">
+			<Option target="nibbler"/>
+		</Unit>
 		<Unit filename="/Users/alexandreroulin/work/nibbler/class/component/CollisionComponent.cpp">
 			<Option target="nibbler"/>
 		</Unit>
@@ -185,6 +191,45 @@
 			<Option target="nibbler"/>
 		</Unit>
 		<Unit filename="/Users/alexandreroulin/work/nibbler/class/events/JoystickEvent.hpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/class/gui/Core.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/class/gui/Core.hpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/class/gui/imgui_demo.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/class/gui/widget/AWidget.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/class/gui/widget/AWidget.hpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/class/gui/widget/WidgetChat.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/class/gui/widget/WidgetChat.hpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/class/gui/widget/WidgetExit.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/class/gui/widget/WidgetExit.hpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/class/gui/widget/WidgetLobby.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/class/gui/widget/WidgetLobby.hpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/class/gui/widget/WidgetSnake.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/class/gui/widget/WidgetSnake.hpp">
 			<Option target="nibbler"/>
 		</Unit>
 		<Unit filename="/Users/alexandreroulin/work/nibbler/class/logger/display/logger_debug.cpp">
@@ -313,6 +358,9 @@
 		<Unit filename="/Users/alexandreroulin/work/nibbler/externlib/sound_sfml/src/main.cpp">
 			<Option target="nibbler"/>
 		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/incs/IWidget.hpp">
+			<Option target="nibbler"/>
+		</Unit>
 		<Unit filename="/Users/alexandreroulin/work/nibbler/incs/logger.h">
 			<Option target="nibbler"/>
 		</Unit>
@@ -320,6 +368,9 @@
 			<Option target="nibbler"/>
 		</Unit>
 		<Unit filename="/Users/alexandreroulin/work/nibbler/incs/nibbler.hpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/incs/stb_image.h">
 			<Option target="nibbler"/>
 		</Unit>
 		<Unit filename="/Users/alexandreroulin/work/nibbler/jsoncpp/include/json/allocator.h">
@@ -400,6 +451,9 @@
 		<Unit filename="/Users/alexandreroulin/work/nibbler/menu/include/widget/WidgetExit.hpp">
 			<Option target="nibbler"/>
 		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/menu/include/widget/WidgetLobby.hpp">
+			<Option target="nibbler"/>
+		</Unit>
 		<Unit filename="/Users/alexandreroulin/work/nibbler/menu/include/widget/WidgetSnake.hpp">
 			<Option target="nibbler"/>
 		</Unit>
@@ -419,6 +473,9 @@
 			<Option target="nibbler"/>
 		</Unit>
 		<Unit filename="/Users/alexandreroulin/work/nibbler/menu/src/widget/WidgetExit.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/menu/src/widget/WidgetLobby.cpp">
 			<Option target="nibbler"/>
 		</Unit>
 		<Unit filename="/Users/alexandreroulin/work/nibbler/menu/src/widget/WidgetSnake.cpp">

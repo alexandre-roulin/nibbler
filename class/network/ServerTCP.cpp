@@ -1,7 +1,9 @@
 #include "ServerTCP.hpp"
 
-ServerTCP::ServerTCP(boost::asio::io_service &io_service)
-		: acceptor_(io_service, tcp::endpoint(tcp::v4(), 4242)),
+ServerTCP::ServerTCP(Univers &univers, boost::asio::io_service &io_service)
+
+		: univers(univers),
+		acceptor_(io_service, tcp::endpoint(tcp::v4(), 4242)),
 		  timer_accept(io_service, boost::posix_time::seconds(1)) {
 	std::cout << "Server created" << std::endl;
 	start_accept();

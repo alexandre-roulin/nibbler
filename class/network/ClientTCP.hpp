@@ -4,6 +4,7 @@
 #include <boost/asio/io_service.hpp>
 #include <boost/asio/ip/tcp.hpp>
 #include <boost/array.hpp>
+#include <Univers.hpp>
 #include "ServerTCP.hpp"
 #include "chat_message.hpp"
 
@@ -14,7 +15,7 @@ public:
 	typedef boost::shared_ptr<ClientTCP> pointer_client;
 
 
-	ClientTCP(boost::asio::io_service &io, std::string &hostname);
+	ClientTCP(Univers &univers, boost::asio::io_service &io, std::string &hostname);
 
 	void read_socket();
 	void connect();
@@ -28,7 +29,7 @@ public:
 	void add_prefix(eHeader, std::string &);
 
 	static pointer_client
-	create(boost::asio::io_service &io, std::string hostname);
+	create(Univers &univers, boost::asio::io_service &io, std::string hostname);
 
 	void parse_input(void const *, size_t);
 
@@ -38,4 +39,5 @@ private:
 	tcp::socket socket;
 	tcp::resolver resolver;
 	tcp::resolver::query query;
+	Univers	&univers;
 };
