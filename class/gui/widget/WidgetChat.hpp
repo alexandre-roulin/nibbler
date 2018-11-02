@@ -5,7 +5,7 @@
 
 class WidgetChat : public AWidget {
 public:
-	WidgetChat(void);
+	WidgetChat(Univers &univers);
 	~WidgetChat(void);
 
 
@@ -15,10 +15,12 @@ public:
 	void	clear(void);
 
 private:
+	Univers					&_univers;
 	ImGuiTextBuffer			_bufferChat;
 	bool					_scrollChat;
 	char					_bufferMessage[CHAT_BUFFER];
 
 	WidgetChat &operator=(const WidgetChat&);
 	WidgetChat(const WidgetChat&);
+	WidgetChat(void);
 };

@@ -10,7 +10,8 @@ univers_(univers),
 _me(this->_snake[0]),
 _winSize(sf::Vector2<unsigned int>(900, 800)),
 _win(sf::VideoMode(this->_winSize.x, this->_winSize.y), "Project Sanke"),
-_io(this->_createContext())
+_io(this->_createContext()),
+_chat(univers)
 {
 	if (!this->_imageTitleScreen.loadFromFile("ecran_titre.png"))
 		(throw(Core::CoreConstructorException("Cannot load background")));

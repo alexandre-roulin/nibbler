@@ -1,7 +1,9 @@
 #include "WidgetChat.hpp"
+#include "Univers.hpp"
 
-WidgetChat::WidgetChat(void) :
-AWidget()
+WidgetChat::WidgetChat(Univers &univers) :
+AWidget(),
+_univers(univers)
 {
 	bzero(this->_bufferMessage, IM_ARRAYSIZE(this->_bufferMessage));
 }
@@ -38,12 +40,10 @@ void			WidgetChat::render(void)
 	ImGui::EndChild();
 	if (ImGui::InputText("Tap", this->_bufferMessage, IM_ARRAYSIZE(this->_bufferMessage), ImGuiInputTextFlags_EnterReturnsTrue))
 	{
-		/*std::string bufferMessage(this->_bufferMessage);
+		std::string bufferMessage(this->_bufferMessage);
 		bufferMessage += "\n";
-		this->_client->add_prefix(CHAT, bufferMessage);
-		this->_client->write_socket(bufferMessage);*/
-		this->addLog("%s\n", this->_bufferMessage);
-
+		this->_univers.getClientTCP_().add_prefix(CHAT, bufferMessage);
+		this->_univers.getClientTCP_().write_socket(bufferMessage);
 		bzero(this->_bufferMessage, IM_ARRAYSIZE(this->_bufferMessage));
 	}
 	ImGui::End();
