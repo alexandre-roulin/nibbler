@@ -1,6 +1,7 @@
 #include <cstdlib>
 #include <deque>
 #include <iostream>
+#include <nibbler.hpp>
 #include "asio.hpp"
 #include "ClientTCP.hpp"
 
@@ -15,7 +16,7 @@ ClientTCP::ClientTCP(boost::asio::io_service &io, std::string &hostname)
 }
 
 void ClientTCP::read_socket() {
-	boost::asio::async_read_until(socket, b, '\n',
+	boost::asio::async_read_until(socket, streambuf_, '\n',
 								  boost::bind(&ClientTCP::handle_read,
 											  shared_from_this(),
 											  boost::asio::placeholders::error,
@@ -30,16 +31,40 @@ void ClientTCP::write_socket(std::string message) {
 										 boost::asio::placeholders::bytes_transferred));
 }
 
+void ClientTCP::add_prefix(eHeader header, std::string &message) {
+	char *header_serialized = reinterpret_cast<char *>(&header);
+	message.insert(0, header_serialized, sizeof(eHeader));
+	std::cout << message << std::endl;
+}
+
+void ClientTCP::parse_input(void const *input, size_t len) {
+	eHeader header;
+	size_t header_len = sizeof(eHeader);
+	std::memcpy(&header, input, header_len);
+	switch (header) {
+		case CHAT:
+			std::cout << std::string(
+					reinterpret_cast<char const *>(streambuf_.data().data()) +
+					header_len, len - header_len);
+			break;
+		case SNAKE:
+			break;
+		case FOOD:
+			break;
+	}
+}
+
 void ClientTCP::handle_read(
 		boost::system::error_code const &error_code, size_t len) {
-	if (error_code == 0) {
-		std::cout << static_cast<char const *>(b.data().data());
+	if (error_code == 0 && len > 0) {
+		parse_input(streambuf_.data().data(), len);
 	}
-	b.consume(len);
+	streambuf_.consume(len);
 	read_socket();
 }
 
-void ClientTCP::handle_write(const boost::system::error_code &error_code, size_t len) {
+void ClientTCP::handle_write(const boost::system::error_code &error_code,
+							 size_t len) {
 }
 
 ClientTCP::pointer_client

@@ -24,10 +24,16 @@ public:
 
 	void handle_write(const boost::system::error_code & /*error*/,
 					  size_t /*bytes_transferred*/);
-	static pointer_client create(boost::asio::io_service &io, std::string hostname);
+
+	void add_prefix(eHeader, std::string &);
+
+	static pointer_client
+	create(boost::asio::io_service &io, std::string hostname);
+
+	void parse_input(void const *, size_t);
 
 private:
-	boost::asio::streambuf b;
+	boost::asio::streambuf streambuf_;
 	boost::asio::deadline_timer timer;
 	tcp::socket socket;
 	tcp::resolver resolver;

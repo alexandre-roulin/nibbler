@@ -68,12 +68,10 @@ void display(KNU::World &world) {
 	}
 }
 
-void f(boost::asio::io_service &io){
-
-}
 int main(int ac, char **av) {
 	char path[] = "/tmp/log.out";
 	logger_init(path);
+
 
 	std::string buffer;
 	boost::asio::io_service io_server;
@@ -90,21 +88,14 @@ int main(int ac, char **av) {
 				t.detach();
 			}
 			else if (buffer == "client") {
-//				std::cout << "Hostname : ";
-//				std::getline(std::cin, buffer);
 				clientTCP = ClientTCP::create(io_client, std::string("localhost"));
 				clientTCP->read_socket();
 				boost::thread t(boost::bind(&boost::asio::io_service::run, &io_client));
 				t.detach();
 			}
-			else if (buffer == "info") {
-				std::cout << serverTCP->size_pointers() << std::endl;
-			}
-			else if (buffer == "hello") {
-				serverTCP->hello();
-			}
 			else {
 				buffer += '\n';
+				clientTCP->add_prefix(CHAT, buffer);
 				clientTCP->write_socket(buffer);
 			}
 
@@ -115,59 +106,4 @@ int main(int ac, char **av) {
 	}
 
 	return 0;
-//	Network net;
-//	std::string buffer;
-//	for (;;) {
-//		std::cout << "New command : ";
-//		std::getline(std::cin, buffer);
-//		if (buffer == "connect")
-//			net.connect_socket();
-//		if (buffer == "accept")
-//			net.accept_socket();
-//		if (buffer == "sendall")
-//			net.send_socket();
-//		if (buffer == "recv")
-//			net.recv_socket();
-//	}
-//	return 1;
-
-
-	KNU::World world;
-
-	world.getSystemManager().addSystem<MotionSystem>();
-	world.getSystemManager().addSystem<JoystickSystem>();
-	world.getSystemManager().addSystem<FollowSystem>();
-	world.getSystemManager().addSystem<CollisionSystem>();
-	world.getSystemManager().addSystem<FoodSystem>();
-
-	std::ifstream file("./save.json");
-	Json::Value input;
-	file >> input;
-	world.getEntityManager().deserializeKNU(input);
-
-	display(world);
-	for (int index = 0; index < 2; ++index) {
-		world.update();                                                         //WORLD			-> Distribute/Destroy entity to System/EntityManager
-		world.getEventManager().emitEvent<JoystickEvent>(ARROW_LEFT);
-
-		world.getSystemManager().getSystem<FollowSystem>()->update();           //FOLLOW		-> Save Next position
-		world.getSystemManager().getSystem<JoystickSystem>()->update();         //JOYSTICK		-> Move Joystick 's position component
-		world.getSystemManager().getSystem<MotionSystem>()->update();           //MOTION		-> Move Motion Component
-		world.getSystemManager().getSystem<CollisionSystem>()->update();        //COLLISION		-> Check Collision with CollisionComponent
-		world.getSystemManager().getSystem<FoodSystem>()->update();             //FOOD			-> Check FoodEvent and add Snake if needed
-		display(world);
-	}
-
-	for (int index = 0; index < 2; ++index) {
-		world.update();
-		world.getEventManager().emitEvent<JoystickEvent>(ARROW_UP);
-		world.getSystemManager().getSystem<FollowSystem>()->update();
-		world.getSystemManager().getSystem<JoystickSystem>()->update();
-		world.getSystemManager().getSystem<MotionSystem>()->update();
-		world.getSystemManager().getSystem<CollisionSystem>()->update();
-		world.getSystemManager().getSystem<FoodSystem>()->update();
-		display(world);
-	}
 }
-
-//
