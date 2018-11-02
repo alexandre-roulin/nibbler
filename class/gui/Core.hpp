@@ -28,7 +28,7 @@ class Core {
 	void						demo(void);
 	bool						titleScreen(void);
 	void						aState(void);
-	void						addMessageChat(const char *);
+	void						addMessageChat(std::string const &);
 	void 						exit(void);
 	sf::Vector2<unsigned int>	positionByPercent(sf::Vector2<unsigned int> const &percent) const;
 
