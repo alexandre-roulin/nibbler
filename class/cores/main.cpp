@@ -33,6 +33,7 @@
 
 #include <gui/Core.hpp>
 
+std::string const Snake::basicName[MAX_SNAKE] = { "Jack O'Lantern", "Eden", "Jacky", "Emerald", "Broutille", "Veggie-vie", "mprevot", "Dota c nul" };
 
 void init(KNU::World &world) {
 	KNU::Entity *snake_follow = nullptr;

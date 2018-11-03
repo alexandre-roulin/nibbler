@@ -1,10 +1,12 @@
 #include "WidgetLobby.hpp"
 #include <gui/Core.hpp>
 
-WidgetLobby::WidgetLobby(Core const &core) :
+WidgetLobby::WidgetLobby(Core const &core, Snake const *snakes) :
 AWidget(),
 _core(core)
 {
+	for (unsigned i = 0; i < MAX_SNAKE; i++)
+		this->addSnake(snakes[i]);
 	this->_color.emplace_back("snake_green");
 	this->_texture.emplace_back();
 	if (!(this->_texture.back().loadFromFile("ressource/snake_presentation/snake_green.png")))
@@ -25,11 +27,11 @@ WidgetLobby::~WidgetLobby(void)
 		delete snake;
 }
 
-bool			WidgetLobby::addSnake(std::string const &name, bool isYourSnake)
+bool			WidgetLobby::addSnake(Snake const &snake, bool isYourSnake)
 {
 	if (this->_snake.size() < MAX_SNAKE)
 	{
-		this->_snake.emplace_back(new WidgetSnake(name, this->_texture, this->_color, isYourSnake));
+		this->_snake.emplace_back(new WidgetSnake(snake, this->_texture, this->_color, isYourSnake));
 		return (true);
 	}
 	return (false);

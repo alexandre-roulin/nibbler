@@ -84,15 +84,7 @@ void			callbackExit(void *ptr)
 void			Core::aState(void)
 {
 	WidgetExit wexit(&callbackExit, this);
-	WidgetLobby lobby(*this);
-	lobby.addSnake("Jack O'Lantern", true);
-	lobby.addSnake("Eden");
-	lobby.addSnake("Jacky");
-	lobby.addSnake("Emerald");
-	lobby.addSnake("Broutille");
-	lobby.addSnake("Veggie-vie");
-	lobby.addSnake("mprevot");
-	lobby.addSnake("Dota c nul");
+	WidgetLobby lobby(*this, this->univers_.getClientTCP_().getSnakes());
 
 	while (this->_win.isOpen())
 	{
