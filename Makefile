@@ -184,17 +184,22 @@ $(DIR_DEPS) :
 #     '$(CC) $(OBJ) -o $(NAME) $(LDFLAGS) $(LDLIBS)'                           #
 # ---------------------------------------------------------------------------- #
 
-all : $(NAME)
+all : libs $(NAME)
+
+libs:
+	make -C imgui-sfml/
 
 $(NAME)		: $(DIR_OBJS) $(DIR_DEPS) $(O_SRCS) $(LIBS)
 	$(CC) $(O_SRCS) -o  $(NAME) $(LDFLAGS) $(LDLIBS) $(CFLAGS)
 
 clean		:
+	make clean -C imgui-sfml/
 	$(RM) $(DIR_OBJS)
 	$(RM) $(DIR_DEPS)
 
 
 fclean		: clean
+	make fclean -C imgui-sfml/
 	$(RM)	$(NAME)
 
 re			: fclean all
