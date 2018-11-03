@@ -25,6 +25,7 @@ public:
 	void change_state_ready();
 
 	void write_socket(std::string message);
+
 	void write_socket(void const *data, size_t len);
 
 	void parse_input(void const *, size_t);

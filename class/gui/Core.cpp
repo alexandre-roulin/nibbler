@@ -7,12 +7,12 @@
 
 Core::Core(Univers &univers) :
 univers_(univers),
-_winSize(sf::Vector2<unsigned int>(900, 800)),
+_winSize(sf::Vector2<unsigned int>(1800, 1600)),
 _win(sf::VideoMode(this->_winSize.x, this->_winSize.y), "Project Sanke"),
 _io(this->_createContext()),
 _chat(univers)
 {
-	if (!this->_imageTitleScreen.loadFromFile("ecran_titre.png"))
+	if (!this->_imageTitleScreen.loadFromFile("ressource/ecran_titre.png"))
 		(throw(Core::CoreConstructorException("Cannot load background")));
 	this->_io.IniFilename = NULL;
 }
@@ -84,15 +84,7 @@ void			callbackExit(void *ptr)
 void			Core::aState(void)
 {
 	WidgetExit wexit(&callbackExit, this);
-	WidgetLobby lobby(*this);
-	lobby.addSnake("Jack O'Lantern", true);
-	lobby.addSnake("Eden");
-	lobby.addSnake("Jacky");
-	lobby.addSnake("Emerald");
-	lobby.addSnake("Broutille");
-	lobby.addSnake("Veggie-vie");
-	lobby.addSnake("mprevot");
-	lobby.addSnake("Dota c nul");
+	WidgetLobby lobby(*this, this->univers_.getClientTCP_().getSnakes());
 
 	while (this->_win.isOpen())
 	{

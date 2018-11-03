@@ -25,7 +25,7 @@ int         main(int argc, char **argv)
     if (!(deleteDisplay = (void (*)(IDisplay *))(dlsym(dlHandle, "deleteDisplay"))))
         return (dlError());
 
-    IDisplay    *display = newDisplay("../commun/tileset1.png", 32, 30, 30, "lol");
+    IDisplay    *display = newDisplay("../commun/tileset_3snake.png", 32, 30, 30, "lol");
 
     Grid<int> grid(30, 30);
 
@@ -40,7 +40,16 @@ int         main(int argc, char **argv)
         std::cout << display->getDirection() << std::endl;
         display->drawTileGrid(0, 0, 0);
         display->drawTileGrid(1, 1, 1);
-        display->drawTileGrid(2, 2, 2);
+		display->drawTileGrid(2, 2, 2);
+		display->drawTileGrid(0+5*0, 17, 3, 3);
+		display->drawTileGrid(1+5*0, 17, 4, 3);
+        display->drawTileGrid(2+5*0, 17, 5, 3);
+		display->drawTileGrid(0+5*1, 17, 3, 4);
+		display->drawTileGrid(1+5*1, 17, 4, 4);
+		display->drawTileGrid(2+5*1, 17, 5, 4);
+		display->drawTileGrid(0+5*2, 17, 3, 5);
+		display->drawTileGrid(1+5*2, 17, 4, 5);
+		display->drawTileGrid(2+5*2, 17, 5, 5);
         display->drawTilePixel(12, 2*32+16, 2*32+16);
         display->render();
     }

@@ -20,6 +20,7 @@ void ServerTCP::start_accept() {
 					TCPConnection::create(acceptor_.get_io_service(), *this);
 			new_connection->socket() = std::move(socket);
 			snakes[nu_].id = nu_;
+			snakes[nu_] = Snake::randomSnake(nu_);
 			new_connection->async_read();
 			pointers.push_back(new_connection);
 			refresh_data_snake_array(new_connection, nu_);
@@ -32,15 +33,21 @@ void ServerTCP::start_accept() {
 void ServerTCP::refresh_data_snake_array(
 		TCPConnection::pointer &connection,
 		int16_t id) {
-	std::string buffer;
 	{
+		std::string buffer;
 		ClientTCP::add_prefix(ID, buffer, &id, sizeof(int16_t));
 		connection->async_write(buffer);
 	}
 	{
+		std::string buffer;
 		ClientTCP::add_prefix(SNAKE_ARRAY, buffer, snakes,
-							  sizeof(Snake) * MAX_SNAKE);
+				sizeof(Snake) * MAX_SNAKE);
 		connection->async_write(buffer);
+	}
+	{
+		std::string buffer;
+		ClientTCP::add_prefix(SNAKE, buffer, &snakes[id], sizeof(Snake));
+		async_write(buffer);
 	}
 }
 
@@ -71,14 +78,12 @@ void ServerTCP::parse_input(void const *input, size_t len) {
 	std::memcpy(&header, input, header_len);
 	char *data_deserialize = new char[len];
 	std::memcpy(data_deserialize,
-				reinterpret_cast<char const *>(input) + header_len, len);
+				reinterpret_cast<char const *>(input) + header_len,
+				len - header_len);
 
 	switch (header) {
 		case SNAKE_ARRAY: {
-			Snake *snake_array = reinterpret_cast<Snake *>(data_deserialize);
-			for (int index = 0; index < MAX_SNAKE; ++index) {
-				snakes[index] = snake_array[index];
-			}
+			std::memcpy(snakes, data_deserialize, sizeof(Snake) * MAX_SNAKE);
 			break;
 		}
 		case SNAKE: {

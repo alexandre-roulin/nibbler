@@ -33,6 +33,8 @@
 
 #include <gui/Core.hpp>
 
+std::string const Snake::basicName[MAX_SNAKE] = { "Jack O'Lantern", "Eden", "Jacky", "Emerald", "Broutille", "Veggie-vie", "mprevot", "Dota c nul" };
+
 void display(KNU::World &world) {
 
 	for (const auto &entity : world.getEntityManager()
@@ -43,10 +45,26 @@ void display(KNU::World &world) {
 	}
 }
 
+bool	demoGui(int ac, char **av, Univers &univers)
+{
+
+	if (ac > 1 && !strcmp(av[1], "demo"))
+	{
+		univers.create_ui();
+		univers.getCore_().demo();
+		return (true);
+	}
+	return (false);
+}
+
 int main(int ac, char **av) {
-	char path[] = "/tmp/log.out";
+	char		path[] = "/tmp/log.out";
 	logger_init(path);
-	Univers univers;
+	Univers		univers;
+
+	if (demoGui(ac, av, univers))
+		return (0);
+
 	std::string buffer;
 	for (;;) {
 		std::cout << "$> ";

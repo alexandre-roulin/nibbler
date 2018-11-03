@@ -4,6 +4,7 @@
 #include <ostream>
 
 #define MAX_SNAKE 8
+#define MAX_SPRITE 3
 #define CHAT_BUFFER 128
 #define COMPONENT_MAX 7
 #define BASE_ENTITIES_CAPACITY 20
@@ -28,9 +29,9 @@ enum eJoystick {
 
 
 enum eSnakeSprite {
-	VOID,
 	GREEN,
-	RED
+	RED,
+	VOID
 };
 
 enum eHeader {
@@ -65,4 +66,42 @@ struct		Snake
 		}
 		return *this;
 	}
+
+	static Snake randomSnake(int16_t id) {
+		Snake snake;
+
+		snake.sprite = static_cast<eSnakeSprite>(rand() % VOID);
+		snake.name = Snake::basicName[rand() % MAX_SNAKE];
+		snake.id = id;
+		return (snake);
+	}
+
+	static int getlastSnakeIndex(Snake *snakes, unsigned int range) {
+		for (unsigned int i = 0; i < range; i++)
+		{
+			if (snakes[i].id == -1)
+				return (i);
+		}
+		return (-1);
+	}
+
+	static int isFull(Snake *snakes, unsigned int range) {
+		for (unsigned int i = 0; i < range; i++)
+		{
+			if (snakes[i].id == -1)
+				return (false);
+		}
+		return (true);
+	}
+
+	static int getSnakeById(Snake *snakes, unsigned int range, int16_t id) {
+		for (unsigned int i = 0; i < range; i++)
+		{
+			if (snakes[i].id == id)
+				return (i);
+		}
+		return (-1);
+	}
+
+	static std::string const basicName[MAX_SNAKE];
 };

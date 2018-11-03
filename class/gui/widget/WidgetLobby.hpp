@@ -10,10 +10,10 @@ class Core;
 
 class WidgetLobby : public AWidget {
 public:
-	WidgetLobby(Core const &core);
+	WidgetLobby(Core const &core, Snake const *snakes);
 	~WidgetLobby(void);
 
-	bool	addSnake(std::string const &, bool isYourSnake = false);
+	bool	addSnake(Snake const &snake, bool isYourSnake = false);
 
 	void	render(void);
 

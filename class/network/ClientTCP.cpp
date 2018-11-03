@@ -59,19 +59,21 @@ void ClientTCP::parse_input(void const *input, size_t len) {
 	eHeader header;
 	size_t header_len = sizeof(eHeader);
 	std::memcpy(&header, input, header_len);
-	char *data_deserialize = new char[len];
+	char *data_deserialize = new char[len - header_len - 1];
+	std::cout << "H:" <<header << "Len : " << len <<  std::endl;
+
 	std::memcpy(data_deserialize,
 				reinterpret_cast<char const *>(input) + header_len,
-				len);
+				len - header_len - 1);
+
+	std::cout << "POST:H:" <<header << "CHAR_MAX :" << std::to_string(data_deserialize[len - header_len - 1])<< std::endl;
 	switch (header) {
 		case CHAT:
 			univers.getCore_().addMessageChat(std::string(data_deserialize));
 			break;
 		case SNAKE_ARRAY: {
-			Snake *snake_array = reinterpret_cast<Snake *>(data_deserialize);
-			for (int index = 0; index < MAX_SNAKE; ++index) {
-				snakes[index] = snake_array[index];
-			}
+			std::cout << "Assert mano : "<<(len - header == sizeof(Snake) * MAX_SNAKE) << std::endl;
+			std::memcpy(snakes, data_deserialize, sizeof(Snake) * MAX_SNAKE);
 			break;
 		}
 		case SNAKE: {
@@ -86,7 +88,7 @@ void ClientTCP::parse_input(void const *input, size_t len) {
 			std::cout << id_ << std::endl;
 			break;
 	}
-	delete[] data_deserialize;
+	delete [] data_deserialize;
 }
 
 void ClientTCP::handle_read(
@@ -112,6 +114,3 @@ ClientTCP::create(Univers &univers, boost::asio::io_service &io,
 Snake const *ClientTCP::getSnakes() const {
 	return snakes;
 }
-
-
-

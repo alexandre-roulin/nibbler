@@ -3,25 +3,24 @@
 #include <string>
 #include <vector>
 #include <SFML/Graphics.hpp>
+#include "nibbler.hpp"
 
 class WidgetSnake : public AWidget {
 public:
-	WidgetSnake(std::string const &, std::vector<sf::Texture> &, std::vector<std::string> &, bool);
+	WidgetSnake(Snake const &, std::vector<sf::Texture> &, std::vector<std::string> &, bool);
 	~WidgetSnake(void);
 
 
 	void	render(void);
 
 private:
-
+	Snake const									&_snake;
 	std::vector<sf::Texture>					&_texture;
 	std::vector<std::string>					&_color;
-	std::string									_name;
-	unsigned int								_indexColor;
-	bool										_isReady;
 	bool										_isYourSnake;
 
 	void		_renderYourSnake(void);
+	void		_renderOtherSnake(void);
 
 	WidgetSnake &operator=(const WidgetSnake&);
 	WidgetSnake(const WidgetSnake&);

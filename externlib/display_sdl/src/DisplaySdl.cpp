@@ -1,4 +1,3 @@
-#include <iostream>
 #include "DisplaySdl.hpp"
 
 IDisplay			*newDisplay(char const *tileset,
@@ -194,7 +193,7 @@ void		DisplaySdl::setBackground(Grid<int> const &grid)
 
 void			DisplaySdl::update(void)
 {
-	this->_direction = NONE;
+	this->_direction = NORTH;
     while (SDL_PollEvent(&this->_ev))
 	{
         if (this->_ev.window.event == SDL_WINDOWEVENT_CLOSE)
