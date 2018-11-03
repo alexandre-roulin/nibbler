@@ -5,14 +5,18 @@ WidgetLobby::WidgetLobby(Core const &core) :
 AWidget(),
 _core(core)
 {
-	this->_color.emplace_back("snake_1");
+	this->_color.emplace_back("snake_green");
 	this->_texture.emplace_back();
-	if (!(this->_texture.back().loadFromFile("snake_1.png")))
-		throw(AWidget::Constructor(std::string("WidgetLobby: Cant load [") + "snake_1.png" + "]"));
-	this->_color.emplace_back("snake_2");
+	if (!(this->_texture.back().loadFromFile("ressource/snake_presentation/snake_green.png")))
+		throw(AWidget::Constructor(std::string("WidgetLobby: Cant load [") + "snake_green.png" + "]"));
+	this->_color.emplace_back("snake_purple");
 	this->_texture.emplace_back();
-	if (!(this->_texture.back().loadFromFile("snake_2.png")))
-		throw(AWidget::Constructor(std::string("WidgetLobby: Cant load [") + "snake_2.png" + "]"));
+	if (!(this->_texture.back().loadFromFile("ressource/snake_presentation/snake_purple.png")))
+		throw(AWidget::Constructor(std::string("WidgetLobby: Cant load [") + "snake_purple.png" + "]"));
+	this->_color.emplace_back("snake_blue");
+	this->_texture.emplace_back();
+	if (!(this->_texture.back().loadFromFile("ressource/snake_presentation/snake_blue.png")))
+		throw(AWidget::Constructor(std::string("WidgetLobby: Cant load [") + "snake_blue.png" + "]"));
 }
 
 WidgetLobby::~WidgetLobby(void)

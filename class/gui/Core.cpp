@@ -12,7 +12,7 @@ _win(sf::VideoMode(this->_winSize.x, this->_winSize.y), "Project Sanke"),
 _io(this->_createContext()),
 _chat(univers)
 {
-	if (!this->_imageTitleScreen.loadFromFile("ecran_titre.png"))
+	if (!this->_imageTitleScreen.loadFromFile("ressource/ecran_titre.png"))
 		(throw(Core::CoreConstructorException("Cannot load background")));
 	this->_io.IniFilename = NULL;
 }
