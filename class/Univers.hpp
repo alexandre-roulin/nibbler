@@ -21,6 +21,9 @@ public:
 	ServerTCP &getServerTCP_() const;
 
 	Core &getCore_() const;
+	void create_ui();
+
+	const Snake *getSnakes() const;
 
 	void create_server();
 	void create_client();
@@ -28,6 +31,7 @@ public:
 
 private:
 	ServerTCP *serverTCP;
+
 
 	boost::asio::io_service io_server;
 	boost::asio::io_service io_client;

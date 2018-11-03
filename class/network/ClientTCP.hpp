@@ -26,7 +26,7 @@ public:
 	void handle_write(const boost::system::error_code & /*error*/,
 					  size_t /*bytes_transferred*/);
 
-	void add_prefix(eHeader, std::string &);
+	static void add_prefix(eHeader, std::string &);
 
 	static pointer_client
 	create(Univers &univers, boost::asio::io_service &io, std::string hostname);
@@ -34,6 +34,12 @@ public:
 	void parse_input(void const *, size_t);
 
 private:
+public:
+	const Snake *getSnakes() const;
+
+private:
+	int16_t id_;
+	Snake const *snakes;
 	boost::asio::streambuf streambuf_;
 	boost::asio::deadline_timer timer;
 	tcp::socket socket;

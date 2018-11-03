@@ -8,7 +8,9 @@
 
 ClientTCP::ClientTCP(Univers &univers, boost::asio::io_service &io,
 					 std::string &hostname)
-		: univers(univers),
+		: id_(0),
+		 snakes(nullptr),
+		  univers(univers),
 		  resolver(io),
 		  query(hostname, "4242"),
 		  socket(io),
@@ -40,21 +42,31 @@ void ClientTCP::write_socket(std::string message) {
 void ClientTCP::add_prefix(eHeader header, std::string &message) {
 	char *header_serialized = reinterpret_cast<char *>(&header);
 	message.insert(0, header_serialized, sizeof(eHeader));
+	message += "\n";
 }
 
+
 void ClientTCP::parse_input(void const *input, size_t len) {
+
 	eHeader header;
 	size_t header_len = sizeof(eHeader);
 	std::memcpy(&header, input, header_len);
+	char const *data_deserialize = reinterpret_cast<char const *>(input) +
+			header_len;
 	switch (header) {
 		case CHAT: {
-			this->univers.getCore_().addMessageChat(std::string(reinterpret_cast<char const *>
-				(streambuf_.data().data()) + header_len, len - header_len));
+			this->univers.getCore_().addMessageChat(
+					std::string(data_deserialize, len - header_len));
 			break;
 		}
-		case SNAKE:
+		case SNAKE_ARRAY:
+			snakes = reinterpret_cast<Snake const *>(data_deserialize);
 			break;
 		case FOOD:
+			break;
+		case ID:
+			id_ = *(reinterpret_cast<int16_t const *>(data_deserialize));
+			std::cout << id_ << std::endl;
 			break;
 	}
 }
@@ -77,3 +89,10 @@ ClientTCP::create(Univers &univers, boost::asio::io_service &io,
 				  std::string hostname) {
 	return pointer_client(new ClientTCP(univers, io, hostname));
 }
+
+Snake const *ClientTCP::getSnakes() const {
+	return snakes;
+}
+
+
+

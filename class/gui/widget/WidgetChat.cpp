@@ -41,7 +41,6 @@ void			WidgetChat::render(void)
 	if (ImGui::InputText("Tap", this->_bufferMessage, IM_ARRAYSIZE(this->_bufferMessage), ImGuiInputTextFlags_EnterReturnsTrue))
 	{
 		std::string bufferMessage(this->_bufferMessage);
-		bufferMessage += "\n";
 		this->_univers.getClientTCP_().add_prefix(CHAT, bufferMessage);
 		this->_univers.getClientTCP_().write_socket(bufferMessage);
 		bzero(this->_bufferMessage, IM_ARRAYSIZE(this->_bufferMessage));

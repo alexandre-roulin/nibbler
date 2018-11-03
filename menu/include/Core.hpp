@@ -35,8 +35,6 @@ class Core {
 	sf::Vector2<unsigned int>	positionByPercent(sf::Vector2<unsigned int> const &percent) const;
 
 private:
-	t_snake						_snake[8];
-	t_snake						&_me;
 	//				GUI				//
 	sf::Vector2<unsigned int>	_winSize;
 	sf::RenderWindow			_win;

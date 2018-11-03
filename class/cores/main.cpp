@@ -63,6 +63,7 @@ void init(KNU::World &world) {
 }
 
 void display(KNU::World &world) {
+
 	for (const auto &entity : world.getEntityManager()
 			.getEntitiesByGroup(GROUP_SNAKE)) {
 		auto positionComponent = entity.getComponent<PositionComponent>();
@@ -75,8 +76,18 @@ int main(int ac, char **av) {
 	char path[] = "/tmp/log.out";
 	logger_init(path);
 	Univers univers;
-	univers.create_server();
-	univers.create_client();
-	univers.getCore_().aState();
-	return (0);
+	std::string buffer;
+	for (;;) {
+		std::cout << "$> ";
+		std::getline(std::cin, buffer);
+		if (buffer == "server")
+			univers.create_server();
+		if (buffer == "client")
+			univers.create_client();
+		if (buffer == "start") {
+			univers.create_ui();
+			univers.getCore_().aState();
+			return (0);
+		}
+	}
 }

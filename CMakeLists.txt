@@ -138,4 +138,4 @@ add_executable(nibbler
         menu/src/Core.cpp
         menu/src/imgui_demo.cpp
         menu/src/main.cpp
-        Time/src/main.cpp)
+        Time/src/main.cpp class/Lol.cpp)

@@ -40,7 +40,7 @@ public:
 	tcp::socket &socket();
 
 	void async_write(std::string message);
-
+	void async_write(void *data, size_t bytes);
 	void async_read();
 };
 
@@ -51,8 +51,14 @@ public:
 
 	void async_write(std::string message);
 
+	void async_write(void *data, size_t bytes);
+	void refresh_data_snake_array(TCPConnection::pointer &connection,
+								  int16_t id);
+
 	void remove(TCPConnection::pointer);
 private:
+	Snake snakes[MAX_SNAKE];
+	int16_t nu_;
 	std::vector<TCPConnection::pointer> pointers;
 
 	void start_accept();
