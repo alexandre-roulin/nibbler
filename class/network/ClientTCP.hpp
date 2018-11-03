@@ -39,7 +39,7 @@ public:
 
 private:
 	int16_t id_;
-	Snake const *snakes;
+	Snake	snakes[MAX_SNAKE];
 	boost::asio::streambuf streambuf_;
 	boost::asio::deadline_timer timer;
 	tcp::socket socket;

@@ -27,7 +27,6 @@ Core &Univers::getCore_() const {
 
 void Univers::create_ui() {
 	core_ = std::make_unique<Core>(*this);
-	core_->aState();
 }
 void Univers::create_server() {
 	serverTCP_ = std::make_unique<ServerTCP>(*this, io_server);
@@ -45,4 +44,3 @@ void Univers::create_client() {
 	boost::thread t(boost::bind(&boost::asio::io_service::run, &io_client));
 	t.detach();
 }
-

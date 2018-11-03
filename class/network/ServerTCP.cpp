@@ -22,10 +22,24 @@ void ServerTCP::start_accept() {
 			new_connection->async_read();
 			pointers.push_back(new_connection);
 			refresh_data_snake_array(new_connection, nu_);
+			refresh_data_snake(nu_);
 			++nu_;
 		}
 		start_accept();
 	});
+}
+
+void ServerTCP::refresh_data_snake(int16_t id) {
+	unsigned int index;
+
+	index = Snake::getSnakeById(snakes, MAX_SNAKE, id);
+
+	assert(!(index == -1 || index > MAX_SNAKE));
+
+	std::string buffer(reinterpret_cast<char *>(&id), sizeof(int16_t));
+	buffer += std::string(reinterpret_cast<char *>(&this->snakes[index]), sizeof(Snake));
+	ClientTCP::add_prefix(SNAKE, buffer);
+	this->async_write(buffer);
 }
 
 void ServerTCP::refresh_data_snake_array(

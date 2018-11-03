@@ -52,6 +52,7 @@ public:
 	void async_write(std::string message);
 
 	void async_write(void *data, size_t bytes);
+	void refresh_data_snake(int16_t index);
 	void refresh_data_snake_array(TCPConnection::pointer &connection,
 								  int16_t id);
 

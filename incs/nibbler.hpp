@@ -36,6 +36,7 @@ enum eSnakeSprite {
 enum eHeader {
 	CHAT,
 	SNAKE_ARRAY,
+	SNAKE,
 	FOOD,
 	ID,
 };
@@ -63,5 +64,32 @@ struct		Snake
 			id = snake.id;
 		}
 		return *this;
+	}
+
+	static int getlastSnakeIndex(Snake *snakes, unsigned int range) {
+		for (unsigned int i = 0; i < range; i++)
+		{
+			if (snakes[i].id == -1)
+				return (i);
+		}
+		return (-1);
+	}
+
+	static int isFull(Snake *snakes, unsigned int range) {
+		for (unsigned int i = 0; i < range; i++)
+		{
+			if (snakes[i].id == -1)
+				return (false);
+		}
+		return (true);
+	}
+
+	static int getSnakeById(Snake *snakes, unsigned int range, int16_t id) {
+		for (unsigned int i = 0; i < range; i++)
+		{
+			if (snakes[i].id == id)
+				return (i);
+		}
+		return (-1);
 	}
 };

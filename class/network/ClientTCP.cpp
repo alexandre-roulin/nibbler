@@ -9,7 +9,6 @@
 ClientTCP::ClientTCP(Univers &univers, boost::asio::io_service &io,
 					 std::string &hostname)
 		: id_(0),
-		 snakes(nullptr),
 		  univers(univers),
 		  resolver(io),
 		  query(hostname, "4242"),
@@ -60,8 +59,29 @@ void ClientTCP::parse_input(void const *input, size_t len) {
 			break;
 		}
 		case SNAKE_ARRAY:
-			snakes = reinterpret_cast<Snake const *>(data_deserialize);
+		{
+			std::memcpy(snakes, data_deserialize, sizeof(Snake) * MAX_SNAKE);
+			for(int i=0;i<MAX_SNAKE;i++)
+				std::cout << this->snakes[i] << std::endl;
 			break;
+		}
+		case SNAKE:
+		{
+			int16_t			id;
+			int	index;
+
+			id = *reinterpret_cast<int16_t const *>(data_deserialize);
+			index = Snake::getSnakeById(snakes, MAX_SNAKE, id);
+			std::cout << "Recv: index[" <<index << "] id [" << id << "]" << std::endl;
+			if (index == -1 && Snake::isFull(snakes, MAX_SNAKE))
+				break;
+			else if (index == -1)
+				index = Snake::getlastSnakeIndex(snakes, MAX_SNAKE);
+			std::memcpy(&snakes[index], data_deserialize + sizeof(id), sizeof(Snake));
+			for(int i=0;i<MAX_SNAKE;i++)
+				std::cout << this->snakes[i] << std::endl;
+			break;
+		}
 		case FOOD:
 			break;
 		case ID:
@@ -93,6 +113,3 @@ ClientTCP::create(Univers &univers, boost::asio::io_service &io,
 Snake const *ClientTCP::getSnakes() const {
 	return snakes;
 }
-
-
-

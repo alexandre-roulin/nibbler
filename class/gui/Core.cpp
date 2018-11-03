@@ -7,7 +7,7 @@
 
 Core::Core(Univers &univers) :
 univers_(univers),
-_winSize(sf::Vector2<unsigned int>(900, 800)),
+_winSize(sf::Vector2<unsigned int>(1800, 1600)),
 _win(sf::VideoMode(this->_winSize.x, this->_winSize.y), "Project Sanke"),
 _io(this->_createContext()),
 _chat(univers)
