@@ -34,8 +34,6 @@ class Core {
 
 private:
 	Univers &univers_;
-	t_snake						_snake[8];
-	t_snake						&_me;
 	//				GUI				//
 	sf::Vector2<unsigned int>	_winSize;
 	sf::RenderWindow			_win;

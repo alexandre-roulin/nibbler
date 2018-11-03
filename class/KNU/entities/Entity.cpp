@@ -18,7 +18,8 @@ namespace KNU {
 		getEntitiesManager().killEntity(*this);
 	}
 
-	bool Entity::isAlive() const {
+	bool Entity
+	::isAlive() const {
 		return getEntitiesManager().isEntityAlive(*this);
 	}
 

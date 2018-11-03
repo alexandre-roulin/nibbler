@@ -1,9 +1,10 @@
 #include "ServerTCP.hpp"
+#include "ClientTCP.hpp"
 
 ServerTCP::ServerTCP(Univers &univers, boost::asio::io_service &io_service)
-
-		: univers(univers),
-		acceptor_(io_service, tcp::endpoint(tcp::v4(), 4242)),
+		: nu_(0),
+		  univers(univers),
+		  acceptor_(io_service, tcp::endpoint(tcp::v4(), 4242)),
 		  timer_accept(io_service, boost::posix_time::seconds(1)) {
 	std::cout << "Server created" << std::endl;
 	start_accept();
@@ -17,19 +18,40 @@ void ServerTCP::start_accept() {
 			TCPConnection::pointer new_connection =
 					TCPConnection::create(acceptor_.get_io_service(), *this);
 			new_connection->socket() = std::move(socket);
-
-			std::cout << "ServerTCP::new_connection > "
-					  << socket.native_handle() << std::endl;
+			snakes[nu_].id = nu_;
 			new_connection->async_read();
 			pointers.push_back(new_connection);
+			refresh_data_snake_array(new_connection, nu_);
+			++nu_;
 		}
 		start_accept();
 	});
 }
 
+void ServerTCP::refresh_data_snake_array(
+		TCPConnection::pointer &connection,
+		int16_t id) {
+	{
+		std::string buffer(reinterpret_cast<char *>(&id), sizeof(int16_t));
+		ClientTCP::add_prefix(ID, buffer);
+		connection->async_write(buffer);
+	}
+	{
+		std::string buffer(reinterpret_cast<char *>(snakes), sizeof(Snake) * MAX_SNAKE);
+		ClientTCP::add_prefix(SNAKE_ARRAY, buffer);
+		connection->async_write(buffer);
+	}
+}
+
 void ServerTCP::async_write(std::string message) {
 	for (auto &pointer : pointers) {
 		pointer->async_write(message);
+	}
+}
+
+void ServerTCP::async_write(void *data, size_t bytes) {
+	for (auto &pointer : pointers) {
+		pointer->async_write(data, bytes);
 	}
 }
 
@@ -53,6 +75,14 @@ TCPConnection::TCPConnection(
 
 void TCPConnection::async_write(std::string message) {
 	boost::asio::async_write(socket_, boost::asio::buffer(message),
+							 boost::bind(&TCPConnection::handle_write,
+										 shared_from_this(),
+										 boost::asio::placeholders::error,
+										 boost::asio::placeholders::bytes_transferred));
+}
+
+void TCPConnection::async_write(void *data, size_t bytes) {
+	boost::asio::async_write(socket_, boost::asio::buffer(data, bytes),
 							 boost::bind(&TCPConnection::handle_write,
 										 shared_from_this(),
 										 boost::asio::placeholders::error,

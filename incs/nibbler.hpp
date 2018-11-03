@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <ostream>
 
 #define MAX_SNAKE 8
 #define CHAT_BUFFER 128
@@ -34,14 +35,33 @@ enum eSnakeSprite {
 
 enum eHeader {
 	CHAT,
-	SNAKE,
-	FOOD
+	SNAKE_ARRAY,
+	FOOD,
+	ID,
 };
 
-typedef struct		s_snake
+struct		Snake
 {
+	Snake() : name(""), sprite(VOID), isReady(false), id(-1) {};
+
 	std::string		name;
 	eSnakeSprite	sprite;
 	bool			isReady;
-	unsigned int	id;
-}					t_snake;
+	int16_t				id;
+
+	friend std::ostream &operator<<(std::ostream &os, const Snake &snake) {
+		os << "name: " << snake.name << " sprite: " << snake.sprite
+		   << " isReady: " << snake.isReady << " id: " << snake.id;
+		return os;
+	}
+
+	Snake &operator=(Snake  const &snake) {
+		if (this != &snake) {
+			name = snake.name;
+			sprite = snake.sprite;
+			isReady = snake.isReady;
+			id = snake.id;
+		}
+		return *this;
+	}
+};
