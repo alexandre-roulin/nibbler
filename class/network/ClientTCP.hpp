@@ -15,23 +15,30 @@ public:
 	typedef boost::shared_ptr<ClientTCP> pointer_client;
 
 
-	ClientTCP(Univers &univers, boost::asio::io_service &io, std::string &hostname);
+	ClientTCP(Univers &univers, boost::asio::io_service &io,
+			  std::string &hostname);
+
+	void connect();
 
 	void read_socket();
-	void connect();
+
+	void change_state_ready();
+
 	void write_socket(std::string message);
+	void write_socket(void const *data, size_t len);
+
+	void parse_input(void const *, size_t);
 
 	void handle_read(const boost::system::error_code &, size_t);
 
-	void handle_write(const boost::system::error_code & /*error*/,
-					  size_t /*bytes_transferred*/);
+	void handle_write(const boost::system::error_code &, size_t);
 
-	static void add_prefix(eHeader, std::string &);
+	template<typename T>
+	static void add_prefix(eHeader, std::string &, T *element, size_t bytes);
 
 	static pointer_client
 	create(Univers &univers, boost::asio::io_service &io, std::string hostname);
 
-	void parse_input(void const *, size_t);
 
 private:
 public:
@@ -39,11 +46,20 @@ public:
 
 private:
 	int16_t id_;
-	Snake const *snakes;
+	Snake snakes[MAX_SNAKE];
 	boost::asio::streambuf streambuf_;
 	boost::asio::deadline_timer timer;
 	tcp::socket socket;
 	tcp::resolver resolver;
 	tcp::resolver::query query;
-	Univers	&univers;
+	Univers &univers;
 };
+
+template<typename T>
+void ClientTCP::add_prefix(eHeader header, std::string &message, T *element,
+						   size_t bytes) {
+	char *header_serialized = reinterpret_cast<char *>(&header);
+	message.insert(0, header_serialized, sizeof(eHeader));
+	message.insert(sizeof(eHeader), reinterpret_cast<char *>(element), bytes);
+	message.insert(sizeof(eHeader) + bytes, "\n", 1);
+}

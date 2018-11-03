@@ -36,6 +36,7 @@ enum eSnakeSprite {
 enum eHeader {
 	CHAT,
 	SNAKE_ARRAY,
+	SNAKE,
 	FOOD,
 	ID,
 };

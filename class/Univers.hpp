@@ -31,8 +31,6 @@ public:
 
 private:
 	ServerTCP *serverTCP;
-
-
 	boost::asio::io_service io_server;
 	boost::asio::io_service io_client;
 

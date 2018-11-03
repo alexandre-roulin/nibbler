@@ -1,5 +1,6 @@
 #include "ServerTCP.hpp"
 #include "ClientTCP.hpp"
+#include <factory/Factory.hpp>
 
 ServerTCP::ServerTCP(Univers &univers, boost::asio::io_service &io_service)
 		: nu_(0),
@@ -31,16 +32,25 @@ void ServerTCP::start_accept() {
 void ServerTCP::refresh_data_snake_array(
 		TCPConnection::pointer &connection,
 		int16_t id) {
+	std::string buffer;
 	{
-		std::string buffer(reinterpret_cast<char *>(&id), sizeof(int16_t));
-		ClientTCP::add_prefix(ID, buffer);
+		ClientTCP::add_prefix(ID, buffer, &id, sizeof(int16_t));
 		connection->async_write(buffer);
 	}
 	{
-		std::string buffer(reinterpret_cast<char *>(snakes), sizeof(Snake) * MAX_SNAKE);
-		ClientTCP::add_prefix(SNAKE_ARRAY, buffer);
+		ClientTCP::add_prefix(SNAKE_ARRAY, buffer, snakes,
+							  sizeof(Snake) * MAX_SNAKE);
 		connection->async_write(buffer);
 	}
+}
+
+void ServerTCP::start_game() {
+	for (int index = 0; index < MAX_SNAKE; ++index) {
+		if (!snakes[index].isReady && snakes[index].id != -1)
+			return;
+	}
+	Factory factory(univers.getWorld_());
+	factory.create_all_snake(nu_);
 }
 
 void ServerTCP::async_write(std::string message) {
@@ -49,10 +59,38 @@ void ServerTCP::async_write(std::string message) {
 	}
 }
 
-void ServerTCP::async_write(void *data, size_t bytes) {
+void ServerTCP::async_write(void const *input, size_t len) {
 	for (auto &pointer : pointers) {
-		pointer->async_write(data, bytes);
+		pointer->async_write(input, len);
 	}
+}
+
+void ServerTCP::parse_input(void const *input, size_t len) {
+	eHeader header;
+	size_t header_len = sizeof(eHeader);
+	std::memcpy(&header, input, header_len);
+	char *data_deserialize = new char[len];
+	std::memcpy(data_deserialize,
+				reinterpret_cast<char const *>(input) + header_len, len);
+
+	switch (header) {
+		case SNAKE_ARRAY: {
+			Snake *snake_array = reinterpret_cast<Snake *>(data_deserialize);
+			for (int index = 0; index < MAX_SNAKE; ++index) {
+				snakes[index] = snake_array[index];
+			}
+			break;
+		}
+		case SNAKE: {
+			Snake snake_temp = *reinterpret_cast<Snake *>(data_deserialize);
+			snakes[snake_temp.id] = snake_temp;
+			break;
+		}
+		default:
+			break;
+	}
+	delete [] data_deserialize;
+	async_write(input, len);
 }
 
 void ServerTCP::remove(TCPConnection::pointer remove) {
@@ -81,7 +119,7 @@ void TCPConnection::async_write(std::string message) {
 										 boost::asio::placeholders::bytes_transferred));
 }
 
-void TCPConnection::async_write(void *data, size_t bytes) {
+void TCPConnection::async_write(void const *data, size_t bytes) {
 	boost::asio::async_write(socket_, boost::asio::buffer(data, bytes),
 							 boost::bind(&TCPConnection::handle_write,
 										 shared_from_this(),
@@ -107,16 +145,10 @@ TCPConnection::handle_write(const boost::system::error_code &error_code,
 
 void TCPConnection::handler_read(const boost::system::error_code &error_code,
 								 size_t len) {
-
 	if (error_code.value() == 0 && len > 0) {
-		serverTCP_.async_write(
-				std::string(
-						reinterpret_cast<char const *>(streambuf_.data().data()),
-						len));
+		serverTCP_.parse_input(streambuf_.data().data(), len);
 	} else {
 		serverTCP_.remove(shared_from_this());
-		std::cout << "Read : " << len
-				  << " Error " << error_code.value() << std::endl;
 		return;
 	}
 	streambuf_.consume(len);

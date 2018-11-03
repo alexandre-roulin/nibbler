@@ -49,6 +49,9 @@ namespace KNU {
 		_eventManager->destroyEvents();
 	}
 
+	uint8_t World::getMax_() const {
+		return max_;
+	}
 
 
 }

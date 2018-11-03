@@ -122,9 +122,6 @@
 		<Unit filename="/Users/alexandreroulin/work/nibbler/class/KNU/utils/Signature.hpp">
 			<Option target="nibbler"/>
 		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/Lol.cpp">
-			<Option target="nibbler"/>
-		</Unit>
 		<Unit filename="/Users/alexandreroulin/work/nibbler/class/Univers.cpp">
 			<Option target="nibbler"/>
 		</Unit>
@@ -180,6 +177,12 @@
 			<Option target="nibbler"/>
 		</Unit>
 		<Unit filename="/Users/alexandreroulin/work/nibbler/class/events/JoystickEvent.hpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/class/factory/Factory.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/class/factory/Factory.hpp">
 			<Option target="nibbler"/>
 		</Unit>
 		<Unit filename="/Users/alexandreroulin/work/nibbler/class/gui/Core.cpp">
@@ -345,6 +348,42 @@
 			<Option target="nibbler"/>
 		</Unit>
 		<Unit filename="/Users/alexandreroulin/work/nibbler/externlib/sound_sfml/src/main.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/imgui-sfml/imconfig.h">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/imgui-sfml/imgui-SFML.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/imgui-sfml/imgui-SFML.h">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/imgui-sfml/imgui.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/imgui-sfml/imgui.h">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/imgui-sfml/imgui_demo.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/imgui-sfml/imgui_draw.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/imgui-sfml/imgui_internal.h">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/imgui-sfml/imgui_widgets.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/imgui-sfml/imstb_rectpack.h">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/imgui-sfml/imstb_textedit.h">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/imgui-sfml/imstb_truetype.h">
 			<Option target="nibbler"/>
 		</Unit>
 		<Unit filename="/Users/alexandreroulin/work/nibbler/incs/IWidget.hpp">

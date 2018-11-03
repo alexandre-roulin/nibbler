@@ -19,6 +19,7 @@ void			WidgetChat::addLog(const char* str, ...)
 	old_size = this->_bufferChat.size();
 	va_start(args, str);
 	this->_bufferChat.appendfv(str, args);
+	this->_bufferChat.appendfv("\n", args);
 	va_end(args);
 	this->_scrollChat = true;
 }
@@ -40,8 +41,9 @@ void			WidgetChat::render(void)
 	ImGui::EndChild();
 	if (ImGui::InputText("Tap", this->_bufferMessage, IM_ARRAYSIZE(this->_bufferMessage), ImGuiInputTextFlags_EnterReturnsTrue))
 	{
-		std::string bufferMessage(this->_bufferMessage);
-		this->_univers.getClientTCP_().add_prefix(CHAT, bufferMessage);
+		std::string bufferMessage;
+		ClientTCP::add_prefix(CHAT, bufferMessage, this->_bufferMessage,
+							  sizeof(_bufferMessage));
 		this->_univers.getClientTCP_().write_socket(bufferMessage);
 		bzero(this->_bufferMessage, IM_ARRAYSIZE(this->_bufferMessage));
 	}

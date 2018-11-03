@@ -25,6 +25,8 @@ add_executable(nibbler
         class/events/FoodEvent.hpp
         class/events/JoystickEvent.cpp
         class/events/JoystickEvent.hpp
+        class/factory/Factory.cpp
+        class/factory/Factory.hpp
         class/gui/widget/AWidget.cpp
         class/gui/widget/AWidget.hpp
         class/gui/widget/WidgetChat.cpp
@@ -97,6 +99,18 @@ add_executable(nibbler
         externlib/sound_sfml/include/SoundSfml.hpp
         externlib/sound_sfml/src/main.cpp
         externlib/sound_sfml/src/SoundSfml.cpp
+        imgui-sfml/imconfig.h
+        imgui-sfml/imgui-SFML.cpp
+        imgui-sfml/imgui-SFML.h
+        imgui-sfml/imgui.cpp
+        imgui-sfml/imgui.h
+        imgui-sfml/imgui_demo.cpp
+        imgui-sfml/imgui_draw.cpp
+        imgui-sfml/imgui_internal.h
+        imgui-sfml/imgui_widgets.cpp
+        imgui-sfml/imstb_rectpack.h
+        imgui-sfml/imstb_textedit.h
+        imgui-sfml/imstb_truetype.h
         incs/IWidget.hpp
         incs/logger.h
         incs/logger_utils.h
@@ -138,4 +152,4 @@ add_executable(nibbler
         menu/src/Core.cpp
         menu/src/imgui_demo.cpp
         menu/src/main.cpp
-        Time/src/main.cpp class/Lol.cpp)
+        Time/src/main.cpp)

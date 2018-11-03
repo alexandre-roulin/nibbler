@@ -40,7 +40,7 @@ public:
 	tcp::socket &socket();
 
 	void async_write(std::string message);
-	void async_write(void *data, size_t bytes);
+	void async_write(void const *data, size_t bytes);
 	void async_read();
 };
 
@@ -50,10 +50,10 @@ public:
 	ServerTCP(Univers &univers, boost::asio::io_service &io_service);
 
 	void async_write(std::string message);
-
-	void async_write(void *data, size_t bytes);
-	void refresh_data_snake_array(TCPConnection::pointer &connection,
-								  int16_t id);
+	void async_write(void const*input, size_t len);
+	void parse_input(void const*, size_t);
+	void refresh_data_snake_array(TCPConnection::pointer &, int16_t);
+	void start_game();
 
 	void remove(TCPConnection::pointer);
 private:

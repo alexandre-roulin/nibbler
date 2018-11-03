@@ -45,6 +45,8 @@ NAME		= nibbler
 SRCS = \
 		Univers.cpp									\
 													\
+		factory/Factory.cpp							\
+													\
 		gui/Core.cpp 								\
 		gui/imgui_demo.cpp							\
 		gui/widget/WidgetChat.cpp					\
@@ -184,17 +186,22 @@ $(DIR_DEPS) :
 #     '$(CC) $(OBJ) -o $(NAME) $(LDFLAGS) $(LDLIBS)'                           #
 # ---------------------------------------------------------------------------- #
 
-all : $(NAME)
+all : libs $(NAME)
+
+libs:
+	make -C imgui-sfml/
 
 $(NAME)		: $(DIR_OBJS) $(DIR_DEPS) $(O_SRCS) $(LIBS)
 	$(CC) $(O_SRCS) -o  $(NAME) $(LDFLAGS) $(LDLIBS) $(CFLAGS)
 
 clean		:
+	make clean -C imgui-sfml/
 	$(RM) $(DIR_OBJS)
 	$(RM) $(DIR_DEPS)
 
 
 fclean		: clean
+	make fclean -C imgui-sfml/
 	$(RM)	$(NAME)
 
 re			: fclean all
@@ -221,3 +228,4 @@ $(DIR_DEPS)/%.d	: ;
 .PHONY	:	all clean fclean re $(DIR_OBJS)/%.o $(DIR_DEPS)/%.d libs
 
 # ---------------------------------------------------------------------------- #
+
