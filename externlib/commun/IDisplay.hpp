@@ -1,7 +1,12 @@
 #pragma once
 #include "Grid.tpp"
 
-enum eDirection;
+enum eDirection {
+	NORTH,
+	SOUTH,
+	EAST,
+	WEST
+};
 
 class IDisplay {
 public:
