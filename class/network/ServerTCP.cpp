@@ -19,6 +19,7 @@ void ServerTCP::start_accept() {
 					TCPConnection::create(acceptor_.get_io_service(), *this);
 			new_connection->socket() = std::move(socket);
 			snakes[nu_].id = nu_;
+			snakes[nu_] = Snake::randomSnake(nu_);
 			new_connection->async_read();
 			pointers.push_back(new_connection);
 			refresh_data_snake_array(new_connection, nu_);
