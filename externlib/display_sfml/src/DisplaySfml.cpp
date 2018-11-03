@@ -1,4 +1,3 @@
-#include <iostream>
 #include "DisplaySfml.hpp"
 
 IDisplay			*newDisplay(char const *tileset,
@@ -167,7 +166,7 @@ void		DisplaySfml::setBackground(Grid<int> const &grid)
 
 void			DisplaySfml::update(void)
 {
-	this->_direction = NONE;
+	this->_direction = NORTH;
     while (this->_win.pollEvent(this->_ev))
     {
         if (this->_ev.type == sf::Event::Closed)
