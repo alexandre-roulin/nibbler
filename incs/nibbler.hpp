@@ -30,7 +30,8 @@ enum eJoystick {
 
 enum eSnakeSprite {
 	GREEN,
-	RED,
+	PURPLE,
+	BLUE,
 	VOID
 };
 
