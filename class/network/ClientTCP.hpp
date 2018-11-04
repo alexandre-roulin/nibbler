@@ -39,8 +39,10 @@ public:
 
 	void parse_input(eHeader header, void const *, size_t);
 
+	void refreshMySnake(void);
+	void change_name(char const *name);
 	void change_sprite(eSnakeSprite snakeSprite);
-	void change_state_ready();
+	void change_state_ready(void);
 
 	template<typename T>
 	static void add_prefix(eHeader, std::string &, T *element, size_t bytes);

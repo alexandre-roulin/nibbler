@@ -20,6 +20,8 @@ private:
 	bool					_scrollChat;
 	char					_bufferMessage[CHAT_BUFFER];
 
+	bool					_chatCommand(void);
+
 	WidgetChat &operator=(const WidgetChat&);
 	WidgetChat(const WidgetChat&);
 	WidgetChat(void);

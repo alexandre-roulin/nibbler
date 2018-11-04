@@ -32,7 +32,7 @@ void			WidgetSnake::_renderOtherSnake(void)
 {
 	unsigned int		sizeTexture;
 
-	ImGui::Begin(std::string(this->_snake.name + std::to_string(this->_snake.id)).c_str(), NULL, ImGuiWindowFlags_NoDecoration);
+	ImGui::Begin(std::string(std::to_string(this->_snake.id) + std::string(this->_snake.name)).c_str(), NULL, ImGuiWindowFlags_NoDecoration);
 
 	if (ImGui::GetWindowSize().x < ImGui::GetWindowSize().y - ImGui::GetFrameHeightWithSpacing() * 3)
 		sizeTexture = ImGui::GetWindowSize().x * 0.8;
@@ -41,7 +41,7 @@ void			WidgetSnake::_renderOtherSnake(void)
 
 	ImGui::PushItemWidth(sizeTexture);
 	ImGui::SetCursorPosX(4);
-	ImGui::LabelText(this->_snake.name.c_str(), "Name : ");
+	ImGui::LabelText(this->_snake.name, "Name : ");
 
 
 	ImGui::SetCursorPosX((ImGui::GetWindowSize().x - sizeTexture) / 2);
@@ -90,7 +90,7 @@ void			WidgetSnake::_renderYourSnake(void)
 {
 	unsigned int		sizeTexture;
 
-	ImGui::Begin(std::string(this->_snake.name + std::to_string(this->_snake.id)).c_str(), NULL, ImGuiWindowFlags_NoDecoration);
+	ImGui::Begin(std::string(std::to_string(this->_snake.id) + std::string(this->_snake.name)).c_str(), NULL, ImGuiWindowFlags_NoDecoration);
 
 	if (ImGui::GetWindowSize().x < ImGui::GetWindowSize().y - ImGui::GetFrameHeightWithSpacing() * 3)
 		sizeTexture = ImGui::GetWindowSize().x * 0.8;
@@ -101,7 +101,7 @@ void			WidgetSnake::_renderYourSnake(void)
 
 	ImGui::PushItemWidth(sizeTexture);
 	ImGui::SetCursorPosX(4);
-	ImGui::LabelText(this->_snake.name.c_str(), "Name : ");
+	ImGui::LabelText(this->_snake.name, "Name : ");
 
 
 	ImGui::SetCursorPosX((ImGui::GetWindowSize().x - sizeTexture) / 2);

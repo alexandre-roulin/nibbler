@@ -40,13 +40,29 @@ void			WidgetChat::render(void)
 	ImGui::EndChild();
 	if (ImGui::InputText("Tap", this->_bufferMessage, IM_ARRAYSIZE(this->_bufferMessage), ImGuiInputTextFlags_EnterReturnsTrue))
 	{
-		std::string bufferMessage;
-		ClientTCP::add_prefix(CHAT, bufferMessage, this->_bufferMessage,
-							  sizeof(_bufferMessage));
-		std::cout << "WidgetChat::render.size() " << bufferMessage.size() << std::endl;
-		this->_univers.getClientTCP_().write_socket(bufferMessage);
+		if (!this->_chatCommand())
+		{
+			std::string bufferMessage;
+			ClientTCP::add_prefix(CHAT, bufferMessage, this->_bufferMessage,
+								  sizeof(_bufferMessage));
+			std::cout << "WidgetChat::render.size() " << bufferMessage.size() << std::endl;
+			this->_univers.getClientTCP_().write_socket(bufferMessage);
+		}
 		bzero(this->_bufferMessage, IM_ARRAYSIZE(this->_bufferMessage));
 	}
 	ImGui::End();
 
+}
+
+bool			WidgetChat::_chatCommand(void)
+{
+	if (!(this->_bufferMessage[0] == '/'))
+		return (false);
+	if (strstr(this->_bufferMessage, "/help"))
+		this->addLog("/help\n/name Aname\n", this->_bufferMessage);
+	else if (strstr(this->_bufferMessage, "/name "))
+		this->_univers.getClientTCP_().change_name(this->_bufferMessage + sizeof("/name ") - 1);
+	else
+		this->addLog("{%s} n'est pas une commande valide\n", this->_bufferMessage);
+	return (true);
 }

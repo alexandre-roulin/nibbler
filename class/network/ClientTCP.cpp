@@ -16,15 +16,25 @@ ClientTCP::ClientTCP(Univers &univers, boost::asio::io_service &io,
 		  timer(io, boost::posix_time::seconds(1)) {
 }
 
-void ClientTCP::change_sprite(eSnakeSprite snakeSprite) {
-	snakes[id_].sprite = snakeSprite;
-	std::string buffer;
-	add_prefix(SNAKE, buffer, &snakes[id_], sizeof(Snake));
-	write_socket(buffer);
+void ClientTCP::change_name(char const *name) {
+	if (strlen(name) > NAME_BUFFER)
+		strncpy(snakes[id_].name, name, NAME_BUFFER);
+	else
+		strcpy(snakes[id_].name, name);
+	this->refreshMySnake();
 }
 
-void ClientTCP::change_state_ready() {
+void ClientTCP::change_sprite(eSnakeSprite snakeSprite) {
+	snakes[id_].sprite = snakeSprite;
+	this->refreshMySnake();
+}
+
+void ClientTCP::change_state_ready(void) {
 	snakes[id_].isReady = !snakes[id_].isReady;
+	this->refreshMySnake();
+}
+
+void ClientTCP::refreshMySnake(void) {
 	std::string buffer;
 	add_prefix(SNAKE, buffer, &snakes[id_], sizeof(Snake));
 	write_socket(buffer);
