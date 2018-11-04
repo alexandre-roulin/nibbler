@@ -616,100 +616,9 @@ CMakeFiles/nibbler.dir/class/Univers.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/Univers.cpp.s"
 	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/alexandreroulin/work/nibbler/class/Univers.cpp -o CMakeFiles/nibbler.dir/class/Univers.cpp.s
 
-CMakeFiles/nibbler.dir/externlib/display_sdl/src/DisplaySdl.cpp.o: CMakeFiles/nibbler.dir/flags.make
-CMakeFiles/nibbler.dir/externlib/display_sdl/src/DisplaySdl.cpp.o: externlib/display_sdl/src/DisplaySdl.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_44) "Building CXX object CMakeFiles/nibbler.dir/externlib/display_sdl/src/DisplaySdl.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/externlib/display_sdl/src/DisplaySdl.cpp.o -c /Users/alexandreroulin/work/nibbler/externlib/display_sdl/src/DisplaySdl.cpp
-
-CMakeFiles/nibbler.dir/externlib/display_sdl/src/DisplaySdl.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/externlib/display_sdl/src/DisplaySdl.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/alexandreroulin/work/nibbler/externlib/display_sdl/src/DisplaySdl.cpp > CMakeFiles/nibbler.dir/externlib/display_sdl/src/DisplaySdl.cpp.i
-
-CMakeFiles/nibbler.dir/externlib/display_sdl/src/DisplaySdl.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/externlib/display_sdl/src/DisplaySdl.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/alexandreroulin/work/nibbler/externlib/display_sdl/src/DisplaySdl.cpp -o CMakeFiles/nibbler.dir/externlib/display_sdl/src/DisplaySdl.cpp.s
-
-CMakeFiles/nibbler.dir/externlib/display_sfml/src/DisplaySfml.cpp.o: CMakeFiles/nibbler.dir/flags.make
-CMakeFiles/nibbler.dir/externlib/display_sfml/src/DisplaySfml.cpp.o: externlib/display_sfml/src/DisplaySfml.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_45) "Building CXX object CMakeFiles/nibbler.dir/externlib/display_sfml/src/DisplaySfml.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/externlib/display_sfml/src/DisplaySfml.cpp.o -c /Users/alexandreroulin/work/nibbler/externlib/display_sfml/src/DisplaySfml.cpp
-
-CMakeFiles/nibbler.dir/externlib/display_sfml/src/DisplaySfml.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/externlib/display_sfml/src/DisplaySfml.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/alexandreroulin/work/nibbler/externlib/display_sfml/src/DisplaySfml.cpp > CMakeFiles/nibbler.dir/externlib/display_sfml/src/DisplaySfml.cpp.i
-
-CMakeFiles/nibbler.dir/externlib/display_sfml/src/DisplaySfml.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/externlib/display_sfml/src/DisplaySfml.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/alexandreroulin/work/nibbler/externlib/display_sfml/src/DisplaySfml.cpp -o CMakeFiles/nibbler.dir/externlib/display_sfml/src/DisplaySfml.cpp.s
-
-CMakeFiles/nibbler.dir/externlib/sandbox/main.cpp.o: CMakeFiles/nibbler.dir/flags.make
-CMakeFiles/nibbler.dir/externlib/sandbox/main.cpp.o: externlib/sandbox/main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_46) "Building CXX object CMakeFiles/nibbler.dir/externlib/sandbox/main.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/externlib/sandbox/main.cpp.o -c /Users/alexandreroulin/work/nibbler/externlib/sandbox/main.cpp
-
-CMakeFiles/nibbler.dir/externlib/sandbox/main.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/externlib/sandbox/main.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/alexandreroulin/work/nibbler/externlib/sandbox/main.cpp > CMakeFiles/nibbler.dir/externlib/sandbox/main.cpp.i
-
-CMakeFiles/nibbler.dir/externlib/sandbox/main.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/externlib/sandbox/main.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/alexandreroulin/work/nibbler/externlib/sandbox/main.cpp -o CMakeFiles/nibbler.dir/externlib/sandbox/main.cpp.s
-
-CMakeFiles/nibbler.dir/externlib/sound_sdl/src/main.cpp.o: CMakeFiles/nibbler.dir/flags.make
-CMakeFiles/nibbler.dir/externlib/sound_sdl/src/main.cpp.o: externlib/sound_sdl/src/main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_47) "Building CXX object CMakeFiles/nibbler.dir/externlib/sound_sdl/src/main.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/externlib/sound_sdl/src/main.cpp.o -c /Users/alexandreroulin/work/nibbler/externlib/sound_sdl/src/main.cpp
-
-CMakeFiles/nibbler.dir/externlib/sound_sdl/src/main.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/externlib/sound_sdl/src/main.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/alexandreroulin/work/nibbler/externlib/sound_sdl/src/main.cpp > CMakeFiles/nibbler.dir/externlib/sound_sdl/src/main.cpp.i
-
-CMakeFiles/nibbler.dir/externlib/sound_sdl/src/main.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/externlib/sound_sdl/src/main.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/alexandreroulin/work/nibbler/externlib/sound_sdl/src/main.cpp -o CMakeFiles/nibbler.dir/externlib/sound_sdl/src/main.cpp.s
-
-CMakeFiles/nibbler.dir/externlib/sound_sdl/src/SoundSdl.cpp.o: CMakeFiles/nibbler.dir/flags.make
-CMakeFiles/nibbler.dir/externlib/sound_sdl/src/SoundSdl.cpp.o: externlib/sound_sdl/src/SoundSdl.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_48) "Building CXX object CMakeFiles/nibbler.dir/externlib/sound_sdl/src/SoundSdl.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/externlib/sound_sdl/src/SoundSdl.cpp.o -c /Users/alexandreroulin/work/nibbler/externlib/sound_sdl/src/SoundSdl.cpp
-
-CMakeFiles/nibbler.dir/externlib/sound_sdl/src/SoundSdl.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/externlib/sound_sdl/src/SoundSdl.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/alexandreroulin/work/nibbler/externlib/sound_sdl/src/SoundSdl.cpp > CMakeFiles/nibbler.dir/externlib/sound_sdl/src/SoundSdl.cpp.i
-
-CMakeFiles/nibbler.dir/externlib/sound_sdl/src/SoundSdl.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/externlib/sound_sdl/src/SoundSdl.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/alexandreroulin/work/nibbler/externlib/sound_sdl/src/SoundSdl.cpp -o CMakeFiles/nibbler.dir/externlib/sound_sdl/src/SoundSdl.cpp.s
-
-CMakeFiles/nibbler.dir/externlib/sound_sfml/src/main.cpp.o: CMakeFiles/nibbler.dir/flags.make
-CMakeFiles/nibbler.dir/externlib/sound_sfml/src/main.cpp.o: externlib/sound_sfml/src/main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_49) "Building CXX object CMakeFiles/nibbler.dir/externlib/sound_sfml/src/main.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/externlib/sound_sfml/src/main.cpp.o -c /Users/alexandreroulin/work/nibbler/externlib/sound_sfml/src/main.cpp
-
-CMakeFiles/nibbler.dir/externlib/sound_sfml/src/main.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/externlib/sound_sfml/src/main.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/alexandreroulin/work/nibbler/externlib/sound_sfml/src/main.cpp > CMakeFiles/nibbler.dir/externlib/sound_sfml/src/main.cpp.i
-
-CMakeFiles/nibbler.dir/externlib/sound_sfml/src/main.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/externlib/sound_sfml/src/main.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/alexandreroulin/work/nibbler/externlib/sound_sfml/src/main.cpp -o CMakeFiles/nibbler.dir/externlib/sound_sfml/src/main.cpp.s
-
-CMakeFiles/nibbler.dir/externlib/sound_sfml/src/SoundSfml.cpp.o: CMakeFiles/nibbler.dir/flags.make
-CMakeFiles/nibbler.dir/externlib/sound_sfml/src/SoundSfml.cpp.o: externlib/sound_sfml/src/SoundSfml.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_50) "Building CXX object CMakeFiles/nibbler.dir/externlib/sound_sfml/src/SoundSfml.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/externlib/sound_sfml/src/SoundSfml.cpp.o -c /Users/alexandreroulin/work/nibbler/externlib/sound_sfml/src/SoundSfml.cpp
-
-CMakeFiles/nibbler.dir/externlib/sound_sfml/src/SoundSfml.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/externlib/sound_sfml/src/SoundSfml.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/alexandreroulin/work/nibbler/externlib/sound_sfml/src/SoundSfml.cpp > CMakeFiles/nibbler.dir/externlib/sound_sfml/src/SoundSfml.cpp.i
-
-CMakeFiles/nibbler.dir/externlib/sound_sfml/src/SoundSfml.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/externlib/sound_sfml/src/SoundSfml.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/alexandreroulin/work/nibbler/externlib/sound_sfml/src/SoundSfml.cpp -o CMakeFiles/nibbler.dir/externlib/sound_sfml/src/SoundSfml.cpp.s
-
 CMakeFiles/nibbler.dir/imgui-sfml/imgui-SFML.cpp.o: CMakeFiles/nibbler.dir/flags.make
 CMakeFiles/nibbler.dir/imgui-sfml/imgui-SFML.cpp.o: imgui-sfml/imgui-SFML.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_51) "Building CXX object CMakeFiles/nibbler.dir/imgui-sfml/imgui-SFML.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_44) "Building CXX object CMakeFiles/nibbler.dir/imgui-sfml/imgui-SFML.cpp.o"
 	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/imgui-sfml/imgui-SFML.cpp.o -c /Users/alexandreroulin/work/nibbler/imgui-sfml/imgui-SFML.cpp
 
 CMakeFiles/nibbler.dir/imgui-sfml/imgui-SFML.cpp.i: cmake_force
@@ -722,7 +631,7 @@ CMakeFiles/nibbler.dir/imgui-sfml/imgui-SFML.cpp.s: cmake_force
 
 CMakeFiles/nibbler.dir/imgui-sfml/imgui.cpp.o: CMakeFiles/nibbler.dir/flags.make
 CMakeFiles/nibbler.dir/imgui-sfml/imgui.cpp.o: imgui-sfml/imgui.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_52) "Building CXX object CMakeFiles/nibbler.dir/imgui-sfml/imgui.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_45) "Building CXX object CMakeFiles/nibbler.dir/imgui-sfml/imgui.cpp.o"
 	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/imgui-sfml/imgui.cpp.o -c /Users/alexandreroulin/work/nibbler/imgui-sfml/imgui.cpp
 
 CMakeFiles/nibbler.dir/imgui-sfml/imgui.cpp.i: cmake_force
@@ -735,7 +644,7 @@ CMakeFiles/nibbler.dir/imgui-sfml/imgui.cpp.s: cmake_force
 
 CMakeFiles/nibbler.dir/imgui-sfml/imgui_demo.cpp.o: CMakeFiles/nibbler.dir/flags.make
 CMakeFiles/nibbler.dir/imgui-sfml/imgui_demo.cpp.o: imgui-sfml/imgui_demo.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_53) "Building CXX object CMakeFiles/nibbler.dir/imgui-sfml/imgui_demo.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_46) "Building CXX object CMakeFiles/nibbler.dir/imgui-sfml/imgui_demo.cpp.o"
 	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/imgui-sfml/imgui_demo.cpp.o -c /Users/alexandreroulin/work/nibbler/imgui-sfml/imgui_demo.cpp
 
 CMakeFiles/nibbler.dir/imgui-sfml/imgui_demo.cpp.i: cmake_force
@@ -748,7 +657,7 @@ CMakeFiles/nibbler.dir/imgui-sfml/imgui_demo.cpp.s: cmake_force
 
 CMakeFiles/nibbler.dir/imgui-sfml/imgui_draw.cpp.o: CMakeFiles/nibbler.dir/flags.make
 CMakeFiles/nibbler.dir/imgui-sfml/imgui_draw.cpp.o: imgui-sfml/imgui_draw.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_54) "Building CXX object CMakeFiles/nibbler.dir/imgui-sfml/imgui_draw.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_47) "Building CXX object CMakeFiles/nibbler.dir/imgui-sfml/imgui_draw.cpp.o"
 	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/imgui-sfml/imgui_draw.cpp.o -c /Users/alexandreroulin/work/nibbler/imgui-sfml/imgui_draw.cpp
 
 CMakeFiles/nibbler.dir/imgui-sfml/imgui_draw.cpp.i: cmake_force
@@ -761,7 +670,7 @@ CMakeFiles/nibbler.dir/imgui-sfml/imgui_draw.cpp.s: cmake_force
 
 CMakeFiles/nibbler.dir/imgui-sfml/imgui_widgets.cpp.o: CMakeFiles/nibbler.dir/flags.make
 CMakeFiles/nibbler.dir/imgui-sfml/imgui_widgets.cpp.o: imgui-sfml/imgui_widgets.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_55) "Building CXX object CMakeFiles/nibbler.dir/imgui-sfml/imgui_widgets.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_48) "Building CXX object CMakeFiles/nibbler.dir/imgui-sfml/imgui_widgets.cpp.o"
 	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/imgui-sfml/imgui_widgets.cpp.o -c /Users/alexandreroulin/work/nibbler/imgui-sfml/imgui_widgets.cpp
 
 CMakeFiles/nibbler.dir/imgui-sfml/imgui_widgets.cpp.i: cmake_force
@@ -774,7 +683,7 @@ CMakeFiles/nibbler.dir/imgui-sfml/imgui_widgets.cpp.s: cmake_force
 
 CMakeFiles/nibbler.dir/jsoncpp/src/jsontestrunner/main.cpp.o: CMakeFiles/nibbler.dir/flags.make
 CMakeFiles/nibbler.dir/jsoncpp/src/jsontestrunner/main.cpp.o: jsoncpp/src/jsontestrunner/main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_56) "Building CXX object CMakeFiles/nibbler.dir/jsoncpp/src/jsontestrunner/main.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_49) "Building CXX object CMakeFiles/nibbler.dir/jsoncpp/src/jsontestrunner/main.cpp.o"
 	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/jsoncpp/src/jsontestrunner/main.cpp.o -c /Users/alexandreroulin/work/nibbler/jsoncpp/src/jsontestrunner/main.cpp
 
 CMakeFiles/nibbler.dir/jsoncpp/src/jsontestrunner/main.cpp.i: cmake_force
@@ -787,7 +696,7 @@ CMakeFiles/nibbler.dir/jsoncpp/src/jsontestrunner/main.cpp.s: cmake_force
 
 CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_reader.cpp.o: CMakeFiles/nibbler.dir/flags.make
 CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_reader.cpp.o: jsoncpp/src/lib_json/json_reader.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_57) "Building CXX object CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_reader.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_50) "Building CXX object CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_reader.cpp.o"
 	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_reader.cpp.o -c /Users/alexandreroulin/work/nibbler/jsoncpp/src/lib_json/json_reader.cpp
 
 CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_reader.cpp.i: cmake_force
@@ -800,7 +709,7 @@ CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_reader.cpp.s: cmake_force
 
 CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_value.cpp.o: CMakeFiles/nibbler.dir/flags.make
 CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_value.cpp.o: jsoncpp/src/lib_json/json_value.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_58) "Building CXX object CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_value.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_51) "Building CXX object CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_value.cpp.o"
 	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_value.cpp.o -c /Users/alexandreroulin/work/nibbler/jsoncpp/src/lib_json/json_value.cpp
 
 CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_value.cpp.i: cmake_force
@@ -813,7 +722,7 @@ CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_value.cpp.s: cmake_force
 
 CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_writer.cpp.o: CMakeFiles/nibbler.dir/flags.make
 CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_writer.cpp.o: jsoncpp/src/lib_json/json_writer.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_59) "Building CXX object CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_writer.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_52) "Building CXX object CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_writer.cpp.o"
 	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_writer.cpp.o -c /Users/alexandreroulin/work/nibbler/jsoncpp/src/lib_json/json_writer.cpp
 
 CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_writer.cpp.i: cmake_force
@@ -826,7 +735,7 @@ CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_writer.cpp.s: cmake_force
 
 CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/jsontest.cpp.o: CMakeFiles/nibbler.dir/flags.make
 CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/jsontest.cpp.o: jsoncpp/src/test_lib_json/jsontest.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_60) "Building CXX object CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/jsontest.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_53) "Building CXX object CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/jsontest.cpp.o"
 	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/jsontest.cpp.o -c /Users/alexandreroulin/work/nibbler/jsoncpp/src/test_lib_json/jsontest.cpp
 
 CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/jsontest.cpp.i: cmake_force
@@ -839,7 +748,7 @@ CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/jsontest.cpp.s: cmake_force
 
 CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/main.cpp.o: CMakeFiles/nibbler.dir/flags.make
 CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/main.cpp.o: jsoncpp/src/test_lib_json/main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_61) "Building CXX object CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/main.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_54) "Building CXX object CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/main.cpp.o"
 	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/main.cpp.o -c /Users/alexandreroulin/work/nibbler/jsoncpp/src/test_lib_json/main.cpp
 
 CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/main.cpp.i: cmake_force
@@ -849,19 +758,6 @@ CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/main.cpp.i: cmake_force
 CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/main.cpp.s"
 	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/alexandreroulin/work/nibbler/jsoncpp/src/test_lib_json/main.cpp -o CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/main.cpp.s
-
-CMakeFiles/nibbler.dir/Time/src/main.cpp.o: CMakeFiles/nibbler.dir/flags.make
-CMakeFiles/nibbler.dir/Time/src/main.cpp.o: Time/src/main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/alexandreroulin/work/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_62) "Building CXX object CMakeFiles/nibbler.dir/Time/src/main.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/Time/src/main.cpp.o -c /Users/alexandreroulin/work/nibbler/Time/src/main.cpp
-
-CMakeFiles/nibbler.dir/Time/src/main.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/Time/src/main.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/alexandreroulin/work/nibbler/Time/src/main.cpp > CMakeFiles/nibbler.dir/Time/src/main.cpp.i
-
-CMakeFiles/nibbler.dir/Time/src/main.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/Time/src/main.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/alexandreroulin/work/nibbler/Time/src/main.cpp -o CMakeFiles/nibbler.dir/Time/src/main.cpp.s
 
 # Object files for target nibbler
 nibbler_OBJECTS = \
@@ -908,13 +804,6 @@ nibbler_OBJECTS = \
 "CMakeFiles/nibbler.dir/class/systems/JoystickSystem.cpp.o" \
 "CMakeFiles/nibbler.dir/class/systems/MotionSystem.cpp.o" \
 "CMakeFiles/nibbler.dir/class/Univers.cpp.o" \
-"CMakeFiles/nibbler.dir/externlib/display_sdl/src/DisplaySdl.cpp.o" \
-"CMakeFiles/nibbler.dir/externlib/display_sfml/src/DisplaySfml.cpp.o" \
-"CMakeFiles/nibbler.dir/externlib/sandbox/main.cpp.o" \
-"CMakeFiles/nibbler.dir/externlib/sound_sdl/src/main.cpp.o" \
-"CMakeFiles/nibbler.dir/externlib/sound_sdl/src/SoundSdl.cpp.o" \
-"CMakeFiles/nibbler.dir/externlib/sound_sfml/src/main.cpp.o" \
-"CMakeFiles/nibbler.dir/externlib/sound_sfml/src/SoundSfml.cpp.o" \
 "CMakeFiles/nibbler.dir/imgui-sfml/imgui-SFML.cpp.o" \
 "CMakeFiles/nibbler.dir/imgui-sfml/imgui.cpp.o" \
 "CMakeFiles/nibbler.dir/imgui-sfml/imgui_demo.cpp.o" \
@@ -925,8 +814,7 @@ nibbler_OBJECTS = \
 "CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_value.cpp.o" \
 "CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_writer.cpp.o" \
 "CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/jsontest.cpp.o" \
-"CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/main.cpp.o" \
-"CMakeFiles/nibbler.dir/Time/src/main.cpp.o"
+"CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/main.cpp.o"
 
 # External object files for target nibbler
 nibbler_EXTERNAL_OBJECTS =
@@ -974,13 +862,6 @@ nibbler: CMakeFiles/nibbler.dir/class/systems/FoodSystem.cpp.o
 nibbler: CMakeFiles/nibbler.dir/class/systems/JoystickSystem.cpp.o
 nibbler: CMakeFiles/nibbler.dir/class/systems/MotionSystem.cpp.o
 nibbler: CMakeFiles/nibbler.dir/class/Univers.cpp.o
-nibbler: CMakeFiles/nibbler.dir/externlib/display_sdl/src/DisplaySdl.cpp.o
-nibbler: CMakeFiles/nibbler.dir/externlib/display_sfml/src/DisplaySfml.cpp.o
-nibbler: CMakeFiles/nibbler.dir/externlib/sandbox/main.cpp.o
-nibbler: CMakeFiles/nibbler.dir/externlib/sound_sdl/src/main.cpp.o
-nibbler: CMakeFiles/nibbler.dir/externlib/sound_sdl/src/SoundSdl.cpp.o
-nibbler: CMakeFiles/nibbler.dir/externlib/sound_sfml/src/main.cpp.o
-nibbler: CMakeFiles/nibbler.dir/externlib/sound_sfml/src/SoundSfml.cpp.o
 nibbler: CMakeFiles/nibbler.dir/imgui-sfml/imgui-SFML.cpp.o
 nibbler: CMakeFiles/nibbler.dir/imgui-sfml/imgui.cpp.o
 nibbler: CMakeFiles/nibbler.dir/imgui-sfml/imgui_demo.cpp.o
@@ -992,10 +873,9 @@ nibbler: CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_value.cpp.o
 nibbler: CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_writer.cpp.o
 nibbler: CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/jsontest.cpp.o
 nibbler: CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/main.cpp.o
-nibbler: CMakeFiles/nibbler.dir/Time/src/main.cpp.o
 nibbler: CMakeFiles/nibbler.dir/build.make
 nibbler: CMakeFiles/nibbler.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/alexandreroulin/work/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_63) "Linking CXX executable nibbler"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/alexandreroulin/work/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_55) "Linking CXX executable nibbler"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/nibbler.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

@@ -4,7 +4,6 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/Users/alexandreroulin/work/nibbler/Time/src/main.cpp" "/Users/alexandreroulin/work/nibbler/CMakeFiles/nibbler.dir/Time/src/main.cpp.o"
   "/Users/alexandreroulin/work/nibbler/class/KNU/World.cpp" "/Users/alexandreroulin/work/nibbler/CMakeFiles/nibbler.dir/class/KNU/World.cpp.o"
   "/Users/alexandreroulin/work/nibbler/class/KNU/component/Component.cpp" "/Users/alexandreroulin/work/nibbler/CMakeFiles/nibbler.dir/class/KNU/component/Component.cpp.o"
   "/Users/alexandreroulin/work/nibbler/class/KNU/entities/Entity.cpp" "/Users/alexandreroulin/work/nibbler/CMakeFiles/nibbler.dir/class/KNU/entities/Entity.cpp.o"
@@ -48,13 +47,6 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/Users/alexandreroulin/work/nibbler/class/systems/FoodSystem.cpp" "/Users/alexandreroulin/work/nibbler/CMakeFiles/nibbler.dir/class/systems/FoodSystem.cpp.o"
   "/Users/alexandreroulin/work/nibbler/class/systems/JoystickSystem.cpp" "/Users/alexandreroulin/work/nibbler/CMakeFiles/nibbler.dir/class/systems/JoystickSystem.cpp.o"
   "/Users/alexandreroulin/work/nibbler/class/systems/MotionSystem.cpp" "/Users/alexandreroulin/work/nibbler/CMakeFiles/nibbler.dir/class/systems/MotionSystem.cpp.o"
-  "/Users/alexandreroulin/work/nibbler/externlib/display_sdl/src/DisplaySdl.cpp" "/Users/alexandreroulin/work/nibbler/CMakeFiles/nibbler.dir/externlib/display_sdl/src/DisplaySdl.cpp.o"
-  "/Users/alexandreroulin/work/nibbler/externlib/display_sfml/src/DisplaySfml.cpp" "/Users/alexandreroulin/work/nibbler/CMakeFiles/nibbler.dir/externlib/display_sfml/src/DisplaySfml.cpp.o"
-  "/Users/alexandreroulin/work/nibbler/externlib/sandbox/main.cpp" "/Users/alexandreroulin/work/nibbler/CMakeFiles/nibbler.dir/externlib/sandbox/main.cpp.o"
-  "/Users/alexandreroulin/work/nibbler/externlib/sound_sdl/src/SoundSdl.cpp" "/Users/alexandreroulin/work/nibbler/CMakeFiles/nibbler.dir/externlib/sound_sdl/src/SoundSdl.cpp.o"
-  "/Users/alexandreroulin/work/nibbler/externlib/sound_sdl/src/main.cpp" "/Users/alexandreroulin/work/nibbler/CMakeFiles/nibbler.dir/externlib/sound_sdl/src/main.cpp.o"
-  "/Users/alexandreroulin/work/nibbler/externlib/sound_sfml/src/SoundSfml.cpp" "/Users/alexandreroulin/work/nibbler/CMakeFiles/nibbler.dir/externlib/sound_sfml/src/SoundSfml.cpp.o"
-  "/Users/alexandreroulin/work/nibbler/externlib/sound_sfml/src/main.cpp" "/Users/alexandreroulin/work/nibbler/CMakeFiles/nibbler.dir/externlib/sound_sfml/src/main.cpp.o"
   "/Users/alexandreroulin/work/nibbler/imgui-sfml/imgui-SFML.cpp" "/Users/alexandreroulin/work/nibbler/CMakeFiles/nibbler.dir/imgui-sfml/imgui-SFML.cpp.o"
   "/Users/alexandreroulin/work/nibbler/imgui-sfml/imgui.cpp" "/Users/alexandreroulin/work/nibbler/CMakeFiles/nibbler.dir/imgui-sfml/imgui.cpp.o"
   "/Users/alexandreroulin/work/nibbler/imgui-sfml/imgui_demo.cpp" "/Users/alexandreroulin/work/nibbler/CMakeFiles/nibbler.dir/imgui-sfml/imgui_demo.cpp.o"
@@ -72,31 +64,8 @@ set(CMAKE_CXX_COMPILER_ID "AppleClang")
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "class"
-  "class/component"
-  "class/events"
-  "class/factory"
-  "class/gui"
-  "class/gui/widget"
-  "class/KNU"
-  "class/KNU/component"
-  "class/KNU/entities"
-  "class/KNU/events"
-  "class/KNU/managers"
-  "class/KNU/systems"
-  "class/KNU/utils"
-  "class/network"
-  "class/systems"
-  "externlib/commun"
-  "externlib/display_sdl/include"
-  "externlib/display_sfml/include"
-  "externlib/sound_sdl/include"
-  "externlib/sound_sfml/include"
-  "imgui-sfml"
   "incs"
   "jsoncpp/include"
-  "jsoncpp/include/json"
-  "jsoncpp/src/lib_json"
-  "jsoncpp/src/test_lib_json"
   )
 
 # Targets to which this target links.

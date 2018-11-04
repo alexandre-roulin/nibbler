@@ -1,5 +1,6 @@
 #include "WidgetChat.hpp"
 #include "Univers.hpp"
+#include "../../../imgui-sfml/imgui.h"
 
 WidgetChat::WidgetChat(Univers &univers) :
 AWidget(),
@@ -44,6 +45,7 @@ void			WidgetChat::render(void)
 		std::string bufferMessage;
 		ClientTCP::add_prefix(CHAT, bufferMessage, this->_bufferMessage,
 							  sizeof(_bufferMessage));
+		std::cout << "WidgetChat::render.size() " << bufferMessage.size() << std::endl;
 		this->_univers.getClientTCP_().write_socket(bufferMessage);
 		bzero(this->_bufferMessage, IM_ARRAYSIZE(this->_bufferMessage));
 	}

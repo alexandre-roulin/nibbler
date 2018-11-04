@@ -49,6 +49,7 @@ void ClientTCP::read_socket_data(eHeader header) {
 }
 
 void ClientTCP::read_socket_chat() {
+	buffer_chat.prepare(CHAT_BUFFER);
 	std::cout << "ClientTCP::read_socket_chat" << std::endl;
 	boost::asio::async_read_until(socket, buffer_chat, '\n',
 								  boost::bind(&ClientTCP::handle_read_chat,
@@ -105,17 +106,18 @@ void ClientTCP::write_socket(std::string message) {
 
 void ClientTCP::parse_input(eHeader header , void const *input, size_t len) {
 
-	std::cout << "data_deserialize [" << len << "]" << std::endl;
-	char *data_deserialize = new char[len];
-	std::cout << "memcpy" << std::endl;
+	size_t real_len = (header == CHAT) ? len - 1 : len;
+	std::cout << "data_deserialize [" << real_len << "]" << std::endl;
 
-	std::memcpy(data_deserialize, reinterpret_cast<char const *>(input), len);
-	std::cout << "switch" << std::endl;
+	char *data_deserialize = new char[real_len];
+//	for (int i = 0; i < real_len; ++i) {
+//		std::cout << static_cast<int>(data_deserialize[i]) << std::endl;
+//	}
+	std::memcpy(data_deserialize, reinterpret_cast<char const *>(input), real_len);
 
 	switch (header) {
 		case CHAT:
-			std::cout << "parse_input::CHAT" << std::endl;
-			univers.getCore_().addMessageChat(std::string(data_deserialize));
+			univers.getCore_().addMessageChat(std::string(data_deserialize, real_len));
 			break;
 		case SNAKE_ARRAY: {
 			std::cout << "parse_input::SNAKE_ARRAY" << std::endl;
@@ -136,7 +138,7 @@ void ClientTCP::parse_input(eHeader header , void const *input, size_t len) {
 			std::cout << "New id : " << id_ << std::endl;
 			break;
 	}
-	delete[] data_deserialize;
+	delete [] data_deserialize;
 }
 
 void ClientTCP::handle_read_data(boost::system::error_code const &error_code,
