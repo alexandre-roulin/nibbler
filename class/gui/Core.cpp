@@ -6,11 +6,11 @@
 #include <iostream>
 
 Core::Core(Univers &univers) :
-univers_(univers),
+univers(univers),
 _winSize(sf::Vector2<unsigned int>(1000, 900)),
 _win(sf::VideoMode(this->_winSize.x, this->_winSize.y), "Project Sanke"),
 _io(this->_createContext()),
-_chat(univers)
+_chat(*this)
 {
 	if (!this->_imageTitleScreen.loadFromFile("ressource/ecran_titre.png"))
 		(throw(Core::CoreConstructorException("Cannot load background")));
@@ -83,8 +83,8 @@ void			callbackExit(void *ptr)
 
 void			Core::aState(void)
 {
-	WidgetExit wexit(&callbackExit, this);
-	WidgetLobby lobby(*this, this->univers_.getClientTCP_().getSnakes());
+	WidgetExit wexit(*this, &callbackExit, this);
+	WidgetLobby lobby(*this, this->univers.getClientTCP_().getSnakes());
 
 	while (this->_win.isOpen())
 	{
@@ -98,7 +98,7 @@ void			Core::aState(void)
 		ImGui::SFML::Update(this->_win, this->_deltaClock.restart());
 
 		ImGui::SetNextWindowPos(this->positionByPercent(sf::Vector2<unsigned int>(0, 50)));
-		ImGui::SetNextWindowSize(this->positionByPercent(sf::Vector2<unsigned int>(100, 50)));
+		ImGui::SetNextWindowSize(this->positionByPercent(sf::Vector2<unsigned int>(70, 50)));
 		this->_chat.render();
 
 		lobby.render();

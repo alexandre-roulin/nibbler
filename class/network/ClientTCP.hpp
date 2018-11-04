@@ -36,7 +36,10 @@ public:
 
 	void parse_input(eHeader header, void const *, size_t);
 
-	void change_state_ready();
+	void refreshMySnake(void);
+	void change_name(char const *name);
+	void change_sprite(eSnakeSprite snakeSprite);
+	void change_state_ready(void);
 
 	void food();
 

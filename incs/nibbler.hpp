@@ -5,6 +5,7 @@
 
 #define MAX_SNAKE 8
 #define CHAT_BUFFER 128
+#define NAME_BUFFER 21
 #define COMPONENT_MAX 7
 #define BASE_ENTITIES_CAPACITY 20
 
@@ -33,9 +34,11 @@ enum eSnakeSprite {
 
 struct		Snake
 {
-	Snake() : name(""), sprite(VOID), isReady(false), id(-1) {};
+	Snake() : sprite(VOID), isReady(false), id(-1) {
+		bzero(name, NAME_BUFFER + 1);
+	};
 
-	std::string		name;
+	char			name[NAME_BUFFER + 1];
 	eSnakeSprite	sprite;
 	bool			isReady;
 	int16_t				id;
@@ -48,7 +51,7 @@ struct		Snake
 
 	Snake &operator=(Snake  const &snake) {
 		if (this != &snake) {
-			name = snake.name;
+			strncpy(name, snake.name, NAME_BUFFER);
 			sprite = snake.sprite;
 			isReady = snake.isReady;
 			id = snake.id;
@@ -60,7 +63,7 @@ struct		Snake
 		Snake snake;
 
 		snake.sprite = static_cast<eSnakeSprite>(rand() % VOID);
-		snake.name = Snake::basicName[rand() % MAX_SNAKE];
+		strncpy(snake.name, Snake::basicName[rand() % MAX_SNAKE].c_str(), NAME_BUFFER);
 		snake.id = id;
 		return (snake);
 	}

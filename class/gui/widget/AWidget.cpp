@@ -1,6 +1,8 @@
 #include "AWidget.hpp"
+#include <gui/Core.hpp>
 
-AWidget::AWidget(void) :
+AWidget::AWidget(Core &core) :
+_core(core),
 _active(true)
 {
 }
