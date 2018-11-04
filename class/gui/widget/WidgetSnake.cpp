@@ -76,7 +76,7 @@ void			WidgetSnake::_renderOtherSnake(void)
 		for (auto const &e : this->_color)
 		{
 			if (ImGui::Selectable(e.c_str(), i == static_cast<int>(this->_snake.sprite)))
-				; //static_cast<int>(this->_snake.sprite) = i;
+				this->_core.univers.getClientTCP_().change_sprite( static_cast<eSnakeSprite>(i));
 			i++;
 		}
 
@@ -136,7 +136,7 @@ void			WidgetSnake::_renderYourSnake(void)
 		for (auto const &e : this->_color)
 		{
 			if (ImGui::Selectable(e.c_str(), i == static_cast<int>(this->_snake.sprite)))
-				; //static_cast<int>(this->_snake.sprite) = i;
+				this->_core.univers.getClientTCP_().change_sprite( static_cast<eSnakeSprite>(i));
 			i++;
 		}
 

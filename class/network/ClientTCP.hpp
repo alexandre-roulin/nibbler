@@ -39,6 +39,7 @@ public:
 
 	void parse_input(eHeader header, void const *, size_t);
 
+	void change_sprite(eSnakeSprite snakeSprite);
 	void change_state_ready();
 
 	template<typename T>

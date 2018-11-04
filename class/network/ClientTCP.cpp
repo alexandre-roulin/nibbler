@@ -16,6 +16,13 @@ ClientTCP::ClientTCP(Univers &univers, boost::asio::io_service &io,
 		  timer(io, boost::posix_time::seconds(1)) {
 }
 
+void ClientTCP::change_sprite(eSnakeSprite snakeSprite) {
+	snakes[id_].sprite = snakeSprite;
+	std::string buffer;
+	add_prefix(SNAKE, buffer, &snakes[id_], sizeof(Snake));
+	write_socket(buffer);
+}
+
 void ClientTCP::change_state_ready() {
 	snakes[id_].isReady = !snakes[id_].isReady;
 	std::string buffer;
