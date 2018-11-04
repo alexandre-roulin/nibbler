@@ -34,14 +34,6 @@ enum eSnakeSprite {
 	VOID
 };
 
-enum eHeader {
-	CHAT,
-	SNAKE_ARRAY,
-	SNAKE,
-	FOOD,
-	ID,
-};
-
 struct		Snake
 {
 	Snake() : name(""), sprite(VOID), isReady(false), id(-1) {};
@@ -104,4 +96,12 @@ struct		Snake
 	}
 
 	static std::string const basicName[MAX_SNAKE];
+};
+
+enum eHeader {
+	CHAT,											//0
+	FOOD,											//1
+	ID = sizeof(int16_t),							//2
+	SNAKE = sizeof(Snake),							//32
+	SNAKE_ARRAY = sizeof(Snake) * MAX_SNAKE,		//256
 };

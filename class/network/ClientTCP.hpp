@@ -14,25 +14,32 @@ class ClientTCP : public boost::enable_shared_from_this<ClientTCP> {
 public:
 	typedef boost::shared_ptr<ClientTCP> pointer_client;
 
-
 	ClientTCP(Univers &univers, boost::asio::io_service &io,
 			  std::string &hostname);
 
 	void connect();
 
-	void read_socket();
+	void read_socket_header();
 
-	void change_state_ready();
+	void read_socket_chat();
+
+	void read_socket_data(eHeader);
 
 	void write_socket(std::string message);
 
 	void write_socket(void const *data, size_t len);
 
-	void parse_input(void const *, size_t);
+	void handle_read_data(const boost::system::error_code &, size_t);
 
-	void handle_read(const boost::system::error_code &, size_t);
+	void handle_read_header(const boost::system::error_code &, size_t);
+
+	void handle_read_chat(const boost::system::error_code &, size_t);
 
 	void handle_write(const boost::system::error_code &, size_t);
+
+	void parse_input(eHeader header, void const *, size_t);
+
+	void change_state_ready();
 
 	template<typename T>
 	static void add_prefix(eHeader, std::string &, T *element, size_t bytes);
@@ -41,16 +48,17 @@ public:
 	create(Univers &univers, boost::asio::io_service &io, std::string hostname);
 
 
-private:
 public:
 	const Snake *getSnakes() const;
 
 private:
-	int16_t id_;
 	Snake snakes[MAX_SNAKE];
-	boost::asio::streambuf streambuf_;
-	boost::asio::deadline_timer timer;
 	tcp::socket socket;
+	boost::asio::streambuf buffer_chat;
+	boost::array<char, 512> buffer_data;
+
+	int16_t id_;
+	boost::asio::deadline_timer timer;
 	tcp::resolver resolver;
 	tcp::resolver::query query;
 	Univers &univers;
@@ -59,8 +67,9 @@ private:
 template<typename T>
 void ClientTCP::add_prefix(eHeader header, std::string &message, T *element,
 						   size_t bytes) {
-	char *header_serialized = reinterpret_cast<char *>(&header);
-	message.insert(0, header_serialized, sizeof(eHeader));
-	message.insert(sizeof(eHeader), reinterpret_cast<char *>(element), bytes);
-	message.insert(sizeof(eHeader) + bytes, "\n", 1);
+
+	message.append(reinterpret_cast<char *>(&header), sizeof(eHeader));
+	message.append(reinterpret_cast<char *>(element), bytes);
+	if (header == CHAT)
+		message.append("\n", 1);
 }

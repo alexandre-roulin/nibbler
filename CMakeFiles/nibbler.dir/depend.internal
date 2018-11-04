@@ -92,7 +92,6 @@ CMakeFiles/nibbler.dir/class/KNU/utils/Signature.cpp.o
  /Users/alexandreroulin/work/nibbler/class/KNU/utils/Signature.cpp
  /Users/alexandreroulin/work/nibbler/class/KNU/utils/Signature.hpp
  class/KNU/component/Component.hpp
-CMakeFiles/nibbler.dir/class/Lol.cpp.o
 CMakeFiles/nibbler.dir/class/Univers.cpp.o
  /Users/alexandreroulin/work/nibbler/class/Univers.cpp
  /Users/alexandreroulin/work/nibbler/class/Univers.hpp
@@ -111,6 +110,9 @@ CMakeFiles/nibbler.dir/class/Univers.cpp.o
  class/network/ClientTCP.hpp
  class/network/ServerTCP.hpp
  class/network/chat_message.hpp
+ imgui-sfml/imconfig.h
+ imgui-sfml/imgui-SFML.h
+ imgui-sfml/imgui.h
  incs/IWidget.hpp
  incs/logger.h
  incs/logger_utils.h
@@ -243,6 +245,9 @@ CMakeFiles/nibbler.dir/class/cores/main.cpp.o
  class/systems/FoodSystem.hpp
  class/systems/JoystickSystem.hpp
  class/systems/MotionSystem.hpp
+ imgui-sfml/imconfig.h
+ imgui-sfml/imgui-SFML.h
+ imgui-sfml/imgui.h
  incs/IWidget.hpp
  incs/logger.h
  incs/logger_utils.h
@@ -264,6 +269,36 @@ CMakeFiles/nibbler.dir/class/events/JoystickEvent.cpp.o
  /Users/alexandreroulin/work/nibbler/class/events/JoystickEvent.cpp
  /Users/alexandreroulin/work/nibbler/class/events/JoystickEvent.hpp
  incs/nibbler.hpp
+CMakeFiles/nibbler.dir/class/factory/Factory.cpp.o
+ /Users/alexandreroulin/work/nibbler/class/factory/Factory.cpp
+ /Users/alexandreroulin/work/nibbler/class/factory/Factory.hpp
+ class/KNU/World.hpp
+ class/KNU/component/Component.hpp
+ class/KNU/entities/Entity.hpp
+ class/KNU/events/EventManager.hpp
+ class/KNU/managers/AbstractPool.hpp
+ class/KNU/managers/Pool.hpp
+ class/KNU/managers/Pool_.hpp
+ class/KNU/systems/System.hpp
+ class/KNU/utils/Signature.hpp
+ class/component/CollisionComponent.hpp
+ class/component/FollowComponent.hpp
+ class/component/JoystickComponent.hpp
+ class/component/MotionComponent.hpp
+ class/component/PositionComponent.hpp
+ incs/logger.h
+ incs/logger_utils.h
+ incs/nibbler.hpp
+ jsoncpp/include/json/allocator.h
+ jsoncpp/include/json/autolink.h
+ jsoncpp/include/json/config.h
+ jsoncpp/include/json/features.h
+ jsoncpp/include/json/forwards.h
+ jsoncpp/include/json/json.h
+ jsoncpp/include/json/reader.h
+ jsoncpp/include/json/value.h
+ jsoncpp/include/json/version.h
+ jsoncpp/include/json/writer.h
 CMakeFiles/nibbler.dir/class/gui/Core.cpp.o
  /Users/alexandreroulin/work/nibbler/class/gui/Core.cpp
  /Users/alexandreroulin/work/nibbler/class/gui/Core.hpp
@@ -285,6 +320,9 @@ CMakeFiles/nibbler.dir/class/gui/Core.cpp.o
  class/network/ClientTCP.hpp
  class/network/ServerTCP.hpp
  class/network/chat_message.hpp
+ imgui-sfml/imconfig.h
+ imgui-sfml/imgui-SFML.h
+ imgui-sfml/imgui.h
  incs/IWidget.hpp
  incs/logger.h
  incs/logger_utils.h
@@ -301,9 +339,14 @@ CMakeFiles/nibbler.dir/class/gui/Core.cpp.o
  jsoncpp/include/json/writer.h
 CMakeFiles/nibbler.dir/class/gui/imgui_demo.cpp.o
  /Users/alexandreroulin/work/nibbler/class/gui/imgui_demo.cpp
+ imgui-sfml/imconfig.h
+ imgui-sfml/imgui.h
 CMakeFiles/nibbler.dir/class/gui/widget/AWidget.cpp.o
  /Users/alexandreroulin/work/nibbler/class/gui/widget/AWidget.cpp
  /Users/alexandreroulin/work/nibbler/class/gui/widget/AWidget.hpp
+ imgui-sfml/imconfig.h
+ imgui-sfml/imgui-SFML.h
+ imgui-sfml/imgui.h
  incs/IWidget.hpp
 CMakeFiles/nibbler.dir/class/gui/widget/WidgetChat.cpp.o
  /Users/alexandreroulin/work/nibbler/class/gui/widget/AWidget.hpp
@@ -322,6 +365,9 @@ CMakeFiles/nibbler.dir/class/gui/widget/WidgetChat.cpp.o
  class/network/ClientTCP.hpp
  class/network/ServerTCP.hpp
  class/network/chat_message.hpp
+ imgui-sfml/imconfig.h
+ imgui-sfml/imgui-SFML.h
+ imgui-sfml/imgui.h
  incs/IWidget.hpp
  incs/logger.h
  incs/logger_utils.h
@@ -340,6 +386,9 @@ CMakeFiles/nibbler.dir/class/gui/widget/WidgetExit.cpp.o
  /Users/alexandreroulin/work/nibbler/class/gui/widget/AWidget.hpp
  /Users/alexandreroulin/work/nibbler/class/gui/widget/WidgetExit.cpp
  /Users/alexandreroulin/work/nibbler/class/gui/widget/WidgetExit.hpp
+ imgui-sfml/imconfig.h
+ imgui-sfml/imgui-SFML.h
+ imgui-sfml/imgui.h
  incs/IWidget.hpp
 CMakeFiles/nibbler.dir/class/gui/widget/WidgetLobby.cpp.o
  /Users/alexandreroulin/work/nibbler/class/gui/widget/AWidget.hpp
@@ -361,6 +410,9 @@ CMakeFiles/nibbler.dir/class/gui/widget/WidgetLobby.cpp.o
  class/network/ClientTCP.hpp
  class/network/ServerTCP.hpp
  class/network/chat_message.hpp
+ imgui-sfml/imconfig.h
+ imgui-sfml/imgui-SFML.h
+ imgui-sfml/imgui.h
  incs/IWidget.hpp
  incs/logger.h
  incs/logger_utils.h
@@ -379,7 +431,11 @@ CMakeFiles/nibbler.dir/class/gui/widget/WidgetSnake.cpp.o
  /Users/alexandreroulin/work/nibbler/class/gui/widget/AWidget.hpp
  /Users/alexandreroulin/work/nibbler/class/gui/widget/WidgetSnake.cpp
  /Users/alexandreroulin/work/nibbler/class/gui/widget/WidgetSnake.hpp
+ imgui-sfml/imconfig.h
+ imgui-sfml/imgui-SFML.h
+ imgui-sfml/imgui.h
  incs/IWidget.hpp
+ incs/nibbler.hpp
 CMakeFiles/nibbler.dir/class/logger/display/logger_debug.cpp.o
  /Users/alexandreroulin/work/nibbler/class/logger/display/logger_debug.cpp
  incs/logger.h
@@ -435,6 +491,14 @@ CMakeFiles/nibbler.dir/class/network/ClientTCP.cpp.o
  class/KNU/systems/System.hpp
  class/KNU/utils/Signature.hpp
  class/Univers.hpp
+ class/gui/Core.hpp
+ class/gui/widget/AWidget.hpp
+ class/gui/widget/WidgetChat.hpp
+ class/network/ClientTCP.hpp
+ imgui-sfml/imconfig.h
+ imgui-sfml/imgui-SFML.h
+ imgui-sfml/imgui.h
+ incs/IWidget.hpp
  incs/logger.h
  incs/logger_utils.h
  incs/nibbler.hpp
@@ -452,8 +516,10 @@ CMakeFiles/nibbler.dir/class/network/Network.cpp.o
  /Users/alexandreroulin/work/nibbler/class/network/Network.cpp
  /Users/alexandreroulin/work/nibbler/class/network/Network.hpp
 CMakeFiles/nibbler.dir/class/network/ServerTCP.cpp.o
+ /Users/alexandreroulin/work/nibbler/class/network/ClientTCP.hpp
  /Users/alexandreroulin/work/nibbler/class/network/ServerTCP.cpp
  /Users/alexandreroulin/work/nibbler/class/network/ServerTCP.hpp
+ /Users/alexandreroulin/work/nibbler/class/network/chat_message.hpp
  class/KNU/World.hpp
  class/KNU/component/Component.hpp
  class/KNU/entities/Entity.hpp
@@ -464,6 +530,12 @@ CMakeFiles/nibbler.dir/class/network/ServerTCP.cpp.o
  class/KNU/systems/System.hpp
  class/KNU/utils/Signature.hpp
  class/Univers.hpp
+ class/component/CollisionComponent.hpp
+ class/component/FollowComponent.hpp
+ class/component/JoystickComponent.hpp
+ class/component/MotionComponent.hpp
+ class/component/PositionComponent.hpp
+ class/factory/Factory.hpp
  incs/logger.h
  incs/logger_utils.h
  incs/nibbler.hpp
@@ -477,6 +549,9 @@ CMakeFiles/nibbler.dir/class/network/ServerTCP.cpp.o
  jsoncpp/include/json/value.h
  jsoncpp/include/json/version.h
  jsoncpp/include/json/writer.h
+CMakeFiles/nibbler.dir/class/network/UtilsTCP.cpp.o
+ /Users/alexandreroulin/work/nibbler/class/network/UtilsTCP.cpp
+ /Users/alexandreroulin/work/nibbler/class/network/UtilsTCP.hpp
 CMakeFiles/nibbler.dir/class/systems/CollisionSystem.cpp.o
  /Users/alexandreroulin/work/nibbler/class/systems/CollisionSystem.cpp
  /Users/alexandreroulin/work/nibbler/class/systems/CollisionSystem.hpp
@@ -615,22 +690,66 @@ CMakeFiles/nibbler.dir/class/systems/MotionSystem.cpp.o
  jsoncpp/include/json/writer.h
 CMakeFiles/nibbler.dir/externlib/display_sdl/src/DisplaySdl.cpp.o
  /Users/alexandreroulin/work/nibbler/externlib/display_sdl/src/DisplaySdl.cpp
-CMakeFiles/nibbler.dir/externlib/display_sdl/src/main.cpp.o
- /Users/alexandreroulin/work/nibbler/externlib/display_sdl/src/main.cpp
+ externlib/commun/Grid.tpp
+ externlib/commun/IDisplay.hpp
+ externlib/commun/Vector2D.tpp
+ externlib/display_sdl/include/DisplaySdl.hpp
 CMakeFiles/nibbler.dir/externlib/display_sfml/src/DisplaySfml.cpp.o
  /Users/alexandreroulin/work/nibbler/externlib/display_sfml/src/DisplaySfml.cpp
-CMakeFiles/nibbler.dir/externlib/display_sfml/src/main.cpp.o
- /Users/alexandreroulin/work/nibbler/externlib/display_sfml/src/main.cpp
+ externlib/commun/Grid.tpp
+ externlib/commun/IDisplay.hpp
+ externlib/commun/Vector2D.tpp
+ externlib/display_sfml/include/DisplaySfml.hpp
 CMakeFiles/nibbler.dir/externlib/sandbox/main.cpp.o
  /Users/alexandreroulin/work/nibbler/externlib/sandbox/main.cpp
+ externlib/commun/Grid.tpp
+ externlib/commun/IDisplay.hpp
 CMakeFiles/nibbler.dir/externlib/sound_sdl/src/SoundSdl.cpp.o
  /Users/alexandreroulin/work/nibbler/externlib/sound_sdl/src/SoundSdl.cpp
+ externlib/commun/ISound.hpp
+ externlib/sound_sdl/include/SoundSdl.hpp
 CMakeFiles/nibbler.dir/externlib/sound_sdl/src/main.cpp.o
  /Users/alexandreroulin/work/nibbler/externlib/sound_sdl/src/main.cpp
+ externlib/commun/ISound.hpp
+ externlib/sound_sdl/include/SoundSdl.hpp
 CMakeFiles/nibbler.dir/externlib/sound_sfml/src/SoundSfml.cpp.o
  /Users/alexandreroulin/work/nibbler/externlib/sound_sfml/src/SoundSfml.cpp
+ externlib/commun/ISound.hpp
+ externlib/sound_sfml/include/SoundSfml.hpp
 CMakeFiles/nibbler.dir/externlib/sound_sfml/src/main.cpp.o
  /Users/alexandreroulin/work/nibbler/externlib/sound_sfml/src/main.cpp
+ externlib/commun/ISound.hpp
+ externlib/sound_sfml/include/SoundSfml.hpp
+CMakeFiles/nibbler.dir/imgui-sfml/imgui-SFML.cpp.o
+ /Users/alexandreroulin/work/nibbler/imgui-sfml/imgui-SFML.cpp
+ /Users/alexandreroulin/work/nibbler/imgui-sfml/imgui-SFML.h
+ imgui-sfml/imconfig.h
+ imgui-sfml/imgui.h
+CMakeFiles/nibbler.dir/imgui-sfml/imgui.cpp.o
+ /Users/alexandreroulin/work/nibbler/imgui-sfml/imconfig.h
+ /Users/alexandreroulin/work/nibbler/imgui-sfml/imgui.cpp
+ /Users/alexandreroulin/work/nibbler/imgui-sfml/imgui.h
+ /Users/alexandreroulin/work/nibbler/imgui-sfml/imgui_internal.h
+ /Users/alexandreroulin/work/nibbler/imgui-sfml/imstb_textedit.h
+ incs/stb_image.h
+CMakeFiles/nibbler.dir/imgui-sfml/imgui_demo.cpp.o
+ /Users/alexandreroulin/work/nibbler/imgui-sfml/imconfig.h
+ /Users/alexandreroulin/work/nibbler/imgui-sfml/imgui.h
+ /Users/alexandreroulin/work/nibbler/imgui-sfml/imgui_demo.cpp
+CMakeFiles/nibbler.dir/imgui-sfml/imgui_draw.cpp.o
+ /Users/alexandreroulin/work/nibbler/imgui-sfml/imconfig.h
+ /Users/alexandreroulin/work/nibbler/imgui-sfml/imgui.h
+ /Users/alexandreroulin/work/nibbler/imgui-sfml/imgui_draw.cpp
+ /Users/alexandreroulin/work/nibbler/imgui-sfml/imgui_internal.h
+ /Users/alexandreroulin/work/nibbler/imgui-sfml/imstb_rectpack.h
+ /Users/alexandreroulin/work/nibbler/imgui-sfml/imstb_textedit.h
+ /Users/alexandreroulin/work/nibbler/imgui-sfml/imstb_truetype.h
+CMakeFiles/nibbler.dir/imgui-sfml/imgui_widgets.cpp.o
+ /Users/alexandreroulin/work/nibbler/imgui-sfml/imconfig.h
+ /Users/alexandreroulin/work/nibbler/imgui-sfml/imgui.h
+ /Users/alexandreroulin/work/nibbler/imgui-sfml/imgui_internal.h
+ /Users/alexandreroulin/work/nibbler/imgui-sfml/imgui_widgets.cpp
+ /Users/alexandreroulin/work/nibbler/imgui-sfml/imstb_textedit.h
 CMakeFiles/nibbler.dir/jsoncpp/src/jsontestrunner/main.cpp.o
  /Users/alexandreroulin/work/nibbler/jsoncpp/src/jsontestrunner/main.cpp
  jsoncpp/include/json/allocator.h
@@ -695,19 +814,3 @@ CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/main.cpp.o
  jsoncpp/include/json/value.h
  jsoncpp/include/json/version.h
  jsoncpp/include/json/writer.h
-CMakeFiles/nibbler.dir/menu/src/Core.cpp.o
- /Users/alexandreroulin/work/nibbler/menu/src/Core.cpp
-CMakeFiles/nibbler.dir/menu/src/imgui_demo.cpp.o
- /Users/alexandreroulin/work/nibbler/menu/src/imgui_demo.cpp
-CMakeFiles/nibbler.dir/menu/src/main.cpp.o
- /Users/alexandreroulin/work/nibbler/menu/src/main.cpp
-CMakeFiles/nibbler.dir/menu/src/widget/AWidget.cpp.o
- /Users/alexandreroulin/work/nibbler/menu/src/widget/AWidget.cpp
-CMakeFiles/nibbler.dir/menu/src/widget/WidgetChat.cpp.o
- /Users/alexandreroulin/work/nibbler/menu/src/widget/WidgetChat.cpp
-CMakeFiles/nibbler.dir/menu/src/widget/WidgetExit.cpp.o
- /Users/alexandreroulin/work/nibbler/menu/src/widget/WidgetExit.cpp
-CMakeFiles/nibbler.dir/menu/src/widget/WidgetLobby.cpp.o
- /Users/alexandreroulin/work/nibbler/menu/src/widget/WidgetLobby.cpp
-CMakeFiles/nibbler.dir/menu/src/widget/WidgetSnake.cpp.o
- /Users/alexandreroulin/work/nibbler/menu/src/widget/WidgetSnake.cpp

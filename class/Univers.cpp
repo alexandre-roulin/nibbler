@@ -40,7 +40,7 @@ void Univers::create_client() {
 	std::getline(std::cin, buffer);
 	clientTCP_ = ClientTCP::create(*this, io_client, std::string(buffer.c_str()));
 	clientTCP_->connect();
-	clientTCP_->read_socket();
+	clientTCP_->read_socket_header();
 	boost::thread t(boost::bind(&boost::asio::io_service::run, &io_client));
 	t.detach();
 }

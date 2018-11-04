@@ -92,7 +92,6 @@ CMakeFiles/nibbler.dir/class/KNU/utils/Signature.cpp.o: class/KNU/utils/Signatur
 CMakeFiles/nibbler.dir/class/KNU/utils/Signature.cpp.o: class/KNU/utils/Signature.hpp
 CMakeFiles/nibbler.dir/class/KNU/utils/Signature.cpp.o: class/KNU/component/Component.hpp
 
-
 CMakeFiles/nibbler.dir/class/Univers.cpp.o: class/Univers.cpp
 CMakeFiles/nibbler.dir/class/Univers.cpp.o: class/Univers.hpp
 CMakeFiles/nibbler.dir/class/Univers.cpp.o: class/KNU/World.hpp
@@ -110,6 +109,9 @@ CMakeFiles/nibbler.dir/class/Univers.cpp.o: class/gui/widget/WidgetChat.hpp
 CMakeFiles/nibbler.dir/class/Univers.cpp.o: class/network/ClientTCP.hpp
 CMakeFiles/nibbler.dir/class/Univers.cpp.o: class/network/ServerTCP.hpp
 CMakeFiles/nibbler.dir/class/Univers.cpp.o: class/network/chat_message.hpp
+CMakeFiles/nibbler.dir/class/Univers.cpp.o: imgui-sfml/imconfig.h
+CMakeFiles/nibbler.dir/class/Univers.cpp.o: imgui-sfml/imgui-SFML.h
+CMakeFiles/nibbler.dir/class/Univers.cpp.o: imgui-sfml/imgui.h
 CMakeFiles/nibbler.dir/class/Univers.cpp.o: incs/IWidget.hpp
 CMakeFiles/nibbler.dir/class/Univers.cpp.o: incs/logger.h
 CMakeFiles/nibbler.dir/class/Univers.cpp.o: incs/logger_utils.h
@@ -242,6 +244,9 @@ CMakeFiles/nibbler.dir/class/cores/main.cpp.o: class/systems/FollowSystem.hpp
 CMakeFiles/nibbler.dir/class/cores/main.cpp.o: class/systems/FoodSystem.hpp
 CMakeFiles/nibbler.dir/class/cores/main.cpp.o: class/systems/JoystickSystem.hpp
 CMakeFiles/nibbler.dir/class/cores/main.cpp.o: class/systems/MotionSystem.hpp
+CMakeFiles/nibbler.dir/class/cores/main.cpp.o: imgui-sfml/imconfig.h
+CMakeFiles/nibbler.dir/class/cores/main.cpp.o: imgui-sfml/imgui-SFML.h
+CMakeFiles/nibbler.dir/class/cores/main.cpp.o: imgui-sfml/imgui.h
 CMakeFiles/nibbler.dir/class/cores/main.cpp.o: incs/IWidget.hpp
 CMakeFiles/nibbler.dir/class/cores/main.cpp.o: incs/logger.h
 CMakeFiles/nibbler.dir/class/cores/main.cpp.o: incs/logger_utils.h
@@ -264,6 +269,36 @@ CMakeFiles/nibbler.dir/class/events/JoystickEvent.cpp.o: class/events/JoystickEv
 CMakeFiles/nibbler.dir/class/events/JoystickEvent.cpp.o: class/events/JoystickEvent.hpp
 CMakeFiles/nibbler.dir/class/events/JoystickEvent.cpp.o: incs/nibbler.hpp
 
+CMakeFiles/nibbler.dir/class/factory/Factory.cpp.o: class/factory/Factory.cpp
+CMakeFiles/nibbler.dir/class/factory/Factory.cpp.o: class/factory/Factory.hpp
+CMakeFiles/nibbler.dir/class/factory/Factory.cpp.o: class/KNU/World.hpp
+CMakeFiles/nibbler.dir/class/factory/Factory.cpp.o: class/KNU/component/Component.hpp
+CMakeFiles/nibbler.dir/class/factory/Factory.cpp.o: class/KNU/entities/Entity.hpp
+CMakeFiles/nibbler.dir/class/factory/Factory.cpp.o: class/KNU/events/EventManager.hpp
+CMakeFiles/nibbler.dir/class/factory/Factory.cpp.o: class/KNU/managers/AbstractPool.hpp
+CMakeFiles/nibbler.dir/class/factory/Factory.cpp.o: class/KNU/managers/Pool.hpp
+CMakeFiles/nibbler.dir/class/factory/Factory.cpp.o: class/KNU/managers/Pool_.hpp
+CMakeFiles/nibbler.dir/class/factory/Factory.cpp.o: class/KNU/systems/System.hpp
+CMakeFiles/nibbler.dir/class/factory/Factory.cpp.o: class/KNU/utils/Signature.hpp
+CMakeFiles/nibbler.dir/class/factory/Factory.cpp.o: class/component/CollisionComponent.hpp
+CMakeFiles/nibbler.dir/class/factory/Factory.cpp.o: class/component/FollowComponent.hpp
+CMakeFiles/nibbler.dir/class/factory/Factory.cpp.o: class/component/JoystickComponent.hpp
+CMakeFiles/nibbler.dir/class/factory/Factory.cpp.o: class/component/MotionComponent.hpp
+CMakeFiles/nibbler.dir/class/factory/Factory.cpp.o: class/component/PositionComponent.hpp
+CMakeFiles/nibbler.dir/class/factory/Factory.cpp.o: incs/logger.h
+CMakeFiles/nibbler.dir/class/factory/Factory.cpp.o: incs/logger_utils.h
+CMakeFiles/nibbler.dir/class/factory/Factory.cpp.o: incs/nibbler.hpp
+CMakeFiles/nibbler.dir/class/factory/Factory.cpp.o: jsoncpp/include/json/allocator.h
+CMakeFiles/nibbler.dir/class/factory/Factory.cpp.o: jsoncpp/include/json/autolink.h
+CMakeFiles/nibbler.dir/class/factory/Factory.cpp.o: jsoncpp/include/json/config.h
+CMakeFiles/nibbler.dir/class/factory/Factory.cpp.o: jsoncpp/include/json/features.h
+CMakeFiles/nibbler.dir/class/factory/Factory.cpp.o: jsoncpp/include/json/forwards.h
+CMakeFiles/nibbler.dir/class/factory/Factory.cpp.o: jsoncpp/include/json/json.h
+CMakeFiles/nibbler.dir/class/factory/Factory.cpp.o: jsoncpp/include/json/reader.h
+CMakeFiles/nibbler.dir/class/factory/Factory.cpp.o: jsoncpp/include/json/value.h
+CMakeFiles/nibbler.dir/class/factory/Factory.cpp.o: jsoncpp/include/json/version.h
+CMakeFiles/nibbler.dir/class/factory/Factory.cpp.o: jsoncpp/include/json/writer.h
+
 CMakeFiles/nibbler.dir/class/gui/Core.cpp.o: class/gui/Core.cpp
 CMakeFiles/nibbler.dir/class/gui/Core.cpp.o: class/gui/Core.hpp
 CMakeFiles/nibbler.dir/class/gui/Core.cpp.o: class/gui/widget/AWidget.hpp
@@ -284,6 +319,9 @@ CMakeFiles/nibbler.dir/class/gui/Core.cpp.o: class/Univers.hpp
 CMakeFiles/nibbler.dir/class/gui/Core.cpp.o: class/network/ClientTCP.hpp
 CMakeFiles/nibbler.dir/class/gui/Core.cpp.o: class/network/ServerTCP.hpp
 CMakeFiles/nibbler.dir/class/gui/Core.cpp.o: class/network/chat_message.hpp
+CMakeFiles/nibbler.dir/class/gui/Core.cpp.o: imgui-sfml/imconfig.h
+CMakeFiles/nibbler.dir/class/gui/Core.cpp.o: imgui-sfml/imgui-SFML.h
+CMakeFiles/nibbler.dir/class/gui/Core.cpp.o: imgui-sfml/imgui.h
 CMakeFiles/nibbler.dir/class/gui/Core.cpp.o: incs/IWidget.hpp
 CMakeFiles/nibbler.dir/class/gui/Core.cpp.o: incs/logger.h
 CMakeFiles/nibbler.dir/class/gui/Core.cpp.o: incs/logger_utils.h
@@ -300,9 +338,14 @@ CMakeFiles/nibbler.dir/class/gui/Core.cpp.o: jsoncpp/include/json/version.h
 CMakeFiles/nibbler.dir/class/gui/Core.cpp.o: jsoncpp/include/json/writer.h
 
 CMakeFiles/nibbler.dir/class/gui/imgui_demo.cpp.o: class/gui/imgui_demo.cpp
+CMakeFiles/nibbler.dir/class/gui/imgui_demo.cpp.o: imgui-sfml/imconfig.h
+CMakeFiles/nibbler.dir/class/gui/imgui_demo.cpp.o: imgui-sfml/imgui.h
 
 CMakeFiles/nibbler.dir/class/gui/widget/AWidget.cpp.o: class/gui/widget/AWidget.cpp
 CMakeFiles/nibbler.dir/class/gui/widget/AWidget.cpp.o: class/gui/widget/AWidget.hpp
+CMakeFiles/nibbler.dir/class/gui/widget/AWidget.cpp.o: imgui-sfml/imconfig.h
+CMakeFiles/nibbler.dir/class/gui/widget/AWidget.cpp.o: imgui-sfml/imgui-SFML.h
+CMakeFiles/nibbler.dir/class/gui/widget/AWidget.cpp.o: imgui-sfml/imgui.h
 CMakeFiles/nibbler.dir/class/gui/widget/AWidget.cpp.o: incs/IWidget.hpp
 
 CMakeFiles/nibbler.dir/class/gui/widget/WidgetChat.cpp.o: class/gui/widget/AWidget.hpp
@@ -321,6 +364,9 @@ CMakeFiles/nibbler.dir/class/gui/widget/WidgetChat.cpp.o: class/Univers.hpp
 CMakeFiles/nibbler.dir/class/gui/widget/WidgetChat.cpp.o: class/network/ClientTCP.hpp
 CMakeFiles/nibbler.dir/class/gui/widget/WidgetChat.cpp.o: class/network/ServerTCP.hpp
 CMakeFiles/nibbler.dir/class/gui/widget/WidgetChat.cpp.o: class/network/chat_message.hpp
+CMakeFiles/nibbler.dir/class/gui/widget/WidgetChat.cpp.o: imgui-sfml/imconfig.h
+CMakeFiles/nibbler.dir/class/gui/widget/WidgetChat.cpp.o: imgui-sfml/imgui-SFML.h
+CMakeFiles/nibbler.dir/class/gui/widget/WidgetChat.cpp.o: imgui-sfml/imgui.h
 CMakeFiles/nibbler.dir/class/gui/widget/WidgetChat.cpp.o: incs/IWidget.hpp
 CMakeFiles/nibbler.dir/class/gui/widget/WidgetChat.cpp.o: incs/logger.h
 CMakeFiles/nibbler.dir/class/gui/widget/WidgetChat.cpp.o: incs/logger_utils.h
@@ -339,6 +385,9 @@ CMakeFiles/nibbler.dir/class/gui/widget/WidgetChat.cpp.o: jsoncpp/include/json/w
 CMakeFiles/nibbler.dir/class/gui/widget/WidgetExit.cpp.o: class/gui/widget/AWidget.hpp
 CMakeFiles/nibbler.dir/class/gui/widget/WidgetExit.cpp.o: class/gui/widget/WidgetExit.cpp
 CMakeFiles/nibbler.dir/class/gui/widget/WidgetExit.cpp.o: class/gui/widget/WidgetExit.hpp
+CMakeFiles/nibbler.dir/class/gui/widget/WidgetExit.cpp.o: imgui-sfml/imconfig.h
+CMakeFiles/nibbler.dir/class/gui/widget/WidgetExit.cpp.o: imgui-sfml/imgui-SFML.h
+CMakeFiles/nibbler.dir/class/gui/widget/WidgetExit.cpp.o: imgui-sfml/imgui.h
 CMakeFiles/nibbler.dir/class/gui/widget/WidgetExit.cpp.o: incs/IWidget.hpp
 
 CMakeFiles/nibbler.dir/class/gui/widget/WidgetLobby.cpp.o: class/gui/widget/AWidget.hpp
@@ -360,6 +409,9 @@ CMakeFiles/nibbler.dir/class/gui/widget/WidgetLobby.cpp.o: class/gui/widget/Widg
 CMakeFiles/nibbler.dir/class/gui/widget/WidgetLobby.cpp.o: class/network/ClientTCP.hpp
 CMakeFiles/nibbler.dir/class/gui/widget/WidgetLobby.cpp.o: class/network/ServerTCP.hpp
 CMakeFiles/nibbler.dir/class/gui/widget/WidgetLobby.cpp.o: class/network/chat_message.hpp
+CMakeFiles/nibbler.dir/class/gui/widget/WidgetLobby.cpp.o: imgui-sfml/imconfig.h
+CMakeFiles/nibbler.dir/class/gui/widget/WidgetLobby.cpp.o: imgui-sfml/imgui-SFML.h
+CMakeFiles/nibbler.dir/class/gui/widget/WidgetLobby.cpp.o: imgui-sfml/imgui.h
 CMakeFiles/nibbler.dir/class/gui/widget/WidgetLobby.cpp.o: incs/IWidget.hpp
 CMakeFiles/nibbler.dir/class/gui/widget/WidgetLobby.cpp.o: incs/logger.h
 CMakeFiles/nibbler.dir/class/gui/widget/WidgetLobby.cpp.o: incs/logger_utils.h
@@ -378,7 +430,11 @@ CMakeFiles/nibbler.dir/class/gui/widget/WidgetLobby.cpp.o: jsoncpp/include/json/
 CMakeFiles/nibbler.dir/class/gui/widget/WidgetSnake.cpp.o: class/gui/widget/AWidget.hpp
 CMakeFiles/nibbler.dir/class/gui/widget/WidgetSnake.cpp.o: class/gui/widget/WidgetSnake.cpp
 CMakeFiles/nibbler.dir/class/gui/widget/WidgetSnake.cpp.o: class/gui/widget/WidgetSnake.hpp
+CMakeFiles/nibbler.dir/class/gui/widget/WidgetSnake.cpp.o: imgui-sfml/imconfig.h
+CMakeFiles/nibbler.dir/class/gui/widget/WidgetSnake.cpp.o: imgui-sfml/imgui-SFML.h
+CMakeFiles/nibbler.dir/class/gui/widget/WidgetSnake.cpp.o: imgui-sfml/imgui.h
 CMakeFiles/nibbler.dir/class/gui/widget/WidgetSnake.cpp.o: incs/IWidget.hpp
+CMakeFiles/nibbler.dir/class/gui/widget/WidgetSnake.cpp.o: incs/nibbler.hpp
 
 CMakeFiles/nibbler.dir/class/logger/display/logger_debug.cpp.o: class/logger/display/logger_debug.cpp
 CMakeFiles/nibbler.dir/class/logger/display/logger_debug.cpp.o: incs/logger.h
@@ -434,6 +490,14 @@ CMakeFiles/nibbler.dir/class/network/ClientTCP.cpp.o: class/KNU/managers/Pool_.h
 CMakeFiles/nibbler.dir/class/network/ClientTCP.cpp.o: class/KNU/systems/System.hpp
 CMakeFiles/nibbler.dir/class/network/ClientTCP.cpp.o: class/KNU/utils/Signature.hpp
 CMakeFiles/nibbler.dir/class/network/ClientTCP.cpp.o: class/Univers.hpp
+CMakeFiles/nibbler.dir/class/network/ClientTCP.cpp.o: class/gui/Core.hpp
+CMakeFiles/nibbler.dir/class/network/ClientTCP.cpp.o: class/gui/widget/AWidget.hpp
+CMakeFiles/nibbler.dir/class/network/ClientTCP.cpp.o: class/gui/widget/WidgetChat.hpp
+CMakeFiles/nibbler.dir/class/network/ClientTCP.cpp.o: class/network/ClientTCP.hpp
+CMakeFiles/nibbler.dir/class/network/ClientTCP.cpp.o: imgui-sfml/imconfig.h
+CMakeFiles/nibbler.dir/class/network/ClientTCP.cpp.o: imgui-sfml/imgui-SFML.h
+CMakeFiles/nibbler.dir/class/network/ClientTCP.cpp.o: imgui-sfml/imgui.h
+CMakeFiles/nibbler.dir/class/network/ClientTCP.cpp.o: incs/IWidget.hpp
 CMakeFiles/nibbler.dir/class/network/ClientTCP.cpp.o: incs/logger.h
 CMakeFiles/nibbler.dir/class/network/ClientTCP.cpp.o: incs/logger_utils.h
 CMakeFiles/nibbler.dir/class/network/ClientTCP.cpp.o: incs/nibbler.hpp
@@ -451,8 +515,10 @@ CMakeFiles/nibbler.dir/class/network/ClientTCP.cpp.o: jsoncpp/include/json/write
 CMakeFiles/nibbler.dir/class/network/Network.cpp.o: class/network/Network.cpp
 CMakeFiles/nibbler.dir/class/network/Network.cpp.o: class/network/Network.hpp
 
+CMakeFiles/nibbler.dir/class/network/ServerTCP.cpp.o: class/network/ClientTCP.hpp
 CMakeFiles/nibbler.dir/class/network/ServerTCP.cpp.o: class/network/ServerTCP.cpp
 CMakeFiles/nibbler.dir/class/network/ServerTCP.cpp.o: class/network/ServerTCP.hpp
+CMakeFiles/nibbler.dir/class/network/ServerTCP.cpp.o: class/network/chat_message.hpp
 CMakeFiles/nibbler.dir/class/network/ServerTCP.cpp.o: class/KNU/World.hpp
 CMakeFiles/nibbler.dir/class/network/ServerTCP.cpp.o: class/KNU/component/Component.hpp
 CMakeFiles/nibbler.dir/class/network/ServerTCP.cpp.o: class/KNU/entities/Entity.hpp
@@ -463,6 +529,12 @@ CMakeFiles/nibbler.dir/class/network/ServerTCP.cpp.o: class/KNU/managers/Pool_.h
 CMakeFiles/nibbler.dir/class/network/ServerTCP.cpp.o: class/KNU/systems/System.hpp
 CMakeFiles/nibbler.dir/class/network/ServerTCP.cpp.o: class/KNU/utils/Signature.hpp
 CMakeFiles/nibbler.dir/class/network/ServerTCP.cpp.o: class/Univers.hpp
+CMakeFiles/nibbler.dir/class/network/ServerTCP.cpp.o: class/component/CollisionComponent.hpp
+CMakeFiles/nibbler.dir/class/network/ServerTCP.cpp.o: class/component/FollowComponent.hpp
+CMakeFiles/nibbler.dir/class/network/ServerTCP.cpp.o: class/component/JoystickComponent.hpp
+CMakeFiles/nibbler.dir/class/network/ServerTCP.cpp.o: class/component/MotionComponent.hpp
+CMakeFiles/nibbler.dir/class/network/ServerTCP.cpp.o: class/component/PositionComponent.hpp
+CMakeFiles/nibbler.dir/class/network/ServerTCP.cpp.o: class/factory/Factory.hpp
 CMakeFiles/nibbler.dir/class/network/ServerTCP.cpp.o: incs/logger.h
 CMakeFiles/nibbler.dir/class/network/ServerTCP.cpp.o: incs/logger_utils.h
 CMakeFiles/nibbler.dir/class/network/ServerTCP.cpp.o: incs/nibbler.hpp
@@ -476,6 +548,9 @@ CMakeFiles/nibbler.dir/class/network/ServerTCP.cpp.o: jsoncpp/include/json/reade
 CMakeFiles/nibbler.dir/class/network/ServerTCP.cpp.o: jsoncpp/include/json/value.h
 CMakeFiles/nibbler.dir/class/network/ServerTCP.cpp.o: jsoncpp/include/json/version.h
 CMakeFiles/nibbler.dir/class/network/ServerTCP.cpp.o: jsoncpp/include/json/writer.h
+
+CMakeFiles/nibbler.dir/class/network/UtilsTCP.cpp.o: class/network/UtilsTCP.cpp
+CMakeFiles/nibbler.dir/class/network/UtilsTCP.cpp.o: class/network/UtilsTCP.hpp
 
 CMakeFiles/nibbler.dir/class/systems/CollisionSystem.cpp.o: class/systems/CollisionSystem.cpp
 CMakeFiles/nibbler.dir/class/systems/CollisionSystem.cpp.o: class/systems/CollisionSystem.hpp
@@ -614,22 +689,66 @@ CMakeFiles/nibbler.dir/class/systems/MotionSystem.cpp.o: jsoncpp/include/json/ve
 CMakeFiles/nibbler.dir/class/systems/MotionSystem.cpp.o: jsoncpp/include/json/writer.h
 
 CMakeFiles/nibbler.dir/externlib/display_sdl/src/DisplaySdl.cpp.o: externlib/display_sdl/src/DisplaySdl.cpp
-
-CMakeFiles/nibbler.dir/externlib/display_sdl/src/main.cpp.o: externlib/display_sdl/src/main.cpp
+CMakeFiles/nibbler.dir/externlib/display_sdl/src/DisplaySdl.cpp.o: externlib/commun/Grid.tpp
+CMakeFiles/nibbler.dir/externlib/display_sdl/src/DisplaySdl.cpp.o: externlib/commun/IDisplay.hpp
+CMakeFiles/nibbler.dir/externlib/display_sdl/src/DisplaySdl.cpp.o: externlib/commun/Vector2D.tpp
+CMakeFiles/nibbler.dir/externlib/display_sdl/src/DisplaySdl.cpp.o: externlib/display_sdl/include/DisplaySdl.hpp
 
 CMakeFiles/nibbler.dir/externlib/display_sfml/src/DisplaySfml.cpp.o: externlib/display_sfml/src/DisplaySfml.cpp
-
-CMakeFiles/nibbler.dir/externlib/display_sfml/src/main.cpp.o: externlib/display_sfml/src/main.cpp
+CMakeFiles/nibbler.dir/externlib/display_sfml/src/DisplaySfml.cpp.o: externlib/commun/Grid.tpp
+CMakeFiles/nibbler.dir/externlib/display_sfml/src/DisplaySfml.cpp.o: externlib/commun/IDisplay.hpp
+CMakeFiles/nibbler.dir/externlib/display_sfml/src/DisplaySfml.cpp.o: externlib/commun/Vector2D.tpp
+CMakeFiles/nibbler.dir/externlib/display_sfml/src/DisplaySfml.cpp.o: externlib/display_sfml/include/DisplaySfml.hpp
 
 CMakeFiles/nibbler.dir/externlib/sandbox/main.cpp.o: externlib/sandbox/main.cpp
+CMakeFiles/nibbler.dir/externlib/sandbox/main.cpp.o: externlib/commun/Grid.tpp
+CMakeFiles/nibbler.dir/externlib/sandbox/main.cpp.o: externlib/commun/IDisplay.hpp
 
 CMakeFiles/nibbler.dir/externlib/sound_sdl/src/SoundSdl.cpp.o: externlib/sound_sdl/src/SoundSdl.cpp
+CMakeFiles/nibbler.dir/externlib/sound_sdl/src/SoundSdl.cpp.o: externlib/commun/ISound.hpp
+CMakeFiles/nibbler.dir/externlib/sound_sdl/src/SoundSdl.cpp.o: externlib/sound_sdl/include/SoundSdl.hpp
 
 CMakeFiles/nibbler.dir/externlib/sound_sdl/src/main.cpp.o: externlib/sound_sdl/src/main.cpp
+CMakeFiles/nibbler.dir/externlib/sound_sdl/src/main.cpp.o: externlib/commun/ISound.hpp
+CMakeFiles/nibbler.dir/externlib/sound_sdl/src/main.cpp.o: externlib/sound_sdl/include/SoundSdl.hpp
 
 CMakeFiles/nibbler.dir/externlib/sound_sfml/src/SoundSfml.cpp.o: externlib/sound_sfml/src/SoundSfml.cpp
+CMakeFiles/nibbler.dir/externlib/sound_sfml/src/SoundSfml.cpp.o: externlib/commun/ISound.hpp
+CMakeFiles/nibbler.dir/externlib/sound_sfml/src/SoundSfml.cpp.o: externlib/sound_sfml/include/SoundSfml.hpp
 
 CMakeFiles/nibbler.dir/externlib/sound_sfml/src/main.cpp.o: externlib/sound_sfml/src/main.cpp
+CMakeFiles/nibbler.dir/externlib/sound_sfml/src/main.cpp.o: externlib/commun/ISound.hpp
+CMakeFiles/nibbler.dir/externlib/sound_sfml/src/main.cpp.o: externlib/sound_sfml/include/SoundSfml.hpp
+
+CMakeFiles/nibbler.dir/imgui-sfml/imgui-SFML.cpp.o: imgui-sfml/imgui-SFML.cpp
+CMakeFiles/nibbler.dir/imgui-sfml/imgui-SFML.cpp.o: imgui-sfml/imgui-SFML.h
+CMakeFiles/nibbler.dir/imgui-sfml/imgui-SFML.cpp.o: imgui-sfml/imconfig.h
+CMakeFiles/nibbler.dir/imgui-sfml/imgui-SFML.cpp.o: imgui-sfml/imgui.h
+
+CMakeFiles/nibbler.dir/imgui-sfml/imgui.cpp.o: imgui-sfml/imconfig.h
+CMakeFiles/nibbler.dir/imgui-sfml/imgui.cpp.o: imgui-sfml/imgui.cpp
+CMakeFiles/nibbler.dir/imgui-sfml/imgui.cpp.o: imgui-sfml/imgui.h
+CMakeFiles/nibbler.dir/imgui-sfml/imgui.cpp.o: imgui-sfml/imgui_internal.h
+CMakeFiles/nibbler.dir/imgui-sfml/imgui.cpp.o: imgui-sfml/imstb_textedit.h
+CMakeFiles/nibbler.dir/imgui-sfml/imgui.cpp.o: incs/stb_image.h
+
+CMakeFiles/nibbler.dir/imgui-sfml/imgui_demo.cpp.o: imgui-sfml/imconfig.h
+CMakeFiles/nibbler.dir/imgui-sfml/imgui_demo.cpp.o: imgui-sfml/imgui.h
+CMakeFiles/nibbler.dir/imgui-sfml/imgui_demo.cpp.o: imgui-sfml/imgui_demo.cpp
+
+CMakeFiles/nibbler.dir/imgui-sfml/imgui_draw.cpp.o: imgui-sfml/imconfig.h
+CMakeFiles/nibbler.dir/imgui-sfml/imgui_draw.cpp.o: imgui-sfml/imgui.h
+CMakeFiles/nibbler.dir/imgui-sfml/imgui_draw.cpp.o: imgui-sfml/imgui_draw.cpp
+CMakeFiles/nibbler.dir/imgui-sfml/imgui_draw.cpp.o: imgui-sfml/imgui_internal.h
+CMakeFiles/nibbler.dir/imgui-sfml/imgui_draw.cpp.o: imgui-sfml/imstb_rectpack.h
+CMakeFiles/nibbler.dir/imgui-sfml/imgui_draw.cpp.o: imgui-sfml/imstb_textedit.h
+CMakeFiles/nibbler.dir/imgui-sfml/imgui_draw.cpp.o: imgui-sfml/imstb_truetype.h
+
+CMakeFiles/nibbler.dir/imgui-sfml/imgui_widgets.cpp.o: imgui-sfml/imconfig.h
+CMakeFiles/nibbler.dir/imgui-sfml/imgui_widgets.cpp.o: imgui-sfml/imgui.h
+CMakeFiles/nibbler.dir/imgui-sfml/imgui_widgets.cpp.o: imgui-sfml/imgui_internal.h
+CMakeFiles/nibbler.dir/imgui-sfml/imgui_widgets.cpp.o: imgui-sfml/imgui_widgets.cpp
+CMakeFiles/nibbler.dir/imgui-sfml/imgui_widgets.cpp.o: imgui-sfml/imstb_textedit.h
 
 CMakeFiles/nibbler.dir/jsoncpp/src/jsontestrunner/main.cpp.o: jsoncpp/src/jsontestrunner/main.cpp
 CMakeFiles/nibbler.dir/jsoncpp/src/jsontestrunner/main.cpp.o: jsoncpp/include/json/allocator.h
@@ -694,20 +813,4 @@ CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/main.cpp.o: jsoncpp/include/jso
 CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/main.cpp.o: jsoncpp/include/json/value.h
 CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/main.cpp.o: jsoncpp/include/json/version.h
 CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/main.cpp.o: jsoncpp/include/json/writer.h
-
-CMakeFiles/nibbler.dir/menu/src/Core.cpp.o: menu/src/Core.cpp
-
-CMakeFiles/nibbler.dir/menu/src/imgui_demo.cpp.o: menu/src/imgui_demo.cpp
-
-CMakeFiles/nibbler.dir/menu/src/main.cpp.o: menu/src/main.cpp
-
-CMakeFiles/nibbler.dir/menu/src/widget/AWidget.cpp.o: menu/src/widget/AWidget.cpp
-
-CMakeFiles/nibbler.dir/menu/src/widget/WidgetChat.cpp.o: menu/src/widget/WidgetChat.cpp
-
-CMakeFiles/nibbler.dir/menu/src/widget/WidgetExit.cpp.o: menu/src/widget/WidgetExit.cpp
-
-CMakeFiles/nibbler.dir/menu/src/widget/WidgetLobby.cpp.o: menu/src/widget/WidgetLobby.cpp
-
-CMakeFiles/nibbler.dir/menu/src/widget/WidgetSnake.cpp.o: menu/src/widget/WidgetSnake.cpp
 

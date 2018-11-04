@@ -4,8 +4,31 @@ project(nibbler)
 set(CMAKE_CXX_STANDARD 14)
 
 include_directories(class)
+include_directories(class/component)
+include_directories(class/events)
+include_directories(class/factory)
+include_directories(class/gui)
+include_directories(class/gui/widget)
+include_directories(class/KNU)
+include_directories(class/KNU/component)
+include_directories(class/KNU/entities)
+include_directories(class/KNU/events)
+include_directories(class/KNU/managers)
+include_directories(class/KNU/systems)
+include_directories(class/KNU/utils)
+include_directories(class/network)
+include_directories(class/systems)
+include_directories(externlib/commun)
+include_directories(externlib/display_sdl/include)
+include_directories(externlib/display_sfml/include)
+include_directories(externlib/sound_sdl/include)
+include_directories(externlib/sound_sfml/include)
+include_directories(imgui-sfml)
 include_directories(incs)
 include_directories(jsoncpp/include)
+include_directories(jsoncpp/include/json)
+include_directories(jsoncpp/src/lib_json)
+include_directories(jsoncpp/src/test_lib_json)
 
 add_executable(nibbler
         class/component/CollisionComponent.cpp
@@ -72,6 +95,8 @@ add_executable(nibbler
         class/network/Network.hpp
         class/network/ServerTCP.cpp
         class/network/ServerTCP.hpp
+        class/network/UtilsTCP.cpp
+        class/network/UtilsTCP.hpp
         class/systems/CollisionSystem.cpp
         class/systems/CollisionSystem.hpp
         class/systems/FollowSystem.cpp
@@ -88,10 +113,8 @@ add_executable(nibbler
         externlib/commun/ISound.hpp
         externlib/display_sdl/include/DisplaySdl.hpp
         externlib/display_sdl/src/DisplaySdl.cpp
-        externlib/display_sdl/src/main.cpp
         externlib/display_sfml/include/DisplaySfml.hpp
         externlib/display_sfml/src/DisplaySfml.cpp
-        externlib/display_sfml/src/main.cpp
         externlib/sandbox/main.cpp
         externlib/sound_sdl/include/SoundSdl.hpp
         externlib/sound_sdl/src/main.cpp
@@ -136,20 +159,4 @@ add_executable(nibbler
         jsoncpp/src/test_lib_json/jsontest.cpp
         jsoncpp/src/test_lib_json/jsontest.h
         jsoncpp/src/test_lib_json/main.cpp
-        menu/include/widget/AWidget.hpp
-        menu/include/widget/WidgetChat.hpp
-        menu/include/widget/WidgetExit.hpp
-        menu/include/widget/WidgetLobby.hpp
-        menu/include/widget/WidgetSnake.hpp
-        menu/include/Core.hpp
-        menu/include/IWidget.hpp
-        menu/include/stb_image.h
-        menu/src/widget/AWidget.cpp
-        menu/src/widget/WidgetChat.cpp
-        menu/src/widget/WidgetExit.cpp
-        menu/src/widget/WidgetLobby.cpp
-        menu/src/widget/WidgetSnake.cpp
-        menu/src/Core.cpp
-        menu/src/imgui_demo.cpp
-        menu/src/main.cpp
         Time/src/main.cpp)

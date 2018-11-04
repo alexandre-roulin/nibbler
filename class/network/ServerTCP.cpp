@@ -21,7 +21,7 @@ void ServerTCP::start_accept() {
 			new_connection->socket() = std::move(socket);
 			snakes[nu_].id = nu_;
 			snakes[nu_] = Snake::randomSnake(nu_);
-			new_connection->async_read();
+			new_connection->read_socket_header();
 			pointers.push_back(new_connection);
 			refresh_data_snake_array(new_connection, nu_);
 			++nu_;
@@ -36,17 +36,20 @@ void ServerTCP::refresh_data_snake_array(
 	{
 		std::string buffer;
 		ClientTCP::add_prefix(ID, buffer, &id, sizeof(int16_t));
-		connection->async_write(buffer);
+//		std::cout << "ServerTCP::refresh_data_snake_array : " << buffer.size() << std::endl;
+		connection->write_socket(buffer);
 	}
 	{
 		std::string buffer;
 		ClientTCP::add_prefix(SNAKE_ARRAY, buffer, snakes,
 				sizeof(Snake) * MAX_SNAKE);
-		connection->async_write(buffer);
+//		std::cout << "ServerTCP::refresh_data_snake_array : " << buffer.size() << std::endl;
+		connection->write_socket(buffer);
 	}
 	{
 		std::string buffer;
-		ClientTCP::add_prefix(SNAKE, buffer, &snakes[id], sizeof(Snake));
+		ClientTCP::add_prefix(SNAKE, buffer, &(snakes[id]), sizeof(Snake));
+//		std::cout << "ServerTCP::refresh_data_snake_array : " << buffer.size() << std::endl;
 		async_write(buffer);
 	}
 }
@@ -62,13 +65,13 @@ void ServerTCP::start_game() {
 
 void ServerTCP::async_write(std::string message) {
 	for (auto &pointer : pointers) {
-		pointer->async_write(message);
+		pointer->write_socket(message);
 	}
 }
 
 void ServerTCP::async_write(void const *input, size_t len) {
 	for (auto &pointer : pointers) {
-		pointer->async_write(input, len);
+		pointer->write_socket(input, len);
 	}
 }
 
@@ -101,8 +104,6 @@ void ServerTCP::parse_input(void const *input, size_t len) {
 void ServerTCP::remove(TCPConnection::pointer remove) {
 	pointers.erase(std::remove_if(pointers.begin(), pointers.end(),
 								  [remove](TCPConnection::pointer pointer) {
-									  std::cout << (remove == pointer)
-												<< std::endl;
 									  return remove == pointer;
 								  }));
 }
@@ -116,7 +117,7 @@ TCPConnection::TCPConnection(
 		  serverTCP_(serverTCP) {
 }
 
-void TCPConnection::async_write(std::string message) {
+void TCPConnection::write_socket(std::string message) {
 	boost::asio::async_write(socket_, boost::asio::buffer(message),
 							 boost::bind(&TCPConnection::handle_write,
 										 shared_from_this(),
@@ -124,7 +125,7 @@ void TCPConnection::async_write(std::string message) {
 										 boost::asio::placeholders::bytes_transferred));
 }
 
-void TCPConnection::async_write(void const *data, size_t bytes) {
+void TCPConnection::write_socket(void const *data, size_t bytes) {
 	boost::asio::async_write(socket_, boost::asio::buffer(data, bytes),
 							 boost::bind(&TCPConnection::handle_write,
 										 shared_from_this(),
@@ -132,14 +133,36 @@ void TCPConnection::async_write(void const *data, size_t bytes) {
 										 boost::asio::placeholders::bytes_transferred));
 }
 
-void TCPConnection::async_read() {
-	boost::asio::async_read_until(socket_, streambuf_, '\n',
-								  boost::bind(&TCPConnection::handler_read,
-											  shared_from_this(),
-											  boost::asio::placeholders::error,
-											  boost::asio::placeholders::bytes_transferred));
+void TCPConnection::read_socket() {
+
 }
 
+
+void TCPConnection::read_socket_header() {
+	boost::asio::async_read(socket_, boost::asio::buffer(buffer_data, sizeof(eHeader)),
+							boost::bind(&ClientTCP::handle_read_header,
+										shared_from_this(),
+										boost::asio::placeholders::error,
+										boost::asio::placeholders::bytes_transferred));
+}
+
+void TCPConnection::read_socket_data(eHeader header) {
+//	std::cout << "TCPConnection::read_socket_data" << std::endl;
+	boost::asio::async_read(socket_, boost::asio::buffer(buffer_data, header),
+							boost::bind(&ClientTCP::handle_read_data,
+										shared_from_this(),
+										boost::asio::placeholders::error,
+										boost::asio::placeholders::bytes_transferred));
+}
+
+
+ void TCPConnection::read_socket_chat() {
+	 boost::asio::async_read_until(socket_, buffer_chat, '\n',
+								   boost::bind(&TCPConnection::handler_read,
+											   shared_from_this(),
+											   boost::asio::placeholders::error,
+											   boost::asio::placeholders::bytes_transferred));
+}
 void
 TCPConnection::handle_write(const boost::system::error_code &error_code,
 							size_t len) {
@@ -151,12 +174,12 @@ TCPConnection::handle_write(const boost::system::error_code &error_code,
 void TCPConnection::handler_read(const boost::system::error_code &error_code,
 								 size_t len) {
 	if (error_code.value() == 0 && len > 0) {
-		serverTCP_.parse_input(streambuf_.data().data(), len);
+		serverTCP_.parse_input(buffer_chat.data().data(), len);
 	} else {
 		serverTCP_.remove(shared_from_this());
 		return;
 	}
-	streambuf_.consume(len);
+	buffer_chat.consume(len);
 	async_read();
 }
 
