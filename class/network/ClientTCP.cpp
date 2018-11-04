@@ -109,9 +109,9 @@ void ClientTCP::parse_input(eHeader header , void const *input, size_t len) {
 	std::cout << "data_deserialize [" << len << "]" << std::endl;
 
 	char *data_deserialize = new char[len];
-//	for (int i = 0; i < len; ++i) {
-//		std::cout << static_cast<int>(data_deserialize[i]) << std::endl;
-//	}
+	for (int i = 0; i < len; ++i) {
+		std::cout << static_cast<int>(data_deserialize[i]) << std::endl;
+	}
 	std::memcpy(data_deserialize, reinterpret_cast<char const *>(input), len);
 
 	switch (header) {
