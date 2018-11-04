@@ -1,10 +1,9 @@
 #include "WidgetChat.hpp"
-#include "Univers.hpp"
+#include <gui/Core.hpp>
 #include "../../../imgui-sfml/imgui.h"
 
-WidgetChat::WidgetChat(Univers &univers) :
-AWidget(),
-_univers(univers)
+WidgetChat::WidgetChat(Core &core) :
+AWidget(core)
 {
 	bzero(this->_bufferMessage, IM_ARRAYSIZE(this->_bufferMessage));
 }
@@ -47,7 +46,7 @@ void			WidgetChat::render(void)
 			ClientTCP::add_prefix(CHAT, bufferMessage, this->_bufferMessage,
 								  sizeof(_bufferMessage));
 			std::cout << "WidgetChat::render.size() " << bufferMessage.size() << std::endl;
-			this->_univers.getClientTCP_().write_socket(bufferMessage);
+			this->_core.univers.getClientTCP_().write_socket(bufferMessage);
 		}
 		bzero(this->_bufferMessage, IM_ARRAYSIZE(this->_bufferMessage));
 	}
@@ -62,7 +61,7 @@ bool			WidgetChat::_chatCommand(void)
 	if (strstr(this->_bufferMessage, "/help"))
 		this->addLog("/help\n/name Aname\n", this->_bufferMessage);
 	else if (strstr(this->_bufferMessage, "/name "))
-		this->_univers.getClientTCP_().change_name(this->_bufferMessage + sizeof("/name ") - 1);
+		this->_core.univers.getClientTCP_().change_name(this->_bufferMessage + sizeof("/name ") - 1);
 	else
 		this->addLog("{%s} n'est pas une commande valide\n", this->_bufferMessage);
 	return (true);

@@ -18,7 +18,6 @@ public:
 	void	render(void);
 
 private:
-	Core 										&_core;
 	std::vector< WidgetSnake * >				_snake;
 	std::vector<sf::Texture>					_texture;
 	std::vector<std::string>					_color;

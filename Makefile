@@ -53,6 +53,7 @@ SRCS = \
 		gui/widget/WidgetExit.cpp					\
 		gui/widget/WidgetSnake.cpp					\
 		gui/widget/WidgetLobby.cpp					\
+		gui/widget/WidgetOption.cpp					\
 		gui/widget/AWidget.cpp						\
 													\
 		cores/main.cpp								\

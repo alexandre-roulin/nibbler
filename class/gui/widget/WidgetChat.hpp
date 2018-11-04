@@ -5,7 +5,7 @@
 
 class WidgetChat : public AWidget {
 public:
-	WidgetChat(Univers &univers);
+	WidgetChat(Core &);
 	~WidgetChat(void);
 
 
@@ -15,7 +15,6 @@ public:
 	void	clear(void);
 
 private:
-	Univers					&_univers;
 	ImGuiTextBuffer			_bufferChat;
 	bool					_scrollChat;
 	char					_bufferMessage[CHAT_BUFFER];

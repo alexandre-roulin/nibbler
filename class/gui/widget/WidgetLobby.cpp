@@ -2,8 +2,7 @@
 #include <gui/Core.hpp>
 
 WidgetLobby::WidgetLobby(Core &core, Snake const *snakes) :
-AWidget(),
-_core(core)
+AWidget(core)
 {
 	for (unsigned i = 0; i < MAX_SNAKE; i++)
 		this->addSnake(snakes[i]);

@@ -1,9 +1,11 @@
 #pragma once
 #include "IWidget.hpp"
 
+class Core;
+
 class AWidget : public IWidget {
 public:
-	AWidget(void);
+	AWidget(Core &);
 	virtual ~AWidget(void);
 
 	virtual void	render(void) = 0;
@@ -21,9 +23,11 @@ public:
 	};
 
 protected:
+	Core										&_core;
 	bool										_active;
 
 private:
 	AWidget &operator=(const AWidget&);
 	AWidget(const AWidget&);
+	AWidget(void);
 };

@@ -16,7 +16,6 @@ public:
 	void	render(void);
 
 private:
-	Core										&_core;
 	Snake const									&_snake;
 	std::vector<sf::Texture>					&_texture;
 	std::vector<std::string>					&_color;

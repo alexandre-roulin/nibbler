@@ -3,8 +3,8 @@
 
 class WidgetExit : public AWidget {
 public:
-	WidgetExit(void);
-	WidgetExit(void (*callback)(void *), void *ptr);
+	WidgetExit(Core &);
+	WidgetExit(Core &, void (*callback)(void *), void *ptr);
 	~WidgetExit(void);
 
 
@@ -16,4 +16,5 @@ private:
 
 	WidgetExit &operator=(const WidgetExit&);
 	WidgetExit(const WidgetExit&);
+	WidgetExit(void);
 };
