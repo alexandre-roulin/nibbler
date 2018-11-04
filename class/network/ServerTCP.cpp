@@ -78,10 +78,9 @@ void ServerTCP::async_write(void const *input, size_t len) {
 
 void ServerTCP::parse_input(eHeader header, void const *input, size_t len) {
 
-	size_t real_len = (header == CHAT) ? len - 1 : len;
 	char *data_deserialize = new char[len];
 
-	std::memcpy(data_deserialize, reinterpret_cast<char const *>(input), real_len);
+	std::memcpy(data_deserialize, reinterpret_cast<char const *>(input), len);
 
 	switch (header) {
 		case SNAKE_ARRAY: {
@@ -98,7 +97,7 @@ void ServerTCP::parse_input(eHeader header, void const *input, size_t len) {
 			break;
 	}
 	std::string buffer;
-	ClientTCP::add_prefix(header, buffer, data_deserialize, real_len);
+	ClientTCP::add_prefix(header, buffer, data_deserialize, len);
 	std::cout << "ServerTCP::parse_input.size() " << buffer.size() << std::endl;
 	async_write(buffer);
 }
