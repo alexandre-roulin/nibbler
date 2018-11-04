@@ -62,6 +62,11 @@ private:
 	int16_t id_;
 	boost::asio::deadline_timer timer;
 	tcp::resolver resolver;
+
+public:
+	int16_t getId_() const;
+
+private:
 	tcp::resolver::query query;
 	Univers &univers;
 

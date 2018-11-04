@@ -5,6 +5,7 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/asio/io_service.hpp>
 #include "../externlib/commun/IDisplay.hpp"
+#include <boost/asio/deadline_timer.hpp>
 
 class ServerTCP;
 
@@ -22,6 +23,8 @@ public:
 	int start_game();
 
 	void loop();
+
+	void manage_input();
 
 	KNU::World &getWorld_() const;
 
@@ -46,6 +49,8 @@ private:
 	boost::asio::io_service io_server;
 	boost::asio::io_service io_client;
 
+	boost::asio::deadline_timer t;
+	boost::asio::io_service io;
 	std::unique_ptr<KNU::World> world_;
 	boost::shared_ptr<ClientTCP> clientTCP_;
 	std::unique_ptr<ServerTCP> serverTCP_;

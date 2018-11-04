@@ -114,5 +114,6 @@ enum eHeader {
 	START_GAME,			//3
 	SNAKE,				//4
 	SNAKE_ARRAY,		//5
-	HEADER				//6
+	HEADER,				//6
+	INPUT				//7
 };

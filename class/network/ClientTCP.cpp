@@ -5,6 +5,7 @@
 #include "asio.hpp"
 #include "ClientTCP.hpp"
 #include <gui/Core.hpp>
+#include <events/JoystickEvent.hpp>
 
 int const ClientTCP::size_header[] = {
 		[CHAT] = SIZEOF_CHAT_PCKT,
@@ -13,7 +14,8 @@ int const ClientTCP::size_header[] = {
 		[START_GAME] = sizeof(int16_t),
 		[SNAKE] = sizeof(Snake),
 		[SNAKE_ARRAY] = sizeof(Snake) * MAX_SNAKE,
-		[HEADER] = sizeof(eHeader)
+		[HEADER] = sizeof(eHeader),
+		[INPUT] = sizeof(int16_t) + sizeof(eDirection)
 };
 
 ClientTCP::ClientTCP(Univers &univers, boost::asio::io_service &io,
@@ -137,8 +139,16 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 		case ID:
 			id_ = *reinterpret_cast<int16_t const *>(data_deserialize);
 			break;
-		case START_GAME:break;
-		case HEADER:break;
+		case START_GAME:
+			break;
+		case HEADER:
+			break;
+		case INPUT:
+			eDirection dir;
+			int16_t id;
+
+			univers.getWorld_().getEventManager().emitEvent<JoystickEvent>()
+			break;
 	}
 	delete[] data_deserialize;
 }
@@ -180,4 +190,8 @@ void ClientTCP::food() {
 	int pos[2] = { 42, 42 };
 	ClientTCP::add_prefix(FOOD, buffer, pos, ClientTCP::size_header[FOOD]);
 	write_socket(buffer);
+}
+
+int16_t ClientTCP::getId_() const {
+	return id_;
 }

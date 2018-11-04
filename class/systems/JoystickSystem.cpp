@@ -12,8 +12,7 @@ JoystickSystem::JoystickSystem() {
 void JoystickSystem::update() {
 	auto events = getWorld().getEventManager().getEvents<JoystickEvent>();
 	for (auto &event : events) {
-		auto entity = getWorld().getEntityManager()
-				.getEntityByTag(event.tag_player);
+		auto entity = getWorld().getEntityManager().getEntityByTag(event.tag_player);
 		auto &joystickComponent = entity.getComponent<JoystickComponent>();
 		joystickComponent.joystick = event.joystick;
 	}
