@@ -5,7 +5,12 @@
 
 #define MAX_SNAKE 8
 #define CHAT_BUFFER 128
-#define NAME_BUFFER 21
+#define NAME_BUFFER 22
+#define OFFSET 8
+#define CHAT_SIZEOF CHAT_BUFFER + NAME_BUFFER + OFFSET
+
+
+
 #define COMPONENT_MAX 7
 #define BASE_ENTITIES_CAPACITY 20
 #define MAP_MAX		20
@@ -37,10 +42,10 @@ enum eSnakeSprite {
 struct		Snake
 {
 	Snake() : sprite(VOID), isReady(false), id(-1) {
-		bzero(name, NAME_BUFFER + 1);
+		bzero(name, NAME_BUFFER);
 	};
 
-	char			name[NAME_BUFFER + 1];
+	char			name[NAME_BUFFER];
 	eSnakeSprite	sprite;
 	bool			isReady;
 	int16_t				id;

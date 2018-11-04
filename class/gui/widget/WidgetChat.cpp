@@ -38,13 +38,15 @@ void			WidgetChat::render(void)
 	this->_scrollChat = false;
 	ImGui::EndChild();
 	ImGui::PushItemWidth(ImGui::GetWindowWidth() * 0.8);
-	if (ImGui::InputText("Tap", this->_bufferMessage, IM_ARRAYSIZE(this->_bufferMessage), ImGuiInputTextFlags_EnterReturnsTrue))
+	if (ImGui::InputText("Tap", this->_bufferMessage, IM_ARRAYSIZE(this->_bufferMessage) - NAME_BUFFER, ImGuiInputTextFlags_EnterReturnsTrue))
 	{
 		if (!this->_chatCommand())
 		{
 			std::string bufferMessage;
-			ClientTCP::add_prefix(CHAT, bufferMessage, this->_bufferMessage,
-								  sizeof(_bufferMessage));
+			char *charBufferMessage = Factory::factory_chat_message(this->_core.univers.getClientTCP_().getSnake().name, this->_bufferMessage);
+			std::cout << charBufferMessage << std::endl;
+			ClientTCP::add_prefix(CHAT, bufferMessage, charBufferMessage,
+								  CHAT_BUFFER);
 			std::cout << "WidgetChat::render.size() " << bufferMessage.size() << std::endl;
 			this->_core.univers.getClientTCP_().write_socket(bufferMessage);
 		}

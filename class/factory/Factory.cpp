@@ -72,11 +72,39 @@ void Factory::create_food(int y, int x) {
 	food.tag("food");
 }
 
+char * Factory::factory_pseudo(char const *name) {
+	static char final_[22] = {0};
+	bzero(final_, 22);
+	final_[0] = '[';
+	size_t len = std::strlen(name) ;
+	if (len > NAME_BUFFER - 4)
+		len = NAME_BUFFER - 4;
+	std::memcpy(final_, name, len);
+	std::strcpy(final_ + len + 1, "]: ");
+	return final_;
+}
+char * Factory::factory_chat_message(char const *name, char const *message) {
+	static char final_[CHAT_SIZEOF] = {0};
+	bzero(final_, CHAT_SIZEOF);
+	size_t lenName = std::strlen(name);
+	if (lenName > NAME_BUFFER)
+		lenName = NAME_BUFFER;
+	final_[0] = ']';
+	std::memcpy(final_ + 1, name, lenName);
+	std::strncpy(final_ + lenName + 1, "]: ", 3);
+	size_t lenMessage = strlen(message);
+	if (lenMessage > CHAT_BUFFER)
+		lenMessage = CHAT_BUFFER;
+	std::memcpy(final_ + lenName + 4, message, lenMessage);
+	return final_;
+}
+
 char * Factory::factory_name(eSnakePart esp, int16_t id) {
 	static char name[13] = "?_snake_????";
 	//"$ID{1}_snake_[body/tail/head]"
 	name[0] = id + 48;
 	std::memcpy(name + 8, part_name[esp], sizeof(char) * 4);
+
 	return name;
 }
 

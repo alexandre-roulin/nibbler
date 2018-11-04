@@ -64,10 +64,12 @@ int main(int ac, char **av) {
 		}
 		if (buffer == "food")
 			univers.getClientTCP_().food();
-		if (buffer == "start") {
-//			univers.create_ui();
-//			univers.getCore_().aState();
+		if (buffer == "game") {
 			univers.start_game();
+		}
+		if (buffer == "start") {
+			univers.create_ui();
+			univers.getCore_().aState();
 			return (0);
 		}
 	}

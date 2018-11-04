@@ -28,20 +28,21 @@ ClientTCP::ClientTCP(Univers &univers, boost::asio::io_service &io,
 }
 
 void ClientTCP::change_name(char const *name) {
+	bzero(snake_array[id_].name, NAME_BUFFER);
 	if (strlen(name) > NAME_BUFFER)
-		strncpy(snakes[id_].name, name, NAME_BUFFER);
+		strncpy(snake_array[id_].name, name, NAME_BUFFER - 1);
 	else
-		strcpy(snakes[id_].name, name);
+		strcpy(snake_array[id_].name, name);
 	this->refreshMySnake();
 }
 
 void ClientTCP::change_sprite(eSnakeSprite snakeSprite) {
-	snakes[id_].sprite = snakeSprite;
+	snake_array[id_].sprite = snakeSprite;
 	this->refreshMySnake();
 }
 
 void ClientTCP::change_state_ready(void) {
-	snakes[id_].isReady = !snakes[id_].isReady;
+	snake_array[id_].isReady = !snake_array[id_].isReady;
 	this->refreshMySnake();
 }
 
@@ -112,9 +113,6 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 
 
 	char *data_deserialize = new char[len];
-	for (int i = 0; i < len; ++i) {
-		std::cout << static_cast<int>(data_deserialize[i]) << std::endl;
-	}
 	std::memcpy(data_deserialize, reinterpret_cast<char const *>(input), len);
 
 	switch (header) {
@@ -169,6 +167,12 @@ ClientTCP::create(Univers &univers, boost::asio::io_service &io,
 
 Snake const *ClientTCP::getSnakes() const {
 	return snake_array;
+}
+Snake	const &ClientTCP::getSnake(void) const {
+	return this->snake_array[this->id_];
+}
+int16_t		ClientTCP::getId(void) const {
+	return this->id_;
 }
 
 void ClientTCP::food() {
