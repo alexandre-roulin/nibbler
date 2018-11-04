@@ -41,6 +41,7 @@ private:
 	sf::Texture					_imageTitleScreen;
 	sf::Clock					_deltaClock;
 	WidgetChat					_chat;
+	sf::Vector2<int>			_mapSize;
 
 	void						_render(void);
 	ImGuiIO						&_createContext(void);

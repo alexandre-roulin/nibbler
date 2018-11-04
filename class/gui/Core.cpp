@@ -10,7 +10,8 @@ univers(univers),
 _winSize(sf::Vector2<unsigned int>(1000, 900)),
 _win(sf::VideoMode(this->_winSize.x, this->_winSize.y), "Project Sanke"),
 _io(this->_createContext()),
-_chat(*this)
+_chat(*this),
+_mapSize(sf::Vector2<int>(20, 20))
 {
 	if (!this->_imageTitleScreen.loadFromFile("ressource/ecran_titre.png"))
 		(throw(Core::CoreConstructorException("Cannot load background")));

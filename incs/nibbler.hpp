@@ -12,6 +12,8 @@
 #define GROUP_SNAKE "snake_group"
 #define TAG_HEAD_SNAKE "snake_head"
 #define TAG_TAIL_SNAKE "snake_tail"
+#define MAP_MAX		20
+#define MAP_MIN		8
 
 enum eDirection {
 	NORTH,
