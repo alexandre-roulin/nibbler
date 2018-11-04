@@ -23,15 +23,6 @@ enum eDirection {
 	WEST
 };
 
-enum eJoystick {
-	NONE,
-	ARROW_UP,
-	ARROW_DOWN,
-	ARROW_LEFT,
-	ARROW_RIGHT
-};
-
-
 enum eSnakeSprite {
 	GREEN,
 	PURPLE,

@@ -6,16 +6,16 @@
 
 struct JoystickComponent {
 private:
-	static std::string const JOYSTICK;
+	static std::string const DIRECTION;
 	static std::string const TAG;
 public:
 
 	static std::string const NAME_COMPONENT;
 
-	explicit JoystickComponent(std::string tag = "");
+	explicit JoystickComponent(eDirection direction = NORTH, std::string tag = "");
 	JoystickComponent(Json::Value);
 
-	eJoystick joystick;
+	eDirection direction;
 	std::string tag;
 
 	Json::Value serializeComponent();

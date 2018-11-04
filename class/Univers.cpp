@@ -53,8 +53,8 @@ void Univers::manage_input() {
 	std::string buffer;
 	eDirection ed = display->getDirection();
 	int16_t id = clientTCP_->getId_();
-	std::memcpy(des, &ed, sizeof(eDirection));
 	std::memcpy(des, &id, sizeof(int16_t));
+	std::memcpy(des, &ed, sizeof(eDirection));
 	ClientTCP::add_prefix(INPUT, buffer, des, ClientTCP::size_header[INPUT]);
 	serverTCP_->async_write(buffer);
 }
@@ -70,9 +70,6 @@ void Univers::loop() {
 
 		display->render();
 	}
-	t.async_wait(boost::bind(&Univers::loop_world, this, &t, ));
-	boost::thread thread(boost::bind(&boost::asio::io_service::run, &io));
-	thread.detach();
 }
 
 

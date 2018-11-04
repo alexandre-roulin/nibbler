@@ -1,25 +1,25 @@
 #include "JoystickComponent.hpp"
-#include <cassert>
 
 
 std::string const JoystickComponent::NAME_COMPONENT = "joystickComponent";
-std::string const JoystickComponent::JOYSTICK = "joystick";
+std::string const JoystickComponent::DIRECTION = "direction";
 std::string const JoystickComponent::TAG = "tag";
 
-JoystickComponent::JoystickComponent(std::string tag) : joystick(NONE), tag(tag) {
+JoystickComponent::JoystickComponent(eDirection direction, std::string tag)
+		: direction(direction), tag(tag) {
 
 }
 
 Json::Value JoystickComponent::serializeComponent() {
 	Json::Value component;
-	component[JOYSTICK] = static_cast<int>(joystick);
+	component[DIRECTION] = static_cast<int>(direction);
 	component[TAG] = tag;
 	return component;
 }
 
 JoystickComponent::JoystickComponent(Json::Value json) {
-	assert(json[JOYSTICK].isInt());
+	assert(json[DIRECTION].isInt());
 	assert(json[TAG].isString());
-	joystick = static_cast<eJoystick >(json.get(JOYSTICK, NONE).asInt());
-	tag = json.get(JOYSTICK, NONE).asString();
+	direction = static_cast<eDirection >(json.get(DIRECTION, NORTH).asInt());
+	tag = json.get(DIRECTION, NORTH).asString();
 }

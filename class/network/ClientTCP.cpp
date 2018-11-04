@@ -150,8 +150,9 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 		case INPUT:
 			eDirection dir;
 			int16_t id;
-
-			univers.getWorld_().getEventManager().emitEvent<JoystickEvent>()
+			std::memcpy(&id, data_deserialize, sizeof(int16_t));
+			std::memcpy(&dir, data_deserialize + sizeof(int16_t), sizeof(eDirection));
+			univers.getWorld_().getEventManager().emitEvent<JoystickEvent>(id, dir);
 			break;
 	}
 	delete[] data_deserialize;

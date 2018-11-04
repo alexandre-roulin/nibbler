@@ -7,10 +7,11 @@
 
 struct JoystickEvent {
 
-	explicit JoystickEvent(eDirection joystick = NORTH, int16_t id = -1)
-			: joystick(joystick),
-			  tag_player(Factory::factory_name(HEAD, id)) {
+	explicit JoystickEvent(int16_t id = -1, eDirection direction = NORTH)
+			: tag_player(Factory::factory_name(HEAD, id)),
+			  direction(direction) {
 	}
-	eDirection joystick;
+
+	eDirection direction;
 	std::string tag_player;
 };
