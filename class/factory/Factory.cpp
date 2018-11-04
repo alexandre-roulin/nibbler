@@ -84,8 +84,8 @@ char * Factory::factory_pseudo(char const *name) {
 	return final_;
 }
 char * Factory::factory_chat_message(char const *name, char const *message) {
-	static char final_[CHAT_SIZEOF] = {0};
-	bzero(final_, CHAT_SIZEOF);
+	static char final_[SIZEOF_CHAT_PCKT] = {0};
+	bzero(final_, SIZEOF_CHAT_PCKT);
 	size_t lenName = std::strlen(name);
 	if (lenName > NAME_BUFFER)
 		lenName = NAME_BUFFER;

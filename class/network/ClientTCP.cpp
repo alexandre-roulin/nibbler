@@ -7,7 +7,7 @@
 #include <gui/Core.hpp>
 
 int const ClientTCP::size_header[] = {
-		[CHAT] = CHAT_BUFFER,
+		[CHAT] = SIZEOF_CHAT_PCKT,
 		[FOOD] = sizeof(int) * 2,
 		[ID] = sizeof(int16_t),
 		[START_GAME] = sizeof(int16_t),
