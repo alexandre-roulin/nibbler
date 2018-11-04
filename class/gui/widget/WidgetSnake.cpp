@@ -1,10 +1,13 @@
 #include "WidgetSnake.hpp"
-#include <iostream>
-WidgetSnake::WidgetSnake(Snake const &snake,
+#include <gui/Core.hpp>
+
+WidgetSnake::WidgetSnake(Core &core,
+							Snake const &snake,
 							std::vector<sf::Texture> &texture,
 							std::vector<std::string> &color,
 							bool isYourSnake = false) :
 AWidget(),
+_core(core),
 _texture(texture),
 _color(color),
 _snake(snake),
@@ -53,7 +56,7 @@ void			WidgetSnake::_renderOtherSnake(void)
 		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4)ImColor::HSV(0.0f, 0.8f, 0.8f));
 		ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)ImColor::HSV(0.0f, 0.9f, 0.9f));
 		if (ImGui::Button("Ready ?", sf::Vector2f(sizeTexture, ImGui::GetFrameHeight())))
-			;//this->_snake.isReady = true;
+			this->_core.univers.getClientTCP_().change_state_ready();;
 	}
 	else
 	{
@@ -61,7 +64,7 @@ void			WidgetSnake::_renderOtherSnake(void)
 		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4)ImColor::HSV(0.33f, 0.8f, 0.8f));
 		ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)ImColor::HSV(0.33f, 0.9f, 0.9f));
 		if (ImGui::Button("Ready !", sf::Vector2f(sizeTexture, ImGui::GetFrameHeight())))
-			;//this->_snake.isReady = false;
+			this->_core.univers.getClientTCP_().change_state_ready();
 	}
 	ImGui::PopStyleColor(3);
 	ImGui::PopID();
@@ -113,7 +116,7 @@ void			WidgetSnake::_renderYourSnake(void)
 		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4)ImColor::HSV(0.0f, 0.8f, 0.8f));
 		ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)ImColor::HSV(0.0f, 0.9f, 0.9f));
 		if (ImGui::Button("Ready ?", sf::Vector2f(sizeTexture, ImGui::GetFrameHeight())))
-			;//this->_snake.isReady = true;
+			this->_core.univers.getClientTCP_().change_state_ready();
 	}
 	else
 	{
@@ -121,7 +124,7 @@ void			WidgetSnake::_renderYourSnake(void)
 		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4)ImColor::HSV(0.33f, 0.8f, 0.8f));
 		ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)ImColor::HSV(0.33f, 0.9f, 0.9f));
 		if (ImGui::Button("Ready !", sf::Vector2f(sizeTexture, ImGui::GetFrameHeight())))
-			;//this->_snake.isReady = false;
+			this->_core.univers.getClientTCP_().change_state_ready();
 	}
 	ImGui::PopStyleColor(3);
 	ImGui::PopID();

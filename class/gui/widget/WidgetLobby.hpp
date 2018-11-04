@@ -10,7 +10,7 @@ class Core;
 
 class WidgetLobby : public AWidget {
 public:
-	WidgetLobby(Core const &core, Snake const *snakes);
+	WidgetLobby(Core &core, Snake const *snakes);
 	~WidgetLobby(void);
 
 	bool	addSnake(Snake const &snake, bool isYourSnake = false);
@@ -18,7 +18,7 @@ public:
 	void	render(void);
 
 private:
-	Core const									&_core;
+	Core 										&_core;
 	std::vector< WidgetSnake * >				_snake;
 	std::vector<sf::Texture>					_texture;
 	std::vector<std::string>					_color;

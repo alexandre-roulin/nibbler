@@ -32,8 +32,8 @@ class Core {
 	void 						exit(void);
 	sf::Vector2<unsigned int>	positionByPercent(sf::Vector2<unsigned int> const &percent) const;
 
+	Univers						&univers;
 private:
-	Univers &univers_;
 	//				GUI				//
 	sf::Vector2<unsigned int>	_winSize;
 	sf::RenderWindow			_win;

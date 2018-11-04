@@ -5,15 +5,18 @@
 #include <SFML/Graphics.hpp>
 #include "nibbler.hpp"
 
+class Core;
+
 class WidgetSnake : public AWidget {
 public:
-	WidgetSnake(Snake const &, std::vector<sf::Texture> &, std::vector<std::string> &, bool);
+	WidgetSnake(Core &, Snake const &, std::vector<sf::Texture> &, std::vector<std::string> &, bool);
 	~WidgetSnake(void);
 
 
 	void	render(void);
 
 private:
+	Core										&_core;
 	Snake const									&_snake;
 	std::vector<sf::Texture>					&_texture;
 	std::vector<std::string>					&_color;

@@ -1,7 +1,7 @@
 #include "WidgetLobby.hpp"
 #include <gui/Core.hpp>
 
-WidgetLobby::WidgetLobby(Core const &core, Snake const *snakes) :
+WidgetLobby::WidgetLobby(Core &core, Snake const *snakes) :
 AWidget(),
 _core(core)
 {
@@ -31,7 +31,7 @@ bool			WidgetLobby::addSnake(Snake const &snake, bool isYourSnake)
 {
 	if (this->_snake.size() < MAX_SNAKE)
 	{
-		this->_snake.emplace_back(new WidgetSnake(snake, this->_texture, this->_color, isYourSnake));
+		this->_snake.emplace_back(new WidgetSnake(this->_core, snake, this->_texture, this->_color, isYourSnake));
 		return (true);
 	}
 	return (false);

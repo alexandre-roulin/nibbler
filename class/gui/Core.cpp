@@ -6,7 +6,7 @@
 #include <iostream>
 
 Core::Core(Univers &univers) :
-univers_(univers),
+univers(univers),
 _winSize(sf::Vector2<unsigned int>(1000, 900)),
 _win(sf::VideoMode(this->_winSize.x, this->_winSize.y), "Project Sanke"),
 _io(this->_createContext()),
@@ -84,7 +84,7 @@ void			callbackExit(void *ptr)
 void			Core::aState(void)
 {
 	WidgetExit wexit(&callbackExit, this);
-	WidgetLobby lobby(*this, this->univers_.getClientTCP_().getSnakes());
+	WidgetLobby lobby(*this, this->univers.getClientTCP_().getSnakes());
 
 	while (this->_win.isOpen())
 	{
