@@ -24,6 +24,8 @@ public:
 	void create_snake(int16_t , int, int);
 	void create_food(int, int);
 	static char * factory_name(eSnakePart, int16_t id);
+	static char * factory_pseudo(char const *name);
+	static char * factory_chat_message(char const *name, char const *message);
 	static std::string factory_name(eSnakePart, std::string);
 	static eSnakePart isSnakePart(std::string );
 	Factory(KNU::World &world);
@@ -31,5 +33,3 @@ private:
 	static const char *part_name[4];
 	KNU::World &world_;
 };
-
-

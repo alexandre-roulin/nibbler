@@ -30,8 +30,9 @@ ClientTCP::ClientTCP(Univers &univers, boost::asio::io_service &io,
 }
 
 void ClientTCP::change_name(char const *name) {
+	bzero(snake_array[id_].name, NAME_BUFFER);
 	if (strlen(name) > NAME_BUFFER)
-		strncpy(snake_array[id_].name, name, NAME_BUFFER);
+		strncpy(snake_array[id_].name, name, NAME_BUFFER - 1);
 	else
 		strcpy(snake_array[id_].name, name);
 	this->refreshMySnake();
@@ -176,6 +177,12 @@ ClientTCP::create(Univers &univers, boost::asio::io_service &io,
 
 Snake const *ClientTCP::getSnakes() const {
 	return snake_array;
+}
+Snake	const &ClientTCP::getSnake(void) const {
+	return this->snake_array[this->id_];
+}
+int16_t		ClientTCP::getId(void) const {
+	return this->id_;
 }
 
 void ClientTCP::food() {

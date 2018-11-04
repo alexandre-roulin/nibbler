@@ -49,7 +49,9 @@ public:
 	static pointer_client
 	create(Univers &univers, boost::asio::io_service &io, std::string hostname);
 
-	const Snake *getSnakes() const;
+	const Snake		*getSnakes() const;
+	Snake const		&getSnake(void) const;
+	int16_t		getId(void) const;
 
 	static int const size_header[];
 private:

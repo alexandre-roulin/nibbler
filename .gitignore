@@ -1,3 +1,5 @@
+.objs/
+.deps/
 nibbler
 *.DS_Store
 obj
