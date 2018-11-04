@@ -9,20 +9,6 @@
 #include <systems/CollisionSystem.hpp>
 #include <systems/RenderSystem.hpp>
 
-void print(const boost::system::error_code& /*e*/,
-		   boost::asio::deadline_timer* t, int* count)
-{
-	if (*count < 5)
-	{
-		std::cout << *count << std::endl;
-		++(*count);
-
-		t->expires_at(t->expires_at() + boost::posix_time::seconds(1));
-		t->async_wait(boost::bind(print,
-								  boost::asio::placeholders::error, t, count));
-	}
-}
-
 Univers::Univers() :
 	t(io, boost::posix_time::seconds(1)) {
 	world_ = std::make_unique<KNU::World>(*this);
@@ -32,10 +18,6 @@ Univers::Univers() :
 	display = nullptr;
 
 	int count = 0;
-	t.async_wait(boost::bind(print, boost::asio::placeholders::error, &t, &count));
-	boost::thread thread(boost::bind(&boost::asio::io_service::run, &io));
-	thread.detach();
-	std::cout << "Final count is " << count << std::endl;
 }
 
 
@@ -79,20 +61,30 @@ void Univers::manage_input() {
 
 void Univers::loop() {
 
+
+
+	for (;;) {
+		display->update();
+
+		manage_input();
+
+		display->render();
+	}
+	t.async_wait(boost::bind(&Univers::loop_world, this, &t, ));
+	boost::thread thread(boost::bind(&boost::asio::io_service::run, &io));
+	thread.detach();
+}
+
+
+void Univers::loop_world() {
 	world_->getSystemManager().addSystem<CollisionSystem>();
 	world_->getSystemManager().addSystem<FollowSystem>();
 	world_->getSystemManager().addSystem<FoodSystem>();
 	world_->getSystemManager().addSystem<JoystickSystem>();
 	world_->getSystemManager().addSystem<MotionSystem>();
 	world_->getSystemManager().addSystem<RenderSystem>();
-
 	for (;;) {
-		display->update();
 		world_->update();
-
-		manage_input();
-
-
 
 		world_->getSystemManager().getSystem<FollowSystem>()->update();
 		world_->getSystemManager().getSystem<JoystickSystem>()->update();
@@ -100,27 +92,24 @@ void Univers::loop() {
 		world_->getSystemManager().getSystem<CollisionSystem>()->update();
 		world_->getSystemManager().getSystem<FoodSystem>()->update();
 		world_->getSystemManager().getSystem<RenderSystem>()->update();
-
-		display->render();
 	}
 }
-
 
 KNU::World &Univers::getWorld_() const {
 	return *world_;
 }
-
 ClientTCP &Univers::getClientTCP_() const {
 	return *clientTCP_;
 }
+
 ServerTCP &Univers::getServerTCP_() const {
 	return *serverTCP_;
 }
 
+
 Core &Univers::getCore_() const {
 	return *core_;
 }
-
 
 void Univers::create_ui() {
 	core_ = std::make_unique<Core>(*this);

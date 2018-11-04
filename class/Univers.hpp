@@ -23,8 +23,10 @@ public:
 	int start_game();
 
 	void loop();
+void loop_world();
 
 	void manage_input();
+
 
 	KNU::World &getWorld_() const;
 

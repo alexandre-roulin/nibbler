@@ -94,6 +94,10 @@ void ClientTCP::handle_read_header(const boost::system::error_code &error_code,
 	}
 }
 
+int16_t ClientTCP::getId_() const {
+	return id_;
+}
+
 void ClientTCP::write_socket(void const *data, size_t len) {
 	boost::asio::async_write(socket, boost::asio::buffer(data, len),
 							 boost::bind(&ClientTCP::handle_write,
@@ -102,6 +106,7 @@ void ClientTCP::write_socket(void const *data, size_t len) {
 										 boost::asio::placeholders::bytes_transferred));
 }
 
+
 void ClientTCP::write_socket(std::string message) {
 	boost::asio::async_write(socket, boost::asio::buffer(message),
 							 boost::bind(&ClientTCP::handle_write,
@@ -109,7 +114,6 @@ void ClientTCP::write_socket(std::string message) {
 										 boost::asio::placeholders::error,
 										 boost::asio::placeholders::bytes_transferred));
 }
-
 
 void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 
@@ -153,6 +157,8 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 	delete[] data_deserialize;
 }
 
+
+
 void ClientTCP::handle_read_data(eHeader header, boost::system::error_code const &error_code,
 								 size_t len) {
 	std::cout << "ClientTCP::handle_read_data [" << len << "]"
@@ -163,8 +169,6 @@ void ClientTCP::handle_read_data(eHeader header, boost::system::error_code const
 	read_socket_header();
 }
 
-
-
 void ClientTCP::handle_write(const boost::system::error_code &error_code,
 							 size_t len) {
 }
@@ -174,13 +178,13 @@ ClientTCP::create(Univers &univers, boost::asio::io_service &io,
 				  std::string hostname) {
 	return pointer_client(new ClientTCP(univers, io, hostname));
 }
-
 Snake const *ClientTCP::getSnakes() const {
 	return snake_array;
 }
 Snake	const &ClientTCP::getSnake(void) const {
 	return this->snake_array[this->id_];
 }
+
 int16_t		ClientTCP::getId(void) const {
 	return this->id_;
 }
@@ -190,8 +194,4 @@ void ClientTCP::food() {
 	int pos[2] = { 42, 42 };
 	ClientTCP::add_prefix(FOOD, buffer, pos, ClientTCP::size_header[FOOD]);
 	write_socket(buffer);
-}
-
-int16_t ClientTCP::getId_() const {
-	return id_;
 }
