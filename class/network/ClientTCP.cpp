@@ -109,14 +109,13 @@ void ClientTCP::parse_input(eHeader header , void const *input, size_t len) {
 	std::cout << "data_deserialize [" << len << "]" << std::endl;
 
 	char *data_deserialize = new char[len];
-	for (int i = 0; i < len; ++i) {
-		std::cout << static_cast<int>(data_deserialize[i]) << std::endl;
-	}
 	std::memcpy(data_deserialize, reinterpret_cast<char const *>(input), len);
-
 	switch (header) {
 		case CHAT:
 			data_deserialize[len - 1] = '\0';
+			for (int i = 0; i < len; ++i) {
+				std::cout << int(data_deserialize[i]) << std::endl;
+			}
 			univers.getCore_().addMessageChat(std::string(data_deserialize, len));
 			break;
 		case SNAKE_ARRAY: {
