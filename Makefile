@@ -70,6 +70,7 @@ SRCS = \
 		systems/FollowSystem.cpp					\
 		systems/CollisionSystem.cpp					\
 		systems/FoodSystem.cpp						\
+		systems/RenderSystem.cpp					\
 													\
 		events/JoystickEvent.cpp					\
 													\

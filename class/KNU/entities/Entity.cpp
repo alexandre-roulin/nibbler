@@ -60,6 +60,14 @@ namespace KNU {
 		return *this;
 	}
 
+	std::string Entity::getTag() const {
+		return getEntitiesManager().getTagOfEntity(*this);
+	}
+
+	std::string Entity::getGroup() const {
+		return getEntitiesManager().getGroupOfEntity(*this);
+	}
+
 	std::string const EntitiesManager::TAG = "tag";
 	std::string const EntitiesManager::GROUP = "group";
 
@@ -101,7 +109,7 @@ namespace KNU {
 				else if (itc.name() == EntitiesManager::GROUP)
 					groupEntity(entity, value.asString());
 			}
-			world._createdEntities.push_back(entity);
+			world.createdEntities_.push_back(entity);
 		}
 		for (int index = 0; index < capacity; ++index) {
 			if (_entitiesMap[index].id == -1)

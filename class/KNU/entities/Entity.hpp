@@ -97,6 +97,9 @@ namespace KNU {
 
 		bool hasTag(std::string tag) const;
 
+		std::string getTag() const;
+		std::string getGroup() const;
+
 		void group(std::string group);
 
 		bool hasGroup(std::string group) const;

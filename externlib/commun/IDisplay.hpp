@@ -1,12 +1,10 @@
 #pragma once
 #include "Grid.tpp"
-
-enum eDirection {
-	NORTH,
-	SOUTH,
-	EAST,
-	WEST
-};
+#include <nibbler.hpp>
+#define SPRITE_GROUND 0
+#define SPRITE_WALL 1
+#define DEFAULT_SIZE_SPRIT 32
+#define PATH_TILESET "./externlib/commun/tileset_3snake.png"
 
 class IDisplay {
 public:

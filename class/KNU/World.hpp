@@ -4,6 +4,7 @@
 
 #include <KNU/systems/System.hpp>
 #include <KNU/events/EventManager.hpp>
+#include "../../externlib/commun/IDisplay.hpp"
 
 class Univers;
 
@@ -12,22 +13,23 @@ namespace KNU {
 
 	class World {
 	private:
-		std::vector<Entity> _createdEntities;
-		std::vector<Entity> _destroyedEntities;
-	public:
-		uint8_t getMax_() const;
+		std::vector<Entity> createdEntities_;
+		std::vector<Entity> destroyedEntities_;
+		std::unique_ptr<EntitiesManager> entityManager_;
+		std::unique_ptr<EventManager> eventManager_;
+		std::unique_ptr<SystemManager> systemManager_;
+		IDisplay *display;
+		int max_;
 
-	private:
-		uint8_t max_;
-
-		std::unique_ptr<EntitiesManager> _entityManager;
-		std::unique_ptr<EventManager> _eventManager;
-		std::unique_ptr<SystemManager> _systemManager;
 
 		friend class EntitiesManager;
-
 	public:
+		int getMax_() const;
+
+		IDisplay *getDisplay() const;
 		World(Univers &);
+
+		void setDisplay(IDisplay *display);
 
 		void update();
 

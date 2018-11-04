@@ -1,7 +1,6 @@
 #include <component/PositionComponent.hpp>
-#include <component/CollisionComponent.hpp>
 #include "CollisionSystem.hpp"
-#include "KNU/World.hpp"
+#include <factory/Factory.hpp>
 #include <events/FoodEvent.hpp>
 
 CollisionSystem::CollisionSystem() {
@@ -11,30 +10,37 @@ CollisionSystem::CollisionSystem() {
 
 
 void CollisionSystem::update() {
-	std::vector<KNU::Entity> v = getEntities();
+	std::vector<KNU::Entity> entities_ = getEntities();
 	auto &world = getWorld();
+
 	for (auto &entity : getEntities()) {
-		auto isWall = entity.getComponent<CollisionComponent>()
-				.isWall;
-		if (entity != world.getEntityManager().getEntityByTag(TAG_HEAD_SNAKE))
-			std::for_each(v.begin(), v.end(),
-						  [&world, isWall](KNU::Entity &entity) {
-							  auto snake_head = world.getEntityManager()
-									  .getEntityByTag(TAG_HEAD_SNAKE);
-							  if (entity != snake_head &&
-								  (snake_head.getComponent<PositionComponent>() ==
-								   entity.getComponent<PositionComponent>())) {
-								  if (isWall) {
-									  snake_head.kill();
-								  } else {
+		if (Factory::isSnakePart(entity.getTag()) == HEAD) {
+			auto &snakePositionComponent = entity.getComponent<PositionComponent>();
+			std::for_each(entities_.begin(), entities_.end(),
+						  [&entity, snakePositionComponent, &world](
+								  KNU::Entity &entity_) {
+							  auto &positionComponent = entity_.getComponent<PositionComponent>();
+							  if (snakePositionComponent == positionComponent) {
+								  auto &collisionComponent = entity_.getComponent<CollisionComponent>();
+								  eSnakePart esp = Factory::isSnakePart(
+										  entity_.getTag());
+								  if (collisionComponent.isWall ||
+									  esp != OTHER) {
 									  entity.kill();
-									  world.getEventManager()
-											  .emitEvent<FoodEvent>(false);
 								  }
+								  if (esp == HEAD)
+									  entity_.kill();
+								  if (entity_.getTag() == "food")
+									  world.getEventManager()
+											  .emitEvent<FoodEvent>(
+													  Factory::factory_name(
+															  TAIL,
+															  entity.getTag()),
+													  entity.getGroup());
 							  }
 						  });
+		}
 	}
-
 }
 
 
