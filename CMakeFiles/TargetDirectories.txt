@@ -1,3 +1,0 @@
-/Users/alexandreroulin/work/nibbler/CMakeFiles/rebuild_cache.dir
-/Users/alexandreroulin/work/nibbler/CMakeFiles/edit_cache.dir
-/Users/alexandreroulin/work/nibbler/CMakeFiles/nibbler.dir
