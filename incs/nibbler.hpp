@@ -4,13 +4,9 @@
 #include <ostream>
 
 #define MAX_SNAKE 8
-#define MAX_SPRITE 3
 #define CHAT_BUFFER 128
 #define COMPONENT_MAX 7
 #define BASE_ENTITIES_CAPACITY 20
-#define GROUP_SNAKE "snake_group"
-#define TAG_HEAD_SNAKE "snake_head"
-#define TAG_TAIL_SNAKE "snake_tail"
 
 enum eDirection {
 	NORTH,
@@ -99,10 +95,14 @@ struct		Snake
 	static std::string const basicName[MAX_SNAKE];
 };
 
+//ADD SIZE IN ClientTCP::size_header
+
 enum eHeader {
-	CHAT,											//0
-	FOOD,											//1
-	ID = sizeof(int16_t),							//2
-	SNAKE = sizeof(Snake),							//32
-	SNAKE_ARRAY = sizeof(Snake) * MAX_SNAKE,		//256
+	CHAT,				//0
+	FOOD,				//1
+	ID,					//2
+	START_GAME,			//3
+	SNAKE,				//4
+	SNAKE_ARRAY,		//5
+	HEADER				//6
 };

@@ -3,7 +3,6 @@
 #include <exception>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
-
 #include "IDisplay.hpp"
 #include "Vector2D.tpp"
 #include "Grid.tpp"

@@ -7,15 +7,15 @@
 
 struct SpriteComponent {
 
-	explicit SpriteComponent(std::string path = "");
+	explicit SpriteComponent(int sprite = 0);
 
-	std::string path;
+	int sprite;
 
 	SpriteComponent &operator=(SpriteComponent const &motionComponent);
 
 	friend std::ostream &
 	operator<<(std::ostream &os, const SpriteComponent &component) {
-		os << "path: " << component.path;
+		os << "path: ";
 		return os;
 	}
 };

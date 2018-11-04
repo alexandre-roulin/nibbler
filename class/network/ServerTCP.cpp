@@ -19,8 +19,8 @@ void ServerTCP::start_accept() {
 			TCPConnection::pointer new_connection =
 					TCPConnection::create(acceptor_.get_io_service(), *this);
 			new_connection->socket() = std::move(socket);
-			snakes[nu_].id = nu_;
-			snakes[nu_] = Snake::randomSnake(nu_);
+			snake_array[nu_].id = nu_;
+			snake_array[nu_] = Snake::randomSnake(nu_);
 			new_connection->read_socket_header();
 			pointers.push_back(new_connection);
 			refresh_data_snake_array(new_connection, nu_);
@@ -41,14 +41,14 @@ void ServerTCP::refresh_data_snake_array(
 	}
 	{
 		std::string buffer;
-		ClientTCP::add_prefix(SNAKE_ARRAY, buffer, snakes,
+		ClientTCP::add_prefix(SNAKE_ARRAY, buffer, snake_array,
 							  sizeof(Snake) * MAX_SNAKE);
 //		std::cout << "ServerTCP::refresh_data_snake_array : " << buffer.size() << std::endl;
 		connection->write_socket(buffer);
 	}
 	{
 		std::string buffer;
-		ClientTCP::add_prefix(SNAKE, buffer, &(snakes[id]), sizeof(Snake));
+		ClientTCP::add_prefix(SNAKE, buffer, &(snake_array[id]), sizeof(Snake));
 //		std::cout << "ServerTCP::refresh_data_snake_array : " << buffer.size() << std::endl;
 		async_write(buffer);
 	}
@@ -56,11 +56,12 @@ void ServerTCP::refresh_data_snake_array(
 
 void ServerTCP::start_game() {
 	for (int index = 0; index < MAX_SNAKE; ++index) {
-		if (!snakes[index].isReady && snakes[index].id != -1)
+		if (!snake_array[index].isReady && snake_array[index].id != -1)
 			return;
 	}
-	Factory factory(univers.getWorld_());
-	factory.create_all_snake(nu_);
+	std::string buffer;
+	ClientTCP::add_prefix(START_GAME, buffer, &nu_, sizeof(int16_t));
+	async_write(buffer);
 }
 
 void ServerTCP::async_write(std::string message) {
@@ -84,14 +85,15 @@ void ServerTCP::parse_input(eHeader header, void const *input, size_t len) {
 
 	switch (header) {
 		case SNAKE_ARRAY: {
-			std::memcpy(snakes, data_deserialize, sizeof(Snake) * MAX_SNAKE);
+			std::memcpy(snake_array, data_deserialize, sizeof(Snake) * MAX_SNAKE);
 			break;
 		}
 		case SNAKE: {
 			Snake snake_temp = *reinterpret_cast<Snake *>(data_deserialize);
-			snakes[snake_temp.id] = snake_temp;
+			snake_array[snake_temp.id] = snake_temp;
 			break;
 		}
+		case FOOD:
 		default:
 			break;
 	}
@@ -119,31 +121,15 @@ TCPConnection::TCPConnection(
 
 
 void
-TCPConnection::handle_read_data(boost::system::error_code const &error_code,
+TCPConnection::handle_read_data(eHeader header, boost::system::error_code const &error_code,
 								size_t len) {
 	std::cout << "TCPConnection::handle_read_data [" << len << "]" << std::endl;
 
 	if (error_code.value() == 0 && len > 0) {
-		eHeader header = static_cast<eHeader >(len);
 		serverTCP_.parse_input(header, buffer_data.data(), len);
 	}
-	buffer_chat.consume(len);
 	read_socket_header();
 }
-
-void
-TCPConnection::handle_read_chat(boost::system::error_code const &error_code,
-								size_t len) {
-	std::cout << "TCPConnection::handle_read_chat" << std::endl;
-	std::cerr << error_code << " " << len << std::endl;
-
-	if (error_code.value() == 0 && len > 0) {
-		serverTCP_.parse_input(CHAT, buffer_chat.data().data(), len);
-	}
-	buffer_chat.consume(len);
-	read_socket_header();
-}
-
 
 void TCPConnection::handle_write(const boost::system::error_code &error_code,
 								 size_t len) {
@@ -154,7 +140,7 @@ void TCPConnection::read_socket_header() {
 
 	std::cout << "TCPConnection::read_socket_header" << std::endl;
 	boost::asio::async_read(socket_,
-							boost::asio::buffer(buffer_data, sizeof(eHeader)),
+							boost::asio::buffer(buffer_data, ClientTCP::size_header[HEADER]),
 							boost::bind(&TCPConnection::handle_read_header,
 										shared_from_this(),
 										boost::asio::placeholders::error,
@@ -163,20 +149,12 @@ void TCPConnection::read_socket_header() {
 
 void TCPConnection::read_socket_data(eHeader header) {
 	std::cout << "TCPConnection::read_socket_data" << std::endl;
-	boost::asio::async_read(socket_, boost::asio::buffer(buffer_data, header),
+	boost::asio::async_read(socket_, boost::asio::buffer(buffer_data, ClientTCP::size_header[header]),
 							boost::bind(&TCPConnection::handle_read_data,
 										shared_from_this(),
+										header,
 										boost::asio::placeholders::error,
 										boost::asio::placeholders::bytes_transferred));
-}
-
-void TCPConnection::read_socket_chat() {
-	std::cout << "TCPConnection::read_socket_chat" << std::endl;
-	boost::asio::async_read_until(socket_, buffer_chat, '\n',
-								  boost::bind(&TCPConnection::handle_read_chat,
-											  shared_from_this(),
-											  boost::asio::placeholders::error,
-											  boost::asio::placeholders::bytes_transferred));
 }
 
 void
@@ -191,22 +169,7 @@ TCPConnection::handle_read_header(const boost::system::error_code &error_code,
 		std::memcpy(&header, buffer_data.data(), sizeof(eHeader));
 
 		std::cout << "Header : " << header << std::endl;
-		switch (header) {
-			case CHAT:
-				read_socket_chat();
-				break;
-			case SNAKE_ARRAY:
-				read_socket_data(SNAKE_ARRAY);
-				break;
-			case SNAKE:
-				read_socket_data(SNAKE);
-				break;
-			case FOOD:
-				break;
-			case ID:
-				read_socket_data(ID);
-				break;
-		}
+		read_socket_data(header);
 	}
 }
 

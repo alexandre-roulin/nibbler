@@ -21,7 +21,6 @@ class ServerTCP;
 class TCPConnection : public boost::enable_shared_from_this<TCPConnection> {
 private:
 	tcp::socket socket_;
-	boost::asio::streambuf buffer_chat;
 	boost::array<char, 512> buffer_data;
 	ServerTCP &serverTCP_;
 
@@ -36,19 +35,15 @@ public:
 	create(boost::asio::io_service &io_service, ServerTCP &serverTCP);
 	void read_socket_header();
 
-	void read_socket_chat();
-
 	void read_socket_data(eHeader);
 
 	void write_socket(std::string message);
 
 	void write_socket(void const *data, size_t len);
 
-	void handle_read_data(const boost::system::error_code &, size_t);
+	void handle_read_data(eHeader header, const boost::system::error_code &, size_t);
 
 	void handle_read_header(const boost::system::error_code &, size_t);
-
-	void handle_read_chat(const boost::system::error_code &, size_t);
 
 	void handle_write(const boost::system::error_code &, size_t);
 
@@ -70,11 +65,13 @@ public:
 
 	void start_game();
 
+	void create_food();
+
 	void remove(TCPConnection::pointer);
 
 private:
 	int16_t nu_;
-	Snake snakes[MAX_SNAKE];
+	Snake snake_array[MAX_SNAKE];
 
 	void start_accept();
 

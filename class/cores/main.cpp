@@ -9,19 +9,15 @@
 #include <component/PositionComponent.hpp>
 #include <component/MotionComponent.hpp>
 #include <component/SpriteComponent.hpp>
-#include <systems/MotionSystem.hpp>
-
-
 #include <logger.h>
+
+
 #include <component/JoystickComponent.hpp>
 #include <events/JoystickEvent.hpp>
-#include <systems/JoystickSystem.hpp>
+
 #include <random>
 #include <component/FollowComponent.hpp>
-#include <systems/FollowSystem.hpp>
 #include <component/CollisionComponent.hpp>
-#include <systems/CollisionSystem.hpp>
-#include <systems/FoodSystem.hpp>
 #include <json/forwards.h>
 #include <json/json.h>
 #include <fstream>
@@ -33,17 +29,7 @@
 
 #include <gui/Core.hpp>
 
-std::string const Snake::basicName[MAX_SNAKE] = { "Jack O'Lantern", "Eden", "Jacky", "Emerald", "Broutille", "Veggie-vie", "mprevot", "Dota c nul" };
-
-void display(KNU::World &world) {
-
-	for (const auto &entity : world.getEntityManager()
-			.getEntitiesByGroup(GROUP_SNAKE)) {
-		auto positionComponent = entity.getComponent<PositionComponent>();
-		log_info("ID [%d] Position [y:%d|x:%d]", entity.getId(),
-				 positionComponent.y, positionComponent.x);
-	}
-}
+std::string const Snake::basicName[MAX_SNAKE] = { "Jack O'Lantern", "Eden", "Jacky", "Emerald", "Broutille", "Veggie-vie", "jinou42", "Dota c cro cool" };
 
 bool	demoGui(int ac, char **av, Univers &univers)
 {
@@ -73,9 +59,15 @@ int main(int ac, char **av) {
 			univers.create_server();
 		if (buffer == "client")
 			univers.create_client();
+		if (buffer == "ready") {
+			univers.getClientTCP_().change_state_ready();
+		}
+		if (buffer == "food")
+			univers.getClientTCP_().food();
 		if (buffer == "start") {
-			univers.create_ui();
-			univers.getCore_().aState();
+//			univers.create_ui();
+//			univers.getCore_().aState();
+			univers.start_game();
 			return (0);
 		}
 	}
