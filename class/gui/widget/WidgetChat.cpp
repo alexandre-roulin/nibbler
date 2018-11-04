@@ -14,10 +14,8 @@ WidgetChat::~WidgetChat(void)
 
 void			WidgetChat::addLog(const char* str, ...)
 {
-	int			old_size;
 	va_list		args;
 
-	old_size = this->_bufferChat.size();
 	va_start(args, str);
 	this->_bufferChat.appendfv(str, args);
 	this->_bufferChat.appendfv("\n", args);

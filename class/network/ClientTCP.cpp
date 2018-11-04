@@ -106,18 +106,18 @@ void ClientTCP::write_socket(std::string message) {
 
 void ClientTCP::parse_input(eHeader header , void const *input, size_t len) {
 
-	size_t real_len = (header == CHAT) ? len - 1 : len;
-	std::cout << "data_deserialize [" << real_len << "]" << std::endl;
+	std::cout << "data_deserialize [" << len << "]" << std::endl;
 
-	char *data_deserialize = new char[real_len];
-//	for (int i = 0; i < real_len; ++i) {
+	char *data_deserialize = new char[len];
+//	for (int i = 0; i < len; ++i) {
 //		std::cout << static_cast<int>(data_deserialize[i]) << std::endl;
 //	}
-	std::memcpy(data_deserialize, reinterpret_cast<char const *>(input), real_len);
+	std::memcpy(data_deserialize, reinterpret_cast<char const *>(input), len);
 
 	switch (header) {
 		case CHAT:
-			univers.getCore_().addMessageChat(std::string(data_deserialize, real_len));
+			data_deserialize[len - 1] = '\0';
+			univers.getCore_().addMessageChat(std::string(data_deserialize, len));
 			break;
 		case SNAKE_ARRAY: {
 			std::cout << "parse_input::SNAKE_ARRAY" << std::endl;
