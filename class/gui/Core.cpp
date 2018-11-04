@@ -98,7 +98,7 @@ void			Core::aState(void)
 		ImGui::SFML::Update(this->_win, this->_deltaClock.restart());
 
 		ImGui::SetNextWindowPos(this->positionByPercent(sf::Vector2<unsigned int>(0, 50)));
-		ImGui::SetNextWindowSize(this->positionByPercent(sf::Vector2<unsigned int>(100, 50)));
+		ImGui::SetNextWindowSize(this->positionByPercent(sf::Vector2<unsigned int>(70, 50)));
 		this->_chat.render();
 
 		lobby.render();
