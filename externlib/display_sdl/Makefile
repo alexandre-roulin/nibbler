@@ -10,7 +10,7 @@ CXX= clang++
 CXXFLAGS= -Wall -Wextra -Werror -Wvla -std=c++14 -fsanitize=address -g3 -fPIC -MMD
 #============HEADERS============#
 
-HEADER_DIR= ./include/ ../commun/
+HEADER_DIR= ./include/ ../commun/ ../../incs/
 
 #============COLORS=============#
 

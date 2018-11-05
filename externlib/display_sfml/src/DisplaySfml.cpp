@@ -146,15 +146,17 @@ void			DisplaySfml::drawTilePixel(int indexWidthTile, int indexHeightTile, int i
 
 void			DisplaySfml::drawGrid(Grid<int> const &grid)
 {
-	for (int y = 0; y < this->_winTileSize.getY(); y++)
-		for (int x = 0; x < this->_winTileSize.getX(); x++)
-			this->drawTileGrid(grid(x, y), x, y);
+	for (int y = 0; y < this->_winTileSize.getY(); ++y)
+		for (int x = 0; x < this->_winTileSize.getX(); ++x)
+			if (grid(x, y) != -1)
+				this->drawTileGrid(grid(x, y), x, y);
 }
 void			DisplaySfml::_drawGrid(sf::RenderTarget &target, Grid<int> const &grid)
 {
-	for (int y = 0; y < this->_winTileSize.getY(); y++)
-		for (int x = 0; x < this->_winTileSize.getX(); x++)
-			this->_drawTileGrid(target, grid(x, y), x, y);
+	for (int y = 0; y < this->_winTileSize.getY(); ++y)
+		for (int x = 0; x < this->_winTileSize.getX(); ++x)
+			if (grid(x, y) != -1)
+				this->_drawTileGrid(target, grid(x, y), x, y);
 }
 
 void		DisplaySfml::setBackground(Grid<int> const &grid)

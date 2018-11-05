@@ -175,15 +175,17 @@ void			DisplaySdl::drawTilePixel(int indexWidthTile, int indexHeightTile,
 
 void			DisplaySdl::drawGrid(Grid<int> const &grid)
 {
-	for (int y = 0; y < this->_winTileSize.getY(); y++)
-		for (int x = 0; x < this->_winTileSize.getX(); x++)
-			this->drawTileGrid(grid(x, y), x, y);
+	for (int y = 0; y < this->_winTileSize.getY(); ++y)
+		for (int x = 0; x < this->_winTileSize.getX(); ++x)
+			if (grid(x, y) != -1)
+				this->drawTileGrid(grid(x, y), x, y);
 }
 void			DisplaySdl::_drawGrid(SDL_Surface *surface, Grid<int> const &grid)
 {
-	for (int y = 0; y < this->_winTileSize.getY(); y++)
-		for (int x = 0; x < this->_winTileSize.getX(); x++)
-			this->_drawTileGrid(surface, grid(x, y), x, y);
+	for (int y = 0; y < this->_winTileSize.getY(); ++y)
+		for (int x = 0; x < this->_winTileSize.getX(); ++x)
+			if (grid(x, y) != -1)
+				this->_drawTileGrid(surface, grid(x, y), x, y);
 }
 
 void		DisplaySdl::setBackground(Grid<int> const &grid)
