@@ -14,9 +14,6 @@ struct SpriteComponent {
 	SpriteComponent &operator=(SpriteComponent const &motionComponent);
 
 	friend std::ostream &
-	operator<<(std::ostream &os, const SpriteComponent &component) {
-		os << "path: ";
-		return os;
-	}
+	operator<<(std::ostream &os, const SpriteComponent &component);
 };
 

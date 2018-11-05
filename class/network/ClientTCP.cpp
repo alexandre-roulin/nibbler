@@ -50,7 +50,7 @@ void ClientTCP::change_state_ready(void) {
 
 void ClientTCP::refreshMySnake(void) {
 	std::string buffer;
-	add_prefix(SNAKE, buffer, &snake_array[id_], sizeof(Snake));
+	add_prefix(SNAKE, buffer, &snake_array[id_]);
 	write_socket(buffer);
 }
 
@@ -62,7 +62,7 @@ void ClientTCP::connect() {
 
 void ClientTCP::read_socket_header() {
 
-	std::cout << "ClientTCP::read_socket_header" << std::endl;
+//	std::cout << "ClientTCP::read_socket_header" << std::endl;
 	boost::asio::async_read(socket, boost::asio::buffer(buffer_data,
 														ClientTCP::size_header[HEADER]),
 							boost::bind(&ClientTCP::handle_read_header,
@@ -72,7 +72,7 @@ void ClientTCP::read_socket_header() {
 }
 
 void ClientTCP::read_socket_data(eHeader header) {
-	std::cout << "ClientTCP::read_socket_data" << std::endl;
+//	std::cout << "ClientTCP::read_socket_data" << std::endl;
 	boost::asio::async_read(socket, boost::asio::buffer(buffer_data,
 														ClientTCP::size_header[header]),
 							boost::bind(&ClientTCP::handle_read_data,
@@ -84,12 +84,12 @@ void ClientTCP::read_socket_data(eHeader header) {
 
 void ClientTCP::handle_read_header(const boost::system::error_code &error_code,
 								   size_t len) {
-	std::cout << "ClientTCP::handle_read_header > len : " << len << std::endl;
+//	std::cout << "ClientTCP::handle_read_header > len : " << len << std::endl;
 	if (error_code.value() == 0) {
 		assert(len == sizeof(eHeader));
 		eHeader header;
 		std::memcpy(&header, buffer_data.data(), sizeof(eHeader));
-		std::cout << "Header : " << header << std::endl;
+//		std::cout << "Header : " << header << std::endl;
 		read_socket_data(header);
 	}
 }
@@ -147,6 +147,7 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 			int16_t nu;
 			std::memcpy(&nu, data_deserialize, ClientTCP::size_header[START_GAME]);
 			factory.create_all_snake(snake_array, nu);
+			std::cout << "factory.create_all_snake" << std::endl;
 		}
 			break;
 		case HEADER:
@@ -166,8 +167,8 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 
 void ClientTCP::handle_read_data(eHeader header, boost::system::error_code const &error_code,
 								 size_t len) {
-	std::cout << "ClientTCP::handle_read_data [" << len << "]"
-	<< "Header [" << header<< "]"<< std::endl;
+//	std::cout << "ClientTCP::handle_read_data [" << len << "]"
+//	<< "Header [" << header<< "]"<< std::endl;
 	if (error_code.value() == 0 && len > 0) {
 		parse_input(header, buffer_data.data(), len);
 	}
@@ -197,6 +198,6 @@ int16_t		ClientTCP::getId(void) const {
 void ClientTCP::food() {
 	std::string buffer;
 	int pos[2] = { 42, 42 };
-	ClientTCP::add_prefix(FOOD, buffer, pos, ClientTCP::size_header[FOOD]);
+	ClientTCP::add_prefix(FOOD, buffer, pos);
 	write_socket(buffer);
 }

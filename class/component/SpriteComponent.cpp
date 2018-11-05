@@ -13,3 +13,8 @@ SpriteComponent::operator=(SpriteComponent const &motionComponent) {
 	}
 	return *this;
 }
+
+std::ostream &operator<<(std::ostream &os, const SpriteComponent &component) {
+	os << "sprite: " << component.sprite;
+	return os;
+}

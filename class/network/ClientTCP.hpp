@@ -44,7 +44,7 @@ public:
 	void food();
 
 	template<typename T>
-	static void add_prefix(eHeader, std::string &, T *element, size_t bytes);
+	static void add_prefix(eHeader, std::string &, T *element);
 
 	static pointer_client
 	create(Univers &univers, boost::asio::io_service &io, std::string hostname);
@@ -74,8 +74,7 @@ private:
 };
 
 template<typename T>
-void ClientTCP::add_prefix(eHeader header, std::string &message, T *element,
-						   size_t bytes) {
+void ClientTCP::add_prefix(eHeader header, std::string &message, T *element) {
 
 	message.append(reinterpret_cast<char *>(&header), sizeof(eHeader));
 	message.append(reinterpret_cast<char *>(element), ClientTCP::size_header[header]);

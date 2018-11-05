@@ -18,12 +18,15 @@ namespace KNU {
 		std::unique_ptr<EntitiesManager> entityManager_;
 		std::unique_ptr<EventManager> eventManager_;
 		std::unique_ptr<SystemManager> systemManager_;
-//		IDisplay *display;
+		IDisplay *display;
 		int max_;
 
 
 		friend class EntitiesManager;
 	public:
+
+		Grid<int> grid;
+
 		int getMax_() const;
 
 		IDisplay *getDisplay() const;

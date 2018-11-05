@@ -43,14 +43,32 @@ bool	demoGui(int ac, char **av, Univers &univers)
 	return (false);
 }
 
+int f(Univers		&univers){
+	univers.create_server();
+	univers.create_client();
+	sleep(1);
+	univers.getClientTCP_().change_state_ready();
+	univers.start_game();
+
+	sleep(1);
+	std::string buffer1;
+	int16_t l = 1;
+	ClientTCP::add_prefix(START_GAME, buffer1, &l);
+	univers.getServerTCP_().async_write(buffer1);
+	univers.loop();
+	return 0x2a;
+}
+
 int main(int ac, char **av) {
 	char		path[] = "/tmp/log.out";
 	logger_init(path);
 	Univers		univers;
 
+
 	if (demoGui(ac, av, univers))
 		return (0);
-
+	if (ac == 3)
+		f(univers);
 	std::string buffer;
 	for (;;) {
 		std::cout << "$> ";
@@ -60,7 +78,6 @@ int main(int ac, char **av) {
 		if (buffer == "client")
 			univers.create_client();
 		if (buffer == "ready") {
-			sleep(1);
 			univers.getClientTCP_().change_state_ready();
 		}
 		if (buffer == "food")
@@ -68,13 +85,14 @@ int main(int ac, char **av) {
 
 		if (buffer == "game") {
 			univers.start_game();
-			univers.loop();
+			std::string buffer1;
+			int16_t l = 1;
+			ClientTCP::add_prefix(START_GAME, buffer1, &l);
+			univers.getServerTCP_().async_write(buffer1);
+
 		}
 		if (buffer == "init") {
-			std::string buffer1;
-			int16_t l;
-			ClientTCP::add_prefix(START_GAME, buffer1, &l, ClientTCP::size_header[START_GAME]);
-			univers.getServerTCP_().async_write(buffer1);
+			univers.loop();
 		}
 
 		if (buffer == "start") {

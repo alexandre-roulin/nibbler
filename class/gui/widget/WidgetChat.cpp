@@ -45,8 +45,7 @@ void			WidgetChat::render(void)
 			std::string bufferMessage;
 			char *charBufferMessage = Factory::factory_chat_message(this->_core.univers.getClientTCP_().getSnake().name, this->_bufferMessage);
 			std::cout << charBufferMessage << std::endl;
-			ClientTCP::add_prefix(CHAT, bufferMessage, charBufferMessage,
-									SIZEOF_CHAT_PCKT);
+			ClientTCP::add_prefix(CHAT, bufferMessage, charBufferMessage);
 			std::cout << "WidgetChat::render.size() " << bufferMessage.size() << std::endl;
 			this->_core.univers.getClientTCP_().write_socket(bufferMessage);
 		}

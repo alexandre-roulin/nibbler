@@ -7,7 +7,7 @@
 #include <systems/FoodSystem.hpp>
 #include <systems/CollisionSystem.hpp>
 #include <systems/RenderSystem.hpp>
-
+#include <boost/thread.hpp>
 Univers::Univers() {
 
 	world_ = std::make_unique<KNU::World>(*this);
@@ -32,7 +32,6 @@ int Univers::start_game() {
 			IDisplay *
 	)>(dlsym(dlHandle, "deleteDisplay"))))
 		return (dlError());
-	std::cout << "dlfini" << std::endl;
 	display = newDisplay(PATH_TILESET, DEFAULT_SIZE_SPRIT, 30, 30, "Nibblour");
 	assert(display != nullptr);
 	Grid<int> grid(30, 30);
@@ -41,6 +40,7 @@ int Univers::start_game() {
 	grid.setBorder(SPRITE_WALL);
 	display->setBackground(grid);
 	world_->setDisplay(display);
+	std::cout << "dlfini" << std::endl;
 	return 0;
 }
 
@@ -51,7 +51,8 @@ void Univers::manage_input() {
 	int16_t id = clientTCP_->getId_();
 	std::memcpy(des, &id, sizeof(int16_t));
 	std::memcpy(des, &ed, sizeof(eDirection));
-	ClientTCP::add_prefix(INPUT, buffer, des, ClientTCP::size_header[INPUT]);
+	std::cout << ed << std::endl;
+	ClientTCP::add_prefix(INPUT, buffer, des);
 	serverTCP_->async_write(buffer);
 }
 
@@ -65,10 +66,16 @@ void Univers::loop() {
 	world_->getSystemManager().addSystem<RenderSystem>();
 
 	deadline_timer.async_wait(boost::bind(&Univers::loop_world, this));
+	boost::thread thread(boost::bind(&boost::asio::io_service::run, &io));
+	thread.detach();
 
-	for (;;) {
+	world_->grid.clear();
+
+	std::cout << "Bug Display"  << std::endl;
+	while (!display->exit()) {
 		display->update();
 		manage_input();
+		display->drawGrid(world_->grid);
 		display->render();
 	}
 }
@@ -76,15 +83,16 @@ void Univers::loop() {
 
 void Univers::loop_world() {
 	world_->update();
+	world_->grid.clear();
 
 	world_->getSystemManager().getSystem<FollowSystem>()->update();
 	world_->getSystemManager().getSystem<JoystickSystem>()->update();
 	world_->getSystemManager().getSystem<MotionSystem>()->update();
 	world_->getSystemManager().getSystem<CollisionSystem>()->update();
 	world_->getSystemManager().getSystem<FoodSystem>()->update();
-//	world_->getSystemManager().getSystem<RenderSystem>()->update();
+	world_->getSystemManager().getSystem<RenderSystem>()->update();
 
-	deadline_timer.expires_at(deadline_timer.expires_at() + boost::posix_time::seconds(1));
+	deadline_timer.expires_at(deadline_timer.expires_at() + boost::posix_time::seconds(5));
 	deadline_timer.async_wait(boost::bind(&Univers::loop_world, this));
 
 }
@@ -117,11 +125,8 @@ void Univers::create_server() {
 }
 
 void Univers::create_client() {
-	std::string buffer;
-	std::cout << "Connect : ";
-	std::getline(std::cin, buffer);
 	clientTCP_ = ClientTCP::create(*this, io_client,
-								   std::string(buffer.c_str()));
+								   std::string("localhost"));
 	clientTCP_->connect();
 	clientTCP_->read_socket_header();
 	boost::thread t(boost::bind(&boost::asio::io_service::run, &io_client));

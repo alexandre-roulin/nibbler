@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-./nibbler < start.ini
+./nibbler 1 2

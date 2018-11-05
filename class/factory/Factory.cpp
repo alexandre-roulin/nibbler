@@ -15,6 +15,7 @@ Factory::Factory(KNU::World &world)
 }
 
 void Factory::create_all_snake(Snake snake_array[MAX_SNAKE], int16_t nu) {
+	std::cout << "Factory::create_all_snake " << nu << std::endl;
 	int rows = nu / 4;
 	int cols = nu % 4;
 	rows = !rows ? 1 : rows;
@@ -39,14 +40,15 @@ void Factory::create_snake(int16_t id, int y, int x) {
 		new_snake = &world_.createEntity();
 		if (index == 0) {
 			new_snake->tag(factory_name(HEAD, id));
-			new_snake->addComponent<JoystickComponent>();
+			new_snake->addComponent<JoystickComponent>(NORTH, factory_name(HEAD, id));
 			new_snake->addComponent<MotionComponent>();
 			new_snake->addComponent<CollisionComponent>(false);
-			new_snake->addComponent<SpriteComponent>(1);
+			new_snake->addComponent<SpriteComponent>(4);
 		}else {
 			new_snake->tag(factory_name(BODY, id));
+			new_snake->addComponent<SpriteComponent>(5);
 		}
-		new_snake->addComponent<PositionComponent>(y + index, x);
+		new_snake->addComponent<PositionComponent>(15, 15);
 		new_snake->group(factory_name(GRP, id));
 		if (snake_follow != nullptr)
 			new_snake->addComponent<FollowComponent>(snake_follow->getId());

@@ -47,7 +47,6 @@ public:
 	bool dlError(void);
 
 private:
-	Grid<int> grid;
 
 	void loop_world();
 	ServerTCP *serverTCP;
