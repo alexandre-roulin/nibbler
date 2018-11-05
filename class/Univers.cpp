@@ -50,10 +50,10 @@ void Univers::manage_input() {
 	eDirection ed = display->getDirection();
 	int16_t id = clientTCP_->getId_();
 	std::memcpy(des, &id, sizeof(int16_t));
-	std::memcpy(des, &ed, sizeof(eDirection));
+	std::memcpy(des + sizeof(int16_t), &ed, sizeof(eDirection));
 	std::cout << ed << std::endl;
 	ClientTCP::add_prefix(INPUT, buffer, des);
-	serverTCP_->async_write(buffer);
+	clientTCP_->write_socket(buffer);
 }
 
 void Univers::loop() {
