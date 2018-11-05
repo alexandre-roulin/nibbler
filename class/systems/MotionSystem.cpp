@@ -21,8 +21,6 @@ void MotionSystem::update() {
 	for (auto &entity : getEntities()) {
 		auto &positionComponent = entity.getComponent<PositionComponent>();
 		auto &motionComponent = entity.getComponent<MotionComponent>();
-		std::cout << "Pre: "  << positionComponent << std::endl;
-
 		switch (motionComponent.direction) {
 			case NORTH:
 				--positionComponent.y;
@@ -37,7 +35,6 @@ void MotionSystem::update() {
 				--positionComponent.x;
 				break;
 		}
-		std::cout << "Post: " << positionComponent << std::endl;
 	}
 }
 

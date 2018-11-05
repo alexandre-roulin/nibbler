@@ -2,7 +2,7 @@
 #include <component/SpriteComponent.hpp>
 #include "Factory.hpp"
 
-const char *Factory::part_name[4] {
+const char *Factory::part_name[PART_SNAKE] {
 		[HEAD] = "head",
 		[BODY] = "body",
 		[TAIL] = "tail",
@@ -30,6 +30,7 @@ void Factory::create_all_snake(Snake snake_array[MAX_SNAKE], int16_t nu) {
 		int real_x = size_cols * rel_x - size_cols / 2;
 		create_snake(index, real_y, real_x);
 	}
+	create_walls();
 }
 
 void Factory::create_snake(int16_t id, int y, int x) {
@@ -43,27 +44,33 @@ void Factory::create_snake(int16_t id, int y, int x) {
 			new_snake->addComponent<JoystickComponent>(NORTH, factory_name(HEAD, id));
 			new_snake->addComponent<MotionComponent>();
 			new_snake->addComponent<CollisionComponent>(false);
-			new_snake->addComponent<SpriteComponent>(4);
-		}else {
+			new_snake->addComponent<SpriteComponent>(21);
+			new_snake->addComponent<PositionComponent>(10, 10);
+		}else if (index == 3) {
+			new_snake->tag(factory_name(TAIL, id));
+			new_snake->addComponent<CollisionComponent>();
+			new_snake->addComponent<SpriteComponent>(23);
+			new_snake->addComponent<PositionComponent>(15, 15 + index);
+		} else {
+			new_snake->addComponent<CollisionComponent>();
+			new_snake->addComponent<PositionComponent>(15, 15 + index);
 			new_snake->tag(factory_name(BODY, id));
-			new_snake->addComponent<SpriteComponent>(5);
+			new_snake->addComponent<SpriteComponent>(22);
 		}
-		new_snake->addComponent<PositionComponent>(15, 15);
+		std::cout << new_snake->getComponent<PositionComponent>() << std::endl;
 		new_snake->group(factory_name(GRP, id));
 		if (snake_follow != nullptr)
 			new_snake->addComponent<FollowComponent>(snake_follow->getId());
 		snake_follow = new_snake;
-
 	}
-	if (new_snake)
-		new_snake->tag(factory_name(TAIL, id));
 }
 
 eSnakePart Factory::isSnakePart(std::string compare) {
-	std::string snake_base("?_snake_????");
-	if (snake_base.compare(1, 7, compare) == 0)
-		for (int index = 0 ; index < 4; ++index) {
-			if (compare.compare(7, 4, part_name[index]) == 0)
+	static char const compare_base[] = "?_snake_????";
+	if (!compare.empty() && std::strstr(compare_base, compare.c_str()) != NULL)
+		std::cout << "isSnakePart " << compare << std::endl;
+		for (int index = 0 ; index < PART_SNAKE; ++index) {
+			if (std::strstr(compare.c_str(), part_name[index]) != NULL)
 				return static_cast<eSnakePart>(index);
 		}
 	return OTHER;
@@ -74,6 +81,29 @@ void Factory::create_food(int y, int x) {
 	food.addComponent<PositionComponent>(y, x);
 	food.addComponent<CollisionComponent>(false);
 	food.tag("food");
+}
+void Factory::create_walls() {
+	int max = world_.getMax_();
+	int x = 0;
+	int y = 1;
+	for (; x < max;++x) {
+//		std::cout << "max: " << max << " X:" << x << " Y:" << max - 1 << std::endl;
+//		std::cout << "max: " << max << " X:" << x << " Y:" << 0 << std::endl;
+		create_wall(x, max -1);
+		create_wall(x, 0);
+	}
+	for (; y < max - 1; ++y) {
+//		std::cout << "max: " << max << " X:" << 0 << " Y:" << y << std::endl;
+//		std::cout << "max: " << max << " X:" << max - 1  << " Y:" << y << std::endl;
+		create_wall(0, y);
+		create_wall(max - 1, y);
+	}
+}
+void Factory::create_wall(int x, int y) {
+	auto &entity = world_.createEntity();
+	entity.addComponent<PositionComponent>(y, x);
+	entity.addComponent<CollisionComponent>();
+	entity.group(WALL_TAG);
 }
 
 char * Factory::factory_pseudo(char const *name) {
@@ -87,6 +117,7 @@ char * Factory::factory_pseudo(char const *name) {
 	std::strcpy(final_ + len + 1, "]: ");
 	return final_;
 }
+
 char * Factory::factory_chat_message(char const *name, char const *message) {
 	static char final_[SIZEOF_CHAT_PCKT] = {0};
 	bzero(final_, SIZEOF_CHAT_PCKT);

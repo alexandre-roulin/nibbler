@@ -7,6 +7,7 @@ namespace KNU {
 		entityManager_ = std::make_unique<EntitiesManager>(*this);
 		eventManager_ = std::make_unique<EventManager>(*this);
 		systemManager_ = std::make_unique<SystemManager>(*this);
+
 	}
 
 	Entity &World::createEntity() {
@@ -32,7 +33,8 @@ namespace KNU {
 	}
 
 	void World::update() {
-		std::cout << "World::update.create() " << createdEntities_.size() << std::endl;
+		if (!createdEntities_.empty())
+			std::cout << "World::update.create() " << createdEntities_.size() << std::endl;
 		for (auto &entity : createdEntities_) {
 			systemManager_->addToSystems(entity);
 		}

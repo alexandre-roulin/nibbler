@@ -83,13 +83,14 @@ int main(int ac, char **av) {
 
 		if (buffer == "game") {
 			univers.start_game();
-
-		}
-		if (buffer == "launch") {
 			std::string buffer1;
 			int16_t l = 42;
 			ClientTCP::add_prefix(START_GAME, buffer1, &l);
 			univers.getClientTCP_().write_socket(buffer1);
+			univers.loop();
+		}
+		if (buffer == "launch") {
+
 		}
 
 

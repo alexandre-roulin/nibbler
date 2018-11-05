@@ -12,31 +12,48 @@ CollisionSystem::CollisionSystem() {
 void CollisionSystem::update() {
 	std::vector<KNU::Entity> entities_ = getEntities();
 	auto &world = getWorld();
+	std::cout << "Size : " << getEntities().size() << std::endl;
 
 	for (auto &entity : getEntities()) {
+		if (Factory::isSnakePart(entity.getTag()) != OTHER)
+			std::cout << "isSnakePart.() "
+					  << Factory::isSnakePart(entity.getTag())
+					  << "Head : " << HEAD << " Other: " << OTHER << std::endl;
 		if (Factory::isSnakePart(entity.getTag()) == HEAD) {
-			auto &snakePositionComponent = entity.getComponent<PositionComponent>();
 			std::for_each(entities_.begin(), entities_.end(),
-						  [&entity, snakePositionComponent, &world](
+						  [&entity, &world](
 								  KNU::Entity &entity_) {
+							  auto &snakePositionComponent = entity.getComponent<PositionComponent>();
 							  auto &positionComponent = entity_.getComponent<PositionComponent>();
-							  if (snakePositionComponent == positionComponent) {
+//							  std::cout << "Snake [" << entity.getId() << "]"
+//										<< snakePositionComponent << std::endl;
+//							  std::cout << "Entity [" << entity_.getId() << "]"
+//										<< positionComponent << std::endl;
+//							  std::cout << std::endl;
+							  if (snakePositionComponent == positionComponent && entity != entity_) {
 								  auto &collisionComponent = entity_.getComponent<CollisionComponent>();
-								  eSnakePart esp = Factory::isSnakePart(
-										  entity_.getTag());
+								  eSnakePart esp = Factory::isSnakePart(entity_.getTag());
+									std::cout << esp << std::endl;
 								  if (collisionComponent.isWall ||
 									  esp != OTHER) {
-									  entity.kill();
+									  std::cout << "wall [" << collisionComponent.isWall << "]" << std::endl;
+//									  entity.kill();
 								  }
-								  if (esp == HEAD)
-									  entity_.kill();
-								  if (entity_.getTag() == "food")
+								  if (esp == HEAD) {
+									  std::cout << "HEAD" << std::endl;
+//									  entity_.kill();
+
+								  }
+								  if (entity_.getTag() == "food") {
+									  std::cout << "food" << std::endl;
+
 									  world.getEventManager()
 											  .emitEvent<FoodEvent>(
 													  Factory::factory_name(
 															  TAIL,
 															  entity.getTag()),
 													  entity.getGroup());
+								  }
 							  }
 						  });
 		}

@@ -42,7 +42,8 @@ int Univers::start_game() {
 	grid.setBorder(SPRITE_WALL);
 	display->setBackground(grid);
 	world_->setDisplay(display);
-
+	display->update();
+	display->render();
 	return 0;
 }
 
@@ -66,6 +67,8 @@ void Univers::loop() {
 	world_->getSystemManager().addSystem<MotionSystem>();
 	world_->getSystemManager().addSystem<RenderSystem>();
 
+	while (world_->getEventManager().getEvents<StartEvent>().empty());
+
 	world_->update();
 	deadline_timer.async_wait(boost::bind(&Univers::loop_world, this));
 	boost::thread thread(boost::bind(&boost::asio::io_service::run, &io));
@@ -88,13 +91,15 @@ void Univers::loop_world() {
 
 
 	world_->getSystemManager().getSystem<FollowSystem>()->update();
+	auto e = world_->getEntityManager().getEntitiesByGroup(Factory::factory_name(GRP, 0));
 	world_->getSystemManager().getSystem<JoystickSystem>()->update();
 	world_->getSystemManager().getSystem<MotionSystem>()->update();
+	std::for_each(e.begin(), e.end(), [](KNU::Entity &e){ std::cout << e.getComponent<PositionComponent>() << std::endl; });
 	world_->getSystemManager().getSystem<CollisionSystem>()->update();
 	world_->getSystemManager().getSystem<FoodSystem>()->update();
 	world_->getSystemManager().getSystem<RenderSystem>()->update();
 
-	deadline_timer.expires_at(deadline_timer.expires_at() + boost::posix_time::seconds(1));
+	deadline_timer.expires_at(deadline_timer.expires_at() + boost::posix_time::milliseconds(800));
 	deadline_timer.async_wait(boost::bind(&Univers::loop_world, this));
 	world_->update();
 

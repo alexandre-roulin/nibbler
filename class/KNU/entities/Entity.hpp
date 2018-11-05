@@ -264,6 +264,7 @@ namespace KNU {
 	template<typename T>
 	T &ComponentManager::getComponent(Entity const &entity) const {
 		const auto componentId = Component<T>::signature();
+//		std::cout << "ComponentManager::getComponent " << componentId << " ID: " << entity.getId() << std::endl;
 		auto componentPool =
 				std::static_pointer_cast<Pool<T>>(componentPools[componentId]);
 		return componentPool->get(entity);

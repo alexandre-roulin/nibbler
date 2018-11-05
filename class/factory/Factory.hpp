@@ -1,6 +1,6 @@
 #pragma once
 
-
+#define PART_SNAKE 4
 #include <nibbler.hpp>
 #include <KNU/World.hpp>
 #include <KNU/entities/Entity.hpp>
@@ -29,7 +29,10 @@ public:
 	static std::string factory_name(eSnakePart, std::string);
 	static eSnakePart isSnakePart(std::string );
 	Factory(KNU::World &world);
+
 private:
-	static const char *part_name[4];
+	void create_walls();
+	void create_wall(int x, int y);
+	static const char *part_name[PART_SNAKE];
 	KNU::World &world_;
 };

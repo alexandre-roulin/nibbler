@@ -15,6 +15,8 @@ namespace KNU {
 
 
 	void Entity::kill() {
+		std::cout << "I'am dead :'(" << std::endl;
+
 		getEntitiesManager().killEntity(*this);
 	}
 
@@ -170,7 +172,7 @@ namespace KNU {
 		if (!freeIds.empty()) {
 			instance_entity = freeIds.front();
 		} else {
-			std::cout << "Size : " << size << " capacity: " << capacity << std::endl;
+//			std::cout << "Size : " << size << " capacity: " << capacity << std::endl;
 			if (size == capacity) {
 				capacity += BASE_ENTITIES_CAPACITY;
 				_entitiesMap.resize(capacity);
@@ -245,6 +247,7 @@ namespace KNU {
 	}
 
 	void EntitiesManager::tagEntity(Entity &entity, std::string tag) {
+		std::cout << tag << " <> "<< entity.getId() << std::endl;
 		_taggedEntity.insert(std::make_pair(tag, entity));
 	}
 

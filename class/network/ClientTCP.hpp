@@ -15,8 +15,7 @@ class ClientTCP : public boost::enable_shared_from_this<ClientTCP> {
 public:
 	typedef boost::shared_ptr<ClientTCP> pointer_client;
 
-	ClientTCP(Univers &univers, boost::asio::io_service &io,
-			  std::string &hostname);
+
 
 	void connect();
 
@@ -55,6 +54,8 @@ public:
 
 	static int const size_header[];
 private:
+	ClientTCP(Univers &univers, boost::asio::io_service &io,
+			  std::string &hostname);
 	Snake snake_array[MAX_SNAKE];
 	tcp::socket socket;
 	boost::array<char, 512> buffer_data;

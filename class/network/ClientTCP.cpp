@@ -119,52 +119,67 @@ void ClientTCP::write_socket(std::string message) {
 void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 
 
-	char *data_deserialize = new char[len];
-	std::memcpy(data_deserialize, reinterpret_cast<char const *>(input), len);
 
 	switch (header) {
-		case CHAT:
+		case CHAT: {
+			char *data_deserialize = new char[len];
+			std::memcpy(data_deserialize, input, len);
 			univers.getCore_().addMessageChat(std::string(data_deserialize, len));
+			delete [] data_deserialize;
 			break;
+		}
 		case SNAKE_ARRAY: {
-			std::memcpy(snake_array, data_deserialize, sizeof(Snake) * MAX_SNAKE);
+			std::memcpy(snake_array, input, sizeof(Snake) * MAX_SNAKE);
 			break;
 		}
 		case SNAKE: {
-			Snake snake_temp = *reinterpret_cast<Snake *>(data_deserialize);
+
+			Snake snake_temp;
+
+			std::memcpy(&snake_temp, input, len);
+
 			snake_array[snake_temp.id] = snake_temp;
-			std::cout << snake_array[snake_temp.id] << std::endl;
+
 			break;
 		}
-		case FOOD:
+		case FOOD: {
 			int position[2];
-			std::memcpy(position, data_deserialize, ClientTCP::size_header[FOOD]);
+			std::memcpy(position, input, len);
 			factory.create_food(position[0], position[1]);
 			break;
+		}
+
 		case ID:
-			id_ = *reinterpret_cast<int16_t const *>(data_deserialize);
+			std::memcpy(&id_, input, len);
 			break;
 		case START_GAME: {
 			int16_t nu;
-			std::memcpy(&nu, data_deserialize, ClientTCP::size_header[START_GAME]);
+			std::memcpy(&nu, input, ClientTCP::size_header[START_GAME]);
 			factory.create_all_snake(snake_array, nu);
 			univers.getWorld_().getEventManager().emitEvent<StartEvent>();
-			//EVENT
+
 			std::cout << "factory.create_all_snake" << std::endl;
 		}
 			break;
-		case INPUT:
+		case INPUT: {
 			eDirection dir;
 			int16_t id;
+			char *data_deserialize = new char[len];
+			std::memcpy(data_deserialize, input, len);
+
 			std::memcpy(&id, data_deserialize, sizeof(int16_t));
 			std::memcpy(&dir, data_deserialize + sizeof(int16_t), sizeof(eDirection));
+
 			univers.getWorld_().getEventManager().emitEvent<JoystickEvent>(id, dir);
-			std::cout << "Size: " << univers.getWorld_().getEventManager().getEvents<JoystickEvent>().size() << std::endl;
+
+//			std::cout << "Size: " << univers.getWorld_().getEventManager().getEvents<JoystickEvent>().size() << std::endl;
+
+			delete [] data_deserialize;
+		}
 			break;
 		default:
 			break;
 	}
-	delete[] data_deserialize;
 }
 
 

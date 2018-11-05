@@ -11,12 +11,15 @@ JoystickSystem::JoystickSystem() {
 
 void JoystickSystem::update() {
 	auto events = getWorld().getEventManager().getEvents<JoystickEvent>();
-	std::cout << "Size" << events.size() << std::endl;
+//	std::cout << "Size" << events.size() << std::endl;
 	for (auto &event : events) {
 		auto entity = getWorld().getEntityManager().getEntityByTag(event.tag_player);
-		std::cout << "Entity event > " << entity.getTag() << " ID:" << entity.getId() << std::endl;
-		auto &joystickComponent = entity.getComponent<JoystickComponent>();
-		joystickComponent.direction = event.direction;
+		std::cout << event.tag_player << "ID: " << entity.getId() << std::endl;
+		
+		if (entity.hasComponent<JoystickComponent>() && entity.getId() != -1) {
+			auto &joystickComponent = entity.getComponent<JoystickComponent>();
+			joystickComponent.direction = event.direction;
+		}
 	}
 	for (auto &entity : getEntities()) {
 		auto &motionComponent = entity.getComponent<MotionComponent>();
