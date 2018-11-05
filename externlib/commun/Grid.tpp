@@ -13,6 +13,7 @@ public:
 
 	void		setBorder(T const &border);
 	void		fill(T const &fill);
+	void		clear(void);
 
 	int			*operator[](size_t row);
 	int			&operator()(size_t row, size_t column);
@@ -84,6 +85,12 @@ void		Grid<T>::fill(T const &fill)
 {
 	for (size_t i = 0; i < this->_rows * this->_columns; i++)
 		this->_grid[i] = fill;
+}
+template <typename T>
+void		Grid<T>::clear(void)
+{
+	for (size_t i = 0; i < this->_rows * this->_columns; i++)
+		this->_grid[i] = -1;
 }
 
 

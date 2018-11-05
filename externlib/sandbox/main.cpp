@@ -1,7 +1,7 @@
 #include "IDisplay.hpp"
 #include <dlfcn.h>
 #include <iostream>
-
+#include <unistd.h>
 bool        dlError(void)
 {
     std::cerr << "Error : " << dlerror() << std::endl;
@@ -34,6 +34,11 @@ int         main(int argc, char **argv)
 
 	display->setBackground(grid);
 
+	Grid<int> map(30, 30);
+
+	map.clear();
+
+
     while (!display->exit())
     {
         display->update();
@@ -51,7 +56,19 @@ int         main(int argc, char **argv)
 		display->drawTileGrid(1+5*2, 17, 4, 5);
 		display->drawTileGrid(2+5*2, 17, 5, 5);
         display->drawTilePixel(12, 2*32+16, 2*32+16);
+
+
+		display->drawGrid(map);
+
         display->render();
+
+		map.clear();
+
+		for(int i = 0; i < 5; ++i)
+			for (int j = 0; j < 5; j++)
+				map(rand()%30, rand()%30) = rand()%40;
+
+		sleep(1);
     }
     deleteDisplay(display);
     return (0);
