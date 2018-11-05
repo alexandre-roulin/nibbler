@@ -42,14 +42,14 @@ struct		Snake
 	int16_t				id;
 
 	friend std::ostream &operator<<(std::ostream &os, const Snake &snake) {
-		os << "name: " << snake.name << " sprite: " << snake.sprite
+		os << " sprite: " << snake.sprite
 		   << " isReady: " << snake.isReady << " id: " << snake.id;
 		return os;
 	}
 
 	Snake &operator=(Snake  const &snake) {
 		if (this != &snake) {
-			strncpy(name, snake.name, NAME_BUFFER);
+			std::memcpy(name, snake.name, NAME_BUFFER);
 			sprite = snake.sprite;
 			isReady = snake.isReady;
 			id = snake.id;

@@ -170,6 +170,7 @@ namespace KNU {
 		if (!freeIds.empty()) {
 			instance_entity = freeIds.front();
 		} else {
+			std::cout << "Size : " << size << " capacity: " << capacity << std::endl;
 			if (size == capacity) {
 				capacity += BASE_ENTITIES_CAPACITY;
 				_entitiesMap.resize(capacity);

@@ -143,7 +143,11 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 		case ID:
 			id_ = *reinterpret_cast<int16_t const *>(data_deserialize);
 			break;
-		case START_GAME:
+		case START_GAME: {
+			int16_t nu;
+			std::memcpy(&nu, data_deserialize, ClientTCP::size_header[START_GAME]);
+			factory.create_all_snake(snake_array, nu);
+		}
 			break;
 		case HEADER:
 			break;

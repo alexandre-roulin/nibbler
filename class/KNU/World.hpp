@@ -18,7 +18,7 @@ namespace KNU {
 		std::unique_ptr<EntitiesManager> entityManager_;
 		std::unique_ptr<EventManager> eventManager_;
 		std::unique_ptr<SystemManager> systemManager_;
-		IDisplay *display;
+//		IDisplay *display;
 		int max_;
 
 

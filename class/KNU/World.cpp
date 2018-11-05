@@ -2,7 +2,7 @@
 #include "World.hpp"
 
 namespace KNU {
-	World::World(Univers &) {
+	World::World(Univers &) : max_(30) {
 
 		entityManager_ = std::make_unique<EntitiesManager>(*this);
 		eventManager_ = std::make_unique<EventManager>(*this);
@@ -32,9 +32,10 @@ namespace KNU {
 	}
 
 	void World::update() {
+		if (!createdEntities_.empty())
+			std::cout << "World::update.create() " << createdEntities_.size() << std::endl;
 		for (auto &entity : createdEntities_) {
 			systemManager_->addToSystems(entity);
-
 		}
 		createdEntities_.clear();
 		for (auto &entity : destroyedEntities_) {
@@ -47,11 +48,11 @@ namespace KNU {
 
 
 	void World::setDisplay(IDisplay *display) {
-		World::display = display;
+//		World::display = display;
 	}
 
 	IDisplay *World::getDisplay() const {
-		return display;
+//		return display;
 	}
 
 	int World::getMax_() const {

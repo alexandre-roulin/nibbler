@@ -1,6 +1,5 @@
 #include "Univers.hpp"
 #include <gui/Core.hpp>
-#include <network/ClientTCP.hpp>
 #include <dlfcn.h>
 #include <systems/MotionSystem.hpp>
 #include <systems/JoystickSystem.hpp>
@@ -9,8 +8,8 @@
 #include <systems/CollisionSystem.hpp>
 #include <systems/RenderSystem.hpp>
 
-Univers::Univers() :
-	t(io, boost::posix_time::seconds(1)) {
+Univers::Univers() {
+
 	world_ = std::make_unique<KNU::World>(*this);
 	core_ = nullptr;
 	clientTCP_ = nullptr;
@@ -21,17 +20,17 @@ Univers::Univers() :
 }
 
 
-
 int Univers::start_game() {
-	if (!(dlHandle = dlopen("./externlib/display_sdl/display_sdl.so", RTLD_LAZY | RTLD_LOCAL)))
+	if (!(dlHandle = dlopen("./externlib/display_sdl/display_sdl.so",
+							RTLD_LAZY | RTLD_LOCAL)))
 		return (dlError());
 	if (!(newDisplay = reinterpret_cast<IDisplay *(*)(
 			const char *, int, int, int, const char *
-			)>(dlsym(dlHandle, "newDisplay"))))
+	)>(dlsym(dlHandle, "newDisplay"))))
 		return (dlError());
 	if (!(deleteDisplay = reinterpret_cast<void (*)(
 			IDisplay *
-			)>(dlsym(dlHandle, "deleteDisplay"))))
+	)>(dlsym(dlHandle, "deleteDisplay"))))
 		return (dlError());
 	std::cout << "dlfini" << std::endl;
 	display = newDisplay(PATH_TILESET, DEFAULT_SIZE_SPRIT, 30, 30, "Nibblour");
@@ -42,9 +41,6 @@ int Univers::start_game() {
 	grid.setBorder(SPRITE_WALL);
 	display->setBackground(grid);
 	world_->setDisplay(display);
-	loop();
-	deleteDisplay(display);
-
 	return 0;
 }
 
@@ -61,40 +57,42 @@ void Univers::manage_input() {
 
 void Univers::loop() {
 
-
-
-	for (;;) {
-		display->update();
-
-		manage_input();
-
-		display->render();
-	}
-}
-
-
-void Univers::loop_world() {
 	world_->getSystemManager().addSystem<CollisionSystem>();
 	world_->getSystemManager().addSystem<FollowSystem>();
 	world_->getSystemManager().addSystem<FoodSystem>();
 	world_->getSystemManager().addSystem<JoystickSystem>();
 	world_->getSystemManager().addSystem<MotionSystem>();
 	world_->getSystemManager().addSystem<RenderSystem>();
-	for (;;) {
-		world_->update();
 
-		world_->getSystemManager().getSystem<FollowSystem>()->update();
-		world_->getSystemManager().getSystem<JoystickSystem>()->update();
-		world_->getSystemManager().getSystem<MotionSystem>()->update();
-		world_->getSystemManager().getSystem<CollisionSystem>()->update();
-		world_->getSystemManager().getSystem<FoodSystem>()->update();
-		world_->getSystemManager().getSystem<RenderSystem>()->update();
+	deadline_timer.async_wait(boost::bind(&Univers::loop_world, this));
+
+	for (;;) {
+		display->update();
+		manage_input();
+		display->render();
 	}
+}
+
+
+void Univers::loop_world() {
+	world_->update();
+
+	world_->getSystemManager().getSystem<FollowSystem>()->update();
+	world_->getSystemManager().getSystem<JoystickSystem>()->update();
+	world_->getSystemManager().getSystem<MotionSystem>()->update();
+	world_->getSystemManager().getSystem<CollisionSystem>()->update();
+	world_->getSystemManager().getSystem<FoodSystem>()->update();
+//	world_->getSystemManager().getSystem<RenderSystem>()->update();
+
+	deadline_timer.expires_at(deadline_timer.expires_at() + boost::posix_time::seconds(1));
+	deadline_timer.async_wait(boost::bind(&Univers::loop_world, this));
+
 }
 
 KNU::World &Univers::getWorld_() const {
 	return *world_;
 }
+
 ClientTCP &Univers::getClientTCP_() const {
 	return *clientTCP_;
 }
@@ -122,7 +120,8 @@ void Univers::create_client() {
 	std::string buffer;
 	std::cout << "Connect : ";
 	std::getline(std::cin, buffer);
-	clientTCP_ = ClientTCP::create(*this, io_client, std::string(buffer.c_str()));
+	clientTCP_ = ClientTCP::create(*this, io_client,
+								   std::string(buffer.c_str()));
 	clientTCP_->connect();
 	clientTCP_->read_socket_header();
 	boost::thread t(boost::bind(&boost::asio::io_service::run, &io_client));

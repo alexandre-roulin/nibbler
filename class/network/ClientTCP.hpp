@@ -78,5 +78,5 @@ void ClientTCP::add_prefix(eHeader header, std::string &message, T *element,
 						   size_t bytes) {
 
 	message.append(reinterpret_cast<char *>(&header), sizeof(eHeader));
-	message.append(reinterpret_cast<char *>(element), bytes);
+	message.append(reinterpret_cast<char *>(element), ClientTCP::size_header[header]);
 }

@@ -56,9 +56,13 @@ void ServerTCP::refresh_data_snake_array(
 
 void ServerTCP::start_game() {
 	for (int index = 0; index < MAX_SNAKE; ++index) {
-		if (!snake_array[index].isReady && snake_array[index].id != -1)
+		if (!snake_array[index].isReady && snake_array[index].id != -1) {
+			std::cerr << "Error " << index << std::endl;
 			return;
+		}
 	}
+	std::cout << "Start Game  " << std::endl;
+
 	std::string buffer;
 	ClientTCP::add_prefix(START_GAME, buffer, &nu_, sizeof(int16_t));
 	async_write(buffer);
@@ -88,10 +92,15 @@ void ServerTCP::parse_input(eHeader header, void const *input, size_t len) {
 			break;
 		}
 		case SNAKE: {
-			Snake snake_temp = *reinterpret_cast<Snake *>(data_deserialize);
+			Snake snake_temp;
+			std::memcpy(&snake_temp, data_deserialize, sizeof(Snake));
+			std::cout << "Kaka" << snake_temp.id << std::endl;
+			assert(snake_temp.id == 0 && snake_temp.id < MAX_SNAKE);
 			snake_array[snake_temp.id] = snake_temp;
 			break;
 		}
+		case START_GAME:
+			start_game();
 		case FOOD:
 		default:
 			break;

@@ -60,13 +60,23 @@ int main(int ac, char **av) {
 		if (buffer == "client")
 			univers.create_client();
 		if (buffer == "ready") {
+			sleep(1);
 			univers.getClientTCP_().change_state_ready();
 		}
 		if (buffer == "food")
 			univers.getClientTCP_().food();
+
 		if (buffer == "game") {
 			univers.start_game();
+			univers.loop();
 		}
+		if (buffer == "init") {
+			std::string buffer1;
+			int16_t l;
+			ClientTCP::add_prefix(START_GAME, buffer1, &l, ClientTCP::size_header[START_GAME]);
+			univers.getServerTCP_().async_write(buffer1);
+		}
+
 		if (buffer == "start") {
 			univers.create_ui();
 			univers.getCore_().aState();

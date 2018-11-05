@@ -23,7 +23,7 @@ public:
 	int start_game();
 
 	void loop();
-void loop_world();
+
 
 	void manage_input();
 
@@ -47,12 +47,17 @@ void loop_world();
 	bool dlError(void);
 
 private:
+	Grid<int> grid;
+
+	void loop_world();
 	ServerTCP *serverTCP;
 	boost::asio::io_service io_server;
 	boost::asio::io_service io_client;
 
-	boost::asio::deadline_timer t;
 	boost::asio::io_service io;
+	boost::asio::deadline_timer deadline_timer = boost::asio::deadline_timer(io,
+																			 boost::posix_time::seconds(
+																					 0));
 	std::unique_ptr<KNU::World> world_;
 	boost::shared_ptr<ClientTCP> clientTCP_;
 	std::unique_ptr<ServerTCP> serverTCP_;

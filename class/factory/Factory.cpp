@@ -17,6 +17,8 @@ Factory::Factory(KNU::World &world)
 void Factory::create_all_snake(Snake snake_array[MAX_SNAKE], int16_t nu) {
 	int rows = nu / 4;
 	int cols = nu % 4;
+	rows = !rows ? 1 : rows;
+	cols = !cols ? 1 : cols;
 	int size_rows = world_.getMax_() / rows;
 	int size_cols = world_.getMax_() / cols;
 

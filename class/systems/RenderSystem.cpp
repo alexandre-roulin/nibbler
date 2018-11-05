@@ -13,7 +13,7 @@ void RenderSystem::update() {
 	for (auto &entity : getEntities()) {
 		auto& positionComponent = entity.getComponent<PositionComponent>();
 		auto& spriteComponent = entity.getComponent<SpriteComponent>();
-		getWorld().getDisplay()->drawTileGrid(spriteComponent.sprite,
-				positionComponent.y, positionComponent.x);
+//		getWorld().getDisplay()->drawTileGrid(spriteComponent.sprite,
+//				positionComponent.y, positionComponent.x);
 	}
 }
