@@ -6,6 +6,7 @@
 #include "ClientTCP.hpp"
 #include <gui/Core.hpp>
 #include <events/JoystickEvent.hpp>
+#include <events/StartEvent.hpp>
 
 int const ClientTCP::size_header[] = {
 		[CHAT] = SIZEOF_CHAT_PCKT,
@@ -147,10 +148,10 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 			int16_t nu;
 			std::memcpy(&nu, data_deserialize, ClientTCP::size_header[START_GAME]);
 			factory.create_all_snake(snake_array, nu);
+			univers.getWorld_().getEventManager().emitEvent<StartEvent>();
+			//EVENT
 			std::cout << "factory.create_all_snake" << std::endl;
 		}
-			break;
-		case HEADER:
 			break;
 		case INPUT:
 			eDirection dir;
@@ -158,6 +159,9 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 			std::memcpy(&id, data_deserialize, sizeof(int16_t));
 			std::memcpy(&dir, data_deserialize + sizeof(int16_t), sizeof(eDirection));
 			univers.getWorld_().getEventManager().emitEvent<JoystickEvent>(id, dir);
+			std::cout << "Size: " << univers.getWorld_().getEventManager().getEvents<JoystickEvent>().size() << std::endl;
+			break;
+		default:
 			break;
 	}
 	delete[] data_deserialize;

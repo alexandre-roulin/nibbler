@@ -7,7 +7,7 @@ ServerTCP::ServerTCP(Univers &univers, boost::asio::io_service &io_service)
 		  univers(univers),
 		  acceptor_(io_service, tcp::endpoint(tcp::v4(), 4242)),
 		  timer_accept(io_service, boost::posix_time::seconds(1)) {
-	std::cout << "Server created" << std::endl;
+	//std::cout << "Server created" << std::endl;
 	start_accept();
 }
 
@@ -36,19 +36,19 @@ void ServerTCP::refresh_data_snake_array(
 	{
 		std::string buffer;
 		ClientTCP::add_prefix(ID, buffer, &id);
-//		std::cout << "ServerTCP::refresh_data_snake_array : " << buffer.size() << std::endl;
+//		//std::cout << "ServerTCP::refresh_data_snake_array : " << buffer.size() << std::endl;
 		connection->write_socket(buffer);
 	}
 	{
 		std::string buffer;
 		ClientTCP::add_prefix(SNAKE_ARRAY, buffer, snake_array);
-//		std::cout << "ServerTCP::refresh_data_snake_array : " << buffer.size() << std::endl;
+//		//std::cout << "ServerTCP::refresh_data_snake_array : " << buffer.size() << std::endl;
 		connection->write_socket(buffer);
 	}
 	{
 		std::string buffer;
 		ClientTCP::add_prefix(SNAKE, buffer, &snake_array[id]);
-//		std::cout << "ServerTCP::refresh_data_snake_array : " << buffer.size() << std::endl;
+//		//std::cout << "ServerTCP::refresh_data_snake_array : " << buffer.size() << std::endl;
 		async_write(buffer);
 	}
 }
@@ -60,7 +60,7 @@ void ServerTCP::start_game() {
 			return;
 		}
 	}
-	std::cout << "Start Game  " << std::endl;
+	//std::cout << "Start Game  " << std::endl;
 
 	std::string buffer;
 	ClientTCP::add_prefix(START_GAME, buffer, &nu_);
@@ -93,21 +93,22 @@ void ServerTCP::parse_input(eHeader header, void const *input, size_t len) {
 		case SNAKE: {
 			Snake snake_temp;
 			std::memcpy(&snake_temp, data_deserialize, sizeof(Snake));
-			std::cout << "Kaka" << snake_temp.id << std::endl;
-			assert(snake_temp.id == 0 && snake_temp.id < MAX_SNAKE);
+			assert(snake_temp.id >= 0 && snake_temp.id < MAX_SNAKE);
 			snake_array[snake_temp.id] = snake_temp;
 			break;
 		}
 		case START_GAME:
 			start_game();
+			return;
 		case FOOD:
 		default:
 			break;
 	}
 	std::string buffer;
 	ClientTCP::add_prefix(header, buffer, data_deserialize);
-	std::cout << "ServerTCP::parse_input.size() " << buffer.size() << std::endl;
+	//std::cout << "ServerTCP::parse_input.size() " << buffer.size() << std::endl;
 	async_write(buffer);
+	delete [] data_deserialize;
 }
 
 void ServerTCP::remove(TCPConnection::pointer remove) {
@@ -130,7 +131,7 @@ TCPConnection::TCPConnection(
 void
 TCPConnection::handle_read_data(eHeader header, boost::system::error_code const &error_code,
 								size_t len) {
-	std::cout << "TCPConnection::handle_read_data [" << len << "]" << std::endl;
+	//std::cout << "TCPConnection::handle_read_data [" << len << "]" << std::endl;
 
 	if (error_code.value() == 0 && len > 0) {
 		serverTCP_.parse_input(header, buffer_data.data(), len);
@@ -144,8 +145,7 @@ void TCPConnection::handle_write(const boost::system::error_code &error_code,
 
 
 void TCPConnection::read_socket_header() {
-
-	std::cout << "TCPConnection::read_socket_header" << std::endl;
+	//std::cout << "TCPConnection::read_socket_header" << std::endl;
 	boost::asio::async_read(socket_,
 							boost::asio::buffer(buffer_data, ClientTCP::size_header[HEADER]),
 							boost::bind(&TCPConnection::handle_read_header,
@@ -155,7 +155,7 @@ void TCPConnection::read_socket_header() {
 }
 
 void TCPConnection::read_socket_data(eHeader header) {
-	std::cout << "TCPConnection::read_socket_data" << std::endl;
+	//std::cout << "TCPConnection::read_socket_data" << std::endl;
 	boost::asio::async_read(socket_, boost::asio::buffer(buffer_data, ClientTCP::size_header[header]),
 							boost::bind(&TCPConnection::handle_read_data,
 										shared_from_this(),
@@ -167,15 +167,15 @@ void TCPConnection::read_socket_data(eHeader header) {
 void
 TCPConnection::handle_read_header(const boost::system::error_code &error_code,
 								  size_t len) {
-	std::cout << "TCPConnection::handle_read_header > len : " << len
-			  << std::endl;
+	//std::cout << "TCPConnection::handle_read_header > len : " << len
+//			  << std::endl;
 	if (error_code.value() == 0) {
 		assert(len == sizeof(eHeader));
 
 		eHeader header;
 		std::memcpy(&header, buffer_data.data(), sizeof(eHeader));
 
-		std::cout << "Header : " << header << std::endl;
+		//std::cout << "Header : " << header << std::endl;
 		read_socket_data(header);
 	}
 }

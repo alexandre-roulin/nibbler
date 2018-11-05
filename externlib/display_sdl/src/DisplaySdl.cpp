@@ -1,4 +1,5 @@
 #include "DisplaySdl.hpp"
+#include "../include/DisplaySdl.hpp"
 
 IDisplay			*newDisplay(char const *tileset,
 						int tileSize,
@@ -20,6 +21,7 @@ DisplaySdl::DisplaySdl(char const *tileset,
 						int height,
 						char const *windowName) :
     _exit(false),
+	_direction(NORTH),
 	_tileSize(tileSize),
 	_winTileSize(Vector2D<int>(width, height)),
     _winPixelSize(Vector2D<int>(width * tileSize, height * tileSize)),
@@ -195,21 +197,21 @@ void		DisplaySdl::setBackground(Grid<int> const &grid)
 
 void			DisplaySdl::update(void)
 {
-	this->_direction = NORTH;
+
     while (SDL_PollEvent(&this->_ev))
 	{
         if (this->_ev.window.event == SDL_WINDOWEVENT_CLOSE)
             this->_exit = true;
 		if (this->_ev.type == SDL_KEYDOWN)
 		{
-			if (this->_ev.key.keysym.scancode == SDL_SCANCODE_Q)
+			if (this->_ev.key.keysym.scancode == SDL_SCANCODE_A)
 				this->_direction = WEST;
 			else if (this->_ev.key.keysym.scancode == SDL_SCANCODE_D)
 				this->_direction = EAST;
 			else if (this->_ev.key.keysym.scancode == SDL_SCANCODE_W)
-				this->_direction = SOUTH;
-			else if (this->_ev.key.keysym.scancode == SDL_SCANCODE_S)
 				this->_direction = NORTH;
+			else if (this->_ev.key.keysym.scancode == SDL_SCANCODE_S)
+				this->_direction = SOUTH;
 		}
     }
 }

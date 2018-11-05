@@ -19,22 +19,25 @@ MotionSystem::MotionSystem() {
 void MotionSystem::update() {
 	log_success("MotionSystem::update SizeEntities [%d]", getEntities().size());
 	for (auto &entity : getEntities()) {
-		auto &transformComponent = entity.getComponent<PositionComponent>();
+		auto &positionComponent = entity.getComponent<PositionComponent>();
 		auto &motionComponent = entity.getComponent<MotionComponent>();
+		std::cout << "Pre: "  << positionComponent << std::endl;
+
 		switch (motionComponent.direction) {
 			case NORTH:
-				transformComponent.y -= motionComponent.speed;
+				--positionComponent.y;
 				break;
 			case SOUTH:
-				transformComponent.y += motionComponent.speed;
+				++positionComponent.y;
 				break;
 			case EAST:
-				transformComponent.x += motionComponent.speed;
+				++positionComponent.x;
 				break;
 			case WEST:
-				transformComponent.x -= motionComponent.speed;
+				--positionComponent.x;
 				break;
 		}
+		std::cout << "Post: " << positionComponent << std::endl;
 	}
 }
 

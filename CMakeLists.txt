@@ -135,4 +135,4 @@ add_executable(nibbler
         jsoncpp/src/lib_json/json_writer.cpp
         jsoncpp/src/test_lib_json/jsontest.cpp
         jsoncpp/src/test_lib_json/jsontest.h
-        jsoncpp/src/test_lib_json/main.cpp class/systems/RenderSystem.cpp class/systems/RenderSystem.hpp)
+        jsoncpp/src/test_lib_json/main.cpp class/systems/RenderSystem.cpp class/systems/RenderSystem.hpp class/events/StartEvent.cpp class/events/StartEvent.hpp)

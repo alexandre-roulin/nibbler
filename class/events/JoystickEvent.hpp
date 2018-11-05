@@ -8,11 +8,7 @@
 
 struct JoystickEvent {
 
-	explicit JoystickEvent(int16_t id = -1, eDirection direction = NORTH)
-			: tag_player(Factory::factory_name(HEAD, id)),
-			  direction(direction) {
-		std::cout << *this << std::endl;
-	}
+	explicit JoystickEvent(int16_t id = -1, eDirection direction = NORTH);
 
 	friend std::ostream &
 	operator<<(std::ostream &os, const JoystickEvent &event) {

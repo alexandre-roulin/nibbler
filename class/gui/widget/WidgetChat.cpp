@@ -57,7 +57,7 @@ void			WidgetChat::render(void)
 
 bool			WidgetChat::_chatCommand(void)
 {
-	if (!(this->_bufferMessage[0] == '/'))
+	if (this->_bufferMessage[0] != '/')
 		return (false);
 	if (strstr(this->_bufferMessage, "/help"))
 		this->addLog("/help\n/name Aname\n", this->_bufferMessage);

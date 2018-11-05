@@ -8,6 +8,8 @@
 #include <systems/CollisionSystem.hpp>
 #include <systems/RenderSystem.hpp>
 #include <boost/thread.hpp>
+#include <events/StartEvent.hpp>
+
 Univers::Univers() {
 
 	world_ = std::make_unique<KNU::World>(*this);
@@ -40,7 +42,7 @@ int Univers::start_game() {
 	grid.setBorder(SPRITE_WALL);
 	display->setBackground(grid);
 	world_->setDisplay(display);
-	std::cout << "dlfini" << std::endl;
+
 	return 0;
 }
 
@@ -51,7 +53,6 @@ void Univers::manage_input() {
 	int16_t id = clientTCP_->getId_();
 	std::memcpy(des, &id, sizeof(int16_t));
 	std::memcpy(des + sizeof(int16_t), &ed, sizeof(eDirection));
-	std::cout << ed << std::endl;
 	ClientTCP::add_prefix(INPUT, buffer, des);
 	clientTCP_->write_socket(buffer);
 }
@@ -65,6 +66,7 @@ void Univers::loop() {
 	world_->getSystemManager().addSystem<MotionSystem>();
 	world_->getSystemManager().addSystem<RenderSystem>();
 
+	world_->update();
 	deadline_timer.async_wait(boost::bind(&Univers::loop_world, this));
 	boost::thread thread(boost::bind(&boost::asio::io_service::run, &io));
 	thread.detach();
@@ -82,8 +84,8 @@ void Univers::loop() {
 
 
 void Univers::loop_world() {
-	world_->update();
 	world_->grid.clear();
+
 
 	world_->getSystemManager().getSystem<FollowSystem>()->update();
 	world_->getSystemManager().getSystem<JoystickSystem>()->update();
@@ -92,8 +94,9 @@ void Univers::loop_world() {
 	world_->getSystemManager().getSystem<FoodSystem>()->update();
 	world_->getSystemManager().getSystem<RenderSystem>()->update();
 
-	deadline_timer.expires_at(deadline_timer.expires_at() + boost::posix_time::seconds(5));
+	deadline_timer.expires_at(deadline_timer.expires_at() + boost::posix_time::seconds(1));
 	deadline_timer.async_wait(boost::bind(&Univers::loop_world, this));
+	world_->update();
 
 }
 

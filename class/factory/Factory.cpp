@@ -93,7 +93,7 @@ char * Factory::factory_chat_message(char const *name, char const *message) {
 	size_t lenName = std::strlen(name);
 	if (lenName > NAME_BUFFER)
 		lenName = NAME_BUFFER;
-	final_[0] = ']';
+	final_[0] = '[';
 	std::memcpy(final_ + 1, name, lenName);
 	std::strncpy(final_ + lenName + 1, "]: ", 3);
 	size_t lenMessage = strlen(message);

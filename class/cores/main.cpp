@@ -80,20 +80,18 @@ int main(int ac, char **av) {
 		if (buffer == "ready") {
 			univers.getClientTCP_().change_state_ready();
 		}
-		if (buffer == "food")
-			univers.getClientTCP_().food();
 
 		if (buffer == "game") {
 			univers.start_game();
-			std::string buffer1;
-			int16_t l = 1;
-			ClientTCP::add_prefix(START_GAME, buffer1, &l);
-			univers.getServerTCP_().async_write(buffer1);
 
 		}
-		if (buffer == "init") {
-			univers.loop();
+		if (buffer == "launch") {
+			std::string buffer1;
+			int16_t l = 42;
+			ClientTCP::add_prefix(START_GAME, buffer1, &l);
+			univers.getClientTCP_().write_socket(buffer1);
 		}
+
 
 		if (buffer == "start") {
 			univers.create_ui();
