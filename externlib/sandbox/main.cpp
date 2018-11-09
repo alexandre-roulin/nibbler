@@ -42,7 +42,6 @@ int         main(int argc, char **argv)
     while (!display->exit())
     {
         display->update();
-        std::cout << display->getDirection() << std::endl;
         display->drawTileGrid(0, 0, 0);
         display->drawTileGrid(1, 1, 1);
 		display->drawTileGrid(2, 2, 2);

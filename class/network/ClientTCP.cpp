@@ -56,7 +56,6 @@ void ClientTCP::refreshMySnake(void) {
 }
 
 void ClientTCP::connect() {
-	std::cout << "Trying to connect" << std::endl;
 	tcp::resolver::iterator it = resolver.resolve(query);
 	boost::asio::connect(socket, it);
 }
@@ -158,7 +157,6 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 			factory.create_all_snake(snake_array, nu);
 			univers.getWorld_().getEventManager().emitEvent<StartEvent>();
 
-			std::cout << "factory.create_all_snake" << std::endl;
 		}
 			break;
 		case INPUT: {

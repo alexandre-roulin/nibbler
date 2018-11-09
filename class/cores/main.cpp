@@ -89,12 +89,12 @@ int main(int ac, char **av) {
 			univers.getClientTCP_().write_socket(buffer1);
 			univers.loop();
 		}
-		if (buffer == "launch") {
+		if (buffer == "start") {
 
 		}
 
 
-		if (buffer == "start") {
+		if (buffer == "ui") {
 			univers.create_ui();
 			univers.getCore_().aState();
 			return (0);

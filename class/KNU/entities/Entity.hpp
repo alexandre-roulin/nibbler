@@ -61,10 +61,7 @@ namespace KNU {
 			return !(*this < rhs);
 		}
 
-		bool operator==(const Entity &rhs) const {
-			return id == rhs.id &&
-				   alive == rhs.alive;
-		}
+		bool operator==(const Entity &rhs) const;
 
 		bool operator!=(const Entity &rhs) const {
 			return !(rhs == *this);
@@ -75,6 +72,10 @@ namespace KNU {
 		void kill();
 
 		bool isAlive() const;
+
+		void killGroup();
+
+		void reset();
 
 		template<typename T>
 		void addComponent(T component);
@@ -172,6 +173,8 @@ namespace KNU {
 
 		void destroyEntity(Entity &entity);
 
+		void killEntityGroup(Entity &entity);
+
 		void tagEntity(Entity &e, std::string tag);
 
 		bool isEntityAlive(Entity const &entity) const;
@@ -247,6 +250,7 @@ namespace KNU {
 		return getEntitiesManager().hasComponent<T>(*this);
 	}
 
+
 	template<typename T>
 	T &EntitiesManager::getComponent(Entity const &entity) const {
 		return _componentManager.getComponent<T>(entity);
@@ -256,7 +260,7 @@ namespace KNU {
 
 	template<typename T>
 	void ComponentManager::addComponent(Entity &entity, T component) {
-
+		log_info("Entity [%d] addComponent(%s)", entity.getId(), typeid(T).name());
 		std::shared_ptr<Pool<T>> componentPool = accommodateComponent<T>();
 		componentPool->add(entity, component);
 	}

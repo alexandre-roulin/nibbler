@@ -15,11 +15,21 @@ namespace KNU {
 
 
 	void Entity::kill() {
-		std::cout << "I'am dead :'(" << std::endl;
 
 		getEntitiesManager().killEntity(*this);
 	}
 
+
+
+	void Entity::killGroup() {
+		entityManager->killEntityGroup(*this);
+	}
+
+
+	void Entity::reset() {
+		id = -1;
+		alive = false;
+	}
 	bool Entity
 	::isAlive() const {
 		return getEntitiesManager().isEntityAlive(*this);
@@ -72,6 +82,10 @@ namespace KNU {
 
 	std::string const EntitiesManager::TAG = "tag";
 	std::string const EntitiesManager::GROUP = "group";
+
+	bool Entity::operator==(const Entity &rhs) const {
+		return id == rhs.id;
+	}
 
 	EntitiesManager::EntitiesManager(World &world)
 			: size(0),
@@ -202,9 +216,11 @@ namespace KNU {
 	}
 
 	void EntitiesManager::destroyEntity(Entity &entity) {
-		log_success("EntitiesManager::destroyEntity");
+
 		freeIds.push(entity.getId());
 		_poolSignature[entity.id].clean();
+		_entitiesMap[entity.id].reset();
+		entity.reset();
 		for (auto it = _taggedEntity.begin(); it != _taggedEntity.end();)
 			if (it->second == entity) it = _taggedEntity.erase(it); else ++it;
 
@@ -214,6 +230,7 @@ namespace KNU {
 				groupEntity.second.erase(find);
 		}
 	}
+
 
 	void EntitiesManager::killEntity(Entity &entity) {
 		world.destroyEntity(entity);
@@ -247,7 +264,6 @@ namespace KNU {
 	}
 
 	void EntitiesManager::tagEntity(Entity &entity, std::string tag) {
-		std::cout << tag << " <> "<< entity.getId() << std::endl;
 		_taggedEntity.insert(std::make_pair(tag, entity));
 	}
 
@@ -305,5 +321,12 @@ namespace KNU {
 
 	Entity::ID EntitiesManager::getEntityId(Entity const &e) const {
 		return e.id;
+	}
+
+	void EntitiesManager::killEntityGroup(Entity &entity) {
+		std::set<Entity> entitiesGroup = _groupedEntities[entity.getGroup()];
+		std::for_each(entitiesGroup.begin(), entitiesGroup.end(), [](Entity entity){
+			entity.kill();
+		});
 	}
 }

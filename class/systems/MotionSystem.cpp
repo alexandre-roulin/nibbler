@@ -17,7 +17,7 @@ MotionSystem::MotionSystem() {
 }
 
 void MotionSystem::update() {
-	log_success("MotionSystem::update SizeEntities [%d]", getEntities().size());
+	log_success("update");
 	for (auto &entity : getEntities()) {
 		auto &positionComponent = entity.getComponent<PositionComponent>();
 		auto &motionComponent = entity.getComponent<MotionComponent>();

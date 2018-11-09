@@ -9,10 +9,13 @@ RenderSystem::RenderSystem() {
 }
 
 void RenderSystem::update() {
+	log_success("update");
 	for (auto &entity : getEntities()) {
-		auto& positionComponent = entity.getComponent<PositionComponent>();
-		auto& spriteComponent = entity.getComponent<SpriteComponent>();
-		getWorld().grid(positionComponent.x, positionComponent.y)
+		if (entity.isAlive()) {
+			auto& positionComponent = entity.getComponent<PositionComponent>();
+			auto& spriteComponent = entity.getComponent<SpriteComponent>();
+			getWorld().grid(positionComponent.x, positionComponent.y)
 					= spriteComponent.sprite;
+		}
 	}
 }

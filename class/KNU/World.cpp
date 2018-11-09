@@ -29,17 +29,18 @@ namespace KNU {
 	}
 	void World::destroyEntity(Entity &e) {
 		log_success("World::destroyEntity [%d]", e.getId());
+
 		destroyedEntities_.push_back(e);
 	}
 
 	void World::update() {
-		if (!createdEntities_.empty())
-			std::cout << "World::update.create() " << createdEntities_.size() << std::endl;
 		for (auto &entity : createdEntities_) {
+			log_info("New id [%d] tag [%s] grps [%s]", entity.getId(), entity.getTag().c_str(), entity.getGroup().data());
 			systemManager_->addToSystems(entity);
 		}
 		createdEntities_.clear();
 		for (auto &entity : destroyedEntities_) {
+			log_info("Dlt id [%d] tag [%s] grps [%s]", entity.getId(), entity.getTag().c_str(), entity.getGroup().data());
 			systemManager_->removeToSystems(entity);
 			entityManager_->destroyEntity(entity);
 		}

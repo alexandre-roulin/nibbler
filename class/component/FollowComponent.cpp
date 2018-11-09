@@ -13,6 +13,10 @@ FollowComponent::FollowComponent(KNU::Entity::ID id, bool skip)
 
 }
 
+FollowComponent::FollowComponent(FollowComponent const &followComponent) {
+	*this = followComponent;
+}
+
 FollowComponent &
 FollowComponent::operator=(FollowComponent const &followComponent) {
 	if (this != &followComponent) {
@@ -40,4 +44,10 @@ FollowComponent::FollowComponent(Json::Value json) {
 	idFollowed = json.get(ID_FOLLOWED, -1).asInt();
 	positionComponent = PositionComponent(json.get(POSITION_COMPONENT, {0, 0}));
 
+}
+
+std::ostream &operator<<(std::ostream &os, const FollowComponent &component) {
+	os << "idFollowed: " << component.idFollowed << " positionComponent: "
+	   << component.positionComponent << " skip: " << component.skip;
+	return os;
 }

@@ -12,12 +12,17 @@ FollowSystem::FollowSystem() {
 
 
 void FollowSystem::update() {
+	log_success("update");
 	for (const auto &entity : getEntities()) {
+
 		auto &followComponent = entity.getComponent<FollowComponent>();
 		auto entityFollowed = getWorld().getEntityManager()
 				.getEntityById(followComponent.idFollowed);
-//		assert(entityFollowed.hasComponent<PositionComponent>());
-		followComponent.positionComponent = entityFollowed.getComponent<PositionComponent>();
+		log_info("In {%d} entityFollowed.id : [%d] idFollowed [%d]", entity.getId(), entityFollowed.getId(), followComponent.idFollowed);
+		assert(entityFollowed.hasComponent<PositionComponent>());
+		if (!followComponent.skip)
+			followComponent.positionComponent = entityFollowed.getComponent<PositionComponent>();
+		followComponent.skip = false;
 	}
 	for (const auto &entity : getEntities()) {
 		entity.getComponent<PositionComponent>() =

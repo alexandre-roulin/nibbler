@@ -12,24 +12,13 @@ CollisionSystem::CollisionSystem() {
 void CollisionSystem::update() {
 	std::vector<KNU::Entity> entities_ = getEntities();
 	auto &world = getWorld();
-	std::cout << "Size : " << getEntities().size() << std::endl;
-
 	for (auto &entity : getEntities()) {
-		if (Factory::isSnakePart(entity.getTag()) != OTHER)
-			std::cout << "isSnakePart.() "
-					  << Factory::isSnakePart(entity.getTag())
-					  << "Head : " << HEAD << " Other: " << OTHER << std::endl;
 		if (Factory::isSnakePart(entity.getTag()) == HEAD) {
 			std::for_each(entities_.begin(), entities_.end(),
 						  [&entity, &world](
 								  KNU::Entity &entity_) {
 							  auto &snakePositionComponent = entity.getComponent<PositionComponent>();
 							  auto &positionComponent = entity_.getComponent<PositionComponent>();
-//							  std::cout << "Snake [" << entity.getId() << "]"
-//										<< snakePositionComponent << std::endl;
-//							  std::cout << "Entity [" << entity_.getId() << "]"
-//										<< positionComponent << std::endl;
-//							  std::cout << std::endl;
 							  if (snakePositionComponent == positionComponent && entity != entity_) {
 								  auto &collisionComponent = entity_.getComponent<CollisionComponent>();
 								  eSnakePart esp = Factory::isSnakePart(entity_.getTag());
@@ -37,22 +26,19 @@ void CollisionSystem::update() {
 								  if (collisionComponent.isWall ||
 									  esp != OTHER) {
 									  std::cout << "wall [" << collisionComponent.isWall << "]" << std::endl;
-//									  entity.kill();
+									  entity.killGroup();
 								  }
 								  if (esp == HEAD) {
 									  std::cout << "HEAD" << std::endl;
-//									  entity_.kill();
-
+										entity.killGroup();
 								  }
 								  if (entity_.getTag() == "food") {
-									  std::cout << "food" << std::endl;
-
+									  std::string s = Factory::factory_name(TAIL, entity.getTag());
+									  std::cout << "food" << s << std::endl;
+									  entity_.kill();
 									  world.getEventManager()
 											  .emitEvent<FoodEvent>(
-													  Factory::factory_name(
-															  TAIL,
-															  entity.getTag()),
-													  entity.getGroup());
+													  s, entity.getGroup());
 								  }
 							  }
 						  });

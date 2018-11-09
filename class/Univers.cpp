@@ -17,13 +17,11 @@ Univers::Univers() {
 	clientTCP_ = nullptr;
 	serverTCP_ = nullptr;
 	display = nullptr;
-
-	int count = 0;
 }
 
 
 int Univers::start_game() {
-	if (!(dlHandle = dlopen("./externlib/display_sdl/display_sdl.so",
+	if (!(dlHandle = dlopen("./externlib/display_sfml/display_sfml.so",
 							RTLD_LAZY | RTLD_LOCAL)))
 		return (dlError());
 	if (!(newDisplay = reinterpret_cast<IDisplay *(*)(
@@ -55,7 +53,8 @@ void Univers::manage_input() {
 	std::memcpy(des, &id, sizeof(int16_t));
 	std::memcpy(des + sizeof(int16_t), &ed, sizeof(eDirection));
 	ClientTCP::add_prefix(INPUT, buffer, des);
-	clientTCP_->write_socket(buffer);
+	if (world_->getEntityManager().getEntityByTag(Factory::factory_name(HEAD, id)).isAlive())
+		clientTCP_->write_socket(buffer);
 }
 
 void Univers::loop() {
@@ -87,14 +86,13 @@ void Univers::loop() {
 
 
 void Univers::loop_world() {
+	log_warn("Test [%d]", world_->getEntityManager().getEntityByTag("0_snake_tail").getComponent<FollowComponent>().idFollowed);
 	world_->grid.clear();
-
+	log_warn("Test [%d]", world_->getEntityManager().getEntityByTag("0_snake_tail").getComponent<FollowComponent>().idFollowed);
 
 	world_->getSystemManager().getSystem<FollowSystem>()->update();
-	auto e = world_->getEntityManager().getEntitiesByGroup(Factory::factory_name(GRP, 0));
 	world_->getSystemManager().getSystem<JoystickSystem>()->update();
 	world_->getSystemManager().getSystem<MotionSystem>()->update();
-	std::for_each(e.begin(), e.end(), [](KNU::Entity &e){ std::cout << e.getComponent<PositionComponent>() << std::endl; });
 	world_->getSystemManager().getSystem<CollisionSystem>()->update();
 	world_->getSystemManager().getSystem<FoodSystem>()->update();
 	world_->getSystemManager().getSystem<RenderSystem>()->update();
