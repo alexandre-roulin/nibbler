@@ -5,36 +5,36 @@
 		<Option title="nibbler"/>
 		<Option makefile_is_custom="1"/>
 		<Option compiler="gcc"/>
-		<Option virtualFolders="CMake Files\;"/>
+		<Option virtualFolders="CMake Files\;CMake Files\SFML\;"/>
 		<Build>
 			<Target title="all">
 				<Option working_dir="/Users/ntoniolo/nibbler"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 all"/>
-					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j4 -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command=" -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command=" -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command=" -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command=" -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="rebuild_cache">
 				<Option working_dir="/Users/ntoniolo/nibbler"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
-					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j4 -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command=" -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command=" -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command=" -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command=" -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="edit_cache">
 				<Option working_dir="/Users/ntoniolo/nibbler"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 edit_cache"/>
-					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j4 -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command=" -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command=" -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command=" -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command=" -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="nibbler">
@@ -43,45 +43,12 @@
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
-				<Compiler>
-					<Add directory="/Users/ntoniolo/nibbler/class"/>
-					<Add directory="/Users/ntoniolo/nibbler/class/component"/>
-					<Add directory="/Users/ntoniolo/nibbler/class/events"/>
-					<Add directory="/Users/ntoniolo/nibbler/class/factory"/>
-					<Add directory="/Users/ntoniolo/nibbler/class/gui"/>
-					<Add directory="/Users/ntoniolo/nibbler/class/gui/widget"/>
-					<Add directory="/Users/ntoniolo/nibbler/class/KNU"/>
-					<Add directory="/Users/ntoniolo/nibbler/class/KNU/component"/>
-					<Add directory="/Users/ntoniolo/nibbler/class/KNU/entities"/>
-					<Add directory="/Users/ntoniolo/nibbler/class/KNU/events"/>
-					<Add directory="/Users/ntoniolo/nibbler/class/KNU/managers"/>
-					<Add directory="/Users/ntoniolo/nibbler/class/KNU/systems"/>
-					<Add directory="/Users/ntoniolo/nibbler/class/KNU/utils"/>
-					<Add directory="/Users/ntoniolo/nibbler/class/network"/>
-					<Add directory="/Users/ntoniolo/nibbler/class/systems"/>
-					<Add directory="/Users/ntoniolo/nibbler/externlib/commun"/>
-					<Add directory="/Users/ntoniolo/nibbler/externlib/display_sdl/include"/>
-					<Add directory="/Users/ntoniolo/nibbler/externlib/display_sfml/include"/>
-					<Add directory="/Users/ntoniolo/nibbler/externlib/sound_sdl/include"/>
-					<Add directory="/Users/ntoniolo/nibbler/externlib/sound_sfml/include"/>
-					<Add directory="/Users/ntoniolo/nibbler/incs"/>
-					<Add directory="/Users/ntoniolo/nibbler/jsoncpp/include"/>
-					<Add directory="/Users/ntoniolo/nibbler/jsoncpp/include/json"/>
-					<Add directory="/Users/ntoniolo/nibbler/jsoncpp/src/lib_json"/>
-					<Add directory="/Users/ntoniolo/nibbler/jsoncpp/src/test_lib_json"/>
-					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1"/>
-					<Add directory="/usr/local/include"/>
-					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/9.0.0/include"/>
-					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include"/>
-					<Add directory="/usr/include"/>
-					<Add directory="/System/Library/Frameworks"/>
-					<Add directory="/Library/Frameworks"/>
-				</Compiler>
+				<Compiler/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 nibbler"/>
-					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j4 -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command=" -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 nibbler"/>
+					<CompileFile command=" -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command=" -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command=" -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="nibbler/fast">
@@ -90,45 +57,12 @@
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
-				<Compiler>
-					<Add directory="/Users/ntoniolo/nibbler/class"/>
-					<Add directory="/Users/ntoniolo/nibbler/class/component"/>
-					<Add directory="/Users/ntoniolo/nibbler/class/events"/>
-					<Add directory="/Users/ntoniolo/nibbler/class/factory"/>
-					<Add directory="/Users/ntoniolo/nibbler/class/gui"/>
-					<Add directory="/Users/ntoniolo/nibbler/class/gui/widget"/>
-					<Add directory="/Users/ntoniolo/nibbler/class/KNU"/>
-					<Add directory="/Users/ntoniolo/nibbler/class/KNU/component"/>
-					<Add directory="/Users/ntoniolo/nibbler/class/KNU/entities"/>
-					<Add directory="/Users/ntoniolo/nibbler/class/KNU/events"/>
-					<Add directory="/Users/ntoniolo/nibbler/class/KNU/managers"/>
-					<Add directory="/Users/ntoniolo/nibbler/class/KNU/systems"/>
-					<Add directory="/Users/ntoniolo/nibbler/class/KNU/utils"/>
-					<Add directory="/Users/ntoniolo/nibbler/class/network"/>
-					<Add directory="/Users/ntoniolo/nibbler/class/systems"/>
-					<Add directory="/Users/ntoniolo/nibbler/externlib/commun"/>
-					<Add directory="/Users/ntoniolo/nibbler/externlib/display_sdl/include"/>
-					<Add directory="/Users/ntoniolo/nibbler/externlib/display_sfml/include"/>
-					<Add directory="/Users/ntoniolo/nibbler/externlib/sound_sdl/include"/>
-					<Add directory="/Users/ntoniolo/nibbler/externlib/sound_sfml/include"/>
-					<Add directory="/Users/ntoniolo/nibbler/incs"/>
-					<Add directory="/Users/ntoniolo/nibbler/jsoncpp/include"/>
-					<Add directory="/Users/ntoniolo/nibbler/jsoncpp/include/json"/>
-					<Add directory="/Users/ntoniolo/nibbler/jsoncpp/src/lib_json"/>
-					<Add directory="/Users/ntoniolo/nibbler/jsoncpp/src/test_lib_json"/>
-					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1"/>
-					<Add directory="/usr/local/include"/>
-					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/9.0.0/include"/>
-					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include"/>
-					<Add directory="/usr/include"/>
-					<Add directory="/System/Library/Frameworks"/>
-					<Add directory="/Library/Frameworks"/>
-				</Compiler>
+				<Compiler/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 nibbler/fast"/>
-					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j4 -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command=" -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 nibbler/fast"/>
+					<CompileFile command=" -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command=" -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command=" -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 		</Build>
@@ -234,12 +168,6 @@
 		<Unit filename="/Users/ntoniolo/nibbler/class/events/JoystickEvent.hpp">
 			<Option target="nibbler"/>
 		</Unit>
-		<Unit filename="/Users/ntoniolo/nibbler/class/events/StartEvent.cpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/ntoniolo/nibbler/class/events/StartEvent.hpp">
-			<Option target="nibbler"/>
-		</Unit>
 		<Unit filename="/Users/ntoniolo/nibbler/class/factory/Factory.cpp">
 			<Option target="nibbler"/>
 		</Unit>
@@ -277,12 +205,6 @@
 			<Option target="nibbler"/>
 		</Unit>
 		<Unit filename="/Users/ntoniolo/nibbler/class/gui/widget/WidgetLobby.hpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/ntoniolo/nibbler/class/gui/widget/WidgetOption.cpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/ntoniolo/nibbler/class/gui/widget/WidgetOption.hpp">
 			<Option target="nibbler"/>
 		</Unit>
 		<Unit filename="/Users/ntoniolo/nibbler/class/gui/widget/WidgetSnake.cpp">
@@ -378,12 +300,6 @@
 		<Unit filename="/Users/ntoniolo/nibbler/class/systems/MotionSystem.hpp">
 			<Option target="nibbler"/>
 		</Unit>
-		<Unit filename="/Users/ntoniolo/nibbler/class/systems/RenderSystem.cpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/ntoniolo/nibbler/class/systems/RenderSystem.hpp">
-			<Option target="nibbler"/>
-		</Unit>
 		<Unit filename="/Users/ntoniolo/nibbler/externlib/commun/IDisplay.hpp">
 			<Option target="nibbler"/>
 		</Unit>
@@ -423,6 +339,42 @@
 		<Unit filename="/Users/ntoniolo/nibbler/externlib/sound_sfml/src/main.cpp">
 			<Option target="nibbler"/>
 		</Unit>
+		<Unit filename="/Users/ntoniolo/nibbler/imgui-sfml/imconfig.h">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/ntoniolo/nibbler/imgui-sfml/imgui-SFML.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/ntoniolo/nibbler/imgui-sfml/imgui-SFML.h">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/ntoniolo/nibbler/imgui-sfml/imgui.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/ntoniolo/nibbler/imgui-sfml/imgui.h">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/ntoniolo/nibbler/imgui-sfml/imgui_demo.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/ntoniolo/nibbler/imgui-sfml/imgui_draw.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/ntoniolo/nibbler/imgui-sfml/imgui_internal.h">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/ntoniolo/nibbler/imgui-sfml/imgui_widgets.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/ntoniolo/nibbler/imgui-sfml/imstb_rectpack.h">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/ntoniolo/nibbler/imgui-sfml/imstb_textedit.h">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/ntoniolo/nibbler/imgui-sfml/imstb_truetype.h">
+			<Option target="nibbler"/>
+		</Unit>
 		<Unit filename="/Users/ntoniolo/nibbler/incs/IWidget.hpp">
 			<Option target="nibbler"/>
 		</Unit>
@@ -438,68 +390,11 @@
 		<Unit filename="/Users/ntoniolo/nibbler/incs/stb_image.h">
 			<Option target="nibbler"/>
 		</Unit>
-		<Unit filename="/Users/ntoniolo/nibbler/jsoncpp/include/json/allocator.h">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/ntoniolo/nibbler/jsoncpp/include/json/assertions.h">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/ntoniolo/nibbler/jsoncpp/include/json/autolink.h">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/ntoniolo/nibbler/jsoncpp/include/json/config.h">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/ntoniolo/nibbler/jsoncpp/include/json/features.h">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/ntoniolo/nibbler/jsoncpp/include/json/forwards.h">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/ntoniolo/nibbler/jsoncpp/include/json/json.h">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/ntoniolo/nibbler/jsoncpp/include/json/reader.h">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/ntoniolo/nibbler/jsoncpp/include/json/value.h">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/ntoniolo/nibbler/jsoncpp/include/json/version.h">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/ntoniolo/nibbler/jsoncpp/include/json/writer.h">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/ntoniolo/nibbler/jsoncpp/src/jsontestrunner/main.cpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/ntoniolo/nibbler/jsoncpp/src/lib_json/json_reader.cpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/ntoniolo/nibbler/jsoncpp/src/lib_json/json_tool.h">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/ntoniolo/nibbler/jsoncpp/src/lib_json/json_value.cpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/ntoniolo/nibbler/jsoncpp/src/lib_json/json_valueiterator.inl">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/ntoniolo/nibbler/jsoncpp/src/lib_json/json_writer.cpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/ntoniolo/nibbler/jsoncpp/src/test_lib_json/jsontest.cpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/ntoniolo/nibbler/jsoncpp/src/test_lib_json/jsontest.h">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/ntoniolo/nibbler/jsoncpp/src/test_lib_json/main.cpp">
-			<Option target="nibbler"/>
-		</Unit>
 		<Unit filename="/Users/ntoniolo/nibbler/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/Users/ntoniolo/nibbler/SFML/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\SFML\"/>
 		</Unit>
 	</Project>
 </CodeBlocks_project_file>

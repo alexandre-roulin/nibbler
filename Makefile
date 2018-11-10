@@ -39,10 +39,10 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake
+CMAKE_COMMAND = /Users/ntoniolo/.brew/Cellar/cmake/3.12.3/bin/cmake
 
 # The command to remove a file.
-RM = /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -E remove -f
+RM = /Users/ntoniolo/.brew/Cellar/cmake/3.12.3/bin/cmake -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
@@ -56,10 +56,56 @@ CMAKE_BINARY_DIR = /Users/ntoniolo/nibbler
 #=============================================================================
 # Targets provided globally by CMake.
 
+# Special rule for the target install/local
+install/local: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/Users/ntoniolo/.brew/Cellar/cmake/3.12.3/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local
+
+# Special rule for the target install/local
+install/local/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/Users/ntoniolo/.brew/Cellar/cmake/3.12.3/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local/fast
+
+# Special rule for the target install/strip
+install/strip: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
+	/Users/ntoniolo/.brew/Cellar/cmake/3.12.3/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip
+
+# Special rule for the target install/strip
+install/strip/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
+	/Users/ntoniolo/.brew/Cellar/cmake/3.12.3/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip/fast
+
+# Special rule for the target install
+install: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
+	/Users/ntoniolo/.brew/Cellar/cmake/3.12.3/bin/cmake -P cmake_install.cmake
+.PHONY : install
+
+# Special rule for the target install
+install/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
+	/Users/ntoniolo/.brew/Cellar/cmake/3.12.3/bin/cmake -P cmake_install.cmake
+.PHONY : install/fast
+
+# Special rule for the target list_install_components
+list_install_components:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\" \"bin\" \"devel\""
+.PHONY : list_install_components
+
+# Special rule for the target list_install_components
+list_install_components/fast: list_install_components
+
+.PHONY : list_install_components/fast
+
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	/Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	/Users/ntoniolo/.brew/Cellar/cmake/3.12.3/bin/cmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : rebuild_cache
 
 # Special rule for the target rebuild_cache
@@ -69,8 +115,8 @@ rebuild_cache/fast: rebuild_cache
 
 # Special rule for the target edit_cache
 edit_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	/Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake cache editor..."
+	/Users/ntoniolo/.brew/Cellar/cmake/3.12.3/bin/ccmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -122,6 +168,149 @@ nibbler: cmake_check_build_system
 nibbler/fast:
 	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/build
 .PHONY : nibbler/fast
+
+#=============================================================================
+# Target rules for targets named sfml-system
+
+# Build rule for target.
+sfml-system: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 sfml-system
+.PHONY : sfml-system
+
+# fast build rule for target.
+sfml-system/fast:
+	$(MAKE) -f SFML/src/SFML/System/CMakeFiles/sfml-system.dir/build.make SFML/src/SFML/System/CMakeFiles/sfml-system.dir/build
+.PHONY : sfml-system/fast
+
+#=============================================================================
+# Target rules for targets named sfml-window
+
+# Build rule for target.
+sfml-window: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 sfml-window
+.PHONY : sfml-window
+
+# fast build rule for target.
+sfml-window/fast:
+	$(MAKE) -f SFML/src/SFML/Window/CMakeFiles/sfml-window.dir/build.make SFML/src/SFML/Window/CMakeFiles/sfml-window.dir/build
+.PHONY : sfml-window/fast
+
+#=============================================================================
+# Target rules for targets named sfml-network
+
+# Build rule for target.
+sfml-network: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 sfml-network
+.PHONY : sfml-network
+
+# fast build rule for target.
+sfml-network/fast:
+	$(MAKE) -f SFML/src/SFML/Network/CMakeFiles/sfml-network.dir/build.make SFML/src/SFML/Network/CMakeFiles/sfml-network.dir/build
+.PHONY : sfml-network/fast
+
+#=============================================================================
+# Target rules for targets named sfml-graphics
+
+# Build rule for target.
+sfml-graphics: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 sfml-graphics
+.PHONY : sfml-graphics
+
+# fast build rule for target.
+sfml-graphics/fast:
+	$(MAKE) -f SFML/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/build.make SFML/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/build
+.PHONY : sfml-graphics/fast
+
+#=============================================================================
+# Target rules for targets named sfml-audio
+
+# Build rule for target.
+sfml-audio: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 sfml-audio
+.PHONY : sfml-audio
+
+# fast build rule for target.
+sfml-audio/fast:
+	$(MAKE) -f SFML/src/SFML/Audio/CMakeFiles/sfml-audio.dir/build.make SFML/src/SFML/Audio/CMakeFiles/sfml-audio.dir/build
+.PHONY : sfml-audio/fast
+
+#=============================================================================
+# Target rules for targets named jsoncpp_lib_static
+
+# Build rule for target.
+jsoncpp_lib_static: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 jsoncpp_lib_static
+.PHONY : jsoncpp_lib_static
+
+# fast build rule for target.
+jsoncpp_lib_static/fast:
+	$(MAKE) -f jsoncpp/src/lib_json/CMakeFiles/jsoncpp_lib_static.dir/build.make jsoncpp/src/lib_json/CMakeFiles/jsoncpp_lib_static.dir/build
+.PHONY : jsoncpp_lib_static/fast
+
+#=============================================================================
+# Target rules for targets named jsoncpp_lib
+
+# Build rule for target.
+jsoncpp_lib: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 jsoncpp_lib
+.PHONY : jsoncpp_lib
+
+# fast build rule for target.
+jsoncpp_lib/fast:
+	$(MAKE) -f jsoncpp/src/lib_json/CMakeFiles/jsoncpp_lib.dir/build.make jsoncpp/src/lib_json/CMakeFiles/jsoncpp_lib.dir/build
+.PHONY : jsoncpp_lib/fast
+
+#=============================================================================
+# Target rules for targets named jsoncpp_check
+
+# Build rule for target.
+jsoncpp_check: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 jsoncpp_check
+.PHONY : jsoncpp_check
+
+# fast build rule for target.
+jsoncpp_check/fast:
+	$(MAKE) -f jsoncpp/src/jsontestrunner/CMakeFiles/jsoncpp_check.dir/build.make jsoncpp/src/jsontestrunner/CMakeFiles/jsoncpp_check.dir/build
+.PHONY : jsoncpp_check/fast
+
+#=============================================================================
+# Target rules for targets named jsoncpp_readerwriter_tests
+
+# Build rule for target.
+jsoncpp_readerwriter_tests: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 jsoncpp_readerwriter_tests
+.PHONY : jsoncpp_readerwriter_tests
+
+# fast build rule for target.
+jsoncpp_readerwriter_tests/fast:
+	$(MAKE) -f jsoncpp/src/jsontestrunner/CMakeFiles/jsoncpp_readerwriter_tests.dir/build.make jsoncpp/src/jsontestrunner/CMakeFiles/jsoncpp_readerwriter_tests.dir/build
+.PHONY : jsoncpp_readerwriter_tests/fast
+
+#=============================================================================
+# Target rules for targets named jsontestrunner_exe
+
+# Build rule for target.
+jsontestrunner_exe: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 jsontestrunner_exe
+.PHONY : jsontestrunner_exe
+
+# fast build rule for target.
+jsontestrunner_exe/fast:
+	$(MAKE) -f jsoncpp/src/jsontestrunner/CMakeFiles/jsontestrunner_exe.dir/build.make jsoncpp/src/jsontestrunner/CMakeFiles/jsontestrunner_exe.dir/build
+.PHONY : jsontestrunner_exe/fast
+
+#=============================================================================
+# Target rules for targets named jsoncpp_test
+
+# Build rule for target.
+jsoncpp_test: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 jsoncpp_test
+.PHONY : jsoncpp_test
+
+# fast build rule for target.
+jsoncpp_test/fast:
+	$(MAKE) -f jsoncpp/src/test_lib_json/CMakeFiles/jsoncpp_test.dir/build.make jsoncpp/src/test_lib_json/CMakeFiles/jsoncpp_test.dir/build
+.PHONY : jsoncpp_test/fast
 
 class/KNU/World.o: class/KNU/World.cpp.o
 
@@ -555,33 +744,6 @@ class/events/JoystickEvent.cpp.s:
 	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/events/JoystickEvent.cpp.s
 .PHONY : class/events/JoystickEvent.cpp.s
 
-class/events/StartEvent.o: class/events/StartEvent.cpp.o
-
-.PHONY : class/events/StartEvent.o
-
-# target to build an object file
-class/events/StartEvent.cpp.o:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/events/StartEvent.cpp.o
-.PHONY : class/events/StartEvent.cpp.o
-
-class/events/StartEvent.i: class/events/StartEvent.cpp.i
-
-.PHONY : class/events/StartEvent.i
-
-# target to preprocess a source file
-class/events/StartEvent.cpp.i:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/events/StartEvent.cpp.i
-.PHONY : class/events/StartEvent.cpp.i
-
-class/events/StartEvent.s: class/events/StartEvent.cpp.s
-
-.PHONY : class/events/StartEvent.s
-
-# target to generate assembly for a file
-class/events/StartEvent.cpp.s:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/events/StartEvent.cpp.s
-.PHONY : class/events/StartEvent.cpp.s
-
 class/factory/Factory.o: class/factory/Factory.cpp.o
 
 .PHONY : class/factory/Factory.o
@@ -770,33 +932,6 @@ class/gui/widget/WidgetLobby.s: class/gui/widget/WidgetLobby.cpp.s
 class/gui/widget/WidgetLobby.cpp.s:
 	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/gui/widget/WidgetLobby.cpp.s
 .PHONY : class/gui/widget/WidgetLobby.cpp.s
-
-class/gui/widget/WidgetOption.o: class/gui/widget/WidgetOption.cpp.o
-
-.PHONY : class/gui/widget/WidgetOption.o
-
-# target to build an object file
-class/gui/widget/WidgetOption.cpp.o:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/gui/widget/WidgetOption.cpp.o
-.PHONY : class/gui/widget/WidgetOption.cpp.o
-
-class/gui/widget/WidgetOption.i: class/gui/widget/WidgetOption.cpp.i
-
-.PHONY : class/gui/widget/WidgetOption.i
-
-# target to preprocess a source file
-class/gui/widget/WidgetOption.cpp.i:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/gui/widget/WidgetOption.cpp.i
-.PHONY : class/gui/widget/WidgetOption.cpp.i
-
-class/gui/widget/WidgetOption.s: class/gui/widget/WidgetOption.cpp.s
-
-.PHONY : class/gui/widget/WidgetOption.s
-
-# target to generate assembly for a file
-class/gui/widget/WidgetOption.cpp.s:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/gui/widget/WidgetOption.cpp.s
-.PHONY : class/gui/widget/WidgetOption.cpp.s
 
 class/gui/widget/WidgetSnake.o: class/gui/widget/WidgetSnake.cpp.o
 
@@ -1338,33 +1473,6 @@ class/systems/MotionSystem.cpp.s:
 	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/systems/MotionSystem.cpp.s
 .PHONY : class/systems/MotionSystem.cpp.s
 
-class/systems/RenderSystem.o: class/systems/RenderSystem.cpp.o
-
-.PHONY : class/systems/RenderSystem.o
-
-# target to build an object file
-class/systems/RenderSystem.cpp.o:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/systems/RenderSystem.cpp.o
-.PHONY : class/systems/RenderSystem.cpp.o
-
-class/systems/RenderSystem.i: class/systems/RenderSystem.cpp.i
-
-.PHONY : class/systems/RenderSystem.i
-
-# target to preprocess a source file
-class/systems/RenderSystem.cpp.i:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/systems/RenderSystem.cpp.i
-.PHONY : class/systems/RenderSystem.cpp.i
-
-class/systems/RenderSystem.s: class/systems/RenderSystem.cpp.s
-
-.PHONY : class/systems/RenderSystem.s
-
-# target to generate assembly for a file
-class/systems/RenderSystem.cpp.s:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/systems/RenderSystem.cpp.s
-.PHONY : class/systems/RenderSystem.cpp.s
-
 externlib/display_sdl/src/DisplaySdl.o: externlib/display_sdl/src/DisplaySdl.cpp.o
 
 .PHONY : externlib/display_sdl/src/DisplaySdl.o
@@ -1554,167 +1662,140 @@ externlib/sound_sfml/src/main.cpp.s:
 	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/externlib/sound_sfml/src/main.cpp.s
 .PHONY : externlib/sound_sfml/src/main.cpp.s
 
-jsoncpp/src/jsontestrunner/main.o: jsoncpp/src/jsontestrunner/main.cpp.o
+imgui-sfml/imgui-SFML.o: imgui-sfml/imgui-SFML.cpp.o
 
-.PHONY : jsoncpp/src/jsontestrunner/main.o
-
-# target to build an object file
-jsoncpp/src/jsontestrunner/main.cpp.o:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/jsoncpp/src/jsontestrunner/main.cpp.o
-.PHONY : jsoncpp/src/jsontestrunner/main.cpp.o
-
-jsoncpp/src/jsontestrunner/main.i: jsoncpp/src/jsontestrunner/main.cpp.i
-
-.PHONY : jsoncpp/src/jsontestrunner/main.i
-
-# target to preprocess a source file
-jsoncpp/src/jsontestrunner/main.cpp.i:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/jsoncpp/src/jsontestrunner/main.cpp.i
-.PHONY : jsoncpp/src/jsontestrunner/main.cpp.i
-
-jsoncpp/src/jsontestrunner/main.s: jsoncpp/src/jsontestrunner/main.cpp.s
-
-.PHONY : jsoncpp/src/jsontestrunner/main.s
-
-# target to generate assembly for a file
-jsoncpp/src/jsontestrunner/main.cpp.s:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/jsoncpp/src/jsontestrunner/main.cpp.s
-.PHONY : jsoncpp/src/jsontestrunner/main.cpp.s
-
-jsoncpp/src/lib_json/json_reader.o: jsoncpp/src/lib_json/json_reader.cpp.o
-
-.PHONY : jsoncpp/src/lib_json/json_reader.o
+.PHONY : imgui-sfml/imgui-SFML.o
 
 # target to build an object file
-jsoncpp/src/lib_json/json_reader.cpp.o:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_reader.cpp.o
-.PHONY : jsoncpp/src/lib_json/json_reader.cpp.o
+imgui-sfml/imgui-SFML.cpp.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/imgui-sfml/imgui-SFML.cpp.o
+.PHONY : imgui-sfml/imgui-SFML.cpp.o
 
-jsoncpp/src/lib_json/json_reader.i: jsoncpp/src/lib_json/json_reader.cpp.i
+imgui-sfml/imgui-SFML.i: imgui-sfml/imgui-SFML.cpp.i
 
-.PHONY : jsoncpp/src/lib_json/json_reader.i
+.PHONY : imgui-sfml/imgui-SFML.i
 
 # target to preprocess a source file
-jsoncpp/src/lib_json/json_reader.cpp.i:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_reader.cpp.i
-.PHONY : jsoncpp/src/lib_json/json_reader.cpp.i
+imgui-sfml/imgui-SFML.cpp.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/imgui-sfml/imgui-SFML.cpp.i
+.PHONY : imgui-sfml/imgui-SFML.cpp.i
 
-jsoncpp/src/lib_json/json_reader.s: jsoncpp/src/lib_json/json_reader.cpp.s
+imgui-sfml/imgui-SFML.s: imgui-sfml/imgui-SFML.cpp.s
 
-.PHONY : jsoncpp/src/lib_json/json_reader.s
+.PHONY : imgui-sfml/imgui-SFML.s
 
 # target to generate assembly for a file
-jsoncpp/src/lib_json/json_reader.cpp.s:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_reader.cpp.s
-.PHONY : jsoncpp/src/lib_json/json_reader.cpp.s
+imgui-sfml/imgui-SFML.cpp.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/imgui-sfml/imgui-SFML.cpp.s
+.PHONY : imgui-sfml/imgui-SFML.cpp.s
 
-jsoncpp/src/lib_json/json_value.o: jsoncpp/src/lib_json/json_value.cpp.o
+imgui-sfml/imgui.o: imgui-sfml/imgui.cpp.o
 
-.PHONY : jsoncpp/src/lib_json/json_value.o
+.PHONY : imgui-sfml/imgui.o
 
 # target to build an object file
-jsoncpp/src/lib_json/json_value.cpp.o:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_value.cpp.o
-.PHONY : jsoncpp/src/lib_json/json_value.cpp.o
+imgui-sfml/imgui.cpp.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/imgui-sfml/imgui.cpp.o
+.PHONY : imgui-sfml/imgui.cpp.o
 
-jsoncpp/src/lib_json/json_value.i: jsoncpp/src/lib_json/json_value.cpp.i
+imgui-sfml/imgui.i: imgui-sfml/imgui.cpp.i
 
-.PHONY : jsoncpp/src/lib_json/json_value.i
+.PHONY : imgui-sfml/imgui.i
 
 # target to preprocess a source file
-jsoncpp/src/lib_json/json_value.cpp.i:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_value.cpp.i
-.PHONY : jsoncpp/src/lib_json/json_value.cpp.i
+imgui-sfml/imgui.cpp.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/imgui-sfml/imgui.cpp.i
+.PHONY : imgui-sfml/imgui.cpp.i
 
-jsoncpp/src/lib_json/json_value.s: jsoncpp/src/lib_json/json_value.cpp.s
+imgui-sfml/imgui.s: imgui-sfml/imgui.cpp.s
 
-.PHONY : jsoncpp/src/lib_json/json_value.s
+.PHONY : imgui-sfml/imgui.s
 
 # target to generate assembly for a file
-jsoncpp/src/lib_json/json_value.cpp.s:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_value.cpp.s
-.PHONY : jsoncpp/src/lib_json/json_value.cpp.s
+imgui-sfml/imgui.cpp.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/imgui-sfml/imgui.cpp.s
+.PHONY : imgui-sfml/imgui.cpp.s
 
-jsoncpp/src/lib_json/json_writer.o: jsoncpp/src/lib_json/json_writer.cpp.o
+imgui-sfml/imgui_demo.o: imgui-sfml/imgui_demo.cpp.o
 
-.PHONY : jsoncpp/src/lib_json/json_writer.o
+.PHONY : imgui-sfml/imgui_demo.o
 
 # target to build an object file
-jsoncpp/src/lib_json/json_writer.cpp.o:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_writer.cpp.o
-.PHONY : jsoncpp/src/lib_json/json_writer.cpp.o
+imgui-sfml/imgui_demo.cpp.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/imgui-sfml/imgui_demo.cpp.o
+.PHONY : imgui-sfml/imgui_demo.cpp.o
 
-jsoncpp/src/lib_json/json_writer.i: jsoncpp/src/lib_json/json_writer.cpp.i
+imgui-sfml/imgui_demo.i: imgui-sfml/imgui_demo.cpp.i
 
-.PHONY : jsoncpp/src/lib_json/json_writer.i
+.PHONY : imgui-sfml/imgui_demo.i
 
 # target to preprocess a source file
-jsoncpp/src/lib_json/json_writer.cpp.i:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_writer.cpp.i
-.PHONY : jsoncpp/src/lib_json/json_writer.cpp.i
+imgui-sfml/imgui_demo.cpp.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/imgui-sfml/imgui_demo.cpp.i
+.PHONY : imgui-sfml/imgui_demo.cpp.i
 
-jsoncpp/src/lib_json/json_writer.s: jsoncpp/src/lib_json/json_writer.cpp.s
+imgui-sfml/imgui_demo.s: imgui-sfml/imgui_demo.cpp.s
 
-.PHONY : jsoncpp/src/lib_json/json_writer.s
+.PHONY : imgui-sfml/imgui_demo.s
 
 # target to generate assembly for a file
-jsoncpp/src/lib_json/json_writer.cpp.s:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_writer.cpp.s
-.PHONY : jsoncpp/src/lib_json/json_writer.cpp.s
+imgui-sfml/imgui_demo.cpp.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/imgui-sfml/imgui_demo.cpp.s
+.PHONY : imgui-sfml/imgui_demo.cpp.s
 
-jsoncpp/src/test_lib_json/jsontest.o: jsoncpp/src/test_lib_json/jsontest.cpp.o
+imgui-sfml/imgui_draw.o: imgui-sfml/imgui_draw.cpp.o
 
-.PHONY : jsoncpp/src/test_lib_json/jsontest.o
+.PHONY : imgui-sfml/imgui_draw.o
 
 # target to build an object file
-jsoncpp/src/test_lib_json/jsontest.cpp.o:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/jsontest.cpp.o
-.PHONY : jsoncpp/src/test_lib_json/jsontest.cpp.o
+imgui-sfml/imgui_draw.cpp.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/imgui-sfml/imgui_draw.cpp.o
+.PHONY : imgui-sfml/imgui_draw.cpp.o
 
-jsoncpp/src/test_lib_json/jsontest.i: jsoncpp/src/test_lib_json/jsontest.cpp.i
+imgui-sfml/imgui_draw.i: imgui-sfml/imgui_draw.cpp.i
 
-.PHONY : jsoncpp/src/test_lib_json/jsontest.i
+.PHONY : imgui-sfml/imgui_draw.i
 
 # target to preprocess a source file
-jsoncpp/src/test_lib_json/jsontest.cpp.i:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/jsontest.cpp.i
-.PHONY : jsoncpp/src/test_lib_json/jsontest.cpp.i
+imgui-sfml/imgui_draw.cpp.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/imgui-sfml/imgui_draw.cpp.i
+.PHONY : imgui-sfml/imgui_draw.cpp.i
 
-jsoncpp/src/test_lib_json/jsontest.s: jsoncpp/src/test_lib_json/jsontest.cpp.s
+imgui-sfml/imgui_draw.s: imgui-sfml/imgui_draw.cpp.s
 
-.PHONY : jsoncpp/src/test_lib_json/jsontest.s
+.PHONY : imgui-sfml/imgui_draw.s
 
 # target to generate assembly for a file
-jsoncpp/src/test_lib_json/jsontest.cpp.s:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/jsontest.cpp.s
-.PHONY : jsoncpp/src/test_lib_json/jsontest.cpp.s
+imgui-sfml/imgui_draw.cpp.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/imgui-sfml/imgui_draw.cpp.s
+.PHONY : imgui-sfml/imgui_draw.cpp.s
 
-jsoncpp/src/test_lib_json/main.o: jsoncpp/src/test_lib_json/main.cpp.o
+imgui-sfml/imgui_widgets.o: imgui-sfml/imgui_widgets.cpp.o
 
-.PHONY : jsoncpp/src/test_lib_json/main.o
+.PHONY : imgui-sfml/imgui_widgets.o
 
 # target to build an object file
-jsoncpp/src/test_lib_json/main.cpp.o:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/main.cpp.o
-.PHONY : jsoncpp/src/test_lib_json/main.cpp.o
+imgui-sfml/imgui_widgets.cpp.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/imgui-sfml/imgui_widgets.cpp.o
+.PHONY : imgui-sfml/imgui_widgets.cpp.o
 
-jsoncpp/src/test_lib_json/main.i: jsoncpp/src/test_lib_json/main.cpp.i
+imgui-sfml/imgui_widgets.i: imgui-sfml/imgui_widgets.cpp.i
 
-.PHONY : jsoncpp/src/test_lib_json/main.i
+.PHONY : imgui-sfml/imgui_widgets.i
 
 # target to preprocess a source file
-jsoncpp/src/test_lib_json/main.cpp.i:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/main.cpp.i
-.PHONY : jsoncpp/src/test_lib_json/main.cpp.i
+imgui-sfml/imgui_widgets.cpp.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/imgui-sfml/imgui_widgets.cpp.i
+.PHONY : imgui-sfml/imgui_widgets.cpp.i
 
-jsoncpp/src/test_lib_json/main.s: jsoncpp/src/test_lib_json/main.cpp.s
+imgui-sfml/imgui_widgets.s: imgui-sfml/imgui_widgets.cpp.s
 
-.PHONY : jsoncpp/src/test_lib_json/main.s
+.PHONY : imgui-sfml/imgui_widgets.s
 
 # target to generate assembly for a file
-jsoncpp/src/test_lib_json/main.cpp.s:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/main.cpp.s
-.PHONY : jsoncpp/src/test_lib_json/main.cpp.s
+imgui-sfml/imgui_widgets.cpp.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/imgui-sfml/imgui_widgets.cpp.s
+.PHONY : imgui-sfml/imgui_widgets.cpp.s
 
 # Help Target
 help:
@@ -1722,9 +1803,24 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
+	@echo "... install/local"
+	@echo "... install/strip"
+	@echo "... install"
+	@echo "... list_install_components"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... nibbler"
+	@echo "... sfml-system"
+	@echo "... sfml-window"
+	@echo "... sfml-network"
+	@echo "... sfml-graphics"
+	@echo "... sfml-audio"
+	@echo "... jsoncpp_lib_static"
+	@echo "... jsoncpp_lib"
+	@echo "... jsoncpp_check"
+	@echo "... jsoncpp_readerwriter_tests"
+	@echo "... jsontestrunner_exe"
+	@echo "... jsoncpp_test"
 	@echo "... class/KNU/World.o"
 	@echo "... class/KNU/World.i"
 	@echo "... class/KNU/World.s"
@@ -1773,9 +1869,6 @@ help:
 	@echo "... class/events/JoystickEvent.o"
 	@echo "... class/events/JoystickEvent.i"
 	@echo "... class/events/JoystickEvent.s"
-	@echo "... class/events/StartEvent.o"
-	@echo "... class/events/StartEvent.i"
-	@echo "... class/events/StartEvent.s"
 	@echo "... class/factory/Factory.o"
 	@echo "... class/factory/Factory.i"
 	@echo "... class/factory/Factory.s"
@@ -1797,9 +1890,6 @@ help:
 	@echo "... class/gui/widget/WidgetLobby.o"
 	@echo "... class/gui/widget/WidgetLobby.i"
 	@echo "... class/gui/widget/WidgetLobby.s"
-	@echo "... class/gui/widget/WidgetOption.o"
-	@echo "... class/gui/widget/WidgetOption.i"
-	@echo "... class/gui/widget/WidgetOption.s"
 	@echo "... class/gui/widget/WidgetSnake.o"
 	@echo "... class/gui/widget/WidgetSnake.i"
 	@echo "... class/gui/widget/WidgetSnake.s"
@@ -1860,9 +1950,6 @@ help:
 	@echo "... class/systems/MotionSystem.o"
 	@echo "... class/systems/MotionSystem.i"
 	@echo "... class/systems/MotionSystem.s"
-	@echo "... class/systems/RenderSystem.o"
-	@echo "... class/systems/RenderSystem.i"
-	@echo "... class/systems/RenderSystem.s"
 	@echo "... externlib/display_sdl/src/DisplaySdl.o"
 	@echo "... externlib/display_sdl/src/DisplaySdl.i"
 	@echo "... externlib/display_sdl/src/DisplaySdl.s"
@@ -1884,24 +1971,21 @@ help:
 	@echo "... externlib/sound_sfml/src/main.o"
 	@echo "... externlib/sound_sfml/src/main.i"
 	@echo "... externlib/sound_sfml/src/main.s"
-	@echo "... jsoncpp/src/jsontestrunner/main.o"
-	@echo "... jsoncpp/src/jsontestrunner/main.i"
-	@echo "... jsoncpp/src/jsontestrunner/main.s"
-	@echo "... jsoncpp/src/lib_json/json_reader.o"
-	@echo "... jsoncpp/src/lib_json/json_reader.i"
-	@echo "... jsoncpp/src/lib_json/json_reader.s"
-	@echo "... jsoncpp/src/lib_json/json_value.o"
-	@echo "... jsoncpp/src/lib_json/json_value.i"
-	@echo "... jsoncpp/src/lib_json/json_value.s"
-	@echo "... jsoncpp/src/lib_json/json_writer.o"
-	@echo "... jsoncpp/src/lib_json/json_writer.i"
-	@echo "... jsoncpp/src/lib_json/json_writer.s"
-	@echo "... jsoncpp/src/test_lib_json/jsontest.o"
-	@echo "... jsoncpp/src/test_lib_json/jsontest.i"
-	@echo "... jsoncpp/src/test_lib_json/jsontest.s"
-	@echo "... jsoncpp/src/test_lib_json/main.o"
-	@echo "... jsoncpp/src/test_lib_json/main.i"
-	@echo "... jsoncpp/src/test_lib_json/main.s"
+	@echo "... imgui-sfml/imgui-SFML.o"
+	@echo "... imgui-sfml/imgui-SFML.i"
+	@echo "... imgui-sfml/imgui-SFML.s"
+	@echo "... imgui-sfml/imgui.o"
+	@echo "... imgui-sfml/imgui.i"
+	@echo "... imgui-sfml/imgui.s"
+	@echo "... imgui-sfml/imgui_demo.o"
+	@echo "... imgui-sfml/imgui_demo.i"
+	@echo "... imgui-sfml/imgui_demo.s"
+	@echo "... imgui-sfml/imgui_draw.o"
+	@echo "... imgui-sfml/imgui_draw.i"
+	@echo "... imgui-sfml/imgui_draw.s"
+	@echo "... imgui-sfml/imgui_widgets.o"
+	@echo "... imgui-sfml/imgui_widgets.i"
+	@echo "... imgui-sfml/imgui_widgets.s"
 .PHONY : help
 
 

@@ -1,8 +1,12 @@
 cmake_minimum_required(VERSION 3.12)
+
+set(CMAKE_C_COMPILER "/usr/bin/gcc")
+set(CMAKE_CXX_COMPILER "/usr/bin/g++")
+
 set(NAME nibbler)
 project(${NAME})
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 14)
 
 add_executable(${NAME}
         class/component/CollisionComponent.cpp
@@ -113,11 +117,10 @@ add_executable(${NAME}
         incs/logger_utils.h
         incs/nibbler.hpp
         incs/stb_image.h
-        #jsoncpp/include/json/allocator.h jsoncpp/include/json/assertions.h jsoncpp/include/json/autolink.h jsoncpp/include/json/config.h jsoncpp/include/json/features.h jsoncpp/include/json/forwards.h jsoncpp/include/json/json.h jsoncpp/include/json/reader.h jsoncpp/include/json/value.h jsoncpp/include/json/version.h jsoncpp/include/json/writer.h jsoncpp/src/jsontestrunner/main.cpp jsoncpp/src/lib_json/json_reader.cpp jsoncpp/src/lib_json/json_tool.h jsoncpp/src/lib_json/json_value.cpp jsoncpp/src/lib_json/json_valueiterator.inl jsoncpp/src/lib_json/json_writer.cpp jsoncpp/src/test_lib_json/jsontest.cpp jsoncpp/src/test_lib_json/jsontest.h jsoncpp/src/test_lib_json/main.cpp class/systems/RenderSystem.cpp class/systems/RenderSystem.hpp class/events/StartEvent.cpp class/events/StartEvent.hpp
         )
 
 #target_compile_options(${NAME} PUBLIC -Wall -Wextra -Werror -Wvla)
-
+target_compile_options(${NAME} PUBLIC -Wunusable-partial-specialization)
 find_package(Git QUIET)
 if(GIT_FOUND AND EXISTS "${PROJECT_SOURCE_DIR}/.git")
     # Update submodules as needed
@@ -139,23 +142,46 @@ endif()
 if(NOT EXISTS "${PROJECT_SOURCE_DIR}/jsoncpp/CMakeLists.txt")
     message(FATAL_ERROR "The jsoncpp submodules were not downloaded! GIT_SUBMODULE was turned off or failed. Please update submodules and try again.")
 endif()
-if(NOT EXISTS "${PROJECT_SOURCE_DIR}/asio/CMakeLists.txt")
-    message(FATAL_ERROR "The asio submodules were not downloaded! GIT_SUBMODULE was turned off or failed. Please update submodules and try again.")
-endif()
-if(NOT EXISTS "${PROJECT_SOURCE_DIR}/thread/CMakeLists.txt")
-    message(FATAL_ERROR "The thread submodules were not downloaded! GIT_SUBMODULE was turned off or failed. Please update submodules and try again.")
-endif()
 
 add_subdirectory(SFML)
 add_subdirectory(jsoncpp)
 
-target_link_libraries(${NAME} PUBLIC sfml-graphics sfml-window sfml-system sfml-audio)
+target_link_libraries(${NAME} PUBLIC
+                sfml-graphics sfml-window sfml-system sfml-audio
+                jsoncpp
+                boost_system boost_thread-mt
+                )
 
 target_include_directories(
         ${NAME} PUBLIC
         class
         incs
         jsoncpp/include
+        SFML/include
+        boost/include
+        boost/libs/thread/include
+        boost/libs/asio/include
+        boost/libs/system/include
+        boost/libs/core/include
+        boost/libs/assert/include
+        boost/libs/static_assert/include
+        boost/libs/config/include
+        boost/libs/type_traits/include
+        boost/libs/move/include
 )
 
 
+if(WIN32)
+elseif(UNIX AND NOT APPLE)
+elseif(APPLE)
+        include_directories(/System/Library/Frameworks)
+        find_library(COCOA_LIBRARY Cocoa)
+        find_library(OpenGL_LIBRARY OpenGL)
+        find_library(IOKit_LIBRARY IOKit)
+        find_library(CoreVideo_LIBRARY CoreVideo)
+        #mark_as_advanced(COCOA_LIBRARY OpenGL_LIBRARY)
+        set(APPLE_LIBS ${COCOA_LIBRARY} ${IOKit_LIBRARY} ${OpenGL_LIBRARY} ${CoreVideo_LIBRARY})
+        set(LIBS ${LIBS} ${APPLE_LIBS})
+else()
+    set(LIBS)
+endif(WIN32)

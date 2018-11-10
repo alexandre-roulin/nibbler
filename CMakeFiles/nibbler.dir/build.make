@@ -34,10 +34,10 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake
+CMAKE_COMMAND = /Users/ntoniolo/.brew/Cellar/cmake/3.12.3/bin/cmake
 
 # The command to remove a file.
-RM = /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -E remove -f
+RM = /Users/ntoniolo/.brew/Cellar/cmake/3.12.3/bin/cmake -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
@@ -60,769 +60,717 @@ include CMakeFiles/nibbler.dir/flags.make
 CMakeFiles/nibbler.dir/class/component/CollisionComponent.cpp.o: CMakeFiles/nibbler.dir/flags.make
 CMakeFiles/nibbler.dir/class/component/CollisionComponent.cpp.o: class/component/CollisionComponent.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/nibbler.dir/class/component/CollisionComponent.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/component/CollisionComponent.cpp.o -c /Users/ntoniolo/nibbler/class/component/CollisionComponent.cpp
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/component/CollisionComponent.cpp.o -c /Users/ntoniolo/nibbler/class/component/CollisionComponent.cpp
 
 CMakeFiles/nibbler.dir/class/component/CollisionComponent.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/component/CollisionComponent.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/component/CollisionComponent.cpp > CMakeFiles/nibbler.dir/class/component/CollisionComponent.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/component/CollisionComponent.cpp > CMakeFiles/nibbler.dir/class/component/CollisionComponent.cpp.i
 
 CMakeFiles/nibbler.dir/class/component/CollisionComponent.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/component/CollisionComponent.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/component/CollisionComponent.cpp -o CMakeFiles/nibbler.dir/class/component/CollisionComponent.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/component/CollisionComponent.cpp -o CMakeFiles/nibbler.dir/class/component/CollisionComponent.cpp.s
 
 CMakeFiles/nibbler.dir/class/component/FollowComponent.cpp.o: CMakeFiles/nibbler.dir/flags.make
 CMakeFiles/nibbler.dir/class/component/FollowComponent.cpp.o: class/component/FollowComponent.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/nibbler.dir/class/component/FollowComponent.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/component/FollowComponent.cpp.o -c /Users/ntoniolo/nibbler/class/component/FollowComponent.cpp
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/component/FollowComponent.cpp.o -c /Users/ntoniolo/nibbler/class/component/FollowComponent.cpp
 
 CMakeFiles/nibbler.dir/class/component/FollowComponent.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/component/FollowComponent.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/component/FollowComponent.cpp > CMakeFiles/nibbler.dir/class/component/FollowComponent.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/component/FollowComponent.cpp > CMakeFiles/nibbler.dir/class/component/FollowComponent.cpp.i
 
 CMakeFiles/nibbler.dir/class/component/FollowComponent.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/component/FollowComponent.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/component/FollowComponent.cpp -o CMakeFiles/nibbler.dir/class/component/FollowComponent.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/component/FollowComponent.cpp -o CMakeFiles/nibbler.dir/class/component/FollowComponent.cpp.s
 
 CMakeFiles/nibbler.dir/class/component/JoystickComponent.cpp.o: CMakeFiles/nibbler.dir/flags.make
 CMakeFiles/nibbler.dir/class/component/JoystickComponent.cpp.o: class/component/JoystickComponent.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/nibbler.dir/class/component/JoystickComponent.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/component/JoystickComponent.cpp.o -c /Users/ntoniolo/nibbler/class/component/JoystickComponent.cpp
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/component/JoystickComponent.cpp.o -c /Users/ntoniolo/nibbler/class/component/JoystickComponent.cpp
 
 CMakeFiles/nibbler.dir/class/component/JoystickComponent.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/component/JoystickComponent.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/component/JoystickComponent.cpp > CMakeFiles/nibbler.dir/class/component/JoystickComponent.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/component/JoystickComponent.cpp > CMakeFiles/nibbler.dir/class/component/JoystickComponent.cpp.i
 
 CMakeFiles/nibbler.dir/class/component/JoystickComponent.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/component/JoystickComponent.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/component/JoystickComponent.cpp -o CMakeFiles/nibbler.dir/class/component/JoystickComponent.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/component/JoystickComponent.cpp -o CMakeFiles/nibbler.dir/class/component/JoystickComponent.cpp.s
 
 CMakeFiles/nibbler.dir/class/component/MotionComponent.cpp.o: CMakeFiles/nibbler.dir/flags.make
 CMakeFiles/nibbler.dir/class/component/MotionComponent.cpp.o: class/component/MotionComponent.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/nibbler.dir/class/component/MotionComponent.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/component/MotionComponent.cpp.o -c /Users/ntoniolo/nibbler/class/component/MotionComponent.cpp
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/component/MotionComponent.cpp.o -c /Users/ntoniolo/nibbler/class/component/MotionComponent.cpp
 
 CMakeFiles/nibbler.dir/class/component/MotionComponent.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/component/MotionComponent.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/component/MotionComponent.cpp > CMakeFiles/nibbler.dir/class/component/MotionComponent.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/component/MotionComponent.cpp > CMakeFiles/nibbler.dir/class/component/MotionComponent.cpp.i
 
 CMakeFiles/nibbler.dir/class/component/MotionComponent.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/component/MotionComponent.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/component/MotionComponent.cpp -o CMakeFiles/nibbler.dir/class/component/MotionComponent.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/component/MotionComponent.cpp -o CMakeFiles/nibbler.dir/class/component/MotionComponent.cpp.s
 
 CMakeFiles/nibbler.dir/class/component/PositionComponent.cpp.o: CMakeFiles/nibbler.dir/flags.make
 CMakeFiles/nibbler.dir/class/component/PositionComponent.cpp.o: class/component/PositionComponent.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/nibbler.dir/class/component/PositionComponent.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/component/PositionComponent.cpp.o -c /Users/ntoniolo/nibbler/class/component/PositionComponent.cpp
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/component/PositionComponent.cpp.o -c /Users/ntoniolo/nibbler/class/component/PositionComponent.cpp
 
 CMakeFiles/nibbler.dir/class/component/PositionComponent.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/component/PositionComponent.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/component/PositionComponent.cpp > CMakeFiles/nibbler.dir/class/component/PositionComponent.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/component/PositionComponent.cpp > CMakeFiles/nibbler.dir/class/component/PositionComponent.cpp.i
 
 CMakeFiles/nibbler.dir/class/component/PositionComponent.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/component/PositionComponent.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/component/PositionComponent.cpp -o CMakeFiles/nibbler.dir/class/component/PositionComponent.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/component/PositionComponent.cpp -o CMakeFiles/nibbler.dir/class/component/PositionComponent.cpp.s
 
 CMakeFiles/nibbler.dir/class/component/SpriteComponent.cpp.o: CMakeFiles/nibbler.dir/flags.make
 CMakeFiles/nibbler.dir/class/component/SpriteComponent.cpp.o: class/component/SpriteComponent.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/nibbler.dir/class/component/SpriteComponent.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/component/SpriteComponent.cpp.o -c /Users/ntoniolo/nibbler/class/component/SpriteComponent.cpp
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/component/SpriteComponent.cpp.o -c /Users/ntoniolo/nibbler/class/component/SpriteComponent.cpp
 
 CMakeFiles/nibbler.dir/class/component/SpriteComponent.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/component/SpriteComponent.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/component/SpriteComponent.cpp > CMakeFiles/nibbler.dir/class/component/SpriteComponent.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/component/SpriteComponent.cpp > CMakeFiles/nibbler.dir/class/component/SpriteComponent.cpp.i
 
 CMakeFiles/nibbler.dir/class/component/SpriteComponent.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/component/SpriteComponent.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/component/SpriteComponent.cpp -o CMakeFiles/nibbler.dir/class/component/SpriteComponent.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/component/SpriteComponent.cpp -o CMakeFiles/nibbler.dir/class/component/SpriteComponent.cpp.s
 
 CMakeFiles/nibbler.dir/class/cores/main.cpp.o: CMakeFiles/nibbler.dir/flags.make
 CMakeFiles/nibbler.dir/class/cores/main.cpp.o: class/cores/main.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/nibbler.dir/class/cores/main.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/cores/main.cpp.o -c /Users/ntoniolo/nibbler/class/cores/main.cpp
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/cores/main.cpp.o -c /Users/ntoniolo/nibbler/class/cores/main.cpp
 
 CMakeFiles/nibbler.dir/class/cores/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/cores/main.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/cores/main.cpp > CMakeFiles/nibbler.dir/class/cores/main.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/cores/main.cpp > CMakeFiles/nibbler.dir/class/cores/main.cpp.i
 
 CMakeFiles/nibbler.dir/class/cores/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/cores/main.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/cores/main.cpp -o CMakeFiles/nibbler.dir/class/cores/main.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/cores/main.cpp -o CMakeFiles/nibbler.dir/class/cores/main.cpp.s
 
 CMakeFiles/nibbler.dir/class/events/FoodEvent.cpp.o: CMakeFiles/nibbler.dir/flags.make
 CMakeFiles/nibbler.dir/class/events/FoodEvent.cpp.o: class/events/FoodEvent.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/nibbler.dir/class/events/FoodEvent.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/events/FoodEvent.cpp.o -c /Users/ntoniolo/nibbler/class/events/FoodEvent.cpp
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/events/FoodEvent.cpp.o -c /Users/ntoniolo/nibbler/class/events/FoodEvent.cpp
 
 CMakeFiles/nibbler.dir/class/events/FoodEvent.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/events/FoodEvent.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/events/FoodEvent.cpp > CMakeFiles/nibbler.dir/class/events/FoodEvent.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/events/FoodEvent.cpp > CMakeFiles/nibbler.dir/class/events/FoodEvent.cpp.i
 
 CMakeFiles/nibbler.dir/class/events/FoodEvent.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/events/FoodEvent.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/events/FoodEvent.cpp -o CMakeFiles/nibbler.dir/class/events/FoodEvent.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/events/FoodEvent.cpp -o CMakeFiles/nibbler.dir/class/events/FoodEvent.cpp.s
 
 CMakeFiles/nibbler.dir/class/events/JoystickEvent.cpp.o: CMakeFiles/nibbler.dir/flags.make
 CMakeFiles/nibbler.dir/class/events/JoystickEvent.cpp.o: class/events/JoystickEvent.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/nibbler.dir/class/events/JoystickEvent.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/events/JoystickEvent.cpp.o -c /Users/ntoniolo/nibbler/class/events/JoystickEvent.cpp
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/events/JoystickEvent.cpp.o -c /Users/ntoniolo/nibbler/class/events/JoystickEvent.cpp
 
 CMakeFiles/nibbler.dir/class/events/JoystickEvent.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/events/JoystickEvent.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/events/JoystickEvent.cpp > CMakeFiles/nibbler.dir/class/events/JoystickEvent.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/events/JoystickEvent.cpp > CMakeFiles/nibbler.dir/class/events/JoystickEvent.cpp.i
 
 CMakeFiles/nibbler.dir/class/events/JoystickEvent.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/events/JoystickEvent.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/events/JoystickEvent.cpp -o CMakeFiles/nibbler.dir/class/events/JoystickEvent.cpp.s
-
-CMakeFiles/nibbler.dir/class/events/StartEvent.cpp.o: CMakeFiles/nibbler.dir/flags.make
-CMakeFiles/nibbler.dir/class/events/StartEvent.cpp.o: class/events/StartEvent.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/nibbler.dir/class/events/StartEvent.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/events/StartEvent.cpp.o -c /Users/ntoniolo/nibbler/class/events/StartEvent.cpp
-
-CMakeFiles/nibbler.dir/class/events/StartEvent.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/events/StartEvent.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/events/StartEvent.cpp > CMakeFiles/nibbler.dir/class/events/StartEvent.cpp.i
-
-CMakeFiles/nibbler.dir/class/events/StartEvent.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/events/StartEvent.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/events/StartEvent.cpp -o CMakeFiles/nibbler.dir/class/events/StartEvent.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/events/JoystickEvent.cpp -o CMakeFiles/nibbler.dir/class/events/JoystickEvent.cpp.s
 
 CMakeFiles/nibbler.dir/class/factory/Factory.cpp.o: CMakeFiles/nibbler.dir/flags.make
 CMakeFiles/nibbler.dir/class/factory/Factory.cpp.o: class/factory/Factory.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/nibbler.dir/class/factory/Factory.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/factory/Factory.cpp.o -c /Users/ntoniolo/nibbler/class/factory/Factory.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/nibbler.dir/class/factory/Factory.cpp.o"
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/factory/Factory.cpp.o -c /Users/ntoniolo/nibbler/class/factory/Factory.cpp
 
 CMakeFiles/nibbler.dir/class/factory/Factory.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/factory/Factory.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/factory/Factory.cpp > CMakeFiles/nibbler.dir/class/factory/Factory.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/factory/Factory.cpp > CMakeFiles/nibbler.dir/class/factory/Factory.cpp.i
 
 CMakeFiles/nibbler.dir/class/factory/Factory.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/factory/Factory.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/factory/Factory.cpp -o CMakeFiles/nibbler.dir/class/factory/Factory.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/factory/Factory.cpp -o CMakeFiles/nibbler.dir/class/factory/Factory.cpp.s
 
 CMakeFiles/nibbler.dir/class/gui/widget/AWidget.cpp.o: CMakeFiles/nibbler.dir/flags.make
 CMakeFiles/nibbler.dir/class/gui/widget/AWidget.cpp.o: class/gui/widget/AWidget.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/nibbler.dir/class/gui/widget/AWidget.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/gui/widget/AWidget.cpp.o -c /Users/ntoniolo/nibbler/class/gui/widget/AWidget.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/nibbler.dir/class/gui/widget/AWidget.cpp.o"
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/gui/widget/AWidget.cpp.o -c /Users/ntoniolo/nibbler/class/gui/widget/AWidget.cpp
 
 CMakeFiles/nibbler.dir/class/gui/widget/AWidget.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/gui/widget/AWidget.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/gui/widget/AWidget.cpp > CMakeFiles/nibbler.dir/class/gui/widget/AWidget.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/gui/widget/AWidget.cpp > CMakeFiles/nibbler.dir/class/gui/widget/AWidget.cpp.i
 
 CMakeFiles/nibbler.dir/class/gui/widget/AWidget.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/gui/widget/AWidget.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/gui/widget/AWidget.cpp -o CMakeFiles/nibbler.dir/class/gui/widget/AWidget.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/gui/widget/AWidget.cpp -o CMakeFiles/nibbler.dir/class/gui/widget/AWidget.cpp.s
 
 CMakeFiles/nibbler.dir/class/gui/widget/WidgetChat.cpp.o: CMakeFiles/nibbler.dir/flags.make
 CMakeFiles/nibbler.dir/class/gui/widget/WidgetChat.cpp.o: class/gui/widget/WidgetChat.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/nibbler.dir/class/gui/widget/WidgetChat.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/gui/widget/WidgetChat.cpp.o -c /Users/ntoniolo/nibbler/class/gui/widget/WidgetChat.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/nibbler.dir/class/gui/widget/WidgetChat.cpp.o"
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/gui/widget/WidgetChat.cpp.o -c /Users/ntoniolo/nibbler/class/gui/widget/WidgetChat.cpp
 
 CMakeFiles/nibbler.dir/class/gui/widget/WidgetChat.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/gui/widget/WidgetChat.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/gui/widget/WidgetChat.cpp > CMakeFiles/nibbler.dir/class/gui/widget/WidgetChat.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/gui/widget/WidgetChat.cpp > CMakeFiles/nibbler.dir/class/gui/widget/WidgetChat.cpp.i
 
 CMakeFiles/nibbler.dir/class/gui/widget/WidgetChat.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/gui/widget/WidgetChat.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/gui/widget/WidgetChat.cpp -o CMakeFiles/nibbler.dir/class/gui/widget/WidgetChat.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/gui/widget/WidgetChat.cpp -o CMakeFiles/nibbler.dir/class/gui/widget/WidgetChat.cpp.s
 
 CMakeFiles/nibbler.dir/class/gui/widget/WidgetExit.cpp.o: CMakeFiles/nibbler.dir/flags.make
 CMakeFiles/nibbler.dir/class/gui/widget/WidgetExit.cpp.o: class/gui/widget/WidgetExit.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/nibbler.dir/class/gui/widget/WidgetExit.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/gui/widget/WidgetExit.cpp.o -c /Users/ntoniolo/nibbler/class/gui/widget/WidgetExit.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/nibbler.dir/class/gui/widget/WidgetExit.cpp.o"
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/gui/widget/WidgetExit.cpp.o -c /Users/ntoniolo/nibbler/class/gui/widget/WidgetExit.cpp
 
 CMakeFiles/nibbler.dir/class/gui/widget/WidgetExit.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/gui/widget/WidgetExit.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/gui/widget/WidgetExit.cpp > CMakeFiles/nibbler.dir/class/gui/widget/WidgetExit.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/gui/widget/WidgetExit.cpp > CMakeFiles/nibbler.dir/class/gui/widget/WidgetExit.cpp.i
 
 CMakeFiles/nibbler.dir/class/gui/widget/WidgetExit.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/gui/widget/WidgetExit.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/gui/widget/WidgetExit.cpp -o CMakeFiles/nibbler.dir/class/gui/widget/WidgetExit.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/gui/widget/WidgetExit.cpp -o CMakeFiles/nibbler.dir/class/gui/widget/WidgetExit.cpp.s
 
 CMakeFiles/nibbler.dir/class/gui/widget/WidgetLobby.cpp.o: CMakeFiles/nibbler.dir/flags.make
 CMakeFiles/nibbler.dir/class/gui/widget/WidgetLobby.cpp.o: class/gui/widget/WidgetLobby.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/nibbler.dir/class/gui/widget/WidgetLobby.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/gui/widget/WidgetLobby.cpp.o -c /Users/ntoniolo/nibbler/class/gui/widget/WidgetLobby.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/nibbler.dir/class/gui/widget/WidgetLobby.cpp.o"
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/gui/widget/WidgetLobby.cpp.o -c /Users/ntoniolo/nibbler/class/gui/widget/WidgetLobby.cpp
 
 CMakeFiles/nibbler.dir/class/gui/widget/WidgetLobby.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/gui/widget/WidgetLobby.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/gui/widget/WidgetLobby.cpp > CMakeFiles/nibbler.dir/class/gui/widget/WidgetLobby.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/gui/widget/WidgetLobby.cpp > CMakeFiles/nibbler.dir/class/gui/widget/WidgetLobby.cpp.i
 
 CMakeFiles/nibbler.dir/class/gui/widget/WidgetLobby.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/gui/widget/WidgetLobby.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/gui/widget/WidgetLobby.cpp -o CMakeFiles/nibbler.dir/class/gui/widget/WidgetLobby.cpp.s
-
-CMakeFiles/nibbler.dir/class/gui/widget/WidgetOption.cpp.o: CMakeFiles/nibbler.dir/flags.make
-CMakeFiles/nibbler.dir/class/gui/widget/WidgetOption.cpp.o: class/gui/widget/WidgetOption.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/nibbler.dir/class/gui/widget/WidgetOption.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/gui/widget/WidgetOption.cpp.o -c /Users/ntoniolo/nibbler/class/gui/widget/WidgetOption.cpp
-
-CMakeFiles/nibbler.dir/class/gui/widget/WidgetOption.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/gui/widget/WidgetOption.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/gui/widget/WidgetOption.cpp > CMakeFiles/nibbler.dir/class/gui/widget/WidgetOption.cpp.i
-
-CMakeFiles/nibbler.dir/class/gui/widget/WidgetOption.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/gui/widget/WidgetOption.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/gui/widget/WidgetOption.cpp -o CMakeFiles/nibbler.dir/class/gui/widget/WidgetOption.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/gui/widget/WidgetLobby.cpp -o CMakeFiles/nibbler.dir/class/gui/widget/WidgetLobby.cpp.s
 
 CMakeFiles/nibbler.dir/class/gui/widget/WidgetSnake.cpp.o: CMakeFiles/nibbler.dir/flags.make
 CMakeFiles/nibbler.dir/class/gui/widget/WidgetSnake.cpp.o: class/gui/widget/WidgetSnake.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/nibbler.dir/class/gui/widget/WidgetSnake.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/gui/widget/WidgetSnake.cpp.o -c /Users/ntoniolo/nibbler/class/gui/widget/WidgetSnake.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/nibbler.dir/class/gui/widget/WidgetSnake.cpp.o"
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/gui/widget/WidgetSnake.cpp.o -c /Users/ntoniolo/nibbler/class/gui/widget/WidgetSnake.cpp
 
 CMakeFiles/nibbler.dir/class/gui/widget/WidgetSnake.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/gui/widget/WidgetSnake.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/gui/widget/WidgetSnake.cpp > CMakeFiles/nibbler.dir/class/gui/widget/WidgetSnake.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/gui/widget/WidgetSnake.cpp > CMakeFiles/nibbler.dir/class/gui/widget/WidgetSnake.cpp.i
 
 CMakeFiles/nibbler.dir/class/gui/widget/WidgetSnake.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/gui/widget/WidgetSnake.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/gui/widget/WidgetSnake.cpp -o CMakeFiles/nibbler.dir/class/gui/widget/WidgetSnake.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/gui/widget/WidgetSnake.cpp -o CMakeFiles/nibbler.dir/class/gui/widget/WidgetSnake.cpp.s
 
 CMakeFiles/nibbler.dir/class/gui/Core.cpp.o: CMakeFiles/nibbler.dir/flags.make
 CMakeFiles/nibbler.dir/class/gui/Core.cpp.o: class/gui/Core.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/nibbler.dir/class/gui/Core.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/gui/Core.cpp.o -c /Users/ntoniolo/nibbler/class/gui/Core.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/nibbler.dir/class/gui/Core.cpp.o"
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/gui/Core.cpp.o -c /Users/ntoniolo/nibbler/class/gui/Core.cpp
 
 CMakeFiles/nibbler.dir/class/gui/Core.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/gui/Core.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/gui/Core.cpp > CMakeFiles/nibbler.dir/class/gui/Core.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/gui/Core.cpp > CMakeFiles/nibbler.dir/class/gui/Core.cpp.i
 
 CMakeFiles/nibbler.dir/class/gui/Core.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/gui/Core.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/gui/Core.cpp -o CMakeFiles/nibbler.dir/class/gui/Core.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/gui/Core.cpp -o CMakeFiles/nibbler.dir/class/gui/Core.cpp.s
 
 CMakeFiles/nibbler.dir/class/gui/imgui_demo.cpp.o: CMakeFiles/nibbler.dir/flags.make
 CMakeFiles/nibbler.dir/class/gui/imgui_demo.cpp.o: class/gui/imgui_demo.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object CMakeFiles/nibbler.dir/class/gui/imgui_demo.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/gui/imgui_demo.cpp.o -c /Users/ntoniolo/nibbler/class/gui/imgui_demo.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/nibbler.dir/class/gui/imgui_demo.cpp.o"
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/gui/imgui_demo.cpp.o -c /Users/ntoniolo/nibbler/class/gui/imgui_demo.cpp
 
 CMakeFiles/nibbler.dir/class/gui/imgui_demo.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/gui/imgui_demo.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/gui/imgui_demo.cpp > CMakeFiles/nibbler.dir/class/gui/imgui_demo.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/gui/imgui_demo.cpp > CMakeFiles/nibbler.dir/class/gui/imgui_demo.cpp.i
 
 CMakeFiles/nibbler.dir/class/gui/imgui_demo.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/gui/imgui_demo.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/gui/imgui_demo.cpp -o CMakeFiles/nibbler.dir/class/gui/imgui_demo.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/gui/imgui_demo.cpp -o CMakeFiles/nibbler.dir/class/gui/imgui_demo.cpp.s
 
 CMakeFiles/nibbler.dir/class/KNU/component/Component.cpp.o: CMakeFiles/nibbler.dir/flags.make
 CMakeFiles/nibbler.dir/class/KNU/component/Component.cpp.o: class/KNU/component/Component.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building CXX object CMakeFiles/nibbler.dir/class/KNU/component/Component.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/KNU/component/Component.cpp.o -c /Users/ntoniolo/nibbler/class/KNU/component/Component.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/nibbler.dir/class/KNU/component/Component.cpp.o"
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/KNU/component/Component.cpp.o -c /Users/ntoniolo/nibbler/class/KNU/component/Component.cpp
 
 CMakeFiles/nibbler.dir/class/KNU/component/Component.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/KNU/component/Component.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/KNU/component/Component.cpp > CMakeFiles/nibbler.dir/class/KNU/component/Component.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/KNU/component/Component.cpp > CMakeFiles/nibbler.dir/class/KNU/component/Component.cpp.i
 
 CMakeFiles/nibbler.dir/class/KNU/component/Component.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/KNU/component/Component.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/KNU/component/Component.cpp -o CMakeFiles/nibbler.dir/class/KNU/component/Component.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/KNU/component/Component.cpp -o CMakeFiles/nibbler.dir/class/KNU/component/Component.cpp.s
 
 CMakeFiles/nibbler.dir/class/KNU/entities/Entity.cpp.o: CMakeFiles/nibbler.dir/flags.make
 CMakeFiles/nibbler.dir/class/KNU/entities/Entity.cpp.o: class/KNU/entities/Entity.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building CXX object CMakeFiles/nibbler.dir/class/KNU/entities/Entity.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/KNU/entities/Entity.cpp.o -c /Users/ntoniolo/nibbler/class/KNU/entities/Entity.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object CMakeFiles/nibbler.dir/class/KNU/entities/Entity.cpp.o"
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/KNU/entities/Entity.cpp.o -c /Users/ntoniolo/nibbler/class/KNU/entities/Entity.cpp
 
 CMakeFiles/nibbler.dir/class/KNU/entities/Entity.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/KNU/entities/Entity.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/KNU/entities/Entity.cpp > CMakeFiles/nibbler.dir/class/KNU/entities/Entity.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/KNU/entities/Entity.cpp > CMakeFiles/nibbler.dir/class/KNU/entities/Entity.cpp.i
 
 CMakeFiles/nibbler.dir/class/KNU/entities/Entity.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/KNU/entities/Entity.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/KNU/entities/Entity.cpp -o CMakeFiles/nibbler.dir/class/KNU/entities/Entity.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/KNU/entities/Entity.cpp -o CMakeFiles/nibbler.dir/class/KNU/entities/Entity.cpp.s
 
 CMakeFiles/nibbler.dir/class/KNU/events/EventManager.cpp.o: CMakeFiles/nibbler.dir/flags.make
 CMakeFiles/nibbler.dir/class/KNU/events/EventManager.cpp.o: class/KNU/events/EventManager.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building CXX object CMakeFiles/nibbler.dir/class/KNU/events/EventManager.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/KNU/events/EventManager.cpp.o -c /Users/ntoniolo/nibbler/class/KNU/events/EventManager.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building CXX object CMakeFiles/nibbler.dir/class/KNU/events/EventManager.cpp.o"
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/KNU/events/EventManager.cpp.o -c /Users/ntoniolo/nibbler/class/KNU/events/EventManager.cpp
 
 CMakeFiles/nibbler.dir/class/KNU/events/EventManager.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/KNU/events/EventManager.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/KNU/events/EventManager.cpp > CMakeFiles/nibbler.dir/class/KNU/events/EventManager.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/KNU/events/EventManager.cpp > CMakeFiles/nibbler.dir/class/KNU/events/EventManager.cpp.i
 
 CMakeFiles/nibbler.dir/class/KNU/events/EventManager.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/KNU/events/EventManager.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/KNU/events/EventManager.cpp -o CMakeFiles/nibbler.dir/class/KNU/events/EventManager.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/KNU/events/EventManager.cpp -o CMakeFiles/nibbler.dir/class/KNU/events/EventManager.cpp.s
 
 CMakeFiles/nibbler.dir/class/KNU/systems/System.cpp.o: CMakeFiles/nibbler.dir/flags.make
 CMakeFiles/nibbler.dir/class/KNU/systems/System.cpp.o: class/KNU/systems/System.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Building CXX object CMakeFiles/nibbler.dir/class/KNU/systems/System.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/KNU/systems/System.cpp.o -c /Users/ntoniolo/nibbler/class/KNU/systems/System.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building CXX object CMakeFiles/nibbler.dir/class/KNU/systems/System.cpp.o"
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/KNU/systems/System.cpp.o -c /Users/ntoniolo/nibbler/class/KNU/systems/System.cpp
 
 CMakeFiles/nibbler.dir/class/KNU/systems/System.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/KNU/systems/System.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/KNU/systems/System.cpp > CMakeFiles/nibbler.dir/class/KNU/systems/System.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/KNU/systems/System.cpp > CMakeFiles/nibbler.dir/class/KNU/systems/System.cpp.i
 
 CMakeFiles/nibbler.dir/class/KNU/systems/System.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/KNU/systems/System.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/KNU/systems/System.cpp -o CMakeFiles/nibbler.dir/class/KNU/systems/System.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/KNU/systems/System.cpp -o CMakeFiles/nibbler.dir/class/KNU/systems/System.cpp.s
 
 CMakeFiles/nibbler.dir/class/KNU/utils/Signature.cpp.o: CMakeFiles/nibbler.dir/flags.make
 CMakeFiles/nibbler.dir/class/KNU/utils/Signature.cpp.o: class/KNU/utils/Signature.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building CXX object CMakeFiles/nibbler.dir/class/KNU/utils/Signature.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/KNU/utils/Signature.cpp.o -c /Users/ntoniolo/nibbler/class/KNU/utils/Signature.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building CXX object CMakeFiles/nibbler.dir/class/KNU/utils/Signature.cpp.o"
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/KNU/utils/Signature.cpp.o -c /Users/ntoniolo/nibbler/class/KNU/utils/Signature.cpp
 
 CMakeFiles/nibbler.dir/class/KNU/utils/Signature.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/KNU/utils/Signature.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/KNU/utils/Signature.cpp > CMakeFiles/nibbler.dir/class/KNU/utils/Signature.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/KNU/utils/Signature.cpp > CMakeFiles/nibbler.dir/class/KNU/utils/Signature.cpp.i
 
 CMakeFiles/nibbler.dir/class/KNU/utils/Signature.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/KNU/utils/Signature.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/KNU/utils/Signature.cpp -o CMakeFiles/nibbler.dir/class/KNU/utils/Signature.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/KNU/utils/Signature.cpp -o CMakeFiles/nibbler.dir/class/KNU/utils/Signature.cpp.s
 
 CMakeFiles/nibbler.dir/class/KNU/World.cpp.o: CMakeFiles/nibbler.dir/flags.make
 CMakeFiles/nibbler.dir/class/KNU/World.cpp.o: class/KNU/World.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Building CXX object CMakeFiles/nibbler.dir/class/KNU/World.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/KNU/World.cpp.o -c /Users/ntoniolo/nibbler/class/KNU/World.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Building CXX object CMakeFiles/nibbler.dir/class/KNU/World.cpp.o"
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/KNU/World.cpp.o -c /Users/ntoniolo/nibbler/class/KNU/World.cpp
 
 CMakeFiles/nibbler.dir/class/KNU/World.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/KNU/World.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/KNU/World.cpp > CMakeFiles/nibbler.dir/class/KNU/World.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/KNU/World.cpp > CMakeFiles/nibbler.dir/class/KNU/World.cpp.i
 
 CMakeFiles/nibbler.dir/class/KNU/World.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/KNU/World.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/KNU/World.cpp -o CMakeFiles/nibbler.dir/class/KNU/World.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/KNU/World.cpp -o CMakeFiles/nibbler.dir/class/KNU/World.cpp.s
 
 CMakeFiles/nibbler.dir/class/logger/display/logger_debug.cpp.o: CMakeFiles/nibbler.dir/flags.make
 CMakeFiles/nibbler.dir/class/logger/display/logger_debug.cpp.o: class/logger/display/logger_debug.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_26) "Building CXX object CMakeFiles/nibbler.dir/class/logger/display/logger_debug.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/logger/display/logger_debug.cpp.o -c /Users/ntoniolo/nibbler/class/logger/display/logger_debug.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building CXX object CMakeFiles/nibbler.dir/class/logger/display/logger_debug.cpp.o"
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/logger/display/logger_debug.cpp.o -c /Users/ntoniolo/nibbler/class/logger/display/logger_debug.cpp
 
 CMakeFiles/nibbler.dir/class/logger/display/logger_debug.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/logger/display/logger_debug.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/logger/display/logger_debug.cpp > CMakeFiles/nibbler.dir/class/logger/display/logger_debug.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/logger/display/logger_debug.cpp > CMakeFiles/nibbler.dir/class/logger/display/logger_debug.cpp.i
 
 CMakeFiles/nibbler.dir/class/logger/display/logger_debug.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/logger/display/logger_debug.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/logger/display/logger_debug.cpp -o CMakeFiles/nibbler.dir/class/logger/display/logger_debug.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/logger/display/logger_debug.cpp -o CMakeFiles/nibbler.dir/class/logger/display/logger_debug.cpp.s
 
 CMakeFiles/nibbler.dir/class/logger/display/logger_error.cpp.o: CMakeFiles/nibbler.dir/flags.make
 CMakeFiles/nibbler.dir/class/logger/display/logger_error.cpp.o: class/logger/display/logger_error.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_27) "Building CXX object CMakeFiles/nibbler.dir/class/logger/display/logger_error.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/logger/display/logger_error.cpp.o -c /Users/ntoniolo/nibbler/class/logger/display/logger_error.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Building CXX object CMakeFiles/nibbler.dir/class/logger/display/logger_error.cpp.o"
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/logger/display/logger_error.cpp.o -c /Users/ntoniolo/nibbler/class/logger/display/logger_error.cpp
 
 CMakeFiles/nibbler.dir/class/logger/display/logger_error.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/logger/display/logger_error.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/logger/display/logger_error.cpp > CMakeFiles/nibbler.dir/class/logger/display/logger_error.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/logger/display/logger_error.cpp > CMakeFiles/nibbler.dir/class/logger/display/logger_error.cpp.i
 
 CMakeFiles/nibbler.dir/class/logger/display/logger_error.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/logger/display/logger_error.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/logger/display/logger_error.cpp -o CMakeFiles/nibbler.dir/class/logger/display/logger_error.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/logger/display/logger_error.cpp -o CMakeFiles/nibbler.dir/class/logger/display/logger_error.cpp.s
 
 CMakeFiles/nibbler.dir/class/logger/display/logger_fatal.cpp.o: CMakeFiles/nibbler.dir/flags.make
 CMakeFiles/nibbler.dir/class/logger/display/logger_fatal.cpp.o: class/logger/display/logger_fatal.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_28) "Building CXX object CMakeFiles/nibbler.dir/class/logger/display/logger_fatal.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/logger/display/logger_fatal.cpp.o -c /Users/ntoniolo/nibbler/class/logger/display/logger_fatal.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_26) "Building CXX object CMakeFiles/nibbler.dir/class/logger/display/logger_fatal.cpp.o"
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/logger/display/logger_fatal.cpp.o -c /Users/ntoniolo/nibbler/class/logger/display/logger_fatal.cpp
 
 CMakeFiles/nibbler.dir/class/logger/display/logger_fatal.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/logger/display/logger_fatal.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/logger/display/logger_fatal.cpp > CMakeFiles/nibbler.dir/class/logger/display/logger_fatal.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/logger/display/logger_fatal.cpp > CMakeFiles/nibbler.dir/class/logger/display/logger_fatal.cpp.i
 
 CMakeFiles/nibbler.dir/class/logger/display/logger_fatal.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/logger/display/logger_fatal.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/logger/display/logger_fatal.cpp -o CMakeFiles/nibbler.dir/class/logger/display/logger_fatal.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/logger/display/logger_fatal.cpp -o CMakeFiles/nibbler.dir/class/logger/display/logger_fatal.cpp.s
 
 CMakeFiles/nibbler.dir/class/logger/display/logger_info.cpp.o: CMakeFiles/nibbler.dir/flags.make
 CMakeFiles/nibbler.dir/class/logger/display/logger_info.cpp.o: class/logger/display/logger_info.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_29) "Building CXX object CMakeFiles/nibbler.dir/class/logger/display/logger_info.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/logger/display/logger_info.cpp.o -c /Users/ntoniolo/nibbler/class/logger/display/logger_info.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_27) "Building CXX object CMakeFiles/nibbler.dir/class/logger/display/logger_info.cpp.o"
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/logger/display/logger_info.cpp.o -c /Users/ntoniolo/nibbler/class/logger/display/logger_info.cpp
 
 CMakeFiles/nibbler.dir/class/logger/display/logger_info.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/logger/display/logger_info.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/logger/display/logger_info.cpp > CMakeFiles/nibbler.dir/class/logger/display/logger_info.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/logger/display/logger_info.cpp > CMakeFiles/nibbler.dir/class/logger/display/logger_info.cpp.i
 
 CMakeFiles/nibbler.dir/class/logger/display/logger_info.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/logger/display/logger_info.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/logger/display/logger_info.cpp -o CMakeFiles/nibbler.dir/class/logger/display/logger_info.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/logger/display/logger_info.cpp -o CMakeFiles/nibbler.dir/class/logger/display/logger_info.cpp.s
 
 CMakeFiles/nibbler.dir/class/logger/display/logger_success.cpp.o: CMakeFiles/nibbler.dir/flags.make
 CMakeFiles/nibbler.dir/class/logger/display/logger_success.cpp.o: class/logger/display/logger_success.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_30) "Building CXX object CMakeFiles/nibbler.dir/class/logger/display/logger_success.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/logger/display/logger_success.cpp.o -c /Users/ntoniolo/nibbler/class/logger/display/logger_success.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_28) "Building CXX object CMakeFiles/nibbler.dir/class/logger/display/logger_success.cpp.o"
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/logger/display/logger_success.cpp.o -c /Users/ntoniolo/nibbler/class/logger/display/logger_success.cpp
 
 CMakeFiles/nibbler.dir/class/logger/display/logger_success.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/logger/display/logger_success.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/logger/display/logger_success.cpp > CMakeFiles/nibbler.dir/class/logger/display/logger_success.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/logger/display/logger_success.cpp > CMakeFiles/nibbler.dir/class/logger/display/logger_success.cpp.i
 
 CMakeFiles/nibbler.dir/class/logger/display/logger_success.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/logger/display/logger_success.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/logger/display/logger_success.cpp -o CMakeFiles/nibbler.dir/class/logger/display/logger_success.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/logger/display/logger_success.cpp -o CMakeFiles/nibbler.dir/class/logger/display/logger_success.cpp.s
 
 CMakeFiles/nibbler.dir/class/logger/display/logger_trace.cpp.o: CMakeFiles/nibbler.dir/flags.make
 CMakeFiles/nibbler.dir/class/logger/display/logger_trace.cpp.o: class/logger/display/logger_trace.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_31) "Building CXX object CMakeFiles/nibbler.dir/class/logger/display/logger_trace.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/logger/display/logger_trace.cpp.o -c /Users/ntoniolo/nibbler/class/logger/display/logger_trace.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_29) "Building CXX object CMakeFiles/nibbler.dir/class/logger/display/logger_trace.cpp.o"
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/logger/display/logger_trace.cpp.o -c /Users/ntoniolo/nibbler/class/logger/display/logger_trace.cpp
 
 CMakeFiles/nibbler.dir/class/logger/display/logger_trace.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/logger/display/logger_trace.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/logger/display/logger_trace.cpp > CMakeFiles/nibbler.dir/class/logger/display/logger_trace.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/logger/display/logger_trace.cpp > CMakeFiles/nibbler.dir/class/logger/display/logger_trace.cpp.i
 
 CMakeFiles/nibbler.dir/class/logger/display/logger_trace.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/logger/display/logger_trace.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/logger/display/logger_trace.cpp -o CMakeFiles/nibbler.dir/class/logger/display/logger_trace.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/logger/display/logger_trace.cpp -o CMakeFiles/nibbler.dir/class/logger/display/logger_trace.cpp.s
 
 CMakeFiles/nibbler.dir/class/logger/display/logger_warn.cpp.o: CMakeFiles/nibbler.dir/flags.make
 CMakeFiles/nibbler.dir/class/logger/display/logger_warn.cpp.o: class/logger/display/logger_warn.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_32) "Building CXX object CMakeFiles/nibbler.dir/class/logger/display/logger_warn.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/logger/display/logger_warn.cpp.o -c /Users/ntoniolo/nibbler/class/logger/display/logger_warn.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_30) "Building CXX object CMakeFiles/nibbler.dir/class/logger/display/logger_warn.cpp.o"
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/logger/display/logger_warn.cpp.o -c /Users/ntoniolo/nibbler/class/logger/display/logger_warn.cpp
 
 CMakeFiles/nibbler.dir/class/logger/display/logger_warn.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/logger/display/logger_warn.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/logger/display/logger_warn.cpp > CMakeFiles/nibbler.dir/class/logger/display/logger_warn.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/logger/display/logger_warn.cpp > CMakeFiles/nibbler.dir/class/logger/display/logger_warn.cpp.i
 
 CMakeFiles/nibbler.dir/class/logger/display/logger_warn.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/logger/display/logger_warn.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/logger/display/logger_warn.cpp -o CMakeFiles/nibbler.dir/class/logger/display/logger_warn.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/logger/display/logger_warn.cpp -o CMakeFiles/nibbler.dir/class/logger/display/logger_warn.cpp.s
 
 CMakeFiles/nibbler.dir/class/logger/logger/logger_init.cpp.o: CMakeFiles/nibbler.dir/flags.make
 CMakeFiles/nibbler.dir/class/logger/logger/logger_init.cpp.o: class/logger/logger/logger_init.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_33) "Building CXX object CMakeFiles/nibbler.dir/class/logger/logger/logger_init.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/logger/logger/logger_init.cpp.o -c /Users/ntoniolo/nibbler/class/logger/logger/logger_init.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_31) "Building CXX object CMakeFiles/nibbler.dir/class/logger/logger/logger_init.cpp.o"
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/logger/logger/logger_init.cpp.o -c /Users/ntoniolo/nibbler/class/logger/logger/logger_init.cpp
 
 CMakeFiles/nibbler.dir/class/logger/logger/logger_init.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/logger/logger/logger_init.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/logger/logger/logger_init.cpp > CMakeFiles/nibbler.dir/class/logger/logger/logger_init.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/logger/logger/logger_init.cpp > CMakeFiles/nibbler.dir/class/logger/logger/logger_init.cpp.i
 
 CMakeFiles/nibbler.dir/class/logger/logger/logger_init.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/logger/logger/logger_init.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/logger/logger/logger_init.cpp -o CMakeFiles/nibbler.dir/class/logger/logger/logger_init.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/logger/logger/logger_init.cpp -o CMakeFiles/nibbler.dir/class/logger/logger/logger_init.cpp.s
 
 CMakeFiles/nibbler.dir/class/logger/utils/logger_get_time.cpp.o: CMakeFiles/nibbler.dir/flags.make
 CMakeFiles/nibbler.dir/class/logger/utils/logger_get_time.cpp.o: class/logger/utils/logger_get_time.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_34) "Building CXX object CMakeFiles/nibbler.dir/class/logger/utils/logger_get_time.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/logger/utils/logger_get_time.cpp.o -c /Users/ntoniolo/nibbler/class/logger/utils/logger_get_time.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_32) "Building CXX object CMakeFiles/nibbler.dir/class/logger/utils/logger_get_time.cpp.o"
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/logger/utils/logger_get_time.cpp.o -c /Users/ntoniolo/nibbler/class/logger/utils/logger_get_time.cpp
 
 CMakeFiles/nibbler.dir/class/logger/utils/logger_get_time.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/logger/utils/logger_get_time.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/logger/utils/logger_get_time.cpp > CMakeFiles/nibbler.dir/class/logger/utils/logger_get_time.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/logger/utils/logger_get_time.cpp > CMakeFiles/nibbler.dir/class/logger/utils/logger_get_time.cpp.i
 
 CMakeFiles/nibbler.dir/class/logger/utils/logger_get_time.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/logger/utils/logger_get_time.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/logger/utils/logger_get_time.cpp -o CMakeFiles/nibbler.dir/class/logger/utils/logger_get_time.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/logger/utils/logger_get_time.cpp -o CMakeFiles/nibbler.dir/class/logger/utils/logger_get_time.cpp.s
 
 CMakeFiles/nibbler.dir/class/logger/utils/logger_init_open_file.cpp.o: CMakeFiles/nibbler.dir/flags.make
 CMakeFiles/nibbler.dir/class/logger/utils/logger_init_open_file.cpp.o: class/logger/utils/logger_init_open_file.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_35) "Building CXX object CMakeFiles/nibbler.dir/class/logger/utils/logger_init_open_file.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/logger/utils/logger_init_open_file.cpp.o -c /Users/ntoniolo/nibbler/class/logger/utils/logger_init_open_file.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_33) "Building CXX object CMakeFiles/nibbler.dir/class/logger/utils/logger_init_open_file.cpp.o"
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/logger/utils/logger_init_open_file.cpp.o -c /Users/ntoniolo/nibbler/class/logger/utils/logger_init_open_file.cpp
 
 CMakeFiles/nibbler.dir/class/logger/utils/logger_init_open_file.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/logger/utils/logger_init_open_file.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/logger/utils/logger_init_open_file.cpp > CMakeFiles/nibbler.dir/class/logger/utils/logger_init_open_file.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/logger/utils/logger_init_open_file.cpp > CMakeFiles/nibbler.dir/class/logger/utils/logger_init_open_file.cpp.i
 
 CMakeFiles/nibbler.dir/class/logger/utils/logger_init_open_file.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/logger/utils/logger_init_open_file.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/logger/utils/logger_init_open_file.cpp -o CMakeFiles/nibbler.dir/class/logger/utils/logger_init_open_file.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/logger/utils/logger_init_open_file.cpp -o CMakeFiles/nibbler.dir/class/logger/utils/logger_init_open_file.cpp.s
 
 CMakeFiles/nibbler.dir/class/network/ClientTCP.cpp.o: CMakeFiles/nibbler.dir/flags.make
 CMakeFiles/nibbler.dir/class/network/ClientTCP.cpp.o: class/network/ClientTCP.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_36) "Building CXX object CMakeFiles/nibbler.dir/class/network/ClientTCP.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/network/ClientTCP.cpp.o -c /Users/ntoniolo/nibbler/class/network/ClientTCP.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_34) "Building CXX object CMakeFiles/nibbler.dir/class/network/ClientTCP.cpp.o"
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/network/ClientTCP.cpp.o -c /Users/ntoniolo/nibbler/class/network/ClientTCP.cpp
 
 CMakeFiles/nibbler.dir/class/network/ClientTCP.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/network/ClientTCP.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/network/ClientTCP.cpp > CMakeFiles/nibbler.dir/class/network/ClientTCP.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/network/ClientTCP.cpp > CMakeFiles/nibbler.dir/class/network/ClientTCP.cpp.i
 
 CMakeFiles/nibbler.dir/class/network/ClientTCP.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/network/ClientTCP.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/network/ClientTCP.cpp -o CMakeFiles/nibbler.dir/class/network/ClientTCP.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/network/ClientTCP.cpp -o CMakeFiles/nibbler.dir/class/network/ClientTCP.cpp.s
 
 CMakeFiles/nibbler.dir/class/network/Network.cpp.o: CMakeFiles/nibbler.dir/flags.make
 CMakeFiles/nibbler.dir/class/network/Network.cpp.o: class/network/Network.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_37) "Building CXX object CMakeFiles/nibbler.dir/class/network/Network.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/network/Network.cpp.o -c /Users/ntoniolo/nibbler/class/network/Network.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_35) "Building CXX object CMakeFiles/nibbler.dir/class/network/Network.cpp.o"
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/network/Network.cpp.o -c /Users/ntoniolo/nibbler/class/network/Network.cpp
 
 CMakeFiles/nibbler.dir/class/network/Network.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/network/Network.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/network/Network.cpp > CMakeFiles/nibbler.dir/class/network/Network.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/network/Network.cpp > CMakeFiles/nibbler.dir/class/network/Network.cpp.i
 
 CMakeFiles/nibbler.dir/class/network/Network.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/network/Network.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/network/Network.cpp -o CMakeFiles/nibbler.dir/class/network/Network.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/network/Network.cpp -o CMakeFiles/nibbler.dir/class/network/Network.cpp.s
 
 CMakeFiles/nibbler.dir/class/network/ServerTCP.cpp.o: CMakeFiles/nibbler.dir/flags.make
 CMakeFiles/nibbler.dir/class/network/ServerTCP.cpp.o: class/network/ServerTCP.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_38) "Building CXX object CMakeFiles/nibbler.dir/class/network/ServerTCP.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/network/ServerTCP.cpp.o -c /Users/ntoniolo/nibbler/class/network/ServerTCP.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_36) "Building CXX object CMakeFiles/nibbler.dir/class/network/ServerTCP.cpp.o"
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/network/ServerTCP.cpp.o -c /Users/ntoniolo/nibbler/class/network/ServerTCP.cpp
 
 CMakeFiles/nibbler.dir/class/network/ServerTCP.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/network/ServerTCP.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/network/ServerTCP.cpp > CMakeFiles/nibbler.dir/class/network/ServerTCP.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/network/ServerTCP.cpp > CMakeFiles/nibbler.dir/class/network/ServerTCP.cpp.i
 
 CMakeFiles/nibbler.dir/class/network/ServerTCP.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/network/ServerTCP.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/network/ServerTCP.cpp -o CMakeFiles/nibbler.dir/class/network/ServerTCP.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/network/ServerTCP.cpp -o CMakeFiles/nibbler.dir/class/network/ServerTCP.cpp.s
 
 CMakeFiles/nibbler.dir/class/network/UtilsTCP.cpp.o: CMakeFiles/nibbler.dir/flags.make
 CMakeFiles/nibbler.dir/class/network/UtilsTCP.cpp.o: class/network/UtilsTCP.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_39) "Building CXX object CMakeFiles/nibbler.dir/class/network/UtilsTCP.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/network/UtilsTCP.cpp.o -c /Users/ntoniolo/nibbler/class/network/UtilsTCP.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_37) "Building CXX object CMakeFiles/nibbler.dir/class/network/UtilsTCP.cpp.o"
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/network/UtilsTCP.cpp.o -c /Users/ntoniolo/nibbler/class/network/UtilsTCP.cpp
 
 CMakeFiles/nibbler.dir/class/network/UtilsTCP.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/network/UtilsTCP.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/network/UtilsTCP.cpp > CMakeFiles/nibbler.dir/class/network/UtilsTCP.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/network/UtilsTCP.cpp > CMakeFiles/nibbler.dir/class/network/UtilsTCP.cpp.i
 
 CMakeFiles/nibbler.dir/class/network/UtilsTCP.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/network/UtilsTCP.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/network/UtilsTCP.cpp -o CMakeFiles/nibbler.dir/class/network/UtilsTCP.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/network/UtilsTCP.cpp -o CMakeFiles/nibbler.dir/class/network/UtilsTCP.cpp.s
 
 CMakeFiles/nibbler.dir/class/systems/CollisionSystem.cpp.o: CMakeFiles/nibbler.dir/flags.make
 CMakeFiles/nibbler.dir/class/systems/CollisionSystem.cpp.o: class/systems/CollisionSystem.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_40) "Building CXX object CMakeFiles/nibbler.dir/class/systems/CollisionSystem.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/systems/CollisionSystem.cpp.o -c /Users/ntoniolo/nibbler/class/systems/CollisionSystem.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_38) "Building CXX object CMakeFiles/nibbler.dir/class/systems/CollisionSystem.cpp.o"
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/systems/CollisionSystem.cpp.o -c /Users/ntoniolo/nibbler/class/systems/CollisionSystem.cpp
 
 CMakeFiles/nibbler.dir/class/systems/CollisionSystem.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/systems/CollisionSystem.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/systems/CollisionSystem.cpp > CMakeFiles/nibbler.dir/class/systems/CollisionSystem.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/systems/CollisionSystem.cpp > CMakeFiles/nibbler.dir/class/systems/CollisionSystem.cpp.i
 
 CMakeFiles/nibbler.dir/class/systems/CollisionSystem.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/systems/CollisionSystem.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/systems/CollisionSystem.cpp -o CMakeFiles/nibbler.dir/class/systems/CollisionSystem.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/systems/CollisionSystem.cpp -o CMakeFiles/nibbler.dir/class/systems/CollisionSystem.cpp.s
 
 CMakeFiles/nibbler.dir/class/systems/FollowSystem.cpp.o: CMakeFiles/nibbler.dir/flags.make
 CMakeFiles/nibbler.dir/class/systems/FollowSystem.cpp.o: class/systems/FollowSystem.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_41) "Building CXX object CMakeFiles/nibbler.dir/class/systems/FollowSystem.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/systems/FollowSystem.cpp.o -c /Users/ntoniolo/nibbler/class/systems/FollowSystem.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_39) "Building CXX object CMakeFiles/nibbler.dir/class/systems/FollowSystem.cpp.o"
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/systems/FollowSystem.cpp.o -c /Users/ntoniolo/nibbler/class/systems/FollowSystem.cpp
 
 CMakeFiles/nibbler.dir/class/systems/FollowSystem.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/systems/FollowSystem.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/systems/FollowSystem.cpp > CMakeFiles/nibbler.dir/class/systems/FollowSystem.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/systems/FollowSystem.cpp > CMakeFiles/nibbler.dir/class/systems/FollowSystem.cpp.i
 
 CMakeFiles/nibbler.dir/class/systems/FollowSystem.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/systems/FollowSystem.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/systems/FollowSystem.cpp -o CMakeFiles/nibbler.dir/class/systems/FollowSystem.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/systems/FollowSystem.cpp -o CMakeFiles/nibbler.dir/class/systems/FollowSystem.cpp.s
 
 CMakeFiles/nibbler.dir/class/systems/FoodSystem.cpp.o: CMakeFiles/nibbler.dir/flags.make
 CMakeFiles/nibbler.dir/class/systems/FoodSystem.cpp.o: class/systems/FoodSystem.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_42) "Building CXX object CMakeFiles/nibbler.dir/class/systems/FoodSystem.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/systems/FoodSystem.cpp.o -c /Users/ntoniolo/nibbler/class/systems/FoodSystem.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_40) "Building CXX object CMakeFiles/nibbler.dir/class/systems/FoodSystem.cpp.o"
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/systems/FoodSystem.cpp.o -c /Users/ntoniolo/nibbler/class/systems/FoodSystem.cpp
 
 CMakeFiles/nibbler.dir/class/systems/FoodSystem.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/systems/FoodSystem.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/systems/FoodSystem.cpp > CMakeFiles/nibbler.dir/class/systems/FoodSystem.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/systems/FoodSystem.cpp > CMakeFiles/nibbler.dir/class/systems/FoodSystem.cpp.i
 
 CMakeFiles/nibbler.dir/class/systems/FoodSystem.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/systems/FoodSystem.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/systems/FoodSystem.cpp -o CMakeFiles/nibbler.dir/class/systems/FoodSystem.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/systems/FoodSystem.cpp -o CMakeFiles/nibbler.dir/class/systems/FoodSystem.cpp.s
 
 CMakeFiles/nibbler.dir/class/systems/JoystickSystem.cpp.o: CMakeFiles/nibbler.dir/flags.make
 CMakeFiles/nibbler.dir/class/systems/JoystickSystem.cpp.o: class/systems/JoystickSystem.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_43) "Building CXX object CMakeFiles/nibbler.dir/class/systems/JoystickSystem.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/systems/JoystickSystem.cpp.o -c /Users/ntoniolo/nibbler/class/systems/JoystickSystem.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_41) "Building CXX object CMakeFiles/nibbler.dir/class/systems/JoystickSystem.cpp.o"
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/systems/JoystickSystem.cpp.o -c /Users/ntoniolo/nibbler/class/systems/JoystickSystem.cpp
 
 CMakeFiles/nibbler.dir/class/systems/JoystickSystem.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/systems/JoystickSystem.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/systems/JoystickSystem.cpp > CMakeFiles/nibbler.dir/class/systems/JoystickSystem.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/systems/JoystickSystem.cpp > CMakeFiles/nibbler.dir/class/systems/JoystickSystem.cpp.i
 
 CMakeFiles/nibbler.dir/class/systems/JoystickSystem.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/systems/JoystickSystem.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/systems/JoystickSystem.cpp -o CMakeFiles/nibbler.dir/class/systems/JoystickSystem.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/systems/JoystickSystem.cpp -o CMakeFiles/nibbler.dir/class/systems/JoystickSystem.cpp.s
 
 CMakeFiles/nibbler.dir/class/systems/MotionSystem.cpp.o: CMakeFiles/nibbler.dir/flags.make
 CMakeFiles/nibbler.dir/class/systems/MotionSystem.cpp.o: class/systems/MotionSystem.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_44) "Building CXX object CMakeFiles/nibbler.dir/class/systems/MotionSystem.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/systems/MotionSystem.cpp.o -c /Users/ntoniolo/nibbler/class/systems/MotionSystem.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_42) "Building CXX object CMakeFiles/nibbler.dir/class/systems/MotionSystem.cpp.o"
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/systems/MotionSystem.cpp.o -c /Users/ntoniolo/nibbler/class/systems/MotionSystem.cpp
 
 CMakeFiles/nibbler.dir/class/systems/MotionSystem.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/systems/MotionSystem.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/systems/MotionSystem.cpp > CMakeFiles/nibbler.dir/class/systems/MotionSystem.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/systems/MotionSystem.cpp > CMakeFiles/nibbler.dir/class/systems/MotionSystem.cpp.i
 
 CMakeFiles/nibbler.dir/class/systems/MotionSystem.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/systems/MotionSystem.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/systems/MotionSystem.cpp -o CMakeFiles/nibbler.dir/class/systems/MotionSystem.cpp.s
-
-CMakeFiles/nibbler.dir/class/systems/RenderSystem.cpp.o: CMakeFiles/nibbler.dir/flags.make
-CMakeFiles/nibbler.dir/class/systems/RenderSystem.cpp.o: class/systems/RenderSystem.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_45) "Building CXX object CMakeFiles/nibbler.dir/class/systems/RenderSystem.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/systems/RenderSystem.cpp.o -c /Users/ntoniolo/nibbler/class/systems/RenderSystem.cpp
-
-CMakeFiles/nibbler.dir/class/systems/RenderSystem.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/systems/RenderSystem.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/systems/RenderSystem.cpp > CMakeFiles/nibbler.dir/class/systems/RenderSystem.cpp.i
-
-CMakeFiles/nibbler.dir/class/systems/RenderSystem.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/systems/RenderSystem.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/systems/RenderSystem.cpp -o CMakeFiles/nibbler.dir/class/systems/RenderSystem.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/systems/MotionSystem.cpp -o CMakeFiles/nibbler.dir/class/systems/MotionSystem.cpp.s
 
 CMakeFiles/nibbler.dir/class/Univers.cpp.o: CMakeFiles/nibbler.dir/flags.make
 CMakeFiles/nibbler.dir/class/Univers.cpp.o: class/Univers.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_46) "Building CXX object CMakeFiles/nibbler.dir/class/Univers.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/Univers.cpp.o -c /Users/ntoniolo/nibbler/class/Univers.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_43) "Building CXX object CMakeFiles/nibbler.dir/class/Univers.cpp.o"
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/Univers.cpp.o -c /Users/ntoniolo/nibbler/class/Univers.cpp
 
 CMakeFiles/nibbler.dir/class/Univers.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/Univers.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/Univers.cpp > CMakeFiles/nibbler.dir/class/Univers.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/Univers.cpp > CMakeFiles/nibbler.dir/class/Univers.cpp.i
 
 CMakeFiles/nibbler.dir/class/Univers.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/Univers.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/Univers.cpp -o CMakeFiles/nibbler.dir/class/Univers.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/Univers.cpp -o CMakeFiles/nibbler.dir/class/Univers.cpp.s
 
 CMakeFiles/nibbler.dir/externlib/display_sdl/src/DisplaySdl.cpp.o: CMakeFiles/nibbler.dir/flags.make
 CMakeFiles/nibbler.dir/externlib/display_sdl/src/DisplaySdl.cpp.o: externlib/display_sdl/src/DisplaySdl.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_47) "Building CXX object CMakeFiles/nibbler.dir/externlib/display_sdl/src/DisplaySdl.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/externlib/display_sdl/src/DisplaySdl.cpp.o -c /Users/ntoniolo/nibbler/externlib/display_sdl/src/DisplaySdl.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_44) "Building CXX object CMakeFiles/nibbler.dir/externlib/display_sdl/src/DisplaySdl.cpp.o"
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/externlib/display_sdl/src/DisplaySdl.cpp.o -c /Users/ntoniolo/nibbler/externlib/display_sdl/src/DisplaySdl.cpp
 
 CMakeFiles/nibbler.dir/externlib/display_sdl/src/DisplaySdl.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/externlib/display_sdl/src/DisplaySdl.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/externlib/display_sdl/src/DisplaySdl.cpp > CMakeFiles/nibbler.dir/externlib/display_sdl/src/DisplaySdl.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/externlib/display_sdl/src/DisplaySdl.cpp > CMakeFiles/nibbler.dir/externlib/display_sdl/src/DisplaySdl.cpp.i
 
 CMakeFiles/nibbler.dir/externlib/display_sdl/src/DisplaySdl.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/externlib/display_sdl/src/DisplaySdl.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/externlib/display_sdl/src/DisplaySdl.cpp -o CMakeFiles/nibbler.dir/externlib/display_sdl/src/DisplaySdl.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/externlib/display_sdl/src/DisplaySdl.cpp -o CMakeFiles/nibbler.dir/externlib/display_sdl/src/DisplaySdl.cpp.s
 
 CMakeFiles/nibbler.dir/externlib/display_sfml/src/DisplaySfml.cpp.o: CMakeFiles/nibbler.dir/flags.make
 CMakeFiles/nibbler.dir/externlib/display_sfml/src/DisplaySfml.cpp.o: externlib/display_sfml/src/DisplaySfml.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_48) "Building CXX object CMakeFiles/nibbler.dir/externlib/display_sfml/src/DisplaySfml.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/externlib/display_sfml/src/DisplaySfml.cpp.o -c /Users/ntoniolo/nibbler/externlib/display_sfml/src/DisplaySfml.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_45) "Building CXX object CMakeFiles/nibbler.dir/externlib/display_sfml/src/DisplaySfml.cpp.o"
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/externlib/display_sfml/src/DisplaySfml.cpp.o -c /Users/ntoniolo/nibbler/externlib/display_sfml/src/DisplaySfml.cpp
 
 CMakeFiles/nibbler.dir/externlib/display_sfml/src/DisplaySfml.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/externlib/display_sfml/src/DisplaySfml.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/externlib/display_sfml/src/DisplaySfml.cpp > CMakeFiles/nibbler.dir/externlib/display_sfml/src/DisplaySfml.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/externlib/display_sfml/src/DisplaySfml.cpp > CMakeFiles/nibbler.dir/externlib/display_sfml/src/DisplaySfml.cpp.i
 
 CMakeFiles/nibbler.dir/externlib/display_sfml/src/DisplaySfml.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/externlib/display_sfml/src/DisplaySfml.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/externlib/display_sfml/src/DisplaySfml.cpp -o CMakeFiles/nibbler.dir/externlib/display_sfml/src/DisplaySfml.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/externlib/display_sfml/src/DisplaySfml.cpp -o CMakeFiles/nibbler.dir/externlib/display_sfml/src/DisplaySfml.cpp.s
 
 CMakeFiles/nibbler.dir/externlib/sandbox/main.cpp.o: CMakeFiles/nibbler.dir/flags.make
 CMakeFiles/nibbler.dir/externlib/sandbox/main.cpp.o: externlib/sandbox/main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_49) "Building CXX object CMakeFiles/nibbler.dir/externlib/sandbox/main.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/externlib/sandbox/main.cpp.o -c /Users/ntoniolo/nibbler/externlib/sandbox/main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_46) "Building CXX object CMakeFiles/nibbler.dir/externlib/sandbox/main.cpp.o"
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/externlib/sandbox/main.cpp.o -c /Users/ntoniolo/nibbler/externlib/sandbox/main.cpp
 
 CMakeFiles/nibbler.dir/externlib/sandbox/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/externlib/sandbox/main.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/externlib/sandbox/main.cpp > CMakeFiles/nibbler.dir/externlib/sandbox/main.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/externlib/sandbox/main.cpp > CMakeFiles/nibbler.dir/externlib/sandbox/main.cpp.i
 
 CMakeFiles/nibbler.dir/externlib/sandbox/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/externlib/sandbox/main.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/externlib/sandbox/main.cpp -o CMakeFiles/nibbler.dir/externlib/sandbox/main.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/externlib/sandbox/main.cpp -o CMakeFiles/nibbler.dir/externlib/sandbox/main.cpp.s
 
 CMakeFiles/nibbler.dir/externlib/sound_sdl/src/main.cpp.o: CMakeFiles/nibbler.dir/flags.make
 CMakeFiles/nibbler.dir/externlib/sound_sdl/src/main.cpp.o: externlib/sound_sdl/src/main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_50) "Building CXX object CMakeFiles/nibbler.dir/externlib/sound_sdl/src/main.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/externlib/sound_sdl/src/main.cpp.o -c /Users/ntoniolo/nibbler/externlib/sound_sdl/src/main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_47) "Building CXX object CMakeFiles/nibbler.dir/externlib/sound_sdl/src/main.cpp.o"
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/externlib/sound_sdl/src/main.cpp.o -c /Users/ntoniolo/nibbler/externlib/sound_sdl/src/main.cpp
 
 CMakeFiles/nibbler.dir/externlib/sound_sdl/src/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/externlib/sound_sdl/src/main.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/externlib/sound_sdl/src/main.cpp > CMakeFiles/nibbler.dir/externlib/sound_sdl/src/main.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/externlib/sound_sdl/src/main.cpp > CMakeFiles/nibbler.dir/externlib/sound_sdl/src/main.cpp.i
 
 CMakeFiles/nibbler.dir/externlib/sound_sdl/src/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/externlib/sound_sdl/src/main.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/externlib/sound_sdl/src/main.cpp -o CMakeFiles/nibbler.dir/externlib/sound_sdl/src/main.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/externlib/sound_sdl/src/main.cpp -o CMakeFiles/nibbler.dir/externlib/sound_sdl/src/main.cpp.s
 
 CMakeFiles/nibbler.dir/externlib/sound_sdl/src/SoundSdl.cpp.o: CMakeFiles/nibbler.dir/flags.make
 CMakeFiles/nibbler.dir/externlib/sound_sdl/src/SoundSdl.cpp.o: externlib/sound_sdl/src/SoundSdl.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_51) "Building CXX object CMakeFiles/nibbler.dir/externlib/sound_sdl/src/SoundSdl.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/externlib/sound_sdl/src/SoundSdl.cpp.o -c /Users/ntoniolo/nibbler/externlib/sound_sdl/src/SoundSdl.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_48) "Building CXX object CMakeFiles/nibbler.dir/externlib/sound_sdl/src/SoundSdl.cpp.o"
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/externlib/sound_sdl/src/SoundSdl.cpp.o -c /Users/ntoniolo/nibbler/externlib/sound_sdl/src/SoundSdl.cpp
 
 CMakeFiles/nibbler.dir/externlib/sound_sdl/src/SoundSdl.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/externlib/sound_sdl/src/SoundSdl.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/externlib/sound_sdl/src/SoundSdl.cpp > CMakeFiles/nibbler.dir/externlib/sound_sdl/src/SoundSdl.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/externlib/sound_sdl/src/SoundSdl.cpp > CMakeFiles/nibbler.dir/externlib/sound_sdl/src/SoundSdl.cpp.i
 
 CMakeFiles/nibbler.dir/externlib/sound_sdl/src/SoundSdl.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/externlib/sound_sdl/src/SoundSdl.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/externlib/sound_sdl/src/SoundSdl.cpp -o CMakeFiles/nibbler.dir/externlib/sound_sdl/src/SoundSdl.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/externlib/sound_sdl/src/SoundSdl.cpp -o CMakeFiles/nibbler.dir/externlib/sound_sdl/src/SoundSdl.cpp.s
 
 CMakeFiles/nibbler.dir/externlib/sound_sfml/src/main.cpp.o: CMakeFiles/nibbler.dir/flags.make
 CMakeFiles/nibbler.dir/externlib/sound_sfml/src/main.cpp.o: externlib/sound_sfml/src/main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_52) "Building CXX object CMakeFiles/nibbler.dir/externlib/sound_sfml/src/main.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/externlib/sound_sfml/src/main.cpp.o -c /Users/ntoniolo/nibbler/externlib/sound_sfml/src/main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_49) "Building CXX object CMakeFiles/nibbler.dir/externlib/sound_sfml/src/main.cpp.o"
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/externlib/sound_sfml/src/main.cpp.o -c /Users/ntoniolo/nibbler/externlib/sound_sfml/src/main.cpp
 
 CMakeFiles/nibbler.dir/externlib/sound_sfml/src/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/externlib/sound_sfml/src/main.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/externlib/sound_sfml/src/main.cpp > CMakeFiles/nibbler.dir/externlib/sound_sfml/src/main.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/externlib/sound_sfml/src/main.cpp > CMakeFiles/nibbler.dir/externlib/sound_sfml/src/main.cpp.i
 
 CMakeFiles/nibbler.dir/externlib/sound_sfml/src/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/externlib/sound_sfml/src/main.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/externlib/sound_sfml/src/main.cpp -o CMakeFiles/nibbler.dir/externlib/sound_sfml/src/main.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/externlib/sound_sfml/src/main.cpp -o CMakeFiles/nibbler.dir/externlib/sound_sfml/src/main.cpp.s
 
 CMakeFiles/nibbler.dir/externlib/sound_sfml/src/SoundSfml.cpp.o: CMakeFiles/nibbler.dir/flags.make
 CMakeFiles/nibbler.dir/externlib/sound_sfml/src/SoundSfml.cpp.o: externlib/sound_sfml/src/SoundSfml.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_53) "Building CXX object CMakeFiles/nibbler.dir/externlib/sound_sfml/src/SoundSfml.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/externlib/sound_sfml/src/SoundSfml.cpp.o -c /Users/ntoniolo/nibbler/externlib/sound_sfml/src/SoundSfml.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_50) "Building CXX object CMakeFiles/nibbler.dir/externlib/sound_sfml/src/SoundSfml.cpp.o"
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/externlib/sound_sfml/src/SoundSfml.cpp.o -c /Users/ntoniolo/nibbler/externlib/sound_sfml/src/SoundSfml.cpp
 
 CMakeFiles/nibbler.dir/externlib/sound_sfml/src/SoundSfml.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/externlib/sound_sfml/src/SoundSfml.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/externlib/sound_sfml/src/SoundSfml.cpp > CMakeFiles/nibbler.dir/externlib/sound_sfml/src/SoundSfml.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/externlib/sound_sfml/src/SoundSfml.cpp > CMakeFiles/nibbler.dir/externlib/sound_sfml/src/SoundSfml.cpp.i
 
 CMakeFiles/nibbler.dir/externlib/sound_sfml/src/SoundSfml.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/externlib/sound_sfml/src/SoundSfml.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/externlib/sound_sfml/src/SoundSfml.cpp -o CMakeFiles/nibbler.dir/externlib/sound_sfml/src/SoundSfml.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/externlib/sound_sfml/src/SoundSfml.cpp -o CMakeFiles/nibbler.dir/externlib/sound_sfml/src/SoundSfml.cpp.s
 
-CMakeFiles/nibbler.dir/jsoncpp/src/jsontestrunner/main.cpp.o: CMakeFiles/nibbler.dir/flags.make
-CMakeFiles/nibbler.dir/jsoncpp/src/jsontestrunner/main.cpp.o: jsoncpp/src/jsontestrunner/main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_54) "Building CXX object CMakeFiles/nibbler.dir/jsoncpp/src/jsontestrunner/main.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/jsoncpp/src/jsontestrunner/main.cpp.o -c /Users/ntoniolo/nibbler/jsoncpp/src/jsontestrunner/main.cpp
+CMakeFiles/nibbler.dir/imgui-sfml/imgui-SFML.cpp.o: CMakeFiles/nibbler.dir/flags.make
+CMakeFiles/nibbler.dir/imgui-sfml/imgui-SFML.cpp.o: imgui-sfml/imgui-SFML.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_51) "Building CXX object CMakeFiles/nibbler.dir/imgui-sfml/imgui-SFML.cpp.o"
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/imgui-sfml/imgui-SFML.cpp.o -c /Users/ntoniolo/nibbler/imgui-sfml/imgui-SFML.cpp
 
-CMakeFiles/nibbler.dir/jsoncpp/src/jsontestrunner/main.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/jsoncpp/src/jsontestrunner/main.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/jsoncpp/src/jsontestrunner/main.cpp > CMakeFiles/nibbler.dir/jsoncpp/src/jsontestrunner/main.cpp.i
+CMakeFiles/nibbler.dir/imgui-sfml/imgui-SFML.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/imgui-sfml/imgui-SFML.cpp.i"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/imgui-sfml/imgui-SFML.cpp > CMakeFiles/nibbler.dir/imgui-sfml/imgui-SFML.cpp.i
 
-CMakeFiles/nibbler.dir/jsoncpp/src/jsontestrunner/main.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/jsoncpp/src/jsontestrunner/main.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/jsoncpp/src/jsontestrunner/main.cpp -o CMakeFiles/nibbler.dir/jsoncpp/src/jsontestrunner/main.cpp.s
+CMakeFiles/nibbler.dir/imgui-sfml/imgui-SFML.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/imgui-sfml/imgui-SFML.cpp.s"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/imgui-sfml/imgui-SFML.cpp -o CMakeFiles/nibbler.dir/imgui-sfml/imgui-SFML.cpp.s
 
-CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_reader.cpp.o: CMakeFiles/nibbler.dir/flags.make
-CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_reader.cpp.o: jsoncpp/src/lib_json/json_reader.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_55) "Building CXX object CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_reader.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_reader.cpp.o -c /Users/ntoniolo/nibbler/jsoncpp/src/lib_json/json_reader.cpp
+CMakeFiles/nibbler.dir/imgui-sfml/imgui.cpp.o: CMakeFiles/nibbler.dir/flags.make
+CMakeFiles/nibbler.dir/imgui-sfml/imgui.cpp.o: imgui-sfml/imgui.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_52) "Building CXX object CMakeFiles/nibbler.dir/imgui-sfml/imgui.cpp.o"
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/imgui-sfml/imgui.cpp.o -c /Users/ntoniolo/nibbler/imgui-sfml/imgui.cpp
 
-CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_reader.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_reader.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/jsoncpp/src/lib_json/json_reader.cpp > CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_reader.cpp.i
+CMakeFiles/nibbler.dir/imgui-sfml/imgui.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/imgui-sfml/imgui.cpp.i"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/imgui-sfml/imgui.cpp > CMakeFiles/nibbler.dir/imgui-sfml/imgui.cpp.i
 
-CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_reader.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_reader.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/jsoncpp/src/lib_json/json_reader.cpp -o CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_reader.cpp.s
+CMakeFiles/nibbler.dir/imgui-sfml/imgui.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/imgui-sfml/imgui.cpp.s"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/imgui-sfml/imgui.cpp -o CMakeFiles/nibbler.dir/imgui-sfml/imgui.cpp.s
 
-CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_value.cpp.o: CMakeFiles/nibbler.dir/flags.make
-CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_value.cpp.o: jsoncpp/src/lib_json/json_value.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_56) "Building CXX object CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_value.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_value.cpp.o -c /Users/ntoniolo/nibbler/jsoncpp/src/lib_json/json_value.cpp
+CMakeFiles/nibbler.dir/imgui-sfml/imgui_demo.cpp.o: CMakeFiles/nibbler.dir/flags.make
+CMakeFiles/nibbler.dir/imgui-sfml/imgui_demo.cpp.o: imgui-sfml/imgui_demo.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_53) "Building CXX object CMakeFiles/nibbler.dir/imgui-sfml/imgui_demo.cpp.o"
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/imgui-sfml/imgui_demo.cpp.o -c /Users/ntoniolo/nibbler/imgui-sfml/imgui_demo.cpp
 
-CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_value.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_value.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/jsoncpp/src/lib_json/json_value.cpp > CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_value.cpp.i
+CMakeFiles/nibbler.dir/imgui-sfml/imgui_demo.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/imgui-sfml/imgui_demo.cpp.i"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/imgui-sfml/imgui_demo.cpp > CMakeFiles/nibbler.dir/imgui-sfml/imgui_demo.cpp.i
 
-CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_value.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_value.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/jsoncpp/src/lib_json/json_value.cpp -o CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_value.cpp.s
+CMakeFiles/nibbler.dir/imgui-sfml/imgui_demo.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/imgui-sfml/imgui_demo.cpp.s"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/imgui-sfml/imgui_demo.cpp -o CMakeFiles/nibbler.dir/imgui-sfml/imgui_demo.cpp.s
 
-CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_writer.cpp.o: CMakeFiles/nibbler.dir/flags.make
-CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_writer.cpp.o: jsoncpp/src/lib_json/json_writer.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_57) "Building CXX object CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_writer.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_writer.cpp.o -c /Users/ntoniolo/nibbler/jsoncpp/src/lib_json/json_writer.cpp
+CMakeFiles/nibbler.dir/imgui-sfml/imgui_draw.cpp.o: CMakeFiles/nibbler.dir/flags.make
+CMakeFiles/nibbler.dir/imgui-sfml/imgui_draw.cpp.o: imgui-sfml/imgui_draw.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_54) "Building CXX object CMakeFiles/nibbler.dir/imgui-sfml/imgui_draw.cpp.o"
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/imgui-sfml/imgui_draw.cpp.o -c /Users/ntoniolo/nibbler/imgui-sfml/imgui_draw.cpp
 
-CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_writer.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_writer.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/jsoncpp/src/lib_json/json_writer.cpp > CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_writer.cpp.i
+CMakeFiles/nibbler.dir/imgui-sfml/imgui_draw.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/imgui-sfml/imgui_draw.cpp.i"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/imgui-sfml/imgui_draw.cpp > CMakeFiles/nibbler.dir/imgui-sfml/imgui_draw.cpp.i
 
-CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_writer.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_writer.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/jsoncpp/src/lib_json/json_writer.cpp -o CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_writer.cpp.s
+CMakeFiles/nibbler.dir/imgui-sfml/imgui_draw.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/imgui-sfml/imgui_draw.cpp.s"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/imgui-sfml/imgui_draw.cpp -o CMakeFiles/nibbler.dir/imgui-sfml/imgui_draw.cpp.s
 
-CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/jsontest.cpp.o: CMakeFiles/nibbler.dir/flags.make
-CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/jsontest.cpp.o: jsoncpp/src/test_lib_json/jsontest.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_58) "Building CXX object CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/jsontest.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/jsontest.cpp.o -c /Users/ntoniolo/nibbler/jsoncpp/src/test_lib_json/jsontest.cpp
+CMakeFiles/nibbler.dir/imgui-sfml/imgui_widgets.cpp.o: CMakeFiles/nibbler.dir/flags.make
+CMakeFiles/nibbler.dir/imgui-sfml/imgui_widgets.cpp.o: imgui-sfml/imgui_widgets.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_55) "Building CXX object CMakeFiles/nibbler.dir/imgui-sfml/imgui_widgets.cpp.o"
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/imgui-sfml/imgui_widgets.cpp.o -c /Users/ntoniolo/nibbler/imgui-sfml/imgui_widgets.cpp
 
-CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/jsontest.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/jsontest.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/jsoncpp/src/test_lib_json/jsontest.cpp > CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/jsontest.cpp.i
+CMakeFiles/nibbler.dir/imgui-sfml/imgui_widgets.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/imgui-sfml/imgui_widgets.cpp.i"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/imgui-sfml/imgui_widgets.cpp > CMakeFiles/nibbler.dir/imgui-sfml/imgui_widgets.cpp.i
 
-CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/jsontest.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/jsontest.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/jsoncpp/src/test_lib_json/jsontest.cpp -o CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/jsontest.cpp.s
-
-CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/main.cpp.o: CMakeFiles/nibbler.dir/flags.make
-CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/main.cpp.o: jsoncpp/src/test_lib_json/main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_59) "Building CXX object CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/main.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/main.cpp.o -c /Users/ntoniolo/nibbler/jsoncpp/src/test_lib_json/main.cpp
-
-CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/main.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/main.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/jsoncpp/src/test_lib_json/main.cpp > CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/main.cpp.i
-
-CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/main.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/main.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/jsoncpp/src/test_lib_json/main.cpp -o CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/main.cpp.s
+CMakeFiles/nibbler.dir/imgui-sfml/imgui_widgets.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/imgui-sfml/imgui_widgets.cpp.s"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/imgui-sfml/imgui_widgets.cpp -o CMakeFiles/nibbler.dir/imgui-sfml/imgui_widgets.cpp.s
 
 # Object files for target nibbler
 nibbler_OBJECTS = \
@@ -835,13 +783,11 @@ nibbler_OBJECTS = \
 "CMakeFiles/nibbler.dir/class/cores/main.cpp.o" \
 "CMakeFiles/nibbler.dir/class/events/FoodEvent.cpp.o" \
 "CMakeFiles/nibbler.dir/class/events/JoystickEvent.cpp.o" \
-"CMakeFiles/nibbler.dir/class/events/StartEvent.cpp.o" \
 "CMakeFiles/nibbler.dir/class/factory/Factory.cpp.o" \
 "CMakeFiles/nibbler.dir/class/gui/widget/AWidget.cpp.o" \
 "CMakeFiles/nibbler.dir/class/gui/widget/WidgetChat.cpp.o" \
 "CMakeFiles/nibbler.dir/class/gui/widget/WidgetExit.cpp.o" \
 "CMakeFiles/nibbler.dir/class/gui/widget/WidgetLobby.cpp.o" \
-"CMakeFiles/nibbler.dir/class/gui/widget/WidgetOption.cpp.o" \
 "CMakeFiles/nibbler.dir/class/gui/widget/WidgetSnake.cpp.o" \
 "CMakeFiles/nibbler.dir/class/gui/Core.cpp.o" \
 "CMakeFiles/nibbler.dir/class/gui/imgui_demo.cpp.o" \
@@ -870,7 +816,6 @@ nibbler_OBJECTS = \
 "CMakeFiles/nibbler.dir/class/systems/FoodSystem.cpp.o" \
 "CMakeFiles/nibbler.dir/class/systems/JoystickSystem.cpp.o" \
 "CMakeFiles/nibbler.dir/class/systems/MotionSystem.cpp.o" \
-"CMakeFiles/nibbler.dir/class/systems/RenderSystem.cpp.o" \
 "CMakeFiles/nibbler.dir/class/Univers.cpp.o" \
 "CMakeFiles/nibbler.dir/externlib/display_sdl/src/DisplaySdl.cpp.o" \
 "CMakeFiles/nibbler.dir/externlib/display_sfml/src/DisplaySfml.cpp.o" \
@@ -879,12 +824,11 @@ nibbler_OBJECTS = \
 "CMakeFiles/nibbler.dir/externlib/sound_sdl/src/SoundSdl.cpp.o" \
 "CMakeFiles/nibbler.dir/externlib/sound_sfml/src/main.cpp.o" \
 "CMakeFiles/nibbler.dir/externlib/sound_sfml/src/SoundSfml.cpp.o" \
-"CMakeFiles/nibbler.dir/jsoncpp/src/jsontestrunner/main.cpp.o" \
-"CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_reader.cpp.o" \
-"CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_value.cpp.o" \
-"CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_writer.cpp.o" \
-"CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/jsontest.cpp.o" \
-"CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/main.cpp.o"
+"CMakeFiles/nibbler.dir/imgui-sfml/imgui-SFML.cpp.o" \
+"CMakeFiles/nibbler.dir/imgui-sfml/imgui.cpp.o" \
+"CMakeFiles/nibbler.dir/imgui-sfml/imgui_demo.cpp.o" \
+"CMakeFiles/nibbler.dir/imgui-sfml/imgui_draw.cpp.o" \
+"CMakeFiles/nibbler.dir/imgui-sfml/imgui_widgets.cpp.o"
 
 # External object files for target nibbler
 nibbler_EXTERNAL_OBJECTS =
@@ -898,13 +842,11 @@ nibbler: CMakeFiles/nibbler.dir/class/component/SpriteComponent.cpp.o
 nibbler: CMakeFiles/nibbler.dir/class/cores/main.cpp.o
 nibbler: CMakeFiles/nibbler.dir/class/events/FoodEvent.cpp.o
 nibbler: CMakeFiles/nibbler.dir/class/events/JoystickEvent.cpp.o
-nibbler: CMakeFiles/nibbler.dir/class/events/StartEvent.cpp.o
 nibbler: CMakeFiles/nibbler.dir/class/factory/Factory.cpp.o
 nibbler: CMakeFiles/nibbler.dir/class/gui/widget/AWidget.cpp.o
 nibbler: CMakeFiles/nibbler.dir/class/gui/widget/WidgetChat.cpp.o
 nibbler: CMakeFiles/nibbler.dir/class/gui/widget/WidgetExit.cpp.o
 nibbler: CMakeFiles/nibbler.dir/class/gui/widget/WidgetLobby.cpp.o
-nibbler: CMakeFiles/nibbler.dir/class/gui/widget/WidgetOption.cpp.o
 nibbler: CMakeFiles/nibbler.dir/class/gui/widget/WidgetSnake.cpp.o
 nibbler: CMakeFiles/nibbler.dir/class/gui/Core.cpp.o
 nibbler: CMakeFiles/nibbler.dir/class/gui/imgui_demo.cpp.o
@@ -933,7 +875,6 @@ nibbler: CMakeFiles/nibbler.dir/class/systems/FollowSystem.cpp.o
 nibbler: CMakeFiles/nibbler.dir/class/systems/FoodSystem.cpp.o
 nibbler: CMakeFiles/nibbler.dir/class/systems/JoystickSystem.cpp.o
 nibbler: CMakeFiles/nibbler.dir/class/systems/MotionSystem.cpp.o
-nibbler: CMakeFiles/nibbler.dir/class/systems/RenderSystem.cpp.o
 nibbler: CMakeFiles/nibbler.dir/class/Univers.cpp.o
 nibbler: CMakeFiles/nibbler.dir/externlib/display_sdl/src/DisplaySdl.cpp.o
 nibbler: CMakeFiles/nibbler.dir/externlib/display_sfml/src/DisplaySfml.cpp.o
@@ -942,15 +883,18 @@ nibbler: CMakeFiles/nibbler.dir/externlib/sound_sdl/src/main.cpp.o
 nibbler: CMakeFiles/nibbler.dir/externlib/sound_sdl/src/SoundSdl.cpp.o
 nibbler: CMakeFiles/nibbler.dir/externlib/sound_sfml/src/main.cpp.o
 nibbler: CMakeFiles/nibbler.dir/externlib/sound_sfml/src/SoundSfml.cpp.o
-nibbler: CMakeFiles/nibbler.dir/jsoncpp/src/jsontestrunner/main.cpp.o
-nibbler: CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_reader.cpp.o
-nibbler: CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_value.cpp.o
-nibbler: CMakeFiles/nibbler.dir/jsoncpp/src/lib_json/json_writer.cpp.o
-nibbler: CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/jsontest.cpp.o
-nibbler: CMakeFiles/nibbler.dir/jsoncpp/src/test_lib_json/main.cpp.o
+nibbler: CMakeFiles/nibbler.dir/imgui-sfml/imgui-SFML.cpp.o
+nibbler: CMakeFiles/nibbler.dir/imgui-sfml/imgui.cpp.o
+nibbler: CMakeFiles/nibbler.dir/imgui-sfml/imgui_demo.cpp.o
+nibbler: CMakeFiles/nibbler.dir/imgui-sfml/imgui_draw.cpp.o
+nibbler: CMakeFiles/nibbler.dir/imgui-sfml/imgui_widgets.cpp.o
 nibbler: CMakeFiles/nibbler.dir/build.make
+nibbler: SFML/lib/libsfml-graphics.2.5.1.dylib
+nibbler: SFML/lib/libsfml-window.2.5.1.dylib
+nibbler: SFML/lib/libsfml-audio.2.5.1.dylib
+nibbler: SFML/lib/libsfml-system.2.5.1.dylib
 nibbler: CMakeFiles/nibbler.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_60) "Linking CXX executable nibbler"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_56) "Linking CXX executable nibbler"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/nibbler.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
