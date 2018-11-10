@@ -616,100 +616,9 @@ CMakeFiles/nibbler.dir/class/Univers.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/Univers.cpp.s"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/Univers.cpp -o CMakeFiles/nibbler.dir/class/Univers.cpp.s
 
-CMakeFiles/nibbler.dir/externlib/display_sdl/src/DisplaySdl.cpp.o: CMakeFiles/nibbler.dir/flags.make
-CMakeFiles/nibbler.dir/externlib/display_sdl/src/DisplaySdl.cpp.o: externlib/display_sdl/src/DisplaySdl.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_44) "Building CXX object CMakeFiles/nibbler.dir/externlib/display_sdl/src/DisplaySdl.cpp.o"
-	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/externlib/display_sdl/src/DisplaySdl.cpp.o -c /Users/ntoniolo/nibbler/externlib/display_sdl/src/DisplaySdl.cpp
-
-CMakeFiles/nibbler.dir/externlib/display_sdl/src/DisplaySdl.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/externlib/display_sdl/src/DisplaySdl.cpp.i"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/externlib/display_sdl/src/DisplaySdl.cpp > CMakeFiles/nibbler.dir/externlib/display_sdl/src/DisplaySdl.cpp.i
-
-CMakeFiles/nibbler.dir/externlib/display_sdl/src/DisplaySdl.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/externlib/display_sdl/src/DisplaySdl.cpp.s"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/externlib/display_sdl/src/DisplaySdl.cpp -o CMakeFiles/nibbler.dir/externlib/display_sdl/src/DisplaySdl.cpp.s
-
-CMakeFiles/nibbler.dir/externlib/display_sfml/src/DisplaySfml.cpp.o: CMakeFiles/nibbler.dir/flags.make
-CMakeFiles/nibbler.dir/externlib/display_sfml/src/DisplaySfml.cpp.o: externlib/display_sfml/src/DisplaySfml.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_45) "Building CXX object CMakeFiles/nibbler.dir/externlib/display_sfml/src/DisplaySfml.cpp.o"
-	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/externlib/display_sfml/src/DisplaySfml.cpp.o -c /Users/ntoniolo/nibbler/externlib/display_sfml/src/DisplaySfml.cpp
-
-CMakeFiles/nibbler.dir/externlib/display_sfml/src/DisplaySfml.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/externlib/display_sfml/src/DisplaySfml.cpp.i"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/externlib/display_sfml/src/DisplaySfml.cpp > CMakeFiles/nibbler.dir/externlib/display_sfml/src/DisplaySfml.cpp.i
-
-CMakeFiles/nibbler.dir/externlib/display_sfml/src/DisplaySfml.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/externlib/display_sfml/src/DisplaySfml.cpp.s"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/externlib/display_sfml/src/DisplaySfml.cpp -o CMakeFiles/nibbler.dir/externlib/display_sfml/src/DisplaySfml.cpp.s
-
-CMakeFiles/nibbler.dir/externlib/sandbox/main.cpp.o: CMakeFiles/nibbler.dir/flags.make
-CMakeFiles/nibbler.dir/externlib/sandbox/main.cpp.o: externlib/sandbox/main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_46) "Building CXX object CMakeFiles/nibbler.dir/externlib/sandbox/main.cpp.o"
-	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/externlib/sandbox/main.cpp.o -c /Users/ntoniolo/nibbler/externlib/sandbox/main.cpp
-
-CMakeFiles/nibbler.dir/externlib/sandbox/main.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/externlib/sandbox/main.cpp.i"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/externlib/sandbox/main.cpp > CMakeFiles/nibbler.dir/externlib/sandbox/main.cpp.i
-
-CMakeFiles/nibbler.dir/externlib/sandbox/main.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/externlib/sandbox/main.cpp.s"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/externlib/sandbox/main.cpp -o CMakeFiles/nibbler.dir/externlib/sandbox/main.cpp.s
-
-CMakeFiles/nibbler.dir/externlib/sound_sdl/src/main.cpp.o: CMakeFiles/nibbler.dir/flags.make
-CMakeFiles/nibbler.dir/externlib/sound_sdl/src/main.cpp.o: externlib/sound_sdl/src/main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_47) "Building CXX object CMakeFiles/nibbler.dir/externlib/sound_sdl/src/main.cpp.o"
-	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/externlib/sound_sdl/src/main.cpp.o -c /Users/ntoniolo/nibbler/externlib/sound_sdl/src/main.cpp
-
-CMakeFiles/nibbler.dir/externlib/sound_sdl/src/main.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/externlib/sound_sdl/src/main.cpp.i"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/externlib/sound_sdl/src/main.cpp > CMakeFiles/nibbler.dir/externlib/sound_sdl/src/main.cpp.i
-
-CMakeFiles/nibbler.dir/externlib/sound_sdl/src/main.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/externlib/sound_sdl/src/main.cpp.s"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/externlib/sound_sdl/src/main.cpp -o CMakeFiles/nibbler.dir/externlib/sound_sdl/src/main.cpp.s
-
-CMakeFiles/nibbler.dir/externlib/sound_sdl/src/SoundSdl.cpp.o: CMakeFiles/nibbler.dir/flags.make
-CMakeFiles/nibbler.dir/externlib/sound_sdl/src/SoundSdl.cpp.o: externlib/sound_sdl/src/SoundSdl.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_48) "Building CXX object CMakeFiles/nibbler.dir/externlib/sound_sdl/src/SoundSdl.cpp.o"
-	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/externlib/sound_sdl/src/SoundSdl.cpp.o -c /Users/ntoniolo/nibbler/externlib/sound_sdl/src/SoundSdl.cpp
-
-CMakeFiles/nibbler.dir/externlib/sound_sdl/src/SoundSdl.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/externlib/sound_sdl/src/SoundSdl.cpp.i"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/externlib/sound_sdl/src/SoundSdl.cpp > CMakeFiles/nibbler.dir/externlib/sound_sdl/src/SoundSdl.cpp.i
-
-CMakeFiles/nibbler.dir/externlib/sound_sdl/src/SoundSdl.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/externlib/sound_sdl/src/SoundSdl.cpp.s"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/externlib/sound_sdl/src/SoundSdl.cpp -o CMakeFiles/nibbler.dir/externlib/sound_sdl/src/SoundSdl.cpp.s
-
-CMakeFiles/nibbler.dir/externlib/sound_sfml/src/main.cpp.o: CMakeFiles/nibbler.dir/flags.make
-CMakeFiles/nibbler.dir/externlib/sound_sfml/src/main.cpp.o: externlib/sound_sfml/src/main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_49) "Building CXX object CMakeFiles/nibbler.dir/externlib/sound_sfml/src/main.cpp.o"
-	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/externlib/sound_sfml/src/main.cpp.o -c /Users/ntoniolo/nibbler/externlib/sound_sfml/src/main.cpp
-
-CMakeFiles/nibbler.dir/externlib/sound_sfml/src/main.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/externlib/sound_sfml/src/main.cpp.i"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/externlib/sound_sfml/src/main.cpp > CMakeFiles/nibbler.dir/externlib/sound_sfml/src/main.cpp.i
-
-CMakeFiles/nibbler.dir/externlib/sound_sfml/src/main.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/externlib/sound_sfml/src/main.cpp.s"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/externlib/sound_sfml/src/main.cpp -o CMakeFiles/nibbler.dir/externlib/sound_sfml/src/main.cpp.s
-
-CMakeFiles/nibbler.dir/externlib/sound_sfml/src/SoundSfml.cpp.o: CMakeFiles/nibbler.dir/flags.make
-CMakeFiles/nibbler.dir/externlib/sound_sfml/src/SoundSfml.cpp.o: externlib/sound_sfml/src/SoundSfml.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_50) "Building CXX object CMakeFiles/nibbler.dir/externlib/sound_sfml/src/SoundSfml.cpp.o"
-	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/externlib/sound_sfml/src/SoundSfml.cpp.o -c /Users/ntoniolo/nibbler/externlib/sound_sfml/src/SoundSfml.cpp
-
-CMakeFiles/nibbler.dir/externlib/sound_sfml/src/SoundSfml.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/externlib/sound_sfml/src/SoundSfml.cpp.i"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/externlib/sound_sfml/src/SoundSfml.cpp > CMakeFiles/nibbler.dir/externlib/sound_sfml/src/SoundSfml.cpp.i
-
-CMakeFiles/nibbler.dir/externlib/sound_sfml/src/SoundSfml.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/externlib/sound_sfml/src/SoundSfml.cpp.s"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/externlib/sound_sfml/src/SoundSfml.cpp -o CMakeFiles/nibbler.dir/externlib/sound_sfml/src/SoundSfml.cpp.s
-
 CMakeFiles/nibbler.dir/imgui-sfml/imgui-SFML.cpp.o: CMakeFiles/nibbler.dir/flags.make
 CMakeFiles/nibbler.dir/imgui-sfml/imgui-SFML.cpp.o: imgui-sfml/imgui-SFML.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_51) "Building CXX object CMakeFiles/nibbler.dir/imgui-sfml/imgui-SFML.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_44) "Building CXX object CMakeFiles/nibbler.dir/imgui-sfml/imgui-SFML.cpp.o"
 	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/imgui-sfml/imgui-SFML.cpp.o -c /Users/ntoniolo/nibbler/imgui-sfml/imgui-SFML.cpp
 
 CMakeFiles/nibbler.dir/imgui-sfml/imgui-SFML.cpp.i: cmake_force
@@ -722,7 +631,7 @@ CMakeFiles/nibbler.dir/imgui-sfml/imgui-SFML.cpp.s: cmake_force
 
 CMakeFiles/nibbler.dir/imgui-sfml/imgui.cpp.o: CMakeFiles/nibbler.dir/flags.make
 CMakeFiles/nibbler.dir/imgui-sfml/imgui.cpp.o: imgui-sfml/imgui.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_52) "Building CXX object CMakeFiles/nibbler.dir/imgui-sfml/imgui.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_45) "Building CXX object CMakeFiles/nibbler.dir/imgui-sfml/imgui.cpp.o"
 	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/imgui-sfml/imgui.cpp.o -c /Users/ntoniolo/nibbler/imgui-sfml/imgui.cpp
 
 CMakeFiles/nibbler.dir/imgui-sfml/imgui.cpp.i: cmake_force
@@ -735,7 +644,7 @@ CMakeFiles/nibbler.dir/imgui-sfml/imgui.cpp.s: cmake_force
 
 CMakeFiles/nibbler.dir/imgui-sfml/imgui_demo.cpp.o: CMakeFiles/nibbler.dir/flags.make
 CMakeFiles/nibbler.dir/imgui-sfml/imgui_demo.cpp.o: imgui-sfml/imgui_demo.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_53) "Building CXX object CMakeFiles/nibbler.dir/imgui-sfml/imgui_demo.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_46) "Building CXX object CMakeFiles/nibbler.dir/imgui-sfml/imgui_demo.cpp.o"
 	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/imgui-sfml/imgui_demo.cpp.o -c /Users/ntoniolo/nibbler/imgui-sfml/imgui_demo.cpp
 
 CMakeFiles/nibbler.dir/imgui-sfml/imgui_demo.cpp.i: cmake_force
@@ -748,7 +657,7 @@ CMakeFiles/nibbler.dir/imgui-sfml/imgui_demo.cpp.s: cmake_force
 
 CMakeFiles/nibbler.dir/imgui-sfml/imgui_draw.cpp.o: CMakeFiles/nibbler.dir/flags.make
 CMakeFiles/nibbler.dir/imgui-sfml/imgui_draw.cpp.o: imgui-sfml/imgui_draw.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_54) "Building CXX object CMakeFiles/nibbler.dir/imgui-sfml/imgui_draw.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_47) "Building CXX object CMakeFiles/nibbler.dir/imgui-sfml/imgui_draw.cpp.o"
 	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/imgui-sfml/imgui_draw.cpp.o -c /Users/ntoniolo/nibbler/imgui-sfml/imgui_draw.cpp
 
 CMakeFiles/nibbler.dir/imgui-sfml/imgui_draw.cpp.i: cmake_force
@@ -761,7 +670,7 @@ CMakeFiles/nibbler.dir/imgui-sfml/imgui_draw.cpp.s: cmake_force
 
 CMakeFiles/nibbler.dir/imgui-sfml/imgui_widgets.cpp.o: CMakeFiles/nibbler.dir/flags.make
 CMakeFiles/nibbler.dir/imgui-sfml/imgui_widgets.cpp.o: imgui-sfml/imgui_widgets.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_55) "Building CXX object CMakeFiles/nibbler.dir/imgui-sfml/imgui_widgets.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_48) "Building CXX object CMakeFiles/nibbler.dir/imgui-sfml/imgui_widgets.cpp.o"
 	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/imgui-sfml/imgui_widgets.cpp.o -c /Users/ntoniolo/nibbler/imgui-sfml/imgui_widgets.cpp
 
 CMakeFiles/nibbler.dir/imgui-sfml/imgui_widgets.cpp.i: cmake_force
@@ -817,13 +726,6 @@ nibbler_OBJECTS = \
 "CMakeFiles/nibbler.dir/class/systems/JoystickSystem.cpp.o" \
 "CMakeFiles/nibbler.dir/class/systems/MotionSystem.cpp.o" \
 "CMakeFiles/nibbler.dir/class/Univers.cpp.o" \
-"CMakeFiles/nibbler.dir/externlib/display_sdl/src/DisplaySdl.cpp.o" \
-"CMakeFiles/nibbler.dir/externlib/display_sfml/src/DisplaySfml.cpp.o" \
-"CMakeFiles/nibbler.dir/externlib/sandbox/main.cpp.o" \
-"CMakeFiles/nibbler.dir/externlib/sound_sdl/src/main.cpp.o" \
-"CMakeFiles/nibbler.dir/externlib/sound_sdl/src/SoundSdl.cpp.o" \
-"CMakeFiles/nibbler.dir/externlib/sound_sfml/src/main.cpp.o" \
-"CMakeFiles/nibbler.dir/externlib/sound_sfml/src/SoundSfml.cpp.o" \
 "CMakeFiles/nibbler.dir/imgui-sfml/imgui-SFML.cpp.o" \
 "CMakeFiles/nibbler.dir/imgui-sfml/imgui.cpp.o" \
 "CMakeFiles/nibbler.dir/imgui-sfml/imgui_demo.cpp.o" \
@@ -876,13 +778,6 @@ nibbler: CMakeFiles/nibbler.dir/class/systems/FoodSystem.cpp.o
 nibbler: CMakeFiles/nibbler.dir/class/systems/JoystickSystem.cpp.o
 nibbler: CMakeFiles/nibbler.dir/class/systems/MotionSystem.cpp.o
 nibbler: CMakeFiles/nibbler.dir/class/Univers.cpp.o
-nibbler: CMakeFiles/nibbler.dir/externlib/display_sdl/src/DisplaySdl.cpp.o
-nibbler: CMakeFiles/nibbler.dir/externlib/display_sfml/src/DisplaySfml.cpp.o
-nibbler: CMakeFiles/nibbler.dir/externlib/sandbox/main.cpp.o
-nibbler: CMakeFiles/nibbler.dir/externlib/sound_sdl/src/main.cpp.o
-nibbler: CMakeFiles/nibbler.dir/externlib/sound_sdl/src/SoundSdl.cpp.o
-nibbler: CMakeFiles/nibbler.dir/externlib/sound_sfml/src/main.cpp.o
-nibbler: CMakeFiles/nibbler.dir/externlib/sound_sfml/src/SoundSfml.cpp.o
 nibbler: CMakeFiles/nibbler.dir/imgui-sfml/imgui-SFML.cpp.o
 nibbler: CMakeFiles/nibbler.dir/imgui-sfml/imgui.cpp.o
 nibbler: CMakeFiles/nibbler.dir/imgui-sfml/imgui_demo.cpp.o
@@ -894,7 +789,7 @@ nibbler: SFML/lib/libsfml-window.2.5.1.dylib
 nibbler: SFML/lib/libsfml-audio.2.5.1.dylib
 nibbler: SFML/lib/libsfml-system.2.5.1.dylib
 nibbler: CMakeFiles/nibbler.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_56) "Linking CXX executable nibbler"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_49) "Linking CXX executable nibbler"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/nibbler.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

@@ -47,13 +47,6 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/Users/ntoniolo/nibbler/class/systems/FoodSystem.cpp" "/Users/ntoniolo/nibbler/CMakeFiles/nibbler.dir/class/systems/FoodSystem.cpp.o"
   "/Users/ntoniolo/nibbler/class/systems/JoystickSystem.cpp" "/Users/ntoniolo/nibbler/CMakeFiles/nibbler.dir/class/systems/JoystickSystem.cpp.o"
   "/Users/ntoniolo/nibbler/class/systems/MotionSystem.cpp" "/Users/ntoniolo/nibbler/CMakeFiles/nibbler.dir/class/systems/MotionSystem.cpp.o"
-  "/Users/ntoniolo/nibbler/externlib/display_sdl/src/DisplaySdl.cpp" "/Users/ntoniolo/nibbler/CMakeFiles/nibbler.dir/externlib/display_sdl/src/DisplaySdl.cpp.o"
-  "/Users/ntoniolo/nibbler/externlib/display_sfml/src/DisplaySfml.cpp" "/Users/ntoniolo/nibbler/CMakeFiles/nibbler.dir/externlib/display_sfml/src/DisplaySfml.cpp.o"
-  "/Users/ntoniolo/nibbler/externlib/sandbox/main.cpp" "/Users/ntoniolo/nibbler/CMakeFiles/nibbler.dir/externlib/sandbox/main.cpp.o"
-  "/Users/ntoniolo/nibbler/externlib/sound_sdl/src/SoundSdl.cpp" "/Users/ntoniolo/nibbler/CMakeFiles/nibbler.dir/externlib/sound_sdl/src/SoundSdl.cpp.o"
-  "/Users/ntoniolo/nibbler/externlib/sound_sdl/src/main.cpp" "/Users/ntoniolo/nibbler/CMakeFiles/nibbler.dir/externlib/sound_sdl/src/main.cpp.o"
-  "/Users/ntoniolo/nibbler/externlib/sound_sfml/src/SoundSfml.cpp" "/Users/ntoniolo/nibbler/CMakeFiles/nibbler.dir/externlib/sound_sfml/src/SoundSfml.cpp.o"
-  "/Users/ntoniolo/nibbler/externlib/sound_sfml/src/main.cpp" "/Users/ntoniolo/nibbler/CMakeFiles/nibbler.dir/externlib/sound_sfml/src/main.cpp.o"
   "/Users/ntoniolo/nibbler/imgui-sfml/imgui-SFML.cpp" "/Users/ntoniolo/nibbler/CMakeFiles/nibbler.dir/imgui-sfml/imgui-SFML.cpp.o"
   "/Users/ntoniolo/nibbler/imgui-sfml/imgui.cpp" "/Users/ntoniolo/nibbler/CMakeFiles/nibbler.dir/imgui-sfml/imgui.cpp.o"
   "/Users/ntoniolo/nibbler/imgui-sfml/imgui_demo.cpp" "/Users/ntoniolo/nibbler/CMakeFiles/nibbler.dir/imgui-sfml/imgui_demo.cpp.o"
@@ -70,6 +63,7 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "SFML/include"
   "/Users/ntoniolo/.brew/include"
   "imgui-sfml"
+  "externlib/commun"
   "/System/Library/Frameworks"
   )
 

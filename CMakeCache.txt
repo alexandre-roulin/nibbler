@@ -14,7 +14,8 @@
 # EXTERNAL cache entries
 ########################
 
-//Build jsoncpp_lib as a shared library.
+//TRUE to build SFML as shared libraries, FALSE to build it as
+// static libraries
 BUILD_SHARED_LIBS:BOOL=TRUE
 
 //Build jsoncpp_lib static library.
@@ -299,6 +300,9 @@ JSONCPP_WITH_TESTS:BOOL=ON
 //Force compilation to fail if a warning occurs
 JSONCPP_WITH_WARNING_AS_ERROR:BOOL=OFF
 
+//The directory containing a CMake configuration file for JsonCpp.
+JsonCpp_DIR:PATH=JsonCpp_DIR-NOTFOUND
+
 //Path to a file.
 OGG_INCLUDE_DIR:PATH=/Users/ntoniolo/nibbler/SFML/extlibs/headers
 
@@ -322,6 +326,9 @@ OPENGL_glu_LIBRARY:FILEPATH=/System/Library/Frameworks/OpenGL.framework
 
 //Path to a library.
 OpenGL_LIBRARY:FILEPATH=/System/Library/Frameworks/OpenGL.framework
+
+//pkg-config executable
+PKG_CONFIG_EXECUTABLE:FILEPATH=/Users/ntoniolo/.brew/bin/pkg-config
 
 //Path to a program.
 PYTHON_EXECUTABLE:FILEPATH=/usr/bin/python2.6
@@ -392,6 +399,9 @@ VORBIS_LIBRARY:FILEPATH=/Users/ntoniolo/nibbler/SFML/extlibs/libs-osx/Frameworks
 
 //Value Computed by CMake
 jsoncpp_BINARY_DIR:STATIC=/Users/ntoniolo/nibbler/jsoncpp
+
+//The directory containing a CMake configuration file for jsoncpp.
+jsoncpp_DIR:PATH=jsoncpp_DIR-NOTFOUND
 
 //Value Computed by CMake
 jsoncpp_SOURCE_DIR:STATIC=/Users/ntoniolo/nibbler/jsoncpp
@@ -542,7 +552,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=14
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=8
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP
@@ -589,6 +599,8 @@ FIND_PACKAGE_MESSAGE_DETAILS_FLAC:INTERNAL=[/Users/ntoniolo/nibbler/SFML/extlibs
 FIND_PACKAGE_MESSAGE_DETAILS_OpenAL:INTERNAL=[/Users/ntoniolo/nibbler/SFML/extlibs/libs-osx/Frameworks/OpenAL.framework][/System/Library/Frameworks/OpenAL.framework/Headers][v()]
 //Details about finding OpenGL
 FIND_PACKAGE_MESSAGE_DETAILS_OpenGL:INTERNAL=[/System/Library/Frameworks/OpenGL.framework][/System/Library/Frameworks/OpenGL.framework][c ][v()]
+//Details about finding PkgConfig
+FIND_PACKAGE_MESSAGE_DETAILS_PkgConfig:INTERNAL=[/Users/ntoniolo/.brew/bin/pkg-config][v0.29.2()]
 //Details about finding PythonInterp
 FIND_PACKAGE_MESSAGE_DETAILS_PythonInterp:INTERNAL=[/usr/bin/python2.6][v2.6.9(2.6)]
 //Details about finding VORBIS
@@ -619,6 +631,30 @@ HAVE_STDDEF_H:INTERNAL=1
 HAVE_STDINT_H:INTERNAL=1
 //Have include sys/types.h
 HAVE_SYS_TYPES_H:INTERNAL=1
+JSONCPP_CFLAGS:INTERNAL=
+JSONCPP_CFLAGS_I:INTERNAL=
+JSONCPP_CFLAGS_OTHER:INTERNAL=
+JSONCPP_FOUND:INTERNAL=
+JSONCPP_INCLUDEDIR:INTERNAL=
+JSONCPP_LIBDIR:INTERNAL=
+JSONCPP_LIBS:INTERNAL=
+JSONCPP_LIBS_L:INTERNAL=
+JSONCPP_LIBS_OTHER:INTERNAL=
+JSONCPP_LIBS_PATHS:INTERNAL=
+JSONCPP_PREFIX:INTERNAL=
+JSONCPP_STATIC_CFLAGS:INTERNAL=
+JSONCPP_STATIC_CFLAGS_I:INTERNAL=
+JSONCPP_STATIC_CFLAGS_OTHER:INTERNAL=
+JSONCPP_STATIC_LIBDIR:INTERNAL=
+JSONCPP_STATIC_LIBS:INTERNAL=
+JSONCPP_STATIC_LIBS_L:INTERNAL=
+JSONCPP_STATIC_LIBS_OTHER:INTERNAL=
+JSONCPP_STATIC_LIBS_PATHS:INTERNAL=
+JSONCPP_VERSION:INTERNAL=
+JSONCPP_jsoncpp_INCLUDEDIR:INTERNAL=
+JSONCPP_jsoncpp_LIBDIR:INTERNAL=
+JSONCPP_jsoncpp_PREFIX:INTERNAL=
+JSONCPP_jsoncpp_VERSION:INTERNAL=
 //CHECK_TYPE_SIZE: sizeof(lconv)
 LCONV_SIZE:INTERNAL=96
 //ADVANCED property for variable: OGG_INCLUDE_DIR
@@ -635,6 +671,8 @@ OPENGL_INCLUDE_DIR-ADVANCED:INTERNAL=1
 OPENGL_gl_LIBRARY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: OPENGL_glu_LIBRARY
 OPENGL_glu_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: PKG_CONFIG_EXECUTABLE
+PKG_CONFIG_EXECUTABLE-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: PYTHON_EXECUTABLE
 PYTHON_EXECUTABLE-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: VORBISENC_LIBRARY
@@ -647,4 +685,5 @@ VORBIS_INCLUDE_DIR-ADVANCED:INTERNAL=1
 VORBIS_LIBRARY-ADVANCED:INTERNAL=1
 //CMAKE_INSTALL_PREFIX during last run
 _GNUInstallDirs_LAST_CMAKE_INSTALL_PREFIX:INTERNAL=/Users/ntoniolo/.brew
+__pkg_config_checked_JSONCPP:INTERNAL=1
 

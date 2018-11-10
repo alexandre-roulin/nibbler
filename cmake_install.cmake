@@ -35,7 +35,6 @@ endif()
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
   include("/Users/ntoniolo/nibbler/SFML/cmake_install.cmake")
-  include("/Users/ntoniolo/nibbler/jsoncpp/cmake_install.cmake")
 
 endif()
 

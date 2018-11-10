@@ -6,7 +6,40 @@ set(CMAKE_CXX_COMPILER "/usr/bin/g++")
 set(NAME nibbler)
 project(${NAME})
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
+
+find_package(Git QUIET)
+if(GIT_FOUND AND EXISTS "${PROJECT_SOURCE_DIR}/.git")
+    # Update submodules as needed
+    option(GIT_SUBMODULE "Check submodules during build" ON)
+    if(GIT_SUBMODULE)
+        message(STATUS "Submodule update")
+        execute_process(COMMAND ${GIT_EXECUTABLE} submodule update --init --recursive
+                WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+                RESULT_VARIABLE GIT_SUBMOD_RESULT)
+        if(NOT GIT_SUBMOD_RESULT EQUAL "0")
+            message(FATAL_ERROR "git submodule update --init failed with ${GIT_SUBMOD_RESULT}, please checkout submodules")
+        endif()
+    endif()
+endif()
+
+if(NOT EXISTS "${PROJECT_SOURCE_DIR}/SFML/CMakeLists.txt")
+    message(FATAL_ERROR "The SFML submodules were not downloaded! GIT_SUBMODULE was turned off or failed. Please update submodules and try again.")
+endif()
+if(NOT EXISTS "${PROJECT_SOURCE_DIR}/jsoncpp/CMakeLists.txt")
+    message(FATAL_ERROR "The jsoncpp submodules were not downloaded! GIT_SUBMODULE was turned off or failed. Please update submodules and try again.")
+endif()
+
+add_subdirectory(SFML)
+
+find_package(PkgConfig REQUIRED)
+if(NOT PKG_CONFIG_FOUND)
+    message(FATAL_ERROR "PkgConfig NotFound")
+endif()
+
+
+find_package(JsonCpp)
+include_directories( ${JsonCpp_INCLUDE_DIRS} )
 
 add_executable(${NAME}
         class/component/CollisionComponent.cpp
@@ -89,17 +122,17 @@ add_executable(${NAME}
         class/Univers.hpp
         externlib/commun/IDisplay.hpp
         externlib/commun/ISound.hpp
-        externlib/display_sdl/include/DisplaySdl.hpp
-        externlib/display_sdl/src/DisplaySdl.cpp
-        externlib/display_sfml/include/DisplaySfml.hpp
-        externlib/display_sfml/src/DisplaySfml.cpp
-        externlib/sandbox/main.cpp
-        externlib/sound_sdl/include/SoundSdl.hpp
-        externlib/sound_sdl/src/main.cpp
-        externlib/sound_sdl/src/SoundSdl.cpp
-        externlib/sound_sfml/include/SoundSfml.hpp
-        externlib/sound_sfml/src/main.cpp
-        externlib/sound_sfml/src/SoundSfml.cpp
+        #externlib/display_sdl/include/DisplaySdl.hpp
+        #externlib/display_sdl/src/DisplaySdl.cpp
+        #externlib/display_sfml/include/DisplaySfml.hpp
+        #externlib/display_sfml/src/DisplaySfml.cpp
+        #externlib/sandbox/main.cpp
+        #externlib/sound_sdl/include/SoundSdl.hpp
+        #externlib/sound_sdl/src/main.cpp
+        #externlib/sound_sdl/src/SoundSdl.cpp
+        #externlib/sound_sfml/include/SoundSfml.hpp
+        #externlib/sound_sfml/src/main.cpp
+        #externlib/sound_sfml/src/SoundSfml.cpp
         imgui-sfml/imconfig.h
         imgui-sfml/imgui-SFML.cpp
         imgui-sfml/imgui-SFML.h
@@ -120,42 +153,12 @@ add_executable(${NAME}
         )
 
 #target_compile_options(${NAME} PUBLIC -Wall -Wextra -Werror -Wvla)
-target_compile_options(${NAME} PUBLIC -Wunusable-partial-specialization)
-find_package(Git QUIET)
-if(GIT_FOUND AND EXISTS "${PROJECT_SOURCE_DIR}/.git")
-    # Update submodules as needed
-    option(GIT_SUBMODULE "Check submodules during build" ON)
-    if(GIT_SUBMODULE)
-        message(STATUS "Submodule update")
-        execute_process(COMMAND ${GIT_EXECUTABLE} submodule update --init --recursive
-                WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-                RESULT_VARIABLE GIT_SUBMOD_RESULT)
-        if(NOT GIT_SUBMOD_RESULT EQUAL "0")
-            message(FATAL_ERROR "git submodule update --init failed with ${GIT_SUBMOD_RESULT}, please checkout submodules")
-        endif()
-    endif()
-endif()
-
-if(NOT EXISTS "${PROJECT_SOURCE_DIR}/SFML/CMakeLists.txt")
-    message(FATAL_ERROR "The SFML submodules were not downloaded! GIT_SUBMODULE was turned off or failed. Please update submodules and try again.")
-endif()
-if(NOT EXISTS "${PROJECT_SOURCE_DIR}/jsoncpp/CMakeLists.txt")
-    message(FATAL_ERROR "The jsoncpp submodules were not downloaded! GIT_SUBMODULE was turned off or failed. Please update submodules and try again.")
-endif()
-
-add_subdirectory(SFML)
-add_subdirectory(jsoncpp)
-
-
-target_link_libraries(${NAME} PUBLIC
-                sfml-graphics sfml-window sfml-system sfml-audio
-                jsoncpp
-                boost_system boost_thread-mt
-                )
 
 link_directories(
         /usr/lib
-        ~/.brew/include
+        $ENV{HOME}/.brew/lib
+        ${PROJECT_SOURCE_DIR}/jsoncpp/src/lib_json/
+        ${PROJECT_SOURCE_DIR}/SFML
 )
 
 target_include_directories(
@@ -164,9 +167,16 @@ target_include_directories(
         incs
         jsoncpp/include
         SFML/include
-        ~/.brew/include
+        $ENV{HOME}/.brew/include
         imgui-sfml/
+        ${PROJECT_SOURCE_DIR}/externlib/commun/
 )
+
+target_link_libraries(${NAME} PUBLIC
+        sfml-graphics sfml-window sfml-system sfml-audio
+        ${JsonCpp_LIBRARIES}
+        boost_system boost_thread-mt
+        )
 
 
 if(WIN32)

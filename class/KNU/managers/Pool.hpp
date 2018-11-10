@@ -4,6 +4,7 @@
 #include <map>
 #include <iostream>
 #include "AbstractPool.hpp"
+#include <cassert>
 
 #define BASE_COMPONENT_SIZE 10
 
