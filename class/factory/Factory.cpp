@@ -81,7 +81,7 @@ void Factory::create_food(int y, int x) {
 	food.addComponent<PositionComponent>(y, x);
 	food.addComponent<CollisionComponent>(false);
 	food.addComponent<SpriteComponent>(33);
-	food.tag("food");
+	food.group("food");
 }
 
 void Factory::create_walls() {

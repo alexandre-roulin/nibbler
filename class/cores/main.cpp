@@ -6,36 +6,23 @@
 #include <boost/thread/thread.hpp>
 
 #include <KNU/World.hpp>
-#include <component/PositionComponent.hpp>
-#include <component/MotionComponent.hpp>
-#include <component/SpriteComponent.hpp>
-#include <logger.h>
 
-
-#include <component/JoystickComponent.hpp>
-#include <events/JoystickEvent.hpp>
 
 #include <random>
-#include <component/FollowComponent.hpp>
-#include <component/CollisionComponent.hpp>
-#include <json/forwards.h>
-#include <json/json.h>
 #include <fstream>
-#include <network/Network.hpp>
-#include <boost/asio/io_service.hpp>
 #include <network/ServerTCP.hpp>
 #include <network/ClientTCP.hpp>
-#include <future>
 
 #include <gui/Core.hpp>
 
-std::string const Snake::basicName[MAX_SNAKE] = { "Jack O'Lantern", "Eden", "Jacky", "Emerald", "Broutille", "Veggie-vie", "jinou42", "Dota c cro cool" };
+std::string const Snake::basicName[MAX_SNAKE] = {"Jack O'Lantern", "Eden",
+												 "Jacky", "Emerald",
+												 "Broutille", "Veggie-vie",
+												 "jinou42", "Dota c cro cool"};
 
-bool	demoGui(int ac, char **av, Univers &univers)
-{
+bool demoGui(int ac, char **av, Univers &univers) {
 
-	if (ac > 1 && !strcmp(av[1], "demo"))
-	{
+	if (ac > 1 && !strcmp(av[1], "demo")) {
 		univers.create_ui();
 		univers.getCore_().demo();
 		return (true);
@@ -43,7 +30,7 @@ bool	demoGui(int ac, char **av, Univers &univers)
 	return (false);
 }
 
-int f(Univers		&univers){
+int f(Univers &univers) {
 	univers.create_server();
 	univers.create_client();
 	sleep(1);
@@ -51,19 +38,18 @@ int f(Univers		&univers){
 	univers.start_game();
 
 	sleep(1);
-	std::string buffer1;
-	int16_t l = 1;
-	ClientTCP::add_prefix(START_GAME, buffer1, &l);
-	univers.getServerTCP_().async_write(buffer1);
+	int16_t rand = 42;
+	univers.getClientTCP_()
+			.write_socket(ClientTCP::add_prefix(START_GAME, &rand));
 	univers.loop();
 	return 0x2a;
 }
 
 int main(int ac, char **av) {
-	char		path[] = "/tmp/log.out";
+	char path[] = "/tmp/log.out";
 	logger_init(path);
-	Univers		univers;
-
+	Univers univers;
+	srand(time(NULL));
 
 	if (demoGui(ac, av, univers))
 		return (0);
@@ -83,10 +69,9 @@ int main(int ac, char **av) {
 
 		if (buffer == "game") {
 			univers.start_game();
-			std::string buffer1;
-			int16_t l = 42;
-			ClientTCP::add_prefix(START_GAME, buffer1, &l);
-			univers.getClientTCP_().write_socket(buffer1);
+			int16_t rand = 42;
+			univers.getClientTCP_()
+			.write_socket(ClientTCP::add_prefix(START_GAME, &rand));
 			univers.loop();
 		}
 		if (buffer == "start") {

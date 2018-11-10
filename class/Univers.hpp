@@ -52,7 +52,6 @@ private:
 	ServerTCP *serverTCP;
 	boost::asio::io_service io_server;
 	boost::asio::io_service io_client;
-
 	boost::asio::io_service io;
 	boost::asio::deadline_timer deadline_timer = boost::asio::deadline_timer(io,
 																			 boost::posix_time::seconds(

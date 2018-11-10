@@ -15,12 +15,16 @@
 #define MAP_MAX		20
 #define MAP_MIN		8
 
+#define DIRECTION_VERTICAL 1			// 0000 0001
+#define DIRECTION_HORIZONTAL 4			// 0000 0100
+
 enum eDirection {
-	NORTH,
-	SOUTH,
-	EAST,
-	WEST
+	NORTH = 1,							// 0000 0001
+	SOUTH = 3,							// 0000 0011
+	EAST = 4,							// 0000 0100
+	WEST = 12							// 0000 1100
 };
+
 
 enum eSnakeSprite {
 	GREEN,

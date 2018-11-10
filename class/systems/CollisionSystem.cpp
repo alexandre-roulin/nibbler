@@ -22,17 +22,18 @@ void CollisionSystem::update() {
 							  if (snakePositionComponent == positionComponent && entity != entity_) {
 								  auto &collisionComponent = entity_.getComponent<CollisionComponent>();
 								  eSnakePart esp = Factory::isSnakePart(entity_.getTag());
-									std::cout << esp << std::endl;
+								  log_warn("Collision between [%d] [%d]", entity_.getId(), entity.getId());
 								  if (collisionComponent.isWall ||
 									  esp != OTHER) {
-									  std::cout << "wall [" << collisionComponent.isWall << "]" << std::endl;
+								  	log_warn("Wall || SnakePart != HEAD");
 									  entity.killGroup();
 								  }
 								  if (esp == HEAD) {
-									  std::cout << "HEAD" << std::endl;
-										entity.killGroup();
+									  log_warn("Head");
+									  entity.killGroup();
 								  }
-								  if (entity_.getTag() == "food") {
+								  if (entity_.getGroup() == "food") {
+									  log_warn("Food");
 									  std::string s = Factory::factory_name(TAIL, entity.getTag());
 									  std::cout << "food" << s << std::endl;
 									  entity_.kill();

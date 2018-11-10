@@ -1,3 +1,4 @@
+#include <nibbler.hpp>
 #include "DisplaySfml.hpp"
 
 IDisplay *newDisplay(char const *tileset,

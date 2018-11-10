@@ -34,22 +34,16 @@ void ServerTCP::refresh_data_snake_array(
 		TCPConnection::pointer &connection,
 		int16_t id) {
 	{
-		std::string buffer;
-		ClientTCP::add_prefix(ID, buffer, &id);
 //		//std::cout << "ServerTCP::refresh_data_snake_array : " << buffer.size() << std::endl;
-		connection->write_socket(buffer);
+		connection->write_socket(ClientTCP::add_prefix(ID, &id));
 	}
 	{
-		std::string buffer;
-		ClientTCP::add_prefix(SNAKE_ARRAY, buffer, snake_array);
 //		//std::cout << "ServerTCP::refresh_data_snake_array : " << buffer.size() << std::endl;
-		connection->write_socket(buffer);
+		connection->write_socket(ClientTCP::add_prefix(SNAKE_ARRAY, snake_array));
 	}
 	{
-		std::string buffer;
-		ClientTCP::add_prefix(SNAKE, buffer, &snake_array[id]);
 //		//std::cout << "ServerTCP::refresh_data_snake_array : " << buffer.size() << std::endl;
-		async_write(buffer);
+		async_write(ClientTCP::add_prefix(SNAKE, &snake_array[id]));
 	}
 }
 
@@ -61,10 +55,7 @@ void ServerTCP::start_game() {
 		}
 	}
 	//std::cout << "Start Game  " << std::endl;
-
-	std::string buffer;
-	ClientTCP::add_prefix(START_GAME, buffer, &nu_);
-	async_write(buffer);
+	async_write(ClientTCP::add_prefix(START_GAME, &nu_));
 }
 
 void ServerTCP::async_write(std::string message) {
@@ -104,10 +95,8 @@ void ServerTCP::parse_input(eHeader header, void const *input, size_t len) {
 		default:
 			break;
 	}
-	std::string buffer;
-	ClientTCP::add_prefix(header, buffer, data_deserialize);
 	//std::cout << "ServerTCP::parse_input.size() " << buffer.size() << std::endl;
-	async_write(buffer);
+	async_write(ClientTCP::add_prefix(header, data_deserialize));
 	delete [] data_deserialize;
 }
 

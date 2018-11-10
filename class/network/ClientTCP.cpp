@@ -50,9 +50,7 @@ void ClientTCP::change_state_ready(void) {
 }
 
 void ClientTCP::refreshMySnake(void) {
-	std::string buffer;
-	add_prefix(SNAKE, buffer, &snake_array[id_]);
-	write_socket(buffer);
+	write_socket(add_prefix(SNAKE, &snake_array[id_]));
 }
 
 void ClientTCP::connect() {
@@ -142,6 +140,7 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 			break;
 		}
 		case FOOD: {
+			log_trace("FoodCreated");
 			int position[2];
 			std::memcpy(position, input, len);
 			factory.create_food(position[0], position[1]);
@@ -212,9 +211,3 @@ int16_t		ClientTCP::getId(void) const {
 	return this->id_;
 }
 
-void ClientTCP::food() {
-	std::string buffer;
-	int pos[2] = { 42, 42 };
-	ClientTCP::add_prefix(FOOD, buffer, pos);
-	write_socket(buffer);
-}

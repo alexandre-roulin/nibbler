@@ -217,18 +217,21 @@ namespace KNU {
 
 	void EntitiesManager::destroyEntity(Entity &entity) {
 
-		freeIds.push(entity.getId());
-		_poolSignature[entity.id].clean();
-		_entitiesMap[entity.id].reset();
-		entity.reset();
-		for (auto it = _taggedEntity.begin(); it != _taggedEntity.end();)
+
+
+		for (auto it = _taggedEntity.begin(); it != _taggedEntity.end();) {
 			if (it->second == entity) it = _taggedEntity.erase(it); else ++it;
+		}
 
 		for (auto &groupEntity : _groupedEntities) {
 			auto find = groupEntity.second.find(entity);
 			if (find != groupEntity.second.end())
 				groupEntity.second.erase(find);
 		}
+		freeIds.push(entity.getId());
+		_poolSignature[entity.id].clean();
+		_entitiesMap[entity.id].reset();
+		entity.reset();
 	}
 
 

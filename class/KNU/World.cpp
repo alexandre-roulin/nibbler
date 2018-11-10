@@ -2,7 +2,7 @@
 #include "World.hpp"
 
 namespace KNU {
-	World::World(Univers &) : max_(30), grid(30, 30) {
+	World::World(Univers &univers) : max_(30), grid(30, 30), univers_(univers) {
 
 		entityManager_ = std::make_unique<EntitiesManager>(*this);
 		eventManager_ = std::make_unique<EventManager>(*this);
@@ -59,6 +59,10 @@ namespace KNU {
 
 	int World::getMax_() const {
 		return max_;
+	}
+
+	Univers &World::getUnivers() const {
+		return univers_;
 	}
 
 

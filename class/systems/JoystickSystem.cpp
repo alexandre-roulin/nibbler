@@ -10,11 +10,11 @@ JoystickSystem::JoystickSystem() {
 }
 
 void JoystickSystem::update() {
-	log_success("update");
 	auto events = getWorld().getEventManager().getEvents<JoystickEvent>();
-//	std::cout << "Size" << events.size() << std::endl;
+	log_success("JoystickSystem::update on %d events", events.size());
 	for (auto &event : events) {
-		auto entity = getWorld().getEntityManager().getEntityByTag(event.tag_player);
+		auto entity = getWorld().getEntityManager().getEntityByTag(
+				event.tag_player);
 
 		if (entity.getId() != -1 && entity.hasComponent<JoystickComponent>()) {
 			auto &joystickComponent = entity.getComponent<JoystickComponent>();
@@ -24,7 +24,22 @@ void JoystickSystem::update() {
 	for (auto &entity : getEntities()) {
 		auto &motionComponent = entity.getComponent<MotionComponent>();
 		auto &joystickComponent = entity.getComponent<JoystickComponent>();
-		motionComponent.direction = joystickComponent.direction;
+		log_error("Match Mot[%d] Joy[%d] MotHor[%d] JoyHor[%d] MotVer[%d] JoyVer[%d]",
+				  motionComponent.direction,
+					joystickComponent.direction,
+				  motionComponent.direction & DIRECTION_HORIZONTAL,
+				  joystickComponent.direction & DIRECTION_HORIZONTAL,
+				  motionComponent.direction & DIRECTION_VERTICAL,
+				  joystickComponent.direction & DIRECTION_VERTICAL
+					);
+
+		if ((motionComponent.direction & DIRECTION_HORIZONTAL &&
+				!(joystickComponent.direction & DIRECTION_HORIZONTAL)) ||
+			(motionComponent.direction & DIRECTION_VERTICAL &&
+					!(joystickComponent.direction & DIRECTION_VERTICAL))) {
+			log_error("MatchDiretion!");
+			motionComponent.direction = joystickComponent.direction;
+		}
 	}
 }
 

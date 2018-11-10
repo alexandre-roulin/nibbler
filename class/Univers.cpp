@@ -46,15 +46,10 @@ int Univers::start_game() {
 }
 
 void Univers::manage_input() {
-	char des[ClientTCP::size_header[INPUT]];
-	std::string buffer;
 	eDirection ed = display->getDirection();
 	int16_t id = clientTCP_->getId_();
-	std::memcpy(des, &id, sizeof(int16_t));
-	std::memcpy(des + sizeof(int16_t), &ed, sizeof(eDirection));
-	ClientTCP::add_prefix(INPUT, buffer, des);
 	if (world_->getEntityManager().getEntityByTag(Factory::factory_name(HEAD, id)).isAlive())
-		clientTCP_->write_socket(buffer);
+		clientTCP_->write_socket(ClientTCP::add_prefix(INPUT, &id, &ed));
 }
 
 void Univers::loop() {
@@ -86,9 +81,7 @@ void Univers::loop() {
 
 
 void Univers::loop_world() {
-	log_warn("Test [%d]", world_->getEntityManager().getEntityByTag("0_snake_tail").getComponent<FollowComponent>().idFollowed);
 	world_->grid.clear();
-	log_warn("Test [%d]", world_->getEntityManager().getEntityByTag("0_snake_tail").getComponent<FollowComponent>().idFollowed);
 
 	world_->getSystemManager().getSystem<FollowSystem>()->update();
 	world_->getSystemManager().getSystem<JoystickSystem>()->update();
@@ -97,7 +90,7 @@ void Univers::loop_world() {
 	world_->getSystemManager().getSystem<FoodSystem>()->update();
 	world_->getSystemManager().getSystem<RenderSystem>()->update();
 
-	deadline_timer.expires_at(deadline_timer.expires_at() + boost::posix_time::milliseconds(800));
+	deadline_timer.expires_at(deadline_timer.expires_at() + boost::posix_time::milliseconds(350));
 	deadline_timer.async_wait(boost::bind(&Univers::loop_world, this));
 	world_->update();
 

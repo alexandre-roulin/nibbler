@@ -20,7 +20,11 @@ namespace KNU {
 		std::unique_ptr<SystemManager> systemManager_;
 		IDisplay *display;
 		int max_;
+		Univers &univers_;
+	public:
+		Univers &getUnivers() const;
 
+	private:
 
 		friend class EntitiesManager;
 	public:

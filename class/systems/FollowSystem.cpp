@@ -18,7 +18,7 @@ void FollowSystem::update() {
 		auto &followComponent = entity.getComponent<FollowComponent>();
 		auto entityFollowed = getWorld().getEntityManager()
 				.getEntityById(followComponent.idFollowed);
-		log_info("In {%d} entityFollowed.id : [%d] idFollowed [%d]", entity.getId(), entityFollowed.getId(), followComponent.idFollowed);
+		log_info("In {%d} entityFollowed.id : [%d]", entity.getId(), entityFollowed.getId());
 		assert(entityFollowed.hasComponent<PositionComponent>());
 		if (!followComponent.skip)
 			followComponent.positionComponent = entityFollowed.getComponent<PositionComponent>();

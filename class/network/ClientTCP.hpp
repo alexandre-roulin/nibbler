@@ -40,11 +40,10 @@ public:
 	void change_sprite(eSnakeSprite snakeSprite);
 	void change_state_ready(void);
 
-	void food();
-
 	template<typename T>
-	static void add_prefix(eHeader, std::string &, T *element);
-
+	static std::string  add_prefix(eHeader, T *element);
+	template<typename T, typename U>
+	static std::string  add_prefix(eHeader, T *element1, U *element2);
 	static pointer_client
 	create(Univers &univers, boost::asio::io_service &io, std::string hostname);
 
@@ -74,9 +73,19 @@ private:
 	Factory factory;
 };
 
-template<typename T>
-void ClientTCP::add_prefix(eHeader header, std::string &message, T *element) {
+template<typename T, typename U>
+std::string ClientTCP::add_prefix(eHeader header, T *element1, U *element2) {
+	std::string message;
+	message.append(reinterpret_cast<char *>(&header), sizeof(eHeader));
+	message.append(reinterpret_cast<char *>(element1), sizeof(*element1));
+	message.append(reinterpret_cast<char *>(element2), sizeof(*element2));
+	return message;
+}
 
+template<typename T>
+std::string ClientTCP::add_prefix(eHeader header, T *element) {
+	std::string message;
 	message.append(reinterpret_cast<char *>(&header), sizeof(eHeader));
 	message.append(reinterpret_cast<char *>(element), ClientTCP::size_header[header]);
+	return message;
 }

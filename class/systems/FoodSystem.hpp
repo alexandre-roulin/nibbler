@@ -6,6 +6,7 @@
 class FoodSystem: public KNU::System {
 public:
 	FoodSystem();
+	void createFood();
 	virtual void update();
 };
 
