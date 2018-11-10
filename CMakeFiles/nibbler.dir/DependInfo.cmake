@@ -68,16 +68,8 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "incs"
   "jsoncpp/include"
   "SFML/include"
-  "boost/include"
-  "boost/libs/thread/include"
-  "boost/libs/asio/include"
-  "boost/libs/system/include"
-  "boost/libs/core/include"
-  "boost/libs/assert/include"
-  "boost/libs/static_assert/include"
-  "boost/libs/config/include"
-  "boost/libs/type_traits/include"
-  "boost/libs/move/include"
+  "/Users/ntoniolo/.brew/include"
+  "imgui-sfml"
   "/System/Library/Frameworks"
   )
 

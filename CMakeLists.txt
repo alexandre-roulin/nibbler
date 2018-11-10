@@ -146,11 +146,17 @@ endif()
 add_subdirectory(SFML)
 add_subdirectory(jsoncpp)
 
+
 target_link_libraries(${NAME} PUBLIC
                 sfml-graphics sfml-window sfml-system sfml-audio
                 jsoncpp
                 boost_system boost_thread-mt
                 )
+
+link_directories(
+        /usr/lib
+        ~/.brew/include
+)
 
 target_include_directories(
         ${NAME} PUBLIC
@@ -158,16 +164,8 @@ target_include_directories(
         incs
         jsoncpp/include
         SFML/include
-        boost/include
-        boost/libs/thread/include
-        boost/libs/asio/include
-        boost/libs/system/include
-        boost/libs/core/include
-        boost/libs/assert/include
-        boost/libs/static_assert/include
-        boost/libs/config/include
-        boost/libs/type_traits/include
-        boost/libs/move/include
+        ~/.brew/include
+        imgui-sfml/
 )
 
 
