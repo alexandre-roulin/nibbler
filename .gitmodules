@@ -4,9 +4,6 @@
 [submodule "SFML"]
 	path = SFML
 	url = https://github.com/SFML/SFML
-[submodule "jsoncpp"]
-	path = jsoncpp
-	url = https://github.com/open-source-parsers/jsoncpp
 [submodule "jsoncpp-cmake"]
 	path = jsoncpp-cmake
 	url = https://github.com/jwonders/jsoncpp-cmake
