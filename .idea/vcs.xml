@@ -4,6 +4,8 @@
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/SFML" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/imgui-sfml" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/imgui/imgui" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/imgui/imgui-sfml" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/json" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/jsoncpp" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/jsoncpp-cmake" vcs="Git" />
