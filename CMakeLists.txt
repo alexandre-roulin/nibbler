@@ -6,7 +6,7 @@ set(CMAKE_CXX_COMPILER "/usr/bin/g++")
 set(NAME nibbler)
 project(${NAME})
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 14)
 
 #set(CMAKE_MACOSX_RPATH 1)
 
@@ -163,7 +163,9 @@ add_executable(${NAME}
         )
 
 #target_compile_options(${NAME} PUBLIC -Wall -Wextra -Werror -Wvla)
-add_compile_options(-fsanitize=address -g3)
+#target_compile_options(${NAME} PUBLIC -fsanitize=address -g3 -DENABLE_ASAN=ON)
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address -g3")
 
 target_include_directories(
         ${NAME} PUBLIC
