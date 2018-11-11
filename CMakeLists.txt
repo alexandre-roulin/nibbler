@@ -133,17 +133,6 @@ add_executable(${NAME}
         class/Univers.hpp
         externlib/commun/IDisplay.hpp
         externlib/commun/ISound.hpp
-        #externlib/display_sdl/include/DisplaySdl.hpp
-        #externlib/display_sdl/src/DisplaySdl.cpp
-        #externlib/display_sfml/include/DisplaySfml.hpp
-        #externlib/display_sfml/src/DisplaySfml.cpp
-        #externlib/sandbox/main.cpp
-        #externlib/sound_sdl/include/SoundSdl.hpp
-        #externlib/sound_sdl/src/main.cpp
-        #externlib/sound_sdl/src/SoundSdl.cpp
-        #externlib/sound_sfml/include/SoundSfml.hpp
-        #externlib/sound_sfml/src/main.cpp
-        #externlib/sound_sfml/src/SoundSfml.cpp
         imgui-sfml/imconfig.h
         imgui-sfml/imgui-SFML.cpp
         imgui-sfml/imgui-SFML.h
