@@ -34,10 +34,10 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /Users/ntoniolo/.brew/Cellar/cmake/3.12.3/bin/cmake
+CMAKE_COMMAND = /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake
 
 # The command to remove a file.
-RM = /Users/ntoniolo/.brew/Cellar/cmake/3.12.3/bin/cmake -E remove -f
+RM = /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
@@ -603,9 +603,22 @@ CMakeFiles/nibbler.dir/class/systems/MotionSystem.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/systems/MotionSystem.cpp.s"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/systems/MotionSystem.cpp -o CMakeFiles/nibbler.dir/class/systems/MotionSystem.cpp.s
 
+CMakeFiles/nibbler.dir/class/systems/RenderSystem.cpp.o: CMakeFiles/nibbler.dir/flags.make
+CMakeFiles/nibbler.dir/class/systems/RenderSystem.cpp.o: class/systems/RenderSystem.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_43) "Building CXX object CMakeFiles/nibbler.dir/class/systems/RenderSystem.cpp.o"
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/systems/RenderSystem.cpp.o -c /Users/ntoniolo/nibbler/class/systems/RenderSystem.cpp
+
+CMakeFiles/nibbler.dir/class/systems/RenderSystem.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/class/systems/RenderSystem.cpp.i"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/class/systems/RenderSystem.cpp > CMakeFiles/nibbler.dir/class/systems/RenderSystem.cpp.i
+
+CMakeFiles/nibbler.dir/class/systems/RenderSystem.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/class/systems/RenderSystem.cpp.s"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/class/systems/RenderSystem.cpp -o CMakeFiles/nibbler.dir/class/systems/RenderSystem.cpp.s
+
 CMakeFiles/nibbler.dir/class/Univers.cpp.o: CMakeFiles/nibbler.dir/flags.make
 CMakeFiles/nibbler.dir/class/Univers.cpp.o: class/Univers.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_43) "Building CXX object CMakeFiles/nibbler.dir/class/Univers.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_44) "Building CXX object CMakeFiles/nibbler.dir/class/Univers.cpp.o"
 	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/class/Univers.cpp.o -c /Users/ntoniolo/nibbler/class/Univers.cpp
 
 CMakeFiles/nibbler.dir/class/Univers.cpp.i: cmake_force
@@ -618,7 +631,7 @@ CMakeFiles/nibbler.dir/class/Univers.cpp.s: cmake_force
 
 CMakeFiles/nibbler.dir/imgui-sfml/imgui-SFML.cpp.o: CMakeFiles/nibbler.dir/flags.make
 CMakeFiles/nibbler.dir/imgui-sfml/imgui-SFML.cpp.o: imgui-sfml/imgui-SFML.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_44) "Building CXX object CMakeFiles/nibbler.dir/imgui-sfml/imgui-SFML.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_45) "Building CXX object CMakeFiles/nibbler.dir/imgui-sfml/imgui-SFML.cpp.o"
 	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/imgui-sfml/imgui-SFML.cpp.o -c /Users/ntoniolo/nibbler/imgui-sfml/imgui-SFML.cpp
 
 CMakeFiles/nibbler.dir/imgui-sfml/imgui-SFML.cpp.i: cmake_force
@@ -631,7 +644,7 @@ CMakeFiles/nibbler.dir/imgui-sfml/imgui-SFML.cpp.s: cmake_force
 
 CMakeFiles/nibbler.dir/imgui-sfml/imgui.cpp.o: CMakeFiles/nibbler.dir/flags.make
 CMakeFiles/nibbler.dir/imgui-sfml/imgui.cpp.o: imgui-sfml/imgui.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_45) "Building CXX object CMakeFiles/nibbler.dir/imgui-sfml/imgui.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_46) "Building CXX object CMakeFiles/nibbler.dir/imgui-sfml/imgui.cpp.o"
 	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/imgui-sfml/imgui.cpp.o -c /Users/ntoniolo/nibbler/imgui-sfml/imgui.cpp
 
 CMakeFiles/nibbler.dir/imgui-sfml/imgui.cpp.i: cmake_force
@@ -641,19 +654,6 @@ CMakeFiles/nibbler.dir/imgui-sfml/imgui.cpp.i: cmake_force
 CMakeFiles/nibbler.dir/imgui-sfml/imgui.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/imgui-sfml/imgui.cpp.s"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/imgui-sfml/imgui.cpp -o CMakeFiles/nibbler.dir/imgui-sfml/imgui.cpp.s
-
-CMakeFiles/nibbler.dir/imgui-sfml/imgui_demo.cpp.o: CMakeFiles/nibbler.dir/flags.make
-CMakeFiles/nibbler.dir/imgui-sfml/imgui_demo.cpp.o: imgui-sfml/imgui_demo.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_46) "Building CXX object CMakeFiles/nibbler.dir/imgui-sfml/imgui_demo.cpp.o"
-	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/nibbler.dir/imgui-sfml/imgui_demo.cpp.o -c /Users/ntoniolo/nibbler/imgui-sfml/imgui_demo.cpp
-
-CMakeFiles/nibbler.dir/imgui-sfml/imgui_demo.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/nibbler.dir/imgui-sfml/imgui_demo.cpp.i"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ntoniolo/nibbler/imgui-sfml/imgui_demo.cpp > CMakeFiles/nibbler.dir/imgui-sfml/imgui_demo.cpp.i
-
-CMakeFiles/nibbler.dir/imgui-sfml/imgui_demo.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/nibbler.dir/imgui-sfml/imgui_demo.cpp.s"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ntoniolo/nibbler/imgui-sfml/imgui_demo.cpp -o CMakeFiles/nibbler.dir/imgui-sfml/imgui_demo.cpp.s
 
 CMakeFiles/nibbler.dir/imgui-sfml/imgui_draw.cpp.o: CMakeFiles/nibbler.dir/flags.make
 CMakeFiles/nibbler.dir/imgui-sfml/imgui_draw.cpp.o: imgui-sfml/imgui_draw.cpp
@@ -725,10 +725,10 @@ nibbler_OBJECTS = \
 "CMakeFiles/nibbler.dir/class/systems/FoodSystem.cpp.o" \
 "CMakeFiles/nibbler.dir/class/systems/JoystickSystem.cpp.o" \
 "CMakeFiles/nibbler.dir/class/systems/MotionSystem.cpp.o" \
+"CMakeFiles/nibbler.dir/class/systems/RenderSystem.cpp.o" \
 "CMakeFiles/nibbler.dir/class/Univers.cpp.o" \
 "CMakeFiles/nibbler.dir/imgui-sfml/imgui-SFML.cpp.o" \
 "CMakeFiles/nibbler.dir/imgui-sfml/imgui.cpp.o" \
-"CMakeFiles/nibbler.dir/imgui-sfml/imgui_demo.cpp.o" \
 "CMakeFiles/nibbler.dir/imgui-sfml/imgui_draw.cpp.o" \
 "CMakeFiles/nibbler.dir/imgui-sfml/imgui_widgets.cpp.o"
 
@@ -777,17 +777,13 @@ nibbler: CMakeFiles/nibbler.dir/class/systems/FollowSystem.cpp.o
 nibbler: CMakeFiles/nibbler.dir/class/systems/FoodSystem.cpp.o
 nibbler: CMakeFiles/nibbler.dir/class/systems/JoystickSystem.cpp.o
 nibbler: CMakeFiles/nibbler.dir/class/systems/MotionSystem.cpp.o
+nibbler: CMakeFiles/nibbler.dir/class/systems/RenderSystem.cpp.o
 nibbler: CMakeFiles/nibbler.dir/class/Univers.cpp.o
 nibbler: CMakeFiles/nibbler.dir/imgui-sfml/imgui-SFML.cpp.o
 nibbler: CMakeFiles/nibbler.dir/imgui-sfml/imgui.cpp.o
-nibbler: CMakeFiles/nibbler.dir/imgui-sfml/imgui_demo.cpp.o
 nibbler: CMakeFiles/nibbler.dir/imgui-sfml/imgui_draw.cpp.o
 nibbler: CMakeFiles/nibbler.dir/imgui-sfml/imgui_widgets.cpp.o
 nibbler: CMakeFiles/nibbler.dir/build.make
-nibbler: SFML/lib/libsfml-graphics.2.5.1.dylib
-nibbler: SFML/lib/libsfml-window.2.5.1.dylib
-nibbler: SFML/lib/libsfml-audio.2.5.1.dylib
-nibbler: SFML/lib/libsfml-system.2.5.1.dylib
 nibbler: CMakeFiles/nibbler.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/ntoniolo/nibbler/CMakeFiles --progress-num=$(CMAKE_PROGRESS_49) "Linking CXX executable nibbler"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/nibbler.dir/link.txt --verbose=$(VERBOSE)

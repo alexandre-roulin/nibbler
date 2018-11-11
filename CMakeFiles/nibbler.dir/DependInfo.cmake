@@ -47,9 +47,9 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/Users/ntoniolo/nibbler/class/systems/FoodSystem.cpp" "/Users/ntoniolo/nibbler/CMakeFiles/nibbler.dir/class/systems/FoodSystem.cpp.o"
   "/Users/ntoniolo/nibbler/class/systems/JoystickSystem.cpp" "/Users/ntoniolo/nibbler/CMakeFiles/nibbler.dir/class/systems/JoystickSystem.cpp.o"
   "/Users/ntoniolo/nibbler/class/systems/MotionSystem.cpp" "/Users/ntoniolo/nibbler/CMakeFiles/nibbler.dir/class/systems/MotionSystem.cpp.o"
+  "/Users/ntoniolo/nibbler/class/systems/RenderSystem.cpp" "/Users/ntoniolo/nibbler/CMakeFiles/nibbler.dir/class/systems/RenderSystem.cpp.o"
   "/Users/ntoniolo/nibbler/imgui-sfml/imgui-SFML.cpp" "/Users/ntoniolo/nibbler/CMakeFiles/nibbler.dir/imgui-sfml/imgui-SFML.cpp.o"
   "/Users/ntoniolo/nibbler/imgui-sfml/imgui.cpp" "/Users/ntoniolo/nibbler/CMakeFiles/nibbler.dir/imgui-sfml/imgui.cpp.o"
-  "/Users/ntoniolo/nibbler/imgui-sfml/imgui_demo.cpp" "/Users/ntoniolo/nibbler/CMakeFiles/nibbler.dir/imgui-sfml/imgui_demo.cpp.o"
   "/Users/ntoniolo/nibbler/imgui-sfml/imgui_draw.cpp" "/Users/ntoniolo/nibbler/CMakeFiles/nibbler.dir/imgui-sfml/imgui_draw.cpp.o"
   "/Users/ntoniolo/nibbler/imgui-sfml/imgui_widgets.cpp" "/Users/ntoniolo/nibbler/CMakeFiles/nibbler.dir/imgui-sfml/imgui_widgets.cpp.o"
   )
@@ -57,22 +57,17 @@ set(CMAKE_CXX_COMPILER_ID "AppleClang")
 
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
+  "/System/Library/Frameworks"
   "class"
   "incs"
   "jsoncpp/include"
-  "SFML/include"
   "/Users/ntoniolo/.brew/include"
   "imgui-sfml"
   "externlib/commun"
-  "/System/Library/Frameworks"
   )
 
 # Targets to which this target links.
 set(CMAKE_TARGET_LINKED_INFO_FILES
-  "/Users/ntoniolo/nibbler/SFML/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/DependInfo.cmake"
-  "/Users/ntoniolo/nibbler/SFML/src/SFML/Window/CMakeFiles/sfml-window.dir/DependInfo.cmake"
-  "/Users/ntoniolo/nibbler/SFML/src/SFML/Audio/CMakeFiles/sfml-audio.dir/DependInfo.cmake"
-  "/Users/ntoniolo/nibbler/SFML/src/SFML/System/CMakeFiles/sfml-system.dir/DependInfo.cmake"
   )
 
 # Fortran module output directory.

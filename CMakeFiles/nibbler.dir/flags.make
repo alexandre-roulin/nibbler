@@ -6,5 +6,5 @@ CXX_FLAGS =  -arch x86_64 -mmacosx-version-min=10.12   -std=gnu++1z
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/Users/ntoniolo/nibbler/class -I/Users/ntoniolo/nibbler/incs -I/Users/ntoniolo/nibbler/jsoncpp/include -I/Users/ntoniolo/nibbler/SFML/include -I/Users/ntoniolo/.brew/include -I/Users/ntoniolo/nibbler/imgui-sfml -I/Users/ntoniolo/nibbler/externlib/commun -I/System/Library/Frameworks 
+CXX_INCLUDES = -I/System/Library/Frameworks -I/Users/ntoniolo/nibbler/class -I/Users/ntoniolo/nibbler/incs -I/Users/ntoniolo/nibbler/jsoncpp/include -I/Users/ntoniolo/.brew/include -I/Users/ntoniolo/nibbler/imgui-sfml -I/Users/ntoniolo/nibbler/externlib/commun 
 

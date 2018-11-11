@@ -8,6 +8,8 @@ project(${NAME})
 
 set(CMAKE_CXX_STANDARD 17)
 
+#set(CMAKE_MACOSX_RPATH 1)
+
 find_package(Git QUIET)
 if(GIT_FOUND AND EXISTS "${PROJECT_SOURCE_DIR}/.git")
     # Update submodules as needed
@@ -26,20 +28,27 @@ endif()
 if(NOT EXISTS "${PROJECT_SOURCE_DIR}/SFML/CMakeLists.txt")
     message(FATAL_ERROR "The SFML submodules were not downloaded! GIT_SUBMODULE was turned off or failed. Please update submodules and try again.")
 endif()
-if(NOT EXISTS "${PROJECT_SOURCE_DIR}/jsoncpp/CMakeLists.txt")
-    message(FATAL_ERROR "The jsoncpp submodules were not downloaded! GIT_SUBMODULE was turned off or failed. Please update submodules and try again.")
-endif()
 
-add_subdirectory(SFML)
+#add_subdirectory(SFML)
 
-find_package(PkgConfig REQUIRED)
-if(NOT PKG_CONFIG_FOUND)
-    message(FATAL_ERROR "PkgConfig NotFound")
-endif()
+link_directories(/usr/lib/)
+link_directories($ENV{HOME}/.brew/lib/)
+#link_directories(${PROJECT_SOURCE_DIR}/SFML/)
 
-
-find_package(JsonCpp)
-include_directories( ${JsonCpp_INCLUDE_DIRS} )
+if(WIN32)
+elseif(UNIX AND NOT APPLE)
+elseif(APPLE)
+    include_directories(/System/Library/Frameworks)
+    find_library(COCOA_LIBRARY Cocoa)
+    find_library(OpenGL_LIBRARY OpenGL)
+    find_library(IOKit_LIBRARY IOKit)
+    find_library(CoreVideo_LIBRARY CoreVideo)
+    mark_as_advanced(COCOA_LIBRARY OpenGL_LIBRARY)
+    set(APPLE_LIBS ${COCOA_LIBRARY} ${IOKit_LIBRARY} ${OpenGL_LIBRARY} ${CoreVideo_LIBRARY})
+    set(LIBS ${LIBS} ${APPLE_LIBS})
+else()
+    set(LIBS)
+endif(WIN32)
 
 add_executable(${NAME}
         class/component/CollisionComponent.cpp
@@ -118,6 +127,8 @@ add_executable(${NAME}
         class/systems/JoystickSystem.hpp
         class/systems/MotionSystem.cpp
         class/systems/MotionSystem.hpp
+        class/systems/RenderSystem.cpp
+        class/systems/RenderSystem.hpp
         class/Univers.cpp
         class/Univers.hpp
         externlib/commun/IDisplay.hpp
@@ -138,7 +149,6 @@ add_executable(${NAME}
         imgui-sfml/imgui-SFML.h
         imgui-sfml/imgui.cpp
         imgui-sfml/imgui.h
-        imgui-sfml/imgui_demo.cpp
         imgui-sfml/imgui_draw.cpp
         imgui-sfml/imgui_internal.h
         imgui-sfml/imgui_widgets.cpp
@@ -153,43 +163,23 @@ add_executable(${NAME}
         )
 
 #target_compile_options(${NAME} PUBLIC -Wall -Wextra -Werror -Wvla)
-
-link_directories(
-        /usr/lib
-        $ENV{HOME}/.brew/lib
-        ${PROJECT_SOURCE_DIR}/jsoncpp/src/lib_json/
-        ${PROJECT_SOURCE_DIR}/SFML
-)
+add_compile_options(-fsanitize=address -g3)
 
 target_include_directories(
         ${NAME} PUBLIC
         class
         incs
         jsoncpp/include
-        SFML/include
+        #SFML/include
         $ENV{HOME}/.brew/include
         imgui-sfml/
         ${PROJECT_SOURCE_DIR}/externlib/commun/
 )
 
+
 target_link_libraries(${NAME} PUBLIC
         sfml-graphics sfml-window sfml-system sfml-audio
-        ${JsonCpp_LIBRARIES}
+        jsoncpp
         boost_system boost_thread-mt
+        ${LIBS}
         )
-
-
-if(WIN32)
-elseif(UNIX AND NOT APPLE)
-elseif(APPLE)
-        include_directories(/System/Library/Frameworks)
-        find_library(COCOA_LIBRARY Cocoa)
-        find_library(OpenGL_LIBRARY OpenGL)
-        find_library(IOKit_LIBRARY IOKit)
-        find_library(CoreVideo_LIBRARY CoreVideo)
-        #mark_as_advanced(COCOA_LIBRARY OpenGL_LIBRARY)
-        set(APPLE_LIBS ${COCOA_LIBRARY} ${IOKit_LIBRARY} ${OpenGL_LIBRARY} ${CoreVideo_LIBRARY})
-        set(LIBS ${LIBS} ${APPLE_LIBS})
-else()
-    set(LIBS)
-endif(WIN32)

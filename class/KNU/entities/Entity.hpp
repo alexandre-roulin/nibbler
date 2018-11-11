@@ -16,6 +16,7 @@
 #include <json/json.h>
 #include <logger.h>
 #include <logger_utils.h>
+
 namespace KNU {
 
 	class EntitiesManager;

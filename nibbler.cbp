@@ -5,36 +5,36 @@
 		<Option title="nibbler"/>
 		<Option makefile_is_custom="1"/>
 		<Option compiler="gcc"/>
-		<Option virtualFolders="CMake Files\;CMake Files\SFML\;"/>
+		<Option virtualFolders="CMake Files\;"/>
 		<Build>
 			<Target title="all">
 				<Option working_dir="/Users/ntoniolo/nibbler"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command=" -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 all"/>
-					<CompileFile command=" -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command=" -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command=" -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="rebuild_cache">
 				<Option working_dir="/Users/ntoniolo/nibbler"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command=" -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
-					<CompileFile command=" -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command=" -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command=" -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="edit_cache">
 				<Option working_dir="/Users/ntoniolo/nibbler"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command=" -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 edit_cache"/>
-					<CompileFile command=" -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command=" -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command=" -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="nibbler">
@@ -43,12 +43,26 @@
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
-				<Compiler/>
+				<Compiler>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Users/ntoniolo/nibbler/class"/>
+					<Add directory="/Users/ntoniolo/nibbler/incs"/>
+					<Add directory="/Users/ntoniolo/nibbler/jsoncpp/include"/>
+					<Add directory="/Users/ntoniolo/.brew/include"/>
+					<Add directory="/Users/ntoniolo/nibbler/imgui-sfml"/>
+					<Add directory="/Users/ntoniolo/nibbler/externlib/commun"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/9.0.0/include"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/Library/Frameworks"/>
+				</Compiler>
 				<MakeCommands>
-					<Build command=" -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 nibbler"/>
-					<CompileFile command=" -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command=" -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command=" -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 nibbler"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="nibbler/fast">
@@ -57,12 +71,26 @@
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
-				<Compiler/>
+				<Compiler>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Users/ntoniolo/nibbler/class"/>
+					<Add directory="/Users/ntoniolo/nibbler/incs"/>
+					<Add directory="/Users/ntoniolo/nibbler/jsoncpp/include"/>
+					<Add directory="/Users/ntoniolo/.brew/include"/>
+					<Add directory="/Users/ntoniolo/nibbler/imgui-sfml"/>
+					<Add directory="/Users/ntoniolo/nibbler/externlib/commun"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/9.0.0/include"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/Library/Frameworks"/>
+				</Compiler>
 				<MakeCommands>
-					<Build command=" -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 nibbler/fast"/>
-					<CompileFile command=" -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command=" -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command=" -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 nibbler/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/ntoniolo/nibbler/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 		</Build>
@@ -300,43 +328,16 @@
 		<Unit filename="/Users/ntoniolo/nibbler/class/systems/MotionSystem.hpp">
 			<Option target="nibbler"/>
 		</Unit>
+		<Unit filename="/Users/ntoniolo/nibbler/class/systems/RenderSystem.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/ntoniolo/nibbler/class/systems/RenderSystem.hpp">
+			<Option target="nibbler"/>
+		</Unit>
 		<Unit filename="/Users/ntoniolo/nibbler/externlib/commun/IDisplay.hpp">
 			<Option target="nibbler"/>
 		</Unit>
 		<Unit filename="/Users/ntoniolo/nibbler/externlib/commun/ISound.hpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/ntoniolo/nibbler/externlib/display_sdl/include/DisplaySdl.hpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/ntoniolo/nibbler/externlib/display_sdl/src/DisplaySdl.cpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/ntoniolo/nibbler/externlib/display_sfml/include/DisplaySfml.hpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/ntoniolo/nibbler/externlib/display_sfml/src/DisplaySfml.cpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/ntoniolo/nibbler/externlib/sandbox/main.cpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/ntoniolo/nibbler/externlib/sound_sdl/include/SoundSdl.hpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/ntoniolo/nibbler/externlib/sound_sdl/src/SoundSdl.cpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/ntoniolo/nibbler/externlib/sound_sdl/src/main.cpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/ntoniolo/nibbler/externlib/sound_sfml/include/SoundSfml.hpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/ntoniolo/nibbler/externlib/sound_sfml/src/SoundSfml.cpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/ntoniolo/nibbler/externlib/sound_sfml/src/main.cpp">
 			<Option target="nibbler"/>
 		</Unit>
 		<Unit filename="/Users/ntoniolo/nibbler/imgui-sfml/imconfig.h">
@@ -352,9 +353,6 @@
 			<Option target="nibbler"/>
 		</Unit>
 		<Unit filename="/Users/ntoniolo/nibbler/imgui-sfml/imgui.h">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/ntoniolo/nibbler/imgui-sfml/imgui_demo.cpp">
 			<Option target="nibbler"/>
 		</Unit>
 		<Unit filename="/Users/ntoniolo/nibbler/imgui-sfml/imgui_draw.cpp">
@@ -392,9 +390,6 @@
 		</Unit>
 		<Unit filename="/Users/ntoniolo/nibbler/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
-		</Unit>
-		<Unit filename="/Users/ntoniolo/nibbler/SFML/CMakeLists.txt">
-			<Option virtualFolder="CMake Files\SFML\"/>
 		</Unit>
 	</Project>
 </CodeBlocks_project_file>
