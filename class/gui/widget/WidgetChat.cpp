@@ -1,6 +1,6 @@
 #include "WidgetChat.hpp"
 #include <gui/Core.hpp>
-#include "../../../imgui-sfml/imgui.h"
+#include "imgui.h"
 
 WidgetChat::WidgetChat(Core &core) :
 		AWidget(core) {

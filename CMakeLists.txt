@@ -32,8 +32,12 @@ endif()
 #add_subdirectory(SFML)
 add_subdirectory(imgui)
 
+execute_process(COMMAND cd ${PROJECT_SOURCE_DIR}/jsoncpp/ && cmake . && make
+                WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/jsoncpp)
+
 link_directories(/usr/lib/)
 link_directories($ENV{HOME}/.brew/lib/)
+link_directories(${PROJECT_SOURCE_DIR}/imgui/)
 #link_directories(${PROJECT_SOURCE_DIR}/SFML/)
 
 if(WIN32)
@@ -50,6 +54,7 @@ elseif(APPLE)
 else()
     set(LIBS)
 endif(WIN32)
+
 
 add_executable(${NAME}
         class/component/CollisionComponent.cpp
@@ -134,17 +139,21 @@ add_executable(${NAME}
         class/Univers.hpp
         externlib/commun/IDisplay.hpp
         externlib/commun/ISound.hpp
-        imgui/imgui-sfml/imgui-SFML.h
-        imgui/imgui-sfml/imgui-SFML.cpp
-        imgui/imgui.h
-        imgui/imgui/imgui.cpp
-        imgui/imgui/imconfig.h
-        imgui/imgui/imgui_draw.cpp
-        imgui/imgui/imgui_internal.h
-        imgui/imgui/imgui_widgets.cpp
-        imgui/imgui/imstb_rectpack.h
-        imgui/imgui/imstb_textedit.h
-        imgui/imgui/imstb_truetype.h
+
+        #imgui/imgui-sfml/imgui-SFML.h
+        #imgui/imgui-sfml/imgui-SFML.cpp
+#
+        #imgui/imconfig-sfml.h
+        #imgui/imgui/imgui.cpp
+        #imgui/imgui/imgui.h
+#
+        #imgui/imgui/imgui_draw.cpp
+        #imgui/imgui/imgui_internal.h
+        #imgui/imgui/imgui_widgets.cpp
+        #imgui/imgui/imstb_rectpack.h
+        #imgui/imgui/imstb_textedit.h
+        #imgui/imgui/imstb_truetype.h
+
         incs/IWidget.hpp
         incs/logger.h
         incs/logger_utils.h
@@ -155,7 +164,7 @@ add_executable(${NAME}
 #target_compile_options(${NAME} PUBLIC -Wall -Wextra -Werror -Wvla)
 #target_compile_options(${NAME} PUBLIC -fsanitize=address -g3 -DENABLE_ASAN=ON)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address -g3")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DIMGUI_USER_CONFIG=\"<../imconfig-sfml.h>\" -fsanitize=address -g3")
 
 target_include_directories(
         ${NAME} PUBLIC
@@ -164,7 +173,9 @@ target_include_directories(
         jsoncpp/include
         #SFML/include
         $ENV{HOME}/.brew/include
-        imgui-sfml/
+        ${PROJECT_SOURCE_DIR}/imgui/
+        ${PROJECT_SOURCE_DIR}/imgui/imgui/
+        ${PROJECT_SOURCE_DIR}/imgui/imgui-sfml/
         ${PROJECT_SOURCE_DIR}/externlib/commun/
 )
 
@@ -172,6 +183,7 @@ target_include_directories(
 target_link_libraries(${NAME} PUBLIC
         sfml-graphics sfml-window sfml-system sfml-audio
         jsoncpp
+        imgui-sfml
         boost_system boost_thread-mt
         ${LIBS}
         )

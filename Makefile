@@ -123,6 +123,19 @@ nibbler/fast:
 	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/build
 .PHONY : nibbler/fast
 
+#=============================================================================
+# Target rules for targets named imgui-sfml
+
+# Build rule for target.
+imgui-sfml: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 imgui-sfml
+.PHONY : imgui-sfml
+
+# fast build rule for target.
+imgui-sfml/fast:
+	$(MAKE) -f imgui/CMakeFiles/imgui-sfml.dir/build.make imgui/CMakeFiles/imgui-sfml.dir/build
+.PHONY : imgui-sfml/fast
+
 class/KNU/World.o: class/KNU/World.cpp.o
 
 .PHONY : class/KNU/World.o
@@ -1311,114 +1324,6 @@ class/systems/RenderSystem.cpp.s:
 	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/systems/RenderSystem.cpp.s
 .PHONY : class/systems/RenderSystem.cpp.s
 
-imgui/imgui-sfml/imgui-SFML.o: imgui/imgui-sfml/imgui-SFML.cpp.o
-
-.PHONY : imgui/imgui-sfml/imgui-SFML.o
-
-# target to build an object file
-imgui/imgui-sfml/imgui-SFML.cpp.o:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/imgui/imgui-sfml/imgui-SFML.cpp.o
-.PHONY : imgui/imgui-sfml/imgui-SFML.cpp.o
-
-imgui/imgui-sfml/imgui-SFML.i: imgui/imgui-sfml/imgui-SFML.cpp.i
-
-.PHONY : imgui/imgui-sfml/imgui-SFML.i
-
-# target to preprocess a source file
-imgui/imgui-sfml/imgui-SFML.cpp.i:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/imgui/imgui-sfml/imgui-SFML.cpp.i
-.PHONY : imgui/imgui-sfml/imgui-SFML.cpp.i
-
-imgui/imgui-sfml/imgui-SFML.s: imgui/imgui-sfml/imgui-SFML.cpp.s
-
-.PHONY : imgui/imgui-sfml/imgui-SFML.s
-
-# target to generate assembly for a file
-imgui/imgui-sfml/imgui-SFML.cpp.s:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/imgui/imgui-sfml/imgui-SFML.cpp.s
-.PHONY : imgui/imgui-sfml/imgui-SFML.cpp.s
-
-imgui/imgui/imgui.o: imgui/imgui/imgui.cpp.o
-
-.PHONY : imgui/imgui/imgui.o
-
-# target to build an object file
-imgui/imgui/imgui.cpp.o:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/imgui/imgui/imgui.cpp.o
-.PHONY : imgui/imgui/imgui.cpp.o
-
-imgui/imgui/imgui.i: imgui/imgui/imgui.cpp.i
-
-.PHONY : imgui/imgui/imgui.i
-
-# target to preprocess a source file
-imgui/imgui/imgui.cpp.i:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/imgui/imgui/imgui.cpp.i
-.PHONY : imgui/imgui/imgui.cpp.i
-
-imgui/imgui/imgui.s: imgui/imgui/imgui.cpp.s
-
-.PHONY : imgui/imgui/imgui.s
-
-# target to generate assembly for a file
-imgui/imgui/imgui.cpp.s:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/imgui/imgui/imgui.cpp.s
-.PHONY : imgui/imgui/imgui.cpp.s
-
-imgui/imgui/imgui_draw.o: imgui/imgui/imgui_draw.cpp.o
-
-.PHONY : imgui/imgui/imgui_draw.o
-
-# target to build an object file
-imgui/imgui/imgui_draw.cpp.o:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/imgui/imgui/imgui_draw.cpp.o
-.PHONY : imgui/imgui/imgui_draw.cpp.o
-
-imgui/imgui/imgui_draw.i: imgui/imgui/imgui_draw.cpp.i
-
-.PHONY : imgui/imgui/imgui_draw.i
-
-# target to preprocess a source file
-imgui/imgui/imgui_draw.cpp.i:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/imgui/imgui/imgui_draw.cpp.i
-.PHONY : imgui/imgui/imgui_draw.cpp.i
-
-imgui/imgui/imgui_draw.s: imgui/imgui/imgui_draw.cpp.s
-
-.PHONY : imgui/imgui/imgui_draw.s
-
-# target to generate assembly for a file
-imgui/imgui/imgui_draw.cpp.s:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/imgui/imgui/imgui_draw.cpp.s
-.PHONY : imgui/imgui/imgui_draw.cpp.s
-
-imgui/imgui/imgui_widgets.o: imgui/imgui/imgui_widgets.cpp.o
-
-.PHONY : imgui/imgui/imgui_widgets.o
-
-# target to build an object file
-imgui/imgui/imgui_widgets.cpp.o:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/imgui/imgui/imgui_widgets.cpp.o
-.PHONY : imgui/imgui/imgui_widgets.cpp.o
-
-imgui/imgui/imgui_widgets.i: imgui/imgui/imgui_widgets.cpp.i
-
-.PHONY : imgui/imgui/imgui_widgets.i
-
-# target to preprocess a source file
-imgui/imgui/imgui_widgets.cpp.i:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/imgui/imgui/imgui_widgets.cpp.i
-.PHONY : imgui/imgui/imgui_widgets.cpp.i
-
-imgui/imgui/imgui_widgets.s: imgui/imgui/imgui_widgets.cpp.s
-
-.PHONY : imgui/imgui/imgui_widgets.s
-
-# target to generate assembly for a file
-imgui/imgui/imgui_widgets.cpp.s:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/imgui/imgui/imgui_widgets.cpp.s
-.PHONY : imgui/imgui/imgui_widgets.cpp.s
-
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -1428,6 +1333,7 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... nibbler"
+	@echo "... imgui-sfml"
 	@echo "... class/KNU/World.o"
 	@echo "... class/KNU/World.i"
 	@echo "... class/KNU/World.s"
@@ -1560,18 +1466,6 @@ help:
 	@echo "... class/systems/RenderSystem.o"
 	@echo "... class/systems/RenderSystem.i"
 	@echo "... class/systems/RenderSystem.s"
-	@echo "... imgui/imgui-sfml/imgui-SFML.o"
-	@echo "... imgui/imgui-sfml/imgui-SFML.i"
-	@echo "... imgui/imgui-sfml/imgui-SFML.s"
-	@echo "... imgui/imgui/imgui.o"
-	@echo "... imgui/imgui/imgui.i"
-	@echo "... imgui/imgui/imgui.s"
-	@echo "... imgui/imgui/imgui_draw.o"
-	@echo "... imgui/imgui/imgui_draw.i"
-	@echo "... imgui/imgui/imgui_draw.s"
-	@echo "... imgui/imgui/imgui_widgets.o"
-	@echo "... imgui/imgui/imgui_widgets.i"
-	@echo "... imgui/imgui/imgui_widgets.s"
 .PHONY : help
 
 
