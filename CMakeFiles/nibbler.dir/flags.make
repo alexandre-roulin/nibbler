@@ -6,5 +6,5 @@ CXX_FLAGS = -g   -std=gnu++14
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/Users/alexandreroulin/work/nibbler/class -I/Users/alexandreroulin/work/nibbler/incs -I/Users/alexandreroulin/work/nibbler/jsoncpp/include 
+CXX_INCLUDES = -I/Users/alexandreroulin/work/nibbler/externlib/commun -I/Users/alexandreroulin/work/nibbler/externlib/display_sdl/include -I/Users/alexandreroulin/work/nibbler/externlib/display_sfml/include -I/Users/alexandreroulin/work/nibbler/externlib/sound_sdl/include -I/Users/alexandreroulin/work/nibbler/externlib/sound_sfml/include -I/Users/alexandreroulin/work/nibbler/imgui-sfml -I/Users/alexandreroulin/work/nibbler/incs -I/Users/alexandreroulin/work/nibbler/jsoncpp/include -I/Users/alexandreroulin/work/nibbler/jsoncpp/include/json -I/Users/alexandreroulin/work/nibbler/jsoncpp/src/lib_json -I/Users/alexandreroulin/work/nibbler/jsoncpp/src/test_lib_json -I/Users/alexandreroulin/work/nibbler/srcs -I/Users/alexandreroulin/work/nibbler/srcs/component -I/Users/alexandreroulin/work/nibbler/srcs/events -I/Users/alexandreroulin/work/nibbler/srcs/factory -I/Users/alexandreroulin/work/nibbler/srcs/gui -I/Users/alexandreroulin/work/nibbler/srcs/gui/widget -I/Users/alexandreroulin/work/nibbler/srcs/KINU -I/Users/alexandreroulin/work/nibbler/srcs/network -I/Users/alexandreroulin/work/nibbler/srcs/systems 
 

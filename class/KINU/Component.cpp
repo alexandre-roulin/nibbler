@@ -1,5 +1,5 @@
 #include "Component.hpp"
 
-namespace KNU {
+namespace KINU {
 	int ComponentCounter::familyCounter = 0;
 }

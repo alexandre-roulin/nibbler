@@ -1,20 +1,20 @@
 #pragma once
 
 #include <ostream>
-#include <KNU/component/Component.hpp>
+#include "Component.hpp"
 
-namespace KNU {
+namespace KINU {
 
 	struct Signature {
 	private:
 		unsigned int mask;
 	public:
-		explicit Signature(unsigned int = 0);
+		Signature(unsigned int = 0);
 
-		template<typename ComponentType>
+		template<typename T>
 		void addComponent();
 
-		template<typename ComponentType>
+		template<typename T>
 		void removeComponent();
 
 		void clean();
@@ -32,14 +32,14 @@ namespace KNU {
 		friend std::ostream &
 		operator<<(std::ostream &os, const Signature &signature);
 	};
-	template<typename ComponentType>
+	template<typename T>
 	void Signature::addComponent() {
-		mask |= (1 << getComponentSignature<ComponentType>());
+		mask |= (1 << getComponentSignature<T>());
 	}
 
-	template<typename ComponentType>
+	template<typename T>
 	void Signature::removeComponent() {
-		mask ^= (1 << getComponentSignature<ComponentType>());
+		mask ^= (1 << getComponentSignature<T>());
 	}
 
 }

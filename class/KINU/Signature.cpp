@@ -3,10 +3,9 @@
 //
 
 #include "Signature.hpp"
-#include <KNU/component/Component.hpp>
 #include <iostream>
 
-namespace KNU {
+namespace KINU {
 
 	bool Signature::matches(Signature systemMask) const {
 		return ((mask & systemMask.mask) == systemMask.mask);

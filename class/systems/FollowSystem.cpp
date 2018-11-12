@@ -1,9 +1,10 @@
 
 
-#include <component/FollowComponent.hpp>
 #include "FollowSystem.hpp"
-#include <KNU/World.hpp>
+#include <KINU/World.hpp>
+#include <component/FollowComponent.hpp>
 #include <component/PositionComponent.hpp>
+#include <logger.h>
 
 FollowSystem::FollowSystem() {
 	requireComponent<FollowComponent>();

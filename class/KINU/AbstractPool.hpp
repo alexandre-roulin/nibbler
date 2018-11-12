@@ -1,6 +1,6 @@
 #pragma once
 
-namespace KNU {
+namespace KINU {
 
 	class AbstractPool {
 	public:

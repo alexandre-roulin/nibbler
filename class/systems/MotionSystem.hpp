@@ -1,9 +1,9 @@
 #pragma once
 
 
-#include <KNU/systems/System.hpp>
+#include <KINU/System.hpp>
 
-class MotionSystem : public KNU::System {
+class MotionSystem : public KINU::System {
 public:
 	explicit MotionSystem();
 	void update() override;

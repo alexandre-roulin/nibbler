@@ -44,9 +44,26 @@
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="/Users/alexandreroulin/work/nibbler/class"/>
+					<Add directory="/Users/alexandreroulin/work/nibbler/externlib/commun"/>
+					<Add directory="/Users/alexandreroulin/work/nibbler/externlib/display_sdl/include"/>
+					<Add directory="/Users/alexandreroulin/work/nibbler/externlib/display_sfml/include"/>
+					<Add directory="/Users/alexandreroulin/work/nibbler/externlib/sound_sdl/include"/>
+					<Add directory="/Users/alexandreroulin/work/nibbler/externlib/sound_sfml/include"/>
+					<Add directory="/Users/alexandreroulin/work/nibbler/imgui-sfml"/>
 					<Add directory="/Users/alexandreroulin/work/nibbler/incs"/>
 					<Add directory="/Users/alexandreroulin/work/nibbler/jsoncpp/include"/>
+					<Add directory="/Users/alexandreroulin/work/nibbler/jsoncpp/include/json"/>
+					<Add directory="/Users/alexandreroulin/work/nibbler/jsoncpp/src/lib_json"/>
+					<Add directory="/Users/alexandreroulin/work/nibbler/jsoncpp/src/test_lib_json"/>
+					<Add directory="/Users/alexandreroulin/work/nibbler/srcs"/>
+					<Add directory="/Users/alexandreroulin/work/nibbler/srcs/component"/>
+					<Add directory="/Users/alexandreroulin/work/nibbler/srcs/events"/>
+					<Add directory="/Users/alexandreroulin/work/nibbler/srcs/factory"/>
+					<Add directory="/Users/alexandreroulin/work/nibbler/srcs/gui"/>
+					<Add directory="/Users/alexandreroulin/work/nibbler/srcs/gui/widget"/>
+					<Add directory="/Users/alexandreroulin/work/nibbler/srcs/KINU"/>
+					<Add directory="/Users/alexandreroulin/work/nibbler/srcs/network"/>
+					<Add directory="/Users/alexandreroulin/work/nibbler/srcs/systems"/>
 					<Add directory="/Library/Developer/CommandLineTools/usr/include/c++/v1"/>
 					<Add directory="/usr/local/include"/>
 					<Add directory="/Library/Developer/CommandLineTools/usr/lib/clang/10.0.0/include"/>
@@ -69,9 +86,26 @@
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="/Users/alexandreroulin/work/nibbler/class"/>
+					<Add directory="/Users/alexandreroulin/work/nibbler/externlib/commun"/>
+					<Add directory="/Users/alexandreroulin/work/nibbler/externlib/display_sdl/include"/>
+					<Add directory="/Users/alexandreroulin/work/nibbler/externlib/display_sfml/include"/>
+					<Add directory="/Users/alexandreroulin/work/nibbler/externlib/sound_sdl/include"/>
+					<Add directory="/Users/alexandreroulin/work/nibbler/externlib/sound_sfml/include"/>
+					<Add directory="/Users/alexandreroulin/work/nibbler/imgui-sfml"/>
 					<Add directory="/Users/alexandreroulin/work/nibbler/incs"/>
 					<Add directory="/Users/alexandreroulin/work/nibbler/jsoncpp/include"/>
+					<Add directory="/Users/alexandreroulin/work/nibbler/jsoncpp/include/json"/>
+					<Add directory="/Users/alexandreroulin/work/nibbler/jsoncpp/src/lib_json"/>
+					<Add directory="/Users/alexandreroulin/work/nibbler/jsoncpp/src/test_lib_json"/>
+					<Add directory="/Users/alexandreroulin/work/nibbler/srcs"/>
+					<Add directory="/Users/alexandreroulin/work/nibbler/srcs/component"/>
+					<Add directory="/Users/alexandreroulin/work/nibbler/srcs/events"/>
+					<Add directory="/Users/alexandreroulin/work/nibbler/srcs/factory"/>
+					<Add directory="/Users/alexandreroulin/work/nibbler/srcs/gui"/>
+					<Add directory="/Users/alexandreroulin/work/nibbler/srcs/gui/widget"/>
+					<Add directory="/Users/alexandreroulin/work/nibbler/srcs/KINU"/>
+					<Add directory="/Users/alexandreroulin/work/nibbler/srcs/network"/>
+					<Add directory="/Users/alexandreroulin/work/nibbler/srcs/systems"/>
 					<Add directory="/Library/Developer/CommandLineTools/usr/include/c++/v1"/>
 					<Add directory="/usr/local/include"/>
 					<Add directory="/Library/Developer/CommandLineTools/usr/lib/clang/10.0.0/include"/>
@@ -88,252 +122,6 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/KNU/World.cpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/KNU/World.hpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/KNU/component/Component.cpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/KNU/component/Component.hpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/KNU/entities/Entity.cpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/KNU/entities/Entity.hpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/KNU/events/EventManager.cpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/KNU/events/EventManager.hpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/KNU/managers/AbstractPool.hpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/KNU/managers/Pool.hpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/KNU/managers/Pool_.hpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/KNU/systems/System.cpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/KNU/systems/System.hpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/KNU/utils/Signature.cpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/KNU/utils/Signature.hpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/Univers.cpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/Univers.hpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/component/CollisionComponent.cpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/component/CollisionComponent.hpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/component/FollowComponent.cpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/component/FollowComponent.hpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/component/JoystickComponent.cpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/component/JoystickComponent.hpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/component/MotionComponent.cpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/component/MotionComponent.hpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/component/PositionComponent.cpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/component/PositionComponent.hpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/component/SpriteComponent.cpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/component/SpriteComponent.hpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/cores/main.cpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/events/FoodEvent.cpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/events/FoodEvent.hpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/events/JoystickEvent.cpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/events/JoystickEvent.hpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/events/StartEvent.cpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/events/StartEvent.hpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/factory/Factory.cpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/factory/Factory.hpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/gui/Core.cpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/gui/Core.hpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/gui/imgui_demo.cpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/gui/widget/AWidget.cpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/gui/widget/AWidget.hpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/gui/widget/WidgetChat.cpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/gui/widget/WidgetChat.hpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/gui/widget/WidgetExit.cpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/gui/widget/WidgetExit.hpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/gui/widget/WidgetLobby.cpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/gui/widget/WidgetLobby.hpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/gui/widget/WidgetSnake.cpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/gui/widget/WidgetSnake.hpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/logger/display/logger_debug.cpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/logger/display/logger_error.cpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/logger/display/logger_fatal.cpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/logger/display/logger_info.cpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/logger/display/logger_success.cpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/logger/display/logger_trace.cpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/logger/display/logger_warn.cpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/logger/logger/logger_init.cpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/logger/utils/logger_get_time.cpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/logger/utils/logger_init_open_file.cpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/network/ClientTCP.cpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/network/ClientTCP.hpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/network/Network.cpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/network/Network.hpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/network/ServerTCP.cpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/network/ServerTCP.hpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/network/UtilsTCP.cpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/network/UtilsTCP.hpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/network/chat_message.hpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/systems/CollisionSystem.cpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/systems/CollisionSystem.hpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/systems/FollowSystem.cpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/systems/FollowSystem.hpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/systems/FoodSystem.cpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/systems/FoodSystem.hpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/systems/JoystickSystem.cpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/systems/JoystickSystem.hpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/systems/MotionSystem.cpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/systems/MotionSystem.hpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/systems/RenderSystem.cpp">
-			<Option target="nibbler"/>
-		</Unit>
-		<Unit filename="/Users/alexandreroulin/work/nibbler/class/systems/RenderSystem.hpp">
-			<Option target="nibbler"/>
-		</Unit>
 		<Unit filename="/Users/alexandreroulin/work/nibbler/externlib/commun/IDisplay.hpp">
 			<Option target="nibbler"/>
 		</Unit>
@@ -482,6 +270,255 @@
 			<Option target="nibbler"/>
 		</Unit>
 		<Unit filename="/Users/alexandreroulin/work/nibbler/jsoncpp/src/test_lib_json/main.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/KINU/AbstractPool.hpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/KINU/Component.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/KINU/Component.hpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/KINU/Entity.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/KINU/Entity.hpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/KINU/EventManager.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/KINU/EventManager.hpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/KINU/Pool.hpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/KINU/Signature.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/KINU/Signature.hpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/KINU/System.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/KINU/System.hpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/KINU/World.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/KINU/World.hpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/Univers.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/Univers.hpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/component/CollisionComponent.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/component/CollisionComponent.hpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/component/FollowComponent.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/component/FollowComponent.hpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/component/JoystickComponent.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/component/JoystickComponent.hpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/component/MotionComponent.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/component/MotionComponent.hpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/component/PositionComponent.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/component/PositionComponent.hpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/component/SpriteComponent.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/component/SpriteComponent.hpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/cores/main.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/events/FoodEvent.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/events/FoodEvent.hpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/events/JoystickEvent.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/events/JoystickEvent.hpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/events/StartEvent.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/events/StartEvent.hpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/factory/Factory.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/factory/Factory.hpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/gui/Core.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/gui/Core.hpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/gui/imgui_demo.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/gui/widget/AWidget.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/gui/widget/AWidget.hpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/gui/widget/WidgetChat.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/gui/widget/WidgetChat.hpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/gui/widget/WidgetExit.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/gui/widget/WidgetExit.hpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/gui/widget/WidgetLobby.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/gui/widget/WidgetLobby.hpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/gui/widget/WidgetOption.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/gui/widget/WidgetOption.hpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/gui/widget/WidgetSnake.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/gui/widget/WidgetSnake.hpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/logger/display/logger_debug.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/logger/display/logger_error.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/logger/display/logger_fatal.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/logger/display/logger_info.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/logger/display/logger_success.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/logger/display/logger_trace.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/logger/display/logger_warn.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/logger/logger/logger_init.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/logger/utils/logger_get_time.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/logger/utils/logger_init_open_file.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/network/ClientTCP.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/network/ClientTCP.hpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/network/Network.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/network/Network.hpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/network/ServerTCP.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/network/ServerTCP.hpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/network/UtilsTCP.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/network/UtilsTCP.hpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/network/chat_message.hpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/systems/CollisionSystem.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/systems/CollisionSystem.hpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/systems/FollowSystem.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/systems/FollowSystem.hpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/systems/FoodSystem.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/systems/FoodSystem.hpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/systems/JoystickSystem.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/systems/JoystickSystem.hpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/systems/MotionSystem.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/systems/MotionSystem.hpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/systems/RenderSystem.cpp">
+			<Option target="nibbler"/>
+		</Unit>
+		<Unit filename="/Users/alexandreroulin/work/nibbler/srcs/systems/RenderSystem.hpp">
 			<Option target="nibbler"/>
 		</Unit>
 		<Unit filename="/Users/alexandreroulin/work/nibbler/CMakeLists.txt">

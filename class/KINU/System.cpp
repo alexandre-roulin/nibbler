@@ -1,11 +1,9 @@
-
 #include <logger.h>
 #include "System.hpp"
 
-namespace KNU {
+namespace KINU {
 
 	void System::addEntity(Entity &entity) {
-//		assert(entity.getSignature().matches(signature));
 		entities.push_back(entity);
 	}
 
@@ -36,7 +34,7 @@ namespace KNU {
 	void SystemManager::addToSystems(Entity &entity) {
 		for (auto &systemMap : _systems) {
 			auto system = systemMap.second;
-
+			log_error("M[%d]", entity.getSignature().getMask() & system->getSignature().getMask());
 			if (entity.getSignature().matches(system->getSignature())) {
 				system->addEntity(entity);
 			}
@@ -54,6 +52,7 @@ namespace KNU {
 			if (entity.getSignature().matches(system->getSignature()))
 				system->removeEntity(entity);
 		}
+
 	}
 
 

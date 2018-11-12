@@ -3,89 +3,28 @@ project(nibbler)
 
 set(CMAKE_CXX_STANDARD 14)
 
-include_directories(class)
+include_directories(externlib/commun)
+include_directories(externlib/display_sdl/include)
+include_directories(externlib/display_sfml/include)
+include_directories(externlib/sound_sdl/include)
+include_directories(externlib/sound_sfml/include)
+include_directories(imgui-sfml)
 include_directories(incs)
 include_directories(jsoncpp/include)
+include_directories(jsoncpp/include/json)
+include_directories(jsoncpp/src/lib_json)
+include_directories(jsoncpp/src/test_lib_json)
+include_directories(class)
+include_directories(class/component)
+include_directories(class/events)
+include_directories(class/factory)
+include_directories(class/gui)
+include_directories(class/gui/widget)
+include_directories(class/KINU)
+include_directories(class/network)
+include_directories(class/systems)
 
 add_executable(nibbler
-        class/component/CollisionComponent.cpp
-        class/component/CollisionComponent.hpp
-        class/component/FollowComponent.cpp
-        class/component/FollowComponent.hpp
-        class/component/JoystickComponent.cpp
-        class/component/JoystickComponent.hpp
-        class/component/MotionComponent.cpp
-        class/component/MotionComponent.hpp
-        class/component/PositionComponent.cpp
-        class/component/PositionComponent.hpp
-        class/component/SpriteComponent.cpp
-        class/component/SpriteComponent.hpp
-        class/cores/main.cpp
-        class/events/FoodEvent.cpp
-        class/events/FoodEvent.hpp
-        class/events/JoystickEvent.cpp
-        class/events/JoystickEvent.hpp
-        class/factory/Factory.cpp
-        class/factory/Factory.hpp
-        class/gui/widget/AWidget.cpp
-        class/gui/widget/AWidget.hpp
-        class/gui/widget/WidgetChat.cpp
-        class/gui/widget/WidgetChat.hpp
-        class/gui/widget/WidgetExit.cpp
-        class/gui/widget/WidgetExit.hpp
-        class/gui/widget/WidgetLobby.cpp
-        class/gui/widget/WidgetLobby.hpp
-        class/gui/widget/WidgetSnake.cpp
-        class/gui/widget/WidgetSnake.hpp
-        class/gui/Core.cpp
-        class/gui/Core.hpp
-        class/gui/imgui_demo.cpp
-        class/KNU/component/Component.cpp
-        class/KNU/component/Component.hpp
-        class/KNU/entities/Entity.cpp
-        class/KNU/entities/Entity.hpp
-        class/KNU/events/EventManager.cpp
-        class/KNU/events/EventManager.hpp
-        class/KNU/managers/AbstractPool.hpp
-        class/KNU/managers/Pool.hpp
-        class/KNU/managers/Pool_.hpp
-        class/KNU/systems/System.cpp
-        class/KNU/systems/System.hpp
-        class/KNU/utils/Signature.cpp
-        class/KNU/utils/Signature.hpp
-        class/KNU/World.cpp
-        class/KNU/World.hpp
-        class/logger/display/logger_debug.cpp
-        class/logger/display/logger_error.cpp
-        class/logger/display/logger_fatal.cpp
-        class/logger/display/logger_info.cpp
-        class/logger/display/logger_success.cpp
-        class/logger/display/logger_trace.cpp
-        class/logger/display/logger_warn.cpp
-        class/logger/logger/logger_init.cpp
-        class/logger/utils/logger_get_time.cpp
-        class/logger/utils/logger_init_open_file.cpp
-        class/network/chat_message.hpp
-        class/network/ClientTCP.cpp
-        class/network/ClientTCP.hpp
-        class/network/Network.cpp
-        class/network/Network.hpp
-        class/network/ServerTCP.cpp
-        class/network/ServerTCP.hpp
-        class/network/UtilsTCP.cpp
-        class/network/UtilsTCP.hpp
-        class/systems/CollisionSystem.cpp
-        class/systems/CollisionSystem.hpp
-        class/systems/FollowSystem.cpp
-        class/systems/FollowSystem.hpp
-        class/systems/FoodSystem.cpp
-        class/systems/FoodSystem.hpp
-        class/systems/JoystickSystem.cpp
-        class/systems/JoystickSystem.hpp
-        class/systems/MotionSystem.cpp
-        class/systems/MotionSystem.hpp
-        class/Univers.cpp
-        class/Univers.hpp
         externlib/commun/IDisplay.hpp
         externlib/commun/ISound.hpp
         externlib/display_sdl/include/DisplaySdl.hpp
@@ -135,4 +74,87 @@ add_executable(nibbler
         jsoncpp/src/lib_json/json_writer.cpp
         jsoncpp/src/test_lib_json/jsontest.cpp
         jsoncpp/src/test_lib_json/jsontest.h
-        jsoncpp/src/test_lib_json/main.cpp class/systems/RenderSystem.cpp class/systems/RenderSystem.hpp class/events/StartEvent.cpp class/events/StartEvent.hpp)
+        jsoncpp/src/test_lib_json/main.cpp
+        class/component/CollisionComponent.cpp
+        class/component/CollisionComponent.hpp
+        class/component/FollowComponent.cpp
+        class/component/FollowComponent.hpp
+        class/component/JoystickComponent.cpp
+        class/component/JoystickComponent.hpp
+        class/component/MotionComponent.cpp
+        class/component/MotionComponent.hpp
+        class/component/PositionComponent.cpp
+        class/component/PositionComponent.hpp
+        class/component/SpriteComponent.cpp
+        class/component/SpriteComponent.hpp
+        class/cores/main.cpp
+        class/events/FoodEvent.cpp
+        class/events/FoodEvent.hpp
+        class/events/JoystickEvent.cpp
+        class/events/JoystickEvent.hpp
+        class/events/StartEvent.cpp
+        class/events/StartEvent.hpp
+        class/factory/Factory.cpp
+        class/factory/Factory.hpp
+        class/gui/widget/AWidget.cpp
+        class/gui/widget/AWidget.hpp
+        class/gui/widget/WidgetChat.cpp
+        class/gui/widget/WidgetChat.hpp
+        class/gui/widget/WidgetExit.cpp
+        class/gui/widget/WidgetExit.hpp
+        class/gui/widget/WidgetLobby.cpp
+        class/gui/widget/WidgetLobby.hpp
+        class/gui/widget/WidgetOption.cpp
+        class/gui/widget/WidgetOption.hpp
+        class/gui/widget/WidgetSnake.cpp
+        class/gui/widget/WidgetSnake.hpp
+        class/gui/Core.cpp
+        class/gui/Core.hpp
+        class/gui/imgui_demo.cpp
+        class/KINU/AbstractPool.hpp
+        class/KINU/Component.cpp
+        class/KINU/Component.hpp
+        class/KINU/Entity.cpp
+        class/KINU/Entity.hpp
+        class/KINU/EventsManager.cpp
+        class/KINU/EventsManager.hpp
+        class/KINU/Pool.hpp
+        class/KINU/Signature.cpp
+        class/KINU/Signature.hpp
+        class/KINU/System.cpp
+        class/KINU/System.hpp
+        class/KINU/World.cpp
+        class/KINU/World.hpp
+        class/logger/display/logger_debug.cpp
+        class/logger/display/logger_error.cpp
+        class/logger/display/logger_fatal.cpp
+        class/logger/display/logger_info.cpp
+        class/logger/display/logger_success.cpp
+        class/logger/display/logger_trace.cpp
+        class/logger/display/logger_warn.cpp
+        class/logger/logger/logger_init.cpp
+        class/logger/utils/logger_get_time.cpp
+        class/logger/utils/logger_init_open_file.cpp
+        class/network/chat_message.hpp
+        class/network/ClientTCP.cpp
+        class/network/ClientTCP.hpp
+        class/network/Network.cpp
+        class/network/Network.hpp
+        class/network/ServerTCP.cpp
+        class/network/ServerTCP.hpp
+        class/network/UtilsTCP.cpp
+        class/network/UtilsTCP.hpp
+        class/systems/CollisionSystem.cpp
+        class/systems/CollisionSystem.hpp
+        class/systems/FollowSystem.cpp
+        class/systems/FollowSystem.hpp
+        class/systems/FoodSystem.cpp
+        class/systems/FoodSystem.hpp
+        class/systems/JoystickSystem.cpp
+        class/systems/JoystickSystem.hpp
+        class/systems/MotionSystem.cpp
+        class/systems/MotionSystem.hpp
+        class/systems/RenderSystem.cpp
+        class/systems/RenderSystem.hpp
+        class/Univers.cpp
+        class/Univers.hpp)

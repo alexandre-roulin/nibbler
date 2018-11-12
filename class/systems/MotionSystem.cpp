@@ -1,8 +1,8 @@
 
+#include "MotionSystem.hpp"
 #include <component/PositionComponent.hpp>
 #include <component/MotionComponent.hpp>
 #include <logger.h>
-#include "MotionSystem.hpp"
 
 //P 0000 0001
 //M 0000 0010

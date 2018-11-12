@@ -7,7 +7,7 @@ std::string const FollowComponent::SKIP = "skip";
 std::string const FollowComponent::ID_FOLLOWED = "idFollowed";
 std::string const FollowComponent::POSITION_COMPONENT = "positionComponent";
 
-FollowComponent::FollowComponent(KNU::Entity::ID id, bool skip)
+FollowComponent::FollowComponent(KINU::Entity::ID id, bool skip)
 		: idFollowed(id),
 		  skip(skip) {
 

@@ -1,13 +1,14 @@
 #pragma once
 
 #include <vector>
-#include <KNU/utils/Signature.hpp>
+#include <KINU/Signature.hpp>
 #include <unordered_map>
 #include <typeindex>
-#include <KNU/entities/Entity.hpp>
+#include <KINU/Entity.hpp>
 
-namespace KNU {
+namespace KINU {
 	class SystemManager;
+
 	class World;
 
 	class System {
@@ -68,7 +69,7 @@ namespace KNU {
 
 		template<typename T, typename ... Args>
 		void addSystem(Args ... args) {
-//			assert(!hasSystem<T>());
+			assert(!hasSystem<T>());
 			std::shared_ptr<T> system(new T(std::forward<Args>(args) ...));
 			system->world = &_world;
 			_systems.insert(std::make_pair(std::type_index(typeid(T)), system));
@@ -87,12 +88,3 @@ namespace KNU {
 	}
 
 }
-
-
-// P 0000 0001
-// M 0000 0010
-
-
-//E 0000 0011
-
-//S 0000 0011

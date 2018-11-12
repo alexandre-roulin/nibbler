@@ -2,17 +2,17 @@
 
 
 #include <iostream>
-#include <KNU/entities/Entity.hpp>
+#include <KINU/Entity.hpp>
 #include <boost/thread/thread.hpp>
 
-#include <KNU/World.hpp>
+#include <KINU/World.hpp>
 
 
 #include <random>
 #include <fstream>
 #include <network/ServerTCP.hpp>
 #include <network/ClientTCP.hpp>
-
+#include <logger.h>
 #include <gui/Core.hpp>
 
 std::string const Snake::basicName[MAX_SNAKE] = {"Jack O'Lantern", "Eden",

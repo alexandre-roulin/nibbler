@@ -6,6 +6,8 @@ CMakeFiles/nibbler.dir/class/KNU/World.cpp.o
  /Users/alexandreroulin/work/nibbler/class/KNU/World.hpp
  /Users/alexandreroulin/work/nibbler/externlib/commun/Grid.tpp
  /Users/alexandreroulin/work/nibbler/externlib/commun/IDisplay.hpp
+ class/KINU/Component.hpp
+ class/KINU/Signature.hpp
  class/KNU/component/Component.hpp
  class/KNU/entities/Entity.hpp
  class/KNU/events/EventManager.hpp
@@ -13,7 +15,6 @@ CMakeFiles/nibbler.dir/class/KNU/World.cpp.o
  class/KNU/managers/Pool.hpp
  class/KNU/managers/Pool_.hpp
  class/KNU/systems/System.hpp
- class/KNU/utils/Signature.hpp
  incs/logger.h
  incs/logger_utils.h
  incs/nibbler.hpp
@@ -33,6 +34,8 @@ CMakeFiles/nibbler.dir/class/KNU/component/Component.cpp.o
 CMakeFiles/nibbler.dir/class/KNU/entities/Entity.cpp.o
  /Users/alexandreroulin/work/nibbler/class/KNU/entities/Entity.cpp
  /Users/alexandreroulin/work/nibbler/class/KNU/entities/Entity.hpp
+ class/KINU/Component.hpp
+ class/KINU/Signature.hpp
  class/KNU/World.hpp
  class/KNU/component/Component.hpp
  class/KNU/entities/Entity.hpp
@@ -41,7 +44,6 @@ CMakeFiles/nibbler.dir/class/KNU/entities/Entity.cpp.o
  class/KNU/managers/Pool.hpp
  class/KNU/managers/Pool_.hpp
  class/KNU/systems/System.hpp
- class/KNU/utils/Signature.hpp
  class/component/CollisionComponent.hpp
  class/component/FollowComponent.hpp
  class/component/JoystickComponent.hpp
@@ -69,14 +71,17 @@ CMakeFiles/nibbler.dir/class/KNU/events/EventManager.cpp.o
  class/KNU/managers/AbstractPool.hpp
  class/KNU/managers/Pool.hpp
  class/KNU/managers/Pool_.hpp
+ incs/logger.h
+ incs/logger_utils.h
 CMakeFiles/nibbler.dir/class/KNU/systems/System.cpp.o
  /Users/alexandreroulin/work/nibbler/class/KNU/systems/System.cpp
  /Users/alexandreroulin/work/nibbler/class/KNU/systems/System.hpp
+ class/KINU/Component.hpp
+ class/KINU/Signature.hpp
  class/KNU/component/Component.hpp
  class/KNU/entities/Entity.hpp
  class/KNU/managers/AbstractPool.hpp
  class/KNU/managers/Pool.hpp
- class/KNU/utils/Signature.hpp
  incs/logger.h
  incs/logger_utils.h
  incs/nibbler.hpp
@@ -99,6 +104,8 @@ CMakeFiles/nibbler.dir/class/Univers.cpp.o
  /Users/alexandreroulin/work/nibbler/class/Univers.hpp
  /Users/alexandreroulin/work/nibbler/externlib/commun/Grid.tpp
  /Users/alexandreroulin/work/nibbler/externlib/commun/IDisplay.hpp
+ class/KINU/Component.hpp
+ class/KINU/Signature.hpp
  class/KNU/World.hpp
  class/KNU/component/Component.hpp
  class/KNU/entities/Entity.hpp
@@ -107,7 +114,6 @@ CMakeFiles/nibbler.dir/class/Univers.cpp.o
  class/KNU/managers/Pool.hpp
  class/KNU/managers/Pool_.hpp
  class/KNU/systems/System.hpp
- class/KNU/utils/Signature.hpp
  class/component/CollisionComponent.hpp
  class/component/FollowComponent.hpp
  class/component/JoystickComponent.hpp
@@ -159,11 +165,12 @@ CMakeFiles/nibbler.dir/class/component/FollowComponent.cpp.o
  /Users/alexandreroulin/work/nibbler/class/component/FollowComponent.cpp
  /Users/alexandreroulin/work/nibbler/class/component/FollowComponent.hpp
  /Users/alexandreroulin/work/nibbler/class/component/PositionComponent.hpp
+ class/KINU/Component.hpp
+ class/KINU/Signature.hpp
  class/KNU/component/Component.hpp
  class/KNU/entities/Entity.hpp
  class/KNU/managers/AbstractPool.hpp
  class/KNU/managers/Pool.hpp
- class/KNU/utils/Signature.hpp
  incs/logger.h
  incs/logger_utils.h
  incs/nibbler.hpp
@@ -194,8 +201,9 @@ CMakeFiles/nibbler.dir/class/component/JoystickComponent.cpp.o
 CMakeFiles/nibbler.dir/class/component/MotionComponent.cpp.o
  /Users/alexandreroulin/work/nibbler/class/component/MotionComponent.cpp
  /Users/alexandreroulin/work/nibbler/class/component/MotionComponent.hpp
+ class/KINU/Component.hpp
+ class/KINU/Signature.hpp
  class/KNU/component/Component.hpp
- class/KNU/utils/Signature.hpp
  incs/nibbler.hpp
  jsoncpp/include/json/allocator.h
  jsoncpp/include/json/autolink.h
@@ -210,8 +218,9 @@ CMakeFiles/nibbler.dir/class/component/MotionComponent.cpp.o
 CMakeFiles/nibbler.dir/class/component/PositionComponent.cpp.o
  /Users/alexandreroulin/work/nibbler/class/component/PositionComponent.cpp
  /Users/alexandreroulin/work/nibbler/class/component/PositionComponent.hpp
+ class/KINU/Component.hpp
+ class/KINU/Signature.hpp
  class/KNU/component/Component.hpp
- class/KNU/utils/Signature.hpp
  incs/logger.h
  incs/logger_utils.h
  jsoncpp/include/json/allocator.h
@@ -229,6 +238,8 @@ CMakeFiles/nibbler.dir/class/component/SpriteComponent.cpp.o
  /Users/alexandreroulin/work/nibbler/class/component/SpriteComponent.hpp
 CMakeFiles/nibbler.dir/class/cores/main.cpp.o
  /Users/alexandreroulin/work/nibbler/class/cores/main.cpp
+ class/KINU/Component.hpp
+ class/KINU/Signature.hpp
  class/KNU/World.hpp
  class/KNU/component/Component.hpp
  class/KNU/entities/Entity.hpp
@@ -237,21 +248,17 @@ CMakeFiles/nibbler.dir/class/cores/main.cpp.o
  class/KNU/managers/Pool.hpp
  class/KNU/managers/Pool_.hpp
  class/KNU/systems/System.hpp
- class/KNU/utils/Signature.hpp
  class/Univers.hpp
  class/component/CollisionComponent.hpp
  class/component/FollowComponent.hpp
  class/component/JoystickComponent.hpp
  class/component/MotionComponent.hpp
  class/component/PositionComponent.hpp
- class/component/SpriteComponent.hpp
- class/events/JoystickEvent.hpp
  class/factory/Factory.hpp
  class/gui/Core.hpp
  class/gui/widget/AWidget.hpp
  class/gui/widget/WidgetChat.hpp
  class/network/ClientTCP.hpp
- class/network/Network.hpp
  class/network/ServerTCP.hpp
  class/network/chat_message.hpp
  externlib/commun/Grid.tpp
@@ -276,6 +283,8 @@ CMakeFiles/nibbler.dir/class/events/FoodEvent.cpp.o
 CMakeFiles/nibbler.dir/class/events/JoystickEvent.cpp.o
  /Users/alexandreroulin/work/nibbler/class/events/JoystickEvent.cpp
  /Users/alexandreroulin/work/nibbler/class/events/JoystickEvent.hpp
+ class/KINU/Component.hpp
+ class/KINU/Signature.hpp
  class/KNU/World.hpp
  class/KNU/component/Component.hpp
  class/KNU/entities/Entity.hpp
@@ -284,7 +293,6 @@ CMakeFiles/nibbler.dir/class/events/JoystickEvent.cpp.o
  class/KNU/managers/Pool.hpp
  class/KNU/managers/Pool_.hpp
  class/KNU/systems/System.hpp
- class/KNU/utils/Signature.hpp
  class/component/CollisionComponent.hpp
  class/component/FollowComponent.hpp
  class/component/JoystickComponent.hpp
@@ -312,6 +320,8 @@ CMakeFiles/nibbler.dir/class/events/StartEvent.cpp.o
 CMakeFiles/nibbler.dir/class/factory/Factory.cpp.o
  /Users/alexandreroulin/work/nibbler/class/factory/Factory.cpp
  /Users/alexandreroulin/work/nibbler/class/factory/Factory.hpp
+ class/KINU/Component.hpp
+ class/KINU/Signature.hpp
  class/KNU/World.hpp
  class/KNU/component/Component.hpp
  class/KNU/entities/Entity.hpp
@@ -320,7 +330,6 @@ CMakeFiles/nibbler.dir/class/factory/Factory.cpp.o
  class/KNU/managers/Pool.hpp
  class/KNU/managers/Pool_.hpp
  class/KNU/systems/System.hpp
- class/KNU/utils/Signature.hpp
  class/component/CollisionComponent.hpp
  class/component/FollowComponent.hpp
  class/component/JoystickComponent.hpp
@@ -350,6 +359,8 @@ CMakeFiles/nibbler.dir/class/gui/Core.cpp.o
  /Users/alexandreroulin/work/nibbler/class/gui/widget/WidgetExit.hpp
  /Users/alexandreroulin/work/nibbler/class/gui/widget/WidgetLobby.hpp
  /Users/alexandreroulin/work/nibbler/class/gui/widget/WidgetSnake.hpp
+ class/KINU/Component.hpp
+ class/KINU/Signature.hpp
  class/KNU/World.hpp
  class/KNU/component/Component.hpp
  class/KNU/entities/Entity.hpp
@@ -358,7 +369,6 @@ CMakeFiles/nibbler.dir/class/gui/Core.cpp.o
  class/KNU/managers/Pool.hpp
  class/KNU/managers/Pool_.hpp
  class/KNU/systems/System.hpp
- class/KNU/utils/Signature.hpp
  class/Univers.hpp
  class/component/CollisionComponent.hpp
  class/component/FollowComponent.hpp
@@ -390,6 +400,8 @@ CMakeFiles/nibbler.dir/class/gui/imgui_demo.cpp.o
 CMakeFiles/nibbler.dir/class/gui/widget/AWidget.cpp.o
  /Users/alexandreroulin/work/nibbler/class/gui/widget/AWidget.cpp
  /Users/alexandreroulin/work/nibbler/class/gui/widget/AWidget.hpp
+ class/KINU/Component.hpp
+ class/KINU/Signature.hpp
  class/KNU/World.hpp
  class/KNU/component/Component.hpp
  class/KNU/entities/Entity.hpp
@@ -398,7 +410,6 @@ CMakeFiles/nibbler.dir/class/gui/widget/AWidget.cpp.o
  class/KNU/managers/Pool.hpp
  class/KNU/managers/Pool_.hpp
  class/KNU/systems/System.hpp
- class/KNU/utils/Signature.hpp
  class/Univers.hpp
  class/component/CollisionComponent.hpp
  class/component/FollowComponent.hpp
@@ -433,6 +444,8 @@ CMakeFiles/nibbler.dir/class/gui/widget/WidgetChat.cpp.o
  /Users/alexandreroulin/work/nibbler/class/gui/widget/WidgetChat.hpp
  /Users/alexandreroulin/work/nibbler/imgui-sfml/imconfig.h
  /Users/alexandreroulin/work/nibbler/imgui-sfml/imgui.h
+ class/KINU/Component.hpp
+ class/KINU/Signature.hpp
  class/KNU/World.hpp
  class/KNU/component/Component.hpp
  class/KNU/entities/Entity.hpp
@@ -441,7 +454,6 @@ CMakeFiles/nibbler.dir/class/gui/widget/WidgetChat.cpp.o
  class/KNU/managers/Pool.hpp
  class/KNU/managers/Pool_.hpp
  class/KNU/systems/System.hpp
- class/KNU/utils/Signature.hpp
  class/Univers.hpp
  class/component/CollisionComponent.hpp
  class/component/FollowComponent.hpp
@@ -480,6 +492,8 @@ CMakeFiles/nibbler.dir/class/gui/widget/WidgetLobby.cpp.o
  /Users/alexandreroulin/work/nibbler/class/gui/widget/WidgetLobby.cpp
  /Users/alexandreroulin/work/nibbler/class/gui/widget/WidgetLobby.hpp
  /Users/alexandreroulin/work/nibbler/class/gui/widget/WidgetSnake.hpp
+ class/KINU/Component.hpp
+ class/KINU/Signature.hpp
  class/KNU/World.hpp
  class/KNU/component/Component.hpp
  class/KNU/entities/Entity.hpp
@@ -488,7 +502,6 @@ CMakeFiles/nibbler.dir/class/gui/widget/WidgetLobby.cpp.o
  class/KNU/managers/Pool.hpp
  class/KNU/managers/Pool_.hpp
  class/KNU/systems/System.hpp
- class/KNU/utils/Signature.hpp
  class/Univers.hpp
  class/component/CollisionComponent.hpp
  class/component/FollowComponent.hpp
@@ -517,10 +530,14 @@ CMakeFiles/nibbler.dir/class/gui/widget/WidgetLobby.cpp.o
  jsoncpp/include/json/value.h
  jsoncpp/include/json/version.h
  jsoncpp/include/json/writer.h
-CMakeFiles/nibbler.dir/class/gui/widget/WidgetSnake.cpp.o
+CMakeFiles/nibbler.dir/class/gui/widget/WidgetOption.cpp.o
  /Users/alexandreroulin/work/nibbler/class/gui/widget/AWidget.hpp
- /Users/alexandreroulin/work/nibbler/class/gui/widget/WidgetSnake.cpp
- /Users/alexandreroulin/work/nibbler/class/gui/widget/WidgetSnake.hpp
+ /Users/alexandreroulin/work/nibbler/class/gui/widget/WidgetOption.cpp
+ /Users/alexandreroulin/work/nibbler/class/gui/widget/WidgetOption.hpp
+ /Users/alexandreroulin/work/nibbler/imgui-sfml/imconfig.h
+ /Users/alexandreroulin/work/nibbler/imgui-sfml/imgui.h
+ class/KINU/Component.hpp
+ class/KINU/Signature.hpp
  class/KNU/World.hpp
  class/KNU/component/Component.hpp
  class/KNU/entities/Entity.hpp
@@ -529,7 +546,39 @@ CMakeFiles/nibbler.dir/class/gui/widget/WidgetSnake.cpp.o
  class/KNU/managers/Pool.hpp
  class/KNU/managers/Pool_.hpp
  class/KNU/systems/System.hpp
- class/KNU/utils/Signature.hpp
+ class/Univers.hpp
+ externlib/commun/Grid.tpp
+ externlib/commun/IDisplay.hpp
+ imgui-sfml/imgui-SFML.h
+ imgui-sfml/imgui.h
+ incs/IWidget.hpp
+ incs/logger.h
+ incs/logger_utils.h
+ incs/nibbler.hpp
+ jsoncpp/include/json/allocator.h
+ jsoncpp/include/json/autolink.h
+ jsoncpp/include/json/config.h
+ jsoncpp/include/json/features.h
+ jsoncpp/include/json/forwards.h
+ jsoncpp/include/json/json.h
+ jsoncpp/include/json/reader.h
+ jsoncpp/include/json/value.h
+ jsoncpp/include/json/version.h
+ jsoncpp/include/json/writer.h
+CMakeFiles/nibbler.dir/class/gui/widget/WidgetSnake.cpp.o
+ /Users/alexandreroulin/work/nibbler/class/gui/widget/AWidget.hpp
+ /Users/alexandreroulin/work/nibbler/class/gui/widget/WidgetSnake.cpp
+ /Users/alexandreroulin/work/nibbler/class/gui/widget/WidgetSnake.hpp
+ class/KINU/Component.hpp
+ class/KINU/Signature.hpp
+ class/KNU/World.hpp
+ class/KNU/component/Component.hpp
+ class/KNU/entities/Entity.hpp
+ class/KNU/events/EventManager.hpp
+ class/KNU/managers/AbstractPool.hpp
+ class/KNU/managers/Pool.hpp
+ class/KNU/managers/Pool_.hpp
+ class/KNU/systems/System.hpp
  class/Univers.hpp
  class/component/CollisionComponent.hpp
  class/component/FollowComponent.hpp
@@ -603,6 +652,8 @@ CMakeFiles/nibbler.dir/class/network/ClientTCP.cpp.o
  /Users/alexandreroulin/work/nibbler/class/network/ClientTCP.hpp
  /Users/alexandreroulin/work/nibbler/class/network/ServerTCP.hpp
  /Users/alexandreroulin/work/nibbler/class/network/chat_message.hpp
+ class/KINU/Component.hpp
+ class/KINU/Signature.hpp
  class/KNU/World.hpp
  class/KNU/component/Component.hpp
  class/KNU/entities/Entity.hpp
@@ -611,7 +662,6 @@ CMakeFiles/nibbler.dir/class/network/ClientTCP.cpp.o
  class/KNU/managers/Pool.hpp
  class/KNU/managers/Pool_.hpp
  class/KNU/systems/System.hpp
- class/KNU/utils/Signature.hpp
  class/Univers.hpp
  class/component/CollisionComponent.hpp
  class/component/FollowComponent.hpp
@@ -649,6 +699,8 @@ CMakeFiles/nibbler.dir/class/network/ServerTCP.cpp.o
  /Users/alexandreroulin/work/nibbler/class/network/ServerTCP.cpp
  /Users/alexandreroulin/work/nibbler/class/network/ServerTCP.hpp
  /Users/alexandreroulin/work/nibbler/class/network/chat_message.hpp
+ class/KINU/Component.hpp
+ class/KINU/Signature.hpp
  class/KNU/World.hpp
  class/KNU/component/Component.hpp
  class/KNU/entities/Entity.hpp
@@ -657,7 +709,6 @@ CMakeFiles/nibbler.dir/class/network/ServerTCP.cpp.o
  class/KNU/managers/Pool.hpp
  class/KNU/managers/Pool_.hpp
  class/KNU/systems/System.hpp
- class/KNU/utils/Signature.hpp
  class/Univers.hpp
  class/component/CollisionComponent.hpp
  class/component/FollowComponent.hpp
@@ -687,6 +738,8 @@ CMakeFiles/nibbler.dir/class/network/UtilsTCP.cpp.o
 CMakeFiles/nibbler.dir/class/systems/CollisionSystem.cpp.o
  /Users/alexandreroulin/work/nibbler/class/systems/CollisionSystem.cpp
  /Users/alexandreroulin/work/nibbler/class/systems/CollisionSystem.hpp
+ class/KINU/Component.hpp
+ class/KINU/Signature.hpp
  class/KNU/World.hpp
  class/KNU/component/Component.hpp
  class/KNU/entities/Entity.hpp
@@ -695,7 +748,6 @@ CMakeFiles/nibbler.dir/class/systems/CollisionSystem.cpp.o
  class/KNU/managers/Pool.hpp
  class/KNU/managers/Pool_.hpp
  class/KNU/systems/System.hpp
- class/KNU/utils/Signature.hpp
  class/component/CollisionComponent.hpp
  class/component/FollowComponent.hpp
  class/component/JoystickComponent.hpp
@@ -721,6 +773,8 @@ CMakeFiles/nibbler.dir/class/systems/CollisionSystem.cpp.o
 CMakeFiles/nibbler.dir/class/systems/FollowSystem.cpp.o
  /Users/alexandreroulin/work/nibbler/class/systems/FollowSystem.cpp
  /Users/alexandreroulin/work/nibbler/class/systems/FollowSystem.hpp
+ class/KINU/Component.hpp
+ class/KINU/Signature.hpp
  class/KNU/World.hpp
  class/KNU/component/Component.hpp
  class/KNU/entities/Entity.hpp
@@ -729,7 +783,6 @@ CMakeFiles/nibbler.dir/class/systems/FollowSystem.cpp.o
  class/KNU/managers/Pool.hpp
  class/KNU/managers/Pool_.hpp
  class/KNU/systems/System.hpp
- class/KNU/utils/Signature.hpp
  class/component/FollowComponent.hpp
  class/component/PositionComponent.hpp
  externlib/commun/Grid.tpp
@@ -750,6 +803,8 @@ CMakeFiles/nibbler.dir/class/systems/FollowSystem.cpp.o
 CMakeFiles/nibbler.dir/class/systems/FoodSystem.cpp.o
  /Users/alexandreroulin/work/nibbler/class/systems/FoodSystem.cpp
  /Users/alexandreroulin/work/nibbler/class/systems/FoodSystem.hpp
+ class/KINU/Component.hpp
+ class/KINU/Signature.hpp
  class/KNU/World.hpp
  class/KNU/component/Component.hpp
  class/KNU/entities/Entity.hpp
@@ -758,12 +813,18 @@ CMakeFiles/nibbler.dir/class/systems/FoodSystem.cpp.o
  class/KNU/managers/Pool.hpp
  class/KNU/managers/Pool_.hpp
  class/KNU/systems/System.hpp
- class/KNU/utils/Signature.hpp
+ class/Univers.hpp
  class/component/CollisionComponent.hpp
  class/component/FollowComponent.hpp
+ class/component/JoystickComponent.hpp
+ class/component/MotionComponent.hpp
  class/component/PositionComponent.hpp
  class/component/SpriteComponent.hpp
  class/events/FoodEvent.hpp
+ class/factory/Factory.hpp
+ class/network/ClientTCP.hpp
+ class/network/ServerTCP.hpp
+ class/network/chat_message.hpp
  externlib/commun/Grid.tpp
  externlib/commun/IDisplay.hpp
  incs/logger.h
@@ -782,6 +843,8 @@ CMakeFiles/nibbler.dir/class/systems/FoodSystem.cpp.o
 CMakeFiles/nibbler.dir/class/systems/JoystickSystem.cpp.o
  /Users/alexandreroulin/work/nibbler/class/systems/JoystickSystem.cpp
  /Users/alexandreroulin/work/nibbler/class/systems/JoystickSystem.hpp
+ class/KINU/Component.hpp
+ class/KINU/Signature.hpp
  class/KNU/World.hpp
  class/KNU/component/Component.hpp
  class/KNU/entities/Entity.hpp
@@ -790,7 +853,6 @@ CMakeFiles/nibbler.dir/class/systems/JoystickSystem.cpp.o
  class/KNU/managers/Pool.hpp
  class/KNU/managers/Pool_.hpp
  class/KNU/systems/System.hpp
- class/KNU/utils/Signature.hpp
  class/component/CollisionComponent.hpp
  class/component/FollowComponent.hpp
  class/component/JoystickComponent.hpp
@@ -816,12 +878,13 @@ CMakeFiles/nibbler.dir/class/systems/JoystickSystem.cpp.o
 CMakeFiles/nibbler.dir/class/systems/MotionSystem.cpp.o
  /Users/alexandreroulin/work/nibbler/class/systems/MotionSystem.cpp
  /Users/alexandreroulin/work/nibbler/class/systems/MotionSystem.hpp
+ class/KINU/Component.hpp
+ class/KINU/Signature.hpp
  class/KNU/component/Component.hpp
  class/KNU/entities/Entity.hpp
  class/KNU/managers/AbstractPool.hpp
  class/KNU/managers/Pool.hpp
  class/KNU/systems/System.hpp
- class/KNU/utils/Signature.hpp
  class/component/MotionComponent.hpp
  class/component/PositionComponent.hpp
  incs/logger.h
@@ -840,6 +903,8 @@ CMakeFiles/nibbler.dir/class/systems/MotionSystem.cpp.o
 CMakeFiles/nibbler.dir/class/systems/RenderSystem.cpp.o
  /Users/alexandreroulin/work/nibbler/class/systems/RenderSystem.cpp
  /Users/alexandreroulin/work/nibbler/class/systems/RenderSystem.hpp
+ class/KINU/Component.hpp
+ class/KINU/Signature.hpp
  class/KNU/World.hpp
  class/KNU/component/Component.hpp
  class/KNU/entities/Entity.hpp
@@ -848,7 +913,6 @@ CMakeFiles/nibbler.dir/class/systems/RenderSystem.cpp.o
  class/KNU/managers/Pool.hpp
  class/KNU/managers/Pool_.hpp
  class/KNU/systems/System.hpp
- class/KNU/utils/Signature.hpp
  class/component/PositionComponent.hpp
  class/component/SpriteComponent.hpp
  externlib/commun/Grid.tpp
@@ -871,6 +935,7 @@ CMakeFiles/nibbler.dir/externlib/display_sdl/src/DisplaySdl.cpp.o
  /Users/alexandreroulin/work/nibbler/externlib/display_sdl/src/DisplaySdl.cpp
 CMakeFiles/nibbler.dir/externlib/display_sfml/src/DisplaySfml.cpp.o
  /Users/alexandreroulin/work/nibbler/externlib/display_sfml/src/DisplaySfml.cpp
+ incs/nibbler.hpp
 CMakeFiles/nibbler.dir/externlib/sandbox/main.cpp.o
  /Users/alexandreroulin/work/nibbler/externlib/sandbox/main.cpp
 CMakeFiles/nibbler.dir/externlib/sound_sdl/src/SoundSdl.cpp.o
@@ -891,10 +956,6 @@ CMakeFiles/nibbler.dir/imgui-sfml/imgui.cpp.o
  /Users/alexandreroulin/work/nibbler/imgui-sfml/imgui_internal.h
  /Users/alexandreroulin/work/nibbler/imgui-sfml/imstb_textedit.h
  incs/stb_image.h
-CMakeFiles/nibbler.dir/imgui-sfml/imgui_demo.cpp.o
- /Users/alexandreroulin/work/nibbler/imgui-sfml/imconfig.h
- /Users/alexandreroulin/work/nibbler/imgui-sfml/imgui.h
- /Users/alexandreroulin/work/nibbler/imgui-sfml/imgui_demo.cpp
 CMakeFiles/nibbler.dir/imgui-sfml/imgui_draw.cpp.o
  /Users/alexandreroulin/work/nibbler/imgui-sfml/imconfig.h
  /Users/alexandreroulin/work/nibbler/imgui-sfml/imgui.h

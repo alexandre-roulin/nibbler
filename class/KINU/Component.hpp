@@ -2,7 +2,7 @@
 
 #include <type_traits>
 
-namespace KNU {
+namespace KINU {
 	struct ComponentCounter {
 		static int familyCounter;
 	};

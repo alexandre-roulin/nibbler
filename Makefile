@@ -78,12 +78,12 @@ SRCS = \
 		network/ClientTCP.cpp						\
 		network/ServerTCP.cpp						\
 													\
-		KNU/World.cpp								\
-		KNU/entities/Entity.cpp						\
-		KNU/component/Component.cpp					\
-		KNU/systems/System.cpp						\
-		KNU/utils/Signature.cpp						\
-		KNU/events/EventManager.cpp					\
+		KINU/World.cpp								\
+		KINU/Entity.cpp								\
+		KINU/Component.cpp							\
+		KINU/System.cpp								\
+		KINU/Signature.cpp							\
+		KINU/EventsManager.cpp						\
 													\
 		logger/display/logger_debug.cpp				\
 		logger/display/logger_error.cpp				\

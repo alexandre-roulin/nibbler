@@ -1,5 +1,6 @@
 
 #include <component/SpriteComponent.hpp>
+#include <logger.h>
 #include "Factory.hpp"
 
 const char *Factory::part_name[PART_SNAKE]{
@@ -9,7 +10,7 @@ const char *Factory::part_name[PART_SNAKE]{
 		[GRPS] = "grps"
 };
 
-Factory::Factory(KNU::World &world)
+Factory::Factory(KINU::World &world)
 		: world_(world) {
 
 }
@@ -39,32 +40,33 @@ void Factory::create_all_snake(Snake snake_array[MAX_SNAKE], int16_t nu) {
 }
 
 void Factory::create_snake(int16_t id, int y, int x) {
-	KNU::Entity *snake_follow = nullptr;
-	KNU::Entity *new_snake = nullptr;
+	KINU::Entity snake_follow;
+	KINU::Entity new_snake;
 
 	for (int index = 0; index < 4; ++index) {
-		new_snake = &world_.createEntity();
+		new_snake = world_.createEntity();
+		log_info("[%d]", new_snake.entitiesManager);
 		if (index == 0) {
-			new_snake->tag(factory_name(HEAD, id));
-			new_snake->addComponent<JoystickComponent>(NORTH,
+			new_snake.tag(factory_name(HEAD, id));
+			new_snake.addComponent<JoystickComponent>(NORTH,
 													   factory_name(HEAD, id));
-			new_snake->addComponent<MotionComponent>();
-			new_snake->addComponent<CollisionComponent>(false);
-			new_snake->addComponent<SpriteComponent>(21);
-			new_snake->addComponent<PositionComponent>(10, 10);
+			new_snake.addComponent<MotionComponent>();
+			new_snake.addComponent<CollisionComponent>(false);
+			new_snake.addComponent<SpriteComponent>(21);
+			new_snake.addComponent<PositionComponent>(10, 10);
 		} else if (index == 3) {
-			new_snake->tag(factory_name(TAIL, id));
-			new_snake->addComponent<CollisionComponent>();
-			new_snake->addComponent<SpriteComponent>(23);
-			new_snake->addComponent<PositionComponent>(15, 15 + index);
+			new_snake.tag(factory_name(TAIL, id));
+			new_snake.addComponent<CollisionComponent>();
+			new_snake.addComponent<SpriteComponent>(23);
+			new_snake.addComponent<PositionComponent>(15, 15 + index);
 		} else {
-			new_snake->addComponent<CollisionComponent>();
-			new_snake->addComponent<PositionComponent>(15, 15 + index);
-			new_snake->addComponent<SpriteComponent>(22);
+			new_snake.addComponent<CollisionComponent>();
+			new_snake.addComponent<PositionComponent>(15, 15 + index);
+			new_snake.addComponent<SpriteComponent>(22);
 		}
-		new_snake->group(factory_name(GRPS, id));
-		if (snake_follow != nullptr)
-			new_snake->addComponent<FollowComponent>(snake_follow->getId());
+		new_snake.group(factory_name(GRPS, id));
+		if (snake_follow.isValid())
+			new_snake.addComponent<FollowComponent>(snake_follow.getId());
 		snake_follow = new_snake;
 	}
 }
@@ -77,11 +79,11 @@ eSnakePart Factory::isSnakePart(std::string compare) {
 }
 
 void Factory::create_food(int y, int x) {
-	auto &food = world_.createEntity();
+	log_trace("Factory::create_food(int y = %d, int x = %d)", y, x);
+	auto food = world_.createEntity();
 	food.addComponent<PositionComponent>(y, x);
 	food.addComponent<CollisionComponent>(false);
 	food.addComponent<SpriteComponent>(33);
-	food.group("food");
 }
 
 void Factory::create_walls() {
@@ -103,7 +105,7 @@ void Factory::create_walls() {
 }
 
 void Factory::create_wall(int x, int y) {
-	auto &entity = world_.createEntity();
+	auto entity = world_.createEntity();
 	entity.addComponent<PositionComponent>(y, x);
 	entity.addComponent<CollisionComponent>();
 	entity.group(WALL_TAG);
