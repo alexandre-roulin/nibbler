@@ -39,10 +39,10 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake
+CMAKE_COMMAND = /Users/ntoniolo/.brew/Cellar/cmake/3.12.3/bin/cmake
 
 # The command to remove a file.
-RM = /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -E remove -f
+RM = /Users/ntoniolo/.brew/Cellar/cmake/3.12.3/bin/cmake -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
@@ -56,56 +56,10 @@ CMAKE_BINARY_DIR = /Users/ntoniolo/nibbler
 #=============================================================================
 # Targets provided globally by CMake.
 
-# Special rule for the target install/local
-install/local: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
-	/Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
-.PHONY : install/local
-
-# Special rule for the target install/local
-install/local/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
-	/Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
-.PHONY : install/local/fast
-
-# Special rule for the target install/strip
-install/strip: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
-	/Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
-.PHONY : install/strip
-
-# Special rule for the target install/strip
-install/strip/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
-	/Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
-.PHONY : install/strip/fast
-
-# Special rule for the target install
-install: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
-	/Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -P cmake_install.cmake
-.PHONY : install
-
-# Special rule for the target install
-install/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
-	/Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -P cmake_install.cmake
-.PHONY : install/fast
-
-# Special rule for the target list_install_components
-list_install_components:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
-.PHONY : list_install_components
-
-# Special rule for the target list_install_components
-list_install_components/fast: list_install_components
-
-.PHONY : list_install_components/fast
-
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	/Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	/Users/ntoniolo/.brew/Cellar/cmake/3.12.3/bin/cmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : rebuild_cache
 
 # Special rule for the target rebuild_cache
@@ -157,6 +111,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named jsoncpp
+
+# Build rule for target.
+jsoncpp: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 jsoncpp
+.PHONY : jsoncpp
+
+# fast build rule for target.
+jsoncpp/fast:
+	$(MAKE) -f CMakeFiles/jsoncpp.dir/build.make CMakeFiles/jsoncpp.dir/build
+.PHONY : jsoncpp/fast
+
+#=============================================================================
 # Target rules for targets named nibbler
 
 # Build rule for target.
@@ -181,71 +148,6 @@ sfml: cmake_check_build_system
 sfml/fast:
 	$(MAKE) -f CMakeFiles/sfml.dir/build.make CMakeFiles/sfml.dir/build
 .PHONY : sfml/fast
-
-#=============================================================================
-# Target rules for targets named jsoncpp_lib_static
-
-# Build rule for target.
-jsoncpp_lib_static: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 jsoncpp_lib_static
-.PHONY : jsoncpp_lib_static
-
-# fast build rule for target.
-jsoncpp_lib_static/fast:
-	$(MAKE) -f jsoncpp/src/lib_json/CMakeFiles/jsoncpp_lib_static.dir/build.make jsoncpp/src/lib_json/CMakeFiles/jsoncpp_lib_static.dir/build
-.PHONY : jsoncpp_lib_static/fast
-
-#=============================================================================
-# Target rules for targets named jsoncpp_check
-
-# Build rule for target.
-jsoncpp_check: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 jsoncpp_check
-.PHONY : jsoncpp_check
-
-# fast build rule for target.
-jsoncpp_check/fast:
-	$(MAKE) -f jsoncpp/src/jsontestrunner/CMakeFiles/jsoncpp_check.dir/build.make jsoncpp/src/jsontestrunner/CMakeFiles/jsoncpp_check.dir/build
-.PHONY : jsoncpp_check/fast
-
-#=============================================================================
-# Target rules for targets named jsoncpp_readerwriter_tests
-
-# Build rule for target.
-jsoncpp_readerwriter_tests: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 jsoncpp_readerwriter_tests
-.PHONY : jsoncpp_readerwriter_tests
-
-# fast build rule for target.
-jsoncpp_readerwriter_tests/fast:
-	$(MAKE) -f jsoncpp/src/jsontestrunner/CMakeFiles/jsoncpp_readerwriter_tests.dir/build.make jsoncpp/src/jsontestrunner/CMakeFiles/jsoncpp_readerwriter_tests.dir/build
-.PHONY : jsoncpp_readerwriter_tests/fast
-
-#=============================================================================
-# Target rules for targets named jsontestrunner_exe
-
-# Build rule for target.
-jsontestrunner_exe: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 jsontestrunner_exe
-.PHONY : jsontestrunner_exe
-
-# fast build rule for target.
-jsontestrunner_exe/fast:
-	$(MAKE) -f jsoncpp/src/jsontestrunner/CMakeFiles/jsontestrunner_exe.dir/build.make jsoncpp/src/jsontestrunner/CMakeFiles/jsontestrunner_exe.dir/build
-.PHONY : jsontestrunner_exe/fast
-
-#=============================================================================
-# Target rules for targets named jsoncpp_test
-
-# Build rule for target.
-jsoncpp_test: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 jsoncpp_test
-.PHONY : jsoncpp_test
-
-# fast build rule for target.
-jsoncpp_test/fast:
-	$(MAKE) -f jsoncpp/src/test_lib_json/CMakeFiles/jsoncpp_test.dir/build.make jsoncpp/src/test_lib_json/CMakeFiles/jsoncpp_test.dir/build
-.PHONY : jsoncpp_test/fast
 
 #=============================================================================
 # Target rules for targets named imgui-sfml
@@ -1454,19 +1356,11 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
-	@echo "... install/local"
-	@echo "... install/strip"
-	@echo "... install"
-	@echo "... list_install_components"
+	@echo "... jsoncpp"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... nibbler"
 	@echo "... sfml"
-	@echo "... jsoncpp_lib_static"
-	@echo "... jsoncpp_check"
-	@echo "... jsoncpp_readerwriter_tests"
-	@echo "... jsontestrunner_exe"
-	@echo "... jsoncpp_test"
 	@echo "... imgui-sfml"
 	@echo "... class/KNU/World.o"
 	@echo "... class/KNU/World.i"

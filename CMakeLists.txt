@@ -10,11 +10,8 @@ project(${NAME})
 
 set(CMAKE_CXX_STANDARD 14)
 
-#set(CMAKE_MACOSX_RPATH 1)
-
 find_package(Git QUIET)
 if(GIT_FOUND AND EXISTS "${PROJECT_SOURCE_DIR}/.git")
-    # Update submodules as needed
     option(GIT_SUBMODULE "Check submodules during build" ON)
     if(GIT_SUBMODULE)
         message(STATUS "Submodule update")
@@ -27,19 +24,9 @@ if(GIT_FOUND AND EXISTS "${PROJECT_SOURCE_DIR}/.git")
     endif()
 endif()
 
-#if(NOT EXISTS "${PROJECT_SOURCE_DIR}/SFML/CMakeLists.txt")
-#    message(FATAL_ERROR "The SFML submodules were not downloaded! GIT_SUBMODULE was turned off or failed. Please update submodules and try again.")
-#endif()
-
-#add_subdirectory(SFML)
-
-add_subdirectory(jsoncpp)
-
-
 link_directories(/usr/lib/)
 link_directories($ENV{HOME}/.brew/lib/)
 link_directories(${PROJECT_SOURCE_DIR}/imgui/)
-link_directories(${PROJECT_SOURCE_DIR}/jsoncpp/src/lib_json/)
 
 
 if(WIN32)
@@ -77,6 +64,26 @@ if (NOT SFML_FOUND)
     include_directories(${sfml_INSTALL_DIR}/src/sfml/include)
     link_directories(${sfml_INSTALL_DIR}/src/sfml-build/lib)
 
+endif()
+
+UNSET(JSONCPP_LIBRARY CACHE)
+find_library(JSONCPP_LIBRARY
+        NAMES jsoncpp
+        HINTS "$ENV{HOME}/.brew/lib/")
+if (NOT JSONCPP_LIBRARY)
+    ExternalProject_Add(jsoncpp
+            PREFIX ${PROJECT_SOURCE_DIR}/jsoncpp
+            GIT_REPOSITORY https://github.com/open-source-parsers/jsoncpp
+            INSTALL_DIR {PROJECT_SOURCE_DIR}/jsoncpp
+            CMAKE_ARGS ""
+            INSTALL_COMMAND make
+            )
+
+    include_directories(${PROJECT_SOURCE_DIR}/jsoncpp/src/jsoncpp/include/)
+    link_directories(${PROJECT_SOURCE_DIR}/jsoncpp/src/jsoncpp-build/src/lib_json/)
+    link_libraries(${PROJECT_SOURCE_DIR}/jsoncpp/src/jsoncpp-build/src/lib_json/libjsoncpp.a)
+else()
+    link_libraries(${JSONCPP_LIBRARY})
 endif()
 
 add_executable(${NAME}
@@ -174,6 +181,11 @@ if (NOT SFML_FOUND)
     add_dependencies(${NAME} sfml)
 endif()
 
+if (NOT JSONCPP_LIBRARY)
+    add_dependencies(${NAME} jsoncpp)
+endif()
+
+
 add_subdirectory(imgui)
 
 
@@ -183,10 +195,9 @@ target_include_directories(
         ${NAME} PUBLIC
         class
         incs
-        jsoncpp/include
-        #SFML/include
+        #jsoncpp/include
         $ENV{HOME}/.brew/include
-        ${PROJECT_SOURCE_DIR}/jsoncpp/include/
+        #${PROJECT_SOURCE_DIR}/jsoncpp/include/
         ${PROJECT_SOURCE_DIR}/imgui/
         ${PROJECT_SOURCE_DIR}/imgui/imgui/
         ${PROJECT_SOURCE_DIR}/imgui/imgui-sfml/
@@ -194,9 +205,9 @@ target_include_directories(
 )
 
 
-target_link_libraries(${NAME} PUBLIC
+target_link_libraries(${NAME} PRIVATE
         sfml-graphics sfml-window sfml-system sfml-audio
-        jsoncpp
+       # jsoncpp
         imgui-sfml
         boost_system boost_thread-mt
         ${LIBS}
