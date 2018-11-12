@@ -25,7 +25,7 @@ int         main(int argc, char **argv)
     if (!(deleteDisplay = (void (*)(IDisplay *))(dlsym(dlHandle, "deleteDisplay"))))
         return (dlError());
 
-    IDisplay    *display = newDisplay("../commun/tileset_3snake.png", 32, 30, 30, "lol");
+    IDisplay    *display = newDisplay("../../ressource/tileset_3snake.png", 32, 30, 30, "lol");
 
     Grid<int> grid(30, 30);
 
