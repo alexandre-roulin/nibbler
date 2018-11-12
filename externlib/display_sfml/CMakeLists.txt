@@ -23,7 +23,7 @@ link_directories(/usr/lib/)
 link_directories($ENV{HOME}/.brew/lib/)
 
 add_library(
-        ${NAME} SHARED
+        ${NAME} MODULE
 
         src/DisplaySfml.cpp
         include/DisplaySfml.hpp
