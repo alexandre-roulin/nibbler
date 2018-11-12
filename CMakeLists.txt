@@ -1,80 +1,62 @@
 cmake_minimum_required(VERSION 3.12)
-project(nibbler)
+
+set(CMAKE_C_COMPILER "/usr/bin/gcc")
+set(CMAKE_CXX_COMPILER "/usr/bin/g++")
+
+set(NAME nibbler)
+project(${NAME})
 
 set(CMAKE_CXX_STANDARD 14)
 
-include_directories(externlib/commun)
-include_directories(externlib/display_sdl/include)
-include_directories(externlib/display_sfml/include)
-include_directories(externlib/sound_sdl/include)
-include_directories(externlib/sound_sfml/include)
-include_directories(imgui-sfml)
-include_directories(incs)
-include_directories(jsoncpp/include)
-include_directories(jsoncpp/include/json)
-include_directories(jsoncpp/src/lib_json)
-include_directories(jsoncpp/src/test_lib_json)
-include_directories(class)
-include_directories(class/component)
-include_directories(class/events)
-include_directories(class/factory)
-include_directories(class/gui)
-include_directories(class/gui/widget)
-include_directories(class/KINU)
-include_directories(class/network)
-include_directories(class/systems)
+#set(CMAKE_MACOSX_RPATH 1)
 
-add_executable(nibbler
-        externlib/commun/IDisplay.hpp
-        externlib/commun/ISound.hpp
-        externlib/display_sdl/include/DisplaySdl.hpp
-        externlib/display_sdl/src/DisplaySdl.cpp
-        externlib/display_sfml/include/DisplaySfml.hpp
-        externlib/display_sfml/src/DisplaySfml.cpp
-        externlib/sandbox/main.cpp
-        externlib/sound_sdl/include/SoundSdl.hpp
-        externlib/sound_sdl/src/main.cpp
-        externlib/sound_sdl/src/SoundSdl.cpp
-        externlib/sound_sfml/include/SoundSfml.hpp
-        externlib/sound_sfml/src/main.cpp
-        externlib/sound_sfml/src/SoundSfml.cpp
-        imgui-sfml/imconfig.h
-        imgui-sfml/imgui-SFML.cpp
-        imgui-sfml/imgui-SFML.h
-        imgui-sfml/imgui.cpp
-        imgui-sfml/imgui.h
-        imgui-sfml/imgui_demo.cpp
-        imgui-sfml/imgui_draw.cpp
-        imgui-sfml/imgui_internal.h
-        imgui-sfml/imgui_widgets.cpp
-        imgui-sfml/imstb_rectpack.h
-        imgui-sfml/imstb_textedit.h
-        imgui-sfml/imstb_truetype.h
-        incs/IWidget.hpp
-        incs/logger.h
-        incs/logger_utils.h
-        incs/nibbler.hpp
-        incs/stb_image.h
-        jsoncpp/include/json/allocator.h
-        jsoncpp/include/json/assertions.h
-        jsoncpp/include/json/autolink.h
-        jsoncpp/include/json/config.h
-        jsoncpp/include/json/features.h
-        jsoncpp/include/json/forwards.h
-        jsoncpp/include/json/json.h
-        jsoncpp/include/json/reader.h
-        jsoncpp/include/json/value.h
-        jsoncpp/include/json/version.h
-        jsoncpp/include/json/writer.h
-        jsoncpp/src/jsontestrunner/main.cpp
-        jsoncpp/src/lib_json/json_reader.cpp
-        jsoncpp/src/lib_json/json_tool.h
-        jsoncpp/src/lib_json/json_value.cpp
-        jsoncpp/src/lib_json/json_valueiterator.inl
-        jsoncpp/src/lib_json/json_writer.cpp
-        jsoncpp/src/test_lib_json/jsontest.cpp
-        jsoncpp/src/test_lib_json/jsontest.h
-        jsoncpp/src/test_lib_json/main.cpp
+find_package(Git QUIET)
+if(GIT_FOUND AND EXISTS "${PROJECT_SOURCE_DIR}/.git")
+    # Update submodules as needed
+    option(GIT_SUBMODULE "Check submodules during build" ON)
+    if(GIT_SUBMODULE)
+        message(STATUS "Submodule update")
+        execute_process(COMMAND ${GIT_EXECUTABLE} submodule update --init --recursive
+                WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+                RESULT_VARIABLE GIT_SUBMOD_RESULT)
+        if(NOT GIT_SUBMOD_RESULT EQUAL "0")
+            message(FATAL_ERROR "git submodule update --init failed with ${GIT_SUBMOD_RESULT}, please checkout submodules")
+        endif()
+    endif()
+endif()
+
+if(NOT EXISTS "${PROJECT_SOURCE_DIR}/SFML/CMakeLists.txt")
+    message(FATAL_ERROR "The SFML submodules were not downloaded! GIT_SUBMODULE was turned off or failed. Please update submodules and try again.")
+endif()
+
+#add_subdirectory(SFML)
+add_subdirectory(imgui)
+
+execute_process(COMMAND cd ${PROJECT_SOURCE_DIR}/jsoncpp/ && cmake . && make
+                WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/jsoncpp)
+
+link_directories(/usr/lib/)
+link_directories($ENV{HOME}/.brew/lib/)
+link_directories(${PROJECT_SOURCE_DIR}/imgui/)
+#link_directories(${PROJECT_SOURCE_DIR}/SFML/)
+
+if(WIN32)
+elseif(UNIX AND NOT APPLE)
+elseif(APPLE)
+    include_directories(/System/Library/Frameworks)
+    find_library(COCOA_LIBRARY Cocoa)
+    find_library(OpenGL_LIBRARY OpenGL)
+    find_library(IOKit_LIBRARY IOKit)
+    find_library(CoreVideo_LIBRARY CoreVideo)
+    mark_as_advanced(COCOA_LIBRARY OpenGL_LIBRARY)
+    set(APPLE_LIBS ${COCOA_LIBRARY} ${IOKit_LIBRARY} ${OpenGL_LIBRARY} ${CoreVideo_LIBRARY})
+    set(LIBS ${LIBS} ${APPLE_LIBS})
+else()
+    set(LIBS)
+endif(WIN32)
+
+
+add_executable(${NAME}
         class/component/CollisionComponent.cpp
         class/component/CollisionComponent.hpp
         class/component/FollowComponent.cpp
@@ -92,8 +74,6 @@ add_executable(nibbler
         class/events/FoodEvent.hpp
         class/events/JoystickEvent.cpp
         class/events/JoystickEvent.hpp
-        class/events/StartEvent.cpp
-        class/events/StartEvent.hpp
         class/factory/Factory.cpp
         class/factory/Factory.hpp
         class/gui/widget/AWidget.cpp
@@ -104,27 +84,26 @@ add_executable(nibbler
         class/gui/widget/WidgetExit.hpp
         class/gui/widget/WidgetLobby.cpp
         class/gui/widget/WidgetLobby.hpp
-        class/gui/widget/WidgetOption.cpp
-        class/gui/widget/WidgetOption.hpp
         class/gui/widget/WidgetSnake.cpp
         class/gui/widget/WidgetSnake.hpp
         class/gui/Core.cpp
         class/gui/Core.hpp
         class/gui/imgui_demo.cpp
-        class/KINU/AbstractPool.hpp
-        class/KINU/Component.cpp
-        class/KINU/Component.hpp
-        class/KINU/Entity.cpp
-        class/KINU/Entity.hpp
-        class/KINU/EventsManager.cpp
-        class/KINU/EventsManager.hpp
-        class/KINU/Pool.hpp
-        class/KINU/Signature.cpp
-        class/KINU/Signature.hpp
-        class/KINU/System.cpp
-        class/KINU/System.hpp
-        class/KINU/World.cpp
-        class/KINU/World.hpp
+        class/KNU/component/Component.cpp
+        class/KNU/component/Component.hpp
+        class/KNU/entities/Entity.cpp
+        class/KNU/entities/Entity.hpp
+        class/KNU/events/EventManager.cpp
+        class/KNU/events/EventManager.hpp
+        class/KNU/managers/AbstractPool.hpp
+        class/KNU/managers/Pool.hpp
+        class/KNU/managers/Pool_.hpp
+        class/KNU/systems/System.cpp
+        class/KNU/systems/System.hpp
+        class/KNU/utils/Signature.cpp
+        class/KNU/utils/Signature.hpp
+        class/KNU/World.cpp
+        class/KNU/World.hpp
         class/logger/display/logger_debug.cpp
         class/logger/display/logger_error.cpp
         class/logger/display/logger_fatal.cpp
@@ -157,4 +136,54 @@ add_executable(nibbler
         class/systems/RenderSystem.cpp
         class/systems/RenderSystem.hpp
         class/Univers.cpp
-        class/Univers.hpp)
+        class/Univers.hpp
+        externlib/commun/IDisplay.hpp
+        externlib/commun/ISound.hpp
+
+        #imgui/imgui-sfml/imgui-SFML.h
+        #imgui/imgui-sfml/imgui-SFML.cpp
+#
+        #imgui/imconfig-sfml.h
+        #imgui/imgui/imgui.cpp
+        #imgui/imgui/imgui.h
+#
+        #imgui/imgui/imgui_draw.cpp
+        #imgui/imgui/imgui_internal.h
+        #imgui/imgui/imgui_widgets.cpp
+        #imgui/imgui/imstb_rectpack.h
+        #imgui/imgui/imstb_textedit.h
+        #imgui/imgui/imstb_truetype.h
+
+        incs/IWidget.hpp
+        incs/logger.h
+        incs/logger_utils.h
+        incs/nibbler.hpp
+        incs/stb_image.h
+        )
+
+#target_compile_options(${NAME} PUBLIC -Wall -Wextra -Werror -Wvla)
+#target_compile_options(${NAME} PUBLIC -fsanitize=address -g3 -DENABLE_ASAN=ON)
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DIMGUI_USER_CONFIG=\"<../imconfig-sfml.h>\" -fsanitize=address -g3")
+
+target_include_directories(
+        ${NAME} PUBLIC
+        class
+        incs
+        jsoncpp/include
+        #SFML/include
+        $ENV{HOME}/.brew/include
+        ${PROJECT_SOURCE_DIR}/imgui/
+        ${PROJECT_SOURCE_DIR}/imgui/imgui/
+        ${PROJECT_SOURCE_DIR}/imgui/imgui-sfml/
+        ${PROJECT_SOURCE_DIR}/externlib/commun/
+)
+
+
+target_link_libraries(${NAME} PUBLIC
+        sfml-graphics sfml-window sfml-system sfml-audio
+        jsoncpp
+        imgui-sfml
+        boost_system boost_thread-mt
+        ${LIBS}
+        )
