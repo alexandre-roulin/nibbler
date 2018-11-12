@@ -207,7 +207,6 @@ target_include_directories(
 
 target_link_libraries(${NAME} PRIVATE
         sfml-graphics sfml-window sfml-system sfml-audio
-       # jsoncpp
         imgui-sfml
         boost_system boost_thread-mt
         ${LIBS}
