@@ -4,7 +4,7 @@
 #define SPRITE_GROUND 0
 #define SPRITE_WALL 1
 #define DEFAULT_SIZE_SPRIT 32
-#define PATH_TILESET "./externlib/commun/tileset_3snake.png"
+#define PATH_TILESET "./ressource/tileset_3snake.png"
 
 class IDisplay {
 public:
