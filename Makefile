@@ -124,6 +124,19 @@ nibbler/fast:
 .PHONY : nibbler/fast
 
 #=============================================================================
+# Target rules for targets named sfml
+
+# Build rule for target.
+sfml: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 sfml
+.PHONY : sfml
+
+# fast build rule for target.
+sfml/fast:
+	$(MAKE) -f CMakeFiles/sfml.dir/build.make CMakeFiles/sfml.dir/build
+.PHONY : sfml/fast
+
+#=============================================================================
 # Target rules for targets named imgui-sfml
 
 # Build rule for target.
@@ -135,6 +148,58 @@ imgui-sfml: cmake_check_build_system
 imgui-sfml/fast:
 	$(MAKE) -f imgui/CMakeFiles/imgui-sfml.dir/build.make imgui/CMakeFiles/imgui-sfml.dir/build
 .PHONY : imgui-sfml/fast
+
+#=============================================================================
+# Target rules for targets named display_sdl
+
+# Build rule for target.
+display_sdl: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 display_sdl
+.PHONY : display_sdl
+
+# fast build rule for target.
+display_sdl/fast:
+	$(MAKE) -f externlib/display_sdl/CMakeFiles/display_sdl.dir/build.make externlib/display_sdl/CMakeFiles/display_sdl.dir/build
+.PHONY : display_sdl/fast
+
+#=============================================================================
+# Target rules for targets named display_sfml
+
+# Build rule for target.
+display_sfml: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 display_sfml
+.PHONY : display_sfml
+
+# fast build rule for target.
+display_sfml/fast:
+	$(MAKE) -f externlib/display_sfml/CMakeFiles/display_sfml.dir/build.make externlib/display_sfml/CMakeFiles/display_sfml.dir/build
+.PHONY : display_sfml/fast
+
+#=============================================================================
+# Target rules for targets named sound_sdl
+
+# Build rule for target.
+sound_sdl: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 sound_sdl
+.PHONY : sound_sdl
+
+# fast build rule for target.
+sound_sdl/fast:
+	$(MAKE) -f externlib/sound_sdl/CMakeFiles/sound_sdl.dir/build.make externlib/sound_sdl/CMakeFiles/sound_sdl.dir/build
+.PHONY : sound_sdl/fast
+
+#=============================================================================
+# Target rules for targets named sound_sfml
+
+# Build rule for target.
+sound_sfml: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 sound_sfml
+.PHONY : sound_sfml
+
+# fast build rule for target.
+sound_sfml/fast:
+	$(MAKE) -f externlib/sound_sfml/CMakeFiles/sound_sfml.dir/build.make externlib/sound_sfml/CMakeFiles/sound_sfml.dir/build
+.PHONY : sound_sfml/fast
 
 class/KNU/World.o: class/KNU/World.cpp.o
 
@@ -1333,7 +1398,12 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... nibbler"
+	@echo "... sfml"
 	@echo "... imgui-sfml"
+	@echo "... display_sdl"
+	@echo "... display_sfml"
+	@echo "... sound_sdl"
+	@echo "... sound_sfml"
 	@echo "... class/KNU/World.o"
 	@echo "... class/KNU/World.i"
 	@echo "... class/KNU/World.s"

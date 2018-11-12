@@ -48,10 +48,10 @@ RM = /Users/ntoniolo/.brew/Cellar/cmake/3.12.3/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/ntoniolo/nibbler/externlib/display_sdl
+CMAKE_SOURCE_DIR = /Users/ntoniolo/nibbler
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/ntoniolo/nibbler/externlib/display_sdl
+CMAKE_BINARY_DIR = /Users/ntoniolo/nibbler
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,14 +80,14 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/ntoniolo/nibbler/externlib/display_sdl/CMakeFiles /Users/ntoniolo/nibbler/externlib/display_sdl/CMakeFiles/progress.marks
-	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/ntoniolo/nibbler/externlib/display_sdl/CMakeFiles 0
+	cd /Users/ntoniolo/nibbler && $(CMAKE_COMMAND) -E cmake_progress_start /Users/ntoniolo/nibbler/CMakeFiles /Users/ntoniolo/nibbler/externlib/display_sdl/CMakeFiles/progress.marks
+	cd /Users/ntoniolo/nibbler && $(MAKE) -f CMakeFiles/Makefile2 externlib/display_sdl/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/ntoniolo/nibbler/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	$(MAKE) -f CMakeFiles/Makefile2 clean
+	cd /Users/ntoniolo/nibbler && $(MAKE) -f CMakeFiles/Makefile2 externlib/display_sdl/clean
 .PHONY : clean
 
 # The main clean target
@@ -97,30 +97,32 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	$(MAKE) -f CMakeFiles/Makefile2 preinstall
+	cd /Users/ntoniolo/nibbler && $(MAKE) -f CMakeFiles/Makefile2 externlib/display_sdl/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	$(MAKE) -f CMakeFiles/Makefile2 preinstall
+	cd /Users/ntoniolo/nibbler && $(MAKE) -f CMakeFiles/Makefile2 externlib/display_sdl/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	$(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /Users/ntoniolo/nibbler && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
-#=============================================================================
-# Target rules for targets named display_sdl
+# Convenience name for target.
+externlib/display_sdl/CMakeFiles/display_sdl.dir/rule:
+	cd /Users/ntoniolo/nibbler && $(MAKE) -f CMakeFiles/Makefile2 externlib/display_sdl/CMakeFiles/display_sdl.dir/rule
+.PHONY : externlib/display_sdl/CMakeFiles/display_sdl.dir/rule
 
-# Build rule for target.
-display_sdl: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 display_sdl
+# Convenience name for target.
+display_sdl: externlib/display_sdl/CMakeFiles/display_sdl.dir/rule
+
 .PHONY : display_sdl
 
 # fast build rule for target.
 display_sdl/fast:
-	$(MAKE) -f CMakeFiles/display_sdl.dir/build.make CMakeFiles/display_sdl.dir/build
+	cd /Users/ntoniolo/nibbler && $(MAKE) -f externlib/display_sdl/CMakeFiles/display_sdl.dir/build.make externlib/display_sdl/CMakeFiles/display_sdl.dir/build
 .PHONY : display_sdl/fast
 
 src/DisplaySdl.o: src/DisplaySdl.cpp.o
@@ -129,7 +131,7 @@ src/DisplaySdl.o: src/DisplaySdl.cpp.o
 
 # target to build an object file
 src/DisplaySdl.cpp.o:
-	$(MAKE) -f CMakeFiles/display_sdl.dir/build.make CMakeFiles/display_sdl.dir/src/DisplaySdl.cpp.o
+	cd /Users/ntoniolo/nibbler && $(MAKE) -f externlib/display_sdl/CMakeFiles/display_sdl.dir/build.make externlib/display_sdl/CMakeFiles/display_sdl.dir/src/DisplaySdl.cpp.o
 .PHONY : src/DisplaySdl.cpp.o
 
 src/DisplaySdl.i: src/DisplaySdl.cpp.i
@@ -138,7 +140,7 @@ src/DisplaySdl.i: src/DisplaySdl.cpp.i
 
 # target to preprocess a source file
 src/DisplaySdl.cpp.i:
-	$(MAKE) -f CMakeFiles/display_sdl.dir/build.make CMakeFiles/display_sdl.dir/src/DisplaySdl.cpp.i
+	cd /Users/ntoniolo/nibbler && $(MAKE) -f externlib/display_sdl/CMakeFiles/display_sdl.dir/build.make externlib/display_sdl/CMakeFiles/display_sdl.dir/src/DisplaySdl.cpp.i
 .PHONY : src/DisplaySdl.cpp.i
 
 src/DisplaySdl.s: src/DisplaySdl.cpp.s
@@ -147,7 +149,7 @@ src/DisplaySdl.s: src/DisplaySdl.cpp.s
 
 # target to generate assembly for a file
 src/DisplaySdl.cpp.s:
-	$(MAKE) -f CMakeFiles/display_sdl.dir/build.make CMakeFiles/display_sdl.dir/src/DisplaySdl.cpp.s
+	cd /Users/ntoniolo/nibbler && $(MAKE) -f externlib/display_sdl/CMakeFiles/display_sdl.dir/build.make externlib/display_sdl/CMakeFiles/display_sdl.dir/src/DisplaySdl.cpp.s
 .PHONY : src/DisplaySdl.cpp.s
 
 # Help Target
@@ -173,6 +175,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	$(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /Users/ntoniolo/nibbler && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

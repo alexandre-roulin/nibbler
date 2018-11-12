@@ -48,10 +48,10 @@ RM = /Users/ntoniolo/.brew/Cellar/cmake/3.12.3/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/ntoniolo/nibbler/externlib/sound_sdl
+CMAKE_SOURCE_DIR = /Users/ntoniolo/nibbler
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/ntoniolo/nibbler/externlib/sound_sdl
+CMAKE_BINARY_DIR = /Users/ntoniolo/nibbler
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,14 +80,14 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/ntoniolo/nibbler/externlib/sound_sdl/CMakeFiles /Users/ntoniolo/nibbler/externlib/sound_sdl/CMakeFiles/progress.marks
-	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/ntoniolo/nibbler/externlib/sound_sdl/CMakeFiles 0
+	cd /Users/ntoniolo/nibbler && $(CMAKE_COMMAND) -E cmake_progress_start /Users/ntoniolo/nibbler/CMakeFiles /Users/ntoniolo/nibbler/externlib/sound_sdl/CMakeFiles/progress.marks
+	cd /Users/ntoniolo/nibbler && $(MAKE) -f CMakeFiles/Makefile2 externlib/sound_sdl/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/ntoniolo/nibbler/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	$(MAKE) -f CMakeFiles/Makefile2 clean
+	cd /Users/ntoniolo/nibbler && $(MAKE) -f CMakeFiles/Makefile2 externlib/sound_sdl/clean
 .PHONY : clean
 
 # The main clean target
@@ -97,30 +97,32 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	$(MAKE) -f CMakeFiles/Makefile2 preinstall
+	cd /Users/ntoniolo/nibbler && $(MAKE) -f CMakeFiles/Makefile2 externlib/sound_sdl/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	$(MAKE) -f CMakeFiles/Makefile2 preinstall
+	cd /Users/ntoniolo/nibbler && $(MAKE) -f CMakeFiles/Makefile2 externlib/sound_sdl/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	$(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /Users/ntoniolo/nibbler && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
-#=============================================================================
-# Target rules for targets named sound_sdl
+# Convenience name for target.
+externlib/sound_sdl/CMakeFiles/sound_sdl.dir/rule:
+	cd /Users/ntoniolo/nibbler && $(MAKE) -f CMakeFiles/Makefile2 externlib/sound_sdl/CMakeFiles/sound_sdl.dir/rule
+.PHONY : externlib/sound_sdl/CMakeFiles/sound_sdl.dir/rule
 
-# Build rule for target.
-sound_sdl: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 sound_sdl
+# Convenience name for target.
+sound_sdl: externlib/sound_sdl/CMakeFiles/sound_sdl.dir/rule
+
 .PHONY : sound_sdl
 
 # fast build rule for target.
 sound_sdl/fast:
-	$(MAKE) -f CMakeFiles/sound_sdl.dir/build.make CMakeFiles/sound_sdl.dir/build
+	cd /Users/ntoniolo/nibbler && $(MAKE) -f externlib/sound_sdl/CMakeFiles/sound_sdl.dir/build.make externlib/sound_sdl/CMakeFiles/sound_sdl.dir/build
 .PHONY : sound_sdl/fast
 
 src/SoundSdl.o: src/SoundSdl.cpp.o
@@ -129,7 +131,7 @@ src/SoundSdl.o: src/SoundSdl.cpp.o
 
 # target to build an object file
 src/SoundSdl.cpp.o:
-	$(MAKE) -f CMakeFiles/sound_sdl.dir/build.make CMakeFiles/sound_sdl.dir/src/SoundSdl.cpp.o
+	cd /Users/ntoniolo/nibbler && $(MAKE) -f externlib/sound_sdl/CMakeFiles/sound_sdl.dir/build.make externlib/sound_sdl/CMakeFiles/sound_sdl.dir/src/SoundSdl.cpp.o
 .PHONY : src/SoundSdl.cpp.o
 
 src/SoundSdl.i: src/SoundSdl.cpp.i
@@ -138,7 +140,7 @@ src/SoundSdl.i: src/SoundSdl.cpp.i
 
 # target to preprocess a source file
 src/SoundSdl.cpp.i:
-	$(MAKE) -f CMakeFiles/sound_sdl.dir/build.make CMakeFiles/sound_sdl.dir/src/SoundSdl.cpp.i
+	cd /Users/ntoniolo/nibbler && $(MAKE) -f externlib/sound_sdl/CMakeFiles/sound_sdl.dir/build.make externlib/sound_sdl/CMakeFiles/sound_sdl.dir/src/SoundSdl.cpp.i
 .PHONY : src/SoundSdl.cpp.i
 
 src/SoundSdl.s: src/SoundSdl.cpp.s
@@ -147,7 +149,7 @@ src/SoundSdl.s: src/SoundSdl.cpp.s
 
 # target to generate assembly for a file
 src/SoundSdl.cpp.s:
-	$(MAKE) -f CMakeFiles/sound_sdl.dir/build.make CMakeFiles/sound_sdl.dir/src/SoundSdl.cpp.s
+	cd /Users/ntoniolo/nibbler && $(MAKE) -f externlib/sound_sdl/CMakeFiles/sound_sdl.dir/build.make externlib/sound_sdl/CMakeFiles/sound_sdl.dir/src/SoundSdl.cpp.s
 .PHONY : src/SoundSdl.cpp.s
 
 # Help Target
@@ -173,6 +175,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	$(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /Users/ntoniolo/nibbler && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

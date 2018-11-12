@@ -187,6 +187,10 @@ endif()
 
 
 add_subdirectory(imgui)
+add_subdirectory(externlib/display_sdl)
+add_subdirectory(externlib/display_sfml)
+add_subdirectory(externlib/sound_sdl)
+add_subdirectory(externlib/sound_sfml)
 
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DIMGUI_USER_CONFIG=\"<../imconfig-sfml.h>\" -fsanitize=address -g3")

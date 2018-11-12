@@ -48,10 +48,10 @@ RM = /Users/ntoniolo/.brew/Cellar/cmake/3.12.3/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/ntoniolo/nibbler/externlib/display_sfml
+CMAKE_SOURCE_DIR = /Users/ntoniolo/nibbler
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/ntoniolo/nibbler/externlib/display_sfml
+CMAKE_BINARY_DIR = /Users/ntoniolo/nibbler
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,14 +80,14 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/ntoniolo/nibbler/externlib/display_sfml/CMakeFiles /Users/ntoniolo/nibbler/externlib/display_sfml/CMakeFiles/progress.marks
-	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/ntoniolo/nibbler/externlib/display_sfml/CMakeFiles 0
+	cd /Users/ntoniolo/nibbler && $(CMAKE_COMMAND) -E cmake_progress_start /Users/ntoniolo/nibbler/CMakeFiles /Users/ntoniolo/nibbler/externlib/display_sfml/CMakeFiles/progress.marks
+	cd /Users/ntoniolo/nibbler && $(MAKE) -f CMakeFiles/Makefile2 externlib/display_sfml/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/ntoniolo/nibbler/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	$(MAKE) -f CMakeFiles/Makefile2 clean
+	cd /Users/ntoniolo/nibbler && $(MAKE) -f CMakeFiles/Makefile2 externlib/display_sfml/clean
 .PHONY : clean
 
 # The main clean target
@@ -97,30 +97,32 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	$(MAKE) -f CMakeFiles/Makefile2 preinstall
+	cd /Users/ntoniolo/nibbler && $(MAKE) -f CMakeFiles/Makefile2 externlib/display_sfml/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	$(MAKE) -f CMakeFiles/Makefile2 preinstall
+	cd /Users/ntoniolo/nibbler && $(MAKE) -f CMakeFiles/Makefile2 externlib/display_sfml/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	$(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /Users/ntoniolo/nibbler && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
-#=============================================================================
-# Target rules for targets named display_sfml
+# Convenience name for target.
+externlib/display_sfml/CMakeFiles/display_sfml.dir/rule:
+	cd /Users/ntoniolo/nibbler && $(MAKE) -f CMakeFiles/Makefile2 externlib/display_sfml/CMakeFiles/display_sfml.dir/rule
+.PHONY : externlib/display_sfml/CMakeFiles/display_sfml.dir/rule
 
-# Build rule for target.
-display_sfml: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 display_sfml
+# Convenience name for target.
+display_sfml: externlib/display_sfml/CMakeFiles/display_sfml.dir/rule
+
 .PHONY : display_sfml
 
 # fast build rule for target.
 display_sfml/fast:
-	$(MAKE) -f CMakeFiles/display_sfml.dir/build.make CMakeFiles/display_sfml.dir/build
+	cd /Users/ntoniolo/nibbler && $(MAKE) -f externlib/display_sfml/CMakeFiles/display_sfml.dir/build.make externlib/display_sfml/CMakeFiles/display_sfml.dir/build
 .PHONY : display_sfml/fast
 
 src/DisplaySfml.o: src/DisplaySfml.cpp.o
@@ -129,7 +131,7 @@ src/DisplaySfml.o: src/DisplaySfml.cpp.o
 
 # target to build an object file
 src/DisplaySfml.cpp.o:
-	$(MAKE) -f CMakeFiles/display_sfml.dir/build.make CMakeFiles/display_sfml.dir/src/DisplaySfml.cpp.o
+	cd /Users/ntoniolo/nibbler && $(MAKE) -f externlib/display_sfml/CMakeFiles/display_sfml.dir/build.make externlib/display_sfml/CMakeFiles/display_sfml.dir/src/DisplaySfml.cpp.o
 .PHONY : src/DisplaySfml.cpp.o
 
 src/DisplaySfml.i: src/DisplaySfml.cpp.i
@@ -138,7 +140,7 @@ src/DisplaySfml.i: src/DisplaySfml.cpp.i
 
 # target to preprocess a source file
 src/DisplaySfml.cpp.i:
-	$(MAKE) -f CMakeFiles/display_sfml.dir/build.make CMakeFiles/display_sfml.dir/src/DisplaySfml.cpp.i
+	cd /Users/ntoniolo/nibbler && $(MAKE) -f externlib/display_sfml/CMakeFiles/display_sfml.dir/build.make externlib/display_sfml/CMakeFiles/display_sfml.dir/src/DisplaySfml.cpp.i
 .PHONY : src/DisplaySfml.cpp.i
 
 src/DisplaySfml.s: src/DisplaySfml.cpp.s
@@ -147,7 +149,7 @@ src/DisplaySfml.s: src/DisplaySfml.cpp.s
 
 # target to generate assembly for a file
 src/DisplaySfml.cpp.s:
-	$(MAKE) -f CMakeFiles/display_sfml.dir/build.make CMakeFiles/display_sfml.dir/src/DisplaySfml.cpp.s
+	cd /Users/ntoniolo/nibbler && $(MAKE) -f externlib/display_sfml/CMakeFiles/display_sfml.dir/build.make externlib/display_sfml/CMakeFiles/display_sfml.dir/src/DisplaySfml.cpp.s
 .PHONY : src/DisplaySfml.cpp.s
 
 # Help Target
@@ -173,6 +175,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	$(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /Users/ntoniolo/nibbler && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

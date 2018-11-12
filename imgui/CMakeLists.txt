@@ -37,11 +37,7 @@ FILE(WRITE ${PROJECT_SOURCE_DIR}/imconfig-sfml.h
 
 
 
-find_package(SFML QUIET COMPONENTS system window graphics network audio)
-if (NOT SFML_FOUND)
-        include_directories(${PROJECT_BINARY_DIR}/../sfml/src/sfml/include)
-        link_directories(${PROJECT_BINARY_DIR}/../sfml/src/sfml-build/lib)
-endif()
+include_directories(${PROJECT_BINARY_DIR}/../sfml/src/sfml/include)
 
 
 add_library(
