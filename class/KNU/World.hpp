@@ -4,7 +4,7 @@
 
 #include <KNU/systems/System.hpp>
 #include <KNU/events/EventManager.hpp>
-#include "../../externlib/commun/IDisplay.hpp"
+#include "IDisplay.hpp"
 
 class Univers;
 

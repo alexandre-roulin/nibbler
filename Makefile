@@ -111,19 +111,6 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named jsoncpp
-
-# Build rule for target.
-jsoncpp: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 jsoncpp
-.PHONY : jsoncpp
-
-# fast build rule for target.
-jsoncpp/fast:
-	$(MAKE) -f CMakeFiles/jsoncpp.dir/build.make CMakeFiles/jsoncpp.dir/build
-.PHONY : jsoncpp/fast
-
-#=============================================================================
 # Target rules for targets named nibbler
 
 # Build rule for target.
@@ -135,19 +122,6 @@ nibbler: cmake_check_build_system
 nibbler/fast:
 	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/build
 .PHONY : nibbler/fast
-
-#=============================================================================
-# Target rules for targets named sfml
-
-# Build rule for target.
-sfml: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 sfml
-.PHONY : sfml
-
-# fast build rule for target.
-sfml/fast:
-	$(MAKE) -f CMakeFiles/sfml.dir/build.make CMakeFiles/sfml.dir/build
-.PHONY : sfml/fast
 
 #=============================================================================
 # Target rules for targets named imgui-sfml
@@ -1356,11 +1330,9 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
-	@echo "... jsoncpp"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... nibbler"
-	@echo "... sfml"
 	@echo "... imgui-sfml"
 	@echo "... class/KNU/World.o"
 	@echo "... class/KNU/World.i"

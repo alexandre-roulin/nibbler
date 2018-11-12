@@ -4,7 +4,7 @@
 #include <memory>
 #include <boost/shared_ptr.hpp>
 #include <boost/asio/io_service.hpp>
-#include "../externlib/commun/IDisplay.hpp"
+#include "IDisplay.hpp"
 #include <boost/asio/deadline_timer.hpp>
 
 class ServerTCP;

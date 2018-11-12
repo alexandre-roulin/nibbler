@@ -167,9 +167,9 @@ add_executable(${NAME}
         class/systems/RenderSystem.hpp
         class/Univers.cpp
         class/Univers.hpp
-        externlib/commun/IDisplay.hpp
-        externlib/commun/ISound.hpp
 
+        incs/IDisplay.hpp
+        incs/ISound.hpp
         incs/IWidget.hpp
         incs/logger.h
         incs/logger_utils.h

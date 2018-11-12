@@ -4,7 +4,5 @@
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/imgui/imgui" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/imgui/imgui-sfml" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/jsoncpp/src/jsoncpp" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/sfml/src/sfml" vcs="Git" />
   </component>
 </project>
