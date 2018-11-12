@@ -1,4 +1,4 @@
-#include <SFML/Audio.hpp>
+//#include <SFML/Audio.hpp>
 #include <unistd.h>
 #include <iostream>
 #include "SoundSdl.hpp"
@@ -16,9 +16,9 @@ int main()
 		sound.setBuffer(buffer);
 		sound.play();
 		*/
-		ssdl.setMusic("zelda.ogg");
+		ssdl.setMusic("../../ressource/zelda.ogg");
 		ssdl.playMusic();
-		ssdl.addNoise("../commun/yes-2.wav");
+		ssdl.addNoise("../../ressource/yes-2.wav");
 		for (long int i = 0; i < 10000000000; i++)
 		{
 			if (!(i % 100000000))
