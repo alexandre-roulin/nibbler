@@ -1,10 +1,12 @@
 cmake_minimum_required(VERSION 3.12)
 
+include(ExternalProject)
 set(CMAKE_C_COMPILER "/usr/bin/gcc")
 set(CMAKE_CXX_COMPILER "/usr/bin/g++")
 
 set(NAME nibbler)
 project(${NAME})
+
 
 set(CMAKE_CXX_STANDARD 14)
 
@@ -25,12 +27,13 @@ if(GIT_FOUND AND EXISTS "${PROJECT_SOURCE_DIR}/.git")
     endif()
 endif()
 
-if(NOT EXISTS "${PROJECT_SOURCE_DIR}/SFML/CMakeLists.txt")
-    message(FATAL_ERROR "The SFML submodules were not downloaded! GIT_SUBMODULE was turned off or failed. Please update submodules and try again.")
-endif()
+#if(NOT EXISTS "${PROJECT_SOURCE_DIR}/SFML/CMakeLists.txt")
+#    message(FATAL_ERROR "The SFML submodules were not downloaded! GIT_SUBMODULE was turned off or failed. Please update submodules and try again.")
+#endif()
 
 #add_subdirectory(SFML)
-add_subdirectory(imgui)
+
+#add_subdirectory(imgui)
 add_subdirectory(jsoncpp)
 
 
@@ -38,7 +41,6 @@ link_directories(/usr/lib/)
 link_directories($ENV{HOME}/.brew/lib/)
 link_directories(${PROJECT_SOURCE_DIR}/imgui/)
 link_directories(${PROJECT_SOURCE_DIR}/jsoncpp/src/lib_json/)
-link_directories(${PROJECT_SOURCE_DIR}/SFML/)
 
 
 if(WIN32)
@@ -56,28 +58,36 @@ else()
     set(LIBS)
 endif(WIN32)
 
-
-find_package(SFML CONFIG PATHS ~/.brew/lib/ COMPONENTS network audio graphics window system)
+message($ENV{HOME}/.brew/lib/)
+#find_package(SFML EXACT CONFIG PATHS $ENV{HOME}/.brew/lib/)# COMPONENTS network audio graphics window system)
+find_package(SFML 2 PATHS ~/.brew/Cellar/sfml/2.4.2_1/share/SFML/cmake/Modules/ system window graphics network audio)
+#~/.brew/Cellar/sfml/2.4.2_1/
 if (NOT SFML_FOUND)
 
-    ExternalProject_Add(SFML
+    set(sfml_PREFIX "${PROJECT_SOURCE_DIR}/sfml")
+    set(sfml_INSTALL_DIR "${PROJECT_SOURCE_DIR}/sfml")
+    list(APPEND sfml_CMAKE_ARGS "-DCMAKE_INSTALL_PREFIX=${sfml_INSTALL_DIR} -DCMAKE_INSTALL_FRAMEWORK_PREFIX=${sfml_INSTALL_DIR} -DSFML_MISC_INSTALL_PREFIX=${sfml_INSTALL_DIR}")
+
+    message("sfml_PREFIX='${sfml_PREFIX}'")
+    message("sfml_INSTALL_DIR='${sfml_INSTALL_DIR}'")
+    message("sfml_CMAKE_ARGS='${sfml_CMAKE_ARGS}'")
+    message("GIT_EXECUTABLE='${GIT_EXECUTABLE}'")
+
+    ExternalProject_Add(sfml
+            PREFIX ${sfml_PREFIX}
             GIT_REPOSITORY https://github.com/SFML/SFML.git
-            GIT_TAG 2.4.2 #Always build with this tag, so we're sure it is stable.
+            INSTALL_DIR ${sfml_INSTALL_DIR}
+            CMAKE_ARGS "${sfml_CMAKE_ARGS}"
+            INSTALL_COMMAND make
             )
 
-    include_directories(${SFML_INSTALL_DIR}/include)
-    link_directories(${SFML_INSTALL_DIR}/lib)
 
-    message("SFML : [${SFML_INSTALL_DIR}]")
-    message(FATAL_ERROR "sfml library not found")
+    include_directories(${sfml_INSTALL_DIR}/src/sfml/include)
+    link_directories(${sfml_INSTALL_DIR}/src/sfml-build/lib)
 
-    if(NOT SFML_FOUND)
-        message(FATAL_ERROR "sfml library not found")
-    endif()
+    message("ADDD____ : ${sfml_INSTALL_DIR}/src/sfml/include")
+    message("ADDD____ : ${sfml_INSTALL_DIR}/src/sfml-build/lib")
 endif()
-
-
-
 
 add_executable(${NAME}
         class/component/CollisionComponent.cpp
@@ -169,6 +179,9 @@ add_executable(${NAME}
         incs/nibbler.hpp
         incs/stb_image.h
         )
+
+
+add_dependencies(${NAME} sfml)
 
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DIMGUI_USER_CONFIG=\"<../imconfig-sfml.h>\" -fsanitize=address -g3")

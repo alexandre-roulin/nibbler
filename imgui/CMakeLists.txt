@@ -28,7 +28,7 @@ endif()
 
 
 
-
+message(" AJHHH ${PROJECT_SOURCE_DIR}")
 
 file(READ imgui-sfml/imconfig-SFML.h IMGUI-SFML_CONFIG)
 file(READ imgui/imconfig.h IMGUI_CONFIG)
