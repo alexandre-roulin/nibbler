@@ -27,9 +27,6 @@ if(GIT_FOUND AND EXISTS "${PROJECT_SOURCE_DIR}/.git")
 endif()
 
 
-
-message(" AJHHH ${PROJECT_SOURCE_DIR}")
-
 file(READ imgui-sfml/imconfig-SFML.h IMGUI-SFML_CONFIG)
 file(READ imgui/imconfig.h IMGUI_CONFIG)
 
@@ -37,6 +34,13 @@ FILE(WRITE ${PROJECT_SOURCE_DIR}/imconfig-sfml.h
         "${IMGUI_CONFIG}"
         "${IMGUI-SFML_CONFIG}")
 
+
+
+find_package(SFML QUIET COMPONENTS system window graphics network audio)
+if (NOT SFML_FOUND)
+        include_directories(${PROJECT_BINARY_DIR}/../sfml/src/sfml/include)
+        link_directories(${PROJECT_BINARY_DIR}/../sfml/src/sfml-build/lib)
+endif()
 
 
 add_library(

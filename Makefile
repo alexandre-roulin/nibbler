@@ -170,6 +170,19 @@ nibbler/fast:
 .PHONY : nibbler/fast
 
 #=============================================================================
+# Target rules for targets named sfml
+
+# Build rule for target.
+sfml: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 sfml
+.PHONY : sfml
+
+# fast build rule for target.
+sfml/fast:
+	$(MAKE) -f CMakeFiles/sfml.dir/build.make CMakeFiles/sfml.dir/build
+.PHONY : sfml/fast
+
+#=============================================================================
 # Target rules for targets named jsoncpp_lib_static
 
 # Build rule for target.
@@ -233,6 +246,19 @@ jsoncpp_test: cmake_check_build_system
 jsoncpp_test/fast:
 	$(MAKE) -f jsoncpp/src/test_lib_json/CMakeFiles/jsoncpp_test.dir/build.make jsoncpp/src/test_lib_json/CMakeFiles/jsoncpp_test.dir/build
 .PHONY : jsoncpp_test/fast
+
+#=============================================================================
+# Target rules for targets named imgui-sfml
+
+# Build rule for target.
+imgui-sfml: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 imgui-sfml
+.PHONY : imgui-sfml
+
+# fast build rule for target.
+imgui-sfml/fast:
+	$(MAKE) -f imgui/CMakeFiles/imgui-sfml.dir/build.make imgui/CMakeFiles/imgui-sfml.dir/build
+.PHONY : imgui-sfml/fast
 
 class/KNU/World.o: class/KNU/World.cpp.o
 
@@ -1435,11 +1461,13 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... nibbler"
+	@echo "... sfml"
 	@echo "... jsoncpp_lib_static"
 	@echo "... jsoncpp_check"
 	@echo "... jsoncpp_readerwriter_tests"
 	@echo "... jsontestrunner_exe"
 	@echo "... jsoncpp_test"
+	@echo "... imgui-sfml"
 	@echo "... class/KNU/World.o"
 	@echo "... class/KNU/World.i"
 	@echo "... class/KNU/World.s"

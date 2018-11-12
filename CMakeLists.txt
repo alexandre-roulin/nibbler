@@ -33,7 +33,6 @@ endif()
 
 #add_subdirectory(SFML)
 
-#add_subdirectory(imgui)
 add_subdirectory(jsoncpp)
 
 
@@ -174,6 +173,9 @@ add_executable(${NAME}
 if (NOT SFML_FOUND)
     add_dependencies(${NAME} sfml)
 endif()
+
+add_subdirectory(imgui)
+
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DIMGUI_USER_CONFIG=\"<../imconfig-sfml.h>\" -fsanitize=address -g3")
 
