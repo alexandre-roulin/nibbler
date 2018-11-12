@@ -58,20 +58,14 @@ else()
     set(LIBS)
 endif(WIN32)
 
-message($ENV{HOME}/.brew/lib/)
-#find_package(SFML EXACT CONFIG PATHS $ENV{HOME}/.brew/lib/)# COMPONENTS network audio graphics window system)
-find_package(SFML 2 PATHS ~/.brew/Cellar/sfml/2.4.2_1/share/SFML/cmake/Modules/ system window graphics network audio)
-#~/.brew/Cellar/sfml/2.4.2_1/
+list(APPEND CMAKE_MODULE_PATH "$ENV{HOME}/.brew/share/SFML/cmake/Modules/")
+
+find_package(SFML QUIET COMPONENTS system window graphics network audio)
 if (NOT SFML_FOUND)
 
     set(sfml_PREFIX "${PROJECT_SOURCE_DIR}/sfml")
     set(sfml_INSTALL_DIR "${PROJECT_SOURCE_DIR}/sfml")
     list(APPEND sfml_CMAKE_ARGS "-DCMAKE_INSTALL_PREFIX=${sfml_INSTALL_DIR} -DCMAKE_INSTALL_FRAMEWORK_PREFIX=${sfml_INSTALL_DIR} -DSFML_MISC_INSTALL_PREFIX=${sfml_INSTALL_DIR}")
-
-    message("sfml_PREFIX='${sfml_PREFIX}'")
-    message("sfml_INSTALL_DIR='${sfml_INSTALL_DIR}'")
-    message("sfml_CMAKE_ARGS='${sfml_CMAKE_ARGS}'")
-    message("GIT_EXECUTABLE='${GIT_EXECUTABLE}'")
 
     ExternalProject_Add(sfml
             PREFIX ${sfml_PREFIX}
@@ -81,12 +75,9 @@ if (NOT SFML_FOUND)
             INSTALL_COMMAND make
             )
 
-
     include_directories(${sfml_INSTALL_DIR}/src/sfml/include)
     link_directories(${sfml_INSTALL_DIR}/src/sfml-build/lib)
 
-    message("ADDD____ : ${sfml_INSTALL_DIR}/src/sfml/include")
-    message("ADDD____ : ${sfml_INSTALL_DIR}/src/sfml-build/lib")
 endif()
 
 add_executable(${NAME}
@@ -180,9 +171,9 @@ add_executable(${NAME}
         incs/stb_image.h
         )
 
-
-add_dependencies(${NAME} sfml)
-
+if (NOT SFML_FOUND)
+    add_dependencies(${NAME} sfml)
+endif()
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DIMGUI_USER_CONFIG=\"<../imconfig-sfml.h>\" -fsanitize=address -g3")
 
