@@ -31,14 +31,15 @@ endif()
 
 #add_subdirectory(SFML)
 add_subdirectory(imgui)
+add_subdirectory(jsoncpp)
 
-execute_process(COMMAND cd ${PROJECT_SOURCE_DIR}/jsoncpp/ && cmake . && make
-                WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/jsoncpp)
 
 link_directories(/usr/lib/)
 link_directories($ENV{HOME}/.brew/lib/)
 link_directories(${PROJECT_SOURCE_DIR}/imgui/)
-#link_directories(${PROJECT_SOURCE_DIR}/SFML/)
+link_directories(${PROJECT_SOURCE_DIR}/jsoncpp/src/lib_json/)
+link_directories(${PROJECT_SOURCE_DIR}/SFML/)
+
 
 if(WIN32)
 elseif(UNIX AND NOT APPLE)
@@ -54,6 +55,28 @@ elseif(APPLE)
 else()
     set(LIBS)
 endif(WIN32)
+
+
+find_package(SFML CONFIG PATHS ~/.brew/lib/ COMPONENTS network audio graphics window system)
+if (NOT SFML_FOUND)
+
+    ExternalProject_Add(SFML
+            GIT_REPOSITORY https://github.com/SFML/SFML.git
+            GIT_TAG 2.4.2 #Always build with this tag, so we're sure it is stable.
+            )
+
+    include_directories(${SFML_INSTALL_DIR}/include)
+    link_directories(${SFML_INSTALL_DIR}/lib)
+
+    message("SFML : [${SFML_INSTALL_DIR}]")
+    message(FATAL_ERROR "sfml library not found")
+
+    if(NOT SFML_FOUND)
+        message(FATAL_ERROR "sfml library not found")
+    endif()
+endif()
+
+
 
 
 add_executable(${NAME}
@@ -140,20 +163,6 @@ add_executable(${NAME}
         externlib/commun/IDisplay.hpp
         externlib/commun/ISound.hpp
 
-        #imgui/imgui-sfml/imgui-SFML.h
-        #imgui/imgui-sfml/imgui-SFML.cpp
-#
-        #imgui/imconfig-sfml.h
-        #imgui/imgui/imgui.cpp
-        #imgui/imgui/imgui.h
-#
-        #imgui/imgui/imgui_draw.cpp
-        #imgui/imgui/imgui_internal.h
-        #imgui/imgui/imgui_widgets.cpp
-        #imgui/imgui/imstb_rectpack.h
-        #imgui/imgui/imstb_textedit.h
-        #imgui/imgui/imstb_truetype.h
-
         incs/IWidget.hpp
         incs/logger.h
         incs/logger_utils.h
@@ -161,8 +170,6 @@ add_executable(${NAME}
         incs/stb_image.h
         )
 
-#target_compile_options(${NAME} PUBLIC -Wall -Wextra -Werror -Wvla)
-#target_compile_options(${NAME} PUBLIC -fsanitize=address -g3 -DENABLE_ASAN=ON)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DIMGUI_USER_CONFIG=\"<../imconfig-sfml.h>\" -fsanitize=address -g3")
 
@@ -173,6 +180,7 @@ target_include_directories(
         jsoncpp/include
         #SFML/include
         $ENV{HOME}/.brew/include
+        ${PROJECT_SOURCE_DIR}/jsoncpp/include/
         ${PROJECT_SOURCE_DIR}/imgui/
         ${PROJECT_SOURCE_DIR}/imgui/imgui/
         ${PROJECT_SOURCE_DIR}/imgui/imgui-sfml/
