@@ -5,7 +5,7 @@ WidgetLobby::WidgetLobby(Core &core, Snake const *snakes) :
 AWidget(core)
 {
 	for (unsigned i = 0; i < MAX_SNAKE; i++)
-		this->addSnake(snakes[i]);
+		this->addSnake(snakes[i], (i == this->_core.univers.getClientTCP_().getId()));
 	this->_color.emplace_back("snake_green");
 	this->_texture.emplace_back();
 	if (!(this->_texture.back().loadFromFile("ressource/snake_presentation/snake_green.png")))
@@ -30,6 +30,7 @@ bool			WidgetLobby::addSnake(Snake const &snake, bool isYourSnake)
 {
 	if (this->_snake.size() < MAX_SNAKE)
 	{
+		std::cout << "WOTD : " << isYourSnake << std::endl;
 		this->_snake.emplace_back(new WidgetSnake(this->_core, snake, this->_texture, this->_color, isYourSnake));
 		return (true);
 	}

@@ -2,6 +2,7 @@
 #include "widget/WidgetExit.hpp"
 #include "widget/WidgetSnake.hpp"
 #include "widget/WidgetLobby.hpp"
+#include "widget/WidgetOption.hpp"
 #include <vector>
 #include <iostream>
 
@@ -49,7 +50,7 @@ bool			Core::titleScreen(void)
 		}
 		ImGui::SFML::Update(this->_win, this->_deltaClock.restart());
 		ImGui::SetNextWindowPosCenter();
-		ImGui::Begin("My First Tool", NULL, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoMove);
+		ImGui::Begin("Titlescreen", NULL, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoMove);
 		ImGui::Image(this->_imageTitleScreen);
 		ImGui::End();
 		this->_render();
@@ -86,6 +87,7 @@ void			Core::aState(void)
 {
 	WidgetExit wexit(*this, &callbackExit, this);
 	WidgetLobby lobby(*this, this->univers.getClientTCP_().getSnakes());
+	WidgetOption option(*this);
 
 	while (this->_win.isOpen())
 	{
@@ -106,6 +108,10 @@ void			Core::aState(void)
 
 		ImGui::SetNextWindowPos(this->positionByPercent(sf::Vector2<unsigned int>(95, 0)), 0, sf::Vector2f(0.5f, 0.5f));
 		wexit.render();
+
+		ImGui::SetNextWindowPos(this->positionByPercent(sf::Vector2<unsigned int>(70, 50)));
+		ImGui::SetNextWindowSize(this->positionByPercent(sf::Vector2<unsigned int>(30, 50)));
+		option.render();
 
 		this->_render();
 	}

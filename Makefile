@@ -39,10 +39,10 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /Users/ntoniolo/.brew/Cellar/cmake/3.12.3/bin/cmake
+CMAKE_COMMAND = /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake
 
 # The command to remove a file.
-RM = /Users/ntoniolo/.brew/Cellar/cmake/3.12.3/bin/cmake -E remove -f
+RM = /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
@@ -59,7 +59,7 @@ CMAKE_BINARY_DIR = /Users/ntoniolo/nibbler
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	/Users/ntoniolo/.brew/Cellar/cmake/3.12.3/bin/cmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	/Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : rebuild_cache
 
 # Special rule for the target rebuild_cache
@@ -69,8 +69,8 @@ rebuild_cache/fast: rebuild_cache
 
 # Special rule for the target edit_cache
 edit_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake cache editor..."
-	/Users/ntoniolo/.brew/Cellar/cmake/3.12.3/bin/ccmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
+	/Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -822,6 +822,33 @@ class/gui/widget/WidgetLobby.cpp.s:
 	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/gui/widget/WidgetLobby.cpp.s
 .PHONY : class/gui/widget/WidgetLobby.cpp.s
 
+class/gui/widget/WidgetOption.o: class/gui/widget/WidgetOption.cpp.o
+
+.PHONY : class/gui/widget/WidgetOption.o
+
+# target to build an object file
+class/gui/widget/WidgetOption.cpp.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/gui/widget/WidgetOption.cpp.o
+.PHONY : class/gui/widget/WidgetOption.cpp.o
+
+class/gui/widget/WidgetOption.i: class/gui/widget/WidgetOption.cpp.i
+
+.PHONY : class/gui/widget/WidgetOption.i
+
+# target to preprocess a source file
+class/gui/widget/WidgetOption.cpp.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/gui/widget/WidgetOption.cpp.i
+.PHONY : class/gui/widget/WidgetOption.cpp.i
+
+class/gui/widget/WidgetOption.s: class/gui/widget/WidgetOption.cpp.s
+
+.PHONY : class/gui/widget/WidgetOption.s
+
+# target to generate assembly for a file
+class/gui/widget/WidgetOption.cpp.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/gui/widget/WidgetOption.cpp.s
+.PHONY : class/gui/widget/WidgetOption.cpp.s
+
 class/gui/widget/WidgetSnake.o: class/gui/widget/WidgetSnake.cpp.o
 
 .PHONY : class/gui/widget/WidgetSnake.o
@@ -1473,6 +1500,9 @@ help:
 	@echo "... class/gui/widget/WidgetLobby.o"
 	@echo "... class/gui/widget/WidgetLobby.i"
 	@echo "... class/gui/widget/WidgetLobby.s"
+	@echo "... class/gui/widget/WidgetOption.o"
+	@echo "... class/gui/widget/WidgetOption.i"
+	@echo "... class/gui/widget/WidgetOption.s"
 	@echo "... class/gui/widget/WidgetSnake.o"
 	@echo "... class/gui/widget/WidgetSnake.i"
 	@echo "... class/gui/widget/WidgetSnake.s"

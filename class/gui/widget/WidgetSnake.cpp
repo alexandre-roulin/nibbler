@@ -21,7 +21,7 @@ void			WidgetSnake::render(void)
 {
 	if (this->_snake.id == -1)
 		return ;
-	if (!this->_isYourSnake)
+	if (this->_isYourSnake)
 		this->_renderYourSnake();
 	else
 		this->_renderOtherSnake();
@@ -31,7 +31,7 @@ void			WidgetSnake::_renderOtherSnake(void)
 {
 	unsigned int		sizeTexture;
 
-	ImGui::Begin(std::string(std::to_string(this->_snake.id) + std::string(this->_snake.name)).c_str(), NULL, ImGuiWindowFlags_NoDecoration);
+	ImGui::Begin(std::string(std::to_string(this->_snake.id) + std::string(this->_snake.name)).c_str(), NULL, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoInputs);
 
 	if (ImGui::GetWindowSize().x < ImGui::GetWindowSize().y - ImGui::GetFrameHeightWithSpacing() * 3)
 		sizeTexture = ImGui::GetWindowSize().x * 0.8;
@@ -69,7 +69,7 @@ void			WidgetSnake::_renderOtherSnake(void)
 	ImGui::PopID();
 
 	ImGui::SetCursorPosX((ImGui::GetWindowSize().x - sizeTexture) / 2);
-	if (ImGui::BeginCombo("", this->_color[static_cast<int>(this->_snake.sprite)].c_str(), ImGuiComboFlags_None))
+	if (ImGui::BeginCombo("", this->_color[static_cast<int>(this->_snake.sprite)].c_str(), ImGuiComboFlags_NoArrowButton))
 	{
 		unsigned int i = 0;
 		for (auto const &e : this->_color)
@@ -129,7 +129,7 @@ void			WidgetSnake::_renderYourSnake(void)
 	ImGui::PopID();
 
 	ImGui::SetCursorPosX((ImGui::GetWindowSize().x - sizeTexture) / 2);
-	if (ImGui::BeginCombo("", this->_color[static_cast<int>(this->_snake.sprite)].c_str(), ImGuiComboFlags_NoArrowButton))
+	if (ImGui::BeginCombo("", this->_color[static_cast<int>(this->_snake.sprite)].c_str(), ImGuiComboFlags_None))
 	{
 		unsigned int i = 0;
 		for (auto const &e : this->_color)
