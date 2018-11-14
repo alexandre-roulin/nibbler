@@ -15,9 +15,9 @@ int main()
 	sound.setBuffer(buffer);
 	sound.play();
 	*/
-	ssfml.setMusic("zelda.ogg");
+	ssfml.setMusic("../../ressource/zelda.ogg");
 	ssfml.playMusic();
-	ssfml.addNoise("../commun/yes-2.wav");
+	ssfml.addNoise("../../ressource/yes-2.wav");
 	for (long int i = 0; i < 10000000000; i++)
 	{
 		if (!(i % 100000000))

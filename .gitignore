@@ -1,4 +1,7 @@
 
+jsoncpp/
+imgui/imconfig-sfml.h
+sfml/
 CMakeCache.txt
 CMakeFiles
 CMakeScripts

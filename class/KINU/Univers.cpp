@@ -24,7 +24,7 @@ Univers::Univers() {
 
 
 int Univers::start_game() {
-	if (!(dlHandle = dlopen("./externlib/display_sfml/display_sfml.so",
+	if (!(dlHandle = dlopen("./externlib/display_sfml/libdisplay_sfml.so",
 							RTLD_LAZY | RTLD_LOCAL)))
 		return (dlError());
 	if (!(newDisplay = reinterpret_cast<IDisplay *(*)(

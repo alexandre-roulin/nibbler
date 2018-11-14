@@ -27,9 +27,6 @@ if(GIT_FOUND AND EXISTS "${PROJECT_SOURCE_DIR}/.git")
 endif()
 
 
-
-
-
 file(READ imgui-sfml/imconfig-SFML.h IMGUI-SFML_CONFIG)
 file(READ imgui/imconfig.h IMGUI_CONFIG)
 
@@ -37,6 +34,10 @@ FILE(WRITE ${PROJECT_SOURCE_DIR}/imconfig-sfml.h
         "${IMGUI_CONFIG}"
         "${IMGUI-SFML_CONFIG}")
 
+
+
+
+include_directories(${PROJECT_BINARY_DIR}/../sfml/src/sfml/include)
 
 
 add_library(
