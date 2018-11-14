@@ -1,21 +1,24 @@
 #pragma once
 
-#include <KINU/World.hpp>
 #include <memory>
 #include <boost/shared_ptr.hpp>
 #include <boost/asio/io_service.hpp>
-#include "../externlib/commun/IDisplay.hpp"
+#include "IDisplay.hpp"
 #include <boost/asio/deadline_timer.hpp>
+
 
 class ServerTCP;
 
 class ClientTCP;
 
 class Core;
+namespace Mix {
+
+	class World;
+};
 
 class Univers {
 public:
-
 	Univers();
 
 	IDisplay &getDisplay() const;
@@ -28,7 +31,7 @@ public:
 	void manage_input();
 
 
-	KINU::World &getWorld_() const;
+	Mix::World &getWorld_() const;
 
 	ClientTCP &getClientTCP_() const;
 
@@ -56,8 +59,8 @@ private:
 	boost::asio::io_service io;
 	boost::asio::deadline_timer deadline_timer = boost::asio::deadline_timer(io,
 																			 boost::posix_time::seconds(
-																					 0));
-	std::unique_ptr<KINU::World> world_;
+																					 1));
+	std::unique_ptr<Mix::World> world_;
 	boost::shared_ptr<ClientTCP> clientTCP_;
 	std::unique_ptr<ServerTCP> serverTCP_;
 	std::unique_ptr<Core> core_;

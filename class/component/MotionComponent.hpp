@@ -2,7 +2,6 @@
 
 #include <ostream>
 #include <nibbler.hpp>
-#include <KINU/Signature.hpp>
 #include <json/json.h>
 
 struct MotionComponent {

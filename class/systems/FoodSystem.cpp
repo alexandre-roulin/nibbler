@@ -1,11 +1,11 @@
 #include <component/CollisionComponent.hpp>
 #include "FoodSystem.hpp"
-#include <KINU/World.hpp>
+#include <KINU/World.h>
 #include <events/FoodEvent.hpp>
 #include <component/FollowComponent.hpp>
 #include <component/SpriteComponent.hpp>
 #include <factory/Factory.hpp>
-#include <Univers.hpp>
+#include <KINU/Univers.hpp>
 #include <network/ClientTCP.hpp>
 #include <logger.h>
 
@@ -33,10 +33,10 @@ void FoodSystem::update() {
 			newEntity.addComponent<FollowComponent>(
 					followComponent.idFollowed); //FollowComponent.id == entityTail.idFollowed
 			newEntity.addComponent<SpriteComponent>(36);
-			followComponent.idFollowed = newEntity.getId();
+			followComponent.idFollowed = newEntity.getIndex();
 			auto &followComponent2 = entityTail.getComponent<FollowComponent>();        //SNAKE TAIL WITH ID FOLLOW
 			followComponent.skip = true;
-			newEntity.tag(Factory::factory_name(BODY, newEntity.getId()));
+			newEntity.tag(Factory::factory_name(BODY, newEntity.getIndex()));
 			newEntity.group(event.tag_group);
 			followComponent.skip = true;
 			createFood();
@@ -45,9 +45,8 @@ void FoodSystem::update() {
 }
 
 void FoodSystem::createFood() {
-	int position[2] = {(rand() % (getWorld().getMax_() - 2)) + 1,
-					   (rand() % (getWorld().getMax_() - 2)) + 1};
-
+	int position[2] = {(rand() % (30 - 2)) + 1,
+					   (rand() % (30 - 2)) + 1};
 	getWorld().getUnivers()
 			.getClientTCP_()
 			.write_socket(ClientTCP::add_prefix(FOOD, position));

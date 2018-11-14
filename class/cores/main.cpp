@@ -2,10 +2,10 @@
 
 
 #include <iostream>
-#include <KINU/Entity.hpp>
+#include <KINU/Entity.h>
 #include <boost/thread/thread.hpp>
 
-#include <KINU/World.hpp>
+#include <KINU/World.h>
 
 
 #include <random>

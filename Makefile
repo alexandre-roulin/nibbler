@@ -39,19 +39,19 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /Users/ntoniolo/.brew/Cellar/cmake/3.12.3/bin/cmake
+CMAKE_COMMAND = /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake
 
 # The command to remove a file.
-RM = /Users/ntoniolo/.brew/Cellar/cmake/3.12.3/bin/cmake -E remove -f
+RM = /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/ntoniolo/nibbler
+CMAKE_SOURCE_DIR = /Users/alexandreroulin/work/nibbler
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/ntoniolo/nibbler
+CMAKE_BINARY_DIR = /Users/alexandreroulin/work/nibbler
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -59,7 +59,7 @@ CMAKE_BINARY_DIR = /Users/ntoniolo/nibbler
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	/Users/ntoniolo/.brew/Cellar/cmake/3.12.3/bin/cmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	/Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : rebuild_cache
 
 # Special rule for the target rebuild_cache
@@ -69,8 +69,8 @@ rebuild_cache/fast: rebuild_cache
 
 # Special rule for the target edit_cache
 edit_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake cache editor..."
-	/Users/ntoniolo/.brew/Cellar/cmake/3.12.3/bin/ccmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
+	/Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -80,9 +80,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/ntoniolo/nibbler/CMakeFiles /Users/ntoniolo/nibbler/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/alexandreroulin/work/nibbler/CMakeFiles /Users/alexandreroulin/work/nibbler/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/ntoniolo/nibbler/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/alexandreroulin/work/nibbler/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -136,194 +136,167 @@ imgui-sfml/fast:
 	$(MAKE) -f imgui/CMakeFiles/imgui-sfml.dir/build.make imgui/CMakeFiles/imgui-sfml.dir/build
 .PHONY : imgui-sfml/fast
 
-class/KNU/World.o: class/KNU/World.cpp.o
+class/KINU/Component.o: class/KINU/Component.cpp.o
 
-.PHONY : class/KNU/World.o
-
-# target to build an object file
-class/KNU/World.cpp.o:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/World.cpp.o
-.PHONY : class/KNU/World.cpp.o
-
-class/KNU/World.i: class/KNU/World.cpp.i
-
-.PHONY : class/KNU/World.i
-
-# target to preprocess a source file
-class/KNU/World.cpp.i:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/World.cpp.i
-.PHONY : class/KNU/World.cpp.i
-
-class/KNU/World.s: class/KNU/World.cpp.s
-
-.PHONY : class/KNU/World.s
-
-# target to generate assembly for a file
-class/KNU/World.cpp.s:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/World.cpp.s
-.PHONY : class/KNU/World.cpp.s
-
-class/KNU/component/Component.o: class/KNU/component/Component.cpp.o
-
-.PHONY : class/KNU/component/Component.o
+.PHONY : class/KINU/Component.o
 
 # target to build an object file
-class/KNU/component/Component.cpp.o:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/component/Component.cpp.o
-.PHONY : class/KNU/component/Component.cpp.o
+class/KINU/Component.cpp.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KINU/Component.cpp.o
+.PHONY : class/KINU/Component.cpp.o
 
-class/KNU/component/Component.i: class/KNU/component/Component.cpp.i
+class/KINU/Component.i: class/KINU/Component.cpp.i
 
-.PHONY : class/KNU/component/Component.i
+.PHONY : class/KINU/Component.i
 
 # target to preprocess a source file
-class/KNU/component/Component.cpp.i:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/component/Component.cpp.i
-.PHONY : class/KNU/component/Component.cpp.i
+class/KINU/Component.cpp.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KINU/Component.cpp.i
+.PHONY : class/KINU/Component.cpp.i
 
-class/KNU/component/Component.s: class/KNU/component/Component.cpp.s
+class/KINU/Component.s: class/KINU/Component.cpp.s
 
-.PHONY : class/KNU/component/Component.s
+.PHONY : class/KINU/Component.s
 
 # target to generate assembly for a file
-class/KNU/component/Component.cpp.s:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/component/Component.cpp.s
-.PHONY : class/KNU/component/Component.cpp.s
+class/KINU/Component.cpp.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KINU/Component.cpp.s
+.PHONY : class/KINU/Component.cpp.s
 
-class/KNU/entities/Entity.o: class/KNU/entities/Entity.cpp.o
+class/KINU/Entity.o: class/KINU/Entity.cpp.o
 
-.PHONY : class/KNU/entities/Entity.o
+.PHONY : class/KINU/Entity.o
 
 # target to build an object file
-class/KNU/entities/Entity.cpp.o:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/entities/Entity.cpp.o
-.PHONY : class/KNU/entities/Entity.cpp.o
+class/KINU/Entity.cpp.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KINU/Entity.cpp.o
+.PHONY : class/KINU/Entity.cpp.o
 
-class/KNU/entities/Entity.i: class/KNU/entities/Entity.cpp.i
+class/KINU/Entity.i: class/KINU/Entity.cpp.i
 
-.PHONY : class/KNU/entities/Entity.i
+.PHONY : class/KINU/Entity.i
 
 # target to preprocess a source file
-class/KNU/entities/Entity.cpp.i:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/entities/Entity.cpp.i
-.PHONY : class/KNU/entities/Entity.cpp.i
+class/KINU/Entity.cpp.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KINU/Entity.cpp.i
+.PHONY : class/KINU/Entity.cpp.i
 
-class/KNU/entities/Entity.s: class/KNU/entities/Entity.cpp.s
+class/KINU/Entity.s: class/KINU/Entity.cpp.s
 
-.PHONY : class/KNU/entities/Entity.s
+.PHONY : class/KINU/Entity.s
 
 # target to generate assembly for a file
-class/KNU/entities/Entity.cpp.s:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/entities/Entity.cpp.s
-.PHONY : class/KNU/entities/Entity.cpp.s
+class/KINU/Entity.cpp.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KINU/Entity.cpp.s
+.PHONY : class/KINU/Entity.cpp.s
 
-class/KNU/events/EventManager.o: class/KNU/events/EventManager.cpp.o
+class/KINU/Event.o: class/KINU/Event.cpp.o
 
-.PHONY : class/KNU/events/EventManager.o
+.PHONY : class/KINU/Event.o
 
 # target to build an object file
-class/KNU/events/EventManager.cpp.o:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/events/EventManager.cpp.o
-.PHONY : class/KNU/events/EventManager.cpp.o
+class/KINU/Event.cpp.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KINU/Event.cpp.o
+.PHONY : class/KINU/Event.cpp.o
 
-class/KNU/events/EventManager.i: class/KNU/events/EventManager.cpp.i
+class/KINU/Event.i: class/KINU/Event.cpp.i
 
-.PHONY : class/KNU/events/EventManager.i
+.PHONY : class/KINU/Event.i
 
 # target to preprocess a source file
-class/KNU/events/EventManager.cpp.i:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/events/EventManager.cpp.i
-.PHONY : class/KNU/events/EventManager.cpp.i
+class/KINU/Event.cpp.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KINU/Event.cpp.i
+.PHONY : class/KINU/Event.cpp.i
 
-class/KNU/events/EventManager.s: class/KNU/events/EventManager.cpp.s
+class/KINU/Event.s: class/KINU/Event.cpp.s
 
-.PHONY : class/KNU/events/EventManager.s
+.PHONY : class/KINU/Event.s
 
 # target to generate assembly for a file
-class/KNU/events/EventManager.cpp.s:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/events/EventManager.cpp.s
-.PHONY : class/KNU/events/EventManager.cpp.s
+class/KINU/Event.cpp.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KINU/Event.cpp.s
+.PHONY : class/KINU/Event.cpp.s
 
-class/KNU/systems/System.o: class/KNU/systems/System.cpp.o
+class/KINU/System.o: class/KINU/System.cpp.o
 
-.PHONY : class/KNU/systems/System.o
+.PHONY : class/KINU/System.o
 
 # target to build an object file
-class/KNU/systems/System.cpp.o:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/systems/System.cpp.o
-.PHONY : class/KNU/systems/System.cpp.o
+class/KINU/System.cpp.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KINU/System.cpp.o
+.PHONY : class/KINU/System.cpp.o
 
-class/KNU/systems/System.i: class/KNU/systems/System.cpp.i
+class/KINU/System.i: class/KINU/System.cpp.i
 
-.PHONY : class/KNU/systems/System.i
+.PHONY : class/KINU/System.i
 
 # target to preprocess a source file
-class/KNU/systems/System.cpp.i:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/systems/System.cpp.i
-.PHONY : class/KNU/systems/System.cpp.i
+class/KINU/System.cpp.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KINU/System.cpp.i
+.PHONY : class/KINU/System.cpp.i
 
-class/KNU/systems/System.s: class/KNU/systems/System.cpp.s
+class/KINU/System.s: class/KINU/System.cpp.s
 
-.PHONY : class/KNU/systems/System.s
+.PHONY : class/KINU/System.s
 
 # target to generate assembly for a file
-class/KNU/systems/System.cpp.s:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/systems/System.cpp.s
-.PHONY : class/KNU/systems/System.cpp.s
+class/KINU/System.cpp.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KINU/System.cpp.s
+.PHONY : class/KINU/System.cpp.s
 
-class/KNU/utils/Signature.o: class/KNU/utils/Signature.cpp.o
+class/KINU/Univers.o: class/KINU/Univers.cpp.o
 
-.PHONY : class/KNU/utils/Signature.o
+.PHONY : class/KINU/Univers.o
 
 # target to build an object file
-class/KNU/utils/Signature.cpp.o:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/utils/Signature.cpp.o
-.PHONY : class/KNU/utils/Signature.cpp.o
+class/KINU/Univers.cpp.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KINU/Univers.cpp.o
+.PHONY : class/KINU/Univers.cpp.o
 
-class/KNU/utils/Signature.i: class/KNU/utils/Signature.cpp.i
+class/KINU/Univers.i: class/KINU/Univers.cpp.i
 
-.PHONY : class/KNU/utils/Signature.i
+.PHONY : class/KINU/Univers.i
 
 # target to preprocess a source file
-class/KNU/utils/Signature.cpp.i:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/utils/Signature.cpp.i
-.PHONY : class/KNU/utils/Signature.cpp.i
+class/KINU/Univers.cpp.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KINU/Univers.cpp.i
+.PHONY : class/KINU/Univers.cpp.i
 
-class/KNU/utils/Signature.s: class/KNU/utils/Signature.cpp.s
+class/KINU/Univers.s: class/KINU/Univers.cpp.s
 
-.PHONY : class/KNU/utils/Signature.s
+.PHONY : class/KINU/Univers.s
 
 # target to generate assembly for a file
-class/KNU/utils/Signature.cpp.s:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KNU/utils/Signature.cpp.s
-.PHONY : class/KNU/utils/Signature.cpp.s
+class/KINU/Univers.cpp.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KINU/Univers.cpp.s
+.PHONY : class/KINU/Univers.cpp.s
 
-class/Univers.o: class/Univers.cpp.o
+class/KINU/World.o: class/KINU/World.cpp.o
 
-.PHONY : class/Univers.o
+.PHONY : class/KINU/World.o
 
 # target to build an object file
-class/Univers.cpp.o:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/Univers.cpp.o
-.PHONY : class/Univers.cpp.o
+class/KINU/World.cpp.o:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KINU/World.cpp.o
+.PHONY : class/KINU/World.cpp.o
 
-class/Univers.i: class/Univers.cpp.i
+class/KINU/World.i: class/KINU/World.cpp.i
 
-.PHONY : class/Univers.i
+.PHONY : class/KINU/World.i
 
 # target to preprocess a source file
-class/Univers.cpp.i:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/Univers.cpp.i
-.PHONY : class/Univers.cpp.i
+class/KINU/World.cpp.i:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KINU/World.cpp.i
+.PHONY : class/KINU/World.cpp.i
 
-class/Univers.s: class/Univers.cpp.s
+class/KINU/World.s: class/KINU/World.cpp.s
 
-.PHONY : class/Univers.s
+.PHONY : class/KINU/World.s
 
 # target to generate assembly for a file
-class/Univers.cpp.s:
-	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/Univers.cpp.s
-.PHONY : class/Univers.cpp.s
+class/KINU/World.cpp.s:
+	$(MAKE) -f CMakeFiles/nibbler.dir/build.make CMakeFiles/nibbler.dir/class/KINU/World.cpp.s
+.PHONY : class/KINU/World.cpp.s
 
 class/component/CollisionComponent.o: class/component/CollisionComponent.cpp.o
 
@@ -1334,27 +1307,24 @@ help:
 	@echo "... edit_cache"
 	@echo "... nibbler"
 	@echo "... imgui-sfml"
-	@echo "... class/KNU/World.o"
-	@echo "... class/KNU/World.i"
-	@echo "... class/KNU/World.s"
-	@echo "... class/KNU/component/Component.o"
-	@echo "... class/KNU/component/Component.i"
-	@echo "... class/KNU/component/Component.s"
-	@echo "... class/KNU/entities/Entity.o"
-	@echo "... class/KNU/entities/Entity.i"
-	@echo "... class/KNU/entities/Entity.s"
-	@echo "... class/KNU/events/EventManager.o"
-	@echo "... class/KNU/events/EventManager.i"
-	@echo "... class/KNU/events/EventManager.s"
-	@echo "... class/KNU/systems/System.o"
-	@echo "... class/KNU/systems/System.i"
-	@echo "... class/KNU/systems/System.s"
-	@echo "... class/KNU/utils/Signature.o"
-	@echo "... class/KNU/utils/Signature.i"
-	@echo "... class/KNU/utils/Signature.s"
-	@echo "... class/Univers.o"
-	@echo "... class/Univers.i"
-	@echo "... class/Univers.s"
+	@echo "... class/KINU/Component.o"
+	@echo "... class/KINU/Component.i"
+	@echo "... class/KINU/Component.s"
+	@echo "... class/KINU/Entity.o"
+	@echo "... class/KINU/Entity.i"
+	@echo "... class/KINU/Entity.s"
+	@echo "... class/KINU/Event.o"
+	@echo "... class/KINU/Event.i"
+	@echo "... class/KINU/Event.s"
+	@echo "... class/KINU/System.o"
+	@echo "... class/KINU/System.i"
+	@echo "... class/KINU/System.s"
+	@echo "... class/KINU/Univers.o"
+	@echo "... class/KINU/Univers.i"
+	@echo "... class/KINU/Univers.s"
+	@echo "... class/KINU/World.o"
+	@echo "... class/KINU/World.i"
+	@echo "... class/KINU/World.s"
 	@echo "... class/component/CollisionComponent.o"
 	@echo "... class/component/CollisionComponent.i"
 	@echo "... class/component/CollisionComponent.s"

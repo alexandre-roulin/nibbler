@@ -1,9 +1,9 @@
 #pragma once
 
 
-#include <KINU/System.hpp>
+#include <KINU/System.h>
 
-class CollisionSystem : public KINU::System {
+class CollisionSystem : public Mix::System {
 public:
 	CollisionSystem();
 	virtual void update();

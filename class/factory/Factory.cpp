@@ -10,26 +10,13 @@ const char *Factory::part_name[PART_SNAKE]{
 		[GRPS] = "grps"
 };
 
-Factory::Factory(KINU::World &world)
-		: world_(world) {
+Factory::Factory(Univers &univers)
+		: univers_(univers) {
 
 }
 
 void Factory::create_all_snake(Snake snake_array[MAX_SNAKE], int16_t nu) {
-	int rows = nu / 4;
-	int cols = nu % 4;
-	rows = !rows ? 1 : rows;
-	cols = !cols ? 1 : cols;
-	int size_rows = world_.getMax_() / rows;
-	int size_cols = world_.getMax_() / cols;
-
-	for (int16_t index = 0; index < nu; ++index) {
-		int rel_y = index / 4;
-		int rel_x = index % 4;
-		int real_y = size_rows * rel_y - size_rows / 2;
-		int real_x = size_cols * rel_x - size_cols / 2;
-		create_snake(index, real_y, real_x);
-	}
+	create_snake(nu, 1,1);
 	if (nu == 1)
 		create_food(8, 8);
 	else
@@ -40,12 +27,12 @@ void Factory::create_all_snake(Snake snake_array[MAX_SNAKE], int16_t nu) {
 }
 
 void Factory::create_snake(int16_t id, int y, int x) {
-	KINU::Entity snake_follow;
-	KINU::Entity new_snake;
+	Mix::Entity snake_follow;
+	Mix::Entity new_snake;
 
 	for (int index = 0; index < 4; ++index) {
-		new_snake = world_.createEntity();
-		log_info("[%d]", new_snake.entitiesManager);
+		new_snake = univers_.getWorld_().createEntity();
+		log_info("[%d]", new_snake.getIndex());
 		if (index == 0) {
 			new_snake.tag(factory_name(HEAD, id));
 			new_snake.addComponent<JoystickComponent>(NORTH,
@@ -65,8 +52,7 @@ void Factory::create_snake(int16_t id, int y, int x) {
 			new_snake.addComponent<SpriteComponent>(22);
 		}
 		new_snake.group(factory_name(GRPS, id));
-		if (snake_follow.isValid())
-			new_snake.addComponent<FollowComponent>(snake_follow.getId());
+		new_snake.addComponent<FollowComponent>(snake_follow.getIndex());
 		snake_follow = new_snake;
 	}
 }
@@ -80,14 +66,14 @@ eSnakePart Factory::isSnakePart(std::string compare) {
 
 void Factory::create_food(int y, int x) {
 	log_trace("Factory::create_food(int y = %d, int x = %d)", y, x);
-	auto food = world_.createEntity();
+	auto food = univers_.getWorld_().createEntity();
 	food.addComponent<PositionComponent>(y, x);
 	food.addComponent<CollisionComponent>(false);
 	food.addComponent<SpriteComponent>(33);
 }
 
 void Factory::create_walls() {
-	int max = world_.getMax_();
+	int max = 30;
 	int x = 0;
 	int y = 1;
 	for (; x < max; ++x) {
@@ -105,7 +91,7 @@ void Factory::create_walls() {
 }
 
 void Factory::create_wall(int x, int y) {
-	auto entity = world_.createEntity();
+	auto entity = univers_.getWorld_().createEntity();
 	entity.addComponent<PositionComponent>(y, x);
 	entity.addComponent<CollisionComponent>();
 	entity.group(WALL_TAG);

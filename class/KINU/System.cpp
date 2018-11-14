@@ -1,59 +1,50 @@
-#include <logger.h>
-#include "System.hpp"
+#include "System.h"
+#include "World.h"
+#include <algorithm>
 
-namespace KINU {
+namespace Mix
+{
 
-	void System::addEntity(Entity &entity) {
-		entities.push_back(entity);
-	}
+void System::addEntity(Entity e)
+{
+    entities.push_back(e);
+}
 
-	void System::removeEntity(Entity entity) {
-		entities.erase(
-				std::remove_if(
-						entities.begin(),
-						entities.end(),
-						[&entity](Entity other) {
-							return entity == other;
-						}),
-				entities.end());
-	}
+void System::removeEntity(Entity e)
+{
+    entities.erase(std::remove_if(entities.begin(), entities.end(),
+        [&e](Entity other) { return e == other; }
+    ), entities.end());
+}
 
-	World &System::getWorld() const {
-		return *world;
-	}
-
-	const Signature &System::getSignature() const {
-		return signature;
-	}
-
-	std::vector<Entity> System::getEntities() {
-		return entities;
-	}
+World& System::getWorld() const
+{
+    assert(world != nullptr);
+    return *world;
+}
 
 
-	void SystemManager::addToSystems(Entity &entity) {
-		for (auto &systemMap : _systems) {
-			auto system = systemMap.second;
-			log_error("M[%d]", entity.getSignature().getMask() & system->getSignature().getMask());
-			if (entity.getSignature().matches(system->getSignature())) {
-				system->addEntity(entity);
-			}
-		}
-	}
+    void SystemManager::addToSystems(Entity e)
+{
+    const auto &entityComponentMask = world.getEntityManager().getComponentMask(e);
 
-	SystemManager::SystemManager(World &world)
-			: _world(world) {
+    for (auto &it : systems) {
+        auto &system = it.second;
+        const auto &systemComponentMask = system->getComponentMask();
+        auto interest = (entityComponentMask & systemComponentMask) == systemComponentMask;
 
-	}
+        if (interest) {
+            system->addEntity(e);
+        }
+    }
+}
 
-	void SystemManager::removeToSystems(Entity &entity) {
-		for (auto &systemMap : _systems) {
-			auto system = systemMap.second;
-			if (entity.getSignature().matches(system->getSignature()))
-				system->removeEntity(entity);
-		}
-
-	}
-
+void SystemManager::removeFromSystems(Entity e)
+{
+    for (auto &it : systems) {
+        auto &system = it.second;
+        system->removeEntity(e);
+    }
+}
 
 }

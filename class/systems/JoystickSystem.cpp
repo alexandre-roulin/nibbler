@@ -1,4 +1,4 @@
-#include <KINU/World.hpp>
+#include <KINU/World.h>
 #include "JoystickSystem.hpp"
 #include <component/JoystickComponent.hpp>
 #include <component/MotionComponent.hpp>
@@ -15,8 +15,8 @@ void JoystickSystem::update() {
 	log_success("JoystickSystem::update on %d events", events.size());
 	for (auto &event : events) {
 		if (event.id != -1 ) {
-			auto entity = getWorld().getEntityManager().getEntityById(event.id);
-			if (entity && entity.hasComponent<JoystickComponent>()) {
+			auto entity = getWorld().getEntityManager().getEntity(event.id);
+			if (entity.isAlive() && entity.hasComponent<JoystickComponent>()) {
 				auto &joystickComponent = entity.getComponent<JoystickComponent>();
 				joystickComponent.direction = event.direction;
 			}

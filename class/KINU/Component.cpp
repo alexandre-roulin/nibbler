@@ -1,5 +1,8 @@
-#include "Component.hpp"
+#include "Component.h"
 
-namespace KINU {
-	int ComponentCounter::familyCounter = 0;
+namespace Mix
+{
+
+BaseComponent::Id BaseComponent::nextId = 0;
+
 }

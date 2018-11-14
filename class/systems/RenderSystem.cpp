@@ -1,4 +1,4 @@
-#include "KINU/World.hpp"
+#include "KINU/World.h"
 #include "RenderSystem.hpp"
 #include <component/PositionComponent.hpp>
 #include <component/SpriteComponent.hpp>
@@ -12,7 +12,7 @@ RenderSystem::RenderSystem() {
 void RenderSystem::update() {
 	log_success("update");
 	for (auto &entity : getEntities()) {
-		if (entity.isValid()) {
+		if (entity.isAlive()) {
 			auto& positionComponent = entity.getComponent<PositionComponent>();
 			auto& spriteComponent = entity.getComponent<SpriteComponent>();
 			getWorld().grid(positionComponent.x, positionComponent.y)

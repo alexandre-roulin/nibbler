@@ -3,11 +3,13 @@
 #include <iostream>
 #include <nibbler.hpp>
 #include "asio.hpp"
+#include <KINU/Univers.hpp>
 #include "ClientTCP.hpp"
 #include <gui/Core.hpp>
 #include <events/JoystickEvent.hpp>
 #include <events/StartEvent.hpp>
-
+#include <KINU/Univers.hpp>
+#include <logger.h>
 int const ClientTCP::size_header[] = {
 		[CHAT] = SIZEOF_CHAT_PCKT,
 		[FOOD] = sizeof(int) * 2,
@@ -19,7 +21,7 @@ int const ClientTCP::size_header[] = {
 		[INPUT] = sizeof(int16_t) + sizeof(eDirection)
 };
 
-ClientTCP::ClientTCP(Univers &univers, boost::asio::io_service &io,
+ClientTCP::ClientTCP(::Univers &univers, boost::asio::io_service &io,
 					 std::string &hostname)
 		: id_(0),
 		  univers(univers),
@@ -27,7 +29,8 @@ ClientTCP::ClientTCP(Univers &univers, boost::asio::io_service &io,
 		  query(hostname, "4242"),
 		  socket(io),
 		  timer(io, boost::posix_time::seconds(1)),
-		  factory(univers.getWorld_()) {
+		  factory(univers) {
+
 }
 
 void ClientTCP::change_name(char const *name) {

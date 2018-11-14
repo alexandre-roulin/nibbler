@@ -1,7 +1,7 @@
 #pragma once
 
-
-#include <KINU/Entity.hpp>
+#
+#include <KINU/Entity.h>
 #include <ostream>
 #include "PositionComponent.hpp"
 
@@ -15,10 +15,10 @@ public:
 	operator<<(std::ostream &os, const FollowComponent &component);
 
 	static std::string const NAME_COMPONENT;
-	explicit FollowComponent(KINU::Entity::ID id = -1, bool skip = false);
+	explicit FollowComponent(Mix::Entity::Id id = -1, bool skip = false);
 	explicit FollowComponent(Json::Value);
 	FollowComponent(FollowComponent const &);
-	KINU::Entity::ID idFollowed;
+	Mix::Entity::Id idFollowed;
 	PositionComponent positionComponent;
 	bool skip;
 	Json::Value serializeComponent();

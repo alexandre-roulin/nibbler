@@ -1,8 +1,6 @@
 #pragma once
 
 #include <ostream>
-#include <KINU/Signature.hpp>
-#include <KINU/Component.hpp>
 #include <json/json.h>
 
 struct PositionComponent {

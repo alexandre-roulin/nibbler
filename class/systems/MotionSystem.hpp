@@ -1,12 +1,14 @@
 #pragma once
 
 
-#include <KINU/System.hpp>
+#include <KINU/System.h>
 
-class MotionSystem : public KINU::System {
+class MotionSystem : public Mix::System {
 public:
 	explicit MotionSystem();
-	void update() override;
+
+	virtual void update();
+
 	~MotionSystem() final;
 
 };

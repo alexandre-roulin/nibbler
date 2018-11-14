@@ -12,13 +12,13 @@ CollisionSystem::CollisionSystem() {
 
 
 void CollisionSystem::update() {
-	std::vector<KINU::Entity> entities_ = getEntities();
+	std::vector<Mix::Entity> entities_ = getEntities();
 	auto &world = getWorld();
 	for (auto &entity : getEntities()) {
 		if (Factory::isSnakePart(entity.getTag()) == HEAD) {
 			std::for_each(entities_.begin(), entities_.end(),
 						  [&entity, &world](
-								  KINU::Entity &entity_) {
+								  Mix::Entity &entity_) {
 							  auto &snakePositionComponent = entity.getComponent<PositionComponent>();
 							  auto &positionComponent = entity_.getComponent<PositionComponent>();
 							  if (snakePositionComponent == positionComponent &&
@@ -27,7 +27,7 @@ void CollisionSystem::update() {
 								  eSnakePart esp = Factory::isSnakePart(
 										  entity_.getTag());
 								  log_warn("Collision between [%d] [%d]",
-										   entity_.getId(), entity.getId());
+										   entity_.getIndex(), entity.getIndex());
 								  if (collisionComponent.isWall ||
 									  esp != OTHER) {
 									  log_warn("Wall || SnakePart != HEAD");

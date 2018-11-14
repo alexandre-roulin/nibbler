@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.12)
+cmake_minimum_required(VERSION 3.10)
 
 set(CMAKE_C_COMPILER "/usr/bin/gcc")
 set(CMAKE_CXX_COMPILER "/usr/bin/g++")
@@ -89,21 +89,20 @@ add_executable(${NAME}
         class/gui/Core.cpp
         class/gui/Core.hpp
         class/gui/imgui_demo.cpp
-        class/KNU/component/Component.cpp
-        class/KNU/component/Component.hpp
-        class/KNU/entities/Entity.cpp
-        class/KNU/entities/Entity.hpp
-        class/KNU/events/EventManager.cpp
-        class/KNU/events/EventManager.hpp
-        class/KNU/managers/AbstractPool.hpp
-        class/KNU/managers/Pool.hpp
-        class/KNU/managers/Pool_.hpp
-        class/KNU/systems/System.cpp
-        class/KNU/systems/System.hpp
-        class/KNU/utils/Signature.cpp
-        class/KNU/utils/Signature.hpp
-        class/KNU/World.cpp
-        class/KNU/World.hpp
+        class/KINU/Component.cpp
+        class/KINU/Component.h
+        class/KINU/Config.h
+        class/KINU/Entity.cpp
+        class/KINU/Entity.h
+        class/KINU/Event.cpp
+        class/KINU/Event.h
+        class/KINU/Pool.h
+        class/KINU/System.cpp
+        class/KINU/System.h
+        class/KINU/Univers.cpp
+        class/KINU/Univers.hpp
+        class/KINU/World.cpp
+        class/KINU/World.h
         class/logger/display/logger_debug.cpp
         class/logger/display/logger_error.cpp
         class/logger/display/logger_fatal.cpp
@@ -135,8 +134,8 @@ add_executable(${NAME}
         class/systems/MotionSystem.hpp
         class/systems/RenderSystem.cpp
         class/systems/RenderSystem.hpp
-        class/Univers.cpp
-        class/Univers.hpp
+        class/KINU/Univers.cpp
+        class/KINU/Univers.hpp
         externlib/commun/IDisplay.hpp
         externlib/commun/ISound.hpp
 
