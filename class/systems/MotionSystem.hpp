@@ -1,9 +1,9 @@
 #pragma once
 
 
-#include <KINU/System.h>
+#include <KINU/System.hpp>
 
-class MotionSystem : public Mix::System {
+class MotionSystem : public KINU::System {
 public:
 	explicit MotionSystem();
 

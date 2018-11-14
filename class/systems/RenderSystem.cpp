@@ -1,4 +1,4 @@
-#include "KINU/World.h"
+#include "KINU/World.hpp"
 #include "RenderSystem.hpp"
 #include <component/PositionComponent.hpp>
 #include <component/SpriteComponent.hpp>

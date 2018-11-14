@@ -12,7 +12,7 @@ class ServerTCP;
 class ClientTCP;
 
 class Core;
-namespace Mix {
+namespace KINU {
 
 	class World;
 };
@@ -31,7 +31,7 @@ public:
 	void manage_input();
 
 
-	Mix::World &getWorld_() const;
+	KINU::World &getWorld_() const;
 
 	ClientTCP &getClientTCP_() const;
 
@@ -60,7 +60,7 @@ private:
 	boost::asio::deadline_timer deadline_timer = boost::asio::deadline_timer(io,
 																			 boost::posix_time::seconds(
 																					 1));
-	std::unique_ptr<Mix::World> world_;
+	std::unique_ptr<KINU::World> world_;
 	boost::shared_ptr<ClientTCP> clientTCP_;
 	std::unique_ptr<ServerTCP> serverTCP_;
 	std::unique_ptr<Core> core_;

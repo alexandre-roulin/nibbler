@@ -1,6 +1,6 @@
-#include "Component.h"
+#include "Component.hpp"
 
-namespace Mix
+namespace KINU
 {
 
 BaseComponent::Id BaseComponent::nextId = 0;

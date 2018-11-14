@@ -1,9 +1,9 @@
 #pragma once
 
 
-#include <KINU/System.h>
+#include <KINU/System.hpp>
 
-class RenderSystem : public Mix::System {
+class RenderSystem : public KINU::System {
 public:
 	RenderSystem();
 	virtual void update();

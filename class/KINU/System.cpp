@@ -1,8 +1,8 @@
-#include "System.h"
-#include "World.h"
+#include "System.hpp"
+#include "World.hpp"
 #include <algorithm>
 
-namespace Mix
+namespace KINU
 {
 
 void System::addEntity(Entity e)

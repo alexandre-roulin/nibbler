@@ -1,7 +1,7 @@
 
 
 #include "MotionComponent.hpp"
-#include <KINU/Component.h>
+#include <KINU/Component.hpp>
 #include <cassert>
 
 std::string const MotionComponent::NAME_COMPONENT = "motionComponent";

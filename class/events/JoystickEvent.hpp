@@ -10,10 +10,6 @@ struct JoystickEvent {
 
 	JoystickEvent(int16_t id = -1, eDirection direction = NORTH);
 
-	JoystickEvent(JoystickEvent const &);
-
-	JoystickEvent &operator=(JoystickEvent const &);
-
 	friend std::ostream &
 	operator<<(std::ostream &os, const JoystickEvent &event) {
 		os << "direction: " << event.direction << " tag_player: "

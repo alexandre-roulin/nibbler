@@ -1,7 +1,8 @@
-#include "Entity.h"
-#include "World.h"
+#include "Entity.hpp"
+#include "World.hpp"
+#include <logger.h>
 
-namespace Mix {
+namespace KINU {
 
 	void Entity::kill() {
 		getEntityManager().killEntity(*this);
@@ -17,6 +18,7 @@ namespace Mix {
 	}
 
 	void Entity::tag(std::string tag) {
+		log_info("[%d] tagged with [%s]", getIndex(), tag.c_str());
 		getEntityManager().tagEntity(*this, tag);
 	}
 

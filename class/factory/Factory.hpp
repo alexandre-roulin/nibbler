@@ -2,8 +2,8 @@
 
 #define PART_SNAKE 4
 #include <nibbler.hpp>
-#include <KINU/World.h>
-#include <KINU/Entity.h>
+#include <KINU/World.hpp>
+#include <KINU/Entity.hpp>
 #include <component/CollisionComponent.hpp>
 #include <component/JoystickComponent.hpp>
 #include <component/MotionComponent.hpp>

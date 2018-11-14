@@ -1,9 +1,9 @@
 #pragma once
 
 
-#include <KINU/System.h>
+#include <KINU/System.hpp>
 
-class JoystickSystem : public Mix::System {
+class JoystickSystem : public KINU::System {
 public:
 	explicit JoystickSystem();
 	void update() override;

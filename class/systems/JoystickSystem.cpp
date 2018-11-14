@@ -1,4 +1,4 @@
-#include <KINU/World.h>
+#include <KINU/World.hpp>
 #include "JoystickSystem.hpp"
 #include <component/JoystickComponent.hpp>
 #include <component/MotionComponent.hpp>

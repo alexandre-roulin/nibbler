@@ -21,6 +21,7 @@ void MotionSystem::update() {
 	for (auto &entity : getEntities()) {
 		auto &positionComponent = entity.getComponent<PositionComponent>();
 		auto &motionComponent = entity.getComponent<MotionComponent>();
+
 		switch (motionComponent.direction) {
 			case NORTH:
 				--positionComponent.y;

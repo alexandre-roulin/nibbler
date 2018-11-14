@@ -2,6 +2,9 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/SFML" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/SFML/src/sfml" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/imgui-sfml" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/imgui/imgui" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/imgui/imgui-sfml" vcs="Git" />
   </component>

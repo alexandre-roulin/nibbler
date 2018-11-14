@@ -1,13 +1,14 @@
 #include <component/CollisionComponent.hpp>
 #include "FoodSystem.hpp"
-#include <KINU/World.h>
+#include <KINU/World.hpp>
 #include <events/FoodEvent.hpp>
 #include <component/FollowComponent.hpp>
 #include <component/SpriteComponent.hpp>
 #include <factory/Factory.hpp>
-#include <KINU/Univers.hpp>
+#include <Univers.hpp>
 #include <network/ClientTCP.hpp>
 #include <logger.h>
+#include <iostream>
 
 FoodSystem::FoodSystem() {
 	requireComponent<FollowComponent>();
@@ -23,22 +24,31 @@ void FoodSystem::update() {
 		if (!event.tag_tail.empty()) {
 			auto entityTail = getWorld().getEntityManager().getEntityByTag(event.tag_tail);
 			auto newEntity = getWorld().createEntity();
-
-			auto &followComponent = entityTail.getComponent<FollowComponent>();        //SNAKE TAIL WITH ID FOLLOW
+			log_error("[%d][%d]", entityTail.getIndex(), newEntity.getIndex());
+			auto &idFollowed = entityTail.getComponent<FollowComponent>().idFollowed;        //SNAKE TAIL WITH ID FOLLOW
 			auto &positionComponent = entityTail.getComponent<PositionComponent>();    //SNAKE TAIL WITH ID FOLLOW
 
 
 			newEntity.addComponent<PositionComponent>(
 					positionComponent);            // Position == entityTail.positionComponent
+
+			std::cout << "Creation" << std::endl;
 			newEntity.addComponent<FollowComponent>(
-					followComponent.idFollowed); //FollowComponent.id == entityTail.idFollowed
+					idFollowed, false); //FollowComponent.id == entityTail.idFollowed
+			std::cout << "Finition" << std::endl;
 			newEntity.addComponent<SpriteComponent>(36);
+
+			std::cout << "followComponent" << std::endl;
+			std::cout << "followComponent.end" << std::endl;
+			auto &followComponent = entityTail.getComponent<FollowComponent>();
 			followComponent.idFollowed = newEntity.getIndex();
-			auto &followComponent2 = entityTail.getComponent<FollowComponent>();        //SNAKE TAIL WITH ID FOLLOW
 			followComponent.skip = true;
+
+			std::cout << entityTail.getIndex() << " " << newEntity.getIndex() << std::endl;
+
+
 			newEntity.tag(Factory::factory_name(BODY, newEntity.getIndex()));
 			newEntity.group(event.tag_group);
-			followComponent.skip = true;
 			createFood();
 		}
 	}

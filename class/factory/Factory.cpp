@@ -16,9 +16,10 @@ Factory::Factory(Univers &univers)
 }
 
 void Factory::create_all_snake(Snake snake_array[MAX_SNAKE], int16_t nu) {
-	create_snake(nu, 1,1);
-	if (nu == 1)
+	if (nu == 1) {
+		create_snake(0, 1,1);
 		create_food(8, 8);
+	}
 	else
 		for (int index = 0; index < nu; ++index) {
 			create_food(10, 10);
@@ -27,8 +28,8 @@ void Factory::create_all_snake(Snake snake_array[MAX_SNAKE], int16_t nu) {
 }
 
 void Factory::create_snake(int16_t id, int y, int x) {
-	Mix::Entity snake_follow;
-	Mix::Entity new_snake;
+	KINU::Entity snake_follow;
+	KINU::Entity new_snake;
 
 	for (int index = 0; index < 4; ++index) {
 		new_snake = univers_.getWorld_().createEntity();
@@ -40,7 +41,7 @@ void Factory::create_snake(int16_t id, int y, int x) {
 			new_snake.addComponent<MotionComponent>();
 			new_snake.addComponent<CollisionComponent>(false);
 			new_snake.addComponent<SpriteComponent>(21);
-			new_snake.addComponent<PositionComponent>(10, 10);
+			new_snake.addComponent<PositionComponent>(25,25);
 		} else if (index == 3) {
 			new_snake.tag(factory_name(TAIL, id));
 			new_snake.addComponent<CollisionComponent>();
@@ -52,7 +53,7 @@ void Factory::create_snake(int16_t id, int y, int x) {
 			new_snake.addComponent<SpriteComponent>(22);
 		}
 		new_snake.group(factory_name(GRPS, id));
-		new_snake.addComponent<FollowComponent>(snake_follow.getIndex());
+		new_snake.addComponent<FollowComponent>(snake_follow.getIndex(), false);
 		snake_follow = new_snake;
 	}
 }

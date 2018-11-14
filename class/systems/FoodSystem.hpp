@@ -1,9 +1,9 @@
 #pragma once
 
 
-#include <KINU/System.h>
+#include <KINU/System.hpp>
 
-class FoodSystem: public Mix::System {
+class FoodSystem: public KINU::System {
 public:
 	FoodSystem();
 	void createFood();

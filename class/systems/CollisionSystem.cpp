@@ -12,13 +12,13 @@ CollisionSystem::CollisionSystem() {
 
 
 void CollisionSystem::update() {
-	std::vector<Mix::Entity> entities_ = getEntities();
+	std::vector<KINU::Entity> entities_ = getEntities();
 	auto &world = getWorld();
 	for (auto &entity : getEntities()) {
 		if (Factory::isSnakePart(entity.getTag()) == HEAD) {
 			std::for_each(entities_.begin(), entities_.end(),
 						  [&entity, &world](
-								  Mix::Entity &entity_) {
+								  KINU::Entity &entity_) {
 							  auto &snakePositionComponent = entity.getComponent<PositionComponent>();
 							  auto &positionComponent = entity_.getComponent<PositionComponent>();
 							  if (snakePositionComponent == positionComponent &&

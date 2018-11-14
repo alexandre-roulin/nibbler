@@ -11,7 +11,7 @@
 #include <boost/array.hpp>
 #include <boost/thread/thread.hpp>
 #include <nibbler.hpp>
-#include <KINU/Univers.hpp>
+#include <Univers.hpp>
 
 
 using boost::asio::ip::tcp;

@@ -10,12 +10,11 @@
 #include <boost/thread.hpp>
 #include <events/StartEvent.hpp>
 #include <logger.h>
-#include <network/ClientTCP.hpp>
 #include <network/ServerTCP.hpp>
 
 Univers::Univers() {
 
-	world_ = std::make_unique<Mix::World>(*this);
+	world_ = std::make_unique<KINU::World>(*this);
 	core_ = nullptr;
 	clientTCP_ = nullptr;
 	serverTCP_ = nullptr;
@@ -51,6 +50,9 @@ int Univers::start_game() {
 void Univers::manage_input() {
 	eDirection ed = display->getDirection();
 	int16_t id = clientTCP_->getId_();
+//	log_warn("Match [%s] [%d]", Factory::factory_name(HEAD, id).c_str(),
+//			 world_->getEntityManager().hasTag(
+//					 Factory::factory_name(HEAD, id)));
 	if (world_->getEntityManager().hasTag(Factory::factory_name(HEAD, id)))
 		clientTCP_->write_socket(ClientTCP::add_prefix(INPUT, &id, &ed));
 }
@@ -75,7 +77,7 @@ void Univers::loop() {
 
 	world_->grid.clear();
 
-	std::cout << "Bug Display"  << std::endl;
+	std::cout << "Bug Display" << std::endl;
 	while (!display->exit()) {
 		display->update();
 		manage_input();
@@ -96,13 +98,14 @@ void Univers::loop_world() {
 	world_->getSystemManager().getSystem<FoodSystem>().update();
 	world_->getSystemManager().getSystem<RenderSystem>().update();
 
-	deadline_timer.expires_at(deadline_timer.expires_at() + boost::posix_time::milliseconds(350));
+	deadline_timer.expires_at(
+			deadline_timer.expires_at() + boost::posix_time::milliseconds(100));
 	deadline_timer.async_wait(boost::bind(&Univers::loop_world, this));
 	world_->update();
 
 }
 
-Mix::World &Univers::getWorld_() const {
+KINU::World &Univers::getWorld_() const {
 	return *world_;
 }
 

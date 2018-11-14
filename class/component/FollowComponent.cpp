@@ -1,30 +1,17 @@
 #include "FollowComponent.hpp"
 #include <cassert>
-
+#include <iostream>
 
 std::string const FollowComponent::NAME_COMPONENT = "followComponent";
 std::string const FollowComponent::SKIP = "skip";
 std::string const FollowComponent::ID_FOLLOWED = "idFollowed";
 std::string const FollowComponent::POSITION_COMPONENT = "positionComponent";
 
-FollowComponent::FollowComponent(Mix::Entity::Id id, bool skip)
+FollowComponent::FollowComponent(KINU::Entity::Id id, bool skip)
 		: idFollowed(id),
-		  skip(skip) {
-
-}
-
-FollowComponent::FollowComponent(FollowComponent const &followComponent) {
-	*this = followComponent;
-}
-
-FollowComponent &
-FollowComponent::operator=(FollowComponent const &followComponent) {
-	if (this != &followComponent) {
-		idFollowed = followComponent.idFollowed;
-		skip = followComponent.skip;
-		positionComponent = followComponent.positionComponent;
-	}
-	return *this;
+		  skip(skip),
+		  positionComponent(PositionComponent()){
+	std::cout << "id: " <<id << "pos " << positionComponent << "skip" << skip << std::endl;
 }
 
 Json::Value FollowComponent::serializeComponent() {

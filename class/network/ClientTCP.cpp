@@ -3,12 +3,12 @@
 #include <iostream>
 #include <nibbler.hpp>
 #include "asio.hpp"
-#include <KINU/Univers.hpp>
+#include <Univers.hpp>
 #include "ClientTCP.hpp"
 #include <gui/Core.hpp>
 #include <events/JoystickEvent.hpp>
 #include <events/StartEvent.hpp>
-#include <KINU/Univers.hpp>
+#include <Univers.hpp>
 #include <logger.h>
 int const ClientTCP::size_header[] = {
 		[CHAT] = SIZEOF_CHAT_PCKT,

@@ -1,5 +1,5 @@
 #include "WidgetOption.hpp"
-#include "KINU/Univers.hpp"
+#include "Univers.hpp"
 #include "../../../imgui-sfml/imgui.h"
 
 WidgetOption::WidgetOption(Core &core) :

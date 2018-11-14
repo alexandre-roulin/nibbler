@@ -1,7 +1,7 @@
 
 
 #include "FollowSystem.hpp"
-#include <KINU/World.h>
+#include <KINU/World.hpp>
 #include <component/FollowComponent.hpp>
 #include <component/PositionComponent.hpp>
 #include <logger.h>
