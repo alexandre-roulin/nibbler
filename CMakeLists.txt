@@ -118,6 +118,8 @@ add_executable(${NAME}
         class/gui/widget/WidgetLobby.hpp
         class/gui/widget/WidgetSnake.cpp
         class/gui/widget/WidgetSnake.hpp
+        class/gui/widget/WidgetOption.cpp
+        class/gui/widget/WidgetOption.hpp
         class/gui/Core.cpp
         class/gui/Core.hpp
         class/gui/imgui_demo.cpp

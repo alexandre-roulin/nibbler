@@ -13,6 +13,7 @@ public:
 	void	render(void);
 
 private:
+	char	_nameBuffer[NAME_BUFFER];
 
 	WidgetOption &operator=(const WidgetOption&);
 	WidgetOption(const WidgetOption&);
