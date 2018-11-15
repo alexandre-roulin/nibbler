@@ -11,27 +11,27 @@ project(${NAME})
 set(CMAKE_CXX_STANDARD 14)
 
 find_package(Git QUIET)
-if(GIT_FOUND AND EXISTS "${PROJECT_SOURCE_DIR}/.git")
+if (GIT_FOUND AND EXISTS "${PROJECT_SOURCE_DIR}/.git")
     option(GIT_SUBMODULE "Check submodules during build" ON)
-    if(GIT_SUBMODULE)
+    if (GIT_SUBMODULE)
         message(STATUS "Submodule update")
         execute_process(COMMAND ${GIT_EXECUTABLE} submodule update --init --recursive
                 WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
                 RESULT_VARIABLE GIT_SUBMOD_RESULT)
-        if(NOT GIT_SUBMOD_RESULT EQUAL "0")
+        if (NOT GIT_SUBMOD_RESULT EQUAL "0")
             message(FATAL_ERROR "git submodule update --init failed with ${GIT_SUBMOD_RESULT}, please checkout submodules")
-        endif()
-    endif()
-endif()
+        endif ()
+    endif ()
+endif ()
 
 link_directories(/usr/lib/)
 link_directories($ENV{HOME}/.brew/lib/)
 link_directories(${PROJECT_SOURCE_DIR}/imgui/)
 
 
-if(WIN32)
-elseif(UNIX AND NOT APPLE)
-elseif(APPLE)
+if (WIN32)
+elseif (UNIX AND NOT APPLE)
+elseif (APPLE)
     include_directories(/System/Library/Frameworks)
     find_library(COCOA_LIBRARY Cocoa)
     find_library(OpenGL_LIBRARY OpenGL)
@@ -40,9 +40,9 @@ elseif(APPLE)
     mark_as_advanced(COCOA_LIBRARY OpenGL_LIBRARY)
     set(APPLE_LIBS ${COCOA_LIBRARY} ${IOKit_LIBRARY} ${OpenGL_LIBRARY} ${CoreVideo_LIBRARY})
     set(LIBS ${LIBS} ${APPLE_LIBS})
-else()
+else ()
     set(LIBS)
-endif(WIN32)
+endif (WIN32)
 
 list(APPEND CMAKE_MODULE_PATH "$ENV{HOME}/.brew/share/SFML/cmake/Modules/")
 
@@ -64,7 +64,7 @@ if (NOT SFML_FOUND)
     include_directories(${sfml_INSTALL_DIR}/src/sfml/include)
     link_directories(${sfml_INSTALL_DIR}/src/sfml-build/lib)
 
-endif()
+endif ()
 
 UNSET(JSONCPP_LIBRARY CACHE)
 find_library(JSONCPP_LIBRARY
@@ -82,9 +82,9 @@ if (NOT JSONCPP_LIBRARY)
     include_directories(${PROJECT_SOURCE_DIR}/jsoncpp/src/jsoncpp/include/)
     link_directories(${PROJECT_SOURCE_DIR}/jsoncpp/src/jsoncpp-build/src/lib_json/)
     link_libraries(${PROJECT_SOURCE_DIR}/jsoncpp/src/jsoncpp-build/src/lib_json/libjsoncpp.a)
-else()
+else ()
     link_libraries(${JSONCPP_LIBRARY})
-endif()
+endif ()
 
 add_executable(${NAME}
         class/component/CollisionComponent.cpp
@@ -100,6 +100,8 @@ add_executable(${NAME}
         class/component/SpriteComponent.cpp
         class/component/SpriteComponent.hpp
         class/cores/main.cpp
+        class/events/StartEvent.cpp
+        class/events/StartEvent.hpp
         class/events/FoodEvent.cpp
         class/events/FoodEvent.hpp
         class/events/JoystickEvent.cpp
@@ -178,11 +180,11 @@ add_executable(${NAME}
 
 if (NOT SFML_FOUND)
     add_dependencies(${NAME} sfml)
-endif()
+endif ()
 
 if (NOT JSONCPP_LIBRARY)
     add_dependencies(${NAME} jsoncpp)
-endif()
+endif ()
 
 
 add_subdirectory(imgui)
