@@ -5,8 +5,7 @@
 ServerTCP::ServerTCP(Univers &univers, boost::asio::io_service &io_service)
 		: nu_(0),
 		  univers(univers),
-		  acceptor_(io_service, tcp::endpoint(tcp::v4(), 4242)),
-		  timer_accept(io_service, boost::posix_time::seconds(1)) {
+		  acceptor_(io_service, tcp::endpoint(tcp::v4(), 4242)) {
 	//std::cout << "Server created" << std::endl;
 	start_accept();
 }
@@ -34,15 +33,15 @@ void ServerTCP::refresh_data_snake_array(
 		TCPConnection::pointer &connection,
 		int16_t id) {
 	{
-//		//std::cout << "ServerTCP::refresh_data_snake_array : " << buffer.size() << std::endl;
+//		std::cout << "ServerTCP::refresh_data_snake_array : " << id << std::endl;
 		connection->write_socket(ClientTCP::add_prefix(ID, &id));
 	}
 	{
-//		//std::cout << "ServerTCP::refresh_data_snake_array : " << buffer.size() << std::endl;
+//		std::cout << "ServerTCP::refresh_data_snake_array : " << std::endl;
 		connection->write_socket(ClientTCP::add_prefix(SNAKE_ARRAY, snake_array));
 	}
 	{
-//		//std::cout << "ServerTCP::refresh_data_snake_array : " << buffer.size() << std::endl;
+//		std::cout << "ServerTCP::refresh_data_snake_array : " << std::endl;
 		async_write(ClientTCP::add_prefix(SNAKE, &snake_array[id]));
 	}
 }
@@ -54,8 +53,11 @@ void ServerTCP::start_game() {
 			return;
 		}
 	}
-	//std::cout << "Start Game  " << std::endl;
-	async_write(ClientTCP::add_prefix(START_GAME, &nu_));
+	ClientTCP::StartInfo startInfo;
+	startInfo.nu = nu_;
+	startInfo.time_duration = boost::posix_time::microsec_clock::universal_time() + boost::posix_time::seconds(1);
+	std::cout << "Start timer in server " << std::endl;
+	async_write(ClientTCP::add_prefix(START_GAME, &startInfo));
 }
 
 void ServerTCP::async_write(std::string message) {
@@ -84,11 +86,13 @@ void ServerTCP::parse_input(eHeader header, void const *input, size_t len) {
 		case SNAKE: {
 			Snake snake_temp;
 			std::memcpy(&snake_temp, data_deserialize, sizeof(Snake));
+			std::cout << snake_temp.id << std::endl;
 			assert(snake_temp.id >= 0 && snake_temp.id < MAX_SNAKE);
 			snake_array[snake_temp.id] = snake_temp;
 			break;
 		}
 		case START_GAME:
+			log_info("StartGame from server");
 			start_game();
 			return;
 		case FOOD:
@@ -156,20 +160,16 @@ void TCPConnection::read_socket_data(eHeader header) {
 void
 TCPConnection::handle_read_header(const boost::system::error_code &error_code,
 								  size_t len) {
-	//std::cout << "TCPConnection::handle_read_header > len : " << len
-//			  << std::endl;
 	if (error_code.value() == 0) {
 		assert(len == sizeof(eHeader));
-
 		eHeader header;
 		std::memcpy(&header, buffer_data.data(), sizeof(eHeader));
-
-		//std::cout << "Header : " << header << std::endl;
 		read_socket_data(header);
 	}
 }
 
 void TCPConnection::write_socket(void const *data, size_t len) {
+
 	boost::asio::async_write(socket_, boost::asio::buffer(data, len),
 							 boost::bind(&TCPConnection::handle_write,
 										 shared_from_this(),

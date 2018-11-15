@@ -27,6 +27,7 @@ public:
 
 	void loop();
 
+	void manage_start();
 
 	void manage_input();
 
@@ -56,10 +57,10 @@ private:
 	ServerTCP *serverTCP;
 	boost::asio::io_service io_server;
 	boost::asio::io_service io_client;
-	boost::asio::io_service io;
-	boost::asio::deadline_timer deadline_timer = boost::asio::deadline_timer(io,
-																			 boost::posix_time::seconds(
-																					 1));
+	boost::asio::io_service io_loop;
+	boost::asio::io_service io_start;
+	boost::asio::deadline_timer timer_loop;
+	boost::asio::deadline_timer timer_start;
 	std::unique_ptr<KINU::World> world_;
 	boost::shared_ptr<ClientTCP> clientTCP_;
 	std::unique_ptr<ServerTCP> serverTCP_;

@@ -11,7 +11,6 @@ FollowComponent::FollowComponent(KINU::Entity::Id id, bool skip)
 		: idFollowed(id),
 		  skip(skip),
 		  positionComponent(PositionComponent()){
-	std::cout << "id: " <<id << "pos " << positionComponent << "skip" << skip << std::endl;
 }
 
 Json::Value FollowComponent::serializeComponent() {

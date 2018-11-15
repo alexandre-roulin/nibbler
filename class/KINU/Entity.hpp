@@ -263,8 +263,7 @@ namespace KINU {
 		std::shared_ptr<Pool<T>> componentPool = accommodateComponent<T>();
 
 		if (entityId >= componentPool->getSize()) {
-			log_warn("OverSize.Base[%d] > resizeto(%d)",componentPool->getSize(), versions.size());
-			componentPool->resize(versions.size());
+			componentPool->resize(componentPool->getSize() + DEFAULT_POOL_SIZE);
 		}
 
 		componentPool->set(entityId, component);

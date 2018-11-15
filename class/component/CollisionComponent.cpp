@@ -4,18 +4,13 @@
 std::string const CollisionComponent::NAME_COMPONENT = "collisionComponent";
 std::string const CollisionComponent::IS_WALL = "isWall";
 
-CollisionComponent::CollisionComponent(bool is_wall)
-		: isWall(is_wall) {
+CollisionComponent::CollisionComponent() {
 
 }
 
 Json::Value CollisionComponent::serializeComponent() {
-	Json::Value component;
-	component[CollisionComponent::IS_WALL] = isWall;
-	return component;
+	return Json::Value();
 }
 
 CollisionComponent::CollisionComponent(Json::Value json) {
-	assert(json[IS_WALL].isBool());
-	isWall = json.get(IS_WALL, true).asBool();
 }

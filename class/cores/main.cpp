@@ -35,12 +35,12 @@ int f(Univers &univers) {
 	univers.create_client();
 	sleep(1);
 	univers.getClientTCP_().change_state_ready();
+	sleep(1);
 	univers.start_game();
 
-	sleep(1);
-	int16_t rand = 42;
+	ClientTCP::StartInfo startInfo;
 	univers.getClientTCP_()
-			.write_socket(ClientTCP::add_prefix(START_GAME, &rand));
+			.write_socket(ClientTCP::add_prefix(START_GAME, &startInfo));
 	univers.loop();
 	return 0x2a;
 }
@@ -63,15 +63,28 @@ int main(int ac, char **av) {
 			univers.create_server();
 		if (buffer == "client")
 			univers.create_client();
+		if (buffer == "connect") {
+			std::string dns, port;
+			std::cout << "dns > ";
+			std::getline(std::cin, dns);
+			std::cout << "port > ";
+			std::getline(std::cin, port);
+			univers.getClientTCP_().connect(dns, port);
+		}
 		if (buffer == "ready") {
 			univers.getClientTCP_().change_state_ready();
 		}
 
 		if (buffer == "game") {
 			univers.start_game();
-			int16_t rand = 42;
+
+			ClientTCP::StartInfo startInfo;
 			univers.getClientTCP_()
-			.write_socket(ClientTCP::add_prefix(START_GAME, &rand));
+					.write_socket(ClientTCP::add_prefix(START_GAME, &startInfo));
+			univers.loop();
+		}
+		if (buffer == "game1") {
+			univers.start_game();
 			univers.loop();
 		}
 		if (buffer == "start") {

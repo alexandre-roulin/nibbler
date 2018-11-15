@@ -65,7 +65,6 @@ namespace KINU {
 		}
 
 		std::vector<T> getData() {
-			log_error("Data size [%d]", data.size());
 			return data;
 		}
 

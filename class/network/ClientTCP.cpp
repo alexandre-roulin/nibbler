@@ -14,22 +14,20 @@ int const ClientTCP::size_header[] = {
 		[CHAT] = SIZEOF_CHAT_PCKT,
 		[FOOD] = sizeof(int) * 2,
 		[ID] = sizeof(int16_t),
-		[START_GAME] = sizeof(int16_t),
+		[START_GAME] = sizeof(StartInfo),
 		[SNAKE] = sizeof(Snake),
 		[SNAKE_ARRAY] = sizeof(Snake) * MAX_SNAKE,
 		[HEADER] = sizeof(eHeader),
 		[INPUT] = sizeof(int16_t) + sizeof(eDirection)
 };
 
-ClientTCP::ClientTCP(::Univers &univers, boost::asio::io_service &io,
-					 std::string &hostname)
+ClientTCP::ClientTCP(::Univers &univers, boost::asio::io_service &io)
 		: id_(0),
 		  univers(univers),
 		  resolver(io),
-		  query(hostname, "4242"),
 		  socket(io),
-		  timer(io, boost::posix_time::seconds(1)),
-		  factory(univers) {
+		  factory(univers),
+		  io(io){
 
 }
 
@@ -56,9 +54,18 @@ void ClientTCP::refreshMySnake(void) {
 	write_socket(add_prefix(SNAKE, &snake_array[id_]));
 }
 
-void ClientTCP::connect() {
-	tcp::resolver::iterator it = resolver.resolve(query);
-	boost::asio::connect(socket, it);
+void ClientTCP::connect(std::string dns, std::string port) {
+	try {
+		tcp::resolver::query query(dns, port);
+		tcp::resolver::iterator it = resolver.resolve(query);
+		boost::asio::connect(socket, it);
+		read_socket_header();
+		boost::thread t(boost::bind(&boost::asio::io_service::run, &io));
+		t.detach();
+	} catch (std::exception &exception) {
+		std::cout << exception.what() << std::endl;
+	}
+
 }
 
 void ClientTCP::read_socket_header() {
@@ -95,16 +102,8 @@ void ClientTCP::handle_read_header(const boost::system::error_code &error_code,
 	}
 }
 
-int16_t ClientTCP::getId_() const {
+int16_t ClientTCP::getId() const {
 	return id_;
-}
-
-void ClientTCP::write_socket(void const *data, size_t len) {
-	boost::asio::async_write(socket, boost::asio::buffer(data, len),
-							 boost::bind(&ClientTCP::handle_write,
-										 shared_from_this(),
-										 boost::asio::placeholders::error,
-										 boost::asio::placeholders::bytes_transferred));
 }
 
 
@@ -159,15 +158,14 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 			break;
 		case START_GAME: {
 			log_info("START_GAME");
-			int16_t nu;
-			std::memcpy(&nu, input, ClientTCP::size_header[START_GAME]);
-			factory.create_all_snake(snake_array, nu);
-			univers.getWorld_().getEventManager().emitEvent<StartEvent>();
+			StartInfo st;
+			std::memcpy(&st, input, ClientTCP::size_header[START_GAME]);
+			factory.create_all_snake(snake_array, st.nu);
+			univers.getWorld_().getEventManager().emitEvent<StartEvent>(st.time_duration);
 
 		}
 			break;
 		case INPUT: {
-			log_info("INPUT");
 			eDirection dir;
 			int16_t id;
 			char *data_deserialize = new char[len];
@@ -205,9 +203,10 @@ void ClientTCP::handle_write(const boost::system::error_code &error_code,
 }
 
 ClientTCP::pointer_client
-ClientTCP::create(Univers &univers, boost::asio::io_service &io,
-				  std::string hostname) {
-	return pointer_client(new ClientTCP(univers, io, hostname));
+ClientTCP::create(Univers &univers, boost::asio::io_service &io) {
+	ClientTCP::pointer_client pointerClient = pointer_client(new ClientTCP(univers, io));
+
+	return pointerClient;
 }
 Snake const *ClientTCP::getSnakes() const {
 	return snake_array;
@@ -215,8 +214,3 @@ Snake const *ClientTCP::getSnakes() const {
 Snake	const &ClientTCP::getSnake(void) const {
 	return this->snake_array[this->id_];
 }
-
-int16_t		ClientTCP::getId(void) const {
-	return this->id_;
-}
-

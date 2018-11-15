@@ -1,9 +1,6 @@
 #include "CollisionSystem.hpp"
 #include <factory/Factory.hpp>
-#include <component/CollisionComponent.hpp>
-#include <component/PositionComponent.hpp>
 #include <events/FoodEvent.hpp>
-#include <logger.h>
 
 CollisionSystem::CollisionSystem() {
 	requireComponent<CollisionComponent>();
@@ -11,42 +8,44 @@ CollisionSystem::CollisionSystem() {
 }
 
 
+void CollisionSystem::checkCollision(
+KINU::Entity &entityHead, KINU::Entity &entityCheck) {
+
+	auto &snakePositionComponent = entityHead.getComponent<PositionComponent>();
+	auto &positionComponent = entityCheck.getComponent<PositionComponent>();
+
+	if (snakePositionComponent == positionComponent &&
+		entityHead != entityCheck) {
+		auto &collisionComponent = entityCheck.getComponent<CollisionComponent>();
+		std::string group = entityCheck.getGroup();
+		log_info("[%d][%d][%s]", entityHead.getIndex(), entityCheck.getIndex(), group.c_str());
+		if (group == FOOD_TAG) {
+			log_info("FoodCollision");
+			entityCheck.kill();
+			getWorld().getEventManager().emitEvent<FoodEvent>(Factory::getIdFromTag(entityHead.getTag()));
+		} else if (group == WALL_TAG) {
+			log_info("WallCollision");
+			entityHead.killGroup();
+		} else if (!entityCheck.getTag().empty()){
+			log_info("HeadCollision");
+			entityHead.killGroup();
+			entityCheck.killGroup();
+		} else if (entityCheck.getGroup() != entityHead.getGroup())  {
+			log_info("Body||TailCollision");
+			entityHead.killGroup();
+		}
+	}
+}
+
 void CollisionSystem::update() {
+	log_success("update");
 	std::vector<KINU::Entity> entities_ = getEntities();
 	auto &world = getWorld();
 	for (auto &entity : getEntities()) {
 		if (Factory::isSnakePart(entity.getTag()) == HEAD) {
-			std::for_each(entities_.begin(), entities_.end(),
-						  [&entity, &world](
-								  KINU::Entity &entity_) {
-							  auto &snakePositionComponent = entity.getComponent<PositionComponent>();
-							  auto &positionComponent = entity_.getComponent<PositionComponent>();
-							  if (snakePositionComponent == positionComponent &&
-								  entity != entity_) {
-								  auto &collisionComponent = entity_.getComponent<CollisionComponent>();
-								  eSnakePart esp = Factory::isSnakePart(
-										  entity_.getTag());
-								  log_warn("Collision between [%d] [%d]",
-										   entity_.getIndex(), entity.getIndex());
-								  if (collisionComponent.isWall ||
-									  esp != OTHER) {
-									  log_warn("Wall || SnakePart != HEAD");
-									  entity.killGroup();
-								  } else if (esp == HEAD) {
-									  log_warn("Head");
-									  entity.killGroup();
-								  } else { //if (entity_.getGroup() == "food")
-									  log_warn("Food");
-									  entity_.kill();
-									  world.getEventManager()
-											  .emitEvent<FoodEvent>(
-													  Factory::factory_name(
-															  TAIL,
-															  entity.getTag()),
-													  entity.getGroup());
-								  }
-							  }
-						  });
+			for (auto &entityCheck : entities_) {
+				checkCollision(entity, entityCheck);
+			}
 		}
 	}
 }

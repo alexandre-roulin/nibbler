@@ -18,7 +18,6 @@ namespace KINU {
 	}
 
 	void Entity::tag(std::string tag) {
-		log_info("[%d] tagged with [%s]", getIndex(), tag.c_str());
 		getEntityManager().tagEntity(*this, tag);
 	}
 

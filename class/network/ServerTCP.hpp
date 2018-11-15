@@ -78,6 +78,5 @@ private:
 	Univers &univers;
 	std::vector<TCPConnection::pointer> pointers;
 	boost::thread thread_accept;
-	boost::asio::deadline_timer timer_accept;
 	tcp::acceptor acceptor_;
 };

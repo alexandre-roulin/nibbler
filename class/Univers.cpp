@@ -1,24 +1,25 @@
 #include "Univers.hpp"
 #include <gui/Core.hpp>
-#include <dlfcn.h>
 #include <systems/MotionSystem.hpp>
 #include <systems/JoystickSystem.hpp>
 #include <systems/FollowSystem.hpp>
 #include <systems/FoodSystem.hpp>
 #include <systems/CollisionSystem.hpp>
 #include <systems/RenderSystem.hpp>
-#include <boost/thread.hpp>
 #include <events/StartEvent.hpp>
-#include <logger.h>
 #include <network/ServerTCP.hpp>
+#include <dlfcn.h>
 
-Univers::Univers() {
+Univers::Univers()
+	: timer_start(boost::asio::deadline_timer(io_start)),
+	timer_loop(boost::asio::deadline_timer(io_loop, boost::posix_time::milliseconds(100)))
+	{
 
-	world_ = std::make_unique<KINU::World>(*this);
-	core_ = nullptr;
-	clientTCP_ = nullptr;
-	serverTCP_ = nullptr;
-	display = nullptr;
+world_ = std::make_unique<KINU::World>(*this);
+core_ = nullptr;
+clientTCP_ = nullptr;
+serverTCP_ = nullptr;
+display = nullptr;
 }
 
 
@@ -36,12 +37,14 @@ int Univers::start_game() {
 		return (dlError());
 	display = newDisplay(PATH_TILESET, DEFAULT_SIZE_SPRIT, 30, 30, "Nibblour");
 	assert(display != nullptr);
-	Grid<int> grid(30, 30);
 
+	Grid<int> grid(30, 30);
 	grid.fill(SPRITE_GROUND);
 	grid.setBorder(SPRITE_WALL);
 	display->setBackground(grid);
+
 	world_->setDisplay(display);
+
 	display->update();
 	display->render();
 	return 0;
@@ -49,13 +52,26 @@ int Univers::start_game() {
 
 void Univers::manage_input() {
 	eDirection ed = display->getDirection();
-	int16_t id = clientTCP_->getId_();
+	int16_t id = clientTCP_->getId();
 //	log_warn("Match [%s] [%d]", Factory::factory_name(HEAD, id).c_str(),
 //			 world_->getEntityManager().hasTag(
 //					 Factory::factory_name(HEAD, id)));
 	if (world_->getEntityManager().hasTag(Factory::factory_name(HEAD, id)))
 		clientTCP_->write_socket(ClientTCP::add_prefix(INPUT, &id, &ed));
 }
+
+void Univers::manage_start() {
+	ClientTCP::StartInfo startInfo;
+	std::vector<StartEvent> startEvent;
+	for (; startEvent.empty(); startEvent = world_->getEventManager().getEvents<StartEvent>());
+	auto ptime = startEvent.front().start_time;
+	timer_start.expires_at(ptime);
+	std::cout << timer_start.expires_at() << std::endl;
+	io_start.run();
+	timer_start.wait();
+	timer_loop.expires_at(ptime + boost::posix_time::milliseconds(200));
+}
+
 
 void Univers::loop() {
 	world_->getSystemManager().addSystem<CollisionSystem>();
@@ -67,12 +83,12 @@ void Univers::loop() {
 
 	world_->getEventManager().emitEvent<StartEvent>();
 	world_->getEventManager().destroyEvents();
-	while (world_->getEventManager().getEvents<StartEvent>().empty());
+	manage_start();
 	log_success("Univers::loop");
 
 	world_->update();
-	deadline_timer.async_wait(boost::bind(&Univers::loop_world, this));
-	boost::thread thread(boost::bind(&boost::asio::io_service::run, &io));
+	timer_loop.async_wait(boost::bind(&Univers::loop_world, this));
+	boost::thread thread(boost::bind(&boost::asio::io_service::run, &io_loop));
 	thread.detach();
 
 	world_->grid.clear();
@@ -86,7 +102,6 @@ void Univers::loop() {
 	}
 }
 
-
 void Univers::loop_world() {
 	log_success("Univers::loop_world");
 	world_->grid.clear();
@@ -98,9 +113,9 @@ void Univers::loop_world() {
 	world_->getSystemManager().getSystem<FoodSystem>().update();
 	world_->getSystemManager().getSystem<RenderSystem>().update();
 
-	deadline_timer.expires_at(
-			deadline_timer.expires_at() + boost::posix_time::milliseconds(100));
-	deadline_timer.async_wait(boost::bind(&Univers::loop_world, this));
+	timer_loop.expires_at(
+			timer_loop.expires_at() + boost::posix_time::milliseconds(200));
+	timer_loop.async_wait(boost::bind(&Univers::loop_world, this));
 	world_->update();
 
 }
@@ -113,10 +128,10 @@ ClientTCP &Univers::getClientTCP_() const {
 	return *clientTCP_;
 }
 
+
 ServerTCP &Univers::getServerTCP_() const {
 	return *serverTCP_;
 }
-
 
 Core &Univers::getCore_() const {
 	return *core_;
@@ -133,12 +148,7 @@ void Univers::create_server() {
 }
 
 void Univers::create_client() {
-	clientTCP_ = ClientTCP::create(*this, io_client,
-								   std::string("localhost"));
-	clientTCP_->connect();
-	clientTCP_->read_socket_header();
-	boost::thread t(boost::bind(&boost::asio::io_service::run, &io_client));
-	t.detach();
+	clientTCP_ = ClientTCP::create(*this, io_client);
 }
 
 bool Univers::dlError() {

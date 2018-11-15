@@ -9,6 +9,7 @@
 #define OFFSET 8
 #define SIZEOF_CHAT_PCKT CHAT_BUFFER + NAME_BUFFER + OFFSET
 #define WALL_TAG "wall"
+#define FOOD_TAG "food"
 
 #define COMPONENT_MAX 6
 #define BASE_ENTITIES_CAPACITY 20
@@ -119,5 +120,5 @@ enum eHeader {
 	SNAKE,				//4
 	SNAKE_ARRAY,		//5
 	HEADER,				//6
-	INPUT				//7
+	INPUT,				//7
 };

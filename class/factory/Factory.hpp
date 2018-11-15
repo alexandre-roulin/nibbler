@@ -24,9 +24,8 @@ public:
 	void create_snake(int16_t , int, int);
 	void create_food(int, int);
 	static std::string factory_name(eSnakePart, int16_t id);
-
+	static KINU::Entity::Id getIdFromTag(std::string tag);
 	static char * factory_chat_message(char const *name, char const *message);
-	static std::string factory_name(eSnakePart, std::string);
 	static eSnakePart isSnakePart(std::string );
 	Factory(Univers &univers);
 

@@ -65,7 +65,7 @@ namespace KINU {
 	template<typename T>
 	std::shared_ptr<Pool<T>> EventManager::accommodateEvent() {
 		if (eventPools.find(std::type_index(typeid(T))) == eventPools.end()) {
-			std::shared_ptr<Pool<T>> pool(new Pool<T>());
+			std::shared_ptr<Pool<T>> pool(new Pool<T>(0));
 			eventPools.insert(std::make_pair(std::type_index(typeid(T)), pool));
 		}
 
@@ -75,8 +75,6 @@ namespace KINU {
 
 	template<typename T>
 	std::vector<T> EventManager::getEvents() {
-//		return std::static_pointer_cast<Pool<T>>(
-//				eventPools[std::type_index(typeid(T))])->getData();
 		return accommodateEvent<T>()->getData();
 	}
 

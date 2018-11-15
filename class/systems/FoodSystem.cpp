@@ -5,10 +5,7 @@
 #include <component/FollowComponent.hpp>
 #include <component/SpriteComponent.hpp>
 #include <factory/Factory.hpp>
-#include <Univers.hpp>
 #include <network/ClientTCP.hpp>
-#include <logger.h>
-#include <iostream>
 
 FoodSystem::FoodSystem() {
 	requireComponent<FollowComponent>();
@@ -21,36 +18,29 @@ void FoodSystem::update() {
 	auto events = getWorld().getEventManager().getEvents<FoodEvent>();
 
 	for (auto &event : events) {
-		if (!event.tag_tail.empty()) {
-			auto entityTail = getWorld().getEntityManager().getEntityByTag(event.tag_tail);
-			auto newEntity = getWorld().createEntity();
-			log_error("[%d][%d]", entityTail.getIndex(), newEntity.getIndex());
-			auto &idFollowed = entityTail.getComponent<FollowComponent>().idFollowed;        //SNAKE TAIL WITH ID FOLLOW
-			auto &positionComponent = entityTail.getComponent<PositionComponent>();    //SNAKE TAIL WITH ID FOLLOW
+		auto entityTail = getWorld().getEntityManager()
+				.getEntityByTag(Factory::factory_name(TAIL, event.id_));
+		auto newEntity = getWorld().createEntity();
+
+		auto &idFollowed = entityTail.getComponent<FollowComponent>().idFollowed;        //SNAKE TAIL WITH ID FOLLOW
+		auto &positionComponent = entityTail.getComponent<PositionComponent>();    //SNAKE TAIL WITH ID FOLLOW
+
+		// Position == entityTail.positionComponent
+		newEntity.addComponent<PositionComponent>(positionComponent);
+
+		//FollowComponent.id == entityTail.idFollowed
+		newEntity.addComponent<FollowComponent>(idFollowed, false);
+		newEntity.addComponent<SpriteComponent>(36);
+		newEntity.addComponent<CollisionComponent>();
+
+		auto &followComponent = entityTail.getComponent<FollowComponent>();
+		followComponent.idFollowed = newEntity.getIndex();
+		followComponent.skip = true;
 
 
-			newEntity.addComponent<PositionComponent>(
-					positionComponent);            // Position == entityTail.positionComponent
-
-			std::cout << "Creation" << std::endl;
-			newEntity.addComponent<FollowComponent>(
-					idFollowed, false); //FollowComponent.id == entityTail.idFollowed
-			std::cout << "Finition" << std::endl;
-			newEntity.addComponent<SpriteComponent>(36);
-
-			std::cout << "followComponent" << std::endl;
-			std::cout << "followComponent.end" << std::endl;
-			auto &followComponent = entityTail.getComponent<FollowComponent>();
-			followComponent.idFollowed = newEntity.getIndex();
-			followComponent.skip = true;
-
-			std::cout << entityTail.getIndex() << " " << newEntity.getIndex() << std::endl;
-
-
-			newEntity.tag(Factory::factory_name(BODY, newEntity.getIndex()));
-			newEntity.group(event.tag_group);
-			createFood();
-		}
+		newEntity.tag(Factory::factory_name(BODY, newEntity.getIndex()));
+		newEntity.group(entityTail.getGroup());
+		createFood();
 	}
 }
 

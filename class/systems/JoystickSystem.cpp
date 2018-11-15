@@ -3,7 +3,6 @@
 #include <component/JoystickComponent.hpp>
 #include <component/MotionComponent.hpp>
 #include <events/JoystickEvent.hpp>
-#include <logger.h>
 
 JoystickSystem::JoystickSystem() {
 	requireComponent<JoystickComponent>();
@@ -14,12 +13,10 @@ void JoystickSystem::update() {
 	auto events = getWorld().getEventManager().getEvents<JoystickEvent>();
 	log_success("JoystickSystem::update on %d events", events.size());
 	for (auto &event : events) {
-		if (event.id != -1 ) {
-			auto entity = getWorld().getEntityManager().getEntity(event.id);
-			if (entity.isAlive() && entity.hasComponent<JoystickComponent>()) {
-				auto &joystickComponent = entity.getComponent<JoystickComponent>();
-				joystickComponent.direction = event.direction;
-			}
+		auto entity = getWorld().getEntityManager().getEntityByTag(Factory::factory_name(HEAD, event.id));
+		if (entity.isAlive() && entity.hasComponent<JoystickComponent>()) {
+			auto &joystickComponent = entity.getComponent<JoystickComponent>();
+			joystickComponent.direction = event.direction;
 		}
 
 	}
@@ -27,20 +24,21 @@ void JoystickSystem::update() {
 		auto &motionComponent = entity.getComponent<MotionComponent>();
 		auto &joystickComponent = entity.getComponent<JoystickComponent>();
 
-		log_error("Match Mot[%d] Joy[%d] MotHor[%d] JoyHor[%d] MotVer[%d] JoyVer[%d]",
-				  motionComponent.direction,
-					joystickComponent.direction,
-				  motionComponent.direction & DIRECTION_HORIZONTAL,
-				  joystickComponent.direction & DIRECTION_HORIZONTAL,
-				  motionComponent.direction & DIRECTION_VERTICAL,
-				  joystickComponent.direction & DIRECTION_VERTICAL
-					);
+		log_error(
+				"Match Mot[%d] Joy[%d] MotHor[%d] JoyHor[%d] MotVer[%d] JoyVer[%d]",
+				motionComponent.direction,
+				joystickComponent.direction,
+				motionComponent.direction & DIRECTION_HORIZONTAL,
+				joystickComponent.direction & DIRECTION_HORIZONTAL,
+				motionComponent.direction & DIRECTION_VERTICAL,
+				joystickComponent.direction & DIRECTION_VERTICAL
+		);
 
 		if ((motionComponent.direction & DIRECTION_HORIZONTAL &&
-				!(joystickComponent.direction & DIRECTION_HORIZONTAL)) ||
+			 !(joystickComponent.direction & DIRECTION_HORIZONTAL)) ||
 			(motionComponent.direction & DIRECTION_VERTICAL &&
-					!(joystickComponent.direction & DIRECTION_VERTICAL))) {
-			log_error("MatchDiretion!");
+			 !(joystickComponent.direction & DIRECTION_VERTICAL))) {
+			log_error("MatchDirection!");
 			motionComponent.direction = joystickComponent.direction;
 		}
 	}
