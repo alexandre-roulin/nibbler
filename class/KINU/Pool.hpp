@@ -2,25 +2,31 @@
 
 #include <vector>
 #include <cassert>
-#include "AbstractPool.hpp"
-#include "Pool.hpp"
+#include <KINU/Config.hpp>
+#include <logger.h>
 
-namespace KNU {
+namespace KINU {
 
-	template<typename T>
-	class Pool_ : public AbstractPool {
+// Required to have a vector of pools containing different object types.
+	class AbstractPool {
 	public:
-		Pool_(int size = BASE_COMPONENT_SIZE) {
+		virtual ~AbstractPool() {}
+
+		virtual void clear() = 0;
+	};
+
+// A pool is just a vector (contiguous data) of objects of type T.
+	template<typename T>
+	class Pool : public AbstractPool {
+	public:
+		Pool(int size = DEFAULT_POOL_SIZE) {
+			resize(size);
 		}
 
-		virtual ~Pool_() {}
+		virtual ~Pool() {}
 
 		bool isEmpty() const {
 			return data.empty();
-		}
-
-		virtual void clean() {
-			data.clear();
 		}
 
 		unsigned int getSize() const {
@@ -36,13 +42,13 @@ namespace KNU {
 		}
 
 		bool set(unsigned int index, T object) {
-//			assert(index < getSize());
+			assert(index < getSize());
 			data[index] = object;
 			return true;
 		}
 
 		T &get(unsigned int index) {
-//			assert(index < getSize());
+			assert(index < getSize());
 			return static_cast<T &>(data[index]);
 		}
 
@@ -59,6 +65,7 @@ namespace KNU {
 		}
 
 		std::vector<T> getData() {
+			log_error("Data size [%d]", data.size());
 			return data;
 		}
 

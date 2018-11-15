@@ -1,15 +1,24 @@
 #pragma once
 
-
-#include <boost/asio/io_service.hpp>
+#include <ctime>
+#include <iostream>
+#include <string>
+#include <boost/bind.hpp>
+#include <boost/shared_ptr.hpp>
+#include <boost/enable_shared_from_this.hpp>
+#include <boost/asio.hpp>
 #include <boost/asio/ip/tcp.hpp>
 #include <boost/array.hpp>
-#include <Univers.hpp>
+#include <boost/thread/thread.hpp>
+#include <boost/asio/io_service.hpp>
+#include <boost/array.hpp>
+#include <nibbler.hpp>
 #include <factory/Factory.hpp>
-#include "ServerTCP.hpp"
-#include "chat_message.hpp"
 
 using boost::asio::ip::tcp;
+
+class Univers;
+class Factory;
 
 class ClientTCP : public boost::enable_shared_from_this<ClientTCP> {
 public:
@@ -53,7 +62,7 @@ public:
 
 	static int const size_header[];
 private:
-	ClientTCP(Univers &univers, boost::asio::io_service &io,
+	ClientTCP(::Univers &univers, boost::asio::io_service &io,
 			  std::string &hostname);
 	Snake snake_array[MAX_SNAKE];
 	tcp::socket socket;
@@ -65,10 +74,10 @@ private:
 
 public:
 	int16_t getId_() const;
+	Univers &univers;
 
 private:
 	tcp::resolver::query query;
-	Univers &univers;
 
 	Factory factory;
 };

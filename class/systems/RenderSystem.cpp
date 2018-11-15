@@ -1,7 +1,8 @@
+#include "KINU/World.hpp"
+#include "RenderSystem.hpp"
 #include <component/PositionComponent.hpp>
 #include <component/SpriteComponent.hpp>
-#include "RenderSystem.hpp"
-#include "KNU/World.hpp"
+#include <logger.h>
 
 RenderSystem::RenderSystem() {
 	requireComponent<PositionComponent>();

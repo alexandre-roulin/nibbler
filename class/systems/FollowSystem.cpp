@@ -1,9 +1,10 @@
 
 
-#include <component/FollowComponent.hpp>
 #include "FollowSystem.hpp"
-#include <KNU/World.hpp>
+#include <KINU/World.hpp>
+#include <component/FollowComponent.hpp>
 #include <component/PositionComponent.hpp>
+#include <logger.h>
 
 FollowSystem::FollowSystem() {
 	requireComponent<FollowComponent>();
@@ -16,9 +17,8 @@ void FollowSystem::update() {
 	for (const auto &entity : getEntities()) {
 
 		auto &followComponent = entity.getComponent<FollowComponent>();
-		auto entityFollowed = getWorld().getEntityManager()
-				.getEntityById(followComponent.idFollowed);
-		log_info("In {%d} entityFollowed.id : [%d]", entity.getId(), entityFollowed.getId());
+		auto entityFollowed = getWorld().getEntityManager().getEntity(followComponent.idFollowed);
+		log_info("In {%d} entityFollowed.id : [%d]", entity.getIndex(), entityFollowed.getIndex());
 		assert(entityFollowed.hasComponent<PositionComponent>());
 		if (!followComponent.skip)
 			followComponent.positionComponent = entityFollowed.getComponent<PositionComponent>();

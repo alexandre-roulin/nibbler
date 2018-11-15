@@ -9,10 +9,12 @@
 #include <systems/RenderSystem.hpp>
 #include <boost/thread.hpp>
 #include <events/StartEvent.hpp>
+#include <logger.h>
+#include <network/ServerTCP.hpp>
 
 Univers::Univers() {
 
-	world_ = std::make_unique<KNU::World>(*this);
+	world_ = std::make_unique<KINU::World>(*this);
 	core_ = nullptr;
 	clientTCP_ = nullptr;
 	serverTCP_ = nullptr;
@@ -48,12 +50,14 @@ int Univers::start_game() {
 void Univers::manage_input() {
 	eDirection ed = display->getDirection();
 	int16_t id = clientTCP_->getId_();
-	if (world_->getEntityManager().getEntityByTag(Factory::factory_name(HEAD, id)).isAlive())
+//	log_warn("Match [%s] [%d]", Factory::factory_name(HEAD, id).c_str(),
+//			 world_->getEntityManager().hasTag(
+//					 Factory::factory_name(HEAD, id)));
+	if (world_->getEntityManager().hasTag(Factory::factory_name(HEAD, id)))
 		clientTCP_->write_socket(ClientTCP::add_prefix(INPUT, &id, &ed));
 }
 
 void Univers::loop() {
-
 	world_->getSystemManager().addSystem<CollisionSystem>();
 	world_->getSystemManager().addSystem<FollowSystem>();
 	world_->getSystemManager().addSystem<FoodSystem>();
@@ -61,7 +65,10 @@ void Univers::loop() {
 	world_->getSystemManager().addSystem<MotionSystem>();
 	world_->getSystemManager().addSystem<RenderSystem>();
 
+	world_->getEventManager().emitEvent<StartEvent>();
+	world_->getEventManager().destroyEvents();
 	while (world_->getEventManager().getEvents<StartEvent>().empty());
+	log_success("Univers::loop");
 
 	world_->update();
 	deadline_timer.async_wait(boost::bind(&Univers::loop_world, this));
@@ -70,7 +77,7 @@ void Univers::loop() {
 
 	world_->grid.clear();
 
-	std::cout << "Bug Display"  << std::endl;
+	std::cout << "Bug Display" << std::endl;
 	while (!display->exit()) {
 		display->update();
 		manage_input();
@@ -81,22 +88,24 @@ void Univers::loop() {
 
 
 void Univers::loop_world() {
+	log_success("Univers::loop_world");
 	world_->grid.clear();
 
-	world_->getSystemManager().getSystem<FollowSystem>()->update();
-	world_->getSystemManager().getSystem<JoystickSystem>()->update();
-	world_->getSystemManager().getSystem<MotionSystem>()->update();
-	world_->getSystemManager().getSystem<CollisionSystem>()->update();
-	world_->getSystemManager().getSystem<FoodSystem>()->update();
-	world_->getSystemManager().getSystem<RenderSystem>()->update();
+	world_->getSystemManager().getSystem<FollowSystem>().update();
+	world_->getSystemManager().getSystem<JoystickSystem>().update();
+	world_->getSystemManager().getSystem<MotionSystem>().update();
+	world_->getSystemManager().getSystem<CollisionSystem>().update();
+	world_->getSystemManager().getSystem<FoodSystem>().update();
+	world_->getSystemManager().getSystem<RenderSystem>().update();
 
-	deadline_timer.expires_at(deadline_timer.expires_at() + boost::posix_time::milliseconds(350));
+	deadline_timer.expires_at(
+			deadline_timer.expires_at() + boost::posix_time::milliseconds(100));
 	deadline_timer.async_wait(boost::bind(&Univers::loop_world, this));
 	world_->update();
 
 }
 
-KNU::World &Univers::getWorld_() const {
+KINU::World &Univers::getWorld_() const {
 	return *world_;
 }
 

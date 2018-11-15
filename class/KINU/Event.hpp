@@ -1,21 +1,34 @@
 #pragma once
 
+#include "Pool.hpp"
 #include <unordered_map>
 #include <vector>
 #include <memory>
 #include <typeindex>
 #include <cstdint>
-#include <KNU/managers/AbstractPool.hpp>
-#include <KNU/managers/Pool_.hpp>
 
-namespace KNU {
+namespace KINU {
 
 	class World;
 
+	struct BaseEvent {
+		using Id = uint8_t;
+	protected:
+		static Id nextId;
+	};
+
+	template<typename T>
+	struct Event : BaseEvent {
+		// Returns the unique id of Event<T>
+		static Id getId() {
+			static auto id = nextId++;
+			return id;
+		}
+	};
 
 	class EventManager {
 	public:
-		explicit EventManager(World &world);
+		EventManager(World &world) : world(world) {}
 
 		template<typename T>
 		void emitEvent(T event);
@@ -30,7 +43,7 @@ namespace KNU {
 
 	private:
 		template<typename T>
-		std::shared_ptr<Pool_<T>> accommodateEvent();
+		std::shared_ptr<Pool<T>> accommodateEvent();
 
 		std::unordered_map<std::type_index, std::shared_ptr<AbstractPool>> eventPools;
 
@@ -39,7 +52,7 @@ namespace KNU {
 
 	template<typename T>
 	void EventManager::emitEvent(T event) {
-		std::shared_ptr<Pool_<T>> eventPool = accommodateEvent<T>();
+		std::shared_ptr<Pool<T>> eventPool = accommodateEvent<T>();
 		eventPool->add(event);
 	}
 
@@ -50,26 +63,21 @@ namespace KNU {
 	}
 
 	template<typename T>
-	std::shared_ptr<Pool_<T>> EventManager::accommodateEvent() {
+	std::shared_ptr<Pool<T>> EventManager::accommodateEvent() {
 		if (eventPools.find(std::type_index(typeid(T))) == eventPools.end()) {
-			std::shared_ptr<Pool_<T>> pool(new Pool_<T>());
+			std::shared_ptr<Pool<T>> pool(new Pool<T>());
 			eventPools.insert(std::make_pair(std::type_index(typeid(T)), pool));
 		}
 
-		return std::static_pointer_cast<Pool_<T>>(
+		return std::static_pointer_cast<Pool<T>>(
 				eventPools[std::type_index(typeid(T))]);
 	}
 
 	template<typename T>
 	std::vector<T> EventManager::getEvents() {
-		if (eventPools.find(std::type_index(typeid(T))) == eventPools.end()) {
-			std::shared_ptr<Pool_<T>> pool(new Pool_<T>());
-			eventPools.insert(std::make_pair(std::type_index(typeid(T)), pool));
-		}
-
-		return std::static_pointer_cast<Pool_<T>>(
-				eventPools[std::type_index(typeid(T))])->getData();
+//		return std::static_pointer_cast<Pool<T>>(
+//				eventPools[std::type_index(typeid(T))])->getData();
+		return accommodateEvent<T>()->getData();
 	}
-
 
 }

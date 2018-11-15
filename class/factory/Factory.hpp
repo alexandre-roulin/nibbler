@@ -2,8 +2,8 @@
 
 #define PART_SNAKE 4
 #include <nibbler.hpp>
-#include <KNU/World.hpp>
-#include <KNU/entities/Entity.hpp>
+#include <KINU/World.hpp>
+#include <KINU/Entity.hpp>
 #include <component/CollisionComponent.hpp>
 #include <component/JoystickComponent.hpp>
 #include <component/MotionComponent.hpp>
@@ -28,11 +28,11 @@ public:
 	static char * factory_chat_message(char const *name, char const *message);
 	static std::string factory_name(eSnakePart, std::string);
 	static eSnakePart isSnakePart(std::string );
-	Factory(KNU::World &world);
+	Factory(Univers &univers);
 
 private:
 	void create_walls();
 	void create_wall(int x, int y);
 	static const char *part_name[PART_SNAKE];
-	KNU::World &world_;
+	Univers &univers_;
 };

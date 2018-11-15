@@ -25,6 +25,16 @@ enum eDirection {
 	WEST = 12							// 0000 1100
 };
 
+//int  0000 0000	0000 0000	0000 0000	0000 0010
+
+//(motionComponent.direction & DIRECTION_VERTICAL &&
+//					!(joystickComponent.direction & DIRECTION_VERTICAL))
+
+//MOTION_COMPONENT		0000 0001
+
+//JOYSTICK_COMPONENT	0000 0011
+//						&
+//DIRECTION_VERTICAL	0000 0001
 
 enum eSnakeSprite {
 	GREEN,

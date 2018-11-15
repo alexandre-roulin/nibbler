@@ -1,9 +1,9 @@
 #pragma once
 
 
-#include <KNU/systems/System.hpp>
+#include <KINU/System.hpp>
 
-class FollowSystem : public KNU::System {
+class FollowSystem : public KINU::System {
 public:
 	FollowSystem();
 	virtual void update();

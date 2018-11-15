@@ -1,8 +1,8 @@
 
+#include "MotionSystem.hpp"
 #include <component/PositionComponent.hpp>
 #include <component/MotionComponent.hpp>
 #include <logger.h>
-#include "MotionSystem.hpp"
 
 //P 0000 0001
 //M 0000 0010
@@ -21,6 +21,7 @@ void MotionSystem::update() {
 	for (auto &entity : getEntities()) {
 		auto &positionComponent = entity.getComponent<PositionComponent>();
 		auto &motionComponent = entity.getComponent<MotionComponent>();
+
 		switch (motionComponent.direction) {
 			case NORTH:
 				--positionComponent.y;
@@ -41,3 +42,4 @@ void MotionSystem::update() {
 MotionSystem::~MotionSystem() {
 
 }
+

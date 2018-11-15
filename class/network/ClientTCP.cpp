@@ -3,11 +3,13 @@
 #include <iostream>
 #include <nibbler.hpp>
 #include "asio.hpp"
+#include <Univers.hpp>
 #include "ClientTCP.hpp"
 #include <gui/Core.hpp>
 #include <events/JoystickEvent.hpp>
 #include <events/StartEvent.hpp>
-
+#include <Univers.hpp>
+#include <logger.h>
 int const ClientTCP::size_header[] = {
 		[CHAT] = SIZEOF_CHAT_PCKT,
 		[FOOD] = sizeof(int) * 2,
@@ -19,7 +21,7 @@ int const ClientTCP::size_header[] = {
 		[INPUT] = sizeof(int16_t) + sizeof(eDirection)
 };
 
-ClientTCP::ClientTCP(Univers &univers, boost::asio::io_service &io,
+ClientTCP::ClientTCP(::Univers &univers, boost::asio::io_service &io,
 					 std::string &hostname)
 		: id_(0),
 		  univers(univers),
@@ -27,7 +29,8 @@ ClientTCP::ClientTCP(Univers &univers, boost::asio::io_service &io,
 		  query(hostname, "4242"),
 		  socket(io),
 		  timer(io, boost::posix_time::seconds(1)),
-		  factory(univers.getWorld_()) {
+		  factory(univers) {
+
 }
 
 void ClientTCP::change_name(char const *name) {
@@ -119,6 +122,7 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 
 	switch (header) {
 		case CHAT: {
+			log_info("CHAT");
 			char *data_deserialize = new char[len];
 			std::memcpy(data_deserialize, input, len);
 			univers.getCore_().addMessageChat(std::string(data_deserialize, len));
@@ -126,10 +130,12 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 			break;
 		}
 		case SNAKE_ARRAY: {
+			log_info("SNAKE_ARRAY");
 			std::memcpy(snake_array, input, sizeof(Snake) * MAX_SNAKE);
 			break;
 		}
 		case SNAKE: {
+			log_info("SNAKE");
 
 			Snake snake_temp;
 
@@ -140,7 +146,7 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 			break;
 		}
 		case FOOD: {
-			log_trace("FoodCreated");
+			log_info("FOOD");
 			int position[2];
 			std::memcpy(position, input, len);
 			factory.create_food(position[0], position[1]);
@@ -148,9 +154,11 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 		}
 
 		case ID:
+			log_info("ID");
 			std::memcpy(&id_, input, len);
 			break;
 		case START_GAME: {
+			log_info("START_GAME");
 			int16_t nu;
 			std::memcpy(&nu, input, ClientTCP::size_header[START_GAME]);
 			factory.create_all_snake(snake_array, nu);
@@ -159,6 +167,7 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 		}
 			break;
 		case INPUT: {
+			log_info("INPUT");
 			eDirection dir;
 			int16_t id;
 			char *data_deserialize = new char[len];

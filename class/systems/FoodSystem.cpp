@@ -1,12 +1,14 @@
 #include <component/CollisionComponent.hpp>
 #include "FoodSystem.hpp"
-#include <KNU/World.hpp>
+#include <KINU/World.hpp>
 #include <events/FoodEvent.hpp>
 #include <component/FollowComponent.hpp>
 #include <component/SpriteComponent.hpp>
 #include <factory/Factory.hpp>
 #include <Univers.hpp>
 #include <network/ClientTCP.hpp>
+#include <logger.h>
+#include <iostream>
 
 FoodSystem::FoodSystem() {
 	requireComponent<FollowComponent>();
@@ -19,33 +21,42 @@ void FoodSystem::update() {
 	auto events = getWorld().getEventManager().getEvents<FoodEvent>();
 
 	for (auto &event : events) {
-		auto entityTail = getWorld().getEntityManager().getEntityByTag(
-				event.tag_tail);
-		auto &newEntity = getWorld().createEntity();
+		if (!event.tag_tail.empty()) {
+			auto entityTail = getWorld().getEntityManager().getEntityByTag(event.tag_tail);
+			auto newEntity = getWorld().createEntity();
+			log_error("[%d][%d]", entityTail.getIndex(), newEntity.getIndex());
+			auto &idFollowed = entityTail.getComponent<FollowComponent>().idFollowed;        //SNAKE TAIL WITH ID FOLLOW
+			auto &positionComponent = entityTail.getComponent<PositionComponent>();    //SNAKE TAIL WITH ID FOLLOW
 
-		auto &followComponent = entityTail.getComponent<FollowComponent>();        //SNAKE TAIL WITH ID FOLLOW
-		auto &positionComponent = entityTail.getComponent<PositionComponent>();    //SNAKE TAIL WITH ID FOLLOW
+
+			newEntity.addComponent<PositionComponent>(
+					positionComponent);            // Position == entityTail.positionComponent
+
+			std::cout << "Creation" << std::endl;
+			newEntity.addComponent<FollowComponent>(
+					idFollowed, false); //FollowComponent.id == entityTail.idFollowed
+			std::cout << "Finition" << std::endl;
+			newEntity.addComponent<SpriteComponent>(36);
+
+			std::cout << "followComponent" << std::endl;
+			std::cout << "followComponent.end" << std::endl;
+			auto &followComponent = entityTail.getComponent<FollowComponent>();
+			followComponent.idFollowed = newEntity.getIndex();
+			followComponent.skip = true;
+
+			std::cout << entityTail.getIndex() << " " << newEntity.getIndex() << std::endl;
 
 
-		newEntity.addComponent<PositionComponent>(
-				positionComponent);            // Position == entityTail.positionComponent
-		newEntity.addComponent<FollowComponent>(
-				followComponent.idFollowed); //FollowComponent.id == entityTail.idFollowed
-		newEntity.addComponent<SpriteComponent>(36);
-		followComponent.idFollowed = newEntity.getId();
-		auto &followComponent2 = entityTail.getComponent<FollowComponent>();        //SNAKE TAIL WITH ID FOLLOW
-		followComponent.skip = true;
-		newEntity.tag(Factory::factory_name(BODY, newEntity.getId()));
-		newEntity.group(event.tag_group);
-		followComponent.skip = true;
-		createFood();
+			newEntity.tag(Factory::factory_name(BODY, newEntity.getIndex()));
+			newEntity.group(event.tag_group);
+			createFood();
+		}
 	}
 }
 
 void FoodSystem::createFood() {
-	int position[2] = {rand() % getWorld().getMax_(),
-					   rand() % getWorld().getMax_()};
-
+	int position[2] = {(rand() % (30 - 2)) + 1,
+					   (rand() % (30 - 2)) + 1};
 	getWorld().getUnivers()
 			.getClientTCP_()
 			.write_socket(ClientTCP::add_prefix(FOOD, position));

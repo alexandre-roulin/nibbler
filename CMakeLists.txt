@@ -121,21 +121,20 @@ add_executable(${NAME}
         class/gui/Core.cpp
         class/gui/Core.hpp
         class/gui/imgui_demo.cpp
-        class/KNU/component/Component.cpp
-        class/KNU/component/Component.hpp
-        class/KNU/entities/Entity.cpp
-        class/KNU/entities/Entity.hpp
-        class/KNU/events/EventManager.cpp
-        class/KNU/events/EventManager.hpp
-        class/KNU/managers/AbstractPool.hpp
-        class/KNU/managers/Pool.hpp
-        class/KNU/managers/Pool_.hpp
-        class/KNU/systems/System.cpp
-        class/KNU/systems/System.hpp
-        class/KNU/utils/Signature.cpp
-        class/KNU/utils/Signature.hpp
-        class/KNU/World.cpp
-        class/KNU/World.hpp
+        class/KINU/Component.cpp
+        class/KINU/Component.hpp
+        class/KINU/Config.hpp
+        class/KINU/Entity.cpp
+        class/KINU/Entity.hpp
+        class/KINU/Event.cpp
+        class/KINU/Event.hpp
+        class/KINU/Pool.hpp
+        class/KINU/System.cpp
+        class/KINU/System.hpp
+        class/Univers.cpp
+        class/Univers.hpp
+        class/KINU/World.cpp
+        class/KINU/World.hpp
         class/logger/display/logger_debug.cpp
         class/logger/display/logger_error.cpp
         class/logger/display/logger_fatal.cpp

@@ -1,8 +1,7 @@
 
 
 #include "MotionComponent.hpp"
-#include <KNU/utils/Signature.hpp>
-#include <KNU/component/Component.hpp>
+#include <KINU/Component.hpp>
 #include <cassert>
 
 std::string const MotionComponent::NAME_COMPONENT = "motionComponent";
