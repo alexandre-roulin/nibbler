@@ -54,7 +54,7 @@ public:
 
 	void change_name(char const *name);
 
-	void change_sprite(eSnakeSprite snakeSprite);
+	void change_sprite(eSprite snakeSprite);
 
 	void change_state_ready(void);
 

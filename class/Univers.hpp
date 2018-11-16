@@ -31,6 +31,7 @@ public:
 
 	void manage_input();
 
+	unsigned int getMapSize();
 
 	KINU::World &getWorld_() const;
 
@@ -41,8 +42,6 @@ public:
 	Core &getCore_() const;
 
 	void create_ui();
-
-	const Snake *getSnakes() const;
 
 	void create_server();
 

@@ -115,7 +115,7 @@ void Univers::loop_world() {
 	world_->getSystemManager().getSystem<RenderSystem>().update();
 
 	timer_loop.expires_at(
-			timer_loop.expires_at() + boost::posix_time::milliseconds(50));
+			timer_loop.expires_at() + boost::posix_time::milliseconds(150));
 	timer_loop.async_wait(boost::bind(&Univers::loop_world, this));
 	world_->update();
 
@@ -160,4 +160,8 @@ bool Univers::dlError() {
 IDisplay &Univers::getDisplay() const {
 	assert(display != nullptr);
 	return *display;
+}
+
+unsigned int Univers::getMapSize() {
+	return 30;
 }

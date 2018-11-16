@@ -15,6 +15,7 @@
 #define BASE_ENTITIES_CAPACITY 20
 #define MAP_MAX		20
 #define MAP_MIN		8
+#define SIZE_LINE_TILESET 15
 
 #define DIRECTION_VERTICAL 1			// 0000 0001
 #define DIRECTION_HORIZONTAL 4			// 0000 0100
@@ -37,16 +38,16 @@ enum eDirection {
 //						&
 //DIRECTION_VERTICAL	0000 0001
 
-enum eSnakeSprite {
-	GREEN,
-	BLUE,
-	PURPLE,
-	PINK,
-	GREY,
-	YELLOW,
-	ORANGE,
-	RED,
-	VOID
+enum eSprite {
+	GREEN_SNAKE,
+	BLUE_SNAKE,
+	PURPLE_SNAKE,
+	PINK_SNAKE,
+	GREY_SNAKE,
+	YELLOW_SNAKE,
+	ORANGE_SNAKE,
+	RED_SNAKE,
+	VARIOUS
 };
 
 struct		Snake
@@ -56,7 +57,7 @@ struct		Snake
 	};
 
 	char			name[NAME_BUFFER];
-	eSnakeSprite	sprite;
+	eSprite	sprite;
 	bool			isReady;
 	int16_t				id;
 
@@ -79,7 +80,7 @@ struct		Snake
 	static Snake randomSnake(int16_t id) {
 		Snake snake;
 
-		snake.sprite = static_cast<eSnakeSprite>(rand() % VOID);
+		snake.sprite = static_cast<eSprite>(rand() % VOID);
 		strncpy(snake.name, Snake::basicName[rand() % MAX_SNAKE].c_str(), NAME_BUFFER);
 		snake.id = id;
 		return (snake);

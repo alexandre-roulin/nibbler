@@ -39,7 +39,7 @@ void ClientTCP::change_name(char const *name) {
 	this->refreshMySnake();
 }
 
-void ClientTCP::change_sprite(eSnakeSprite snakeSprite) {
+void ClientTCP::change_sprite(eSprite snakeSprite) {
 	snake_array[id_].sprite = snakeSprite;
 	this->refreshMySnake();
 }

@@ -23,9 +23,10 @@ std::ostream &operator<<(std::ostream &os, const MotionComponent &component) {
 	return os;
 }
 
-MotionComponent::MotionComponent(eDirection direction, unsigned int speed)
-		: direction(direction),
-		  speed(speed) {}
+MotionComponent::MotionComponent(eDirection direction)
+		: direction(direction) {
+
+}
 
 Json::Value MotionComponent::serializeComponent() {
 	Json::Value component;

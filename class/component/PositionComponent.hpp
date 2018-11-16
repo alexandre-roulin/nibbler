@@ -10,7 +10,7 @@ private:
 public:
 	static std::string const NAME_COMPONENT;
 
-	explicit PositionComponent(int y = 0, int x = 0);
+	explicit PositionComponent(int x = 0, int y = 0);
 	PositionComponent(PositionComponent const &);
 	PositionComponent(Json::Value);
 

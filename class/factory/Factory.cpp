@@ -19,7 +19,7 @@ void Factory::create_all_snake(Snake snake_array[MAX_SNAKE], int16_t nu) {
 
 	log_info("Create %d snake(s)", nu);
 	for (int index = 0; index < nu; ++index) {
-		create_snake(index, index, index);
+		create_snake(snake_array[index], nu);
 	}
 	for (int index = 0; index < nu; ++index) {
 		univers_.getWorld_().getEventManager().emitEvent<FoodCreation>(10, 10 +
@@ -28,22 +28,22 @@ void Factory::create_all_snake(Snake snake_array[MAX_SNAKE], int16_t nu) {
 	create_walls();
 }
 
-void Factory::create_snake(int16_t id, int y, int x) {
+void Factory::create_snake(Snake snake, int max_snakes) {
 	KINU::Entity snake_follow;
 	KINU::Entity new_snake;
-
+	int base_x = (snake.id + 1) * univers_.getMapSize() / (max_snakes + 1);
+	int base_y = univers_.getMapSize() / 2;
 	for (int index = 0; index < 4; ++index) {
 		new_snake = univers_.getWorld_().createEntity();
 		if (index == 0) {
-			new_snake.tag(factory_name(HEAD, id));
-			new_snake.addComponent<JoystickComponent>((id == 0 ? NORTH : WEST),
-													  factory_name(HEAD, id));
-			new_snake.addComponent<MotionComponent>();
-			new_snake.addComponent<CollisionComponent>(false);
-			new_snake.addComponent<SpriteComponent>(21);
-			new_snake.addComponent<PositionComponent>(25 - x * 8, 25 - y * 8);
+			new_snake.tag(factory_name(HEAD, snake.id));
+			new_snake.addComponent<JoystickComponent>(NORTH);
+			new_snake.addComponent<MotionComponent>(NORTH);
+			new_snake.addComponent<CollisionComponent>();
+			new_snake.addComponent<SpriteComponent>(snake.sprite * SIZE_LINE_TILESET + 10);
+			new_snake.addComponent<PositionComponent>(base_x, base_y);
 		} else if (index == 3) {
-			new_snake.tag(factory_name(TAIL, id));
+			new_snake.tag(factory_name(TAIL, snake.id));
 			new_snake.addComponent<FollowComponent>(snake_follow.getIndex(),
 													false);
 			new_snake.addComponent<CollisionComponent>();
@@ -56,7 +56,7 @@ void Factory::create_snake(int16_t id, int y, int x) {
 			new_snake.addComponent<PositionComponent>(15, 15 + index);
 			new_snake.addComponent<SpriteComponent>(22);
 		}
-		new_snake.group(factory_name(GRPS, id));
+		new_snake.group(factory_name(GRPS, snake.id));
 		snake_follow = new_snake;
 	}
 }

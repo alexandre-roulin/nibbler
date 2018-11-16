@@ -11,9 +11,7 @@ private:
 public:
 
 	static std::string const NAME_COMPONENT;
-	explicit MotionComponent(
-			eDirection direction = NORTH,
-			unsigned int speed = 1);
+	explicit MotionComponent(eDirection direction = NORTH);
 	MotionComponent(Json::Value);
 	eDirection direction;
 
