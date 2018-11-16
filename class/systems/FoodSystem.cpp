@@ -4,6 +4,7 @@
 #include <events/FoodEat.hpp>
 #include <component/FollowComponent.hpp>
 #include <component/SpriteComponent.hpp>
+#include <component/PreviousComponent.hpp>
 #include <factory/Factory.hpp>
 #include <network/ClientTCP.hpp>
 #include <events/FoodCreation.hpp>
@@ -29,13 +30,22 @@ void FoodSystem::update() {
 
 		//FollowComponent.id == entityTail.idFollowed
 		newEntity.addComponent<FollowComponent>(entityTail.getComponent<FollowComponent>().idFollowed, false);
-		newEntity.addComponent<SpriteComponent>(36);
+
+		newEntity.addComponent<PreviousComponent>(entityTail.getIndex(), false);
+
+
+		auto entityPrevious = getWorld().getEntityManager().getEntity(entityTail.getComponent<FollowComponent>().idFollowed);
+
+		entityPrevious.getComponent<PreviousComponent>().idPrevious = newEntity.getIndex();
+
+
+		newEntity.addComponent<SpriteComponent>(eSprite::BODY | (getWorld().getUnivers().getClientTCP_().getSnake().sprite));
+
 		newEntity.addComponent<CollisionComponent>();
 
 		auto &followComponent = entityTail.getComponent<FollowComponent>();
 		followComponent.idFollowed = newEntity.getIndex();
 		followComponent.skip = true;
-
 
 		newEntity.tag(Factory::factory_name(BODY, newEntity.getIndex()));
 		newEntity.group(entityTail.getGroup());
@@ -49,7 +59,7 @@ void FoodSystem::update() {
 		auto food = getWorld().createEntity();
 		food.addComponent<PositionComponent>(foodCreationEvent.y, foodCreationEvent.x);
 		food.addComponent<CollisionComponent>(false);
-		food.addComponent<SpriteComponent>(33);
+		food.addComponent<SpriteComponent>(eSprite::FOOD);
 		food.group(FOOD_TAG);
 	}
 }

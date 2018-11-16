@@ -1,7 +1,8 @@
 
 #include "SpriteComponent.hpp"
+#include "nibbler.hpp"
 
-SpriteComponent::SpriteComponent(int sprite) :
+SpriteComponent::SpriteComponent(eSprite sprite) :
 		sprite(sprite) {
 
 }
@@ -15,6 +16,6 @@ SpriteComponent::operator=(SpriteComponent const &motionComponent) {
 }
 
 std::ostream &operator<<(std::ostream &os, const SpriteComponent &component) {
-	os << "sprite: " << component.sprite;
+	os << "eSprite: " << static_cast<int>(component.sprite);
 	return os;
 }
