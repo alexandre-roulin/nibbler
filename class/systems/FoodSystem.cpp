@@ -1,11 +1,12 @@
 #include <component/CollisionComponent.hpp>
 #include "FoodSystem.hpp"
 #include <KINU/World.hpp>
-#include <events/FoodEvent.hpp>
+#include <events/FoodEat.hpp>
 #include <component/FollowComponent.hpp>
 #include <component/SpriteComponent.hpp>
 #include <factory/Factory.hpp>
 #include <network/ClientTCP.hpp>
+#include <events/FoodCreation.hpp>
 
 FoodSystem::FoodSystem() {
 	requireComponent<FollowComponent>();
@@ -15,21 +16,19 @@ FoodSystem::FoodSystem() {
 void FoodSystem::update() {
 	log_success("update");
 
-	auto events = getWorld().getEventManager().getEvents<FoodEvent>();
+	auto events = getWorld().getEventManager().getEvents<FoodEat>();
 
 	for (auto &event : events) {
 		auto entityTail = getWorld().getEntityManager()
 				.getEntityByTag(Factory::factory_name(TAIL, event.id_));
 		auto newEntity = getWorld().createEntity();
 
-		auto &idFollowed = entityTail.getComponent<FollowComponent>().idFollowed;        //SNAKE TAIL WITH ID FOLLOW
-		auto &positionComponent = entityTail.getComponent<PositionComponent>();    //SNAKE TAIL WITH ID FOLLOW
 
 		// Position == entityTail.positionComponent
-		newEntity.addComponent<PositionComponent>(positionComponent);
+		newEntity.addComponent<PositionComponent>(entityTail.getComponent<PositionComponent>());
 
 		//FollowComponent.id == entityTail.idFollowed
-		newEntity.addComponent<FollowComponent>(idFollowed, false);
+		newEntity.addComponent<FollowComponent>(entityTail.getComponent<FollowComponent>().idFollowed, false);
 		newEntity.addComponent<SpriteComponent>(36);
 		newEntity.addComponent<CollisionComponent>();
 
@@ -41,6 +40,17 @@ void FoodSystem::update() {
 		newEntity.tag(Factory::factory_name(BODY, newEntity.getIndex()));
 		newEntity.group(entityTail.getGroup());
 		createFood();
+	}
+
+	auto foodCreationEvents = getWorld().getEventManager().getEvents<FoodCreation>();
+	log_warn("Find %d foodCreationEvents",foodCreationEvents.size());
+
+	for (auto foodCreationEvent : foodCreationEvents) {
+		auto food = getWorld().createEntity();
+		food.addComponent<PositionComponent>(foodCreationEvent.y, foodCreationEvent.x);
+		food.addComponent<CollisionComponent>(false);
+		food.addComponent<SpriteComponent>(33);
+		food.group(FOOD_TAG);
 	}
 }
 

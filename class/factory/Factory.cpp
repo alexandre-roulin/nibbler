@@ -1,5 +1,6 @@
 
 #include <component/SpriteComponent.hpp>
+#include <events/FoodCreation.hpp>
 #include "Factory.hpp"
 
 const char *Factory::part_name[PART_SNAKE]{
@@ -21,7 +22,8 @@ void Factory::create_all_snake(Snake snake_array[MAX_SNAKE], int16_t nu) {
 		create_snake(index, index, index);
 	}
 	for (int index = 0; index < nu; ++index) {
-		create_food(10, 10 + index);
+		univers_.getWorld_().getEventManager().emitEvent<FoodCreation>(10, 10 +
+																		   index);
 	}
 	create_walls();
 }
@@ -42,12 +44,14 @@ void Factory::create_snake(int16_t id, int y, int x) {
 			new_snake.addComponent<PositionComponent>(25 - x * 8, 25 - y * 8);
 		} else if (index == 3) {
 			new_snake.tag(factory_name(TAIL, id));
-			new_snake.addComponent<FollowComponent>(snake_follow.getIndex(), false);
+			new_snake.addComponent<FollowComponent>(snake_follow.getIndex(),
+													false);
 			new_snake.addComponent<CollisionComponent>();
 			new_snake.addComponent<SpriteComponent>(23);
 			new_snake.addComponent<PositionComponent>(15, 15 + index);
 		} else {
-			new_snake.addComponent<FollowComponent>(snake_follow.getIndex(), false);
+			new_snake.addComponent<FollowComponent>(snake_follow.getIndex(),
+													false);
 			new_snake.addComponent<CollisionComponent>();
 			new_snake.addComponent<PositionComponent>(15, 15 + index);
 			new_snake.addComponent<SpriteComponent>(22);
@@ -62,15 +66,6 @@ eSnakePart Factory::isSnakePart(std::string compare) {
 		if (std::strstr(compare.c_str(), part_name[index]) != NULL)
 			return static_cast<eSnakePart>(index);
 	return OTHER;
-}
-
-void Factory::create_food(int y, int x) {
-	log_trace("Factory::create_food(int y = %d, int x = %d)", y, x);
-	auto food = univers_.getWorld_().createEntity();
-	food.addComponent<PositionComponent>(y, x);
-	food.addComponent<CollisionComponent>(false);
-	food.addComponent<SpriteComponent>(33);
-	food.group(FOOD_TAG);
 }
 
 void Factory::create_walls() {

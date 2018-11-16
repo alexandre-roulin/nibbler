@@ -6,8 +6,7 @@
 #include <Univers.hpp>
 #include "ClientTCP.hpp"
 #include <gui/Core.hpp>
-#include <events/JoystickEvent.hpp>
-#include <events/StartEvent.hpp>
+
 #include <Univers.hpp>
 #include <logger.h>
 int const ClientTCP::size_header[] = {
@@ -148,7 +147,7 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 			log_info("FOOD");
 			int position[2];
 			std::memcpy(position, input, len);
-			factory.create_food(position[0], position[1]);
+			foodCreations.push_back(FoodCreation(position[0], position[1]));
 			break;
 		}
 
@@ -173,9 +172,7 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 
 			std::memcpy(&id, data_deserialize, sizeof(int16_t));
 			std::memcpy(&dir, data_deserialize + sizeof(int16_t), sizeof(eDirection));
-
-			univers.getWorld_().getEventManager().emitEvent<JoystickEvent>(id, dir);
-
+			joystickEvents.push_back(JoystickEvent(id, dir));
 //			std::cout << "Size: " << univers.getWorld_().getEventManager().getEvents<JoystickEvent>().size() << std::endl;
 
 			delete [] data_deserialize;
@@ -186,6 +183,17 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 	}
 }
 
+
+void ClientTCP::deliverEvents() {
+	for (auto foodCreation : foodCreations) {
+		univers.getWorld_().getEventManager().emitEvent(foodCreation);
+	}
+	for (auto joystickEvent : joystickEvents) {
+		univers.getWorld_().getEventManager().emitEvent(joystickEvent);
+	}
+	joystickEvents.clear();
+	foodCreations.clear();
+}
 
 
 void ClientTCP::handle_read_data(eHeader header, boost::system::error_code const &error_code,

@@ -2,9 +2,9 @@
 
 #include <string>
 #include <KINU/Entity.hpp>
-class FoodEvent {
+class FoodEat {
 public:
-	explicit FoodEvent(KINU::Entity::Id id = 0);
+	explicit FoodEat(KINU::Entity::Id id = 0);
 	KINU::Entity::Id id_;
 };
 

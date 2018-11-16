@@ -20,7 +20,8 @@ namespace KINU {
 	class Pool : public AbstractPool {
 	public:
 		Pool(int size = DEFAULT_POOL_SIZE) {
-			resize(size);
+			if (size != 0)
+				resize(size);
 		}
 
 		virtual ~Pool() {}
@@ -34,10 +35,13 @@ namespace KINU {
 		}
 
 		void resize(int n) {
+			log_warn("Resize[%s] from %d to %d", typeid(T).name(), getSize(),
+					 n);
 			data.resize(n);
 		}
 
 		void clear() {
+			log_fatal("Clear -> %s", typeid(T).name());
 			data.clear();
 		}
 
@@ -57,14 +61,17 @@ namespace KINU {
 		}
 
 		T &operator[](unsigned int index) {
+			assert(index < getSize());
 			return data[index];
 		}
 
 		const T &operator[](unsigned int index) const {
+			assert(index < getSize());
 			return data[index];
 		}
 
 		std::vector<T> getData() {
+			log_fatal("In [%s] size [%d]", typeid(T).name(), data.size());
 			return data;
 		}
 

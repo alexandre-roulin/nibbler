@@ -14,7 +14,9 @@
 #include <boost/array.hpp>
 #include <nibbler.hpp>
 #include <factory/Factory.hpp>
-
+#include <events/JoystickEvent.hpp>
+#include <events/StartEvent.hpp>
+#include <events/FoodCreation.hpp>
 using boost::asio::ip::tcp;
 
 class Univers;
@@ -29,6 +31,8 @@ public:
 		unsigned int nu;
 		boost::posix_time::ptime time_duration;
 	};
+
+	void deliverEvents();
 
 	void connect(std::string dns, std::string port);
 
@@ -73,6 +77,9 @@ public:
 private:
 	ClientTCP(::Univers &univers, boost::asio::io_service &io);
 
+	std::vector<FoodCreation> foodCreations;
+	std::vector<JoystickEvent> joystickEvents;
+	std::vector<StartEvent> startEvents;
 	Snake snake_array[MAX_SNAKE];
 	tcp::socket socket;
 	boost::array<char, 512> buffer_data;

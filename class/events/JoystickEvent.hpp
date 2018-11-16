@@ -8,15 +8,7 @@
 
 struct JoystickEvent {
 
-	JoystickEvent(int16_t id = -1, eDirection direction = NORTH);
-
-	friend std::ostream &
-	operator<<(std::ostream &os, const JoystickEvent &event) {
-		os << "direction: " << event.direction << " tag_player: "
-		   << event.id;
-		return os;
-	}
-
-	int16_t id;
+	JoystickEvent(KINU::Entity::Id id = 0, eDirection direction = NORTH);
+	KINU::Entity::Id id;
 	eDirection direction;
 };

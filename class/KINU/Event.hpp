@@ -41,6 +41,9 @@ namespace KINU {
 
 		void destroyEvents();
 
+		template<typename T>
+		void destroy();
+
 	private:
 		template<typename T>
 		std::shared_ptr<Pool<T>> accommodateEvent();
@@ -78,4 +81,8 @@ namespace KINU {
 		return accommodateEvent<T>()->getData();
 	}
 
+	template<typename T>
+	void EventManager::destroy() {
+		eventPools[typeid(T)]->clear();
+	}
 }

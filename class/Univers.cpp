@@ -86,7 +86,6 @@ void Univers::loop() {
 	manage_start();
 	log_success("Univers::loop");
 
-	world_->update();
 	timer_loop.async_wait(boost::bind(&Univers::loop_world, this));
 	boost::thread thread(boost::bind(&boost::asio::io_service::run, &io_loop));
 	thread.detach();
@@ -106,6 +105,8 @@ void Univers::loop_world() {
 	log_success("Univers::loop_world");
 	world_->grid.clear();
 
+	clientTCP_->deliverEvents();
+
 	world_->getSystemManager().getSystem<FollowSystem>().update();
 	world_->getSystemManager().getSystem<JoystickSystem>().update();
 	world_->getSystemManager().getSystem<MotionSystem>().update();
@@ -114,7 +115,7 @@ void Univers::loop_world() {
 	world_->getSystemManager().getSystem<RenderSystem>().update();
 
 	timer_loop.expires_at(
-			timer_loop.expires_at() + boost::posix_time::milliseconds(200));
+			timer_loop.expires_at() + boost::posix_time::milliseconds(50));
 	timer_loop.async_wait(boost::bind(&Univers::loop_world, this));
 	world_->update();
 

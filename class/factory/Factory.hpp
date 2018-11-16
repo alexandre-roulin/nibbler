@@ -22,7 +22,6 @@ class Factory {
 public:
 	void create_all_snake(Snake snake_array[8], int16_t nu);
 	void create_snake(int16_t , int, int);
-	void create_food(int, int);
 	static std::string factory_name(eSnakePart, int16_t id);
 	static KINU::Entity::Id getIdFromTag(std::string tag);
 	static char * factory_chat_message(char const *name, char const *message);

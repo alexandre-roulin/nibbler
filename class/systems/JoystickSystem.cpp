@@ -42,6 +42,7 @@ void JoystickSystem::update() {
 			motionComponent.direction = joystickComponent.direction;
 		}
 	}
+
 }
 
 JoystickSystem::~JoystickSystem() {

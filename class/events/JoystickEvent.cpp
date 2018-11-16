@@ -1,6 +1,6 @@
 #include "JoystickEvent.hpp"
 
-JoystickEvent::JoystickEvent(int16_t id, eDirection direction)
+JoystickEvent::JoystickEvent(KINU::Entity::Id id, eDirection direction)
 		: id(id),
 		  direction(direction) {
 }

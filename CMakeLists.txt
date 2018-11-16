@@ -102,10 +102,12 @@ add_executable(${NAME}
         class/cores/main.cpp
         class/events/StartEvent.cpp
         class/events/StartEvent.hpp
-        class/events/FoodEvent.cpp
-        class/events/FoodEvent.hpp
+        class/events/FoodEat.cpp
+        class/events/FoodEat.hpp
         class/events/JoystickEvent.cpp
         class/events/JoystickEvent.hpp
+        class/events/FoodCreation.hpp
+        class/events/FoodCreation.cpp
         class/factory/Factory.cpp
         class/factory/Factory.hpp
         class/gui/widget/AWidget.cpp

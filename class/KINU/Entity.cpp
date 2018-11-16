@@ -49,6 +49,10 @@ namespace KINU {
 		return s;
 	}
 
+	EntityManager::EntityManager(World &world) :world(world){
+
+	}
+
 	EntityManager &Entity::getEntityManager() const {
 		assert(entityManager != nullptr);
 		return *entityManager;
@@ -64,17 +68,16 @@ namespace KINU {
 			versions.push_back(0);
 			index = (unsigned int) versions.size() - 1;
 			assert(index < (1 << Entity::IndexBits));
-
+			log_warn("New Index %d with %d", index, componentMasks.size());
 			if (index >= componentMasks.size()) {
-				// TODO: grow by doubling?
-				componentMasks.resize(index + 1);
+				componentMasks.resize(componentMasks.size() + DEFAULT_POOL_SIZE);
+				log_warn("RESIZE componentMasks > %d", componentMasks.size());
 			}
 		}
 
 		assert(index < versions.size());
 		Entity e(index, versions[index]);
 		e.entityManager = this;
-
 		return e;
 	}
 

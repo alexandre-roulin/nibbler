@@ -1,6 +1,6 @@
 #include "CollisionSystem.hpp"
 #include <factory/Factory.hpp>
-#include <events/FoodEvent.hpp>
+#include <events/FoodEat.hpp>
 
 CollisionSystem::CollisionSystem() {
 	requireComponent<CollisionComponent>();
@@ -22,7 +22,9 @@ KINU::Entity &entityHead, KINU::Entity &entityCheck) {
 		if (group == FOOD_TAG) {
 			log_info("FoodCollision");
 			entityCheck.kill();
-			getWorld().getEventManager().emitEvent<FoodEvent>(Factory::getIdFromTag(entityHead.getTag()));
+			getWorld().getEventManager().emitEvent<FoodEat>(Factory::getIdFromTag(entityHead.getTag()));
+			getWorld().getEventManager().emitEvent<FoodEat>(Factory::getIdFromTag(entityHead.getTag()));
+			getWorld().getEventManager().emitEvent<FoodEat>(Factory::getIdFromTag(entityHead.getTag()));
 		} else if (group == WALL_TAG) {
 			log_info("WallCollision");
 			entityHead.killGroup();

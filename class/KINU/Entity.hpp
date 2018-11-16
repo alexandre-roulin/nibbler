@@ -131,7 +131,7 @@ namespace KINU {
 
 	class EntityManager {
 	public:
-		EntityManager(World &world) : world(world) {}
+		EntityManager(World &world);
 
 		/*
 			Entity management.
@@ -322,4 +322,5 @@ namespace KINU {
 
 		return std::static_pointer_cast<Pool<T>>(componentPools[componentId]);
 	}
+
 }
