@@ -14,6 +14,7 @@ public:
 	~WidgetLobby(void);
 
 	bool	addSnake(Snake const &snake, bool isYourSnake = false);
+	void	addColor(std::string const &name, std::string const &pathColor);
 
 	void	render(void);
 

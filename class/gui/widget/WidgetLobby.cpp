@@ -6,18 +6,28 @@ AWidget(core)
 {
 	for (unsigned i = 0; i < MAX_SNAKE; i++)
 		this->addSnake(snakes[i], (i == this->_core.univers.getClientTCP_().getId()));
+	/*
 	this->_color.emplace_back("snake_green");
 	this->_texture.emplace_back();
 	if (!(this->_texture.back().loadFromFile("ressource/snake_presentation/snake_green.png")))
 		throw(AWidget::Constructor(std::string("WidgetLobby: Cant load [") + "snake_green.png" + "]"));
-	this->_color.emplace_back("snake_purple");
-	this->_texture.emplace_back();
-	if (!(this->_texture.back().loadFromFile("ressource/snake_presentation/snake_purple.png")))
-		throw(AWidget::Constructor(std::string("WidgetLobby: Cant load [") + "snake_purple.png" + "]"));
 	this->_color.emplace_back("snake_blue");
 	this->_texture.emplace_back();
 	if (!(this->_texture.back().loadFromFile("ressource/snake_presentation/snake_blue.png")))
 		throw(AWidget::Constructor(std::string("WidgetLobby: Cant load [") + "snake_blue.png" + "]"));
+	this->_color.emplace_back("snake_purple");
+	this->_texture.emplace_back();
+	if (!(this->_texture.back().loadFromFile("ressource/snake_presentation/snake_purple.png")))
+		throw(AWidget::Constructor(std::string("WidgetLobby: Cant load [") + "snake_purple.png" + "]"));
+	*/
+	this->addColor("Green", "ressource/snake_presentation/snake_green.png");
+	this->addColor("Blue", "ressource/snake_presentation/snake_blue.png");
+	this->addColor("Purple", "ressource/snake_presentation/snake_purple.png");
+	this->addColor("Pink", "ressource/snake_presentation/snake_pink.png");
+	this->addColor("Grey", "ressource/snake_presentation/snake_grey.png");
+	this->addColor("Yellow", "ressource/snake_presentation/snake_yellow.png");
+	this->addColor("Orange", "ressource/snake_presentation/snake_orange.png");
+	this->addColor("Red", "ressource/snake_presentation/snake_red.png");
 }
 
 WidgetLobby::~WidgetLobby(void)
@@ -26,11 +36,18 @@ WidgetLobby::~WidgetLobby(void)
 		delete snake;
 }
 
+void			WidgetLobby::addColor(std::string const &name, std::string const &pathColor) {
+	this->_color.emplace_back(name);
+	this->_texture.emplace_back();
+	if (!(this->_texture.back().loadFromFile(pathColor)))
+		throw(AWidget::Constructor(std::string("WidgetLobby: Cant load [") + pathColor + "]"));
+}
+
+
 bool			WidgetLobby::addSnake(Snake const &snake, bool isYourSnake)
 {
 	if (this->_snake.size() < MAX_SNAKE)
 	{
-		std::cout << "WOTD : " << isYourSnake << std::endl;
 		this->_snake.emplace_back(new WidgetSnake(this->_core, snake, this->_texture, this->_color, isYourSnake));
 		return (true);
 	}

@@ -39,8 +39,13 @@ enum eDirection {
 
 enum eSnakeSprite {
 	GREEN,
-	PURPLE,
 	BLUE,
+	PURPLE,
+	PINK,
+	GREY,
+	YELLOW,
+	ORANGE,
+	RED,
 	VOID
 };
 
