@@ -7,8 +7,6 @@
 #include "ClientTCP.hpp"
 #include <gui/Core.hpp>
 
-#include <Univers.hpp>
-#include <logger.h>
 int const ClientTCP::size_header[] = {
 		[CHAT] = SIZEOF_CHAT_PCKT,
 		[FOOD] = sizeof(int) * 2,
@@ -59,8 +57,10 @@ void ClientTCP::connect(std::string dns, std::string port) {
 		tcp::resolver::iterator it = resolver.resolve(query);
 		boost::asio::connect(socket, it);
 		read_socket_header();
-		boost::thread t(boost::bind(&boost::asio::io_service::run, &io));
-		t.detach();
+		thread = boost::thread(boost::bind(&boost::asio::io_service::run, &io));
+		thread.detach();
+		auto e = std::this_thread::get_id();
+		std::cout << "connect > " << std::this_thread::get_id() << std::endl;
 	} catch (std::exception &exception) {
 		std::cout << exception.what() << std::endl;
 	}
@@ -69,7 +69,8 @@ void ClientTCP::connect(std::string dns, std::string port) {
 
 void ClientTCP::read_socket_header() {
 
-//	std::cout << "ClientTCP::read_socket_header" << std::endl;
+	std::cout << "ClientTCP::read_socket_header" << std::this_thread::get_id()
+			  << std::endl;
 	boost::asio::async_read(socket, boost::asio::buffer(buffer_data,
 														ClientTCP::size_header[HEADER]),
 							boost::bind(&ClientTCP::handle_read_header,
@@ -92,6 +93,7 @@ void ClientTCP::read_socket_data(eHeader header) {
 void ClientTCP::handle_read_header(const boost::system::error_code &error_code,
 								   size_t len) {
 //	std::cout << "ClientTCP::handle_read_header > len : " << len << std::endl;
+	id = std::this_thread::get_id();
 	if (error_code.value() == 0) {
 		assert(len == sizeof(eHeader));
 		eHeader header;
@@ -212,9 +214,7 @@ void ClientTCP::handle_write(const boost::system::error_code &error_code,
 
 ClientTCP::pointer_client
 ClientTCP::create(Univers &univers, boost::asio::io_service &io) {
-	ClientTCP::pointer_client pointerClient = pointer_client(new ClientTCP(univers, io));
-
-	return pointerClient;
+	return pointer_client(new ClientTCP(univers, io));
 }
 Snake const *ClientTCP::getSnakes() const {
 	return snake_array;

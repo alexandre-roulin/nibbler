@@ -88,6 +88,8 @@ private:
 	Univers &univers;
 	Factory factory;
 	boost::asio::io_service &io;
+	boost::thread thread;
+	std::__thread_id id;
 };
 
 template<typename T, typename U>

@@ -70,8 +70,10 @@ enum eSprite {
 	TO_EAST,			// 0000 0000 0100 0000 0000 0000
 	TO_WEST,			// 0000 0000 1000 0000 0000 0000
 	WALL,				// 0000 0001 0000 0000 0000 0000
-	FOOD				// 0000 0010 0000 0000 0000 0000
+	FOOD_SPRITE                // 0000 0010 0000 0000 0000 0000
 };
+
+
 
 struct		Snake
 {
@@ -103,7 +105,7 @@ struct		Snake
 	static Snake randomSnake(int16_t id) {
 		Snake snake;
 
-		snake.sprite = static_cast<eSprite>(rand() % VOID);
+		snake.sprite = static_cast<eSprite>(rand() % 20);
 		strncpy(snake.name, Snake::basicName[rand() % MAX_SNAKE].c_str(), NAME_BUFFER);
 		snake.id = id;
 		return (snake);

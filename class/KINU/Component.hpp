@@ -35,6 +35,7 @@ struct Component : BaseComponent
     // Returns the unique id of Component<T>
     static Id getId()
     {
+		std::bitset<8> b;
         static auto id = nextId++;
         assert(id < MaxComponents);
         return id;

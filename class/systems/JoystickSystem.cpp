@@ -13,12 +13,15 @@ void JoystickSystem::update() {
 	auto events = getWorld().getEventManager().getEvents<JoystickEvent>();
 	log_success("JoystickSystem::update on %d events", events.size());
 	for (auto &event : events) {
-		auto entity = getWorld().getEntityManager().getEntityByTag(Factory::factory_name(HEAD, event.id));
-		if (entity.isAlive() && entity.hasComponent<JoystickComponent>()) {
-			auto &joystickComponent = entity.getComponent<JoystickComponent>();
-			joystickComponent.direction = event.direction;
+		if (getWorld().getEntityManager().hasTag(
+				Factory::factory_name(HEAD, event.id))) {
+			auto entity = getWorld().getEntityManager().getEntityByTag(
+					Factory::factory_name(HEAD, event.id));
+			if (entity.isAlive() && entity.hasComponent<JoystickComponent>()) {
+				auto &joystickComponent = entity.getComponent<JoystickComponent>();
+				joystickComponent.direction = event.direction;
+			}
 		}
-
 	}
 	for (auto &entity : getEntities()) {
 		auto &motionComponent = entity.getComponent<MotionComponent>();

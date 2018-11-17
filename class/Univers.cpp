@@ -6,9 +6,7 @@
 #include <systems/FoodSystem.hpp>
 #include <systems/CollisionSystem.hpp>
 #include <systems/RenderSystem.hpp>
-#include <events/StartEvent.hpp>
 #include <network/ServerTCP.hpp>
-#include <dlfcn.h>
 
 Univers::Univers()
 	: timer_start(boost::asio::deadline_timer(io_start)),
@@ -35,7 +33,7 @@ int Univers::start_game() {
 			IDisplay *
 	)>(dlsym(dlHandle, "deleteDisplay"))))
 		return (dlError());
-	display = newDisplay(PATH_TILESET, DEFAULT_SIZE_SPRIT, 30, 30, "Nibblour");
+	display = newDisplay(PATH_TILESET, DEFAULT_SIZE_SPRITE, 30, 30, "Nibblour");
 	assert(display != nullptr);
 
 	Grid<int> grid(30, 30);

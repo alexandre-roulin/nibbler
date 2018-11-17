@@ -149,7 +149,6 @@ add_executable(${NAME}
         class/logger/logger/logger_init.cpp
         class/logger/utils/logger_get_time.cpp
         class/logger/utils/logger_init_open_file.cpp
-        class/network/chat_message.hpp
         class/network/ClientTCP.cpp
         class/network/ClientTCP.hpp
         class/network/Network.cpp

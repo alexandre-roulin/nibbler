@@ -25,6 +25,40 @@ KINU::Entity &entityHead, KINU::Entity &entityCheck) {
 			getWorld().getEventManager().emitEvent<FoodEat>(Factory::getIdFromTag(entityHead.getTag()));
 			getWorld().getEventManager().emitEvent<FoodEat>(Factory::getIdFromTag(entityHead.getTag()));
 			getWorld().getEventManager().emitEvent<FoodEat>(Factory::getIdFromTag(entityHead.getTag()));
+			getWorld().getEventManager().emitEvent<FoodEat>(
+					Factory::getIdFromTag(entityHead.getTag()));
+			getWorld().getEventManager().emitEvent<FoodEat>(
+					Factory::getIdFromTag(entityHead.getTag()));
+			getWorld().getEventManager().emitEvent<FoodEat>(
+					Factory::getIdFromTag(entityHead.getTag()));
+			getWorld().getEventManager().emitEvent<FoodEat>(
+					Factory::getIdFromTag(entityHead.getTag()));
+			getWorld().getEventManager().emitEvent<FoodEat>(
+					Factory::getIdFromTag(entityHead.getTag()));
+			getWorld().getEventManager().emitEvent<FoodEat>(
+					Factory::getIdFromTag(entityHead.getTag()));
+			getWorld().getEventManager().emitEvent<FoodEat>(
+					Factory::getIdFromTag(entityHead.getTag()));
+			getWorld().getEventManager().emitEvent<FoodEat>(
+					Factory::getIdFromTag(entityHead.getTag()));
+			getWorld().getEventManager().emitEvent<FoodEat>(
+					Factory::getIdFromTag(entityHead.getTag()));
+			getWorld().getEventManager().emitEvent<FoodEat>(
+					Factory::getIdFromTag(entityHead.getTag()));
+			getWorld().getEventManager().emitEvent<FoodEat>(
+					Factory::getIdFromTag(entityHead.getTag()));
+			getWorld().getEventManager().emitEvent<FoodEat>(
+					Factory::getIdFromTag(entityHead.getTag()));
+			getWorld().getEventManager().emitEvent<FoodEat>(
+					Factory::getIdFromTag(entityHead.getTag()));
+			getWorld().getEventManager().emitEvent<FoodEat>(
+					Factory::getIdFromTag(entityHead.getTag()));
+			getWorld().getEventManager().emitEvent<FoodEat>(
+					Factory::getIdFromTag(entityHead.getTag()));
+			getWorld().getEventManager().emitEvent<FoodEat>(
+					Factory::getIdFromTag(entityHead.getTag()));
+			getWorld().getEventManager().emitEvent<FoodEat>(
+					Factory::getIdFromTag(entityHead.getTag()));
 		} else if (group == WALL_TAG) {
 			log_info("WallCollision");
 			entityHead.killGroup();

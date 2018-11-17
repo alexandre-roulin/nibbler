@@ -6,7 +6,6 @@
 #include <component/SpriteComponent.hpp>
 #include <factory/Factory.hpp>
 #include <network/ClientTCP.hpp>
-#include <events/FoodCreation.hpp>
 
 FoodSystem::FoodSystem() {
 	requireComponent<FollowComponent>();
@@ -49,7 +48,7 @@ void FoodSystem::update() {
 		auto food = getWorld().createEntity();
 		food.addComponent<PositionComponent>(foodCreationEvent.y, foodCreationEvent.x);
 		food.addComponent<CollisionComponent>(false);
-		food.addComponent<SpriteComponent>(33);
+		food.addComponent<SpriteComponent>(0);
 		food.group(FOOD_TAG);
 	}
 }

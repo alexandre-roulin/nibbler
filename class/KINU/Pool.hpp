@@ -46,6 +46,7 @@ namespace KINU {
 		}
 
 		bool set(unsigned int index, T object) {
+			log_fatal("Set -> %d %s", index, typeid(T).name());
 			assert(index < getSize());
 			data[index] = object;
 			return true;
