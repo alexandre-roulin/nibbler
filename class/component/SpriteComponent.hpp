@@ -3,13 +3,13 @@
 #include <utility>
 
 #include <ostream>
-
+#include <nibbler.hpp>
 
 struct SpriteComponent {
 
-	explicit SpriteComponent(int sprite = 0);
+	explicit SpriteComponent(eSprite sprite = eSprite::GREEN);
 
-	int sprite;
+	eSprite sprite;
 
 	SpriteComponent &operator=(SpriteComponent const &motionComponent);
 

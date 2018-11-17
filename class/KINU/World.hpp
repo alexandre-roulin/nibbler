@@ -21,6 +21,7 @@ namespace KINU {
 		World(Univers &univers);
 
 		Grid<int> grid;
+		Grid<int> gridToDraw;
 		Univers &univers_;
 		IDisplay *display_;
 		Univers &getUnivers() const;

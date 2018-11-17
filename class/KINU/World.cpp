@@ -2,7 +2,7 @@
 
 namespace KINU {
 
-	World::World(Univers &univers) : grid(30, 30) , univers_(univers){
+	World::World(Univers &univers) : grid(30, 30), gridToDraw(30, 30) , univers_(univers){
 		entityManager = std::make_unique<EntityManager>(*this);
 		systemManager = std::make_unique<SystemManager>(*this);
 		eventManager = std::make_unique<EventManager>(*this);

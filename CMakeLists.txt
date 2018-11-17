@@ -179,7 +179,7 @@ add_executable(${NAME}
         incs/logger_utils.h
         incs/nibbler.hpp
         incs/stb_image.h
-        )
+        class/systems/SpriteSystem.cpp class/systems/SpriteSystem.hpp)
 
 if (NOT SFML_FOUND)
     add_dependencies(${NAME} sfml)
