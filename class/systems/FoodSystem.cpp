@@ -39,7 +39,7 @@ void FoodSystem::update() {
 				| (SpriteSystem::spriteDirection(newEntity.getComponent<PositionComponent>(),
 				        entityFollowed.getComponent<PositionComponent>()) << eSprite::BITWISE_TO);
 		//
-		newEntity.addComponent<SpriteComponent>(sprite);
+		newEntity.addComponent<SpriteComponent>(sprite, MINOR_PRIORITY);
 
 		auto &followComponent = entityTail.getComponent<FollowComponent>();
 		followComponent.idFollowed = newEntity.getIndex();

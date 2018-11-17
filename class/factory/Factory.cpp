@@ -41,21 +41,21 @@ void Factory::create_snake(Snake snake, int max_snakes) {
 			new_snake.addComponent<JoystickComponent>(NORTH);
 			new_snake.addComponent<MotionComponent>(NORTH);
 			new_snake.addComponent<CollisionComponent>();
-			new_snake.addComponent<SpriteComponent>(eSprite::HEAD | snake.sprite);
+			new_snake.addComponent<SpriteComponent>(eSprite::HEAD | snake.sprite, SPECIFIC_LAST);
 			new_snake.addComponent<PositionComponent>(base_x, base_y);
 		}
 		else if (index == 3) {
 			new_snake.tag(factory_name(TAIL, snake.id));
 			new_snake.addComponent<FollowComponent>(snake_follow.getIndex(), false);
 			new_snake.addComponent<CollisionComponent>();
-			new_snake.addComponent<SpriteComponent>(eSprite::TAIL | snake.sprite);
+			new_snake.addComponent<SpriteComponent>(eSprite::TAIL | snake.sprite, SPECIFIC_LAST);
 			new_snake.addComponent<PositionComponent>(15, 15 + index);
 		}
 		else {
 			new_snake.addComponent<FollowComponent>(snake_follow.getIndex(), false);
 			new_snake.addComponent<CollisionComponent>();
 			new_snake.addComponent<PositionComponent>(15, 15 + index);
-			new_snake.addComponent<SpriteComponent>(eSprite::BODY | snake.sprite);
+			new_snake.addComponent<SpriteComponent>(eSprite::BODY | snake.sprite, MINOR_PRIORITY);
 		}
 		new_snake.group(factory_name(GRPS, snake.id));
 		snake_follow = new_snake;

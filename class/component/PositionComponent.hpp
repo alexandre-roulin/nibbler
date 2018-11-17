@@ -19,13 +19,7 @@ public:
 	Json::Value serializeComponent();
 
 	PositionComponent &
-	operator=(PositionComponent const &motionComponent) {
-		if (this != &motionComponent) {
-			y = motionComponent.y;
-			x = motionComponent.x;
-		}
-		return *this;
-	}
+	operator=(PositionComponent const &motionComponent);
 
 	bool operator==(const PositionComponent &rhs) const;
 

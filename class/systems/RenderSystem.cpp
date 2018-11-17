@@ -1,9 +1,7 @@
 #include "KINU/World.hpp"
 #include "RenderSystem.hpp"
 #include <component/SpriteComponent.hpp>
-#include <component/FollowComponent.hpp>
-#include <logger.h>
-
+#include <list>
 RenderSystem::RenderSystem() {
 	requireComponent<PositionComponent>();
 	requireComponent<SpriteComponent>();
@@ -64,52 +62,78 @@ int RenderSystem::getSpriteSnake_(eSprite sprite) {
 	if ((sprite & eSprite::FOOD) == eSprite::FOOD)
 		return (SPRITE_FOOD);
 	if ((sprite & eSprite::MASK_BODY) == eSprite::HEAD)
-		return (SIZE_LINE_TILESET * static_cast<int>(sprite & eSprite::MASK_COLOR) + 5 + direction(to));
+		return (SIZE_LINE_TILESET *
+				static_cast<int>(sprite & eSprite::MASK_COLOR) + 5 +
+				direction(to));
 	if ((sprite & eSprite::MASK_BODY) == eSprite::BODY) {
 
 		if (from == to && (from == eSprite::NORTH || from == eSprite::SOUTH))
-			return (SIZE_LINE_TILESET * static_cast<int>(sprite & eSprite::MASK_COLOR) + 14);
+			return (SIZE_LINE_TILESET *
+					static_cast<int>(sprite & eSprite::MASK_COLOR) + 14);
 		else if (from == to && (from == eSprite::EAST || from == eSprite::WEST))
-			return (SIZE_LINE_TILESET * static_cast<int>(sprite & eSprite::MASK_COLOR) + 13);
+			return (SIZE_LINE_TILESET *
+					static_cast<int>(sprite & eSprite::MASK_COLOR) + 13);
 
 		else if (from == eSprite::NORTH && to == eSprite::EAST)
-			return (SIZE_LINE_TILESET * static_cast<int>(sprite & eSprite::MASK_COLOR) + 1);
+			return (SIZE_LINE_TILESET *
+					static_cast<int>(sprite & eSprite::MASK_COLOR) + 1);
 		else if (from == eSprite::NORTH && to == eSprite::WEST)
-			return (SIZE_LINE_TILESET * static_cast<int>(sprite & eSprite::MASK_COLOR) + 2);
+			return (SIZE_LINE_TILESET *
+					static_cast<int>(sprite & eSprite::MASK_COLOR) + 2);
 
 		else if (from == eSprite::SOUTH && to == eSprite::EAST)
-			return (SIZE_LINE_TILESET * static_cast<int>(sprite & eSprite::MASK_COLOR) + 3);
+			return (SIZE_LINE_TILESET *
+					static_cast<int>(sprite & eSprite::MASK_COLOR) + 3);
 		else if (from == eSprite::SOUTH && to == eSprite::WEST)
-			return (SIZE_LINE_TILESET * static_cast<int>(sprite & eSprite::MASK_COLOR) + 4);
+			return (SIZE_LINE_TILESET *
+					static_cast<int>(sprite & eSprite::MASK_COLOR) + 4);
 
 		else if (from == eSprite::WEST && to == eSprite::SOUTH)
-			return (SIZE_LINE_TILESET * static_cast<int>(sprite & eSprite::MASK_COLOR) + 1);
+			return (SIZE_LINE_TILESET *
+					static_cast<int>(sprite & eSprite::MASK_COLOR) + 1);
 		else if (from == eSprite::EAST && to == eSprite::SOUTH)
-			return (SIZE_LINE_TILESET * static_cast<int>(sprite & eSprite::MASK_COLOR) + 2);
+			return (SIZE_LINE_TILESET *
+					static_cast<int>(sprite & eSprite::MASK_COLOR) + 2);
 
 		else if (from == eSprite::WEST && to == eSprite::NORTH)
-			return (SIZE_LINE_TILESET * static_cast<int>(sprite & eSprite::MASK_COLOR) + 3);
+			return (SIZE_LINE_TILESET *
+					static_cast<int>(sprite & eSprite::MASK_COLOR) + 3);
 		else if (from == eSprite::EAST && to == eSprite::NORTH)
-			return (SIZE_LINE_TILESET * static_cast<int>(sprite & eSprite::MASK_COLOR) + 4);
+			return (SIZE_LINE_TILESET *
+					static_cast<int>(sprite & eSprite::MASK_COLOR) + 4);
 
 		else
 			return (SIZE_LINE_TILESET);
 	}
 	if ((sprite & eSprite::MASK_BODY) == eSprite::TAIL)
-		return (SIZE_LINE_TILESET * static_cast<int>(sprite & eSprite::MASK_COLOR) + 9 + direction(to));
+		return (SIZE_LINE_TILESET *
+				static_cast<int>(sprite & eSprite::MASK_COLOR) + 9 +
+				direction(to));
 
 	return (0);
 }
 
 
 void RenderSystem::update() {
+	std::list<std::pair<PositionComponent &, SpriteComponent &>> renderComponents;
+	Grid<int> &grid = getWorld().grid;
+
 	log_success("update");
 
 	for (auto &entity : getEntities()) {
 		if (entity.isAlive()) {
-			auto& positionComponent = entity.getComponent<PositionComponent>();
-			getWorld().grid(positionComponent.x, positionComponent.y) = RenderSystem::getSpriteSnake_(entity.getComponent<SpriteComponent>().sprite);
+			renderComponents.push_back(std::pair<PositionComponent &, SpriteComponent &>(
+					entity.getComponent<PositionComponent>(),
+					entity.getComponent<SpriteComponent>()));
 		}
+	}
+	renderComponents.sort([](auto & renderPair1, auto &renderPair2) -> bool {
+		return renderPair1.second.priority <
+			   renderPair2.second.priority;
+	});
+	for (auto &renderComponent : renderComponents) {
+		std::cout << renderComponent.second.priority << std::endl;
+		grid(renderComponent.first.x, renderComponent.first.y) = RenderSystem::getSpriteSnake_(renderComponent.second.sprite);
 	}
 }
 

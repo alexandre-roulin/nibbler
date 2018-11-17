@@ -8,6 +8,7 @@
 #include <systems/SpriteSystem.hpp>
 #include <systems/RenderSystem.hpp>
 #include <network/ServerTCP.hpp>
+#include <dlfcn.h>
 
 Univers::Univers()
 	: timer_start(boost::asio::deadline_timer(io_start)),

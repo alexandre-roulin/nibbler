@@ -11,11 +11,7 @@
 #define SIZEOF_CHAT_PCKT CHAT_BUFFER + NAME_BUFFER + OFFSET
 #define WALL_TAG "wall"
 #define FOOD_TAG "food"
-
-#define COMPONENT_MAX 6
-#define BASE_ENTITIES_CAPACITY 20
-#define MAP_MAX		20
-#define MAP_MIN		8
+#define DEFAULT_SIZE_SPRITE 32
 #define SIZE_LINE_TILESET 15
 
 #define DIRECTION_VERTICAL 1			// 0000 0001
@@ -28,30 +24,11 @@ enum eDirection {
 	WEST = 12							// 0000 1100
 };
 
-//int  0000 0000	0000 0000	0000 0000	0000 0010
-
-//(motionComponent.direction & DIRECTION_VERTICAL &&
-//					!(joystickComponent.direction & DIRECTION_VERTICAL))
-
-//MOTION_COMPONENT		0000 0001
-
-//JOYSTICK_COMPONENT	0000 0011
-//						&
-//DIRECTION_VERTICAL	0000 0001
-
-
-/**
- * A LIRE
- * Ca serait pas mal de faire ca via
- *
- * 		{3e BYTE}	{2e BYTE}	{1e BYTE}
- * 		0000 0000	0000 0000	0000 0000
- *
- *
- * {1 BYTE} == Couleur
- * {2 BYTE} == Direction
- * {3e BYTE} == Various
- * **/
+enum ePriority {
+	NO_PRIORITY,
+	MINOR_PRIORITY,
+	SPECIFIC_LAST,
+};
 
 enum class eSprite {
 	GREEN = 0,
@@ -62,6 +39,8 @@ enum class eSprite {
 	YELLOW = 5,
 	ORANGE = 6,
 	RED = 7,
+
+	//	MASK_COLOR = GREEN | BLUE | PURPLE | PINK | GREY | YELLOW | ORANGE | RED,
 
 	MASK_COLOR = 0xFF,
 

@@ -69,8 +69,8 @@ void ClientTCP::connect(std::string dns, std::string port) {
 
 void ClientTCP::read_socket_header() {
 
-	std::cout << "ClientTCP::read_socket_header" << std::this_thread::get_id()
-			  << std::endl;
+//	std::cout << "ClientTCP::read_socket_header" << std::this_thread::get_id()
+//			  << std::endl;
 	boost::asio::async_read(socket, boost::asio::buffer(buffer_data,
 														ClientTCP::size_header[HEADER]),
 							boost::bind(&ClientTCP::handle_read_header,
@@ -187,6 +187,7 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 
 
 void ClientTCP::deliverEvents() {
+	mu.lock();
 	for (auto foodCreation : foodCreations) {
 		univers.getWorld_().getEventManager().emitEvent(foodCreation);
 	}
@@ -195,6 +196,7 @@ void ClientTCP::deliverEvents() {
 	}
 	joystickEvents.clear();
 	foodCreations.clear();
+	mu.unlock();
 }
 
 

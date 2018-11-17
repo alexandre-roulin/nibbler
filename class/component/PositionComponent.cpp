@@ -39,3 +39,12 @@ PositionComponent::PositionComponent(Json::Value json) {
 	y = json.get(POS_Y, 0).asInt();
 }
 
+PositionComponent &
+PositionComponent::operator=(PositionComponent const &motionComponent) {
+	if (this != &motionComponent) {
+		y = motionComponent.y;
+		x = motionComponent.x;
+	}
+	return *this;
+}
+

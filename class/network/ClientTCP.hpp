@@ -90,6 +90,8 @@ private:
 	boost::asio::io_service &io;
 	boost::thread thread;
 	std::__thread_id id;
+	std::mutex mu;
+
 };
 
 template<typename T, typename U>

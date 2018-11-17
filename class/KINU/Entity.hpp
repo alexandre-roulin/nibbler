@@ -263,7 +263,7 @@ namespace KINU {
 		std::shared_ptr<Pool<T>> componentPool = accommodateComponent<T>();
 
 		if (entityId >= componentPool->getSize()) {
-			componentPool->resize(componentPool->getSize() + DEFAULT_POOL_SIZE);
+			componentPool->resize(entityId + DEFAULT_POOL_SIZE);
 			log_warn("EntityManager::addComponent %s %d", typeid(T).name(),
 					 componentPool->getSize());
 		}
