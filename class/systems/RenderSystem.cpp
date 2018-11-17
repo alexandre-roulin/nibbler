@@ -2,7 +2,6 @@
 #include "RenderSystem.hpp"
 #include <component/SpriteComponent.hpp>
 #include <component/FollowComponent.hpp>
-#include <component/PreviousComponent.hpp>
 #include <logger.h>
 
 RenderSystem::RenderSystem() {

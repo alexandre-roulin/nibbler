@@ -4,7 +4,6 @@
 #include <events/FoodEat.hpp>
 #include <component/FollowComponent.hpp>
 #include <component/SpriteComponent.hpp>
-#include <component/PreviousComponent.hpp>
 #include <factory/Factory.hpp>
 #include <network/ClientTCP.hpp>
 #include <events/FoodCreation.hpp>
