@@ -7,6 +7,8 @@ public:
 
 	Grid(size_t rows, size_t columns);
 	~Grid(void);
+	Grid(Grid const &src);
+	Grid		&operator=(Grid const &rhs);
 
 	size_t		getRows(void) const;
 	size_t		getColumns(void) const;
@@ -27,8 +29,6 @@ private:
 	T							*_grid;
 
 
-	Grid		&operator=(Grid const &rhs);
-	Grid(Grid const &src);
 	Grid(void);
 };
 
@@ -37,6 +37,16 @@ template <typename T>
 Grid<T>::Grid(void)
 {
 	return ;
+}
+
+template <typename T>
+Grid<T>::Grid(Grid const &src) :
+		_rows(src._rows),
+		_columns(src._columns),
+		_grid(new T[src._rows * src._columns]())
+{
+	for (size_t i = 0; i < this->_rows * this->_columns; i++)
+		this->_grid[i] = src._grid[i];
 }
 
 template <typename T>
@@ -117,3 +127,15 @@ int			&Grid<T>::operator()(size_t row, size_t column) const
 {
 	return (this->_grid[row * this->_columns + column]);
 }
+
+template <typename T>
+Grid<T>			&Grid<T>::operator=(Grid<T> const &src)
+{
+	size_t max_rows = (this->_rows > src._rows ? this->_rows : src._rows);
+	size_t max_columns = (this->_columns > src._columns ? this->_columns : src._columns);
+
+	for (size_t i = 0; i < max_rows * max_columns; i++)
+		this->_grid[i] = src._grid[i];
+	return (*this);
+}
+

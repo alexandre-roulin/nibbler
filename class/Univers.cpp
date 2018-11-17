@@ -98,13 +98,14 @@ void Univers::loop() {
 	while (!display->exit()) {
 		display->update();
 		manage_input();
-		display->drawGrid(world_->grid);
+		display->drawGrid(world_->gridToDraw);
 		display->render();
 	}
 }
 
 void Univers::loop_world() {
 	log_success("Univers::loop_world");
+	world_->gridToDraw = world_->grid;
 	world_->grid.clear();
 
 	clientTCP_->deliverEvents();
