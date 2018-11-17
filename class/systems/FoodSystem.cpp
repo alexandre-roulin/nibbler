@@ -24,23 +24,12 @@ void FoodSystem::update() {
 				.getEntityByTag(Factory::factory_name(TAIL, event.id_));
 		auto newEntity = getWorld().createEntity();
 
-
 		// Position == entityTail.positionComponent
 		newEntity.addComponent<PositionComponent>(entityTail.getComponent<PositionComponent>());
 
 		//FollowComponent.id == entityTail.idFollowed
 		newEntity.addComponent<FollowComponent>(entityTail.getComponent<FollowComponent>().idFollowed, false);
-
-		newEntity.addComponent<PreviousComponent>(entityTail.getIndex(), false);
-
-
-		auto entityPrevious = getWorld().getEntityManager().getEntity(entityTail.getComponent<FollowComponent>().idFollowed);
-
-		entityPrevious.getComponent<PreviousComponent>().idPrevious = newEntity.getIndex();
-
-
-		newEntity.addComponent<SpriteComponent>(eSprite::BODY | (getWorld().getUnivers().getClientTCP_().getSnake().sprite));
-
+		newEntity.addComponent<SpriteComponent>(eSprite::BODY | (getWorld().getUnivers().getClientTCP_().getSnake().sprite & eSprite::MASK_COLOR));
 		newEntity.addComponent<CollisionComponent>();
 
 		auto &followComponent = entityTail.getComponent<FollowComponent>();

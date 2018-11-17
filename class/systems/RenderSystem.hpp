@@ -10,7 +10,8 @@ public:
 	RenderSystem();
 	virtual void update();
 private:
-	static int getSpriteSnake_(eSprite body, PositionComponent &previous, PositionComponent &actual, PositionComponent &follow);
+	static void debugSpriteSnake_(eSprite sprite);
+	static int getSpriteSnake_(eSprite sprite);
 };
 
 

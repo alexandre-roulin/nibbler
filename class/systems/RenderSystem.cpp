@@ -10,100 +10,109 @@ RenderSystem::RenderSystem() {
 	requireComponent<SpriteComponent>();
 }
 
-void RenderSystem::update() {
-	log_success("update");
-
-	PositionComponent followPosition, positionComponentFollowed, positionComponentPrevious;
-
-	for (auto &entity : getEntities()) {
-		if (entity.isAlive()) {
-			auto& positionComponent = entity.getComponent<PositionComponent>();
-			auto& spriteComponent = entity.getComponent<SpriteComponent>();
-
-			if (entity.hasComponent<FollowComponent>()) {
-				auto *followComponent = &entity.getComponent<FollowComponent>();
-				auto entityFollowed = getWorld().getEntityManager().getEntity(followComponent->idFollowed);
-				positionComponentFollowed = entityFollowed.getComponent<PositionComponent>();
-			}
-			if (entity.hasComponent<PreviousComponent>()) {
-				auto *previousComponent = &entity.getComponent<PreviousComponent>();
-				auto entityPrevious = getWorld().getEntityManager().getEntity(previousComponent->idPrevious);
-				positionComponentPrevious = entityPrevious.getComponent<PositionComponent>();
-			}
-
-			getWorld().grid(positionComponent.x, positionComponent.y) = RenderSystem::getSpriteSnake_(spriteComponent.sprite, positionComponentPrevious, positionComponent, positionComponentFollowed);
-		}
-	}
-}
-
-int direction(PositionComponent &actual, PositionComponent &follow) {
-	PositionComponent res;
-
-	res.x = actual.x - follow.x;
-	res.y = actual.y - follow.y;
-	if (res.y < 0)
+int direction(eSprite to) {
+	if ((to & eSprite::SOUTH) == eSprite::SOUTH)
 		return (0);
-	else if (res.x > 0)
+	if ((to & eSprite::WEST) == eSprite::WEST)
 		return (1);
-	else if (res.y > 0)
+	if ((to & eSprite::NORTH) == eSprite::NORTH)
 		return (2);
 	return (3);
 }
-int edirection(PositionComponent &actual, PositionComponent &follow) {
-	PositionComponent res;
 
-	res.x = actual.x - follow.x;
-	res.y = actual.y - follow.y;
-	if (res.y < 0)
-		return (SOUTH);
-	else if (res.x > 0)
-		return (WEST);
-	else if (res.y > 0)
-		return (NORTH);
-	return (EAST);
+void RenderSystem::debugSpriteSnake_(eSprite sprite) {
+	eSprite from = (sprite & eSprite::MASK_FROM) >> eSprite::BITWISE_FROM;
+	eSprite to = (sprite & eSprite::MASK_TO) >> eSprite::BITWISE_TO;
+
+	std::cout << "Entity : [";
+
+	if ((sprite & eSprite::MASK_BODY) == eSprite::HEAD)
+		std::cout << "HEAD";
+	if ((sprite & eSprite::MASK_BODY) == eSprite::BODY)
+		std::cout << "BODY";
+	if ((sprite & eSprite::MASK_BODY) == eSprite::TAIL)
+		std::cout << "TAIL";
+
+	std::cout << "] FROM [";
+	if ((from & eSprite::NORTH) == eSprite::NORTH)
+		std::cout << "NORTH";
+	if ((from & eSprite::SOUTH) == eSprite::SOUTH)
+		std::cout << "SOUTH";
+	if ((from & eSprite::WEST) == eSprite::WEST)
+		std::cout << "WEST";
+	if ((from & eSprite::EAST) == eSprite::EAST)
+		std::cout << "EAST";
+	std::cout << "]TO [";
+	if ((to & eSprite::NORTH) == eSprite::NORTH)
+		std::cout << "NORTH";
+	if ((to & eSprite::SOUTH) == eSprite::SOUTH)
+		std::cout << "SOUTH";
+	if ((to & eSprite::WEST) == eSprite::WEST)
+		std::cout << "WEST";
+	if ((to & eSprite::EAST) == eSprite::EAST)
+		std::cout << "EAST";
+	std::bitset<32> c(static_cast<int>(sprite));
+
+	std::cout << "::  : [" << c << "]" << std::endl;
 }
 
-int RenderSystem::getSpriteSnake_(eSprite sprite, PositionComponent &previous, PositionComponent &actual, PositionComponent &follow) {
-	int isprite = static_cast<int>(sprite);
 
-	if ((isprite & eSprite::FOOD) == eSprite::FOOD)
+int RenderSystem::getSpriteSnake_(eSprite sprite) {
+
+	eSprite from = (sprite & eSprite::MASK_FROM) >> eSprite::BITWISE_FROM;
+	eSprite to = (sprite & eSprite::MASK_TO) >> eSprite::BITWISE_TO;
+
+	if ((sprite & eSprite::FOOD) == eSprite::FOOD)
 		return (SPRITE_FOOD);
-	if ((isprite & eSprite::MASK_BODY) == eSprite::HEAD)
-		return (SIZE_LINE_TILESET * static_cast<int>(isprite & eSprite::MASK_COLOR) + 5);
-	if ((isprite & eSprite::MASK_BODY) == eSprite::BODY) {
+	if ((sprite & eSprite::MASK_BODY) == eSprite::HEAD)
+		return (SIZE_LINE_TILESET * static_cast<int>(sprite & eSprite::MASK_COLOR) + 5 + direction(to));
+	if ((sprite & eSprite::MASK_BODY) == eSprite::BODY) {
 
-		if (previous.x == actual.x && actual.x == follow.x)
-			return (SIZE_LINE_TILESET * static_cast<int>(isprite & eSprite::MASK_COLOR) + 14);
-		else if (previous.y == actual.y && actual.y == follow.y)
-			return (SIZE_LINE_TILESET * static_cast<int>(isprite & eSprite::MASK_COLOR) + 13);
+		if (from == to && (from == eSprite::NORTH || from == eSprite::SOUTH))
+			return (SIZE_LINE_TILESET * static_cast<int>(sprite & eSprite::MASK_COLOR) + 14);
+		else if (from == to && (from == eSprite::EAST || from == eSprite::WEST))
+			return (SIZE_LINE_TILESET * static_cast<int>(sprite & eSprite::MASK_COLOR) + 13);
 
-		else if (edirection(previous, actual) == NORTH && edirection(actual, follow) == EAST)
-			return (SIZE_LINE_TILESET * static_cast<int>(isprite & eSprite::MASK_COLOR) + 1);
-		else if (edirection(previous, actual) == NORTH && edirection(actual, follow) == WEST)
-			return (SIZE_LINE_TILESET * static_cast<int>(isprite & eSprite::MASK_COLOR) + 2);
+		else if (from == eSprite::NORTH && to == eSprite::EAST)
+			return (SIZE_LINE_TILESET * static_cast<int>(sprite & eSprite::MASK_COLOR) + 1);
+		else if (from == eSprite::NORTH && to == eSprite::WEST)
+			return (SIZE_LINE_TILESET * static_cast<int>(sprite & eSprite::MASK_COLOR) + 2);
 
-		else if (edirection(previous, actual) == SOUTH && edirection(actual, follow) == EAST)
-			return (SIZE_LINE_TILESET * static_cast<int>(isprite & eSprite::MASK_COLOR) + 3);
-		else if (edirection(previous, actual) == SOUTH && edirection(actual, follow) == WEST)
-			return (SIZE_LINE_TILESET * static_cast<int>(isprite & eSprite::MASK_COLOR) + 4);
+		else if (from == eSprite::SOUTH && to == eSprite::EAST)
+			return (SIZE_LINE_TILESET * static_cast<int>(sprite & eSprite::MASK_COLOR) + 3);
+		else if (from == eSprite::SOUTH && to == eSprite::WEST)
+			return (SIZE_LINE_TILESET * static_cast<int>(sprite & eSprite::MASK_COLOR) + 4);
 
-		else if (edirection(previous, actual) == WEST && edirection(actual, follow) == SOUTH)
-			return (SIZE_LINE_TILESET * static_cast<int>(isprite & eSprite::MASK_COLOR) + 1);
-		else if (edirection(previous, actual) == EAST && edirection(actual, follow) == SOUTH)
-			return (SIZE_LINE_TILESET * static_cast<int>(isprite & eSprite::MASK_COLOR) + 2);
+		else if (from == eSprite::WEST && to == eSprite::SOUTH)
+			return (SIZE_LINE_TILESET * static_cast<int>(sprite & eSprite::MASK_COLOR) + 1);
+		else if (from == eSprite::EAST && to == eSprite::SOUTH)
+			return (SIZE_LINE_TILESET * static_cast<int>(sprite & eSprite::MASK_COLOR) + 2);
 
-		else if (edirection(previous, actual) == WEST && edirection(actual, follow) == NORTH)
-			return (SIZE_LINE_TILESET * static_cast<int>(isprite & eSprite::MASK_COLOR) + 3);
-		else if (edirection(previous, actual) == EAST && edirection(actual, follow) == NORTH)
-			return (SIZE_LINE_TILESET * static_cast<int>(isprite & eSprite::MASK_COLOR) + 4);
+		else if (from == eSprite::WEST && to == eSprite::NORTH)
+			return (SIZE_LINE_TILESET * static_cast<int>(sprite & eSprite::MASK_COLOR) + 3);
+		else if (from == eSprite::EAST && to == eSprite::NORTH)
+			return (SIZE_LINE_TILESET * static_cast<int>(sprite & eSprite::MASK_COLOR) + 4);
 
 		else
 			return (SIZE_LINE_TILESET);
 	}
-	if ((isprite & eSprite::MASK_BODY) == eSprite::TAIL)
-		return (SIZE_LINE_TILESET * static_cast<int>(isprite & eSprite::MASK_COLOR) + 9 + direction(actual, follow));
+	if ((sprite & eSprite::MASK_BODY) == eSprite::TAIL)
+		return (SIZE_LINE_TILESET * static_cast<int>(sprite & eSprite::MASK_COLOR) + 9 + direction(to));
 
 	return (0);
 }
+
+
+void RenderSystem::update() {
+	log_success("update");
+
+	for (auto &entity : getEntities()) {
+		if (entity.isAlive()) {
+			auto& positionComponent = entity.getComponent<PositionComponent>();
+			getWorld().grid(positionComponent.x, positionComponent.y) = RenderSystem::getSpriteSnake_(entity.getComponent<SpriteComponent>().sprite);
+		}
+	}
+}
+
 
 

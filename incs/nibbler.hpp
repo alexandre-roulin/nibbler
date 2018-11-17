@@ -72,33 +72,63 @@ enum class eSprite {
 	MASK_BODY = HEAD | BODY | TAIL,
 
 
-	FROM_NORTH = (1 << 11),
-	FROM_SOUTH = (1 << 12),
-	FROM_EAST = (1 << 13),
-	FROM_WEST = (1 << 14),
-	TO_NORTH = (1 << 15),
-	TO_SOUTH = (1 << 16),
-	TO_EAST = (1 << 17),
-	TO_WEST = (1 << 18),
-	WALL = (1 << 19),
-	FOOD = (1 << 20)
+	NORTH = (1 << 11),
+	SOUTH = (1 << 12),
+	EAST = (1 << 13),
+	WEST = (1 << 14),
+
+	MASK_DIRECTION = NORTH | SOUTH | EAST | WEST,
+
+	FROM_NORTH = (1 << 15),
+	FROM_SOUTH = (1 << 16),
+	FROM_EAST = (1 << 17),
+	FROM_WEST = (1 << 18),
+
+	MASK_FROM = FROM_NORTH | FROM_SOUTH | FROM_EAST | FROM_WEST,
+
+	TO_NORTH = (1 << 19),
+	TO_SOUTH = (1 << 20),
+	TO_EAST = (1 << 21),
+	TO_WEST = (1 << 22),
+
+	MASK_TO = TO_NORTH | TO_SOUTH | TO_EAST | TO_WEST,
+
+	BITWISE_TO = 8,
+	BITWISE_FROM = 4,
+
+
+	WALL = (1 << 23),
+	FOOD = (1 << 24)
 };
-inline eSprite operator|(eSprite x, eSprite y)
-{
+inline eSprite operator|(eSprite const x, eSprite const y) {
 	return static_cast<eSprite> (static_cast<int>(x) | static_cast<int>(y));
 }
-inline eSprite operator&(eSprite x, eSprite y)
-{
+inline eSprite const &operator|=(eSprite &x, eSprite const &y) {
+	x = static_cast<eSprite> (static_cast<int>(x) | static_cast<int>(y));
+	return (x);
+}
+inline eSprite operator&(eSprite const x, eSprite const y) {
 	return static_cast<eSprite> (static_cast<int>(x) &  static_cast<int>(y));
 }
-inline eSprite operator&(int x, eSprite y)
-{
+inline eSprite operator&(int const x, eSprite const y) {
 	return static_cast<eSprite> (x &  static_cast<int>(y));
 }
-inline eSprite operator&(eSprite x, int y)
-{
+inline eSprite operator&(eSprite const x, int const y) {
 	return static_cast<eSprite> (static_cast<int>(x) & y);
 }
+inline eSprite operator^(int const x, eSprite const y) {
+	return static_cast<eSprite> (x ^  static_cast<int>(y));
+}
+inline eSprite operator^(eSprite const x, int const y) {
+	return static_cast<eSprite> (static_cast<int>(x) ^ y);
+}
+inline eSprite operator<<(eSprite const x, eSprite const y) {
+	return static_cast<eSprite> (static_cast<int>(x) << static_cast<int>(y));
+}
+inline eSprite operator>>(eSprite const x, eSprite const y) {
+	return static_cast<eSprite> (static_cast<int>(x) >> static_cast<int>(y));
+}
+
 
 /*
 enum class eSprite {

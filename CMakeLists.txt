@@ -180,7 +180,7 @@ add_executable(${NAME}
         incs/logger_utils.h
         incs/nibbler.hpp
         incs/stb_image.h
-        class/component/PreviousComponent.cpp class/component/PreviousComponent.hpp)
+        class/component/PreviousComponent.cpp class/component/PreviousComponent.hpp class/systems/SpriteSystem.cpp class/systems/SpriteSystem.hpp)
 
 if (NOT SFML_FOUND)
     add_dependencies(${NAME} sfml)

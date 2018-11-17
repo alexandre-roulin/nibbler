@@ -5,6 +5,7 @@
 #include <systems/FollowSystem.hpp>
 #include <systems/FoodSystem.hpp>
 #include <systems/CollisionSystem.hpp>
+#include <systems/SpriteSystem.hpp>
 #include <systems/RenderSystem.hpp>
 #include <events/StartEvent.hpp>
 #include <network/ServerTCP.hpp>
@@ -79,6 +80,7 @@ void Univers::loop() {
 	world_->getSystemManager().addSystem<FoodSystem>();
 	world_->getSystemManager().addSystem<JoystickSystem>();
 	world_->getSystemManager().addSystem<MotionSystem>();
+	world_->getSystemManager().addSystem<SpriteSystem>();
 	world_->getSystemManager().addSystem<RenderSystem>();
 
 	world_->getEventManager().emitEvent<StartEvent>();
@@ -112,6 +114,7 @@ void Univers::loop_world() {
 	world_->getSystemManager().getSystem<MotionSystem>().update();
 	world_->getSystemManager().getSystem<CollisionSystem>().update();
 	world_->getSystemManager().getSystem<FoodSystem>().update();
+	world_->getSystemManager().getSystem<SpriteSystem>().update();
 	world_->getSystemManager().getSystem<RenderSystem>().update();
 
 	timer_loop.expires_at(
