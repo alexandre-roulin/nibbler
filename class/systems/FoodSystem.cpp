@@ -8,6 +8,7 @@
 #include <factory/Factory.hpp>
 #include <network/ClientTCP.hpp>
 #include <events/FoodCreation.hpp>
+#include <systems/SpriteSystem.hpp>
 
 FoodSystem::FoodSystem() {
 	requireComponent<FollowComponent>();
@@ -29,8 +30,17 @@ void FoodSystem::update() {
 
 		//FollowComponent.id == entityTail.idFollowed
 		newEntity.addComponent<FollowComponent>(entityTail.getComponent<FollowComponent>().idFollowed, false);
-		newEntity.addComponent<SpriteComponent>(eSprite::BODY | (getWorld().getUnivers().getClientTCP_().getSnake().sprite & eSprite::MASK_COLOR));
 		newEntity.addComponent<CollisionComponent>();
+
+
+		// NEW : Make TO_direction
+		KINU::Entity entityFollowed = getWorld().getEntityManager().getEntity(entityTail.getComponent<FollowComponent>().idFollowed);
+
+		eSprite sprite = eSprite::BODY | (getWorld().getUnivers().getClientTCP_().getSnake().sprite & eSprite::MASK_COLOR)
+				| (SpriteSystem::spriteDirection(newEntity.getComponent<PositionComponent>(),
+				        entityFollowed.getComponent<PositionComponent>()) << eSprite::BITWISE_TO);
+		//
+		newEntity.addComponent<SpriteComponent>(sprite);
 
 		auto &followComponent = entityTail.getComponent<FollowComponent>();
 		followComponent.idFollowed = newEntity.getIndex();

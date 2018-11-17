@@ -11,7 +11,7 @@ SpriteSystem::SpriteSystem() {
 	requireComponent<SpriteComponent>();
 }
 
-eSprite spriteDirection(PositionComponent &actual, PositionComponent &follow) {
+eSprite SpriteSystem::spriteDirection(PositionComponent &actual, PositionComponent &follow) {
 	PositionComponent res;
 
 	res.x = actual.x - follow.x;
@@ -65,12 +65,12 @@ void SpriteSystem::update() {
 			}
 			else {
 				spriteComponent.sprite |=
-						(spriteDirection(positionComponent, positionComponentFollowed) << eSprite::BITWISE_TO);
+						(SpriteSystem::spriteDirection(positionComponent, positionComponentFollowed) << eSprite::BITWISE_TO);
 			}
 
 			if (followComponent) {
 				entityFollowed.getComponent<SpriteComponent>().sprite |=
-						(spriteDirection(positionComponent, positionComponentFollowed) << eSprite::BITWISE_FROM);
+						(SpriteSystem::spriteDirection(positionComponent, positionComponentFollowed) << eSprite::BITWISE_FROM);
 			}
 		}
 	}
