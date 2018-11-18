@@ -20,8 +20,7 @@ namespace KINU {
 	public:
 		World(Univers &univers);
 
-		Grid<int> grid;
-		Grid<int> gridToDraw;
+
 		Univers &univers_;
 		IDisplay *display_;
 		Univers &getUnivers() const;
@@ -49,6 +48,7 @@ namespace KINU {
 
 		std::vector<Entity> getGroup(std::string group) const;
 
+		Grid<int> grid;
 	private:
 		// vector of entities that are awaiting creation
 		std::vector<Entity> createdEntities;

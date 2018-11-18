@@ -3,7 +3,6 @@
 #include <vector>
 #include <cassert>
 #include <KINU/Config.hpp>
-#include <logger.h>
 
 namespace KINU {
 
@@ -35,18 +34,14 @@ namespace KINU {
 		}
 
 		void resize(int n) {
-			log_warn("Resize[%s] from %d to %d", typeid(T).name(), getSize(),
-					 n);
 			data.resize(n);
 		}
 
 		void clear() {
-			log_fatal("Clear -> %s", typeid(T).name());
 			data.clear();
 		}
 
 		bool set(unsigned int index, T object) {
-			log_fatal("Set -> %d %s", index, typeid(T).name());
 			assert(index < getSize());
 			data[index] = object;
 			return true;
@@ -72,7 +67,6 @@ namespace KINU {
 		}
 
 		std::vector<T> getData() {
-			log_fatal("In [%s] size [%d]", typeid(T).name(), data.size());
 			return data;
 		}
 

@@ -6,8 +6,8 @@
 #include <component/SpriteComponent.hpp>
 #include <factory/Factory.hpp>
 #include <network/ClientTCP.hpp>
-#include <events/FoodCreation.hpp>
 #include <systems/SpriteSystem.hpp>
+#include <logger.h>
 
 FoodSystem::FoodSystem() {
 	requireComponent<FollowComponent>();
@@ -25,20 +25,27 @@ void FoodSystem::update() {
 		auto newEntity = getWorld().createEntity();
 
 		// Position == entityTail.positionComponent
-		newEntity.addComponent<PositionComponent>(entityTail.getComponent<PositionComponent>());
+		newEntity.addComponent<PositionComponent>(
+				entityTail.getComponent<PositionComponent>());
 
 		//FollowComponent.id == entityTail.idFollowed
-		newEntity.addComponent<FollowComponent>(entityTail.getComponent<FollowComponent>().idFollowed, false);
+		newEntity.addComponent<FollowComponent>(
+				entityTail.getComponent<FollowComponent>().idFollowed, false);
 		newEntity.addComponent<CollisionComponent>();
 
 
 		// NEW : Make TO_direction
-		KINU::Entity entityFollowed = getWorld().getEntityManager().getEntity(entityTail.getComponent<FollowComponent>().idFollowed);
+		KINU::Entity entityFollowed = getWorld().getEntityManager().getEntity(
+				entityTail.getComponent<FollowComponent>().idFollowed);
 
-		eSprite sprite = eSprite::BODY | (getWorld().getUnivers().getClientTCP_().getSnake().sprite & eSprite::MASK_COLOR)
-				| (SpriteSystem::spriteDirection(newEntity.getComponent<PositionComponent>(),
-				        entityFollowed.getComponent<PositionComponent>()) << eSprite::BITWISE_TO);
-		//
+		eSprite sprite = eSprite::BODY |
+						 (getWorld().getUnivers().getClientTCP_().getSnakes()[std::stoi(entityTail.getTag())].sprite &
+						  eSprite::MASK_COLOR)
+						 | (SpriteSystem::spriteDirection(
+				newEntity.getComponent<PositionComponent>(),
+				entityFollowed.getComponent<PositionComponent>())
+				<< eSprite::BITWISE_TO);
+		log_warn("New entity create sprite [%d]", sprite);
 		newEntity.addComponent<SpriteComponent>(sprite, MINOR_PRIORITY);
 
 		auto &followComponent = entityTail.getComponent<FollowComponent>();
@@ -47,27 +54,16 @@ void FoodSystem::update() {
 
 		newEntity.tag(Factory::factory_name(BODY, newEntity.getIndex()));
 		newEntity.group(entityTail.getGroup());
-		createFood();
 	}
 
 	auto foodCreationEvents = getWorld().getEventManager().getEvents<FoodCreation>();
-	log_warn("Find %d foodCreationEvents",foodCreationEvents.size());
-
 	for (auto foodCreationEvent : foodCreationEvents) {
 		auto food = getWorld().createEntity();
-		food.addComponent<PositionComponent>(foodCreationEvent.y, foodCreationEvent.x);
+		food.addComponent(foodCreationEvent.positionComponent_);
 		food.addComponent<CollisionComponent>(false);
-		food.addComponent<SpriteComponent>(eSprite::FOOD);
+		food.addComponent<SpriteComponent>(eSprite::FOOD, NO_PRIORITY);
 		food.group(FOOD_TAG);
 	}
-}
-
-void FoodSystem::createFood() {
-	int position[2] = {(rand() % (30 - 2)) + 1,
-					   (rand() % (30 - 2)) + 1};
-	getWorld().getUnivers()
-			.getClientTCP_()
-			.write_socket(ClientTCP::add_prefix(FOOD, position));
 }
 
 //

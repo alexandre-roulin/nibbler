@@ -11,53 +11,61 @@
 #include <dlfcn.h>
 
 Univers::Univers()
-	: timer_start(boost::asio::deadline_timer(io_start)),
-	timer_loop(boost::asio::deadline_timer(io_loop, boost::posix_time::milliseconds(100)))
-	{
+		: timer_start(boost::asio::deadline_timer(io_start)),
+		  timer_loop(boost::asio::deadline_timer(io_loop,
+												 boost::posix_time::milliseconds(
+														 100))),
+		  mapSize(0),
+		  gameSpeed(100) {
 
-world_ = std::make_unique<KINU::World>(*this);
-core_ = nullptr;
-clientTCP_ = nullptr;
-serverTCP_ = nullptr;
-display = nullptr;
+	world_ = std::make_unique<KINU::World>(*this);
+	core_ = nullptr; //std::make_unique<Core>(*this)
+	clientTCP_ = ClientTCP::create(*this, io_client);
+	serverTCP_ = nullptr;
+	display = nullptr;
 }
 
 
-int Univers::start_game() {
-	if (!(dlHandle = dlopen("./externlib/display_sfml/libdisplay_sfml.so",
-							RTLD_LAZY | RTLD_LOCAL)))
+bool Univers::load_external_library(std::string title, std::string library_path) {
+
+	if (display != nullptr && dlHandle != nullptr) {
+		deleteDisplay(display);
+		dlclose(dlHandle);
+	}
+
+	if (!(dlHandle = dlopen(library_path.c_str(), RTLD_LAZY | RTLD_LOCAL)))
 		return (dlError());
+
 	if (!(newDisplay = reinterpret_cast<IDisplay *(*)(
 			const char *, int, int, int, const char *
 	)>(dlsym(dlHandle, "newDisplay"))))
 		return (dlError());
+
 	if (!(deleteDisplay = reinterpret_cast<void (*)(
 			IDisplay *
 	)>(dlsym(dlHandle, "deleteDisplay"))))
 		return (dlError());
-	display = newDisplay(PATH_TILESET, DEFAULT_SIZE_SPRITE, 30, 30, "Nibblour");
-	assert(display != nullptr);
+	if (!(display = newDisplay(PATH_TILESET, DEFAULT_SIZE_SPRITE, mapSize,
+							   mapSize, title.c_str())))
+		return false;
 
-	Grid<int> grid(30, 30);
-	grid.fill(SPRITE_GROUND);
-	grid.setBorder(SPRITE_WALL);
-	display->setBackground(grid);
-
+	world_->grid = Grid<int>(mapSize);
+	world_->grid.fill(SPRITE_GROUND);
+	world_->grid.setBorder(SPRITE_WALL);
+	display->setBackground(world_->grid);
 	world_->setDisplay(display);
 
 	display->update();
 	display->render();
-	return 0;
+	return true;
 }
 
 void Univers::manage_input() {
-	eDirection ed = display->getDirection();
-	int16_t id = clientTCP_->getId();
-//	log_warn("Match [%s] [%d]", Factory::factory_name(HEAD, id).c_str(),
-//			 world_->getEntityManager().hasTag(
-//					 Factory::factory_name(HEAD, id)));
-	if (world_->getEntityManager().hasTag(Factory::factory_name(HEAD, id)))
-		clientTCP_->write_socket(ClientTCP::add_prefix(INPUT, &id, &ed));
+	ClientTCP::InputInfo inputInfo;
+	inputInfo.id = clientTCP_->getId();
+	inputInfo.dir = display->getDirection();
+	if (world_->getEntityManager().hasTag(Factory::factory_name(HEAD, inputInfo.id)))
+		clientTCP_->write_socket(ClientTCP::add_prefix(INPUT, &inputInfo));
 }
 
 void Univers::manage_start() {
@@ -66,10 +74,9 @@ void Univers::manage_start() {
 	for (; startEvent.empty(); startEvent = world_->getEventManager().getEvents<StartEvent>());
 	auto ptime = startEvent.front().start_time;
 	timer_start.expires_at(ptime);
-	std::cout << timer_start.expires_at() << std::endl;
 	io_start.run();
 	timer_start.wait();
-	timer_loop.expires_at(ptime + boost::posix_time::milliseconds(200));
+	timer_loop.expires_at(ptime + boost::posix_time::milliseconds(gameSpeed));
 }
 
 
@@ -93,19 +100,18 @@ void Univers::loop() {
 
 	world_->grid.clear();
 
-	std::cout << "Bug Display" << std::endl;
-	while (!display->exit()) {
-		display->update();
-		manage_input();
-		display->drawGrid(world_->gridToDraw);
-		display->render();
+	while (display == nullptr || !display->exit()) {
+		if (display != nullptr) {
+			display->update();
+			manage_input();
+			display->drawGrid(world_->grid);
+			display->render();
+		}
 	}
 }
 
 void Univers::loop_world() {
 	log_success("Univers::loop_world");
-	world_->gridToDraw = world_->grid;
-	world_->grid.clear();
 
 	clientTCP_->deliverEvents();
 
@@ -117,11 +123,21 @@ void Univers::loop_world() {
 	world_->getSystemManager().getSystem<SpriteSystem>().update();
 	world_->getSystemManager().getSystem<RenderSystem>().update();
 
-	timer_loop.expires_at(
-			timer_loop.expires_at() + boost::posix_time::milliseconds(150));
-	timer_loop.async_wait(boost::bind(&Univers::loop_world, this));
 	world_->update();
+	timer_loop.expires_at(
+			timer_loop.expires_at() +
+			boost::posix_time::milliseconds(gameSpeed));
+	timer_loop.async_wait(boost::bind(&Univers::loop_world, this));
+}
 
+void Univers::create_ui() {
+	core_ = std::make_unique<Core>(*this);
+}
+
+void Univers::create_server(unsigned int port) {
+	serverTCP_ = std::make_unique<ServerTCP>(io_server, port);
+	boost::thread t2(boost::bind(&boost::asio::io_service::run, &io_server));
+	t2.detach();
 }
 
 KINU::World &Univers::getWorld_() const {
@@ -133,26 +149,12 @@ ClientTCP &Univers::getClientTCP_() const {
 }
 
 
-ServerTCP &Univers::getServerTCP_() const {
-	return *serverTCP_;
-}
-
 Core &Univers::getCore_() const {
 	return *core_;
 }
 
-void Univers::create_ui() {
-	core_ = std::make_unique<Core>(*this);
-}
-
-void Univers::create_server() {
-	serverTCP_ = std::make_unique<ServerTCP>(*this, io_server);
-	boost::thread t2(boost::bind(&boost::asio::io_service::run, &io_server));
-	t2.detach();
-}
-
-void Univers::create_client() {
-	clientTCP_ = ClientTCP::create(*this, io_client);
+unsigned int Univers::getMapSize() {
+	return mapSize;
 }
 
 bool Univers::dlError() {
@@ -160,11 +162,8 @@ bool Univers::dlError() {
 	return (false);
 }
 
-IDisplay &Univers::getDisplay() const {
-	assert(display != nullptr);
-	return *display;
+void Univers::setMapSize(unsigned int mapSize) {
+	Univers::mapSize = mapSize;
 }
 
-unsigned int Univers::getMapSize() {
-	return 30;
-}
+

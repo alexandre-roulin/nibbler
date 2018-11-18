@@ -21,9 +21,7 @@ class Univers {
 public:
 	Univers();
 
-	IDisplay &getDisplay() const;
-
-	int start_game();
+	bool load_external_library(std::string title, std::string library_path);
 
 	void loop();
 
@@ -37,15 +35,11 @@ public:
 
 	ClientTCP &getClientTCP_() const;
 
-	ServerTCP &getServerTCP_() const;
-
 	Core &getCore_() const;
 
 	void create_ui();
 
-	void create_server();
-
-	void create_client();
+	void create_server(unsigned int port = 4242);
 
 	bool dlError(void);
 
@@ -53,7 +47,6 @@ private:
 
 	void loop_world();
 
-	ServerTCP *serverTCP;
 	boost::asio::io_service io_server;
 	boost::asio::io_service io_client;
 	boost::asio::io_service io_loop;
@@ -61,11 +54,20 @@ private:
 	boost::asio::deadline_timer timer_loop;
 	boost::asio::deadline_timer timer_start;
 	std::unique_ptr<KINU::World> world_;
-	boost::shared_ptr<ClientTCP> clientTCP_;
 	std::unique_ptr<ServerTCP> serverTCP_;
 	std::unique_ptr<Core> core_;
+	boost::shared_ptr<ClientTCP> clientTCP_;
 	void *dlHandle;
 	IDisplay *display;
+
+	unsigned int mapSize;
+public:
+	void setMapSize(unsigned int mapSize);
+
+private:
+	unsigned int gameSpeed;
+
+private:
 
 	IDisplay *(*newDisplay)(char const *, int, int, int, char const *);
 

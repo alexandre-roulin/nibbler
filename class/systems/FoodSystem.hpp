@@ -6,7 +6,7 @@
 class FoodSystem: public KINU::System {
 public:
 	FoodSystem();
-	void createFood();
+
 	virtual void update();
 };
 

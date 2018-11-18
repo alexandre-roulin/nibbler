@@ -2,10 +2,9 @@
 #include "ClientTCP.hpp"
 #include <factory/Factory.hpp>
 
-ServerTCP::ServerTCP(Univers &univers, boost::asio::io_service &io_service)
+ServerTCP::ServerTCP(boost::asio::io_service &io_service, unsigned int port)
 		: nu_(0),
-		  univers(univers),
-		  acceptor_(io_service, tcp::endpoint(tcp::v4(), 4242)) {
+		  acceptor_(io_service, tcp::endpoint(tcp::v4(), port)) {
 	//std::cout << "Server created" << std::endl;
 	start_accept();
 }
@@ -58,6 +57,11 @@ void ServerTCP::start_game() {
 	startInfo.time_duration = boost::posix_time::microsec_clock::universal_time() + boost::posix_time::seconds(1);
 	std::cout << "Start timer in server " << std::endl;
 	async_write(ClientTCP::add_prefix(START_GAME, &startInfo));
+	for (int index = 0; index < nu_; ++index) {
+		PositionComponent positionComponent((rand() % (30 - 2)) + 1, (rand() % (30 - 2)) + 1);
+		async_write(ClientTCP::add_prefix(FOOD, &positionComponent));
+	}
+
 }
 
 void ServerTCP::async_write(std::string message) {

@@ -23,7 +23,7 @@ void FollowSystem::update() {
 		followComponent.skip = false;
 	}
 	for (const auto &entity : getEntities()) {
-		entity.getComponent<PositionComponent>() =
-				entity.getComponent<FollowComponent>().positionComponent;
+		auto &positionComponent = entity.getComponent<PositionComponent>();
+		positionComponent = entity.getComponent<FollowComponent>().positionComponent;
 	}
 }

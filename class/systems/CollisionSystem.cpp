@@ -1,6 +1,8 @@
 #include "CollisionSystem.hpp"
 #include <factory/Factory.hpp>
 #include <events/FoodEat.hpp>
+#include <events/FoodCreation.hpp>
+#include <network/ClientTCP.hpp>
 
 CollisionSystem::CollisionSystem() {
 	requireComponent<CollisionComponent>();
@@ -9,7 +11,7 @@ CollisionSystem::CollisionSystem() {
 
 
 void CollisionSystem::checkCollision(
-KINU::Entity &entityHead, KINU::Entity &entityCheck) {
+		KINU::Entity &entityHead, KINU::Entity &entityCheck) {
 
 	auto &snakePositionComponent = entityHead.getComponent<PositionComponent>();
 	auto &positionComponent = entityCheck.getComponent<PositionComponent>();
@@ -18,58 +20,34 @@ KINU::Entity &entityHead, KINU::Entity &entityCheck) {
 		entityHead != entityCheck) {
 		auto &collisionComponent = entityCheck.getComponent<CollisionComponent>();
 		std::string group = entityCheck.getGroup();
-		log_info("[%d][%d][%s]", entityHead.getIndex(), entityCheck.getIndex(), group.c_str());
+		log_info("[%d][%d][%s]", entityHead.getIndex(), entityCheck.getIndex(),
+				 group.c_str());
 		if (group == FOOD_TAG) {
 			log_info("FoodCollision");
 			entityCheck.kill();
-			getWorld().getEventManager().emitEvent<FoodEat>(Factory::getIdFromTag(entityHead.getTag()));
-			getWorld().getEventManager().emitEvent<FoodEat>(Factory::getIdFromTag(entityHead.getTag()));
-			getWorld().getEventManager().emitEvent<FoodEat>(Factory::getIdFromTag(entityHead.getTag()));
 			getWorld().getEventManager().emitEvent<FoodEat>(
 					Factory::getIdFromTag(entityHead.getTag()));
-			getWorld().getEventManager().emitEvent<FoodEat>(
-					Factory::getIdFromTag(entityHead.getTag()));
-			getWorld().getEventManager().emitEvent<FoodEat>(
-					Factory::getIdFromTag(entityHead.getTag()));
-			getWorld().getEventManager().emitEvent<FoodEat>(
-					Factory::getIdFromTag(entityHead.getTag()));
-			getWorld().getEventManager().emitEvent<FoodEat>(
-					Factory::getIdFromTag(entityHead.getTag()));
-			getWorld().getEventManager().emitEvent<FoodEat>(
-					Factory::getIdFromTag(entityHead.getTag()));
-			getWorld().getEventManager().emitEvent<FoodEat>(
-					Factory::getIdFromTag(entityHead.getTag()));
-			getWorld().getEventManager().emitEvent<FoodEat>(
-					Factory::getIdFromTag(entityHead.getTag()));
-			getWorld().getEventManager().emitEvent<FoodEat>(
-					Factory::getIdFromTag(entityHead.getTag()));
-			getWorld().getEventManager().emitEvent<FoodEat>(
-					Factory::getIdFromTag(entityHead.getTag()));
-			getWorld().getEventManager().emitEvent<FoodEat>(
-					Factory::getIdFromTag(entityHead.getTag()));
-			getWorld().getEventManager().emitEvent<FoodEat>(
-					Factory::getIdFromTag(entityHead.getTag()));
-			getWorld().getEventManager().emitEvent<FoodEat>(
-					Factory::getIdFromTag(entityHead.getTag()));
-			getWorld().getEventManager().emitEvent<FoodEat>(
-					Factory::getIdFromTag(entityHead.getTag()));
-			getWorld().getEventManager().emitEvent<FoodEat>(
-					Factory::getIdFromTag(entityHead.getTag()));
-			getWorld().getEventManager().emitEvent<FoodEat>(
-					Factory::getIdFromTag(entityHead.getTag()));
-			getWorld().getEventManager().emitEvent<FoodEat>(
-					Factory::getIdFromTag(entityHead.getTag()));
+			if (getWorld().getUnivers().getClientTCP_().getId() ==
+				std::stoi(entityHead.getTag())) {
+				auto positionFood = PositionComponent(rand() % (30 - 2) + 1, rand() % (30 - 2) + 1);
+				getWorld().getUnivers().getClientTCP_().write_socket(ClientTCP::add_prefix(FOOD, &positionFood);
+			}
 		} else if (group == WALL_TAG) {
 			log_info("WallCollision");
 			entityHead.killGroup();
-		} else if (!entityCheck.getTag().empty()){
-			log_info("HeadCollision");
-			entityHead.killGroup();
-			entityCheck.killGroup();
-		} else if (entityCheck.getGroup() != entityHead.getGroup())  {
+		} else if (entityCheck.getGroup() == entityHead.getGroup()) {
 			log_info("Body||TailCollision");
 			entityHead.killGroup();
+		} else {
+			log_info("Crash an other Snake");
+			auto winSnake = getWorld().getEntityManager().getEntityGroup(entityHead.getGroup()).size();
+			for (int index = 0; index < winSnake; ++index) {
+				getWorld().getEventManager().emitEvent<FoodEat>(
+						Factory::getIdFromTag(entityHead.getTag()));
+			}
+			entityHead.killGroup();
 		}
+
 	}
 }
 

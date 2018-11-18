@@ -103,10 +103,11 @@ private:
 };
 
 extern "C" {
-IDisplay *_deleteDisplay(char const *tileset,
-						 int tileSize,
-						 int width,
-						 int height,
-						 char const *windowName);
+IDisplay *newDisplay(char const *tileset,
+					 int tileSize,
+					 int width,
+					 int height,
+					 char const *windowName);
 void deleteDisplay(IDisplay *display);
 }
+

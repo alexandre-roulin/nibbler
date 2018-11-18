@@ -9,7 +9,7 @@
 
 int const ClientTCP::size_header[] = {
 		[CHAT] = SIZEOF_CHAT_PCKT,
-		[FOOD] = sizeof(int) * 2,
+		[FOOD] = sizeof(PositionComponent),
 		[ID] = sizeof(int16_t),
 		[START_GAME] = sizeof(StartInfo),
 		[SNAKE] = sizeof(Snake),
@@ -59,8 +59,6 @@ void ClientTCP::connect(std::string dns, std::string port) {
 		read_socket_header();
 		thread = boost::thread(boost::bind(&boost::asio::io_service::run, &io));
 		thread.detach();
-		auto e = std::this_thread::get_id();
-		std::cout << "connect > " << std::this_thread::get_id() << std::endl;
 	} catch (std::exception &exception) {
 		std::cout << exception.what() << std::endl;
 	}
@@ -68,9 +66,6 @@ void ClientTCP::connect(std::string dns, std::string port) {
 }
 
 void ClientTCP::read_socket_header() {
-
-//	std::cout << "ClientTCP::read_socket_header" << std::this_thread::get_id()
-//			  << std::endl;
 	boost::asio::async_read(socket, boost::asio::buffer(buffer_data,
 														ClientTCP::size_header[HEADER]),
 							boost::bind(&ClientTCP::handle_read_header,
@@ -80,7 +75,6 @@ void ClientTCP::read_socket_header() {
 }
 
 void ClientTCP::read_socket_data(eHeader header) {
-//	std::cout << "ClientTCP::read_socket_data" << std::endl;
 	boost::asio::async_read(socket, boost::asio::buffer(buffer_data,
 														ClientTCP::size_header[header]),
 							boost::bind(&ClientTCP::handle_read_data,
@@ -146,38 +140,26 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 			break;
 		}
 		case FOOD: {
-			log_info("FOOD");
-			int position[2];
-			std::memcpy(position, input, len);
-			foodCreations.push_back(FoodCreation(position[0], position[1]));
+			PositionComponent positionComponent;
+			std::memcpy(&positionComponent, input, len);
+			foodCreations.push_back(FoodCreation(positionComponent));
 			break;
 		}
 
 		case ID:
-			log_info("ID");
 			std::memcpy(&id_, input, len);
 			break;
 		case START_GAME: {
-			log_info("START_GAME");
 			StartInfo st;
 			std::memcpy(&st, input, ClientTCP::size_header[START_GAME]);
 			factory.create_all_snake(snake_array, st.nu);
 			univers.getWorld_().getEventManager().emitEvent<StartEvent>(st.time_duration);
-
 		}
 			break;
 		case INPUT: {
-			eDirection dir;
-			int16_t id;
-			char *data_deserialize = new char[len];
-			std::memcpy(data_deserialize, input, len);
-
-			std::memcpy(&id, data_deserialize, sizeof(int16_t));
-			std::memcpy(&dir, data_deserialize + sizeof(int16_t), sizeof(eDirection));
-			joystickEvents.push_back(JoystickEvent(id, dir));
-//			std::cout << "Size: " << univers.getWorld_().getEventManager().getEvents<JoystickEvent>().size() << std::endl;
-
-			delete [] data_deserialize;
+			InputInfo ii;
+			std::memcpy(&ii, input, len);
+			joystickEvents.push_back(JoystickEvent(ii.id, ii.dir));
 		}
 			break;
 		default:
@@ -202,8 +184,6 @@ void ClientTCP::deliverEvents() {
 
 void ClientTCP::handle_read_data(eHeader header, boost::system::error_code const &error_code,
 								 size_t len) {
-//	std::cout << "ClientTCP::handle_read_data [" << len << "]"
-//	<< "Header [" << header<< "]"<< std::endl;
 	if (error_code.value() == 0 && len > 0) {
 		parse_input(header, buffer_data.data(), len);
 	}
@@ -222,5 +202,6 @@ Snake const *ClientTCP::getSnakes() const {
 	return snake_array;
 }
 Snake	const &ClientTCP::getSnake(void) const {
+	std::cout << this->snake_array[this->id_] << std::endl;
 	return this->snake_array[this->id_];
 }

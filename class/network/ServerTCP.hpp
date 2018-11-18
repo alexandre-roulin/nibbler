@@ -53,7 +53,7 @@ public:
 
 class ServerTCP {
 public:
-	ServerTCP(Univers &univers, boost::asio::io_service &io_service);
+	ServerTCP(boost::asio::io_service &io_service, unsigned int port);
 
 	void async_write(std::string message);
 
@@ -75,7 +75,6 @@ private:
 
 	void start_accept();
 
-	Univers &univers;
 	std::vector<TCPConnection::pointer> pointers;
 	boost::thread thread_accept;
 	tcp::acceptor acceptor_;
