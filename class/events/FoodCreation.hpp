@@ -1,13 +1,13 @@
 #pragma once
 
+#include <component/PositionComponent.hpp>
 
 class FoodCreation {
 
 public:
-	FoodCreation(int x = 0, int y = 0);
+	FoodCreation(PositionComponent = PositionComponent(0,0));
 
-	int x;
-	int y;
+	PositionComponent positionComponent_;
 };
 
 

@@ -21,10 +21,6 @@ void Factory::create_all_snake(Snake snake_array[MAX_SNAKE], int16_t nu) {
 	for (int index = 0; index < nu; ++index) {
 		create_snake(snake_array[index], nu);
 	}
-	for (int index = 0; index < nu; ++index) {
-		univers_.getWorld_().getEventManager().emitEvent<FoodCreation>(10, 10 +
-																		   index);
-	}
 	create_walls();
 }
 
@@ -43,23 +39,27 @@ void Factory::create_snake(Snake snake, int max_snakes) {
 			new_snake.addComponent<CollisionComponent>();
 			new_snake.addComponent<SpriteComponent>(eSprite::HEAD | snake.sprite, SPECIFIC_LAST);
 			new_snake.addComponent<PositionComponent>(base_x, base_y);
+			log_warn("HEAD [%d][%d][%d]",base_x, base_y, new_snake.getComponent<MotionComponent>().direction);
 		}
 		else if (index == 3) {
 			new_snake.tag(factory_name(TAIL, snake.id));
 			new_snake.addComponent<FollowComponent>(snake_follow.getIndex(), false);
 			new_snake.addComponent<CollisionComponent>();
 			new_snake.addComponent<SpriteComponent>(eSprite::TAIL | snake.sprite, SPECIFIC_LAST);
-			new_snake.addComponent<PositionComponent>(15, 15 + index);
+			new_snake.addComponent<PositionComponent>(base_x + 1, base_y);
+			log_warn("TAIL [%d][%d]",base_x + 1, base_y);
 		}
 		else {
 			new_snake.addComponent<FollowComponent>(snake_follow.getIndex(), false);
 			new_snake.addComponent<CollisionComponent>();
-			new_snake.addComponent<PositionComponent>(15, 15 + index);
+			new_snake.addComponent<PositionComponent>(base_x + (index - 1), base_y + 1);
 			new_snake.addComponent<SpriteComponent>(eSprite::BODY | snake.sprite, MINOR_PRIORITY);
+			log_warn("BODY [%d][%d]",base_x + (index - 1), base_y + 1);
 		}
 		new_snake.group(factory_name(GRPS, snake.id));
 		snake_follow = new_snake;
 	}
+
 }
 
 eSnakePart Factory::isSnakePart(std::string compare) {
@@ -70,12 +70,12 @@ eSnakePart Factory::isSnakePart(std::string compare) {
 }
 
 void Factory::create_walls() {
-	int max = 30;
+	int max = univers_.getMapSize();
 	int x = 0;
 	int y = 1;
 	for (; x < max; ++x) {
-		create_wall(x, max - 1);
 		create_wall(x, 0);
+		create_wall(x, max - 1);
 	}
 	for (; y < max - 1; ++y) {
 		create_wall(0, y);
@@ -84,8 +84,9 @@ void Factory::create_walls() {
 }
 
 void Factory::create_wall(int x, int y) {
+	log_fatal("create_wall [%d][%d]", x ,y);
 	auto entity = univers_.getWorld_().createEntity();
-	entity.addComponent<PositionComponent>(y, x);
+	entity.addComponent<PositionComponent>(x, y);
 	entity.addComponent<CollisionComponent>();
 	entity.group(WALL_TAG);
 }

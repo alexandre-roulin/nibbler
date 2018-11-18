@@ -32,6 +32,12 @@ public:
 		boost::posix_time::ptime time_duration;
 	};
 
+
+	struct InputInfo {
+		int16_t id;
+		eDirection dir;
+	};
+
 	void deliverEvents();
 
 	void connect(std::string dns, std::string port);

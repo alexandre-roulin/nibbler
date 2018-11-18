@@ -1,5 +1,6 @@
 #include "FoodCreation.hpp"
 
-FoodCreation::FoodCreation(int x, int y): x(x), y(y) {
+FoodCreation::FoodCreation(PositionComponent positionComponent)
+		: positionComponent_(positionComponent) {
 
 }

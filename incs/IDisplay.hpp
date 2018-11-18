@@ -5,9 +5,10 @@
 #define SPRITE_GROUND 8 * SIZE_LINE_TILESET
 #define SPRITE_WALL 8 * SIZE_LINE_TILESET + 1
 #define SPRITE_FOOD SIZE_LINE_TILESET
-#define DEFAULT_SIZE_SPRIT 32
 #define PATH_TILESET "./ressource/snake_tileset.png"
-
+#define SIZE_LINE_TILESET 15
+#define LIBRARY_SFML "./externlib/display_sfml/libdisplay_sfml.so"
+#define LIBRARY_SDL "./externlib/display_sfml/libdisplay_sdl.so"
 class IDisplay {
 public:
 	virtual ~IDisplay() {}

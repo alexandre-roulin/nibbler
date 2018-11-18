@@ -12,7 +12,6 @@
 #define WALL_TAG "wall"
 #define FOOD_TAG "food"
 #define DEFAULT_SIZE_SPRITE 32
-#define SIZE_LINE_TILESET 15
 
 #define DIRECTION_VERTICAL 1			// 0000 0001
 #define DIRECTION_HORIZONTAL 4			// 0000 0100
@@ -40,8 +39,6 @@ enum class eSprite {
 	ORANGE = 6,
 	RED = 7,
 
-	//	MASK_COLOR = GREEN | BLUE | PURPLE | PINK | GREY | YELLOW | ORANGE | RED,
-
 	MASK_COLOR = 0xFF,
 
 	HEAD = (1 << 8),
@@ -49,7 +46,6 @@ enum class eSprite {
 	TAIL = (1 << 10),
 
 	MASK_BODY = HEAD | BODY | TAIL,
-
 
 	NORTH = (1 << 11),
 	SOUTH = (1 << 12),
@@ -109,31 +105,6 @@ inline eSprite operator>>(eSprite const x, eSprite const y) {
 }
 
 
-/*
-enum class eSprite {
-	GREEN_SNAKE = (1 << 0),		// 0000 0000 0000 0000 0000 0001
-	BLUE_SNAKE = (1 << 1),			// 0000 0000 0000 0000 0000 0010
-	PURPLE_SNAKE = (1 << 2),		// 0000 0000 0000 0000 0000 0100
-	PINK_SNAKE = (1 << 3),			// 0000 0000 0000 0000 0000 1000
-	GREY_SNAKE = (1 << 4),			// 0000 0000 0000 0000 0001 0000
-	YELLOW_SNAKE = (1 << 5),		// 0000 0000 0000 0000 0010 0000
-	ORANGE_SNAKE = (1 << 6),		// 0000 0000 0000 0000 0100 0000
-	RED_SNAKE = (1 << 7),			// 0000 0000 0000 0000 1000 0000
-	HEAD = (1 << 8),
-	BODY = (1 << 9),
-	TAIL = (1 << 10),
-	FROM_NORTH = (1 << 11),
-	FROM_SOUTH = (1 << 12),
-	FROM_EAST = (1 << 13),
-	FROM_WEST = (1 << 14),
-	TO_NORTH = (1 << 15),
-	TO_SOUTH = (1 << 16),
-	TO_EAST = (1 << 17),
-	TO_WEST = (1 << 18),
-	WALL = (1 << 19),
-	FOOD = (1 << 20)
-};
-*/
 struct		Snake
 {
 	Snake() : sprite(eSprite::BLUE), isReady(false), id(-1) {
@@ -145,11 +116,7 @@ struct		Snake
 	bool			isReady;
 	int16_t				id;
 
-	friend std::ostream &operator<<(std::ostream &os, const Snake &snake) {
-		os << " sprite: " << static_cast<int>(snake.sprite)
-		   << " isReady: " << snake.isReady << " id: " << snake.id;
-		return os;
-	}
+	friend std::ostream &operator<<(std::ostream &os, const Snake &snake);
 
 	Snake &operator=(Snake  const &snake) {
 		if (this != &snake) {
