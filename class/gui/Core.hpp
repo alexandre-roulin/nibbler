@@ -6,8 +6,11 @@
 #include "widget/WidgetChat.hpp"
 #include "nibbler.hpp"
 
+
 class Core {
 	public:
+
+	enum eColor {RED, GREEN};
 
 	class CoreConstructorException : public std::exception {
 	public:
@@ -26,13 +29,23 @@ class Core {
 
 	//				GUI				//
 	void						demo(void);
-	bool						titleScreen(void);
+	void						mainMenu();
+	void						titleScreen(void);
 	void						aState(void);
 	void						addMessageChat(std::string const &);
 	void 						exit(void);
 	sf::Vector2<unsigned int>	positionByPercent(sf::Vector2<unsigned int> const &percent) const;
 
 	Univers						&univers;
+
+
+	static void					beginColor(float const color);
+	static void					endColor();
+
+
+	static float const 				HUE_RED;
+	static float const 				HUE_GREEN;
+
 private:
 	//				GUI				//
 	sf::Vector2<unsigned int>	_winSize;
@@ -46,7 +59,10 @@ private:
 	void						_render(void);
 	ImGuiIO						&_createContext(void);
 	void						_processEvent(sf::Event const &event);
+	void						_updateGenCoreEvent();
 
 	Core          &operator=(Core const &rhs);
 	Core(Core const &src);
+
+	static bool 				_useColor;
 };

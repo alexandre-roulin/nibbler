@@ -32,7 +32,19 @@ Core::~Core(void)
 	ImGui::SFML::Shutdown();
 }
 
-bool			Core::titleScreen(void)
+void			Core::_updateGenCoreEvent() {
+	sf::Event event;
+	while (this->_win.pollEvent(event))
+	{
+		ImGui::SFML::ProcessEvent(event);
+
+		if (event.type == sf::Event::Closed)
+			this->_win.close();
+	}
+	ImGui::SFML::Update(this->_win, this->_deltaClock.restart());
+}
+
+void			Core::titleScreen()
 {
 	sf::Event	event;
 	bool		titleScreen = true;
@@ -55,24 +67,58 @@ bool			Core::titleScreen(void)
 		ImGui::End();
 		this->_render();
 	}
-	return (true);
 }
 
+void			Core::mainMenu() {
+	int clickSolo = 0;
+	int clickMulti = 0;
+	sf::Vector2f sizeButton(50, 20);
+
+	while (this->_win.isOpen())
+	{
+		this->_updateGenCoreEvent();
+
+
+		ImGui::SetNextWindowPos(this->positionByPercent(sf::Vector2<unsigned int>(0, 0)));
+		ImGui::SetNextWindowSize(this->positionByPercent(sf::Vector2<unsigned int>(50, 100)));
+		ImGui::Begin("Multi", NULL, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoBackground);
+
+		ImGui::SetCursorPos(sf::Vector2f(ImGui::GetWindowSize().x / 2 - sizeButton.x / 2,
+										 ImGui::GetWindowSize().y / 2 - sizeButton.y / 2));
+		if (ImGui::Button("Multi", sizeButton))
+			clickMulti++;
+		if (clickMulti & 1)
+		{
+
+		}
+		ImGui::End();
+
+		ImGui::SetNextWindowPos(this->positionByPercent(sf::Vector2<unsigned int>(50, 0)));
+		ImGui::SetNextWindowSize(this->positionByPercent(sf::Vector2<unsigned int>(50, 100)));
+		ImGui::Begin("Solo", NULL, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoBackground);
+
+
+		ImGui::SetCursorPos(sf::Vector2f(ImGui::GetWindowSize().x / 2 - sizeButton.x / 2,
+				                         ImGui::GetWindowSize().y / 2 - sizeButton.y / 2));
+		if (ImGui::Button("Solo", sizeButton))
+			clickSolo++;
+		if (clickSolo & 1)
+		{
+			ImGui::SameLine();
+			ImGui::Text("Thanks for clicking me!");
+		}
+		ImGui::End();
+
+		this->_render();
+	}
+}
 
 void			Core::demo(void)
 {
 	while (this->_win.isOpen())
 	{
-		sf::Event event;
-		while (this->_win.pollEvent(event))
-		{
-			ImGui::SFML::ProcessEvent(event);
+		this->_updateGenCoreEvent();
 
-			if (event.type == sf::Event::Closed)
-				this->_win.close();
-		}
-
-		ImGui::SFML::Update(this->_win, this->_deltaClock.restart());
 		ImGui::ShowDemoWindow();
 		this->_render();
 	}
@@ -149,6 +195,24 @@ void					Core::_processEvent(sf::Event const &event)
 }
 
 
+void					Core::beginColor(float const color) {
+	assert(Core::_useColor == false);
+	Core::_useColor = true;
+	ImGui::PushStyleColor(ImGuiCol_Button, static_cast<ImVec4>(ImColor::HSV(color, 0.7f, 0.7f)));
+	ImGui::PushStyleColor(ImGuiCol_ButtonHovered, static_cast<ImVec4>(ImColor::HSV(color, 0.8f, 0.8f)));
+	ImGui::PushStyleColor(ImGuiCol_ButtonActive, static_cast<ImVec4>(ImColor::HSV(color, 0.9f, 0.9f)));
+}
+void					Core::endColor() {
+	ImGui::PopStyleColor(3);
+	Core::_useColor = false;
+}
+
+
+float const 				Core::HUE_GREEN = 0.33f;
+float const 				Core::HUE_RED = 0.f;
+
+bool 						Core::_useColor = false;
+
 Core::CoreConstructorException::~CoreConstructorException(void) throw(){}
 Core::CoreConstructorException::CoreConstructorException(void) throw() :
 	_error("Error on Core constructor") {}
@@ -159,3 +223,4 @@ Core::CoreConstructorException::CoreConstructorException(Core::CoreConstructorEx
 	{ this->_error = src._error; }
 const char	*Core::CoreConstructorException::what() const throw()
 	{ return (this->_error.c_str()); }
+
