@@ -23,12 +23,7 @@ void FollowSystem::update() {
 		followComponent.skip = false;
 	}
 	for (const auto &entity : getEntities()) {
-
 		auto &positionComponent = entity.getComponent<PositionComponent>();
 		positionComponent = entity.getComponent<FollowComponent>().positionComponent;
-
-		log_info("Entity [%d] x [%d] y [%d] fl [%d]", entity.getIndex(),
-				 positionComponent.x, positionComponent.y ,entity.getComponent<FollowComponent>().idFollowed);
-
 	}
 }

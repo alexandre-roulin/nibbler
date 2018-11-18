@@ -135,9 +135,6 @@ void RenderSystem::update() {
 
 	grid.clear();
 	for (auto &renderComponent : renderComponents) {
-		log_fatal("x[%d]y[%d]s[%d]p[%d]", renderComponent.first.x,
-				  renderComponent.first.y, renderComponent.second.sprite, renderComponent.second.priority);
-
 		grid(renderComponent.first.x,
 			 renderComponent.first.y) = RenderSystem::getSpriteSnake_(
 				renderComponent.second.sprite);

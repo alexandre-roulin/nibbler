@@ -7,8 +7,8 @@
 #define SPRITE_FOOD SIZE_LINE_TILESET
 #define PATH_TILESET "./ressource/snake_tileset.png"
 #define SIZE_LINE_TILESET 15
-#define LIBRARY_SFML "./externlib/display_sfml/libdisplay_sfml.so"
-#define LIBRARY_SDL "./externlib/display_sfml/libdisplay_sdl.so"
+#define PATH_LIBRARY_SFML "./externlib/display_sfml/libdisplay_sfml.so"
+#define PATH_LIBRARY_SDL "./externlib/display_sdl/libdisplay_sdl.so"
 class IDisplay {
 public:
 	virtual ~IDisplay() {}

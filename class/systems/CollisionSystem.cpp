@@ -2,6 +2,7 @@
 #include <factory/Factory.hpp>
 #include <events/FoodEat.hpp>
 #include <events/FoodCreation.hpp>
+#include <network/ClientTCP.hpp>
 
 CollisionSystem::CollisionSystem() {
 	requireComponent<CollisionComponent>();
@@ -24,16 +25,26 @@ void CollisionSystem::checkCollision(
 		if (group == FOOD_TAG) {
 			log_info("FoodCollision");
 			entityCheck.kill();
-			getWorld().getEventManager().emitEvent<FoodEat>(Factory::getIdFromTag(entityHead.getTag()));
-			getWorld().getEventManager().emitEvent<FoodCreation>(PositionComponent(rand() % (30 - 2) + 1, rand() % (30 - 2) + 1));
+			getWorld().getEventManager().emitEvent<FoodEat>(
+					Factory::getIdFromTag(entityHead.getTag()));
+			if (getWorld().getUnivers().getClientTCP_().getId() ==
+				std::stoi(entityHead.getTag())) {
+				auto positionFood = PositionComponent(rand() % (30 - 2) + 1, rand() % (30 - 2) + 1);
+				getWorld().getUnivers().getClientTCP_().write_socket(ClientTCP::add_prefix(FOOD, &positionFood);
+			}
 		} else if (group == WALL_TAG) {
 			log_info("WallCollision");
 			entityHead.killGroup();
-		} else if (entityCheck.getGroup() != entityHead.getGroup()) {
+		} else if (entityCheck.getGroup() == entityHead.getGroup()) {
 			log_info("Body||TailCollision");
 			entityHead.killGroup();
-		} else if (!entityCheck.getTag().empty()) { //TODO
-			log_info("HeadCollision");
+		} else {
+			log_info("Crash an other Snake");
+			auto winSnake = getWorld().getEntityManager().getEntityGroup(entityHead.getGroup()).size();
+			for (int index = 0; index < winSnake; ++index) {
+				getWorld().getEventManager().emitEvent<FoodEat>(
+						Factory::getIdFromTag(entityHead.getTag()));
+			}
 			entityHead.killGroup();
 		}
 

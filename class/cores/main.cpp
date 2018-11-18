@@ -64,8 +64,8 @@ int main(int ac, char **av) {
 		}
 
 		if (buffer == "game") {
-			univers.setMapSize(60);
-			univers.load_external_library(std::string("Game pro"),std::string(LIBRARY_SFML));
+			univers.setMapSize(35);
+			univers.load_external_library(std::string("Game pro"),std::string(PATH_LIBRARY_SFML));
 
 			ClientTCP::StartInfo startInfo;
 			univers.getClientTCP_()
@@ -73,7 +73,8 @@ int main(int ac, char **av) {
 			univers.loop();
 		}
 		if (buffer == "game1") {
-			univers.load_external_library(std::string("Game pro"), std::string(LIBRARY_SDL));
+			univers.setMapSize(35);
+			univers.load_external_library(std::string("Game pro"), std::string(PATH_LIBRARY_SFML));
 			univers.loop();
 		}
 		if (buffer == "ui") {
