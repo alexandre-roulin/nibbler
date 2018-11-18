@@ -134,7 +134,7 @@ void			Core::aState(void)
 {
 	WidgetExit wexit(*this, &callbackExit, this);
 	WidgetLobby lobby(*this, this->univers.getClientTCP_().getSnakes());
-	WidgetOption optionSnake(*this);
+	WidgetOption *optionSnake = nullptr;
 	WidgetConnect optionConnect(*this);
 
 
@@ -159,9 +159,11 @@ void			Core::aState(void)
 		wexit.render();
 
 		if (this->univers.getClientTCP_().isConnect()) {
+			if (!optionSnake)
+				optionSnake = new WidgetOption(*this);
 			ImGui::SetNextWindowPos(this->positionByPercent(sf::Vector2<unsigned int>(70, 50)));
 			ImGui::SetNextWindowSize(this->positionByPercent(sf::Vector2<unsigned int>(30, 25)));
-			optionSnake.render();
+			optionSnake->render();
 			ImGui::SetNextWindowPos(this->positionByPercent(sf::Vector2<unsigned int>(70, 75)));
 			ImGui::SetNextWindowSize(this->positionByPercent(sf::Vector2<unsigned int>(30, 25)));
 			optionConnect.render();
@@ -174,6 +176,8 @@ void			Core::aState(void)
 
 		this->_render();
 	}
+	if (optionSnake)
+		delete optionSnake;
 }
 
 void				Core::addMessageChat(std::string const &msg)

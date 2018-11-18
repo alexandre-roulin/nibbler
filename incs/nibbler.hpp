@@ -181,4 +181,5 @@ enum eHeader {
 	SNAKE_ARRAY,		//5
 	HEADER,				//6
 	INPUT,				//7
+	RESIZE_MAP,			//8
 };

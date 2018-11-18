@@ -64,6 +64,8 @@ public:
 
 	void change_state_ready(void);
 
+	void change_map_size(unsigned int);
+
 	template<typename T>
 	static std::string add_prefix(eHeader, T *element);
 

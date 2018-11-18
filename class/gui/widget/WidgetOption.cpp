@@ -4,10 +4,9 @@
 #include "imgui.h"
 
 WidgetOption::WidgetOption(Core &core) :
-AWidget(core)
+AWidget(core),
+_mapSize(this->_core.univers.getMapSize())
 {
-	this->_mapSize[0] = 30;
-	this->_mapSize[1] = 30;
 	memcpy(this->_nameBuffer, this->_core.univers.getClientTCP_().getSnake().name, NAME_BUFFER);
 }
 
@@ -26,15 +25,12 @@ void			WidgetOption::render(void)
 		memcpy(this->_nameBuffer, this->_core.univers.getClientTCP_().getSnake().name, NAME_BUFFER);
 	}
 
-	if (ImGui::InputInt2("Size map", this->_mapSize, ImGuiInputTextFlags_CharsDecimal | ImGuiInputTextFlags_CharsNoBlank | ImGuiInputTextFlags_EnterReturnsTrue)) {
-		if (this->_mapSize[0] < MAP_MIN)
-			this->_mapSize[0] = MAP_MIN;
-		else if (this->_mapSize[0] > MAP_MAX)
-			this->_mapSize[0] = MAP_MAX;
-		if (this->_mapSize[1] < MAP_MIN)
-			this->_mapSize[1] = MAP_MIN;
-		else if (this->_mapSize[1] > MAP_MAX)
-			this->_mapSize[1] = MAP_MAX;
+	if (ImGui::InputInt("##Size map", reinterpret_cast<int *>(&this->_mapSize), 1, 4, ImGuiInputTextFlags_CharsDecimal | ImGuiInputTextFlags_CharsNoBlank | ImGuiInputTextFlags_EnterReturnsTrue)) {
+		if (this->_mapSize < MAP_MIN)
+			this->_mapSize = MAP_MIN;
+		else if (this->_mapSize > MAP_MAX)
+			this->_mapSize = MAP_MAX;
+		this->_core.univers.getClientTCP_().change_map_size(this->_mapSize);
 	}
 
 
