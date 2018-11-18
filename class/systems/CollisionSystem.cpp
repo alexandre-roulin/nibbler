@@ -30,7 +30,7 @@ void CollisionSystem::checkCollision(
 			if (getWorld().getUnivers().getClientTCP_().getId() ==
 				std::stoi(entityHead.getTag())) {
 				auto positionFood = PositionComponent(rand() % (30 - 2) + 1, rand() % (30 - 2) + 1);
-				getWorld().getUnivers().getClientTCP_().write_socket(ClientTCP::add_prefix(FOOD, &positionFood);
+				getWorld().getUnivers().getClientTCP_().write_socket(ClientTCP::add_prefix(FOOD, &positionFood));
 			}
 		} else if (group == WALL_TAG) {
 			log_info("WallCollision");

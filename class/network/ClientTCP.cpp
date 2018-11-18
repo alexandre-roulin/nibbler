@@ -15,7 +15,7 @@ int const ClientTCP::size_header[] = {
 		[SNAKE] = sizeof(Snake),
 		[SNAKE_ARRAY] = sizeof(Snake) * MAX_SNAKE,
 		[HEADER] = sizeof(eHeader),
-		[INPUT] = sizeof(int16_t) + sizeof(eDirection)
+		[INPUT] = sizeof(InputInfo)
 };
 
 ClientTCP::ClientTCP(::Univers &univers, boost::asio::io_service &io)
