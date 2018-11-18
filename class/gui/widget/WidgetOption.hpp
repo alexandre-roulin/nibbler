@@ -13,10 +13,8 @@ public:
 	void	render(void);
 
 private:
-	bool	_client;
+	int		_mapSize[2];
 	char	_nameBuffer[NAME_BUFFER];
-	char	_dnsBuffer[NAME_BUFFER];
-	char	_portBuffer[NAME_BUFFER];
 
 	WidgetOption &operator=(const WidgetOption&);
 	WidgetOption(const WidgetOption&);

@@ -19,7 +19,8 @@ int const ClientTCP::size_header[] = {
 };
 
 ClientTCP::ClientTCP(::Univers &univers, boost::asio::io_service &io)
-		: id_(0),
+		: isConnect_(false),
+		  id_(0),
 		  univers(univers),
 		  resolver(io),
 		  socket(io),
@@ -59,6 +60,7 @@ void ClientTCP::connect(std::string dns, std::string port) {
 		read_socket_header();
 		thread = boost::thread(boost::bind(&boost::asio::io_service::run, &io));
 		thread.detach();
+		isConnect_ = true;
 	} catch (std::exception &exception) {
 		std::cout << exception.what() << std::endl;
 	}
@@ -100,6 +102,10 @@ void ClientTCP::handle_read_header(const boost::system::error_code &error_code,
 int16_t ClientTCP::getId() const {
 	return id_;
 }
+bool	ClientTCP::isConnect() const {
+	return isConnect_;
+}
+
 
 
 void ClientTCP::write_socket(std::string message) {

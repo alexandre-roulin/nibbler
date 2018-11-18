@@ -2,7 +2,8 @@
 #include "widget/WidgetExit.hpp"
 #include "widget/WidgetSnake.hpp"
 #include "widget/WidgetLobby.hpp"
-#include "widget/WidgetOption.hpp"
+#include "gui/widget/WidgetOption.hpp"
+#include "gui/widget/WidgetConnect.hpp"
 #include <vector>
 #include <iostream>
 
@@ -133,7 +134,9 @@ void			Core::aState(void)
 {
 	WidgetExit wexit(*this, &callbackExit, this);
 	WidgetLobby lobby(*this, this->univers.getClientTCP_().getSnakes());
-	WidgetOption option(*this);
+	WidgetOption optionSnake(*this);
+	WidgetConnect optionConnect(*this);
+
 
 	while (this->_win.isOpen())
 	{
@@ -155,9 +158,19 @@ void			Core::aState(void)
 		ImGui::SetNextWindowPos(this->positionByPercent(sf::Vector2<unsigned int>(95, 0)), 0, sf::Vector2f(0.5f, 0.5f));
 		wexit.render();
 
-		ImGui::SetNextWindowPos(this->positionByPercent(sf::Vector2<unsigned int>(70, 50)));
-		ImGui::SetNextWindowSize(this->positionByPercent(sf::Vector2<unsigned int>(30, 50)));
-		option.render();
+		if (this->univers.getClientTCP_().isConnect()) {
+			ImGui::SetNextWindowPos(this->positionByPercent(sf::Vector2<unsigned int>(70, 50)));
+			ImGui::SetNextWindowSize(this->positionByPercent(sf::Vector2<unsigned int>(30, 25)));
+			optionSnake.render();
+			ImGui::SetNextWindowPos(this->positionByPercent(sf::Vector2<unsigned int>(70, 75)));
+			ImGui::SetNextWindowSize(this->positionByPercent(sf::Vector2<unsigned int>(30, 25)));
+			optionConnect.render();
+		}
+		else {
+			ImGui::SetNextWindowPos(this->positionByPercent(sf::Vector2<unsigned int>(70, 50)));
+			ImGui::SetNextWindowSize(this->positionByPercent(sf::Vector2<unsigned int>(30, 50)));
+			optionConnect.render();
+		}
 
 		this->_render();
 	}
