@@ -121,7 +121,7 @@ void Univers::loop_world() {
 	milliseconds now = duration_cast< milliseconds >(
 			system_clock::now().time_since_epoch());
 	log_success("loop_world::begin::time : %lld" , now.count());
-
+	std::cout << now.count() << std::endl;
 	clientTCP_->deliverEvents();
 
 	world_->getSystemManager().getSystem<FollowSystem>().update();

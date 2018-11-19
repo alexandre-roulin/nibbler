@@ -21,7 +21,8 @@ std::string const Snake::basicName[MAX_SNAKE] = {"Jack O'Lantern", "Eden",
 												 "jinou42", "Dota c cro cool"};
 
 std::ostream &operator<<(std::ostream &os, const Snake &snake) {
-	os << "name: " << snake.name << " sprite: " << static_cast<int>(snake.sprite) << " isReady: "
+	os << "name: " << snake.name << " sprite: "
+	   << static_cast<int>(snake.sprite) << " isReady: "
 	   << snake.isReady << " id: " << snake.id;
 	return os;
 }
@@ -46,7 +47,60 @@ bool uiTest(int ac, char **av, Univers &univers) {
 	return (false);
 }
 
+void cal() {
+
+
+	printf("%ld\n", 1542654256474 - 1542654256474);
+	printf("%ld\n", 1542654257474 - 1542654257474);
+	printf("%ld\n", 1542654258474 - 1542654258474);
+	printf("%ld\n", 1542654259474 - 1542654259474);
+	printf("%ld\n", 1542654260475 - 1542654260475);
+	printf("%ld\n", 1542654261474 - 1542654261474);
+	printf("%ld\n", 1542654262474 - 1542654262474);
+	printf("%ld\n", 1542654263474 - 1542654263474);
+	printf("%ld\n", 1542654264474 - 1542654264474);
+	printf("%ld\n", 1542654265474 - 1542654265474);
+	printf("%ld\n", 1542654266474 - 1542654266474);
+	printf("%ld\n", 1542654267474 - 1542654267474);
+	printf("%ld\n", 1542654268474 - 1542654268474);
+	printf("%ld\n", 1542654269475 - 1542654269475);
+	printf("%ld\n", 1542654270474 - 1542654270474);
+	printf("%ld\n", 1542654271474 - 1542654271474);
+	printf("%ld\n", 1542654272473 - 1542654272473);
+	printf("%ld\n", 1542654273474 - 1542654273474);
+	printf("%ld\n", 1542654274475 - 1542654274475);
+	printf("%ld\n", 1542654275474 - 1542654275474);
+	printf("%ld\n", 1542654276474 - 1542654276474);
+	printf("%ld\n", 1542654277473 - 1542654277473);
+	printf("%ld\n", 1542654278475 - 1542654278475);
+	printf("%ld\n", 1542654279473 - 1542654279473);
+	printf("%ld\n", 1542654280473 - 1542654280473);
+	printf("%ld\n", 1542654281475 - 1542654281475);
+	printf("%ld\n", 1542654282475 - 1542654282475);
+	printf("%ld\n", 1542654283474 - 1542654283474);
+	printf("%ld\n", 1542654284474 - 1542654284474);
+	printf("%ld\n", 1542654285474 - 1542654285474);
+	printf("%ld\n", 1542654286475 - 1542654286475);
+	printf("%ld\n", 1542654287474 - 1542654287474);
+	printf("%ld\n", 1542654288473 - 1542654288473);
+	printf("%ld\n", 1542654289475 - 1542654289475);
+	printf("%ld\n", 1542654290474 - 1542654290474);
+	printf("%ld\n", 1542654291473 - 1542654291473);
+	printf("%ld\n", 1542654292474 - 1542654292474);
+	printf("%ld\n", 1542654293473 - 1542654293473);
+	printf("%ld\n", 1542654294474 - 1542654294474);
+	printf("%ld\n", 1542654295473 - 1542654295473);
+	printf("%ld\n", 1542654296474 - 1542654296474);
+	printf("%ld\n", 1542654297472 - 1542654297472);
+	printf("%ld\n", 1542654298475 - 1542654298475);
+	printf("%ld\n", 1542654299472 - 1542654299472);
+	printf("%ld\n", 1542654300475 - 1542654300475);
+	printf("%ld\n", 1542654301472 - 1542654301472);
+
+}
+
 int main(int ac, char **av) {
+	cal();
 	srand(time(NULL));
 	char path[] = "/tmp/log.out";
 	logger_init(path);
@@ -66,7 +120,8 @@ int main(int ac, char **av) {
 			sleep(1);
 			univers.getClientTCP_().change_state_ready();
 			univers.setMapSize(35);
-			univers.load_external_library(std::string("Game pro"),std::string(PATH_LIBRARY_SFML));
+			univers.load_external_library(std::string("Game pro"),
+										  std::string(PATH_LIBRARY_SFML));
 
 		}
 		if (buffer == "autoc") {
@@ -74,7 +129,8 @@ int main(int ac, char **av) {
 			sleep(1);
 			univers.getClientTCP_().change_state_ready();
 			univers.setMapSize(35);
-			univers.load_external_library(std::string("Game pro"), std::string(PATH_LIBRARY_SFML));
+			univers.load_external_library(std::string("Game pro"),
+										  std::string(PATH_LIBRARY_SFML));
 			univers.loop();
 		}
 		if (buffer == "autocs") {
@@ -84,13 +140,15 @@ int main(int ac, char **av) {
 			sleep(1);
 			univers.getClientTCP_().change_state_ready();
 			univers.setMapSize(35);
-			univers.load_external_library(std::string("Game pro"), std::string(PATH_LIBRARY_SFML));
+			univers.load_external_library(std::string("Game pro"),
+										  std::string(PATH_LIBRARY_SFML));
 			univers.loop();
 		}
 		if (buffer == "loop") {
 			ClientTCP::StartInfo startInfo;
 			univers.getClientTCP_()
-					.write_socket(ClientTCP::add_prefix(START_GAME, &startInfo));
+					.write_socket(
+							ClientTCP::add_prefix(START_GAME, &startInfo));
 			univers.loop();
 		}
 		if (buffer == "server")
@@ -109,16 +167,19 @@ int main(int ac, char **av) {
 
 		if (buffer == "game") {
 			univers.setMapSize(35);
-			univers.load_external_library(std::string("Game pro"),std::string(PATH_LIBRARY_SFML));
+			univers.load_external_library(std::string("Game pro"),
+										  std::string(PATH_LIBRARY_SFML));
 
 			ClientTCP::StartInfo startInfo;
 			univers.getClientTCP_()
-					.write_socket(ClientTCP::add_prefix(START_GAME, &startInfo));
+					.write_socket(
+							ClientTCP::add_prefix(START_GAME, &startInfo));
 			univers.loop();
 		}
 		if (buffer == "game1") {
 			univers.setMapSize(35);
-			univers.load_external_library(std::string("Game pro"), std::string(PATH_LIBRARY_SFML));
+			univers.load_external_library(std::string("Game pro"),
+										  std::string(PATH_LIBRARY_SFML));
 			univers.loop();
 		}
 		if (buffer == "ui") {

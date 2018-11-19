@@ -101,7 +101,14 @@ void ServerTCP::parse_input(eHeader header, void const *input, size_t len) {
 			log_info("StartGame from server");
 			start_game();
 			return;
-		case FOOD:
+		case FOOD: {
+			PositionComponent positionComponent;
+			std::memcpy(&positionComponent, input, len);
+			if (positionComponent.y != 0 && positionComponent.x != 0)
+				async_write(ClientTCP::add_prefix(FOOD, &positionComponent));
+			return;
+		}
+
 		default:
 			break;
 	}
