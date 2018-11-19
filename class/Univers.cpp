@@ -19,7 +19,7 @@ Univers::Univers()
 												 boost::posix_time::milliseconds(
 														 100))),
 		  mapSize(MAP_MIN),
-		  gameSpeed(500) {
+		  gameSpeed(1000) {
 
 	world_ = std::make_unique<KINU::World>(*this);
 	core_ = nullptr; //std::make_unique<Core>(*this)
@@ -84,6 +84,7 @@ void Univers::manage_start() {
 
 
 void Univers::loop() {
+
 	world_->getSystemManager().addSystem<CollisionSystem>();
 	world_->getSystemManager().addSystem<FollowSystem>();
 	world_->getSystemManager().addSystem<JoystickSystem>();
@@ -115,6 +116,9 @@ void Univers::loop() {
 }
 
 void Univers::loop_world() {
+	auto now = std::chrono::high_resolution_clock::now().time_since_epoch().count();
+
+	log_success("loop_world::begin::time : %lld", now  - time );
 
 	clientTCP_->deliverEvents();
 
@@ -128,6 +132,7 @@ void Univers::loop_world() {
 	world_->getSystemManager().getSystem<FoodEatSystem>().update();
 
 	world_->update();
+	
 	timer_loop.expires_at(
 			timer_loop.expires_at() +
 			boost::posix_time::milliseconds(gameSpeed));

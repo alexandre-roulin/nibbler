@@ -66,7 +66,7 @@ public:
 
 private:
 	unsigned int gameSpeed;
-
+	long long int time = std::chrono::high_resolution_clock::now().time_since_epoch().count();
 private:
 
 	IDisplay *(*newDisplay)(char const *, int, int, int, char const *);
