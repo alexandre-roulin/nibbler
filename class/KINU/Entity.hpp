@@ -13,7 +13,7 @@
 #include <ostream>
 #include <iostream>
 
-namespace KINU {
+  namespace KINU {
 
 	class World;
 

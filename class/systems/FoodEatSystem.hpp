@@ -3,10 +3,8 @@
 
 #include <KINU/System.hpp>
 
-class FoodSystem: public KINU::System {
+class FoodEatSystem : public KINU::System {
 public:
-	FoodSystem();
-
 	virtual void update();
 };
 

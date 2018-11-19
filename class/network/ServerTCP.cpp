@@ -55,14 +55,15 @@ void ServerTCP::start_game() {
 	}
 	ClientTCP::StartInfo startInfo;
 	startInfo.nu = nu_;
-	startInfo.time_duration = boost::posix_time::microsec_clock::universal_time() + boost::posix_time::seconds(1);
+	startInfo.time_duration = boost::posix_time::microsec_clock::universal_time();
 	std::cout << "Start timer in server " << std::endl;
-	async_write(ClientTCP::add_prefix(START_GAME, &startInfo));
-	for (int index = 0; index < nu_; ++index) {
+	int max_food = (nu_ > 1 ? nu_ - 1 : nu_);
+	for (int index = 0; index < max_food; ++index) {
+		std::cout << max_food << std::endl;
 		PositionComponent positionComponent((rand() % (30 - 2)) + 1, (rand() % (30 - 2)) + 1);
 		async_write(ClientTCP::add_prefix(FOOD, &positionComponent));
 	}
-
+	async_write(ClientTCP::add_prefix(START_GAME, &startInfo));
 }
 
 void ServerTCP::async_write(std::string message) {

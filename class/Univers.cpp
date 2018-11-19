@@ -3,7 +3,7 @@
 #include <systems/MotionSystem.hpp>
 #include <systems/JoystickSystem.hpp>
 #include <systems/FollowSystem.hpp>
-#include <systems/FoodSystem.hpp>
+#include <systems/FoodCreationSystem.hpp>
 #include <systems/CollisionSystem.hpp>
 #include <systems/SpriteSystem.hpp>
 #include <systems/RenderSystem.hpp>
@@ -11,7 +11,7 @@
 #include <dlfcn.h>
 #include <logger.h>
 #include <SFML/System.hpp>
-
+#include <systems/FoodEatSystem.hpp>
 Univers::Univers()
 		: timer_start(boost::asio::deadline_timer(io_start)),
 		  timer_loop(boost::asio::deadline_timer(io_loop,
@@ -85,11 +85,12 @@ void Univers::manage_start() {
 void Univers::loop() {
 	world_->getSystemManager().addSystem<CollisionSystem>();
 	world_->getSystemManager().addSystem<FollowSystem>();
-	world_->getSystemManager().addSystem<FoodSystem>();
 	world_->getSystemManager().addSystem<JoystickSystem>();
 	world_->getSystemManager().addSystem<MotionSystem>();
 	world_->getSystemManager().addSystem<SpriteSystem>();
 	world_->getSystemManager().addSystem<RenderSystem>();
+	world_->getSystemManager().addSystem<FoodCreationSystem>();
+	world_->getSystemManager().addSystem<FoodEatSystem>();
 
 	world_->getEventManager().emitEvent<StartEvent>();
 	world_->getEventManager().destroyEvents();
@@ -120,9 +121,10 @@ void Univers::loop_world() {
 	world_->getSystemManager().getSystem<JoystickSystem>().update();
 	world_->getSystemManager().getSystem<MotionSystem>().update();
 	world_->getSystemManager().getSystem<CollisionSystem>().update();
-	world_->getSystemManager().getSystem<FoodSystem>().update();
+	world_->getSystemManager().getSystem<FoodCreationSystem>().update();
 	world_->getSystemManager().getSystem<SpriteSystem>().update();
 	world_->getSystemManager().getSystem<RenderSystem>().update();
+	world_->getSystemManager().getSystem<FoodEatSystem>().update();
 
 	world_->update();
 	timer_loop.expires_at(

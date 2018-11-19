@@ -47,6 +47,7 @@ bool uiTest(int ac, char **av, Univers &univers) {
 }
 
 int main(int ac, char **av) {
+	srand(time(NULL));
 	char path[] = "/tmp/log.out";
 	logger_init(path);
 	Univers univers;
@@ -70,6 +71,16 @@ int main(int ac, char **av) {
 		}
 		if (buffer == "autoc") {
 			univers.getClientTCP_().connect("localhost", "4242");
+			sleep(1);
+			univers.getClientTCP_().change_state_ready();
+			univers.setMapSize(35);
+			univers.load_external_library(std::string("Game pro"), std::string(PATH_LIBRARY_SFML));
+			univers.loop();
+		}
+		if (buffer == "autocs") {
+			std::cout << "connect > ";
+			std::getline(std::cin, buffer);
+			univers.getClientTCP_().connect(buffer.c_str(), "4242");
 			sleep(1);
 			univers.getClientTCP_().change_state_ready();
 			univers.setMapSize(35);

@@ -68,7 +68,7 @@ namespace KINU {
 			index = (unsigned int) versions.size() - 1;
 			assert(index < (1 << Entity::IndexBits));
 			if (index >= componentMasks.size()) {
-				componentMasks.resize(componentMasks.size() + DEFAULT_POOL_SIZE);
+				componentMasks.resize(index + DEFAULT_POOL_SIZE);
 			}
 		}
 

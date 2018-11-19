@@ -157,12 +157,14 @@ add_executable(${NAME}
         class/network/ServerTCP.hpp
         class/network/UtilsTCP.cpp
         class/network/UtilsTCP.hpp
+        class/systems/FoodEatSystem.cpp
+        class/systems/FoodEatSystem.hpp
         class/systems/CollisionSystem.cpp
         class/systems/CollisionSystem.hpp
         class/systems/FollowSystem.cpp
         class/systems/FollowSystem.hpp
-        class/systems/FoodSystem.cpp
-        class/systems/FoodSystem.hpp
+        class/systems/FoodCreationSystem.cpp
+        class/systems/FoodCreationSystem.hpp
         class/systems/JoystickSystem.cpp
         class/systems/JoystickSystem.hpp
         class/systems/MotionSystem.cpp

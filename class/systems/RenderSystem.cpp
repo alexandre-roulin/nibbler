@@ -3,6 +3,7 @@
 #include "RenderSystem.hpp"
 #include <component/SpriteComponent.hpp>
 #include <list>
+#include <component/FollowComponent.hpp>
 
 RenderSystem::RenderSystem() {
 	requireComponent<PositionComponent>();
@@ -136,6 +137,8 @@ void RenderSystem::update() {
 
 	grid.clear();
 	for (auto &renderComponent : renderComponents) {
+		log_warn("Render Priority [%d] Sprite [%d]", renderComponent.second.priority, renderComponent.second.sprite);
+
 		grid(renderComponent.first.x,
 			 renderComponent.first.y) = RenderSystem::getSpriteSnake_(
 				renderComponent.second.sprite);
