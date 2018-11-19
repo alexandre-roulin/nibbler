@@ -26,7 +26,6 @@ eSprite SpriteSystem::spriteDirection(PositionComponent &actual,
 }
 
 void SpriteSystem::update() {
-	log_success("update");
 
 	FollowComponent *followComponent = nullptr;
 	KINU::Entity entityFollowed;

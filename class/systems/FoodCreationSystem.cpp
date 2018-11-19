@@ -15,10 +15,10 @@ FoodCreationSystem::FoodCreationSystem() {
 }
 
 void FoodCreationSystem::update() {
-	log_success("update");
 
 	auto foodCreationEvents = getWorld().getEventManager().getEvents<FoodCreation>();
 	for (auto foodCreationEvent : foodCreationEvents) {
+		log_info("FoodCreationSystem:: x[%d] y[%d]", foodCreationEvent.positionComponent_.x, foodCreationEvent.positionComponent_.y);
 		auto food = getWorld().createEntity();
 		food.addComponent(foodCreationEvent.positionComponent_);
 		food.addComponent<CollisionComponent>();

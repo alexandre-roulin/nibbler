@@ -3,7 +3,6 @@
 #include "RenderSystem.hpp"
 #include <component/SpriteComponent.hpp>
 #include <list>
-#include <component/FollowComponent.hpp>
 
 RenderSystem::RenderSystem() {
 	requireComponent<PositionComponent>();
@@ -121,23 +120,29 @@ void RenderSystem::update() {
 	std::list<std::pair<PositionComponent &, SpriteComponent &>> renderComponents;
 	Grid<int> &grid = getWorld().grid;
 
-	log_success("update");
 
 	for (auto &entity : getEntities()) {
 		if (entity.isAlive()) {
+			log_info("RenderSystem:: tag[%s] group[%s] x[%d] y[%d] ",
+					 entity.getTag().c_str(),
+					 entity.getGroup().c_str(),
+					 entity.getComponent<PositionComponent>().x,
+					 entity.getComponent<PositionComponent>().y);
 			renderComponents.push_back(
 					std::pair<PositionComponent &, SpriteComponent &>(
 							entity.getComponent<PositionComponent>(),
 							entity.getComponent<SpriteComponent>()));
 		}
 	}
-	renderComponents.sort([](auto const &renderPair1, auto const &renderPair2) -> bool {
-		return renderPair1.second.priority < renderPair2.second.priority;
-	});
+	renderComponents.sort(
+			[](auto const &renderPair1, auto const &renderPair2) -> bool {
+				return renderPair1.second.priority <
+					   renderPair2.second.priority;
+			});
 
 	grid.clear();
 	for (auto &renderComponent : renderComponents) {
-		log_warn("Render Priority [%d] Sprite [%d]", renderComponent.second.priority, renderComponent.second.sprite);
+
 
 		grid(renderComponent.first.x,
 			 renderComponent.first.y) = RenderSystem::getSpriteSnake_(

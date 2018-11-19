@@ -13,7 +13,6 @@ FollowSystem::FollowSystem() {
 
 
 void FollowSystem::update() {
-	log_success("update");
 	for (const auto &entity : getEntities()) {
 
 		auto &followComponent = entity.getComponent<FollowComponent>();

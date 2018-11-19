@@ -40,7 +40,7 @@ void Factory::create_snake(Snake snake, int max_snakes) {
 			new_snake.addComponent<CollisionComponent>();
 			new_snake.addComponent<SpriteComponent>(eSprite::HEAD | snake.sprite, SPECIFIC_LAST);
 			new_snake.addComponent<PositionComponent>(base_x, base_y);
-			log_warn("HEAD [%d][%d][%d]",base_x, base_y, new_snake.getComponent<MotionComponent>().direction);
+			log_warn("Factory::creationHead x[%d] y[%d]",base_x, base_y);
 		}
 		else if (index == 3) {
 			new_snake.tag(factory_name(TAIL, snake.id));
@@ -48,14 +48,14 @@ void Factory::create_snake(Snake snake, int max_snakes) {
 			new_snake.addComponent<CollisionComponent>();
 			new_snake.addComponent<SpriteComponent>(eSprite::TAIL | snake.sprite, SPECIFIC_LAST);
 			new_snake.addComponent<PositionComponent>(base_x + 1, base_y);
-			log_warn("TAIL [%d][%d]",base_x + 1, base_y);
+			log_warn("Factory::creationTail x[%d] y[%d]",base_x + 1, base_y);
 		}
 		else {
 			new_snake.addComponent<FollowComponent>(snake_follow.getIndex(), false);
 			new_snake.addComponent<CollisionComponent>();
 			new_snake.addComponent<PositionComponent>(base_x + (index - 1), base_y + 1);
 			new_snake.addComponent<SpriteComponent>(eSprite::BODY | snake.sprite, MINOR_PRIORITY);
-			log_warn("BODY [%d][%d]",base_x + (index - 1), base_y + 1);
+			log_warn("Factory::creationBody x[%d] y[%d]",base_x + (index - 1), base_y + 1);
 		}
 		new_snake.group(factory_name(GRPS, snake.id));
 		snake_follow = new_snake;

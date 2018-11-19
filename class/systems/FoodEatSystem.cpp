@@ -27,9 +27,6 @@ void FoodEatSystem::update() {
 
 
 // NEW : Make TO_direction
-		auto entityFollowed = getWorld().getEntityManager().getEntity(
-				entityTail.getComponent<FollowComponent>().idFollowed);
-
 		newEntity.addComponent<SpriteComponent>(
 				getWorld().getEntityManager().getEntity(
 						entityTail.getComponent<FollowComponent>().idFollowed).getComponent<SpriteComponent>());

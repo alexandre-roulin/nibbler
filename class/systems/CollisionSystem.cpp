@@ -53,7 +53,6 @@ void CollisionSystem::checkCollision(
 }
 
 void CollisionSystem::update() {
-	log_success("update");
 	std::vector<KINU::Entity> entities_ = getEntities();
 	auto &world = getWorld();
 	for (auto &entity : getEntities()) {

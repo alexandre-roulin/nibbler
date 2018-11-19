@@ -131,7 +131,7 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 
 	switch (header) {
 		case CHAT: {
-			log_info("CHAT");
+			log_info("eHeader::CHAT");
 			char *data_deserialize = new char[len];
 			std::memcpy(data_deserialize, input, len);
 			univers.getCore_().addMessageChat(std::string(data_deserialize, len));
@@ -139,12 +139,12 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 			break;
 		}
 		case SNAKE_ARRAY: {
-			log_info("SNAKE_ARRAY");
+			log_info("eHeader::SNAKE_ARRAY");
 			std::memcpy(snake_array, input, sizeof(Snake) * MAX_SNAKE);
 			break;
 		}
 		case SNAKE: {
-			log_info("SNAKE");
+			log_info("eHeader::SNAKE");
 
 			Snake snake_temp;
 
@@ -155,6 +155,8 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 			break;
 		}
 		case FOOD: {
+			log_info("eHeader::FOOD");
+
 			PositionComponent positionComponent;
 			std::memcpy(&positionComponent, input, len);
 			foodCreations.push_back(FoodCreation(positionComponent));
@@ -162,9 +164,13 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 		}
 
 		case ID:
+			log_info("eHeader::ID");
+
 			std::memcpy(&id_, input, len);
 			break;
 		case START_GAME: {
+			log_info("eHeader::START_GAME");
+
 			StartInfo st;
 			std::memcpy(&st, input, ClientTCP::size_header[START_GAME]);
 			factory.create_all_snake(snake_array, st.nu);
@@ -172,12 +178,15 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 		}
 			break;
 		case INPUT: {
+
 			InputInfo ii;
 			std::memcpy(&ii, input, len);
 			joystickEvents.push_back(JoystickEvent(ii.id, ii.dir));
 		}
 			break;
 		case RESIZE_MAP: {
+			log_info("eHeader::RESIZE_MAP");
+
 			unsigned int buffer;
 			std::memcpy(&buffer, input, ClientTCP::size_header[RESIZE_MAP]);
 			univers.setMapSize(buffer);

@@ -12,6 +12,7 @@
 #include <logger.h>
 #include <SFML/System.hpp>
 #include <systems/FoodEatSystem.hpp>
+
 Univers::Univers()
 		: timer_start(boost::asio::deadline_timer(io_start)),
 		  timer_loop(boost::asio::deadline_timer(io_loop,
@@ -127,6 +128,8 @@ void Univers::loop_world() {
 	world_->getSystemManager().getSystem<FoodEatSystem>().update();
 
 	world_->update();
+	std::string b;
+	std::getline(std::cin, b);
 	timer_loop.expires_at(
 			timer_loop.expires_at() +
 			boost::posix_time::milliseconds(gameSpeed));
@@ -165,6 +168,7 @@ bool Univers::dlError() {
 }
 
 void Univers::setMapSize(unsigned int mapSize) {
+	log_success("New map size [%d]", mapSize);
 	Univers::mapSize = mapSize;
 }
 
