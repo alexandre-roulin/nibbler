@@ -19,7 +19,7 @@ Univers::Univers()
 												 boost::posix_time::milliseconds(
 														 100))),
 		  mapSize(MAP_MIN),
-		  gameSpeed(100) {
+		  gameSpeed(1000) {
 
 	world_ = std::make_unique<KINU::World>(*this);
 	core_ = nullptr; //std::make_unique<Core>(*this)
