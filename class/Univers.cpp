@@ -115,10 +115,12 @@ void Univers::loop() {
 	}
 }
 
-void Univers::loop_world() {
-	auto now = std::chrono::high_resolution_clock::now().time_since_epoch().count();
+using namespace std::chrono; // TODO REMOVE
 
-	log_success("loop_world::begin::time : %lld", now  - time );
+void Univers::loop_world() {
+	milliseconds now = duration_cast< milliseconds >(
+			system_clock::now().time_since_epoch());
+	log_success("loop_world::begin::time : %lld" , now.count());
 
 	clientTCP_->deliverEvents();
 
@@ -132,7 +134,7 @@ void Univers::loop_world() {
 	world_->getSystemManager().getSystem<FoodEatSystem>().update();
 
 	world_->update();
-	
+
 	timer_loop.expires_at(
 			timer_loop.expires_at() +
 			boost::posix_time::milliseconds(gameSpeed));
