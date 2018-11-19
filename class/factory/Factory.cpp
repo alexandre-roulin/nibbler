@@ -1,6 +1,7 @@
 
 #include <component/SpriteComponent.hpp>
 #include <events/FoodCreation.hpp>
+#include <logger.h>
 #include "Factory.hpp"
 
 const char *Factory::part_name[PART_SNAKE]{
@@ -84,7 +85,6 @@ void Factory::create_walls() {
 }
 
 void Factory::create_wall(int x, int y) {
-	log_fatal("create_wall [%d][%d]", x ,y);
 	auto entity = univers_.getWorld_().createEntity();
 	entity.addComponent<PositionComponent>(x, y);
 	entity.addComponent<CollisionComponent>();

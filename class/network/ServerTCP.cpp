@@ -1,6 +1,7 @@
 #include "ServerTCP.hpp"
 #include "ClientTCP.hpp"
 #include <factory/Factory.hpp>
+#include <logger.h>
 
 ServerTCP::ServerTCP(boost::asio::io_service &io_service, unsigned int port)
 		: nu_(0),

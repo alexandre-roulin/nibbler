@@ -1,3 +1,4 @@
+#include <logger.h>
 #include "KINU/World.hpp"
 #include "RenderSystem.hpp"
 #include <component/SpriteComponent.hpp>

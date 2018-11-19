@@ -1,3 +1,4 @@
+#include <logger.h>
 #include <KINU/World.hpp>
 #include "JoystickSystem.hpp"
 #include <component/JoystickComponent.hpp>
@@ -27,15 +28,15 @@ void JoystickSystem::update() {
 		auto &motionComponent = entity.getComponent<MotionComponent>();
 		auto &joystickComponent = entity.getComponent<JoystickComponent>();
 
-		log_error(
-				"Match Mot[%d] Joy[%d] MotHor[%d] JoyHor[%d] MotVer[%d] JoyVer[%d]",
-				motionComponent.direction,
-				joystickComponent.direction,
-				motionComponent.direction & DIRECTION_HORIZONTAL,
-				joystickComponent.direction & DIRECTION_HORIZONTAL,
-				motionComponent.direction & DIRECTION_VERTICAL,
-				joystickComponent.direction & DIRECTION_VERTICAL
-		);
+//		log_error(
+//				"Match Mot[%d] Joy[%d] MotHor[%d] JoyHor[%d] MotVer[%d] JoyVer[%d]",
+//				motionComponent.direction,
+//				joystickComponent.direction,
+//				motionComponent.direction & DIRECTION_HORIZONTAL,
+//				joystickComponent.direction & DIRECTION_HORIZONTAL,
+//				motionComponent.direction & DIRECTION_VERTICAL,
+//				joystickComponent.direction & DIRECTION_VERTICAL
+//		);
 
 		if ((motionComponent.direction & DIRECTION_HORIZONTAL &&
 			 !(joystickComponent.direction & DIRECTION_HORIZONTAL)) ||

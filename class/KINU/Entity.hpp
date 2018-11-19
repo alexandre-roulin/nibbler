@@ -12,7 +12,7 @@
 #include <cstdint>
 #include <ostream>
 #include <iostream>
-#include <logger.h>
+
 namespace KINU {
 
 	class World;
@@ -264,8 +264,6 @@ namespace KINU {
 
 		if (entityId >= componentPool->getSize()) {
 			componentPool->resize(entityId + DEFAULT_POOL_SIZE);
-			log_warn("EntityManager::addComponent %s %d", typeid(T).name(),
-					 componentPool->getSize());
 		}
 
 		componentPool->set(entityId, component);

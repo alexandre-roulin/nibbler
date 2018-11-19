@@ -1,6 +1,5 @@
 #include "Entity.hpp"
 #include "World.hpp"
-#include <logger.h>
 
 namespace KINU {
 
@@ -68,10 +67,8 @@ namespace KINU {
 			versions.push_back(0);
 			index = (unsigned int) versions.size() - 1;
 			assert(index < (1 << Entity::IndexBits));
-			log_warn("New Index %d with %d", index, componentMasks.size());
 			if (index >= componentMasks.size()) {
 				componentMasks.resize(componentMasks.size() + DEFAULT_POOL_SIZE);
-				log_warn("RESIZE componentMasks > %d", componentMasks.size());
 			}
 		}
 

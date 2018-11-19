@@ -1,3 +1,4 @@
+#include <logger.h>
 
 #include "MotionSystem.hpp"
 #include <component/PositionComponent.hpp>
@@ -20,11 +21,6 @@ void MotionSystem::update() {
 	for (auto &entity : getEntities()) {
 		auto &positionComponent = entity.getComponent<PositionComponent>();
 		auto &motionComponent = entity.getComponent<MotionComponent>();
-
-		log_info("Entity [%d] x [%d] y [%d] mc [%d]", entity.getIndex(),
-				 positionComponent.x, positionComponent.y,
-				 static_cast<int>(motionComponent.direction));
-
 		switch (motionComponent.direction) {
 			case NORTH:
 				--positionComponent.y;

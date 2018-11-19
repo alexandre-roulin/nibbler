@@ -3,6 +3,7 @@
 #include <events/FoodEat.hpp>
 #include <events/FoodCreation.hpp>
 #include <network/ClientTCP.hpp>
+#include <logger.h>
 
 CollisionSystem::CollisionSystem() {
 	requireComponent<CollisionComponent>();
@@ -39,11 +40,13 @@ void CollisionSystem::checkCollision(
 			log_info("Body||TailCollision");
 			entityHead.killGroup();
 		} else {
-			log_info("Crash an other Snake");
+			log_info("Crash an other Snake called [%s]",entityHead.getGroup().c_str());
+
 			auto winSnake = getWorld().getEntityManager().getEntityGroup(entityHead.getGroup()).size();
+			log_warn("ID [%d] with [%d]", Factory::getIdFromTag(entityCheck.getGroup()), winSnake);
 			for (int index = 0; index < winSnake; ++index) {
 				getWorld().getEventManager().emitEvent<FoodEat>(
-						Factory::getIdFromTag(entityHead.getTag()));
+						Factory::getIdFromTag(entityCheck.getGroup()));
 			}
 			entityHead.killGroup();
 		}

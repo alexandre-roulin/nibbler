@@ -9,6 +9,7 @@
 #include <systems/RenderSystem.hpp>
 #include <network/ServerTCP.hpp>
 #include <dlfcn.h>
+#include <logger.h>
 
 Univers::Univers()
 		: timer_start(boost::asio::deadline_timer(io_start)),
@@ -16,7 +17,7 @@ Univers::Univers()
 												 boost::posix_time::milliseconds(
 														 100))),
 		  mapSize(0),
-		  gameSpeed(100) {
+		  gameSpeed(600) {
 
 	world_ = std::make_unique<KINU::World>(*this);
 	core_ = nullptr; //std::make_unique<Core>(*this)
@@ -111,7 +112,6 @@ void Univers::loop() {
 }
 
 void Univers::loop_world() {
-	log_success("Univers::loop_world");
 
 	clientTCP_->deliverEvents();
 
