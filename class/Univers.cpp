@@ -10,14 +10,15 @@
 #include <network/ServerTCP.hpp>
 #include <dlfcn.h>
 #include <logger.h>
+#include <SFML/System.hpp>
 
 Univers::Univers()
 		: timer_start(boost::asio::deadline_timer(io_start)),
 		  timer_loop(boost::asio::deadline_timer(io_loop,
 												 boost::posix_time::milliseconds(
 														 100))),
-		  mapSize(0),
-		  gameSpeed(600) {
+		  mapSize(MAP_MIN),
+		  gameSpeed(100) {
 
 	world_ = std::make_unique<KINU::World>(*this);
 	core_ = nullptr; //std::make_unique<Core>(*this)
@@ -152,8 +153,7 @@ ClientTCP &Univers::getClientTCP_() const {
 Core &Univers::getCore_() const {
 	return *core_;
 }
-
-unsigned int Univers::getMapSize() {
+unsigned int &Univers::getMapSize() {
 	return mapSize;
 }
 

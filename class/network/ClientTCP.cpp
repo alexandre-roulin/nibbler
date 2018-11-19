@@ -16,17 +16,26 @@ int const ClientTCP::size_header[] = {
 		[SNAKE] = sizeof(Snake),
 		[SNAKE_ARRAY] = sizeof(Snake) * MAX_SNAKE,
 		[HEADER] = sizeof(eHeader),
-		[INPUT] = sizeof(InputInfo)
+		[INPUT] = sizeof(InputInfo),
+		[RESIZE_MAP] = sizeof(unsigned int)
 };
 
 ClientTCP::ClientTCP(::Univers &univers, boost::asio::io_service &io)
-		: id_(0),
+		: isConnect_(false),
+		  id_(0),
 		  univers(univers),
 		  resolver(io),
 		  socket(io),
 		  factory(univers),
 		  io(io){
 
+}
+
+void ClientTCP::change_map_size(unsigned int size) {
+	unsigned int size2D[2];
+	size2D[0] = size;
+
+	write_socket(add_prefix(RESIZE_MAP, &size2D));
 }
 
 void ClientTCP::change_name(char const *name) {
@@ -60,6 +69,7 @@ void ClientTCP::connect(std::string dns, std::string port) {
 		read_socket_header();
 		thread = boost::thread(boost::bind(&boost::asio::io_service::run, &io));
 		thread.detach();
+		isConnect_ = true;
 	} catch (std::exception &exception) {
 		std::cout << exception.what() << std::endl;
 	}
@@ -101,6 +111,10 @@ void ClientTCP::handle_read_header(const boost::system::error_code &error_code,
 int16_t ClientTCP::getId() const {
 	return id_;
 }
+bool	ClientTCP::isConnect() const {
+	return isConnect_;
+}
+
 
 
 void ClientTCP::write_socket(std::string message) {
@@ -161,6 +175,12 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 			InputInfo ii;
 			std::memcpy(&ii, input, len);
 			joystickEvents.push_back(JoystickEvent(ii.id, ii.dir));
+		}
+			break;
+		case RESIZE_MAP: {
+			unsigned int buffer;
+			std::memcpy(&buffer, input, ClientTCP::size_header[RESIZE_MAP]);
+			univers.setMapSize(buffer);
 		}
 			break;
 		default:

@@ -29,7 +29,7 @@ public:
 
 	void manage_input();
 
-	unsigned int getMapSize();
+	unsigned int &getMapSize();
 
 	KINU::World &getWorld_() const;
 

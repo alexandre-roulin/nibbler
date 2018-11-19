@@ -36,6 +36,15 @@ bool demoGui(int ac, char **av, Univers &univers) {
 	return (false);
 }
 
+bool uiTest(int ac, char **av, Univers &univers) {
+
+	if (ac > 1 && !strcmp(av[1], "test")) {
+		univers.create_ui();
+		univers.getCore_().mainMenu();
+		return (true);
+	}
+	return (false);
+}
 
 int main(int ac, char **av) {
 	char path[] = "/tmp/log.out";
@@ -43,7 +52,8 @@ int main(int ac, char **av) {
 	Univers univers;
 	srand(time(NULL));
 
-	if (demoGui(ac, av, univers))
+	if (demoGui(ac, av, univers)
+		|| uiTest(ac, av, univers))
 		return (0);
 	std::string buffer;
 	for (;;) {

@@ -48,25 +48,19 @@ void			WidgetSnake::_renderOtherSnake(void)
 
 
 	ImGui::SetCursorPosX((ImGui::GetWindowSize().x - sizeTexture) / 2);
-	ImGui::PushID(0);
 	if (!this->_snake.isReady)
 	{
-		ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor::HSV(0.0f, 0.7f, 0.7f));
-		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4)ImColor::HSV(0.0f, 0.8f, 0.8f));
-		ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)ImColor::HSV(0.0f, 0.9f, 0.9f));
+		Core::beginColor(Core::HUE_RED);
 		if (ImGui::Button("Ready ?", sf::Vector2f(sizeTexture, ImGui::GetFrameHeight())))
 			this->_core.univers.getClientTCP_().change_state_ready();;
 	}
 	else
 	{
-		ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor::HSV(0.33f, 0.7f, 0.7f));
-		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4)ImColor::HSV(0.33f, 0.8f, 0.8f));
-		ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)ImColor::HSV(0.33f, 0.9f, 0.9f));
+		Core::beginColor(Core::HUE_GREEN);
 		if (ImGui::Button("Ready !", sf::Vector2f(sizeTexture, ImGui::GetFrameHeight())))
 			this->_core.univers.getClientTCP_().change_state_ready();
 	}
-	ImGui::PopStyleColor(3);
-	ImGui::PopID();
+	Core::endColor();
 
 	ImGui::SetCursorPosX((ImGui::GetWindowSize().x - sizeTexture) / 2);
 	if (ImGui::BeginCombo("", this->_color[static_cast<int>(this->_snake.sprite)].c_str(), ImGuiComboFlags_NoArrowButton))

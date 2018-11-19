@@ -64,6 +64,8 @@ public:
 
 	void change_state_ready(void);
 
+	void change_map_size(unsigned int);
+
 	template<typename T>
 	static std::string add_prefix(eHeader, T *element);
 
@@ -78,11 +80,13 @@ public:
 	Snake const &getSnake(void) const;
 
 	int16_t getId(void) const;
+	bool	isConnect() const;
 
 	static int const size_header[];
 private:
 	ClientTCP(::Univers &univers, boost::asio::io_service &io);
 
+	bool isConnect_;
 	std::vector<FoodCreation> foodCreations;
 	std::vector<JoystickEvent> joystickEvents;
 	std::vector<StartEvent> startEvents;

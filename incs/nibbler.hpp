@@ -16,6 +16,9 @@
 #define DIRECTION_VERTICAL 1			// 0000 0001
 #define DIRECTION_HORIZONTAL 4			// 0000 0100
 
+#define MAP_MAX 100
+#define MAP_MIN 5
+
 enum eDirection {
 	NORTH = 1,							// 0000 0001
 	SOUTH = 3,							// 0000 0011
@@ -178,4 +181,5 @@ enum eHeader {
 	SNAKE_ARRAY,		//5
 	HEADER,				//6
 	INPUT,				//7
+	RESIZE_MAP,			//8
 };

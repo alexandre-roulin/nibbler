@@ -4,7 +4,8 @@
 #include "imgui.h"
 
 WidgetOption::WidgetOption(Core &core) :
-AWidget(core)
+AWidget(core),
+_mapSize(this->_core.univers.getMapSize())
 {
 	memcpy(this->_nameBuffer, this->_core.univers.getClientTCP_().getSnake().name, NAME_BUFFER);
 }
@@ -14,11 +15,7 @@ WidgetOption::~WidgetOption(void)
 
 void			WidgetOption::render(void)
 {
-	ImGui::Begin("TEST", NULL, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse);
-//	ImGui::InputInt("Size of Map", &i0);
-//	ImGui::InputInt2("input int2", vec4i);
-	void change_name(char const *name);
-
+	ImGui::Begin("Options", NULL, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse);
 
 	if (ImGui::InputText("Name", this->_nameBuffer,
 						 IM_ARRAYSIZE(this->_nameBuffer),
@@ -27,6 +24,16 @@ void			WidgetOption::render(void)
 		this->_core.univers.getClientTCP_().change_name(this->_nameBuffer);
 		memcpy(this->_nameBuffer, this->_core.univers.getClientTCP_().getSnake().name, NAME_BUFFER);
 	}
-	ImGui::End();
 
+	if (ImGui::InputInt("##Size map", reinterpret_cast<int *>(&this->_mapSize), 1, 4, ImGuiInputTextFlags_CharsDecimal | ImGuiInputTextFlags_CharsNoBlank | ImGuiInputTextFlags_EnterReturnsTrue)) {
+		if (this->_mapSize < MAP_MIN)
+			this->_mapSize = MAP_MIN;
+		else if (this->_mapSize > MAP_MAX)
+			this->_mapSize = MAP_MAX;
+		this->_core.univers.getClientTCP_().change_map_size(this->_mapSize);
+	}
+
+
+
+	ImGui::End();
 }
