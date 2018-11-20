@@ -38,6 +38,8 @@ void WidgetChat::render(void) {
 	this->_scrollChat = false;
 	ImGui::EndChild();
 	ImGui::PushItemWidth(ImGui::GetWindowWidth() * 0.8);
+	if (ImGui::IsRootWindowOrAnyChildFocused() && !ImGui::IsAnyItemActive() && !ImGui::IsMouseClicked(0))
+		ImGui::SetKeyboardFocusHere(0);
 	if (ImGui::InputText("Tap", this->_bufferMessage,
 						 IM_ARRAYSIZE(this->_bufferMessage),
 						 ImGuiInputTextFlags_EnterReturnsTrue)) {
