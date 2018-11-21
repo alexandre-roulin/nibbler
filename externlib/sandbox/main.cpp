@@ -13,16 +13,16 @@ int         main(int argc, char **argv)
     static_cast<void>(argc);
     static_cast<void>(argv);
 
-    void *dlHandle;
+    void *dlHandleDisplay;
 
-    if (!(dlHandle = dlopen(argv[1], RTLD_LAZY | RTLD_LOCAL)))
+    if (!(dlHandleDisplay = dlopen(argv[1], RTLD_LAZY | RTLD_LOCAL)))
         return (dlError());
 
     IDisplay    *(*newDisplay)(char const *, int, int, int, char const *);
     void        (*deleteDisplay)(IDisplay *);
-    if (!(newDisplay = (IDisplay *(*)(char const *, int, int, int, char const *))(dlsym(dlHandle, "newDisplay"))))
+    if (!(newDisplay = (IDisplay *(*)(char const *, int, int, int, char const *))(dlsym(dlHandleDisplay, "newDisplay"))))
         return (dlError());
-    if (!(deleteDisplay = (void (*)(IDisplay *))(dlsym(dlHandle, "deleteDisplay"))))
+    if (!(deleteDisplay = (void (*)(IDisplay *))(dlsym(dlHandleDisplay, "deleteDisplay"))))
         return (dlError());
 
     IDisplay    *display = newDisplay("../../ressource/tileset_3snake.png", 32, 30, 30, "lol");

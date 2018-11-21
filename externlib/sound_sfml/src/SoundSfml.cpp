@@ -39,17 +39,19 @@ void		SoundSfml::playMusic(void)
 
 void		SoundSfml::addNoise(std::string const &path)
 {
-	this->_noiseBuffer.emplace_back(sf::SoundBuffer());
-	if (!this->_noiseBuffer.back().loadFromFile(path))
+	this->_noiseBuffer.emplace_back(new sf::SoundBuffer());
+	if (!this->_noiseBuffer.back()->loadFromFile(path)) {
+		this->_noiseBuffer.pop_back();
 		throw(SoundSfml::SfmlSoundException("Cant load [" + path + "] noise"));
-	this->_noise.emplace_back(sf::Sound());
-	this->_noise.back().setBuffer(this->_noiseBuffer.back());
+	}
+	this->_noise.emplace_back(new sf::Sound());
+	this->_noise.back()->setBuffer(*this->_noiseBuffer.back());
 }
 void		SoundSfml::playNoise(unsigned int index)
 {
 	if (index >= this->_noise.size())
 		throw(SoundSfml::SfmlSoundException("Cant play the noise at " + std::to_string(index) + "index"));
-	this->_noise[index].play();
+	this->_noise[index]->play();
 }
 
 void SoundSfml::_clean(void)
