@@ -62,6 +62,7 @@ public:
 	void parse_input(eHeader, void const *, size_t);
 
 	void refresh_data_snake_array(TCPConnection::pointer &, int16_t);
+	void refresh_data_map_size(TCPConnection::pointer &connection);
 
 	void start_game();
 
@@ -72,6 +73,7 @@ public:
 private:
 	int16_t nu_;
 	Snake snake_array[MAX_SNAKE];
+	unsigned int	mapSize;
 
 	void start_accept();
 
