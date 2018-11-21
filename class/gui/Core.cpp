@@ -6,6 +6,8 @@
 #include "gui/widget/WidgetConnect.hpp"
 #include <vector>
 #include <iostream>
+#include <logger.h>
+
 
 Core::Core(Univers &univers) :
 univers(univers),
@@ -133,12 +135,13 @@ void			callbackExit(void *ptr)
 void			Core::aState(void)
 {
 	WidgetExit wexit(*this, &callbackExit, this);
-	WidgetLobby lobby(*this, this->univers.getClientTCP_().getSnakes());
+	WidgetLobby *lobby = nullptr;
 	WidgetOption *optionSnake = nullptr;
 	WidgetConnect optionConnect(*this);
 
 
-	while (this->_win.isOpen())
+	lobby = new WidgetLobby(*this, this->univers.getClientTCP_().getSnakes());
+	while (this->_win.isOpen() && !this->univers.getClientTCP_().isOpenGame())
 	{
 		sf::Event event;
 		while (this->_win.pollEvent(event))
@@ -153,14 +156,18 @@ void			Core::aState(void)
 		ImGui::SetNextWindowSize(this->positionByPercent(sf::Vector2<unsigned int>(70, 50)));
 		this->_chat.render();
 
-		lobby.render();
+		lobby->render();
 
 		ImGui::SetNextWindowPos(this->positionByPercent(sf::Vector2<unsigned int>(95, 0)), 0, sf::Vector2f(0.5f, 0.5f));
 		wexit.render();
 
 		if (this->univers.getClientTCP_().isConnect()) {
-			if (!optionSnake)
+			if (!optionSnake) {
+				if (lobby)
+					delete lobby;
+				lobby = new WidgetLobby(*this, this->univers.getClientTCP_().getSnakes());
 				optionSnake = new WidgetOption(*this);
+			}
 			ImGui::SetNextWindowPos(this->positionByPercent(sf::Vector2<unsigned int>(70, 50)));
 			ImGui::SetNextWindowSize(this->positionByPercent(sf::Vector2<unsigned int>(30, 25)));
 			optionSnake->render();
@@ -178,6 +185,8 @@ void			Core::aState(void)
 	}
 	if (optionSnake)
 		delete optionSnake;
+	if (lobby)
+		delete lobby;
 }
 
 void				Core::addMessageChat(std::string const &msg)

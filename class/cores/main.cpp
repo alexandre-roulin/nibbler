@@ -18,7 +18,7 @@
 std::string const Snake::basicName[MAX_SNAKE] = {"Jack O'Lantern", "Eden",
 												 "Jacky", "Emerald",
 												 "Broutille", "Veggie-vie",
-												 "jinou42", "Dota c cro cool"};
+												 "jinou42", "Dautta c bo"};
 
 std::ostream &operator<<(std::ostream &os, const Snake &snake) {
 	os << "name: " << snake.name << " sprite: "
@@ -111,7 +111,7 @@ int main(int ac, char **av) {
 			sleep(1);
 			univers.getClientTCP_().change_state_ready();
 			univers.setMapSize(35);
-			univers.load_external_library(std::string("Game pro"),
+			univers.load_external_display_library(std::string("Game pro"),
 										  std::string(PATH_LIBRARY_SFML));
 
 		}
@@ -120,7 +120,7 @@ int main(int ac, char **av) {
 			sleep(1);
 			univers.getClientTCP_().change_state_ready();
 			univers.setMapSize(35);
-			univers.load_external_library(std::string("Game pro"),
+			univers.load_external_display_library(std::string("Game pro"),
 										  std::string(PATH_LIBRARY_SFML));
 			univers.loop();
 		}
@@ -131,7 +131,7 @@ int main(int ac, char **av) {
 			sleep(1);
 			univers.getClientTCP_().change_state_ready();
 			univers.setMapSize(35);
-			univers.load_external_library(std::string("Game pro"),
+			univers.load_external_display_library(std::string("Game pro"),
 										  std::string(PATH_LIBRARY_SFML));
 			univers.loop();
 		}
@@ -158,7 +158,7 @@ int main(int ac, char **av) {
 
 		if (buffer == "game") {
 			univers.setMapSize(35);
-			univers.load_external_library(std::string("Game pro"),
+			univers.load_external_display_library(std::string("Game pro"),
 										  std::string(PATH_LIBRARY_SFML));
 
 			ClientTCP::StartInfo startInfo;
@@ -169,13 +169,35 @@ int main(int ac, char **av) {
 		}
 		if (buffer == "game1") {
 			univers.setMapSize(35);
-			univers.load_external_library(std::string("Game pro"),
+			univers.load_external_display_library(std::string("Game pro"),
 										  std::string(PATH_LIBRARY_SFML));
 			univers.loop();
 		}
 		if (buffer == "ui") {
 			univers.create_ui();
 			univers.getCore_().aState();
+			Core *core = univers.releaseCore_();
+			if (core)
+				delete core;
+			
+			if (univers.getClientTCP_().isOpenGame()) {
+				
+				//univers.getClientTCP_().change_state_ready();
+				//sleep(1);
+				
+				univers.load_external_display_library(std::string("Game pro"),
+											  std::string(PATH_LIBRARY_SFML));
+
+			  ClientTCP::StartInfo startInfo;
+				if (univers.isServer()) {
+					univers.getClientTCP_()
+							.write_socket(
+									ClientTCP::add_prefix(START_GAME, &startInfo));	
+				} else {
+					std::cout << "I launch " << std::endl;
+				}
+				univers.loop();
+			}
 			return (0);
 		}
 	}

@@ -5,7 +5,8 @@
 
 ServerTCP::ServerTCP(boost::asio::io_service &io_service, unsigned int port)
 		: nu_(0),
-		  acceptor_(io_service, tcp::endpoint(tcp::v4(), port)) {
+		  acceptor_(io_service, tcp::endpoint(tcp::v4(), port)),
+		  mapSize(30) {
 	//std::cout << "Server created" << std::endl;
 	start_accept();
 }
@@ -23,6 +24,7 @@ void ServerTCP::start_accept() {
 			new_connection->read_socket_header();
 			pointers.push_back(new_connection);
 			refresh_data_snake_array(new_connection, nu_);
+			refresh_data_map_size(new_connection);
 			++nu_;
 		}
 		start_accept();
@@ -44,6 +46,10 @@ void ServerTCP::refresh_data_snake_array(
 //		std::cout << "ServerTCP::refresh_data_snake_array : " << std::endl;
 		async_write(ClientTCP::add_prefix(SNAKE, &snake_array[id]));
 	}
+}
+
+void ServerTCP::refresh_data_map_size(TCPConnection::pointer &connection) {
+	async_write(ClientTCP::add_prefix(RESIZE_MAP, &mapSize));
 }
 
 void ServerTCP::start_game() {
@@ -108,6 +114,10 @@ void ServerTCP::parse_input(eHeader header, void const *input, size_t len) {
 				async_write(ClientTCP::add_prefix(FOOD, &positionComponent));
 			return;
 		}
+		case RESIZE_MAP: {
+				std::memcpy(&mapSize, input, len);
+				break ;
+			}
 
 		default:
 			break;

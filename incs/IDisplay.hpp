@@ -9,6 +9,9 @@
 #define SIZE_LINE_TILESET 15
 #define PATH_LIBRARY_SFML "./externlib/display_sfml/libdisplay_sfml.so"
 #define PATH_LIBRARY_SDL "./externlib/display_sdl/libdisplay_sdl.so"
+#define PATH_SOUND_LIBRARY_SFML "./externlib/sound_sfml/libsound_sfml.so"
+#define PATH_SOUND_LIBRARY_SDL "./externlib/sound_sdl/libsound_sdl.so"
+
 class IDisplay {
 public:
 	virtual ~IDisplay() {}

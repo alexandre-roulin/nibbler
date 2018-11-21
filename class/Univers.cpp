@@ -27,9 +27,11 @@ Univers::Univers()
 	serverTCP_ = nullptr;
 	display = nullptr;
 }
-
-
-bool Univers::load_external_library(std::string title, std::string library_path) {
+/*
+bool Univers::load_external_sound_library(std::string const &title, std::string const &library_path) {
+}
+*/
+bool Univers::load_external_display_library(std::string const &title, std::string const &library_path) {
 
 	if (display != nullptr && dlHandle != nullptr) {
 		deleteDisplay(display);
@@ -146,9 +148,14 @@ void Univers::create_ui() {
 }
 
 void Univers::create_server(unsigned int port) {
+	isServer_ = true;
 	serverTCP_ = std::make_unique<ServerTCP>(io_server, port);
 	boost::thread t2(boost::bind(&boost::asio::io_service::run, &io_server));
 	t2.detach();
+}
+
+bool Univers::isServer() const {
+	return isServer_;
 }
 
 KINU::World &Univers::getWorld_() const {
@@ -158,10 +165,16 @@ KINU::World &Univers::getWorld_() const {
 ClientTCP &Univers::getClientTCP_() const {
 	return *clientTCP_;
 }
+ServerTCP &Univers::getServerTCP_() const {
+	return *serverTCP_;
+}
 
 
 Core &Univers::getCore_() const {
 	return *core_;
+}
+Core *Univers::releaseCore_() {
+	return (core_.release());
 }
 unsigned int &Univers::getMapSize() {
 	return mapSize;
