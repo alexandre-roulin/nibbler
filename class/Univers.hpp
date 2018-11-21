@@ -21,7 +21,7 @@ class Univers {
 public:
 	Univers();
 
-	bool load_external_library(std::string title, std::string library_path);
+	bool load_external_display_library(std::string const &title, std::string const &library_path);
 
 	void loop();
 

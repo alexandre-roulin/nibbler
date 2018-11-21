@@ -19,6 +19,14 @@
 #define MAP_MAX 100
 #define MAP_MIN 5
 
+enum class eSound {
+	WELCOME = 0,
+	READY,
+	RESIZE_MAP,
+	FOOD,
+	DEATH
+};
+
 enum eDirection {
 	NORTH = 1,							// 0000 0001
 	SOUTH = 3,							// 0000 0011

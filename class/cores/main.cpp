@@ -120,7 +120,7 @@ int main(int ac, char **av) {
 			sleep(1);
 			univers.getClientTCP_().change_state_ready();
 			univers.setMapSize(35);
-			univers.load_external_library(std::string("Game pro"),
+			univers.load_external_display_library(std::string("Game pro"),
 										  std::string(PATH_LIBRARY_SFML));
 
 		}
@@ -129,7 +129,7 @@ int main(int ac, char **av) {
 			sleep(1);
 			univers.getClientTCP_().change_state_ready();
 			univers.setMapSize(35);
-			univers.load_external_library(std::string("Game pro"),
+			univers.load_external_display_library(std::string("Game pro"),
 										  std::string(PATH_LIBRARY_SFML));
 			univers.loop();
 		}
@@ -140,7 +140,7 @@ int main(int ac, char **av) {
 			sleep(1);
 			univers.getClientTCP_().change_state_ready();
 			univers.setMapSize(35);
-			univers.load_external_library(std::string("Game pro"),
+			univers.load_external_display_library(std::string("Game pro"),
 										  std::string(PATH_LIBRARY_SFML));
 			univers.loop();
 		}
@@ -167,7 +167,7 @@ int main(int ac, char **av) {
 
 		if (buffer == "game") {
 			univers.setMapSize(35);
-			univers.load_external_library(std::string("Game pro"),
+			univers.load_external_display_library(std::string("Game pro"),
 										  std::string(PATH_LIBRARY_SFML));
 
 			ClientTCP::StartInfo startInfo;
@@ -178,7 +178,7 @@ int main(int ac, char **av) {
 		}
 		if (buffer == "game1") {
 			univers.setMapSize(35);
-			univers.load_external_library(std::string("Game pro"),
+			univers.load_external_display_library(std::string("Game pro"),
 										  std::string(PATH_LIBRARY_SFML));
 			univers.loop();
 		}
@@ -194,7 +194,7 @@ int main(int ac, char **av) {
 				//univers.getClientTCP_().change_state_ready();
 				//sleep(1);
 				
-				univers.load_external_library(std::string("Game pro"),
+				univers.load_external_display_library(std::string("Game pro"),
 											  std::string(PATH_LIBRARY_SFML));
 
 			  ClientTCP::StartInfo startInfo;
@@ -205,7 +205,6 @@ int main(int ac, char **av) {
 				} else {
 					std::cout << "I launch " << std::endl;
 				}
-				univers.setMapSize(35);
 				univers.loop();
 			}
 			return (0);

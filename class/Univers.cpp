@@ -28,9 +28,11 @@ Univers::Univers()
 	serverTCP_ = nullptr;
 	display = nullptr;
 }
-
-
-bool Univers::load_external_library(std::string title, std::string library_path) {
+/*
+bool Univers::load_external_sound_library(std::string const &title, std::string const &library_path) {
+}
+*/
+bool Univers::load_external_display_library(std::string const &title, std::string const &library_path) {
 
 	if (display != nullptr && dlHandle != nullptr) {
 		deleteDisplay(display);
