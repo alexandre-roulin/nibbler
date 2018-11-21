@@ -158,10 +158,16 @@ KINU::World &Univers::getWorld_() const {
 ClientTCP &Univers::getClientTCP_() const {
 	return *clientTCP_;
 }
+ServerTCP &Univers::getServerTCP_() const {
+	return *serverTCP_;
+}
 
 
 Core &Univers::getCore_() const {
 	return *core_;
+}
+Core *Univers::releaseCore_() {
+	return (core_.release());
 }
 unsigned int &Univers::getMapSize() {
 	return mapSize;

@@ -1,4 +1,5 @@
 #include <gui/Core.hpp>
+#include "nibbler.hpp"
 #include "WidgetOption.hpp"
 #include "Univers.hpp"
 #include "imgui.h"
@@ -25,15 +26,23 @@ void			WidgetOption::render(void)
 		memcpy(this->_nameBuffer, this->_core.univers.getClientTCP_().getSnake().name, NAME_BUFFER);
 	}
 
-	if (ImGui::InputInt("##Size map", reinterpret_cast<int *>(&this->_mapSize), 1, 4, ImGuiInputTextFlags_CharsDecimal | ImGuiInputTextFlags_CharsNoBlank | ImGuiInputTextFlags_EnterReturnsTrue)) {
+	if (ImGui::InputInt("Size map", reinterpret_cast<int *>(&this->_mapSize), 1, 4, ImGuiInputTextFlags_CharsDecimal | ImGuiInputTextFlags_CharsNoBlank | ImGuiInputTextFlags_EnterReturnsTrue)) {
 		if (this->_mapSize < MAP_MIN)
 			this->_mapSize = MAP_MIN;
 		else if (this->_mapSize > MAP_MAX)
 			this->_mapSize = MAP_MAX;
 		this->_core.univers.getClientTCP_().change_map_size(this->_mapSize);
 	}
-
-
+	
+	
+	
+	if (Snake::allSnakesReady(this->_core.univers.getClientTCP_().getSnakes(), MAX_SNAKE)) {
+		Core::beginColor(Core::HUE_GREEN);
+		if (ImGui::Button("Run the game")) {
+			this->_core.univers.getClientTCP_().send_host_open_game();
+		}
+		Core::endColor();
+	}
 
 	ImGui::End();
 }

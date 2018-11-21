@@ -140,7 +140,7 @@ struct		Snake
 		return (snake);
 	}
 
-	static int getlastSnakeIndex(Snake *snakes, unsigned int range) {
+	static int getlastSnakeIndex(Snake const *snakes, unsigned int range) {
 		for (unsigned int i = 0; i < range; i++)
 		{
 			if (snakes[i].id == -1)
@@ -149,7 +149,7 @@ struct		Snake
 		return (-1);
 	}
 
-	static int isFull(Snake *snakes, unsigned int range) {
+	static int isFull(Snake const *snakes, unsigned int range) {
 		for (unsigned int i = 0; i < range; i++)
 		{
 			if (snakes[i].id == -1)
@@ -158,13 +158,22 @@ struct		Snake
 		return (true);
 	}
 
-	static int getSnakeById(Snake *snakes, unsigned int range, int16_t id) {
+	static int getSnakeById(Snake const *snakes, unsigned int range, int16_t id) {
 		for (unsigned int i = 0; i < range; i++)
 		{
 			if (snakes[i].id == id)
 				return (i);
 		}
 		return (-1);
+	}
+	
+	static int allSnakesReady(Snake const *snakes, unsigned int range) {
+		for (unsigned int i = 0; i < range; i++)
+		{
+			if (snakes[i].id != -1 && !snakes[i].isReady)
+				return (false);
+		}
+		return (true);
 	}
 
 	static std::string const basicName[MAX_SNAKE];
@@ -176,10 +185,11 @@ enum eHeader {
 	CHAT,				//0
 	FOOD,				//1
 	ID,					//2
-	START_GAME,			//3
-	SNAKE,				//4
-	SNAKE_ARRAY,		//5
-	HEADER,				//6
-	INPUT,				//7
-	RESIZE_MAP,			//8
+	OPEN_GAME,			//3
+	START_GAME,			//4
+	SNAKE,				//5
+	SNAKE_ARRAY,		//6
+	HEADER,				//7
+	INPUT,				//8
+	RESIZE_MAP,			//9
 };

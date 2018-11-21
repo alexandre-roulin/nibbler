@@ -58,6 +58,8 @@ public:
 
 	void refreshMySnake(void);
 
+	void send_host_open_game(void);
+	
 	void change_name(char const *name);
 
 	void change_sprite(eSprite snakeSprite);
@@ -81,12 +83,14 @@ public:
 
 	int16_t getId(void) const;
 	bool	isConnect() const;
+	bool	isOpenGame() const;
 
 	static int const size_header[];
 private:
 	ClientTCP(::Univers &univers, boost::asio::io_service &io);
 
 	bool isConnect_;
+	bool openGame_;
 	std::vector<FoodCreation> foodCreations;
 	std::vector<JoystickEvent> joystickEvents;
 	std::vector<StartEvent> startEvents;

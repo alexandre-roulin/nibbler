@@ -5,21 +5,10 @@ WidgetLobby::WidgetLobby(Core &core, Snake const *snakes) :
 AWidget(core)
 {
 	for (unsigned i = 0; i < MAX_SNAKE; i++)
+	{
+		std::cout << "isYOur ? i[" << i <<  "] id[" << this->_core.univers.getClientTCP_().getId() << "] = [" << (i == this->_core.univers.getClientTCP_().getId()) << "]" << std::endl;
 		this->addSnake(snakes[i], (i == this->_core.univers.getClientTCP_().getId()));
-	/*
-	this->_color.emplace_back("snake_green");
-	this->_texture.emplace_back();
-	if (!(this->_texture.back().loadFromFile("ressource/snake_presentation/snake_green.png")))
-		throw(AWidget::Constructor(std::string("WidgetLobby: Cant load [") + "snake_green.png" + "]"));
-	this->_color.emplace_back("snake_blue");
-	this->_texture.emplace_back();
-	if (!(this->_texture.back().loadFromFile("ressource/snake_presentation/snake_blue.png")))
-		throw(AWidget::Constructor(std::string("WidgetLobby: Cant load [") + "snake_blue.png" + "]"));
-	this->_color.emplace_back("snake_purple");
-	this->_texture.emplace_back();
-	if (!(this->_texture.back().loadFromFile("ressource/snake_presentation/snake_purple.png")))
-		throw(AWidget::Constructor(std::string("WidgetLobby: Cant load [") + "snake_purple.png" + "]"));
-	*/
+	}
 	this->addColor("Green", "ressource/snake_presentation/snake_green.png");
 	this->addColor("Blue", "ressource/snake_presentation/snake_blue.png");
 	this->addColor("Purple", "ressource/snake_presentation/snake_purple.png");

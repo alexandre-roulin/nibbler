@@ -12,6 +12,7 @@ int const ClientTCP::size_header[] = {
 		[CHAT] = SIZEOF_CHAT_PCKT,
 		[FOOD] = sizeof(PositionComponent),
 		[ID] = sizeof(int16_t),
+		[OPEN_GAME] = sizeof(bool),
 		[START_GAME] = sizeof(StartInfo),
 		[SNAKE] = sizeof(Snake),
 		[SNAKE_ARRAY] = sizeof(Snake) * MAX_SNAKE,
@@ -22,6 +23,7 @@ int const ClientTCP::size_header[] = {
 
 ClientTCP::ClientTCP(::Univers &univers, boost::asio::io_service &io)
 		: isConnect_(false),
+		  openGame_(false),
 		  id_(0),
 		  univers(univers),
 		  resolver(io),
@@ -29,6 +31,12 @@ ClientTCP::ClientTCP(::Univers &univers, boost::asio::io_service &io)
 		  factory(univers),
 		  io(io){
 
+}
+
+void ClientTCP::send_host_open_game(void) {
+	bool data;
+	data = true;
+	write_socket(add_prefix(OPEN_GAME, &data));
 }
 
 void ClientTCP::change_map_size(unsigned int size) {
@@ -114,7 +122,9 @@ int16_t ClientTCP::getId() const {
 bool	ClientTCP::isConnect() const {
 	return isConnect_;
 }
-
+bool	ClientTCP::isOpenGame() const {
+	return openGame_;
+}
 
 
 void ClientTCP::write_socket(std::string message) {
@@ -167,6 +177,15 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 			log_info("eHeader::ID");
 
 			std::memcpy(&id_, input, len);
+			break;
+		case OPEN_GAME: {
+			log_info("eHeader::OPEN_GAME");
+
+			ClientTCP::StartInfo startInfo;
+			bool data;
+			std::memcpy(&data, input, ClientTCP::size_header[OPEN_GAME]);
+			openGame_ = data;
+		}
 			break;
 		case START_GAME: {
 			log_info("eHeader::START_GAME");

@@ -18,7 +18,7 @@
 std::string const Snake::basicName[MAX_SNAKE] = {"Jack O'Lantern", "Eden",
 												 "Jacky", "Emerald",
 												 "Broutille", "Veggie-vie",
-												 "jinou42", "Dota c cro cool"};
+												 "jinou42", "Dautta c bo"};
 
 std::ostream &operator<<(std::ostream &os, const Snake &snake) {
 	os << "name: " << snake.name << " sprite: "
@@ -185,6 +185,20 @@ int main(int ac, char **av) {
 		if (buffer == "ui") {
 			univers.create_ui();
 			univers.getCore_().aState();
+			Core *core = univers.releaseCore_();
+			if (core)
+				delete core;
+			
+			if (univers.getClientTCP_().isOpenGame()) {
+				univers.load_external_library(std::string("Game pro"),
+											  std::string(PATH_LIBRARY_SFML));
+
+				ClientTCP::StartInfo startInfo;
+				univers.getClientTCP_()
+						.write_socket(
+								ClientTCP::add_prefix(START_GAME, &startInfo));	
+				univers.loop();
+			}
 			return (0);
 		}
 	}

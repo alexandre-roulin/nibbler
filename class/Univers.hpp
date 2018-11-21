@@ -34,8 +34,11 @@ public:
 	KINU::World &getWorld_() const;
 
 	ClientTCP &getClientTCP_() const;
+	
+	ServerTCP &getServerTCP_() const;
 
 	Core &getCore_() const;
+	Core *releaseCore_();
 
 	void create_ui();
 
