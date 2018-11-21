@@ -22,7 +22,7 @@
 enum class eSound {
 	WELCOME = 0,
 	READY,
-	RESIZE_MAP,
+	RESIZE_MAP = 0,
 	FOOD,
 	DEATH
 };

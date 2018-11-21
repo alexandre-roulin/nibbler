@@ -3,6 +3,7 @@
 #include <exception>
 #include "ISound.hpp"
 #include <vector>
+#include <deque>
 
 class SoundSfml : public ISound {
     public:
@@ -36,6 +37,8 @@ private:
 
 	std::vector< std::unique_ptr< sf::SoundBuffer> >			_noiseBuffer;
 	std::vector< std::unique_ptr< sf::Sound > >					_noise;
+
+	std::deque< sf::Sound >										_noiseDeque;
 
     SoundSfml          &operator=(SoundSfml const &rhs);
     SoundSfml(SoundSfml const &src);

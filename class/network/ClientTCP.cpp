@@ -162,6 +162,7 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 
 			snake_array[snake_temp.id] = snake_temp;
 
+			univers.playNoise(eSound::READY);
 			break;
 		}
 		case FOOD: {
@@ -209,6 +210,7 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 			unsigned int buffer;
 			std::memcpy(&buffer, input, ClientTCP::size_header[RESIZE_MAP]);
 			univers.setMapSize(buffer);
+			univers.playNoise(eSound::RESIZE_MAP);
 		}
 			break;
 		default:
