@@ -190,13 +190,22 @@ int main(int ac, char **av) {
 				delete core;
 			
 			if (univers.getClientTCP_().isOpenGame()) {
+				
+				//univers.getClientTCP_().change_state_ready();
+				//sleep(1);
+				
 				univers.load_external_library(std::string("Game pro"),
 											  std::string(PATH_LIBRARY_SFML));
 
-				ClientTCP::StartInfo startInfo;
-				univers.getClientTCP_()
-						.write_socket(
-								ClientTCP::add_prefix(START_GAME, &startInfo));	
+			  ClientTCP::StartInfo startInfo;
+				if (univers.isServer()) {
+					univers.getClientTCP_()
+							.write_socket(
+									ClientTCP::add_prefix(START_GAME, &startInfo));	
+				} else {
+					std::cout << "I launch " << std::endl;
+				}
+				univers.setMapSize(35);
 				univers.loop();
 			}
 			return (0);

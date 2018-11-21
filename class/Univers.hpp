@@ -41,6 +41,7 @@ public:
 	Core *releaseCore_();
 
 	void create_ui();
+	bool isServer() const;
 
 	void create_server(unsigned int port = 4242);
 
@@ -62,6 +63,7 @@ private:
 	boost::shared_ptr<ClientTCP> clientTCP_;
 	void *dlHandle;
 	IDisplay *display;
+	bool		isServer_;
 
 	unsigned int mapSize;
 public:

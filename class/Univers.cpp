@@ -19,7 +19,8 @@ Univers::Univers()
 												 boost::posix_time::milliseconds(
 														 100))),
 		  mapSize(MAP_MIN),
-		  gameSpeed(1000) {
+		  gameSpeed(1000),
+		  isServer_(false) {
 
 	world_ = std::make_unique<KINU::World>(*this);
 	core_ = nullptr; //std::make_unique<Core>(*this)
@@ -146,9 +147,14 @@ void Univers::create_ui() {
 }
 
 void Univers::create_server(unsigned int port) {
+	isServer_ = true;
 	serverTCP_ = std::make_unique<ServerTCP>(io_server, port);
 	boost::thread t2(boost::bind(&boost::asio::io_service::run, &io_server));
 	t2.detach();
+}
+
+bool Univers::isServer() const {
+	return isServer_;
 }
 
 KINU::World &Univers::getWorld_() const {
