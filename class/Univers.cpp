@@ -19,40 +19,68 @@ Univers::Univers()
 												 boost::posix_time::milliseconds(
 														 100))),
 		  mapSize(MAP_MIN),
-		  gameSpeed(200) {
+		  gameSpeed(80),
+		  dlHandleDisplay(nullptr),
+		  dlHandleSound(nullptr),
+		  display(nullptr),
+		  sound(nullptr),
+		  isServer_(false) {
 
 	world_ = std::make_unique<KINU::World>(*this);
 	core_ = nullptr; //std::make_unique<Core>(*this)
 	clientTCP_ = ClientTCP::create(*this, io_client);
 	serverTCP_ = nullptr;
-	display = nullptr;
 }
-/*
-bool Univers::load_external_sound_library(std::string const &title, std::string const &library_path) {
-}
-*/
-bool Univers::load_external_display_library(std::string const &title, std::string const &library_path) {
 
-	if (display != nullptr && dlHandle != nullptr) {
-		deleteDisplay(display);
-		dlclose(dlHandle);
+bool Univers::load_external_sound_library(std::string const &title, std::string const &library_path) {
+	if (sound != nullptr && dlHandleSound != nullptr) {
+		if(deleteSound) {
+			deleteSound(sound);
+			deleteSound = nullptr;
+			newSound = nullptr;
+		}
+		dlclose(dlHandleSound);
 	}
 
-	if (!(dlHandle = dlopen(library_path.c_str(), RTLD_LAZY | RTLD_LOCAL)))
+	if (!(dlHandleSound = dlopen(library_path.c_str(), RTLD_LAZY | RTLD_LOCAL)))
+		return (dlError());
+
+	if (!(newSound = reinterpret_cast<ISound *(*)(
+			const char *) >(dlsym(dlHandleSound, "newSound"))))
+		return (dlError());
+
+	if (!(deleteSound = reinterpret_cast<void (*)(
+			ISound * )>(dlsym(dlHandleSound, "deleteSound"))))
+		return (dlError());
+	return (sound = newSound(library_path.c_str())) != nullptr;
+}
+
+bool Univers::load_external_display_library(std::string const &title, std::string const &library_path) {
+
+	if (display != nullptr && dlHandleDisplay != nullptr) {
+		if(deleteDisplay) {
+			deleteDisplay(display);
+			deleteDisplay = nullptr;
+			newDisplay = nullptr;
+		}
+		dlclose(dlHandleDisplay);
+	}
+
+	if (!(dlHandleDisplay = dlopen(library_path.c_str(), RTLD_LAZY | RTLD_LOCAL)))
 		return (dlError());
 
 	if (!(newDisplay = reinterpret_cast<IDisplay *(*)(
 			const char *, int, int, int, const char *
-	)>(dlsym(dlHandle, "newDisplay"))))
+	)>(dlsym(dlHandleDisplay, "newDisplay"))))
 		return (dlError());
 
 	if (!(deleteDisplay = reinterpret_cast<void (*)(
 			IDisplay *
-	)>(dlsym(dlHandle, "deleteDisplay"))))
+	)>(dlsym(dlHandleDisplay, "deleteDisplay"))))
 		return (dlError());
 	if (!(display = newDisplay(PATH_TILESET, DEFAULT_SIZE_SPRITE, mapSize,
 							   mapSize, title.c_str())))
-		return false;
+		return (false);
 
 	world_->grid = Grid<int>(mapSize);
 	world_->grid.fill(SPRITE_GROUND);
@@ -62,7 +90,7 @@ bool Univers::load_external_display_library(std::string const &title, std::strin
 
 	display->update();
 	display->render();
-	return true;
+	return (true);
 }
 
 void Univers::manage_input() {
@@ -124,7 +152,6 @@ void Univers::loop_world() {
 			system_clock::now().time_since_epoch());
 	log_success("loop_world::begin::time : %lld" , now.count());
 	std::cout << now.count() << std::endl;
-	world_->getSystemManager().getSystem<RenderSystem>().update();
 	clientTCP_->deliverEvents();
 
 	world_->getSystemManager().getSystem<FollowSystem>().update();
@@ -133,6 +160,7 @@ void Univers::loop_world() {
 	world_->getSystemManager().getSystem<CollisionSystem>().update();
 	world_->getSystemManager().getSystem<FoodCreationSystem>().update();
 	world_->getSystemManager().getSystem<SpriteSystem>().update();
+	world_->getSystemManager().getSystem<RenderSystem>().update();
 	world_->getSystemManager().getSystem<FoodEatSystem>().update();
 
 	world_->update();
@@ -169,6 +197,32 @@ ServerTCP &Univers::getServerTCP_() const {
 	return *serverTCP_;
 }
 
+ISound &Univers::getSound() const {
+	return *sound;
+}
+
+void	Univers::playNoise(int i) const {
+	if (sound)
+		sound->playNoise(i);
+}
+void	Univers::playNoise(eSound e) const {
+	if (sound)
+		sound->playNoise(static_cast<int>(e));
+}
+void	Univers::playMusic(std::string const &path) const {
+	if (sound)
+	{
+		sound->setMusic(path.c_str());
+		sound->playMusic();
+	}
+}
+void	Univers::playMusic(char *path) const {
+	if (sound)
+	{
+		sound->setMusic(path);
+		sound->playMusic();
+	}
+}
 
 Core &Univers::getCore_() const {
 	return *core_;
@@ -182,6 +236,7 @@ unsigned int &Univers::getMapSize() {
 
 bool Univers::dlError() {
 	std::cerr << "Error : " << dlerror() << std::endl;
+	dlclose(dlHandleDisplay);
 	return (false);
 }
 

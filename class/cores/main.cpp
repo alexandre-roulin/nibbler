@@ -102,6 +102,20 @@ int main(int ac, char **av) {
 		|| uiTest(ac, av, univers))
 		return (0);
 	std::string buffer;
+	
+	univers.load_external_sound_library(std::string("Game pro"),
+								  std::string(PATH_SOUND_LIBRARY_SFML));
+	
+	univers.getSound().addNoise(std::string("./ressource/sound/appear-online.ogg"));
+	univers.getSound().addNoise(std::string("./ressource/sound/yes-2.wav"));
+	univers.getSound().addNoise(std::string("./ressource/sound/click.wav"));
+	univers.getSound().addNoise(std::string("./ressource/sound/slime10.wav"));
+	univers.getSound().addNoise(std::string("./ressource/sound/hit17.ogg"));
+	/*
+	univers.getSound().setMusic("./ressource/sound/zelda.ogg");
+	univers.getSound().playMusic();
+	*/
+	
 	for (;;) {
 		std::cout << "$> ";
 		std::getline(std::cin, buffer);
@@ -112,7 +126,7 @@ int main(int ac, char **av) {
 			univers.getClientTCP_().change_state_ready();
 			univers.setMapSize(35);
 			univers.load_external_display_library(std::string("Game pro"),
-										  std::string(PATH_LIBRARY_SFML));
+										  std::string(PATH_DISPLAY_LIBRARY_SFML));
 
 		}
 		if (buffer == "autoc") {
@@ -121,7 +135,7 @@ int main(int ac, char **av) {
 			univers.getClientTCP_().change_state_ready();
 			univers.setMapSize(35);
 			univers.load_external_display_library(std::string("Game pro"),
-										  std::string(PATH_LIBRARY_SFML));
+										  std::string(PATH_DISPLAY_LIBRARY_SFML));
 			univers.loop();
 		}
 		if (buffer == "autocs") {
@@ -132,7 +146,7 @@ int main(int ac, char **av) {
 			univers.getClientTCP_().change_state_ready();
 			univers.setMapSize(35);
 			univers.load_external_display_library(std::string("Game pro"),
-										  std::string(PATH_LIBRARY_SFML));
+										  std::string(PATH_DISPLAY_LIBRARY_SFML));
 			univers.loop();
 		}
 		if (buffer == "loop") {
@@ -159,7 +173,7 @@ int main(int ac, char **av) {
 		if (buffer == "game") {
 			univers.setMapSize(35);
 			univers.load_external_display_library(std::string("Game pro"),
-										  std::string(PATH_LIBRARY_SFML));
+										  std::string(PATH_DISPLAY_LIBRARY_SFML));
 
 			ClientTCP::StartInfo startInfo;
 			univers.getClientTCP_()
@@ -170,7 +184,7 @@ int main(int ac, char **av) {
 		if (buffer == "game1") {
 			univers.setMapSize(35);
 			univers.load_external_display_library(std::string("Game pro"),
-										  std::string(PATH_LIBRARY_SFML));
+										  std::string(PATH_DISPLAY_LIBRARY_SFML));
 			univers.loop();
 		}
 		if (buffer == "ui") {
@@ -186,7 +200,7 @@ int main(int ac, char **av) {
 				//sleep(1);
 				
 				univers.load_external_display_library(std::string("Game pro"),
-											  std::string(PATH_LIBRARY_SFML));
+											  std::string(PATH_DISPLAY_LIBRARY_SFML));
 
 			  ClientTCP::StartInfo startInfo;
 				if (univers.isServer()) {

@@ -4,6 +4,7 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/asio/io_service.hpp>
 #include "IDisplay.hpp"
+#include "ISound.hpp"
 #include <boost/asio/deadline_timer.hpp>
 
 
@@ -22,6 +23,7 @@ public:
 	Univers();
 
 	bool load_external_display_library(std::string const &title, std::string const &library_path);
+	bool load_external_sound_library(std::string const &title, std::string const &library_path);
 
 	void loop();
 
@@ -39,6 +41,12 @@ public:
 
 	Core &getCore_() const;
 	Core *releaseCore_();
+	
+	ISound &getSound() const;
+	void	playNoise(int i) const;
+	void	playNoise(eSound e) const;
+	void	playMusic(char *path) const;
+	void	playMusic(std::string const &path) const;
 
 	void create_ui();
 	bool isServer() const;
@@ -61,8 +69,10 @@ private:
 	std::unique_ptr<ServerTCP> serverTCP_;
 	std::unique_ptr<Core> core_;
 	boost::shared_ptr<ClientTCP> clientTCP_;
-	void *dlHandle;
-	IDisplay *display;
+	void *dlHandleDisplay;
+	void *dlHandleSound;
+	IDisplay	*display;
+	ISound		*sound;
 	bool		isServer_;
 
 	unsigned int mapSize;
@@ -75,8 +85,10 @@ private:
 private:
 
 	IDisplay *(*newDisplay)(char const *, int, int, int, char const *);
+	ISound *(*newSound)(char const *);
 
 	void (*deleteDisplay)(IDisplay *);
+	void (*deleteSound)(ISound *);
 
 };
 
