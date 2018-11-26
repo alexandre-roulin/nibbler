@@ -36,7 +36,8 @@ void			WidgetOption::render(void)
 	
 	
 	
-	if (Snake::allSnakesReady(this->_core.univers.getClientTCP_().getSnakes(), MAX_SNAKE)) {
+	if (this->_core.univers.isServer() 
+		&& Snake::allSnakesReady(this->_core.univers.getClientTCP_().getSnakes(), MAX_SNAKE)) {
 		Core::beginColor(Core::HUE_GREEN);
 		if (ImGui::Button("Run the game")) {
 			this->_core.univers.getClientTCP_().send_host_open_game();

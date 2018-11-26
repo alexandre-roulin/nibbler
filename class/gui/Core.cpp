@@ -72,50 +72,6 @@ void			Core::titleScreen()
 	}
 }
 
-void			Core::mainMenu() {
-	int clickSolo = 0;
-	int clickMulti = 0;
-	sf::Vector2f sizeButton(50, 20);
-
-	while (this->_win.isOpen())
-	{
-		this->_updateGenCoreEvent();
-
-
-		ImGui::SetNextWindowPos(this->positionByPercent(sf::Vector2<unsigned int>(0, 0)));
-		ImGui::SetNextWindowSize(this->positionByPercent(sf::Vector2<unsigned int>(50, 100)));
-		ImGui::Begin("Multi", NULL, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoBackground);
-
-		ImGui::SetCursorPos(sf::Vector2f(ImGui::GetWindowSize().x / 2 - sizeButton.x / 2,
-										 ImGui::GetWindowSize().y / 2 - sizeButton.y / 2));
-		if (ImGui::Button("Multi", sizeButton))
-			clickMulti++;
-		if (clickMulti & 1)
-		{
-
-		}
-		ImGui::End();
-
-		ImGui::SetNextWindowPos(this->positionByPercent(sf::Vector2<unsigned int>(50, 0)));
-		ImGui::SetNextWindowSize(this->positionByPercent(sf::Vector2<unsigned int>(50, 100)));
-		ImGui::Begin("Solo", NULL, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoBackground);
-
-
-		ImGui::SetCursorPos(sf::Vector2f(ImGui::GetWindowSize().x / 2 - sizeButton.x / 2,
-				                         ImGui::GetWindowSize().y / 2 - sizeButton.y / 2));
-		if (ImGui::Button("Solo", sizeButton))
-			clickSolo++;
-		if (clickSolo & 1)
-		{
-			ImGui::SameLine();
-			ImGui::Text("Thanks for clicking me!");
-		}
-		ImGui::End();
-
-		this->_render();
-	}
-}
-
 void			Core::demo(void)
 {
 	while (this->_win.isOpen())

@@ -24,6 +24,9 @@ void CollisionSystem::checkCollision(
 				 group.c_str());
 		if (group == FOOD_TAG) {
 			log_info("FoodCollision");
+			
+			getWorld().getUnivers().playNoise(eSound::FOOD);
+			
 			entityCheck.kill();
 			getWorld().getEventManager().emitEvent<FoodEat>(
 					Factory::getIdFromTag(entityHead.getTag()));

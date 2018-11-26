@@ -29,7 +29,6 @@ class Core {
 
 	//				GUI				//
 	void						demo(void);
-	void						mainMenu();
 	void						titleScreen(void);
 	void						aState(void);
 	void						addMessageChat(std::string const &);

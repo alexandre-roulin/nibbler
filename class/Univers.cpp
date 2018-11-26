@@ -13,6 +13,7 @@
 #include <SFML/System.hpp>
 #include <systems/FoodEatSystem.hpp>
 
+
 Univers::Univers()
 		: timer_start(boost::asio::deadline_timer(io_start)),
 		  timer_loop(boost::asio::deadline_timer(io_loop,
@@ -136,6 +137,7 @@ void Univers::loop() {
 	thread.detach();
 
 	world_->grid.clear();
+	playMusic("./ressource/sound/zelda.ogg");
 
 	while (display == nullptr || !display->exit()) {
 		if (display != nullptr) {
@@ -203,23 +205,24 @@ ISound &Univers::getSound() const {
 	return *sound;
 }
 
+
 void	Univers::playNoise(int i) const {
-	if (sound)
+	if (sound && flag.test(eFlag::SOUND))
 		sound->playNoise(i);
 }
 void	Univers::playNoise(eSound e) const {
-	if (sound)
+	if (sound && flag.test(eFlag::SOUND))
 		sound->playNoise(static_cast<int>(e));
 }
 void	Univers::playMusic(std::string const &path) const {
-	if (sound)
+	if (sound && flag.test(eFlag::SOUND))
 	{
 		sound->setMusic(path.c_str());
 		sound->playMusic();
 	}
 }
 void	Univers::playMusic(char *path) const {
-	if (sound)
+	if (sound && flag.test(eFlag::SOUND))
 	{
 		sound->setMusic(path);
 		sound->playMusic();
@@ -235,6 +238,18 @@ Core *Univers::releaseCore_() {
 unsigned int &Univers::getMapSize() {
 	return mapSize;
 }
+
+void Univers::setFlag(eFlag flag) {
+	this->flag.set(flag);
+}
+void Univers::unsetFlag(eFlag flag) {
+	this->flag.reset(flag);
+}
+
+bool Univers::testFlag(eFlag flag) {
+	return (this->flag.test(flag));
+}
+
 
 bool Univers::dlError() {
 	std::cerr << "Error : " << dlerror() << std::endl;

@@ -3,10 +3,10 @@
 #include <memory>
 #include <boost/shared_ptr.hpp>
 #include <boost/asio/io_service.hpp>
+#include <bitset>
 #include "IDisplay.hpp"
 #include "ISound.hpp"
 #include <boost/asio/deadline_timer.hpp>
-
 
 class ServerTCP;
 
@@ -20,6 +20,9 @@ namespace KINU {
 
 class Univers {
 public:
+	
+	enum eFlag { SOUND };
+	
 	Univers();
 
 	bool load_external_display_library(std::string const &title, std::string const &library_path);
@@ -54,11 +57,16 @@ public:
 	void create_server(unsigned int port = 4242);
 
 	bool dlError(void);
+	
+	void setFlag(eFlag);
+	void unsetFlag(eFlag);
+	bool testFlag(eFlag);
 
 private:
 
 	void loop_world();
 
+	std::bitset<32>			flag;
 	boost::asio::io_service io_server;
 	boost::asio::io_service io_client;
 	boost::asio::io_service io_loop;

@@ -21,10 +21,10 @@
 
 enum class eSound {
 	WELCOME = 0,
-	READY,
+	READY = 2,
 	RESIZE_MAP = 0,
-	FOOD,
-	DEATH
+	FOOD = 3,
+	DEATH = 4
 };
 
 enum eDirection {
