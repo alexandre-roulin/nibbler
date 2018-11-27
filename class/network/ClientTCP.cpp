@@ -18,7 +18,8 @@ int const ClientTCP::size_header[] = {
 		[SNAKE_ARRAY] = sizeof(Snake) * MAX_SNAKE,
 		[HEADER] = sizeof(eHeader),
 		[INPUT] = sizeof(InputInfo),
-		[RESIZE_MAP] = sizeof(unsigned int)
+		[RESIZE_MAP] = sizeof(unsigned int),
+		[REMOVE_SNAKE] = sizeof(int16_t)
 };
 
 ClientTCP::ClientTCP(::Univers &univers, boost::asio::io_service &io)
@@ -163,6 +164,14 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 			snake_array[snake_temp.id] = snake_temp;
 
 			univers.playNoise(eSound::READY);
+			break;
+		}
+		case REMOVE_SNAKE: {
+			log_info("eHeader::REMOVE_SNAKE");
+
+			snake_array[*(reinterpret_cast< const int16_t *>(input))].id = -1;
+
+			univers.playNoise(eSound::DEATH);
 			break;
 		}
 		case FOOD: {

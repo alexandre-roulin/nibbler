@@ -6,7 +6,7 @@ AWidget(core)
 {
 	for (unsigned i = 0; i < MAX_SNAKE; i++)
 	{
-		std::cout << "isYOur ? i[" << i <<  "] id[" << this->_core.univers.getClientTCP_().getId() << "] = [" << (i == this->_core.univers.getClientTCP_().getId()) << "]" << std::endl;
+		std::cout << snakes[i].id << "  |  isYour ? i[" << i <<  "] id[" << this->_core.univers.getClientTCP_().getId() << "] = [" << (i == this->_core.univers.getClientTCP_().getId()) << "]" << std::endl;
 		this->addSnake(snakes[i], (i == this->_core.univers.getClientTCP_().getId()));
 	}
 	this->addColor("Green", "ressource/snake_presentation/snake_green.png");

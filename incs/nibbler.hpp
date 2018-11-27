@@ -200,4 +200,6 @@ enum eHeader {
 	HEADER,				//7
 	INPUT,				//8
 	RESIZE_MAP,			//9
+	REMOVE_SNAKE,		//10
+	POCK				//11
 };
