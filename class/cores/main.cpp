@@ -14,6 +14,7 @@
 #include <network/ClientTCP.hpp>
 #include <logger.h>
 #include <gui/Core.hpp>
+#include <boost/program_options.hpp>
 
 std::string const Snake::basicName[MAX_SNAKE] = {"Jack O'Lantern", "Eden",
 												 "Jacky", "Emerald",
@@ -32,16 +33,6 @@ bool demoGui(int ac, char **av, Univers &univers) {
 	if (ac > 1 && !strcmp(av[1], "demo")) {
 		univers.create_ui();
 		univers.getCore_().demo();
-		return (true);
-	}
-	return (false);
-}
-
-bool uiTest(int ac, char **av, Univers &univers) {
-
-	if (ac > 1 && !strcmp(av[1], "test")) {
-		univers.create_ui();
-		univers.getCore_().mainMenu();
 		return (true);
 	}
 	return (false);
@@ -90,31 +81,23 @@ void cal() {
 
 }
 
-int main(int ac, char **av) {
-	cal();
-	srand(time(NULL));
-	char path[] = "/tmp/log.out";
-	logger_init(path);
-	Univers univers;
-	srand(time(NULL));
-
-	if (demoGui(ac, av, univers)
-		|| uiTest(ac, av, univers))
-		return (0);
+void nibbler(Univers &univers) {
 	std::string buffer;
 	
-	univers.load_external_sound_library(std::string("Game pro"),
-								  std::string(PATH_SOUND_LIBRARY_SFML));
-	
-	univers.getSound().addNoise(std::string("./ressource/sound/appear-online.ogg"));
-	univers.getSound().addNoise(std::string("./ressource/sound/yes-2.wav"));
-	univers.getSound().addNoise(std::string("./ressource/sound/click.wav"));
-	univers.getSound().addNoise(std::string("./ressource/sound/slime10.wav"));
-	univers.getSound().addNoise(std::string("./ressource/sound/hit17.ogg"));
-	/*
-	univers.getSound().setMusic("./ressource/sound/zelda.ogg");
-	univers.getSound().playMusic();
-	*/
+	if (univers.testFlag(Univers::SOUND)) {
+		univers.load_external_sound_library(std::string("Game pro"),
+									  std::string(PATH_SOUND_LIBRARY_SFML));
+		
+		univers.getSound().addNoise(std::string("./ressource/sound/appear-online.ogg"));
+		univers.getSound().addNoise(std::string("./ressource/sound/yes-2.wav"));
+		univers.getSound().addNoise(std::string("./ressource/sound/click.wav"));
+		univers.getSound().addNoise(std::string("./ressource/sound/slime10.wav"));
+		univers.getSound().addNoise(std::string("./ressource/sound/hit17.ogg"));
+		/*
+		univers.getSound().setMusic("./ressource/sound/zelda.ogg");
+		univers.getSound().playMusic();
+		*/
+	}
 	
 	for (;;) {
 		std::cout << "$> ";
@@ -212,7 +195,57 @@ int main(int ac, char **av) {
 				}
 				univers.loop();
 			}
-			return (0);
+			return ;
 		}
 	}
+}
+
+int main(int argc, char** argv) 
+{
+	cal();
+	srand(time(NULL));
+	char path[] = "/tmp/log.out";
+	logger_init(path);
+	try
+	{
+		Univers univers;
+		
+		boost::program_options::options_description desc("Options");
+			desc.add_options() // <- Retourne une reference ! OP
+			("help", "Print help messages")
+			("sound", "enable the sound");
+
+		boost::program_options::variables_map vm;
+		try
+		{
+			boost::program_options::store(boost::program_options::parse_command_line(argc, argv, desc), vm);
+
+			if (vm.count("help"))
+			{
+				std::cout << "Basic Command Line Parameter App" << std::endl
+						<< desc << std::endl;
+				return (0);
+			}
+			if (vm.count("sound")) {
+				univers.setFlag(Univers::SOUND);
+			}
+			boost::program_options::notify(vm);
+		}
+		catch(const boost::program_options::error& e)
+		{
+			std::cerr << "ERROR: " << e.what() << std::endl << std::endl;
+						std::cerr << desc << std::endl;
+			return (0);
+		}
+		if (demoGui(argc, argv, univers))
+			return (0);
+		nibbler(univers);
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << "Unhandled Exception reached the top of main: "
+				<< e.what() << ", application will now exit" << std::endl;
+	}
+
+	return (0);
 }

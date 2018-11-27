@@ -20,19 +20,21 @@ class ServerTCP;
 
 class TCPConnection : public boost::enable_shared_from_this<TCPConnection> {
 private:
+	Snake const &snake_;
 	tcp::socket socket_;
 	boost::array<char, 512> buffer_data;
 	ServerTCP &serverTCP_;
 
-	TCPConnection(boost::asio::io_service &io_service, ServerTCP &serverTCP);
+	TCPConnection(Snake const &, boost::asio::io_service &io_service, ServerTCP &serverTCP);
 
+	void checkError_(boost::system::error_code const &error_code);
 
 
 public:
 	typedef boost::shared_ptr<TCPConnection> pointer;
 
 	static pointer
-	create(boost::asio::io_service &io_service, ServerTCP &serverTCP);
+	create(Snake const &snake, boost::asio::io_service &io_service, ServerTCP &serverTCP);
 	void read_socket_header();
 
 	void read_socket_data(eHeader);
@@ -61,6 +63,7 @@ public:
 
 	void parse_input(eHeader, void const *, size_t);
 
+	void erase_snake(Snake const &);
 	void refresh_data_snake_array(TCPConnection::pointer &, int16_t);
 	void refresh_data_map_size(TCPConnection::pointer &connection);
 
