@@ -89,7 +89,10 @@ public:
 private:
 	ClientTCP(::Univers &univers, boost::asio::io_service &io);
 
-	bool isConnect_;
+	void checkError_(boost::system::error_code const &error_code);
+
+
+		bool isConnect_;
 	bool openGame_;
 	std::vector<FoodCreation> foodCreations;
 	std::vector<JoystickEvent> joystickEvents;

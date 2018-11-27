@@ -41,24 +41,6 @@ void ServerTCP::start_accept() {
 }
 
 void ServerTCP::erase_snake(Snake const &snake) {
-
-	/*for (int i = 0; i < MAX_SNAKE; i++) {
-		if (snake_array[i].id == snake.id) {
-			for (; i < MAX_SNAKE; i++) {
-				if (i == MAX_SNAKE || i + 1 == MAX_SNAKE) {
-					snake_array[i].id = -1;
-					break ;
-				}
-				else {
-					snake_array[i] = snake_array[i + 1];
-				}
-			}
-			break ;
-		}
-	}
-	nu_--;
-	async_write(ClientTCP::add_prefix(SNAKE_ARRAY, snake_array));*/
-
 	nu_--;
 	int16_t id = snake.id;
 	snake_array[id].id = -1;

@@ -7,6 +7,7 @@
 #include <Univers.hpp>
 #include "ClientTCP.hpp"
 #include <gui/Core.hpp>
+#include <exception>
 
 int const ClientTCP::size_header[] = {
 		[CHAT] = SIZEOF_CHAT_PCKT,
@@ -85,6 +86,17 @@ void ClientTCP::connect(std::string dns, std::string port) {
 
 }
 
+void ClientTCP::checkError_(boost::system::error_code const &error_code) {
+
+	if ((boost::asio::error::eof == error_code) ||
+		(boost::asio::error::connection_reset == error_code))
+	{
+		std::cout << "Lost signal" << std::endl;
+		throw std::runtime_error("Lost signal from server");
+	}
+}
+
+
 void ClientTCP::read_socket_header() {
 	boost::asio::async_read(socket, boost::asio::buffer(buffer_data,
 														ClientTCP::size_header[HEADER]),
@@ -107,6 +119,9 @@ void ClientTCP::read_socket_data(eHeader header) {
 void ClientTCP::handle_read_header(const boost::system::error_code &error_code,
 								   size_t len) {
 //	std::cout << "ClientTCP::handle_read_header > len : " << len << std::endl;
+
+	checkError_(error_code);
+
 	id = std::this_thread::get_id();
 	if (error_code.value() == 0) {
 		assert(len == sizeof(eHeader));
@@ -244,6 +259,7 @@ void ClientTCP::deliverEvents() {
 
 void ClientTCP::handle_read_data(eHeader header, boost::system::error_code const &error_code,
 								 size_t len) {
+	checkError_(error_code);
 	if (error_code.value() == 0 && len > 0) {
 		parse_input(header, buffer_data.data(), len);
 	}
@@ -252,6 +268,7 @@ void ClientTCP::handle_read_data(eHeader header, boost::system::error_code const
 
 void ClientTCP::handle_write(const boost::system::error_code &error_code,
 							 size_t len) {
+	checkError_(error_code);
 }
 
 ClientTCP::pointer_client
