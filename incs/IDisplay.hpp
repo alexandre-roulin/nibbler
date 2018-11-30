@@ -2,7 +2,7 @@
 
 #include "Grid.tpp"
 #include <nibbler.hpp>
-#define SPRITE_GROUND 8 * SIZE_LINE_TILESET
+#define SPRITE_GROUND 8 * SIZE_LINE_TILESET + 5
 #define SPRITE_WALL 8 * SIZE_LINE_TILESET + 1
 #define SPRITE_FOOD SIZE_LINE_TILESET
 #define PATH_TILESET "./ressource/snake_tileset.png"
