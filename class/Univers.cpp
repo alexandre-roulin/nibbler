@@ -166,7 +166,8 @@ void Univers::loop_world() {
 	world_->getSystemManager().getSystem<FoodEatSystem>().update();
 
 	world_->update();
-
+	std::string buffer;
+	std::getline(std::cin, buffer);
 	timer_loop.expires_at(
 			timer_loop.expires_at() +
 			boost::posix_time::milliseconds(gameSpeed));
