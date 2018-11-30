@@ -216,7 +216,6 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 			break;
 		case START_GAME: {
 			log_info("eHeader::START_GAME");
-
 			StartInfo st;
 			std::memcpy(&st, input, ClientTCP::size_header[START_GAME]);
 			factory.create_all_snake(snake_array, st.nu);
