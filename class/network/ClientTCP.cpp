@@ -42,10 +42,8 @@ void ClientTCP::send_host_open_game(void) {
 }
 
 void ClientTCP::change_map_size(unsigned int size) {
-	unsigned int size2D[2];
-	size2D[0] = size;
 
-	write_socket(add_prefix(RESIZE_MAP, &size2D));
+	write_socket(add_prefix(RESIZE_MAP, &size));
 }
 
 void ClientTCP::change_name(char const *name) {

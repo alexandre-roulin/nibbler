@@ -29,6 +29,9 @@ void Factory::create_snake(Snake snake, int max_snakes) {
 	KINU::Entity	snake_follow;
 	KINU::Entity	new_snake;
 
+	// (0 + 1) * 35 / (2 + 1) = 11
+	// 35 / 2 = 17
+
 	int base_x = (snake.id + 1) * univers_.getMapSize() / (max_snakes + 1);
 	int base_y = univers_.getMapSize() / 2;
 	for (int index = 0; index < 4; ++index) {

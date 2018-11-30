@@ -6,7 +6,7 @@
 ServerTCP::ServerTCP(boost::asio::io_service &io_service, unsigned int port)
 		: nu_(0),
 		  acceptor_(io_service, tcp::endpoint(tcp::v4(), port)),
-		  mapSize(30) {
+		  mapSize(35) {
 	//std::cout << "Server created" << std::endl;
 	start_accept();
 }
