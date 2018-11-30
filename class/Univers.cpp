@@ -104,11 +104,11 @@ void Univers::manage_input() {
 			clientTCP_->write_socket(ClientTCP::add_prefix(INPUT, &inputInfo));
 		}
 	} else {
-		ClientTCP::InputInfo inputInfo;
-		inputInfo.id = clientTCP_->getId();
-		inputInfo.dir = display->getDirection();
-		if (world_->getEntityManager().hasTag(Factory::factory_name(HEAD, inputInfo.id)))
-			clientTCP_->write_socket(ClientTCP::add_prefix(INPUT, &inputInfo));
+//		ClientTCP::InputInfo inputInfo;
+//		inputInfo.id = clientTCP_->getId();
+//		inputInfo.dir = display->getDirection();
+//		if (world_->getEntityManager().hasTag(Factory::factory_name(HEAD, inputInfo.id)))
+//			clientTCP_->write_socket(ClientTCP::add_prefix(INPUT, &inputInfo));
 	}
 }
 
