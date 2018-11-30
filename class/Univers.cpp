@@ -96,7 +96,7 @@ bool Univers::load_external_display_library(std::string const &title, std::strin
 
 void Univers::manage_input() {
 	ClientTCP::InputInfo inputInfo;
-	inputInfo.id = clientTCP_->getId();
+	inputInfo.id = 0; //clientTCP_->getId()
 	inputInfo.dir = display->getDirection();
 	if (world_->getEntityManager().hasTag(Factory::factory_name(HEAD, inputInfo.id)))
 		clientTCP_->write_socket(ClientTCP::add_prefix(INPUT, &inputInfo));
