@@ -99,13 +99,10 @@ void Univers::manage_input() {
 		ClientTCP::InputInfo inputInfo;
 		inputInfo.id = clientTCP_->getId();
 		inputInfo.dir = display->getDirection();
-
-		if (world_->getEntityManager().hasTag(Factory::factory_name(HEAD, inputInfo.id)))
+		for (int i = 0 ; i < Snake::getlastSnakeIndex(clientTCP_->getSnakes(), MAX_SNAKE); ++i) {
+			inputInfo.id = i;
 			clientTCP_->write_socket(ClientTCP::add_prefix(INPUT, &inputInfo));
-		inputInfo.id = 1;
-		if (world_->getEntityManager().hasTag(Factory::factory_name(HEAD, inputInfo.id)))
-			clientTCP_->write_socket(ClientTCP::add_prefix(INPUT, &inputInfo));
-
+		}
 	} else {
 		ClientTCP::InputInfo inputInfo;
 		inputInfo.id = clientTCP_->getId();
