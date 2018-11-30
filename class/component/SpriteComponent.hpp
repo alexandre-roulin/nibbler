@@ -19,7 +19,5 @@ struct SpriteComponent {
 
 	SpriteComponent &operator=(SpriteComponent const &sp);
 
-	friend std::ostream &
-	operator<<(std::ostream &os, const SpriteComponent &component);
 };
 
