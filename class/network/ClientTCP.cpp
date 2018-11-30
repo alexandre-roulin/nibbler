@@ -194,7 +194,9 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 
 			PositionComponent positionComponent;
 			std::memcpy(&positionComponent, input, len);
+			mu.lock();
 			foodCreations.push_back(FoodCreation(positionComponent));
+			mu.unlock();
 			break;
 		}
 
@@ -225,7 +227,9 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 
 			InputInfo ii;
 			std::memcpy(&ii, input, len);
+			mu.lock();
 			joystickEvents.push_back(JoystickEvent(ii.id, ii.dir));
+			mu.unlock();
 		}
 			break;
 		case RESIZE_MAP: {
