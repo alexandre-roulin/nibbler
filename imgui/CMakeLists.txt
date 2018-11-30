@@ -35,9 +35,9 @@ FILE(WRITE ${PROJECT_SOURCE_DIR}/imconfig-sfml.h
         "${IMGUI-SFML_CONFIG}")
 
 
-
-
-include_directories(${PROJECT_BINARY_DIR}/../sfml/src/sfml/include)
+include_directories(${SFML_INCLUDE_DIR})
+message("SFML_INCLUDE_DIR : ${SFML_INCLUDE_DIR}")
+#include_directories(${PROJECT_BINARY_DIR}/../sfml/src/sfml/include)
 
 
 add_library(

@@ -48,7 +48,7 @@ else ()
     find_package(OpenGL 3.3 REQUIRED)
 endif (WIN32)
 
-list(APPEND CMAKE_MODULE_PATH "$ENV{HOME}/.brew/share/SFML/cmake/Modules/")
+#list(APPEND CMAKE_MODULE_PATH "$ENV{HOME}/.brew/share/SFML/cmake/Modules/")
 
 
 set(PREFIX_SFML "${CMAKE_SOURCE_DIR}/cmake_modules/sfml")
@@ -83,11 +83,17 @@ if (NOT SFML_FOUND OR NOT SFML_INCLUDE_DIR_FOUND)
     list(APPEND SFML_LIBRARIES_DIR ${INSTALL_DIR}/src/SFML-build/lib)
 
     link_directories(${SFML_LIBRARIES_DIR})
-endif ()
+    #add_dependencies(SFML)
 
+endif ()
 include_directories(${SFML_INCLUDE_DIR})
-message("SFML_LIBRARIES: ${SFML_LIBRARIES}")
-message("SFML_INCLUDE_DIR: ${SFML_INCLUDE_DIR}")
+
+
+#find_package(SDL2 REQUIRED)
+#include_directories(${SDL2_INCLUDE_DIR})
+
+#find_package(SDL2_mixer REQUIRED)
+#include_directories(${SDL2_MIXER_INCLUDE_DIR})
 
 add_executable(${NAME}
         class/component/CollisionComponent.cpp
@@ -186,7 +192,7 @@ add_executable(${NAME}
         incs/stb_image.h
         class/systems/SpriteSystem.cpp class/systems/SpriteSystem.hpp class/gui/widget/WidgetConnect.cpp class/gui/widget/WidgetConnect.hpp)
 
-if (NOT SFML_FOUND)
+if (NOT SFML_FOUND OR NOT SFML_INCLUDE_DIR_FOUND)
     add_dependencies(${NAME} SFML)
 endif ()
 
@@ -217,12 +223,14 @@ target_include_directories(
 )
 
 
-target_link_libraries(${NAME} PUBLIC Boost::filesystem)
-target_link_libraries(${NAME} PUBLIC Boost::thread)
-target_link_libraries(${NAME} PUBLIC Boost::program_options)
+target_link_libraries(${NAME} PRIVATE Boost::filesystem)
+target_link_libraries(${NAME} PRIVATE Boost::thread)
+target_link_libraries(${NAME} PRIVATE Boost::program_options)
+#target_link_libraries(${NAME} PRIVATE ${SDL2_LIBRARY})
+#target_link_libraries(${NAME} PRIVATE ${SDL2_MIXER_LIBRARY})
+target_link_libraries(${NAME} PRIVATE ${OPENGL_LIBRARIES})
 
 target_link_libraries(${NAME} PRIVATE
         ${SFML_LIBRARIES}
         imgui-sfml
-        target_link_libraries(${NAME} ${OPENGL_LIBRARIES})
         )
