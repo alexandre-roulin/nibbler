@@ -95,12 +95,24 @@ bool Univers::load_external_display_library(std::string const &title, std::strin
 }
 
 void Univers::manage_input() {
-	ClientTCP::InputInfo inputInfo;
-	inputInfo.id = clientTCP_->getId();
-	inputInfo.dir = display->getDirection();
-	if (clientTCP_->getId() == 0)
-	if (world_->getEntityManager().hasTag(Factory::factory_name(HEAD, inputInfo.id)))
-		clientTCP_->write_socket(ClientTCP::add_prefix(INPUT, &inputInfo));
+	if (true) {
+		ClientTCP::InputInfo inputInfo;
+		inputInfo.id = clientTCP_->getId();
+		inputInfo.dir = display->getDirection();
+
+		if (world_->getEntityManager().hasTag(Factory::factory_name(HEAD, inputInfo.id)))
+			clientTCP_->write_socket(ClientTCP::add_prefix(INPUT, &inputInfo));
+		inputInfo.id = 1;
+		if (world_->getEntityManager().hasTag(Factory::factory_name(HEAD, inputInfo.id)))
+			clientTCP_->write_socket(ClientTCP::add_prefix(INPUT, &inputInfo));
+
+	} else {
+		ClientTCP::InputInfo inputInfo;
+		inputInfo.id = clientTCP_->getId();
+		inputInfo.dir = display->getDirection();
+		if (world_->getEntityManager().hasTag(Factory::factory_name(HEAD, inputInfo.id)))
+			clientTCP_->write_socket(ClientTCP::add_prefix(INPUT, &inputInfo));
+	}
 }
 
 void Univers::manage_start() {
