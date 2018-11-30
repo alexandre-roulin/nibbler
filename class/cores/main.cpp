@@ -643,7 +643,6 @@ void nibbler(Univers &univers) {
 }
 
 int main(int argc, char **argv) {
-	cal();
 	srand(time(NULL));
 	char path[] = "/tmp/log.out";
 	logger_init(path);
