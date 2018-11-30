@@ -193,8 +193,10 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 			FoodInfo foodInfo;
 			std::memcpy(&foodInfo, input, len);
 			mu.lock();
+			log_trace("FOOD::mu.lock()");
 			foodCreations.push_back(FoodCreation(foodInfo.positionComponent, foodInfo.fromSnake));
 			mu.unlock();
+			log_trace("FOOD::mu.unlock()");
 			break;
 		}
 
@@ -225,8 +227,10 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 			InputInfo ii;
 			std::memcpy(&ii, input, len);
 			mu.lock();
+			log_trace("INPUT::mu.lock()");
 			joystickEvents.push_back(JoystickEvent(ii.id, ii.dir));
 			mu.unlock();
+			log_trace("INPUT::mu.unlock()");
 		}
 			break;
 		case RESIZE_MAP: {
@@ -246,6 +250,7 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 
 void ClientTCP::deliverEvents() {
 	mu.lock();
+	log_trace("ClientTCP::mu.lock()");
 	for (auto foodCreation : foodCreations) {
 		univers.getWorld_().getEventManager().emitEvent(foodCreation);
 	}
@@ -255,6 +260,7 @@ void ClientTCP::deliverEvents() {
 	joystickEvents.clear();
 	foodCreations.clear();
 	mu.unlock();
+	log_trace("ClientTCP::mu.unlock()");
 }
 
 
