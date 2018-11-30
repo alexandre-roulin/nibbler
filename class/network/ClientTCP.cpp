@@ -11,7 +11,7 @@
 
 int const ClientTCP::size_header[] = {
 		[CHAT] = SIZEOF_CHAT_PCKT,
-		[FOOD] = sizeof(PositionComponent),
+		[FOOD] = sizeof(FoodInfo),
 		[ID] = sizeof(int16_t),
 		[OPEN_GAME] = sizeof(bool),
 		[START_GAME] = sizeof(StartInfo),
@@ -190,10 +190,10 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 		case FOOD: {
 			log_info("eHeader::FOOD");
 
-			PositionComponent positionComponent;
-			std::memcpy(&positionComponent, input, len);
+			FoodInfo foodInfo;
+			std::memcpy(&foodInfo, input, len);
 			mu.lock();
-			foodCreations.push_back(FoodCreation(positionComponent));
+			foodCreations.push_back(FoodCreation(foodInfo.positionComponent, foodInfo.fromSnake));
 			mu.unlock();
 			break;
 		}

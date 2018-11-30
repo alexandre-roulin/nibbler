@@ -83,8 +83,10 @@ void ServerTCP::start_game() {
 	int max_food = (nu_ > 1 ? nu_ - 1 : nu_);
 	for (int index = 0; index < max_food; ++index) {
 		std::cout << max_food << std::endl;
-		PositionComponent positionComponent((rand() % (30 - 2)) + 1, (rand() % (30 - 2)) + 1);
-		async_write(ClientTCP::add_prefix(FOOD, &positionComponent));
+		ClientTCP::FoodInfo foodInfo;
+		foodInfo.positionComponent = PositionComponent ((rand() % (30 - 2)) + 1, (rand() % (30 - 2)) + 1);
+		foodInfo.fromSnake = false;
+		async_write(ClientTCP::add_prefix(FOOD, &foodInfo));
 	}
 	async_write(ClientTCP::add_prefix(START_GAME, &startInfo));
 }
@@ -124,10 +126,10 @@ void ServerTCP::parse_input(eHeader header, void const *input, size_t len) {
 			start_game();
 			return;
 		case FOOD: {
-			PositionComponent positionComponent;
-			std::memcpy(&positionComponent, input, len);
-			if (positionComponent.y != 0 && positionComponent.x != 0)
-				async_write(ClientTCP::add_prefix(FOOD, &positionComponent));
+			ClientTCP::FoodInfo foodInfo;
+			std::memcpy(&foodInfo, input, len);
+			if (foodInfo.positionComponent.y != 0 && foodInfo.positionComponent.x != 0)
+				async_write(ClientTCP::add_prefix(FOOD, &foodInfo));
 			return;
 		}
 		case RESIZE_MAP: {

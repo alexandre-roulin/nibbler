@@ -38,6 +38,11 @@ public:
 		eDirection dir;
 	};
 
+
+	struct FoodInfo {
+		bool fromSnake;
+		PositionComponent positionComponent;
+	};
 	void deliverEvents();
 
 	void connect(std::string dns, std::string port);

@@ -32,12 +32,19 @@ void CollisionSystem::checkCollision(
 					Factory::getIdFromTag(entityHead.getTag()));
 			if (getWorld().getUnivers().getClientTCP_().getId() ==
 				std::stoi(entityHead.getTag())) {
-				auto positionFood = PositionComponent(rand() % (30 - 2) + 1, rand() % (30 - 2) + 1);
-				getWorld().getUnivers().getClientTCP_().write_socket(ClientTCP::add_prefix(FOOD, &positionFood));
+				ClientTCP::FoodInfo foodInfo;
+				foodInfo.positionComponent = PositionComponent(rand() % (30 - 2) + 1, rand() % (30 - 2) + 1);
+				foodInfo.fromSnake = false;
+				getWorld().getUnivers().getClientTCP_().write_socket(ClientTCP::add_prefix(FOOD, &foodInfo));
 			} else {
-				auto positionFood = PositionComponent();
-				getWorld().getUnivers().getClientTCP_().write_socket(ClientTCP::add_prefix(FOOD, &positionFood));
+				ClientTCP::FoodInfo foodInfo;
+				getWorld().getUnivers().getClientTCP_().write_socket(ClientTCP::add_prefix(FOOD, &foodInfo));
 			}
+		} else if (group == FOOD_TAG_FROM_SNAKE) {
+			getWorld().getUnivers().playNoise(eSound::FOOD);
+			entityCheck.kill();
+			getWorld().getEventManager().emitEvent<FoodEat>(
+					Factory::getIdFromTag(entityHead.getTag()));
 		} else if (group == WALL_TAG) {
 			log_info("WallCollision");
 			entityHead.killGroup();
@@ -51,10 +58,12 @@ void CollisionSystem::checkCollision(
 			auto winSnake = getWorld().getEntityManager().getEntityGroup(
 					entityHead.getGroup());
 			for (auto snake : winSnake) {
+				ClientTCP::FoodInfo foodInfo;
+				foodInfo.positionComponent = snake.getComponent<PositionComponent>();
+				foodInfo.fromSnake = true;
 				if (snake.hasComponent<PositionComponent>())
 					getWorld().getUnivers().getClientTCP_().write_socket(
-							ClientTCP::add_prefix(FOOD,
-												  &snake.getComponent<PositionComponent>()));
+							ClientTCP::add_prefix(FOOD, &foodInfo));
 			}
 			entityHead.killGroup();
 		}

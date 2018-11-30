@@ -11,6 +11,7 @@
 #define SIZEOF_CHAT_PCKT CHAT_BUFFER + NAME_BUFFER + OFFSET
 #define WALL_TAG "wall"
 #define FOOD_TAG "food"
+#define FOOD_TAG_FROM_SNAKE "food_snake"
 #define DEFAULT_SIZE_SPRITE 32
 
 #define DIRECTION_VERTICAL 1			// 0000 0001

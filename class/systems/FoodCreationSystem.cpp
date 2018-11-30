@@ -23,7 +23,7 @@ void FoodCreationSystem::update() {
 		food.addComponent(foodCreationEvent.positionComponent_);
 		food.addComponent<CollisionComponent>();
 		food.addComponent<SpriteComponent>(eSprite::FOOD, NO_PRIORITY);
-		food.group(FOOD_TAG);
+		food.group((foodCreationEvent.fromSnake_ ? FOOD_TAG_FROM_SNAKE : FOOD_TAG));
 	}
 }
 

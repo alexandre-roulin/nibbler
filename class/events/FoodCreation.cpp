@@ -1,6 +1,9 @@
 #include "FoodCreation.hpp"
 
-FoodCreation::FoodCreation(PositionComponent positionComponent)
-		: positionComponent_(positionComponent) {
+FoodCreation::FoodCreation(
+		PositionComponent positionComponent,
+		bool fromSnake)
+		: positionComponent_(positionComponent),
+		  fromSnake_(fromSnake) {
 
 }

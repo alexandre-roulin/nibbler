@@ -20,7 +20,7 @@ Univers::Univers()
 												 boost::posix_time::milliseconds(
 														 100))),
 		  mapSize(MAP_MIN),
-		  gameSpeed(200),
+		  gameSpeed(80),
 		  dlHandleDisplay(nullptr),
 		  dlHandleSound(nullptr),
 		  display(nullptr),
@@ -150,10 +150,7 @@ void Univers::loop() {
 using namespace std::chrono; // TODO REMOVE
 
 void Univers::loop_world() {
-	milliseconds now = duration_cast< milliseconds >(
-			system_clock::now().time_since_epoch());
-	log_success("loop_world::begin::time : %lld" , now.count());
-	std::cout << now.count() << std::endl;
+
 	clientTCP_->deliverEvents();
 
 	world_->getSystemManager().getSystem<FollowSystem>().update();
@@ -166,8 +163,7 @@ void Univers::loop_world() {
 	world_->getSystemManager().getSystem<FoodEatSystem>().update();
 
 	world_->update();
-//	std::string buffer;
-//	std::getline(std::cin, buffer);
+
 	timer_loop.expires_at(
 			timer_loop.expires_at() +
 			boost::posix_time::milliseconds(gameSpeed));
