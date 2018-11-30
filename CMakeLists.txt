@@ -205,9 +205,7 @@ target_include_directories(
         ${NAME} PUBLIC
         class
         incs
-        #jsoncpp/include
         $ENV{HOME}/.brew/include
-        #${PROJECT_SOURCE_DIR}/jsoncpp/include/
         ${PROJECT_SOURCE_DIR}/imgui/
         ${PROJECT_SOURCE_DIR}/imgui/imgui/
         ${PROJECT_SOURCE_DIR}/imgui/imgui-sfml/
