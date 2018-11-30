@@ -103,8 +103,6 @@ void ServerTCP::async_write(void const *input, size_t len) {
 
 void ServerTCP::parse_input(eHeader header, void const *input, size_t len) {
 
-	std::cout << std::endl;
-
 	char *data_deserialize = new char[len];
 
 	std::memcpy(data_deserialize, reinterpret_cast<char const *>(input), len);
@@ -117,7 +115,6 @@ void ServerTCP::parse_input(eHeader header, void const *input, size_t len) {
 		case SNAKE: {
 			Snake snake_temp;
 			std::memcpy(&snake_temp, data_deserialize, sizeof(Snake));
-			std::cout << snake_temp.id << std::endl;
 			assert(snake_temp.id >= 0 && snake_temp.id < MAX_SNAKE);
 			snake_array[snake_temp.id] = snake_temp;
 			break;
