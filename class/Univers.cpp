@@ -95,7 +95,7 @@ bool Univers::load_external_display_library(std::string const &title, std::strin
 }
 
 void Univers::manage_input() {
-	if (true) {
+	if (clientTCP_->getId() == 0) {
 		ClientTCP::InputInfo inputInfo;
 		inputInfo.id = clientTCP_->getId();
 		inputInfo.dir = display->getDirection();

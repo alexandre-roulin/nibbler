@@ -592,6 +592,7 @@ void nibbler(Univers &univers) {
 		}
 
 		if (buffer == "game") {
+			univers.getClientTCP_().change_state_ready();
 			univers.setMapSize(35);
 			univers.load_external_display_library(std::string("Game pro"),
 												  std::string(
@@ -604,6 +605,7 @@ void nibbler(Univers &univers) {
 			univers.loop();
 		}
 		if (buffer == "game1") {
+			univers.getClientTCP_().change_state_ready();
 			univers.setMapSize(35);
 			univers.load_external_display_library(std::string("Game pro"),
 												  std::string(
