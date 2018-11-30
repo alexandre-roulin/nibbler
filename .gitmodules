@@ -4,3 +4,6 @@
 [submodule "imgui/imgui-sfml"]
 	path = imgui/imgui-sfml
 	url = https://github.com/eliasdaler/imgui-sfml
+[submodule "cmake_modules/boost-cmake"]
+	path = cmake_modules/boost-cmake
+	url = https://github.com/Orphis/boost-cmake.git

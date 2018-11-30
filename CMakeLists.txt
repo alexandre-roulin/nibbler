@@ -24,12 +24,16 @@ if (GIT_FOUND AND EXISTS "${PROJECT_SOURCE_DIR}/.git")
     endif ()
 endif ()
 
+add_subdirectory(cmake_modules/boost-cmake)
+
 link_directories(/usr/lib/)
 link_directories($ENV{HOME}/.brew/lib/)
 link_directories(${PROJECT_SOURCE_DIR}/imgui/)
 
+set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
 
 if (WIN32)
+    find_package(OpenGL 3.3 REQUIRED)
 elseif (UNIX AND NOT APPLE)
 elseif (APPLE)
     include_directories(/System/Library/Frameworks)
@@ -39,52 +43,51 @@ elseif (APPLE)
     find_library(CoreVideo_LIBRARY CoreVideo)
     mark_as_advanced(COCOA_LIBRARY OpenGL_LIBRARY)
     set(APPLE_LIBS ${COCOA_LIBRARY} ${IOKit_LIBRARY} ${OpenGL_LIBRARY} ${CoreVideo_LIBRARY})
-    set(LIBS ${LIBS} ${APPLE_LIBS})
+    set(OPENGL_LIBRARIES ${LIBS} ${APPLE_LIBS})
 else ()
-    set(LIBS)
+    find_package(OpenGL 3.3 REQUIRED)
 endif (WIN32)
 
 list(APPEND CMAKE_MODULE_PATH "$ENV{HOME}/.brew/share/SFML/cmake/Modules/")
 
-find_package(SFML QUIET COMPONENTS system window graphics network audio)
-if (NOT SFML_FOUND)
 
-    set(sfml_PREFIX "${PROJECT_SOURCE_DIR}/sfml")
-    set(sfml_INSTALL_DIR "${PROJECT_SOURCE_DIR}/sfml")
-    list(APPEND sfml_CMAKE_ARGS "-DCMAKE_INSTALL_PREFIX=${sfml_INSTALL_DIR} -DCMAKE_INSTALL_FRAMEWORK_PREFIX=${sfml_INSTALL_DIR} -DSFML_MISC_INSTALL_PREFIX=${sfml_INSTALL_DIR}")
+set(PREFIX_SFML "${CMAKE_SOURCE_DIR}/cmake_modules/sfml")
+set(SFML_PATH ${PREFIX_SFML})
+find_package(SFML QUIET COMPONENTS system window graphics audio)
+if (NOT SFML_FOUND OR NOT SFML_INCLUDE_DIR_FOUND)
+    message(STATUS "SFML not found - will build from source")
 
-    ExternalProject_Add(sfml
-            PREFIX ${sfml_PREFIX}
+    ExternalProject_Add(SFML
+            PREFIX ${PREFIX_SFML}
             GIT_REPOSITORY https://github.com/SFML/SFML.git
-            INSTALL_DIR ${sfml_INSTALL_DIR}
-            CMAKE_ARGS "${sfml_CMAKE_ARGS}"
-            INSTALL_COMMAND make
-            )
 
-    include_directories(${sfml_INSTALL_DIR}/src/sfml/include)
-    link_directories(${sfml_INSTALL_DIR}/src/sfml-build/lib)
+            UPDATE_COMMAND ""
 
+            INSTALL_DIR ${SFML_PATH}
+            INSTALL_COMMAND make -j
+
+            CMAKE_ARGS
+            "-DCMAKE_INSTALL_PREFIX=${SFML_PATH}"
+            "-DCMAKE_INSTALL_FRAMEWORK_PREFIX=${SFML_PATH}"
+            "-DSFML_MISC_INSTALL_PREFIX=${SFML_PATH}"
+
+            CMAKE_CACHE_ARGS
+            "-DCMAKE_C_COMPILER:FILEPATH=${CMAKE_C_COMPILER}"
+            "-DCMAKE_CXX_COMPILER:FILEPATH=${CMAKE_CXX_COMPILER}"
+
+            LOG_DOWNLOAD 1 LOG_UPDATE 1 LOG_CONFIGURE 1 LOG_BUILD 1 LOG_INSTALL 1)
+
+    ExternalProject_Get_Property(SFML INSTALL_DIR)
+    set(SFML_INCLUDE_DIR ${INSTALL_DIR}/src/SFML/include)
+    list(APPEND SFML_LIBRARIES sfml-graphics sfml-window sfml-system sfml-audio)
+    list(APPEND SFML_LIBRARIES_DIR ${INSTALL_DIR}/src/SFML-build/lib)
+
+    link_directories(${SFML_LIBRARIES_DIR})
 endif ()
 
-UNSET(JSONCPP_LIBRARY CACHE)
-find_library(JSONCPP_LIBRARY
-        NAMES jsoncpp
-        HINTS "$ENV{HOME}/.brew/lib/")
-if (NOT JSONCPP_LIBRARY)
-    ExternalProject_Add(jsoncpp
-            PREFIX ${PROJECT_SOURCE_DIR}/jsoncpp
-            GIT_REPOSITORY https://github.com/open-source-parsers/jsoncpp
-            INSTALL_DIR {PROJECT_SOURCE_DIR}/jsoncpp
-            CMAKE_ARGS ""
-            INSTALL_COMMAND make
-            )
-
-    include_directories(${PROJECT_SOURCE_DIR}/jsoncpp/src/jsoncpp/include/)
-    link_directories(${PROJECT_SOURCE_DIR}/jsoncpp/src/jsoncpp-build/src/lib_json/)
-    link_libraries(${PROJECT_SOURCE_DIR}/jsoncpp/src/jsoncpp-build/src/lib_json/libjsoncpp.a)
-else ()
-    link_libraries(${JSONCPP_LIBRARY})
-endif ()
+include_directories(${SFML_INCLUDE_DIR})
+message("SFML_LIBRARIES: ${SFML_LIBRARIES}")
+message("SFML_INCLUDE_DIR: ${SFML_INCLUDE_DIR}")
 
 add_executable(${NAME}
         class/component/CollisionComponent.cpp
@@ -184,19 +187,20 @@ add_executable(${NAME}
         class/systems/SpriteSystem.cpp class/systems/SpriteSystem.hpp class/gui/widget/WidgetConnect.cpp class/gui/widget/WidgetConnect.hpp)
 
 if (NOT SFML_FOUND)
-    add_dependencies(${NAME} sfml)
+    add_dependencies(${NAME} SFML)
 endif ()
 
-if (NOT JSONCPP_LIBRARY)
-    add_dependencies(${NAME} jsoncpp)
-endif ()
+message("SFML_LIBRARIES ${SFML_LIBRARIES}")
+message("SFML_INCLUDE_DIR ${SFML_INCLUDE_DIR}")
+
+include_directories(${SFML_INCLUDE_DIR})
 
 
 add_subdirectory(imgui)
-add_subdirectory(externlib/display_sdl)
-add_subdirectory(externlib/display_sfml)
-add_subdirectory(externlib/sound_sdl)
-add_subdirectory(externlib/sound_sfml)
+add_subdirectory(extern/display_sdl)
+add_subdirectory(extern/display_sfml)
+add_subdirectory(extern/sound_sdl)
+add_subdirectory(extern/sound_sfml)
 
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DIMGUI_USER_CONFIG=\"<../imconfig-sfml.h>\" -fsanitize=address -g3")
@@ -209,13 +213,16 @@ target_include_directories(
         ${PROJECT_SOURCE_DIR}/imgui/
         ${PROJECT_SOURCE_DIR}/imgui/imgui/
         ${PROJECT_SOURCE_DIR}/imgui/imgui-sfml/
-        ${PROJECT_SOURCE_DIR}/externlib/commun/
+        ${PROJECT_SOURCE_DIR}/extern/commun/
 )
 
 
+target_link_libraries(${NAME} PUBLIC Boost::filesystem)
+target_link_libraries(${NAME} PUBLIC Boost::thread)
+target_link_libraries(${NAME} PUBLIC Boost::program_options)
+
 target_link_libraries(${NAME} PRIVATE
-        sfml-graphics sfml-window sfml-system sfml-audio
+        ${SFML_LIBRARIES}
         imgui-sfml
-        boost_system boost_thread-mt boost_program_options
-        ${LIBS}
+        target_link_libraries(${NAME} ${OPENGL_LIBRARIES})
         )
