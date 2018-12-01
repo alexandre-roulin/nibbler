@@ -100,6 +100,8 @@ add_executable(${NAME}
         class/component/SpriteComponent.cpp
         class/component/SpriteComponent.hpp
         class/cores/main.cpp
+        class/events/NextFrame.cpp
+        class/events/NextFrame.hpp
         class/events/StartEvent.cpp
         class/events/StartEvent.hpp
         class/events/FoodEat.cpp

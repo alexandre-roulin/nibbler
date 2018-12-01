@@ -1,8 +1,6 @@
 #include "ServerTCP.hpp"
 #include "ClientTCP.hpp"
-#include <factory/Factory.hpp>
 #include <logger.h>
-
 ServerTCP::ServerTCP(boost::asio::io_service &io_service, unsigned int port)
 		: nu_(0),
 		  acceptor_(io_service, tcp::endpoint(tcp::v4(), port)),
@@ -16,7 +14,8 @@ void ServerTCP::start_accept() {
 
 		if (!ec) {
 			TCPConnection::pointer new_connection =
-					TCPConnection::create(snake_array[nu_], acceptor_.get_io_service(), *this);
+					TCPConnection::create(snake_array[nu_],
+										  acceptor_.get_io_service(), *this);
 			new_connection->socket() = std::move(socket);
 
 			int16_t first_id = 0;
@@ -24,7 +23,7 @@ void ServerTCP::start_accept() {
 			for (int i = 0; i < MAX_SNAKE; i++) {
 				if (snake_array[i].id == -1) {
 					first_id = i;
-					break ;
+					break;
 				}
 			}
 
@@ -57,7 +56,8 @@ void ServerTCP::refresh_data_snake_array(
 	}
 	{
 //		std::cout << "ServerTCP::refresh_data_snake_array : " << std::endl;
-		connection->write_socket(ClientTCP::add_prefix(SNAKE_ARRAY, snake_array));
+		connection->write_socket(
+				ClientTCP::add_prefix(SNAKE_ARRAY, snake_array));
 	}
 	{
 //		std::cout << "ServerTCP::refresh_data_snake_array : " << std::endl;
@@ -84,7 +84,8 @@ void ServerTCP::start_game() {
 	for (int index = 0; index < max_food; ++index) {
 		std::cout << max_food << std::endl;
 		ClientTCP::FoodInfo foodInfo;
-		foodInfo.positionComponent = PositionComponent ((rand() % (30 - 2)) + 1, (rand() % (30 - 2)) + 1);
+		foodInfo.positionComponent = PositionComponent((rand() % (30 - 2)) + 1,
+													   (rand() % (30 - 2)) + 1);
 		foodInfo.fromSnake = false;
 		async_write(ClientTCP::add_prefix(FOOD, &foodInfo));
 	}
@@ -105,44 +106,58 @@ void ServerTCP::async_write(void const *input, size_t len) {
 
 void ServerTCP::parse_input(eHeader header, void const *input, size_t len) {
 
-	char *data_deserialize = new char[len];
-
-	std::memcpy(data_deserialize, reinterpret_cast<char const *>(input), len);
 
 	switch (header) {
 		case SNAKE_ARRAY: {
-			std::memcpy(snake_array, data_deserialize, sizeof(Snake) * MAX_SNAKE);
+			std::memcpy(snake_array, input, sizeof(Snake) * MAX_SNAKE);
 			break;
 		}
 		case SNAKE: {
 			Snake snake_temp;
-			std::memcpy(&snake_temp, data_deserialize, sizeof(Snake));
+			std::memcpy(&snake_temp, input, sizeof(Snake));
 			assert(snake_temp.id >= 0 && snake_temp.id < MAX_SNAKE);
 			snake_array[snake_temp.id] = snake_temp;
 			break;
 		}
-		case START_GAME:
+		case START_GAME: {
 			log_info("StartGame from server");
 			start_game();
 			return;
+		}
 		case FOOD: {
 			ClientTCP::FoodInfo foodInfo;
 			std::memcpy(&foodInfo, input, len);
-			if (foodInfo.positionComponent.y != 0 && foodInfo.positionComponent.x != 0)
-				async_write(ClientTCP::add_prefix(FOOD, &foodInfo));
+			foodInfoArray.push_back(foodInfo);
+//			async_write(ClientTCP::add_prefix(FOOD, &foodInfo));
 			return;
 		}
 		case RESIZE_MAP: {
-				std::memcpy(&mapSize, input, len);
-				break ;
+			std::memcpy(&mapSize, input, len);
+			break;
+		}
+		case INPUT: {
+			ClientTCP::InputInfo inputInfo;
+			std::memcpy(&inputInfo, input, len);
+			snake_array[inputInfo.id].direction = inputInfo.dir;
+			snake_array[inputInfo.id].isUpdate = true;
+			for (int index = 0; index < nu_; ++index) {
+				if (!snake_array[index].isUpdate)
+					return;
 			}
-
+			async_write(ClientTCP::add_prefix(SNAKE_ARRAY, snake_array));
+			for (auto infoArray : foodInfoArray) {
+				async_write(ClientTCP::add_prefix(FOOD, &infoArray));
+			}
+			foodInfoArray.clear();
+			char *void_data;
+			async_write(ClientTCP::add_prefix(POCK, void_data));
+			return;
+		}
 		default:
 			break;
 	}
 	//std::cout << "ServerTCP::parse_input.size() " << buffer.size() << std::endl;
-	async_write(ClientTCP::add_prefix(header, data_deserialize));
-	delete [] data_deserialize;
+	async_write(ClientTCP::add_prefix(header, const_cast<void *>(input)));
 }
 
 void ServerTCP::remove(TCPConnection::pointer remove) {
@@ -168,8 +183,7 @@ TCPConnection::TCPConnection(
 void TCPConnection::checkError_(boost::system::error_code const &error_code) {
 
 	if ((boost::asio::error::eof == error_code) ||
-		(boost::asio::error::connection_reset == error_code))
-	{
+		(boost::asio::error::connection_reset == error_code)) {
 		//Need to reset the Snake;
 		std::cout << "Disconnected" << std::endl;
 		serverTCP_.erase_snake(snake_);
@@ -178,7 +192,8 @@ void TCPConnection::checkError_(boost::system::error_code const &error_code) {
 }
 
 void
-TCPConnection::handle_read_data(eHeader header, boost::system::error_code const &error_code,
+TCPConnection::handle_read_data(eHeader header,
+								boost::system::error_code const &error_code,
 								size_t len) {
 	//std::cout << "TCPConnection::handle_read_data [" << len << "]" << std::endl;
 	checkError_(error_code);
@@ -193,6 +208,7 @@ void TCPConnection::handle_write(const boost::system::error_code &error_code,
 								 size_t len) {
 	checkError_(error_code);
 }
+
 void
 TCPConnection::handle_read_header(const boost::system::error_code &error_code,
 								  size_t len) {
@@ -209,7 +225,8 @@ TCPConnection::handle_read_header(const boost::system::error_code &error_code,
 void TCPConnection::read_socket_header() {
 	//std::cout << "TCPConnection::read_socket_header" << std::endl;
 	boost::asio::async_read(socket_,
-							boost::asio::buffer(buffer_data, ClientTCP::size_header[HEADER]),
+							boost::asio::buffer(buffer_data,
+												ClientTCP::size_header[HEADER]),
 							boost::bind(&TCPConnection::handle_read_header,
 										shared_from_this(),
 										boost::asio::placeholders::error,
@@ -218,7 +235,8 @@ void TCPConnection::read_socket_header() {
 
 void TCPConnection::read_socket_data(eHeader header) {
 	//std::cout << "TCPConnection::read_socket_data" << std::endl;
-	boost::asio::async_read(socket_, boost::asio::buffer(buffer_data, ClientTCP::size_header[header]),
+	boost::asio::async_read(socket_, boost::asio::buffer(buffer_data,
+														 ClientTCP::size_header[header]),
 							boost::bind(&TCPConnection::handle_read_data,
 										shared_from_this(),
 										header,

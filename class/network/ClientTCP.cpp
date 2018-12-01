@@ -8,7 +8,7 @@
 #include "ClientTCP.hpp"
 #include <gui/Core.hpp>
 #include <exception>
-
+#include <events/NextFrame.hpp>
 int const ClientTCP::size_header[] = {
 		[CHAT] = SIZEOF_CHAT_PCKT,
 		[FOOD] = sizeof(FoodInfo),
@@ -20,7 +20,8 @@ int const ClientTCP::size_header[] = {
 		[HEADER] = sizeof(eHeader),
 		[INPUT] = sizeof(InputInfo),
 		[RESIZE_MAP] = sizeof(unsigned int),
-		[REMOVE_SNAKE] = sizeof(int16_t)
+		[REMOVE_SNAKE] = sizeof(int16_t),
+		[POCK] = sizeof("")
 };
 
 ClientTCP::ClientTCP(::Univers &univers, boost::asio::io_service &io)
@@ -220,8 +221,8 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 			std::memcpy(&st, input, ClientTCP::size_header[START_GAME]);
 			factory.create_all_snake(snake_array, st.nu);
 			univers.getWorld_().getEventManager().emitEvent<StartEvent>(st.time_duration);
-		}
 			break;
+		}
 		case INPUT: {
 
 			InputInfo ii;
@@ -231,8 +232,8 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 			joystickEvents.push_back(JoystickEvent(ii.id, ii.dir));
 			mu.unlock();
 			log_trace("INPUT::mu.unlock()");
-		}
 			break;
+		}
 		case RESIZE_MAP: {
 			log_info("eHeader::RESIZE_MAP");
 
@@ -240,8 +241,12 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 			std::memcpy(&buffer, input, ClientTCP::size_header[RESIZE_MAP]);
 			univers.setMapSize(buffer);
 			univers.playNoise(eSound::RESIZE_MAP);
-		}
 			break;
+		}
+		case POCK: {
+			log_info("eHeader::POCK");
+			univers.getWorld_().getEventManager().emitEvent<NextFrame>();
+		}
 		default:
 			break;
 	}

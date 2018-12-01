@@ -36,10 +36,11 @@ void CollisionSystem::checkCollision(
 				foodInfo.positionComponent = PositionComponent(rand() % (30 - 2) + 1, rand() % (30 - 2) + 1);
 				foodInfo.fromSnake = false;
 				getWorld().getUnivers().getClientTCP_().write_socket(ClientTCP::add_prefix(FOOD, &foodInfo));
-			} else {
-				ClientTCP::FoodInfo foodInfo;
-				getWorld().getUnivers().getClientTCP_().write_socket(ClientTCP::add_prefix(FOOD, &foodInfo));
 			}
+// else {
+//				ClientTCP::FoodInfo foodInfo;
+//				getWorld().getUnivers().getClientTCP_().write_socket(ClientTCP::add_prefix(FOOD, &foodInfo));
+//			}
 		} else if (group == FOOD_TAG_FROM_SNAKE) {
 			getWorld().getUnivers().playNoise(eSound::FOOD);
 			entityCheck.kill();

@@ -119,14 +119,16 @@ inline eSprite operator>>(eSprite const x, eSprite const y) {
 
 struct		Snake
 {
-	Snake() : sprite(eSprite::BLUE), isReady(false), id(-1) {
+	Snake() : sprite(eSprite::BLUE), isReady(false), id(-1), isUpdate(false), direction(NORTH) {
 		bzero(name, NAME_BUFFER);
 	};
 
 	char			name[NAME_BUFFER];
 	eSprite			sprite;
 	bool			isReady;
-	int16_t				id;
+	int16_t			id;
+	bool			isUpdate;
+	eDirection		direction;
 
 	friend std::ostream &operator<<(std::ostream &os, const Snake &snake);
 
