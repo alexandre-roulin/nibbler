@@ -149,8 +149,8 @@ void ServerTCP::parse_input(eHeader header, void const *input, size_t len) {
 				async_write(ClientTCP::add_prefix(FOOD, &infoArray));
 			}
 			foodInfoArray.clear();
-			char *void_data;
-			async_write(ClientTCP::add_prefix(POCK, void_data));
+			int i = 42;
+			async_write(ClientTCP::add_prefix(POCK, i));
 			return;
 		}
 		default:

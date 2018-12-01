@@ -21,7 +21,7 @@ int const ClientTCP::size_header[] = {
 		[INPUT] = sizeof(InputInfo),
 		[RESIZE_MAP] = sizeof(unsigned int),
 		[REMOVE_SNAKE] = sizeof(int16_t),
-		[POCK] = sizeof("")
+		[POCK] = sizeof(int)
 };
 
 ClientTCP::ClientTCP(::Univers &univers, boost::asio::io_service &io)
