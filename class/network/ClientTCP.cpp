@@ -164,8 +164,9 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 			break;
 		}
 		case SNAKE_ARRAY: {
-			log_info("eHeader::SNAKE_ARRAY");
-			std::memcpy(snake_array, input, sizeof(Snake) * MAX_SNAKE);
+			log_info("eHeader::SNAKE_ARRAY Len : %d S*8 %d", len,
+					 sizeof(Snake) * MAX_SNAKE);
+			std::memcpy(snake_array, input, len);
 			break;
 		}
 		case SNAKE: {

@@ -109,7 +109,7 @@ void ServerTCP::parse_input(eHeader header, void const *input, size_t len) {
 
 	switch (header) {
 		case SNAKE_ARRAY: {
-			std::memcpy(snake_array, input, sizeof(Snake) * MAX_SNAKE);
+			std::memcpy(snake_array, input, len);
 			break;
 		}
 		case SNAKE: {
