@@ -12,13 +12,15 @@
 #include <logger.h>
 #include <dlfcn.h>
 #include <events/NextFrame.hpp>
+#include <events/FoodEat.hpp>
+
 Univers::Univers()
 		: timer_start(boost::asio::deadline_timer(io_start)),
 		  timer_loop(boost::asio::deadline_timer(io_loop,
 												 boost::posix_time::milliseconds(
 														 100))),
 		  mapSize(MAP_MIN),
-		  gameSpeed(800),
+		  gameSpeed(400),
 		  dlHandleDisplay(nullptr),
 		  dlHandleSound(nullptr),
 		  display(nullptr),
@@ -167,16 +169,19 @@ void Univers::loop_world() {
 
 	// GET REFRESH DATA
 	for (; world_->getEventManager().getEvents<NextFrame>().empty(); );
-
+	world_->getEventManager().destroy<NextFrame>();
+	world_->update();
 	world_->getSystemManager().getSystem<FollowSystem>().update();
 	world_->getSystemManager().getSystem<JoystickSystem>().update();
+	world_->getEventManager().destroy<JoystickEvent>();
 	world_->getSystemManager().getSystem<MotionSystem>().update();
 	world_->getSystemManager().getSystem<CollisionSystem>().update();
 	world_->getSystemManager().getSystem<FoodCreationSystem>().update();
+	world_->getEventManager().destroy<FoodCreation>();
 	world_->getSystemManager().getSystem<SpriteSystem>().update();
 	world_->getSystemManager().getSystem<RenderSystem>().update();
 	world_->getSystemManager().getSystem<FoodEatSystem>().update();
-	world_->update();
+	world_->getEventManager().destroy<FoodEat>();
 
 	timer_loop.expires_at(
 			timer_loop.expires_at() +

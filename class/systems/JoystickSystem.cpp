@@ -14,7 +14,7 @@ void JoystickSystem::update() {
 	auto events = getWorld().getEventManager().getEvents<JoystickEvent>();
 	log_success("JoystickSystem::update on %d events", events.size());
 	Snake const *snake_array = getWorld().getUnivers().getClientTCP_().getSnakes();
-	for (int index =0; index < MAX_SNAKE; ++index) {
+	for (int index = 0; index < MAX_SNAKE; ++index) {
 		if (snake_array[index].id != -1) {
 			if (getWorld().getEntityManager().hasTag(
 					Factory::factory_name(HEAD, snake_array[index].id))) {
