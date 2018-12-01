@@ -1,13 +1,11 @@
 #include <component/CollisionComponent.hpp>
 #include "FoodCreationSystem.hpp"
 #include <KINU/World.hpp>
-#include <events/FoodEat.hpp>
 #include <component/FollowComponent.hpp>
 #include <component/SpriteComponent.hpp>
-#include <factory/Factory.hpp>
-#include <network/ClientTCP.hpp>
 #include <systems/SpriteSystem.hpp>
 #include <logger.h>
+#include <events/FoodCreation.hpp>
 
 FoodCreationSystem::FoodCreationSystem() {
 	requireComponent<FollowComponent>();

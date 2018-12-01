@@ -106,13 +106,14 @@ void ServerTCP::async_write(void const *input, size_t len) {
 
 void ServerTCP::parse_input(eHeader header, void const *input, size_t len) {
 
-
 	switch (header) {
 		case SNAKE_ARRAY: {
+			log_info("ServerTCP::SNAKE_ARRAY");
 			std::memcpy(snake_array, input, len);
 			break;
 		}
 		case SNAKE: {
+			log_info("ServerTCP::SNAKE");
 			Snake snake_temp;
 			std::memcpy(&snake_temp, input, sizeof(Snake));
 			assert(snake_temp.id >= 0 && snake_temp.id < MAX_SNAKE);
@@ -120,11 +121,12 @@ void ServerTCP::parse_input(eHeader header, void const *input, size_t len) {
 			break;
 		}
 		case START_GAME: {
-			log_info("StartGame from server");
+			log_info("ServerTCP::START_GAME");
 			start_game();
 			return;
 		}
 		case FOOD: {
+			log_info("ServerTCP::FOOD");
 			ClientTCP::FoodInfo foodInfo;
 			std::memcpy(&foodInfo, input, len);
 			foodInfoArray.push_back(foodInfo);
@@ -132,25 +134,33 @@ void ServerTCP::parse_input(eHeader header, void const *input, size_t len) {
 			return;
 		}
 		case RESIZE_MAP: {
+			log_info("ServerTCP::RESIZE_MAP");
 			std::memcpy(&mapSize, input, len);
 			break;
 		}
 		case INPUT: {
+			mutex.lock();
+			log_info("ServerTCP::INPUT");
 			ClientTCP::InputInfo inputInfo;
 			std::memcpy(&inputInfo, input, len);
 			snake_array[inputInfo.id].direction = inputInfo.dir;
 			snake_array[inputInfo.id].isUpdate = true;
 			for (int index = 0; index < nu_; ++index) {
-				if (!snake_array[index].isUpdate)
+				if (!snake_array[index].isUpdate) {
+					mutex.unlock();
+					log_info("ServerTCP::INPUT Not updated");
 					return;
+				}
 			}
 			async_write(ClientTCP::add_prefix(SNAKE_ARRAY, snake_array));
 			for (auto infoArray : foodInfoArray) {
 				async_write(ClientTCP::add_prefix(FOOD, &infoArray));
 			}
 			foodInfoArray.clear();
-			int i = 42;
-			async_write(ClientTCP::add_prefix(POCK, &i));
+			char data = '#';
+			async_write(ClientTCP::add_prefix(POCK, &data));
+			log_info("ServerTCP::INPUT Updated");
+			mutex.unlock();
 			return;
 		}
 		default:

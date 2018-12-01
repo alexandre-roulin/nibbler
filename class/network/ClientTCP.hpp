@@ -73,11 +73,10 @@ public:
 
 	void change_map_size(unsigned int);
 
+	static std::string add_prefix(eHeader);
+
 	template<typename T>
 	static std::string add_prefix(eHeader, T *element);
-
-	template<typename T, typename U>
-	static std::string add_prefix(eHeader, T *element1, U *element2);
 
 	static pointer_client
 	create(Univers &univers, boost::asio::io_service &io);
@@ -115,15 +114,6 @@ private:
 	std::mutex mu;
 
 };
-
-template<typename T, typename U>
-std::string ClientTCP::add_prefix(eHeader header, T *element1, U *element2) {
-	std::string message;
-	message.append(reinterpret_cast<char *>(&header), sizeof(eHeader));
-	message.append(reinterpret_cast<char *>(element1), sizeof(*element1));
-	message.append(reinterpret_cast<char *>(element2), sizeof(*element2));
-	return message;
-}
 
 template<typename T>
 std::string ClientTCP::add_prefix(eHeader header, T *element) {

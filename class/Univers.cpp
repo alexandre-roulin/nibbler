@@ -9,10 +9,11 @@
 #include <systems/RenderSystem.hpp>
 #include <network/ServerTCP.hpp>
 #include <systems/FoodEatSystem.hpp>
-#include <logger.h>
-#include <dlfcn.h>
 #include <events/NextFrame.hpp>
 #include <events/FoodEat.hpp>
+#include <dlfcn.h>
+#include <network/ClientTCP.hpp>
+#include <logger.h>
 
 Univers::Univers()
 		: timer_start(boost::asio::deadline_timer(io_start)),
@@ -20,7 +21,7 @@ Univers::Univers()
 												 boost::posix_time::milliseconds(
 														 100))),
 		  mapSize(MAP_MIN),
-		  gameSpeed(399),
+		  gameSpeed(280),
 		  dlHandleDisplay(nullptr),
 		  dlHandleSound(nullptr),
 		  display(nullptr),
@@ -98,22 +99,25 @@ bool Univers::load_external_display_library(std::string const &title,
 }
 
 void Univers::manage_input() {
-//	if (clientTCP_->getId() == 12) {
-//		ClientTCP::InputInfo inputInfo;
-//		inputInfo.id = clientTCP_->getId();
-//		inputInfo.dir = display->getDirection();
-//		for (int i = 0 ; i < Snake::getlastSnakeIndex(clientTCP_->getSnakes(), MAX_SNAKE); ++i) {
-//			inputInfo.id = i;
-//			clientTCP_->write_socket(ClientTCP::add_prefix(INPUT, &inputInfo));
-//		}
-//	} else {
 	ClientTCP::InputInfo inputInfo;
 	inputInfo.id = clientTCP_->getId();
 	inputInfo.dir = display->getDirection();
+
 	if (world_->getEntityManager().hasTag(
 			Factory::factory_name(HEAD, inputInfo.id)))
 		clientTCP_->write_socket(ClientTCP::add_prefix(INPUT, &inputInfo));
-//	}
+	if (clientTCP_->getId() == 0 && false) {
+		inputInfo.id = 0;
+		inputInfo.dir = display->getDirection();
+
+		if (world_->getEntityManager().hasTag(
+				Factory::factory_name(HEAD, inputInfo.id)))
+			clientTCP_->write_socket(ClientTCP::add_prefix(INPUT, &inputInfo));
+		inputInfo.id = 1;
+		if (world_->getEntityManager().hasTag(
+				Factory::factory_name(HEAD, inputInfo.id)))
+			clientTCP_->write_socket(ClientTCP::add_prefix(INPUT, &inputInfo));
+	}
 }
 
 void Univers::manage_start() {
@@ -162,15 +166,18 @@ void Univers::loop() {
 
 void Univers::loop_world() {
 
-	clientTCP_->deliverEvents();
 
 	// SEND DIRECTION
 	manage_input();
 
 	// GET REFRESH DATA
-	for (; world_->getEventManager().getEvents<NextFrame>().empty(); );
+	for (; world_->getEventManager().getEvents<NextFrame>().empty(););
 	world_->getEventManager().destroy<NextFrame>();
+
+	clientTCP_->deliverEvents();
+
 	world_->update();
+
 	world_->getSystemManager().getSystem<FollowSystem>().update();
 	world_->getSystemManager().getSystem<JoystickSystem>().update();
 	world_->getEventManager().destroy<JoystickEvent>();

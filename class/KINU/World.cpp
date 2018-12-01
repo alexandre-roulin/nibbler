@@ -27,7 +27,9 @@ namespace KINU {
 
 	void World::update() {
 		for (auto e : createdEntities) {
-			log_info("Created entity [%d] [%s] [%s]", e.getIndex(), e.getTag().c_str(), e.getGroup().c_str());
+//			log_info("Created entity index[%d] ", e.getIndex());
+//			log_info("Created entity t[%s]", e.getTag().c_str());
+//			log_info("Created entity g[%s]", e.getGroup().c_str());
 			getSystemManager().addToSystems(e);
 		}
 		createdEntities.clear();

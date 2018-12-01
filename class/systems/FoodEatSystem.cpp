@@ -35,7 +35,6 @@ void FoodEatSystem::update() {
 		followComponent.idFollowed = newEntity.getIndex();
 		followComponent.skip = true;
 
-		newEntity.tag(Factory::factory_name(BODY, newEntity.getIndex()));
 		newEntity.group(entityTail.getGroup());
 
 	}
