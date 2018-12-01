@@ -75,6 +75,7 @@ set(FIND_SFML_PATHS
         $ENV{HOME}/.brew/Frameworks
         $ENV{HOME}/.brew/lib
         $ENV{HOME}/.brew/Cellar
+        $ENV{HOME}/.brew/include
         ${SFML_PATH})
 
 # find the SFML include directory

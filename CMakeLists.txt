@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.12)
 
 include(ExternalProject)
+INCLUDE(FindPkgConfig)
 set(CMAKE_C_COMPILER "/usr/bin/gcc")
 set(CMAKE_CXX_COMPILER "/usr/bin/g++")
 
@@ -48,8 +49,6 @@ else ()
     find_package(OpenGL 3.3 REQUIRED)
 endif (WIN32)
 
-#list(APPEND CMAKE_MODULE_PATH "$ENV{HOME}/.brew/share/SFML/cmake/Modules/")
-
 
 set(PREFIX_SFML "${CMAKE_SOURCE_DIR}/cmake_modules/sfml")
 set(SFML_PATH ${PREFIX_SFML})
@@ -83,17 +82,22 @@ if (NOT SFML_FOUND OR NOT SFML_INCLUDE_DIR_FOUND)
     list(APPEND SFML_LIBRARIES_DIR ${INSTALL_DIR}/src/SFML-build/lib)
 
     link_directories(${SFML_LIBRARIES_DIR})
-    #add_dependencies(SFML)
-
 endif ()
 include_directories(${SFML_INCLUDE_DIR})
 
 
-#find_package(SDL2 REQUIRED)
-#include_directories(${SDL2_INCLUDE_DIR})
+PKG_CHECK_MODULES(SDL2 REQUIRED sdl2 sdl2_mixer sdl2_image)
+message(" SDL2_INCLUDE_DIR: ${SDL2_INCLUDE_DIR}")
+message(" SDL2_LIBRARIES: ${SDL2_LIBRARIES}")
+message(" SDL2_MIXER_INCLUDE_DIR: ${SDL2_MIXER_INCLUDE_DIR}")
 
+#find_package(SDL2 REQUIRED)
+include_directories(${SDL2_INCLUDE_DIR})
 #find_package(SDL2_mixer REQUIRED)
 #include_directories(${SDL2_MIXER_INCLUDE_DIR})
+#find_package(SDL2_image REQUIRED)
+#include_directories(${SDL2_IMAGE_INCLUDE_DIR})
+
 
 add_executable(${NAME}
         class/component/CollisionComponent.cpp

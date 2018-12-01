@@ -4,6 +4,9 @@
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/SFML" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/SFML/src/sfml" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/cmake_modules/SDL2/src/SDL2" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/cmake_modules/SDL2_IMAGE/src/SDL2_IMAGE" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/cmake_modules/SDL2_MIXER/src/SDL2_MIXER" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/cmake_modules/boost-cmake" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/cmake_modules/sfml/src/SFML" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/extern/sfml/src/SFML" vcs="Git" />

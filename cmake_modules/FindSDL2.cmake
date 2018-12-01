@@ -76,6 +76,11 @@ SET(SDL2_SEARCH_PATHS
         /opt/csw # Blastwave
         /opt
         ${SDL2_PATH}
+        $ENV{HOME}/.brew/Frameworks
+        $ENV{HOME}/.brew/lib
+        $ENV{HOME}/.brew/Cellar
+        $ENV{HOME}/.brew/include
+        $ENV{HOME}/.brew/bin
         )
 
 FIND_PATH(SDL2_INCLUDE_DIR SDL.h

@@ -21,8 +21,12 @@ add_library(
 )
 
 target_link_libraries(${NAME} PRIVATE
-        SDL2 SDL2_image
+        ${SDL2} ${SDL2_IMAGE_LIBRARIES}
         )
+
+
+target_include_directories(${NAME} PUBLIC {SDL2_INCLUDE_DIR})
+target_include_directories(${NAME} PUBLIC {SDL2_IMAGE_INCLUDE_DIR})
 
 target_include_directories(
         ${NAME} PUBLIC

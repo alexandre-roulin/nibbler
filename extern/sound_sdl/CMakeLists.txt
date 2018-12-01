@@ -30,8 +30,10 @@ add_library(
 )
 
 target_link_libraries(${NAME} PRIVATE
-        SDL2 SDL2_mixer
+        ${SDL2_LIBRARY} ${SDL2_MIXER_LIBRARIES}
         )
+target_include_directories(${NAME} PUBLIC ${SDL2_INCLUDE_DIR})
+target_include_directories(${NAME} PUBLIC ${SDL2_MIXER_INCLUDE_DIR})
 
 target_include_directories(
         ${NAME} PUBLIC
