@@ -52,7 +52,6 @@ set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
 
 include_directories(
         ${PROJECT_SOURCE_DIR}/incs/
-        ${PROJECT_SOURCE_DIR}/extern/SFML/include/
         ${PROJECT_SOURCE_DIR}/imgui/
         ${PROJECT_SOURCE_DIR}/imgui/imgui/
         ${PROJECT_SOURCE_DIR}/imgui/imgui-sfml/)
@@ -62,7 +61,6 @@ find_package(SDL2_image REQUIRED)
 find_package(SDL2_mixer REQUIRED)
 
 add_subdirectory(cmake/boost-cmake)
-#add_subdirectory(extern/SFML)
 find_package(SFML REQUIRED)
 
 

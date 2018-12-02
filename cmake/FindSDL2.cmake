@@ -68,21 +68,14 @@ SET(SDL2_SEARCH_PATHS
         ~/Library/Frameworks
         /Library/Frameworks
         /usr/local
+        /usr/local/bin/
         /usr
         /sw # Fink
         /opt/local # DarwinPorts
         /opt/csw # Blastwave
         /opt
         $ENV{HOME}/.brew
-
-        $ENV{HOME}/.brew/lib
-        $ENV{HOME}/.brew/
-        $ENV{HOME}/.brew/include
-        $ENV{HOME}/.brew/bin
-        $ENV{HOME}/.brew/Frameworks
-        $ENV{HOME}/.brew/Cellar
-        ${SDL2_PATH}
-        )
+        ${SDL2_PATH})
 
 FIND_PATH(SDL2_INCLUDE_DIR SDL.h
         HINTS
