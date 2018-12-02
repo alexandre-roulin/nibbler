@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.12)
 
 set(CMAKE_CXX_STANDARD 14)
 
+SET(CMAKE_INSTALL_PREFIX < install_path >)
+
 if (WIN32)
     if(MSVC)
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4")
@@ -20,6 +22,7 @@ elseif (APPLE)
         execute_process(COMMAND $ENV{HOME}/.brew/bin/brew install sdl2)
         execute_process(COMMAND $ENV{HOME}/.brew/bin/brew install sdl2_image)
         execute_process(COMMAND $ENV{HOME}/.brew/bin/brew install sdl2_mixer)
+        execute_process(COMMAND $ENV{HOME}/.brew/bin/brew install sfml)
     endif(INSTALL)
 
     link_directories(/usr/lib/)
@@ -59,7 +62,8 @@ find_package(SDL2_image REQUIRED)
 find_package(SDL2_mixer REQUIRED)
 
 add_subdirectory(cmake/boost-cmake)
-add_subdirectory(extern/SFML)
+#add_subdirectory(extern/SFML)
+find_package(SFML REQUIRED)
 
 
 add_subdirectory(imgui)
