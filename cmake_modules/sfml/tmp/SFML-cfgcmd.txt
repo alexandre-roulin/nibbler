@@ -1,1 +1,0 @@
-cmd='/usr/local/Cellar/cmake/3.12.2/bin/cmake;-DCMAKE_INSTALL_PREFIX=/Users/alexandreroulin/work/nibbler/cmake_modules/sfml;-DCMAKE_INSTALL_FRAMEWORK_PREFIX=/Users/alexandreroulin/work/nibbler/cmake_modules/sfml;-DSFML_MISC_INSTALL_PREFIX=/Users/alexandreroulin/work/nibbler/cmake_modules/sfml;-C<TMP_DIR>/SFML-cache-$<CONFIG>.cmake;-GUnix Makefiles;<SOURCE_DIR><SOURCE_SUBDIR>'
