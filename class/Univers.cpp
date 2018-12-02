@@ -100,24 +100,24 @@ void Univers::manage_input() {
 	ClientTCP::InputInfo inputInfo;
 
 
-	inputInfo.id = clientTCP_->getId();
-	inputInfo.dir = display->getDirection();
-
-	if (world_->getEntitiesManager().hasEntityByTagId(eTag::HEAD_TAG + inputInfo.id))
-		clientTCP_->write_socket(ClientTCP::add_prefix(INPUT, &inputInfo));
-
-//	if (clientTCP_->getId() == 0) {
-//		inputInfo.id = 0;
-//		inputInfo.dir = display->getDirection();
+//	inputInfo.id = clientTCP_->getId();
+//	inputInfo.dir = display->getDirection();
 //
-//		if (world_->getEntitiesManager().hasEntityByTagId(
-//				eTag::HEAD_TAG + inputInfo.id))
-//			clientTCP_->write_socket(ClientTCP::add_prefix(INPUT, &inputInfo));
-//		inputInfo.id = 1;
-//		if (world_->getEntitiesManager().hasEntityByTagId(
-//				eTag::HEAD_TAG + inputInfo.id))
-//			clientTCP_->write_socket(ClientTCP::add_prefix(INPUT, &inputInfo));
-//	}
+//	if (world_->getEntitiesManager().hasEntityByTagId(eTag::HEAD_TAG + inputInfo.id))
+//		clientTCP_->write_socket(ClientTCP::add_prefix(INPUT, &inputInfo));
+//
+	if (clientTCP_->getId() == 0) {
+		inputInfo.id = 0;
+		inputInfo.dir = display->getDirection();
+
+		if (world_->getEntitiesManager().hasEntityByTagId(
+				eTag::HEAD_TAG + inputInfo.id))
+			clientTCP_->write_socket(ClientTCP::add_prefix(INPUT, &inputInfo));
+		inputInfo.id = 1;
+		if (world_->getEntitiesManager().hasEntityByTagId(
+				eTag::HEAD_TAG + inputInfo.id))
+			clientTCP_->write_socket(ClientTCP::add_prefix(INPUT, &inputInfo));
+	}
 }
 
 void Univers::manage_start() {
@@ -169,14 +169,19 @@ void Univers::loop_world() {
 
 	// SEND DIRECTION
 	manage_input();
+	std::cout << "manage_input" <<std::endl;
 
 	// GET REFRESH DATA
 	for (; world_->getEventsManager().getEvents<NextFrame>().empty(););
+	std::cout << "getEventsManager" <<std::endl;
 	world_->getEventsManager().destroy<NextFrame>();
 
+	std::cout << "deliverEvents" <<std::endl;
 	clientTCP_->deliverEvents();
 
+	std::cout << "update" <<std::endl;
 	world_->update();
+	std::cout << "getSystemsManager" <<std::endl;
 
 	world_->getSystemsManager().getSystem<FollowSystem>().update();
 	world_->getSystemsManager().getSystem<JoystickSystem>().update();
@@ -190,6 +195,7 @@ void Univers::loop_world() {
 	world_->getSystemsManager().getSystem<FoodEatSystem>().update();
 	world_->getEventsManager().destroy<FoodEat>();
 
+	std::cout << "timer_loop" <<std::endl;
 	timer_loop.expires_at(
 			timer_loop.expires_at() +
 			boost::posix_time::milliseconds(gameSpeed));

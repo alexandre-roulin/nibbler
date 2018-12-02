@@ -22,7 +22,6 @@ int const ClientTCP::size_header[] = {
 		[RESIZE_MAP] = sizeof(unsigned int),
 		[REMOVE_SNAKE] = sizeof(int16_t),
 		[POCK] = sizeof(char),
-		[ALIVE] = sizeof(bool)
 };
 
 ClientTCP::ClientTCP(::Univers &univers, boost::asio::io_service &io)
@@ -152,6 +151,7 @@ void ClientTCP::write_socket(std::string message) {
 
 void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 
+	std::cout << "ClientTCP::parse_input " << header << 	std::endl;
 
 
 	switch (header) {

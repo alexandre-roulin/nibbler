@@ -104,6 +104,7 @@ void ServerTCP::async_write(void const *input, size_t len) {
 }
 
 void ServerTCP::parse_input(eHeader header, void const *input, size_t len) {
+	std::cout << "ServerTCP::parse_input" <<std::endl;
 
 	switch (header) {
 		case SNAKE_ARRAY: {
@@ -115,6 +116,8 @@ void ServerTCP::parse_input(eHeader header, void const *input, size_t len) {
 			std::memcpy(&snake_temp, input, sizeof(Snake));
 			assert(snake_temp.id >= 0 && snake_temp.id < MAX_SNAKE);
 			snake_array[snake_temp.id] = snake_temp;
+			if (!snake_array[snake_temp.id].isAlive)
+				log_warn("Snake is die %d",snake_temp.id);
 			break;
 		}
 		case START_GAME: {
@@ -134,10 +137,6 @@ void ServerTCP::parse_input(eHeader header, void const *input, size_t len) {
 			log_info("ServerTCP::RESIZE_MAP");
 			std::memcpy(&mapSize, input, len);
 			break;
-		}
-		case ALIVE: {
-
-			return;
 		}
 		case INPUT: {
 			mutex.lock();

@@ -145,6 +145,9 @@ struct		Snake
 			sprite = snake.sprite;
 			isReady = snake.isReady;
 			id = snake.id;
+			isUpdate = snake.isUpdate;
+			direction = snake.direction;
+			isAlive = snake.isAlive;
 		}
 		return *this;
 	}

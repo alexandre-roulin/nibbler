@@ -2,21 +2,5 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/SFML" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/SFML/src/sfml" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/cmake/boost-cmake" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/cmake_modules/SDL2/src/SDL2" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/cmake_modules/SDL2_IMAGE/src/SDL2_IMAGE" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/cmake_modules/SDL2_MIXER/src/SDL2_MIXER" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/cmake_modules/boost-cmake" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/cmake_modules/sfml/src/SFML" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/extern/SDL2" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/extern/SDL_MIXER" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/extern/SFML" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/extern/boost" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/extern/sfml/src/SFML" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/imgui/imgui" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/imgui/imgui-sfml" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/sfml/src/sfml" vcs="Git" />
   </component>
 </project>
