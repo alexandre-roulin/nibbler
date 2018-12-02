@@ -1,1 +1,0 @@
-cmd='/Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake;-DCMAKE_INSTALL_PREFIX=/Users/aroulin/nibbler/cmake_modules/sfml;-DCMAKE_INSTALL_FRAMEWORK_PREFIX=/Users/aroulin/nibbler/cmake_modules/sfml;-DSFML_MISC_INSTALL_PREFIX=/Users/aroulin/nibbler/cmake_modules/sfml;-C<TMP_DIR>/SFML-cache-$<CONFIG>.cmake;-GUnix Makefiles;<SOURCE_DIR><SOURCE_SUBDIR>'
