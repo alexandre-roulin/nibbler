@@ -45,7 +45,9 @@ void JoystickSystem::update() {
 			 !(joystickComponent.direction & DIRECTION_HORIZONTAL)) ||
 			(motionComponent.direction & DIRECTION_VERTICAL &&
 			 !(joystickComponent.direction & DIRECTION_VERTICAL))) {
-			log_error("MatchDirection!");
+//			log_error("MatchDirection!");
+			log_info("Entity 0 size %d", getWorld().getEntitiesManager().getEntitiesByGroupId(0).size());
+			log_info("Entity 1 size %d", getWorld().getEntitiesManager().getEntitiesByGroupId(1).size());
 			motionComponent.direction = joystickComponent.direction;
 		}
 	}

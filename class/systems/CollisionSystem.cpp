@@ -26,6 +26,9 @@ void CollisionSystem::checkCollision(
 
 			getWorld().getUnivers().playNoise(eSound::FOOD);
 
+			//delete
+			log_warn("Head collision x[%d] y[%d]",snakePositionComponent.x, snakePositionComponent.y);
+			//
 			entityCheck.kill();
 			getWorld().getEventsManager().emitEvent<FoodEat>(entityHead.getGroupIdByEntity());
 
