@@ -1,0 +1,10 @@
+[  0%] Linking CXX shared library ../../../lib/libsfml-system.dylib
+[ 14%] Built target sfml-system
+[ 14%] Linking CXX shared library ../../../lib/libsfml-network.dylib
+[ 15%] Linking CXX shared library ../../../lib/libsfml-audio.dylib
+[ 16%] Linking CXX shared library ../../../lib/libsfml-window.dylib
+[ 25%] Built target sfml-network
+[ 41%] Built target sfml-audio
+[ 74%] Built target sfml-window
+[ 75%] Linking CXX shared library ../../../lib/libsfml-graphics.dylib
+[100%] Built target sfml-graphics
