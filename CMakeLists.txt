@@ -198,7 +198,7 @@ include_directories(${SFML_INCLUDE_DIR})
 add_subdirectory(imgui)
 add_subdirectory(extern/display_sdl)
 add_subdirectory(extern/display_sfml)
-add_subdirectory(extern/sound_sdl)
+#add_subdirectory(extern/sound_sdl)
 add_subdirectory(extern/sound_sfml)
 
 
