@@ -1,6 +1,5 @@
 #include "ServerTCP.hpp"
-#include "ClientTCP.hpp"
-#include <logger.h>
+
 ServerTCP::ServerTCP(boost::asio::io_service &io_service, unsigned int port)
 		: nu_(0),
 		  acceptor_(io_service, tcp::endpoint(tcp::v4(), port)),
@@ -104,7 +103,7 @@ void ServerTCP::async_write(void const *input, size_t len) {
 }
 
 void ServerTCP::parse_input(eHeader header, void const *input, size_t len) {
-	std::cout << "ServerTCP::parse_input" <<std::endl;
+	std::cout << "ServerTCP::parse_input" << header << std::endl;
 
 	switch (header) {
 		case SNAKE_ARRAY: {
@@ -117,7 +116,7 @@ void ServerTCP::parse_input(eHeader header, void const *input, size_t len) {
 			assert(snake_temp.id >= 0 && snake_temp.id < MAX_SNAKE);
 			snake_array[snake_temp.id] = snake_temp;
 			if (!snake_array[snake_temp.id].isAlive)
-				log_warn("Snake is die %d",snake_temp.id);
+				log_warn("Snake is die %d", snake_temp.id);
 			break;
 		}
 		case START_GAME: {
@@ -145,7 +144,8 @@ void ServerTCP::parse_input(eHeader header, void const *input, size_t len) {
 			snake_array[inputInfo.id].direction = inputInfo.dir;
 			snake_array[inputInfo.id].isUpdate = true;
 			for (int index = 0; index < nu_; ++index) {
-				if (snake_array[index].isAlive && !snake_array[index].isUpdate) {
+				if (snake_array[index].isAlive &&
+					!snake_array[index].isUpdate) {
 					mutex.unlock();
 					return;
 				}

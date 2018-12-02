@@ -238,9 +238,11 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 			break;
 		}
 		case POCK: {
+			std::cout << "Pock::begin()" << std::endl;
 			mu.lock();
 			univers.getWorld_().getEventsManager().emitEvent<NextFrame>();
 			mu.unlock();
+			std::cout << "Pock::end()" << std::endl;
 		}
 		default:
 			break;
