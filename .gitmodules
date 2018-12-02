@@ -7,3 +7,6 @@
 [submodule "cmake/boost-cmake"]
 	path = cmake/boost-cmake
 	url = https://github.com/Orphis/boost-cmake
+[submodule "extern/SFML"]
+	path = extern/SFML
+	url = https://github.com/SFML/SFML
