@@ -154,6 +154,9 @@ void ServerTCP::parse_input(eHeader header, void const *input, size_t len) {
 			foodInfoArray.clear();
 			char data = '#';
 			async_write(ClientTCP::add_prefix(POCK, &data));
+			for (int index = 0; index < nu_; ++index) {
+				snake_array[index].isUpdate = false;
+			}
 			mutex.unlock();
 			return;
 		}
