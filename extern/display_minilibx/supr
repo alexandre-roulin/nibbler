@@ -1,4 +1,4 @@
-# Install script for directory: /Users/ntoniolo/nibbler/externlib/display_minilibx
+# Install script for directory: /Users/ntoniolo/nibbler/extern/display_minilibx
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -40,5 +40,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/Users/ntoniolo/nibbler/externlib/display_minilibx/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/Users/ntoniolo/nibbler/extern/display_minilibx/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

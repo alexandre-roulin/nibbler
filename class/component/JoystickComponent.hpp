@@ -2,7 +2,6 @@
 
 
 #include <nibbler.hpp>
-#include <json/json.h>
 
 struct JoystickComponent {
 public:

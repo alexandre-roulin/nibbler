@@ -1,9 +1,9 @@
 
-externlib/display_sdl/Makefile
+extern/display_sdl/Makefile
 ./Makefile
-externlib/display_sfml/Makefile
-externlib/sound_sdl/Makefile
-externlib/sound_sfml/Makefile
+extern/display_sfml/Makefile
+extern/sound_sdl/Makefile
+extern/sound_sfml/Makefile
 
 jsoncpp/
 imgui/imconfig-sfml.h

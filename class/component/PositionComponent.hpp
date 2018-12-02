@@ -1,7 +1,6 @@
 #pragma once
 
 #include <ostream>
-#include <json/json.h>
 
 struct PositionComponent {
 public:

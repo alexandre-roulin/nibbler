@@ -3,7 +3,7 @@
 #include <cstdint>
 #include <bitset>
 #include "Config.hpp"
-
+#include <cassert>
 namespace KINU {
 
 	struct BaseComponent {
