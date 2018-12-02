@@ -238,7 +238,9 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 			break;
 		}
 		case POCK: {
+			mu.lock();
 			univers.getWorld_().getEventsManager().emitEvent<NextFrame>();
+			mu.unlock();
 		}
 		default:
 			break;
