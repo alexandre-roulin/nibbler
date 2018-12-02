@@ -28,7 +28,9 @@ void Factory::create_snake(Snake snake, int max_snakes) {
 	int base_x = (snake.id + 1) * univers_.getMapSize() / (max_snakes + 1);
 	int base_y = univers_.getMapSize() / 2;
 	for (int index = 0; index < 4; ++index) {
+
 		new_snake = univers_.getWorld_().createEntity();
+
 		if (index == 0) {
 			new_snake.tagByTagId(eTag::HEAD_TAG + snake.id);
 			new_snake.addComponent<JoystickComponent>(NORTH);

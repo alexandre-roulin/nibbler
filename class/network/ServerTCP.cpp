@@ -79,7 +79,6 @@ void ServerTCP::start_game() {
 	ClientTCP::StartInfo startInfo;
 	startInfo.nu = nu_;
 	startInfo.time_duration = boost::posix_time::microsec_clock::universal_time();
-	std::cout << "Start timer in server " << std::endl;
 	int max_food = (nu_ > 1 ? nu_ - 1 : nu_);
 	for (int index = 0; index < max_food; ++index) {
 		std::cout << max_food << std::endl;
@@ -123,17 +122,22 @@ void ServerTCP::parse_input(eHeader header, void const *input, size_t len) {
 			return;
 		}
 		case FOOD: {
+			mutex.lock();
 			log_info("ServerTCP::FOOD");
 			ClientTCP::FoodInfo foodInfo;
 			std::memcpy(&foodInfo, input, len);
 			foodInfoArray.push_back(foodInfo);
-//			async_write(ClientTCP::add_prefix(FOOD, &foodInfo));
+			mutex.unlock();
 			return;
 		}
 		case RESIZE_MAP: {
 			log_info("ServerTCP::RESIZE_MAP");
 			std::memcpy(&mapSize, input, len);
 			break;
+		}
+		case ALIVE: {
+
+			return;
 		}
 		case INPUT: {
 			mutex.lock();
@@ -142,7 +146,7 @@ void ServerTCP::parse_input(eHeader header, void const *input, size_t len) {
 			snake_array[inputInfo.id].direction = inputInfo.dir;
 			snake_array[inputInfo.id].isUpdate = true;
 			for (int index = 0; index < nu_; ++index) {
-				if (!snake_array[index].isUpdate) {
+				if (snake_array[index].isAlive && !snake_array[index].isUpdate) {
 					mutex.unlock();
 					return;
 				}
@@ -154,13 +158,15 @@ void ServerTCP::parse_input(eHeader header, void const *input, size_t len) {
 			foodInfoArray.clear();
 			char data = '#';
 			async_write(ClientTCP::add_prefix(POCK, &data));
+			for (int index = 0; index < nu_; ++index) {
+				snake_array[index].isUpdate = false;
+			}
 			mutex.unlock();
 			return;
 		}
 		default:
 			break;
 	}
-	//std::cout << "ServerTCP::parse_input.size() " << buffer.size() << std::endl;
 	async_write(ClientTCP::add_prefix(header, const_cast<void *>(input)));
 }
 

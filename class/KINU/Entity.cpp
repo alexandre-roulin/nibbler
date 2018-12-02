@@ -87,7 +87,6 @@ namespace KINU {
 		Entity e(newInstance);
 		e.entitiesManager_ = this;
 		validId.push_back(newInstance);
-		log_error("componentMasks.size() %d id %d", componentMasks.size(), newInstance);
 		if (newInstance >= componentMasks.size())
 			componentMasks.resize(newInstance + 1);
 		assert(!componentMasks[e.getId()].any());

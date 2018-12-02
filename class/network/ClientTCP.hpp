@@ -88,7 +88,7 @@ public:
 	int16_t getId(void) const;
 	bool	isConnect() const;
 	bool	isOpenGame() const;
-
+	void killSnake();
 	static int const size_header[];
 private:
 	ClientTCP(::Univers &univers, boost::asio::io_service &io);
@@ -110,8 +110,8 @@ private:
 	Factory factory;
 	boost::asio::io_service &io;
 	boost::thread thread;
-	std::__thread_id id;
 	std::mutex mu;
+
 
 };
 

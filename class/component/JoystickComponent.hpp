@@ -2,15 +2,13 @@
 
 
 #include <nibbler.hpp>
-#include <json/json.h>
 
 struct JoystickComponent {
 public:
 
-	explicit JoystickComponent(eDirection direction = NORTH, std::string tag = "");
+	explicit JoystickComponent(eDirection direction = NORTH);
 
 	eDirection direction;
-	std::string tag;
 };
 
 

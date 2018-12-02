@@ -8,8 +8,6 @@
 #include <events/FoodCreation.hpp>
 
 FoodCreationSystem::FoodCreationSystem() {
-	requireComponent<FollowComponent>();
-	requireComponent<PositionComponent>();
 }
 
 void FoodCreationSystem::update() {

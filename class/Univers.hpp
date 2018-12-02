@@ -57,7 +57,6 @@ public:
 	void create_server(unsigned int port = 4242);
 
 	bool dlError(void);
-	
 	void setFlag(eFlag);
 	void unsetFlag(eFlag);
 	bool testFlag(eFlag);

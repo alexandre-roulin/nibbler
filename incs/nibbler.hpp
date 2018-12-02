@@ -125,7 +125,7 @@ inline eSprite operator>>(eSprite const x, eSprite const y) {
 
 struct		Snake
 {
-	Snake() : sprite(eSprite::BLUE), isReady(false), id(-1), isUpdate(false), direction(NORTH) {
+	Snake() : sprite(eSprite::BLUE), isReady(false), id(-1), isUpdate(false), direction(NORTH), isAlive(true) {
 		bzero(name, NAME_BUFFER);
 	};
 
@@ -135,6 +135,7 @@ struct		Snake
 	int16_t			id;
 	bool			isUpdate;
 	eDirection		direction;
+	bool			isAlive;
 
 	friend std::ostream &operator<<(std::ostream &os, const Snake &snake);
 
@@ -210,5 +211,6 @@ enum eHeader {
 	INPUT,				//8
 	RESIZE_MAP,			//9
 	REMOVE_SNAKE,		//10
-	POCK				//11
+	POCK,				//11
+	ALIVE				//12
 };
