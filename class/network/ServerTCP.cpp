@@ -135,6 +135,10 @@ void ServerTCP::parse_input(eHeader header, void const *input, size_t len) {
 			std::memcpy(&mapSize, input, len);
 			break;
 		}
+		case ALIVE: {
+
+			return;
+		}
 		case INPUT: {
 			mutex.lock();
 			ClientTCP::InputInfo inputInfo;
@@ -142,7 +146,7 @@ void ServerTCP::parse_input(eHeader header, void const *input, size_t len) {
 			snake_array[inputInfo.id].direction = inputInfo.dir;
 			snake_array[inputInfo.id].isUpdate = true;
 			for (int index = 0; index < nu_; ++index) {
-				if (!snake_array[index].isUpdate) {
+				if (snake_array[index].isAlive && !snake_array[index].isUpdate) {
 					mutex.unlock();
 					return;
 				}

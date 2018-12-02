@@ -241,6 +241,7 @@ namespace KINU {
 	void EntitiesManager::addComponent(Entity entity, Args &&... args) {
 		T component(std::forward<Args>(args) ...);
 		addComponent<T>(entity, component);
+
 	}
 
 

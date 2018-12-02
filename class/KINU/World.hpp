@@ -42,7 +42,7 @@ namespace KINU {
 		// vector of entities that are awaiting destruction
 		std::vector<Entity> destroyedEntities;
 
-		std::unique_ptr<EntitiesManager> entitiesManages;
+		std::unique_ptr<EntitiesManager> entitiesManager;
 		std::unique_ptr<SystemsManager> systemsManager;
 		std::unique_ptr<EventsManager> eventsManager;
 

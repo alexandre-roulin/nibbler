@@ -105,6 +105,7 @@ void Univers::manage_input() {
 
 	if (world_->getEntitiesManager().hasEntityByTagId(eTag::HEAD_TAG + inputInfo.id))
 		clientTCP_->write_socket(ClientTCP::add_prefix(INPUT, &inputInfo));
+	
 //	if (clientTCP_->getId() == 0) {
 //		inputInfo.id = 0;
 //		inputInfo.dir = display->getDirection();

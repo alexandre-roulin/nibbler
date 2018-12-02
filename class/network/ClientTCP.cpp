@@ -21,7 +21,8 @@ int const ClientTCP::size_header[] = {
 		[INPUT] = sizeof(InputInfo),
 		[RESIZE_MAP] = sizeof(unsigned int),
 		[REMOVE_SNAKE] = sizeof(int16_t),
-		[POCK] = sizeof(char)
+		[POCK] = sizeof(char),
+		[ALIVE] = sizeof(bool)
 };
 
 ClientTCP::ClientTCP(::Univers &univers, boost::asio::io_service &io)
@@ -121,7 +122,6 @@ void ClientTCP::handle_read_header(const boost::system::error_code &error_code,
 
 	checkError_(error_code);
 
-	id = std::this_thread::get_id();
 	if (error_code.value() == 0) {
 		assert(len == sizeof(eHeader));
 		eHeader header;
@@ -290,4 +290,9 @@ std::string ClientTCP::add_prefix(eHeader header) {
 	std::string message;
 	message.append(reinterpret_cast<char *>(&header), sizeof(eHeader));
 	return message;
+}
+
+void ClientTCP::killSnake() {
+	snake_array[id_].isAlive = false;
+	write_socket(add_prefix(SNAKE, &(snake_array[id_])));
 }

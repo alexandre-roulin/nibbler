@@ -47,9 +47,12 @@ void CollisionSystem::checkCollision(
 			getWorld().getEventsManager().emitEvent<FoodEat>(entityHead.getGroupIdByEntity());
 		} else if (tagId == WALL_TAG) {
 			log_info("WALL_TAG::WallCollision");
+//			getWorld().getUnivers().getClientTCP_().killSnake();
 			entityHead.killGroup();
+
 		} else if (entityCheck.getGroupIdByEntity() == entityHead.getGroupIdByEntity()) {
 			log_info("HIMSELF::CollisionOnHimself");
+//			getWorld().getUnivers().getClientTCP_().killSnake();
 			entityHead.killGroup();
 		} else {
 			log_info("SNAKE::CollisionSnake");
@@ -63,6 +66,8 @@ void CollisionSystem::checkCollision(
 					getWorld().getUnivers().getClientTCP_().write_socket(
 							ClientTCP::add_prefix(FOOD, &foodInfo));
 			}
+//			getWorld().getUnivers().getClientTCP_().killSnake();
+
 			entityHead.killGroup();
 		}
 
