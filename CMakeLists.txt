@@ -1,15 +1,33 @@
 cmake_minimum_required(VERSION 3.12)
 
-include(ExternalProject)
-INCLUDE(FindPkgConfig)
-set(CMAKE_C_COMPILER "/usr/bin/gcc")
-set(CMAKE_CXX_COMPILER "/usr/bin/g++")
+set(CMAKE_CXX_STANDARD 14)
+
+if (WIN32)
+    if(MSVC)
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4")
+    else()
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wpedantic -std=c++14")
+        if(NOT WIN32)
+            set(GLAD_LIBRARIES dl)
+        endif()
+    endif()
+elseif (UNIX AND NOT APPLE)
+elseif (APPLE)
+    set(CMAKE_C_COMPILER "/usr/bin/gcc")
+    set(CMAKE_CXX_COMPILER "/usr/bin/g++")
+
+    #execute_process(COMMAND $ENV{HOME}/.brew/bin/brew install sdl2)
+    #execute_process(COMMAND $ENV{HOME}/.brew/bin/brew install sdl2_image)
+    #execute_process(COMMAND $ENV{HOME}/.brew/bin/brew install sdl2_mixer)
+
+    link_directories(/usr/lib/)
+    link_directories($ENV{HOME}/.brew/lib/)
+    include_directories($ENV{HOME}/.brew/include)
+            else ()
+endif ()
 
 set(NAME nibbler)
 project(${NAME})
-
-
-set(CMAKE_CXX_STANDARD 14)
 
 find_package(Git QUIET)
 if (GIT_FOUND AND EXISTS "${PROJECT_SOURCE_DIR}/.git")
@@ -25,13 +43,29 @@ if (GIT_FOUND AND EXISTS "${PROJECT_SOURCE_DIR}/.git")
     endif ()
 endif ()
 
-add_subdirectory(cmake_modules/boost-cmake)
+set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
 
-link_directories(/usr/lib/)
-link_directories($ENV{HOME}/.brew/lib/)
-link_directories(${PROJECT_SOURCE_DIR}/imgui/)
+include_directories(
+        ${PROJECT_SOURCE_DIR}/incs/
+        ${PROJECT_SOURCE_DIR}/extern/SFML/include/
+        ${PROJECT_SOURCE_DIR}/imgui/
+        ${PROJECT_SOURCE_DIR}/imgui/imgui/
+        ${PROJECT_SOURCE_DIR}/imgui/imgui-sfml/)
 
-set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
+find_package(SDL2 REQUIRED)
+find_package(SDL2_image REQUIRED)
+find_package(SDL2_mixer REQUIRED)
+
+add_subdirectory(cmake/boost-cmake)
+add_subdirectory(extern/SFML)
+
+
+add_subdirectory(imgui)
+add_subdirectory(extern/display_sdl)
+add_subdirectory(extern/display_sfml)
+add_subdirectory(extern/sound_sdl)
+add_subdirectory(extern/sound_sfml)
+
 
 if (WIN32)
     find_package(OpenGL 3.3 REQUIRED)
@@ -47,57 +81,7 @@ elseif (APPLE)
     set(OPENGL_LIBRARIES ${LIBS} ${APPLE_LIBS})
 else ()
     find_package(OpenGL 3.3 REQUIRED)
-endif (WIN32)
-
-
-set(PREFIX_SFML "${CMAKE_SOURCE_DIR}/cmake_modules/sfml")
-set(SFML_PATH ${PREFIX_SFML})
-find_package(SFML QUIET COMPONENTS system window graphics audio)
-if (NOT SFML_FOUND OR NOT SFML_INCLUDE_DIR_FOUND)
-    message(STATUS "SFML not found - will build from source")
-
-    ExternalProject_Add(SFML
-            PREFIX ${PREFIX_SFML}
-            GIT_REPOSITORY https://github.com/SFML/SFML.git
-
-            UPDATE_COMMAND ""
-
-            INSTALL_DIR ${SFML_PATH}
-            INSTALL_COMMAND make -j
-
-            CMAKE_ARGS
-            "-DCMAKE_INSTALL_PREFIX=${SFML_PATH}"
-            "-DCMAKE_INSTALL_FRAMEWORK_PREFIX=${SFML_PATH}"
-            "-DSFML_MISC_INSTALL_PREFIX=${SFML_PATH}"
-
-            CMAKE_CACHE_ARGS
-            "-DCMAKE_C_COMPILER:FILEPATH=${CMAKE_C_COMPILER}"
-            "-DCMAKE_CXX_COMPILER:FILEPATH=${CMAKE_CXX_COMPILER}"
-
-            LOG_DOWNLOAD 1 LOG_UPDATE 1 LOG_CONFIGURE 1 LOG_BUILD 1 LOG_INSTALL 1)
-
-    ExternalProject_Get_Property(SFML INSTALL_DIR)
-    set(SFML_INCLUDE_DIR ${INSTALL_DIR}/src/SFML/include)
-    list(APPEND SFML_LIBRARIES sfml-graphics sfml-window sfml-system sfml-audio)
-    list(APPEND SFML_LIBRARIES_DIR ${INSTALL_DIR}/src/SFML-build/lib)
-
-    link_directories(${SFML_LIBRARIES_DIR})
 endif ()
-include_directories(${SFML_INCLUDE_DIR})
-
-
-PKG_CHECK_MODULES(SDL2 REQUIRED sdl2 sdl2_mixer sdl2_image)
-message(" SDL2_INCLUDE_DIR: ${SDL2_INCLUDE_DIR}")
-message(" SDL2_LIBRARIES: ${SDL2_LIBRARIES}")
-message(" SDL2_MIXER_INCLUDE_DIR: ${SDL2_MIXER_INCLUDE_DIR}")
-
-#find_package(SDL2 REQUIRED)
-include_directories(${SDL2_INCLUDE_DIR})
-#find_package(SDL2_mixer REQUIRED)
-#include_directories(${SDL2_MIXER_INCLUDE_DIR})
-#find_package(SDL2_image REQUIRED)
-#include_directories(${SDL2_IMAGE_INCLUDE_DIR})
-
 
 add_executable(${NAME}
         class/component/CollisionComponent.cpp
@@ -186,25 +170,6 @@ add_executable(${NAME}
         incs/stb_image.h
         class/systems/SpriteSystem.cpp class/systems/SpriteSystem.hpp class/gui/widget/WidgetConnect.cpp class/gui/widget/WidgetConnect.hpp class/KINU/Component.cpp class/KINU/Component.hpp class/KINU/Entity.cpp class/KINU/Entity.hpp class/KINU/EventsManager.cpp class/KINU/EventsManager.hpp class/KINU/Pool.hpp class/KINU/SystemsManager.cpp class/KINU/SystemsManager.hpp class/KINU/World.cpp class/KINU/World.hpp class/KINU/Config.hpp)
 
-if (NOT SFML_FOUND OR NOT SFML_INCLUDE_DIR_FOUND)
-    add_dependencies(${NAME} SFML)
-endif ()
-
-message("SFML_LIBRARIES ${SFML_LIBRARIES}")
-message("SFML_INCLUDE_DIR ${SFML_INCLUDE_DIR}")
-
-include_directories(${SFML_INCLUDE_DIR})
-
-
-add_subdirectory(imgui)
-add_subdirectory(extern/display_sdl)
-add_subdirectory(extern/display_sfml)
-add_subdirectory(extern/sound_sdl)
-add_subdirectory(extern/sound_sfml)
-
-
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DIMGUI_USER_CONFIG=\"<../imconfig-sfml.h>\" -fsanitize=address -g3")
-
 target_include_directories(
         ${NAME} PUBLIC
         class
@@ -216,15 +181,12 @@ target_include_directories(
         ${PROJECT_SOURCE_DIR}/extern/commun/
 )
 
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DIMGUI_USER_CONFIG=\"<../imconfig-sfml.h>\" -fsanitize=address -g3")
 
 target_link_libraries(${NAME} PRIVATE Boost::filesystem)
 target_link_libraries(${NAME} PRIVATE Boost::thread)
 target_link_libraries(${NAME} PRIVATE Boost::program_options)
-#target_link_libraries(${NAME} PRIVATE ${SDL2_LIBRARY})
-#target_link_libraries(${NAME} PRIVATE ${SDL2_MIXER_LIBRARY})
+list(APPEND SFML_LIBRARIES sfml-graphics sfml-window sfml-system sfml-audio)
+target_link_libraries(${NAME} PRIVATE ${SFML_LIBRARIES})
+target_link_libraries(${NAME} PRIVATE imgui-sfml)
 target_link_libraries(${NAME} PRIVATE ${OPENGL_LIBRARIES})
-
-target_link_libraries(${NAME} PRIVATE
-        ${SFML_LIBRARIES}
-        imgui-sfml
-        )

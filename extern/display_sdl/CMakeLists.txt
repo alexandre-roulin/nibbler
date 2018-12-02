@@ -1,37 +1,21 @@
 cmake_minimum_required(VERSION 3.12)
 
-set(CMAKE_C_COMPILER "/usr/bin/gcc")
-set(CMAKE_CXX_COMPILER "/usr/bin/g++")
-
 set(NAME display_sdl)
 project(${NAME})
 
-set(CMAKE_BUILD_TYPE Release)
-
-set(CMAKE_CXX_STANDARD 14)
-
-link_directories(/usr/lib/)
-link_directories($ENV{HOME}/.brew/lib/)
-
-add_library(
-        ${NAME} MODULE
-
+add_library(${NAME} MODULE
         src/DisplaySdl.cpp
-        include/DisplaySdl.hpp
-)
+        include/DisplaySdl.hpp)
+
+message("SDL2_INCLUDE_DIR:${SDL2_INCLUDE_DIR}")
+message("SDL2_IMAGE_INCLUDE_DIR:${SDL2_IMAGE_INCLUDE_DIR}")
+message("SDL2_LIBRARIES:${SDL2_LIBRARIES}")
+message("SDL2_IMAGE_LIBRARIES:${SDL2_IMAGE_LIBRARIES}")
 
 target_link_libraries(${NAME} PRIVATE
-        ${SDL2} ${SDL2_IMAGE_LIBRARIES}
-        )
+        ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARIES})
 
-
-target_include_directories(${NAME} PUBLIC {SDL2_INCLUDE_DIR})
-target_include_directories(${NAME} PUBLIC {SDL2_IMAGE_INCLUDE_DIR})
-
-target_include_directories(
-        ${NAME} PUBLIC
-        $ENV{HOME}/.brew/include
-        ${PROJECT_SOURCE_DIR}/../../incs/
-        ${PROJECT_SOURCE_DIR}/include
-)
+target_include_directories(${NAME} PUBLIC ${SDL2_INCLUDE_DIR})
+target_include_directories(${NAME} PUBLIC ${SDL2_IMAGE_INCLUDE_DIR})
+target_include_directories(${NAME} PUBLIC ${PROJECT_SOURCE_DIR}/include)
 
