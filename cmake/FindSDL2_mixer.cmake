@@ -53,7 +53,6 @@ find_path(SDL2_MIXER_INCLUDE_DIR SDL_mixer.h
         include/SDL2 include
         PATHS ${SDL2_MIXER_PATH}
         )
-message("SDL2_MIXER_INCLUDE_DIR : ${SDL2_MIXER_INCLUDE_DIR}")
 
 if(CMAKE_SIZEOF_VOID_P EQUAL 8)
     set(VC_LIB_PATH_SUFFIX lib/x64)
