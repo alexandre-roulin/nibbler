@@ -5,9 +5,9 @@
 #include "PositionComponent.hpp"
 
 struct FollowComponent {
-	explicit FollowComponent(KINU::Entity::Id id = 0, bool skip = false);
+	explicit FollowComponent(KINU::Entity::ID id = 0, bool skip = false);
 
-	KINU::Entity::Id idFollowed;
+	KINU::Entity::ID	 idFollowed;
 	PositionComponent positionComponent;
 	bool skip;
 

@@ -3,59 +3,48 @@
 
 namespace KINU {
 
-	World::World(Univers &univers) : grid(0), univers_(univers){
-		entityManager = std::make_unique<EntityManager>(*this);
-		systemManager = std::make_unique<SystemManager>(*this);
-		eventManager = std::make_unique<EventManager>(*this);
-		log_success("New map create [%d %d]",univers.getMapSize(),univers.getMapSize());
+	World::World(Univers &univers) : grid(0), univers_(univers) {
+		entitiesManages = std::make_unique<EntitiesManager>(*this);
+		systemsManager = std::make_unique<SystemsManager>(*this);
+		eventsManager = std::make_unique<EventsManager>(*this);
 	}
 
-	EntityManager &World::getEntityManager() const {
-		assert(entityManager != nullptr);
-		return *entityManager;
+	EntitiesManager &World::getEntitiesManager() const {
+		assert(entitiesManages != nullptr);
+		return *entitiesManages;
 	}
 
-	SystemManager &World::getSystemManager() const {
-		assert(systemManager != nullptr);
-		return *systemManager;
+	SystemsManager &World::getSystemsManager() const {
+		assert(systemsManager != nullptr);
+		return *systemsManager;
 	}
 
-	EventManager &World::getEventManager() const {
-		assert(eventManager != nullptr);
-		return *eventManager;
+	EventsManager &World::getEventsManager() const {
+		assert(eventsManager != nullptr);
+		return *eventsManager;
 	}
 
 	void World::update() {
 		for (auto e : createdEntities) {
-			log_info("Created entity [%d] [%s] [%s]", e.getIndex(), e.getTag().c_str(), e.getGroup().c_str());
-			getSystemManager().addToSystems(e);
+			getSystemsManager().addToSystems(e);
 		}
 		createdEntities.clear();
 
 		for (auto e : destroyedEntities) {
-			getSystemManager().removeFromSystems(e);
-			getEntityManager().destroyEntity(e);
+			getSystemsManager().removeFromSystems(e);
+			getEntitiesManager().destroyEntity(e);
 		}
 		destroyedEntities.clear();
-		eventManager->destroyEvents();
 	}
 
 	Entity World::createEntity() {
-		auto e = getEntityManager().createEntity();
+		auto e = getEntitiesManager().createEntity();
 		createdEntities.push_back(e);
 		return e;
 	}
 
 	void World::destroyEntity(Entity e) {
 		destroyedEntities.push_back(e);
-	}
-
-	Entity World::getEntity(std::string tag) const {
-		return getEntityManager().getEntityByTag(tag);
-	}
-
-	std::vector<Entity> World::getGroup(std::string group) const {
-		return getEntityManager().getEntityGroup(group);
 	}
 
 	Univers &World::getUnivers() const {

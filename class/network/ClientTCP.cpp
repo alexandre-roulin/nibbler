@@ -8,7 +8,7 @@
 #include "ClientTCP.hpp"
 #include <gui/Core.hpp>
 #include <exception>
-
+#include <events/NextFrame.hpp>
 int const ClientTCP::size_header[] = {
 		[CHAT] = SIZEOF_CHAT_PCKT,
 		[FOOD] = sizeof(FoodInfo),
@@ -20,7 +20,8 @@ int const ClientTCP::size_header[] = {
 		[HEADER] = sizeof(eHeader),
 		[INPUT] = sizeof(InputInfo),
 		[RESIZE_MAP] = sizeof(unsigned int),
-		[REMOVE_SNAKE] = sizeof(int16_t)
+		[REMOVE_SNAKE] = sizeof(int16_t),
+		[POCK] = sizeof(char)
 };
 
 ClientTCP::ClientTCP(::Univers &univers, boost::asio::io_service &io)
@@ -163,12 +164,10 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 			break;
 		}
 		case SNAKE_ARRAY: {
-			log_info("eHeader::SNAKE_ARRAY");
-			std::memcpy(snake_array, input, sizeof(Snake) * MAX_SNAKE);
+			std::memcpy(snake_array, input, len);
 			break;
 		}
 		case SNAKE: {
-			log_info("eHeader::SNAKE");
 
 			Snake snake_temp;
 
@@ -217,9 +216,9 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 			StartInfo st;
 			std::memcpy(&st, input, ClientTCP::size_header[START_GAME]);
 			factory.create_all_snake(snake_array, st.nu);
-			univers.getWorld_().getEventManager().emitEvent<StartEvent>(st.time_duration);
-		}
+			univers.getWorld_().getEventsManager().emitEvent<StartEvent>(st.time_duration);
 			break;
+		}
 		case INPUT: {
 
 			InputInfo ii;
@@ -227,8 +226,8 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 			mu.lock();
 			joystickEvents.push_back(JoystickEvent(ii.id, ii.dir));
 			mu.unlock();
-		}
 			break;
+		}
 		case RESIZE_MAP: {
 			log_info("eHeader::RESIZE_MAP");
 
@@ -236,8 +235,11 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 			std::memcpy(&buffer, input, ClientTCP::size_header[RESIZE_MAP]);
 			univers.setMapSize(buffer);
 			univers.playNoise(eSound::RESIZE_MAP);
-		}
 			break;
+		}
+		case POCK: {
+			univers.getWorld_().getEventsManager().emitEvent<NextFrame>();
+		}
 		default:
 			break;
 	}
@@ -247,12 +249,12 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 void ClientTCP::deliverEvents() {
 	mu.lock();
 	for (auto foodCreation : foodCreations) {
-		univers.getWorld_().getEventManager().emitEvent(foodCreation);
+		univers.getWorld_().getEventsManager().emitEvent(foodCreation);
 	}
-	for (auto joystickEvent : joystickEvents) {
-		univers.getWorld_().getEventManager().emitEvent(joystickEvent);
-	}
-	joystickEvents.clear();
+//	for (auto joystickEvent : joystickEvents) {
+//		univers.getWorld_().getEventsManager().emitEvent(joystickEvent);
+//	}
+//	joystickEvents.clear();
 	foodCreations.clear();
 	mu.unlock();
 }
@@ -282,4 +284,10 @@ Snake const *ClientTCP::getSnakes() const {
 Snake	const &ClientTCP::getSnake(void) const {
 	std::cout << this->snake_array[this->id_] << std::endl;
 	return this->snake_array[this->id_];
+}
+
+std::string ClientTCP::add_prefix(eHeader header) {
+	std::string message;
+	message.append(reinterpret_cast<char *>(&header), sizeof(eHeader));
+	return message;
 }

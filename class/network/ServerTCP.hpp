@@ -12,7 +12,9 @@
 #include <boost/thread/thread.hpp>
 #include <nibbler.hpp>
 #include <Univers.hpp>
+#include "ClientTCP.hpp"
 
+#define DATA '#'
 
 using boost::asio::ip::tcp;
 
@@ -77,7 +79,8 @@ private:
 	int16_t nu_;
 	Snake snake_array[MAX_SNAKE];
 	unsigned int	mapSize;
-
+	std::vector<ClientTCP::FoodInfo> foodInfoArray;
+	std::mutex mutex;
 	void start_accept();
 
 	std::vector<TCPConnection::pointer> pointers;

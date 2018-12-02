@@ -9,11 +9,11 @@
 #include <events/FoodEat.hpp>
 
 void FoodEatSystem::update() {
-	auto events = getWorld().getEventManager().getEvents<FoodEat>();
+	auto events = getWorld().getEventsManager().getEvents<FoodEat>();
 
 	for (auto &event : events) {
-		auto entityTail = getWorld().getEntityManager()
-				.getEntityByTag(Factory::factory_name(TAIL, event.id_));
+		auto entityTail = getWorld().getEntitiesManager()
+				.getEntityByTagId(event.id_ + eTag::TAIL_TAG);
 		auto newEntity = getWorld().createEntity();
 
 // Position == entityTail.positionComponent
@@ -27,16 +27,15 @@ void FoodEatSystem::update() {
 
 
 // NEW : Make TO_direction
-		newEntity.addComponent<SpriteComponent>(
-				getWorld().getEntityManager().getEntity(
-						entityTail.getComponent<FollowComponent>().idFollowed).getComponent<SpriteComponent>());
+		auto entity = getWorld().getEntitiesManager().getEntityById(
+				entityTail.getComponent<FollowComponent>().idFollowed);
+		newEntity.addComponent<SpriteComponent>(entity.getComponent<SpriteComponent>());
 
 		auto &followComponent = entityTail.getComponent<FollowComponent>();
-		followComponent.idFollowed = newEntity.getIndex();
+		followComponent.idFollowed = newEntity.getId();
 		followComponent.skip = true;
 
-		newEntity.tag(Factory::factory_name(BODY, newEntity.getIndex()));
-		newEntity.group(entityTail.getGroup());
+		newEntity.groupEntityByGroupId(entityTail.getGroupIdByEntity());
 
 	}
 

@@ -1,7 +1,7 @@
 #pragma once
 
 
-#include <KINU/System.hpp>
+#include <KINU/SystemsManager.hpp>
 #include "nibbler.hpp"
 
 class PositionComponent;

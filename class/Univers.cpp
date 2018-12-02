@@ -8,11 +8,10 @@
 #include <systems/SpriteSystem.hpp>
 #include <systems/RenderSystem.hpp>
 #include <network/ServerTCP.hpp>
-#include <dlfcn.h>
-#include <logger.h>
-#include <SFML/System.hpp>
 #include <systems/FoodEatSystem.hpp>
-
+#include <events/NextFrame.hpp>
+#include <events/FoodEat.hpp>
+#include <dlfcn.h>
 
 Univers::Univers()
 		: timer_start(boost::asio::deadline_timer(io_start)),
@@ -20,7 +19,7 @@ Univers::Univers()
 												 boost::posix_time::milliseconds(
 														 100))),
 		  mapSize(MAP_MIN),
-		  gameSpeed(80),
+		  gameSpeed(120),
 		  dlHandleDisplay(nullptr),
 		  dlHandleSound(nullptr),
 		  display(nullptr),
@@ -33,9 +32,10 @@ Univers::Univers()
 	serverTCP_ = nullptr;
 }
 
-bool Univers::load_external_sound_library(std::string const &title, std::string const &library_path) {
+bool Univers::load_external_sound_library(std::string const &title,
+										  std::string const &library_path) {
 	if (sound != nullptr && dlHandleSound != nullptr) {
-		if(deleteSound) {
+		if (deleteSound) {
 			deleteSound(sound);
 			deleteSound = nullptr;
 			newSound = nullptr;
@@ -51,15 +51,16 @@ bool Univers::load_external_sound_library(std::string const &title, std::string 
 		return (dlError());
 
 	if (!(deleteSound = reinterpret_cast<void (*)(
-			ISound * )>(dlsym(dlHandleSound, "deleteSound"))))
+			ISound *)>(dlsym(dlHandleSound, "deleteSound"))))
 		return (dlError());
 	return (sound = newSound(library_path.c_str())) != nullptr;
 }
 
-bool Univers::load_external_display_library(std::string const &title, std::string const &library_path) {
+bool Univers::load_external_display_library(std::string const &title,
+											std::string const &library_path) {
 
 	if (display != nullptr && dlHandleDisplay != nullptr) {
-		if(deleteDisplay) {
+		if (deleteDisplay) {
 			deleteDisplay(display);
 			deleteDisplay = nullptr;
 			newDisplay = nullptr;
@@ -67,7 +68,8 @@ bool Univers::load_external_display_library(std::string const &title, std::strin
 		dlclose(dlHandleDisplay);
 	}
 
-	if (!(dlHandleDisplay = dlopen(library_path.c_str(), RTLD_LAZY | RTLD_LOCAL)))
+	if (!(dlHandleDisplay = dlopen(library_path.c_str(),
+								   RTLD_LAZY | RTLD_LOCAL)))
 		return (dlError());
 
 	if (!(newDisplay = reinterpret_cast<IDisplay *(*)(
@@ -96,16 +98,31 @@ bool Univers::load_external_display_library(std::string const &title, std::strin
 
 void Univers::manage_input() {
 	ClientTCP::InputInfo inputInfo;
-	inputInfo.id = clientTCP_->getId();
-	inputInfo.dir = display->getDirection();
-	if (world_->getEntityManager().hasTag(Factory::factory_name(HEAD, inputInfo.id)))
-		clientTCP_->write_socket(ClientTCP::add_prefix(INPUT, &inputInfo));
+
+
+//	inputInfo.id = clientTCP_->getId();
+//	inputInfo.dir = display->getDirection();
+//
+//	if (world_->getEntitiesManager().hasEntityByTagId(eTag::HEAD_TAG + inputInfo.id))
+//		clientTCP_->write_socket(ClientTCP::add_prefix(INPUT, &inputInfo));
+	if (clientTCP_->getId() == 0) {
+		inputInfo.id = 0;
+		inputInfo.dir = display->getDirection();
+
+		if (world_->getEntitiesManager().hasEntityByTagId(
+				eTag::HEAD_TAG + inputInfo.id))
+			clientTCP_->write_socket(ClientTCP::add_prefix(INPUT, &inputInfo));
+		inputInfo.id = 1;
+		if (world_->getEntitiesManager().hasEntityByTagId(
+				eTag::HEAD_TAG + inputInfo.id))
+			clientTCP_->write_socket(ClientTCP::add_prefix(INPUT, &inputInfo));
+	}
 }
 
 void Univers::manage_start() {
 	ClientTCP::StartInfo startInfo;
 	std::vector<StartEvent> startEvent;
-	for (; startEvent.empty(); startEvent = world_->getEventManager().getEvents<StartEvent>());
+	for (; startEvent.empty(); startEvent = world_->getEventsManager().getEvents<StartEvent>());
 	auto ptime = startEvent.front().start_time;
 	timer_start.expires_at(ptime);
 	io_start.run();
@@ -116,17 +133,17 @@ void Univers::manage_start() {
 
 void Univers::loop() {
 
-	world_->getSystemManager().addSystem<CollisionSystem>();
-	world_->getSystemManager().addSystem<FollowSystem>();
-	world_->getSystemManager().addSystem<JoystickSystem>();
-	world_->getSystemManager().addSystem<MotionSystem>();
-	world_->getSystemManager().addSystem<SpriteSystem>();
-	world_->getSystemManager().addSystem<RenderSystem>();
-	world_->getSystemManager().addSystem<FoodCreationSystem>();
-	world_->getSystemManager().addSystem<FoodEatSystem>();
+	world_->getSystemsManager().addSystem<CollisionSystem>();
+	world_->getSystemsManager().addSystem<FollowSystem>();
+	world_->getSystemsManager().addSystem<JoystickSystem>();
+	world_->getSystemsManager().addSystem<MotionSystem>();
+	world_->getSystemsManager().addSystem<SpriteSystem>();
+	world_->getSystemsManager().addSystem<RenderSystem>();
+	world_->getSystemsManager().addSystem<FoodCreationSystem>();
+	world_->getSystemsManager().addSystem<FoodEatSystem>();
 
-	world_->getEventManager().emitEvent<StartEvent>();
-	world_->getEventManager().destroyEvents();
+	world_->getEventsManager().emitEvent<StartEvent>();
+	world_->getEventsManager().destroyEvents();
 	manage_start();
 	log_success("Univers::loop");
 
@@ -140,29 +157,37 @@ void Univers::loop() {
 	while (display == nullptr || !display->exit()) {
 		if (display != nullptr) {
 			display->update();
-			manage_input();
-			display->drawGrid(world_->grid);
+			display->drawGrid(world_->grid); //TODO REFRESH WITH CACHE
 			display->render();
 		}
 	}
 }
 
-using namespace std::chrono; // TODO REMOVE
-
 void Univers::loop_world() {
+
+
+	// SEND DIRECTION
+	manage_input();
+
+	// GET REFRESH DATA
+	for (; world_->getEventsManager().getEvents<NextFrame>().empty(););
+	world_->getEventsManager().destroy<NextFrame>();
 
 	clientTCP_->deliverEvents();
 
-	world_->getSystemManager().getSystem<FollowSystem>().update();
-	world_->getSystemManager().getSystem<JoystickSystem>().update();
-	world_->getSystemManager().getSystem<MotionSystem>().update();
-	world_->getSystemManager().getSystem<CollisionSystem>().update();
-	world_->getSystemManager().getSystem<FoodCreationSystem>().update();
-	world_->getSystemManager().getSystem<SpriteSystem>().update();
-	world_->getSystemManager().getSystem<RenderSystem>().update();
-	world_->getSystemManager().getSystem<FoodEatSystem>().update();
-
 	world_->update();
+
+	world_->getSystemsManager().getSystem<FollowSystem>().update();
+	world_->getSystemsManager().getSystem<JoystickSystem>().update();
+	world_->getEventsManager().destroy<JoystickEvent>();
+	world_->getSystemsManager().getSystem<MotionSystem>().update();
+	world_->getSystemsManager().getSystem<CollisionSystem>().update();
+	world_->getSystemsManager().getSystem<FoodCreationSystem>().update();
+	world_->getEventsManager().destroy<FoodCreation>();
+	world_->getSystemsManager().getSystem<SpriteSystem>().update();
+	world_->getSystemsManager().getSystem<RenderSystem>().update();
+	world_->getSystemsManager().getSystem<FoodEatSystem>().update();
+	world_->getEventsManager().destroy<FoodEat>();
 
 	timer_loop.expires_at(
 			timer_loop.expires_at() +
@@ -192,6 +217,7 @@ KINU::World &Univers::getWorld_() const {
 ClientTCP &Univers::getClientTCP_() const {
 	return *clientTCP_;
 }
+
 ServerTCP &Univers::getServerTCP_() const {
 	return *serverTCP_;
 }
@@ -201,24 +227,25 @@ ISound &Univers::getSound() const {
 }
 
 
-void	Univers::playNoise(int i) const {
+void Univers::playNoise(int i) const {
 	if (sound && flag.test(eFlag::SOUND))
 		sound->playNoise(i);
 }
-void	Univers::playNoise(eSound e) const {
+
+void Univers::playNoise(eSound e) const {
 	if (sound && flag.test(eFlag::SOUND))
 		sound->playNoise(static_cast<int>(e));
 }
-void	Univers::playMusic(std::string const &path) const {
-	if (sound && flag.test(eFlag::SOUND))
-	{
+
+void Univers::playMusic(std::string const &path) const {
+	if (sound && flag.test(eFlag::SOUND)) {
 		sound->setMusic(path.c_str());
 		sound->playMusic();
 	}
 }
-void	Univers::playMusic(char *path) const {
-	if (sound && flag.test(eFlag::SOUND))
-	{
+
+void Univers::playMusic(char *path) const {
+	if (sound && flag.test(eFlag::SOUND)) {
 		sound->setMusic(path);
 		sound->playMusic();
 	}
@@ -227,9 +254,11 @@ void	Univers::playMusic(char *path) const {
 Core &Univers::getCore_() const {
 	return *core_;
 }
+
 Core *Univers::releaseCore_() {
 	return (core_.release());
 }
+
 unsigned int &Univers::getMapSize() {
 	return mapSize;
 }
@@ -237,6 +266,7 @@ unsigned int &Univers::getMapSize() {
 void Univers::setFlag(eFlag flag) {
 	this->flag.set(flag);
 }
+
 void Univers::unsetFlag(eFlag flag) {
 	this->flag.reset(flag);
 }

@@ -1,13 +1,11 @@
 #include <component/CollisionComponent.hpp>
 #include "FoodCreationSystem.hpp"
 #include <KINU/World.hpp>
-#include <events/FoodEat.hpp>
 #include <component/FollowComponent.hpp>
 #include <component/SpriteComponent.hpp>
-#include <factory/Factory.hpp>
-#include <network/ClientTCP.hpp>
 #include <systems/SpriteSystem.hpp>
 #include <logger.h>
+#include <events/FoodCreation.hpp>
 
 FoodCreationSystem::FoodCreationSystem() {
 	requireComponent<FollowComponent>();
@@ -16,14 +14,14 @@ FoodCreationSystem::FoodCreationSystem() {
 
 void FoodCreationSystem::update() {
 
-	auto foodCreationEvents = getWorld().getEventManager().getEvents<FoodCreation>();
+	auto foodCreationEvents = getWorld().getEventsManager().getEvents<FoodCreation>();
 	for (auto foodCreationEvent : foodCreationEvents) {
 		log_info("FoodCreationSystem:: x[%d] y[%d]", foodCreationEvent.positionComponent_.x, foodCreationEvent.positionComponent_.y);
 		auto food = getWorld().createEntity();
 		food.addComponent(foodCreationEvent.positionComponent_);
 		food.addComponent<CollisionComponent>();
 		food.addComponent<SpriteComponent>(eSprite::FOOD, NO_PRIORITY);
-		food.group((foodCreationEvent.fromSnake_ ? FOOD_TAG_FROM_SNAKE : FOOD_TAG));
+		food.groupEntityByGroupId((foodCreationEvent.fromSnake_ ? eTag::FOOD_TAG_FROM_SNAKE : eTag::FOOD_TAG));
 	}
 }
 

@@ -4,8 +4,8 @@
 #include <KINU/Entity.hpp>
 class FoodEat {
 public:
-	explicit FoodEat(KINU::Entity::Id id = 0);
-	KINU::Entity::Id id_;
+	explicit FoodEat(KINU::Entity::ID id = 0);
+	KINU::Entity::ID id_;
 };
 
 

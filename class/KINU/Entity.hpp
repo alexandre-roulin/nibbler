@@ -1,80 +1,65 @@
 #pragma once
 
-#include "Config.hpp"
+#include <cstdint>
+#include <deque>
+#include <vector>
 #include "Component.hpp"
 #include "Pool.hpp"
-#include <vector>
-#include <deque>
+#include <map>
 #include <unordered_map>
-#include <set>
-#include <memory>
-#include <string>
-#include <cstdint>
-#include <ostream>
-#include <iostream>
+#include <logger.h>
 
-  namespace KINU {
+namespace KINU {
 
 	class World;
 
-	class EntityManager;
+	class EntitiesManager;
 
-// Basically just an id.
+	using TagId = int16_t;
+
 	class Entity {
 	public:
-		using Id = uint32_t;
-		using Version = uint8_t;
+		using ID = uint16_t;
 
-		/*
-			Id = index + version (kinda).
-		*/
-		Entity(Id index = 0, Version version = 0) {
-			id = (version << IndexBits) | index;
-		}
+		Entity();
 
-		Entity(const Entity &) = default;
+		bool operator==(const Entity &rhs) const;
 
-		Entity &operator=(const Entity &) = default;
+		bool operator!=(const Entity &rhs) const;
 
-		/*
-			Comparison operators.
-		*/
-		bool operator==(const Entity &e) const {
-			return getIndex() == e.getIndex();
-		}
+		ID getId() const;
 
-		bool operator!=(const Entity &e) const {
-			return getIndex() != e.getIndex();
-		}
+		/** Kill Management**/
 
-		bool operator<(const Entity &e) const {
-			return getIndex() < e.getIndex();
-		}
-
-		/*
-			Returns the index part of the id.
-		*/
-		Id getIndex() const { return id & IndexMask; }
-
-		/*
-			Returns the version part of the id.
-		*/
-		Version getVersion() const { return (id >> IndexBits) & VersionMask; }
-
-		/*
-			Kills the entity (destroyed when the world updates).
-		*/
 		void kill();
 
 		void killGroup();
-		/*
-			Checks whether the entity is still alive.
-		*/
-		bool isAlive() const;
 
-		/*
-			Component management.
-		*/
+		/** Tag Management **/
+
+		// Tag entity with tag id
+		void tagByTagId(TagId);
+
+		// Check if entity has any tag id
+		bool hasTagId() const;
+
+		// Getter tag id by entity
+		TagId getTagId();
+
+
+		/** Group Management **/
+
+		// Group entity by tag id
+		void groupEntityByGroupId(TagId);
+
+		// Check if entity has any group id
+		bool hasGroupId() const;
+
+		// get group id of possible group entity
+		TagId getGroupIdByEntity();
+
+		/** Component Management **/
+
 		template<typename T>
 		void addComponent(T component);
 
@@ -90,214 +75,198 @@
 		template<typename T>
 		T &getComponent() const;
 
-		/*
-			Tags the entity.
-		*/
-		void tag(std::string tag);
+	private:
+		friend class EntitiesManager;
 
-		bool hasTag(std::string tag) const;
+		Entity(Entity::ID);
 
-
-		std::string getTag() const;
-		/*
-			Adds the entity to a certain group.
-		*/
-		void group(std::string group);
-
-		std::string getGroup() const;
-
-		bool hasGroup(std::string group) const;
-
-		/*
-			Returns a string of the entity (id + version).
-		*/
-		std::string toString() const;
+	public:
+		EntitiesManager &getEntitiesManager_() const;
 
 	private:
-		EntityManager &getEntityManager() const;
 
-		static const uint32_t IndexBits = INDEX_BITS;
-		static const uint32_t IndexMask = (1 << IndexBits) - 1;
-		static const uint32_t VersionBits = VERSION_BITS;
-		static const uint32_t VersionMask = (1 << VersionBits) - 1;
-
-		// Id = index + version (kinda).
-		Id id;
-
-		EntityManager *entityManager = nullptr;
-
-		friend class EntityManager;
+		Entity::ID id_;
+		EntitiesManager *entitiesManager_;
 	};
 
-	class EntityManager {
+	class EntitiesManager {
 	public:
-		EntityManager(World &world);
+		EntitiesManager(World &world);
 
-		/*
-			Entity management.
-		*/
+
+		/** Constructor && Destructor**/
 		Entity createEntity();
 
-		void destroyEntity(Entity e);
+		void destroyEntity(Entity);
 
-		void killEntity(Entity e);
+		/** ComponentMask **/
 
-		bool isEntityAlive(Entity e) const;
+		ComponentMask &getComponentMask(Entity);
 
-		Entity getEntity(Entity::Id index);
+		/** Kill Management**/
 
-		std::string getGroupOfEntity(Entity entity) const;
-		std::string getTagOfEntity(Entity entity) const;
+		void killEntity(Entity);
 
-		void killEntitiesGroup(std::string group);
+		void killGroupEntity(Entity);
 
-		/*
-			Component management.
-		*/
+		/** ID Management **/
+
+		bool hasEntityById(Entity::ID);
+
+		Entity getEntityById(Entity::ID);
+
+		/** Tag Management **/
+
+		// Getter entity by tag id
+		Entity getEntityByTagId(TagId);
+
+		// Check if there is any entity tag by tag id
+		bool hasEntityByTagId(TagId) const;
+
+		// Tag entity with tag id
+		void tagEntityByTagId(Entity, TagId);
+
+		// Check if entity has any tag id
+		bool hasTagIdByEntity(Entity) const;
+
+		// Getter tag id by entity
+		TagId getTagIdByEntity(Entity);
+
+		/** Group Management **/
+
+		// Getter group entities by tag id
+		std::vector<Entity>
+		getEntitiesByGroupId(TagId);
+
+		// Check if there is any group with tag id
+		bool hasEntitiesGroupId(TagId) const;
+
+		// Group entity by tag id
+		void groupEntityByGroupId(Entity, TagId);
+
+		// Check if entity has any group id
+		bool hasGroupIdByEntity(Entity) const;
+
+		// get group id of possible group entity
+		TagId getGroupIdByEntity(Entity);
+
+		/** Component Management **/
+
 		template<typename T>
-		void addComponent(Entity e, T component);
+		void addComponent(Entity, T component);
 
 		template<typename T, typename ... Args>
 		void addComponent(Entity e, Args &&... args);
 
 		template<typename T>
-		void removeComponent(Entity e);
+		void removeComponent(Entity);
 
 		template<typename T>
-		bool hasComponent(Entity e) const;
+		bool hasComponent(Entity) const;
 
 		template<typename T>
-		T &getComponent(Entity e) const;
+		T &getComponent(Entity) const;
 
-		const ComponentMask &getComponentMask(Entity e) const;
-
-		/*
-			Tag management.
-		*/
-		void tagEntity(Entity e, std::string tag);
-
-		bool hasTag(std::string tag) const;
-
-		bool hasTaggedEntity(std::string tag, Entity e) const;
-
-		Entity getEntityByTag(std::string tag);
-
-		int getTagCount() const;
-
-		/*
-			Group management.
-		*/
-		void groupEntity(Entity e, std::string group);
-
-		bool hasGroup(std::string group) const;
-
-		bool hasEntityInGroup(std::string group, Entity e) const;
-
-		std::vector<Entity> getEntityGroup(std::string group);
-
-		int getGroupCount() const;
-
-		int getEntityGroupCount(std::string group);
-
-	private:
 		template<typename T>
 		std::shared_ptr<Pool<T>> accommodateComponent();
 
-		// minimum amount of free indices before we reuse one
-		const std::uint32_t MinimumFreeIds = MINIMUM_FREE_IDS;
+	private:
+		//Group variable
+		std::unordered_map<Entity::ID, TagId> groupedEntityId; // Entity::ID = PlayerID
+		std::unordered_map<TagId, std::vector<Entity>> groupedEntities; // [PlayerID] = std::vector<Entity::ID>{0, 1, 2, ...}
 
-		// deque of free entity indices
-		std::deque<Entity::Id> freeIds;
+		//Tag variable
+		std::unordered_map<Entity::ID, TagId> taggedEntityId; // Entity::ID = PlayerID
+		std::unordered_map<TagId, Entity> taggedEntities; // [PlayerID] = Entity::ID
 
-		// vector of versions (index = entity index)
-		std::vector<Entity::Version> versions;
+		// Id variable
+		Entity::ID nextId; // next slot available
+		std::deque<Entity::ID> freeIds; // freeIds slots
 
-		// vector of component pools, each pool contains all the data for a certain component type
-		// vector index = component id, pool index = entity id
+		// ComponentMask Pool
+		std::vector<ComponentMask> componentMasks; // [Entity::ID] = Mask
+
+		// Component Pool
 		std::vector<std::shared_ptr<AbstractPool>> componentPools;
 
-		// vector of component masks, each mask lets us know which components are turned "on" for a specific entity
-		// vector index = entity id, each bit set to 1 means that the entity has that component
-		std::vector<ComponentMask> componentMasks;
+		// Entity pool
+		std::vector<Entity::ID> validId;
 
-		// maps a tag to an entity
-		std::unordered_map<std::string, Entity> taggedEntities;
-		std::unordered_map<Entity::Id, std::string> entityTags;
-
-		// maps a tag to a group of entities
-		std::unordered_map<std::string, std::set<Entity>> groupedEntities;
-		std::unordered_map<Entity::Id, std::string> entityGroups;
-
-		World &world;
+		World &world_;
 	};
+
+	/** Component Management from Entity **/
 
 	template<typename T>
 	void Entity::addComponent(T component) {
-		getEntityManager().addComponent<T>(*this, component);
+		getEntitiesManager_().addComponent<T>(*this, component);
 	}
 
-	template<typename T, typename ... Args>
+	template<typename T, typename... Args>
 	void Entity::addComponent(Args &&... args) {
-		getEntityManager().addComponent<T>(*this, std::forward<Args>(args)...);
+		getEntitiesManager_().addComponent<T>(*this, std::forward<Args>(args)...);
 	}
 
 	template<typename T>
 	void Entity::removeComponent() {
-		getEntityManager().removeComponent<T>(*this);
+		getEntitiesManager_().removeComponent<T>(*this);
 	}
 
 	template<typename T>
 	bool Entity::hasComponent() const {
-		return getEntityManager().hasComponent<T>(*this);
+		return getEntitiesManager_().hasComponent<T>(*this);
 	}
 
 	template<typename T>
 	T &Entity::getComponent() const {
-		return getEntityManager().getComponent<T>(*this);
+		return getEntitiesManager_().getComponent<T>(*this);
 	}
+	/** Component Management from EntitiesManager **/
 
 	template<typename T>
-	void EntityManager::addComponent(Entity e, T component) {
+	void EntitiesManager::addComponent(Entity entity, T component) {
 		const auto componentId = Component<T>::getId();
-		const auto entityId = e.getIndex();
+		const auto entityId = entity.getId();
 		std::shared_ptr<Pool<T>> componentPool = accommodateComponent<T>();
 
 		if (entityId >= componentPool->getSize()) {
-			componentPool->resize(entityId + DEFAULT_POOL_SIZE);
+			componentPool->resize(entityId + DEFAULT_POOL_SIZE_COMPONENT);
 		}
 
 		componentPool->set(entityId, component);
 		componentMasks[entityId].set(componentId);
 	}
 
-	template<typename T, typename ... Args>
-	void EntityManager::addComponent(Entity e, Args &&... args) {
+	template<typename T, typename... Args>
+	void EntitiesManager::addComponent(Entity entity, Args &&... args) {
 		T component(std::forward<Args>(args) ...);
-		addComponent<T>(e, component);
+		addComponent<T>(entity, component);
 	}
 
+
 	template<typename T>
-	void EntityManager::removeComponent(Entity e) {
+	void EntitiesManager::removeComponent(Entity entity) {
 		const auto componentId = Component<T>::getId();
-		const auto entityId = e.getIndex();
+		const auto entityId = entity.getId();
 		assert(entityId < componentMasks.size());
 		componentMasks[entityId].set(componentId, false);
+
 	}
 
 	template<typename T>
-	bool EntityManager::hasComponent(Entity e) const {
+	bool EntitiesManager::hasComponent(Entity entity) const {
 		const auto componentId = Component<T>::getId();
-		const auto entityId = e.getIndex();
+		const auto entityId = entity.getId();
 		assert(entityId < componentMasks.size());
 		return componentMasks[entityId].test(componentId);
 	}
 
 	template<typename T>
-	T &EntityManager::getComponent(Entity e) const {
+	T &EntitiesManager::getComponent(Entity entity) const {
 		const auto componentId = Component<T>::getId();
-		const auto entityId = e.getIndex();
+		const auto entityId = entity.getId();
 
-		assert(hasComponent<T>(e));
+		assert(hasComponent<T>(entity));
 		assert(componentId < componentPools.size());
 		auto componentPool = std::static_pointer_cast<Pool<T>>(
 				componentPools[componentId]);
@@ -308,19 +277,22 @@
 	}
 
 	template<typename T>
-	std::shared_ptr<Pool<T>> EntityManager::accommodateComponent() {
-		const auto componentId = Component<T>::getId();
+	std::shared_ptr<Pool<T>> EntitiesManager::accommodateComponent() {
+		auto const componentId = Component<T>::getId();
 
 		if (componentId >= componentPools.size()) {
 			componentPools.resize(componentId + 1, nullptr);
 		}
 
 		if (!componentPools[componentId]) {
-			std::shared_ptr<Pool<T>> pool(new Pool<T>());
+			std::shared_ptr<Pool<T>> pool(new Pool<T>(DEFAULT_POOL_SIZE_COMPONENT));
 			componentPools[componentId] = pool;
 		}
 
-		return std::static_pointer_cast<Pool<T>>(componentPools[componentId]);
+		return std::static_pointer_cast<Pool<T>>(
+				componentPools[componentId]);
 	}
+
+
 
 }

@@ -1,4 +1,4 @@
 #include "FoodEat.hpp"
 
-FoodEat::FoodEat(KINU::Entity::Id id) : id_(id){
+FoodEat::FoodEat(KINU::Entity::ID id) : id_(id){
 }

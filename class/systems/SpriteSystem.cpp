@@ -32,7 +32,6 @@ void SpriteSystem::update() {
 	PositionComponent followPosition, positionComponentFollowed;
 
 	for (auto &entity : getEntities()) {
-		if (entity.isAlive()) {
 			auto &positionComponent = entity.getComponent<PositionComponent>();
 			auto &spriteComponent = entity.getComponent<SpriteComponent>();
 
@@ -40,18 +39,16 @@ void SpriteSystem::update() {
 															   (eSprite::MASK_DIRECTION |
 																eSprite::MASK_FROM |
 																eSprite::MASK_TO));
-		}
 	}
 
 	for (auto &entity : getEntities()) {
 		followComponent = nullptr;
-		if (entity.isAlive()) {
 			auto &positionComponent = entity.getComponent<PositionComponent>();
 			auto &spriteComponent = entity.getComponent<SpriteComponent>();
 
 			if (entity.hasComponent<FollowComponent>()) {
 				followComponent = &entity.getComponent<FollowComponent>();
-				entityFollowed = getWorld().getEntityManager().getEntity(
+				entityFollowed = getWorld().getEntitiesManager().getEntityById(
 						followComponent->idFollowed);
 				positionComponentFollowed = entityFollowed.getComponent<PositionComponent>();
 			}
@@ -81,6 +78,5 @@ void SpriteSystem::update() {
 													   positionComponentFollowed)
 								<< eSprite::BITWISE_FROM);
 			}
-		}
 	}
 }

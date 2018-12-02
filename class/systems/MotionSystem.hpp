@@ -1,7 +1,7 @@
 #pragma once
 
 
-#include <KINU/System.hpp>
+#include <KINU/SystemsManager.hpp>
 
 class MotionSystem : public KINU::System {
 public:

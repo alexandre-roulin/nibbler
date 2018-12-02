@@ -113,6 +113,8 @@ add_executable(${NAME}
         class/component/SpriteComponent.cpp
         class/component/SpriteComponent.hpp
         class/cores/main.cpp
+        class/events/NextFrame.cpp
+        class/events/NextFrame.hpp
         class/events/StartEvent.cpp
         class/events/StartEvent.hpp
         class/events/FoodEat.cpp
@@ -138,20 +140,8 @@ add_executable(${NAME}
         class/gui/Core.cpp
         class/gui/Core.hpp
         class/gui/imgui_demo.cpp
-        class/KINU/Component.cpp
-        class/KINU/Component.hpp
-        class/KINU/Config.hpp
-        class/KINU/Entity.cpp
-        class/KINU/Entity.hpp
-        class/KINU/Event.cpp
-        class/KINU/Event.hpp
-        class/KINU/Pool.hpp
-        class/KINU/System.cpp
-        class/KINU/System.hpp
         class/Univers.cpp
         class/Univers.hpp
-        class/KINU/World.cpp
-        class/KINU/World.hpp
         class/logger/display/logger_debug.cpp
         class/logger/display/logger_error.cpp
         class/logger/display/logger_fatal.cpp
@@ -194,7 +184,7 @@ add_executable(${NAME}
         incs/logger_utils.h
         incs/nibbler.hpp
         incs/stb_image.h
-        class/systems/SpriteSystem.cpp class/systems/SpriteSystem.hpp class/gui/widget/WidgetConnect.cpp class/gui/widget/WidgetConnect.hpp)
+        class/systems/SpriteSystem.cpp class/systems/SpriteSystem.hpp class/gui/widget/WidgetConnect.cpp class/gui/widget/WidgetConnect.hpp class/KINU/Component.cpp class/KINU/Component.hpp class/KINU/Entity.cpp class/KINU/Entity.hpp class/KINU/EventsManager.cpp class/KINU/EventsManager.hpp class/KINU/Pool.hpp class/KINU/SystemsManager.cpp class/KINU/SystemsManager.hpp class/KINU/World.cpp class/KINU/World.hpp class/KINU/Config.hpp)
 
 if (NOT SFML_FOUND OR NOT SFML_INCLUDE_DIR_FOUND)
     add_dependencies(${NAME} SFML)
