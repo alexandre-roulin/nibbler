@@ -148,10 +148,6 @@ void ServerTCP::parse_input(eHeader header, void const *input, size_t len) {
 				}
 			}
 			async_write(ClientTCP::add_prefix(SNAKE_ARRAY, snake_array));
-			log_warn("New Frame with %d food(s)", foodInfoArray.size());
-			for (auto array : foodInfoArray) {
-				 log_debug("Food [%d] [%d]", array.positionComponent.x, array.positionComponent.y);
-			}
 			for (auto infoArray : foodInfoArray) {
 				async_write(ClientTCP::add_prefix(FOOD, &infoArray));
 			}

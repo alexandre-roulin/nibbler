@@ -19,7 +19,7 @@ Univers::Univers()
 												 boost::posix_time::milliseconds(
 														 100))),
 		  mapSize(MAP_MIN),
-		  gameSpeed(120),
+		  gameSpeed(800),
 		  dlHandleDisplay(nullptr),
 		  dlHandleSound(nullptr),
 		  display(nullptr),
