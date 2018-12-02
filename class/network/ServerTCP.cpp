@@ -79,7 +79,6 @@ void ServerTCP::start_game() {
 	ClientTCP::StartInfo startInfo;
 	startInfo.nu = nu_;
 	startInfo.time_duration = boost::posix_time::microsec_clock::universal_time();
-	std::cout << "Start timer in server " << std::endl;
 	int max_food = (nu_ > 1 ? nu_ - 1 : nu_);
 	for (int index = 0; index < max_food; ++index) {
 		std::cout << max_food << std::endl;
@@ -123,11 +122,12 @@ void ServerTCP::parse_input(eHeader header, void const *input, size_t len) {
 			return;
 		}
 		case FOOD: {
+			mutex.lock();
 			log_info("ServerTCP::FOOD");
 			ClientTCP::FoodInfo foodInfo;
 			std::memcpy(&foodInfo, input, len);
 			foodInfoArray.push_back(foodInfo);
-//			async_write(ClientTCP::add_prefix(FOOD, &foodInfo));
+			mutex.unlock();
 			return;
 		}
 		case RESIZE_MAP: {
@@ -148,6 +148,10 @@ void ServerTCP::parse_input(eHeader header, void const *input, size_t len) {
 				}
 			}
 			async_write(ClientTCP::add_prefix(SNAKE_ARRAY, snake_array));
+			log_warn("New Frame with %d food(s)", foodInfoArray.size());
+			for (auto array : foodInfoArray) {
+				 log_debug("Food [%d] [%d]", array.positionComponent.x, array.positionComponent.y);
+			}
 			for (auto infoArray : foodInfoArray) {
 				async_write(ClientTCP::add_prefix(FOOD, &infoArray));
 			}
@@ -160,7 +164,6 @@ void ServerTCP::parse_input(eHeader header, void const *input, size_t len) {
 		default:
 			break;
 	}
-	//std::cout << "ServerTCP::parse_input.size() " << buffer.size() << std::endl;
 	async_write(ClientTCP::add_prefix(header, const_cast<void *>(input)));
 }
 
