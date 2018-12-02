@@ -100,23 +100,23 @@ void Univers::manage_input() {
 	ClientTCP::InputInfo inputInfo;
 
 
-//	inputInfo.id = clientTCP_->getId();
-//	inputInfo.dir = display->getDirection();
-//
-//	if (world_->getEntitiesManager().hasEntityByTagId(eTag::HEAD_TAG + inputInfo.id))
-//		clientTCP_->write_socket(ClientTCP::add_prefix(INPUT, &inputInfo));
-	if (clientTCP_->getId() == 0) {
-		inputInfo.id = 0;
-		inputInfo.dir = display->getDirection();
+	inputInfo.id = clientTCP_->getId();
+	inputInfo.dir = display->getDirection();
 
-		if (world_->getEntitiesManager().hasEntityByTagId(
-				eTag::HEAD_TAG + inputInfo.id))
-			clientTCP_->write_socket(ClientTCP::add_prefix(INPUT, &inputInfo));
-		inputInfo.id = 1;
-		if (world_->getEntitiesManager().hasEntityByTagId(
-				eTag::HEAD_TAG + inputInfo.id))
-			clientTCP_->write_socket(ClientTCP::add_prefix(INPUT, &inputInfo));
-	}
+	if (world_->getEntitiesManager().hasEntityByTagId(eTag::HEAD_TAG + inputInfo.id))
+		clientTCP_->write_socket(ClientTCP::add_prefix(INPUT, &inputInfo));
+//	if (clientTCP_->getId() == 0) {
+//		inputInfo.id = 0;
+//		inputInfo.dir = display->getDirection();
+//
+//		if (world_->getEntitiesManager().hasEntityByTagId(
+//				eTag::HEAD_TAG + inputInfo.id))
+//			clientTCP_->write_socket(ClientTCP::add_prefix(INPUT, &inputInfo));
+//		inputInfo.id = 1;
+//		if (world_->getEntitiesManager().hasEntityByTagId(
+//				eTag::HEAD_TAG + inputInfo.id))
+//			clientTCP_->write_socket(ClientTCP::add_prefix(INPUT, &inputInfo));
+//	}
 }
 
 void Univers::manage_start() {
