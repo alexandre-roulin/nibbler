@@ -11,7 +11,7 @@ CollisionSystem::CollisionSystem() {
 
 
 void CollisionSystem::checkCollision(
-		KINU::Entity &entityHead, KINU::Entity &entityCheck) {
+		KINU::Entity entityHead, KINU::Entity entityCheck) {
 
 	auto &snakePositionComponent = entityHead.getComponent<PositionComponent>();
 	auto &positionComponent = entityCheck.getComponent<PositionComponent>();
@@ -19,46 +19,40 @@ void CollisionSystem::checkCollision(
 	if (snakePositionComponent == positionComponent &&
 		entityHead != entityCheck) {
 		auto &collisionComponent = entityCheck.getComponent<CollisionComponent>();
-		std::string group = entityCheck.getGroup();
-		log_info("[%d][%d][%s]", entityHead.getIndex(), entityCheck.getIndex(),
-				 group.c_str());
-		if (group == FOOD_TAG) {
-			log_info("FoodCollision");
-			
+		KINU::TagId tagId = entityCheck.getGroupIdByEntity();
+
+		if (tagId == eTag::FOOD_TAG) {
+			log_info("FOOD_TAG::FoodCollision");
+
 			getWorld().getUnivers().playNoise(eSound::FOOD);
-			
+
 			entityCheck.kill();
-			getWorld().getEventManager().emitEvent<FoodEat>(
-					Factory::getIdFromTag(entityHead.getTag()));
-			if (getWorld().getUnivers().getClientTCP_().getId() ==
-				std::stoi(entityHead.getTag())) {
+			getWorld().getEventsManager().emitEvent<FoodEat>(entityHead.getGroupIdByEntity());
+
+			if (getWorld().getUnivers().getClientTCP_().getId() == entityHead.getGroupIdByEntity()) {
 				ClientTCP::FoodInfo foodInfo;
-				foodInfo.positionComponent = PositionComponent(rand() % (30 - 2) + 1, rand() % (30 - 2) + 1);
+				foodInfo.positionComponent = PositionComponent(
+						rand() % (30 - 2) + 1, rand() % (30 - 2) + 1);
 				foodInfo.fromSnake = false;
-				getWorld().getUnivers().getClientTCP_().write_socket(ClientTCP::add_prefix(FOOD, &foodInfo));
+				getWorld().getUnivers().getClientTCP_().write_socket(
+						ClientTCP::add_prefix(FOOD, &foodInfo));
 			}
-// else {
-//				ClientTCP::FoodInfo foodInfo;
-//				getWorld().getUnivers().getClientTCP_().write_socket(ClientTCP::add_prefix(FOOD, &foodInfo));
-//			}
-		} else if (group == FOOD_TAG_FROM_SNAKE) {
+		} else if (tagId == eTag::FOOD_TAG_FROM_SNAKE) {
+			log_info("FOOD_TAG_FROM_SNAKE::FoodCollision");
 			getWorld().getUnivers().playNoise(eSound::FOOD);
 			entityCheck.kill();
-			getWorld().getEventManager().emitEvent<FoodEat>(
-					Factory::getIdFromTag(entityHead.getTag()));
-		} else if (group == WALL_TAG) {
-			log_info("WallCollision");
+			getWorld().getEventsManager().emitEvent<FoodEat>(entityHead.getGroupIdByEntity());
+		} else if (tagId == WALL_TAG) {
+			log_info("WALL_TAG::WallCollision");
 			entityHead.killGroup();
-		} else if (entityCheck.getGroup() == entityHead.getGroup()) {
-			log_info("Body||TailCollision");
+		} else if (entityCheck.getGroupIdByEntity() == entityHead.getGroupIdByEntity()) {
+			log_info("HIMSELF::CollisionOnHimself");
 			entityHead.killGroup();
 		} else {
-			log_info("Crash an other Snake called [%s]",
-					 entityHead.getGroup().c_str());
+			log_info("SNAKE::CollisionSnake");
 
-			auto winSnake = getWorld().getEntityManager().getEntityGroup(
-					entityHead.getGroup());
-			for (auto snake : winSnake) {
+			auto appleSnake = getWorld().getEntitiesManager().getEntitiesByGroupId(entityHead.getGroupIdByEntity());
+			for (auto snake : appleSnake) {
 				ClientTCP::FoodInfo foodInfo;
 				foodInfo.positionComponent = snake.getComponent<PositionComponent>();
 				foodInfo.fromSnake = true;
@@ -75,9 +69,11 @@ void CollisionSystem::checkCollision(
 void CollisionSystem::update() {
 	std::vector<KINU::Entity> entities_ = getEntities();
 	auto &world = getWorld();
-	for (auto &entity : getEntities()) {
-		if (Factory::isSnakePart(entity.getTag()) == HEAD) {
-			for (auto &entityCheck : entities_) {
+	for (auto entity : getEntities()) {
+		if (entity.hasTagId() &&
+			entity.getTagId() - entity.getGroupIdByEntity() == eTag::HEAD_TAG) {
+
+			for (auto entityCheck : entities_) {
 				checkCollision(entity, entityCheck);
 			}
 		}

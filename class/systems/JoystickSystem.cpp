@@ -3,24 +3,24 @@
 #include "JoystickSystem.hpp"
 #include <component/JoystickComponent.hpp>
 #include <component/MotionComponent.hpp>
-#include <events/JoystickEvent.hpp>
 #include <network/ClientTCP.hpp>
+
 JoystickSystem::JoystickSystem() {
 	requireComponent<JoystickComponent>();
 	requireComponent<MotionComponent>();
 }
 
 void JoystickSystem::update() {
-	auto events = getWorld().getEventManager().getEvents<JoystickEvent>();
-	log_success("JoystickSystem::update on %d events", events.size());
 	Snake const *snake_array = getWorld().getUnivers().getClientTCP_().getSnakes();
+
 	for (int index = 0; index < MAX_SNAKE; ++index) {
 		if (snake_array[index].id != -1) {
-			if (getWorld().getEntityManager().hasTag(
-					Factory::factory_name(HEAD, snake_array[index].id))) {
-				auto entity = getWorld().getEntityManager().getEntityByTag(
-						Factory::factory_name(HEAD, snake_array[index].id));
-				if (entity.isAlive() && entity.hasComponent<JoystickComponent>()) {
+			if (getWorld().getEntitiesManager().hasEntityByTagId(
+					snake_array[index].id + eTag::HEAD_TAG)) {
+				auto entity = getWorld().getEntitiesManager().
+						getEntityByTagId(
+						snake_array[index].id + eTag::HEAD_TAG);
+				if (entity.hasComponent<JoystickComponent>()) {
 					auto &joystickComponent = entity.getComponent<JoystickComponent>();
 					joystickComponent.direction = snake_array[index].direction;
 				}

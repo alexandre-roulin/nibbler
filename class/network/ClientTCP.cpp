@@ -164,13 +164,10 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 			break;
 		}
 		case SNAKE_ARRAY: {
-			log_info("eHeader::SNAKE_ARRAY Len : %d S*8 %d", len,
-					 sizeof(Snake) * MAX_SNAKE);
 			std::memcpy(snake_array, input, len);
 			break;
 		}
 		case SNAKE: {
-			log_info("eHeader::SNAKE");
 
 			Snake snake_temp;
 
@@ -219,7 +216,7 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 			StartInfo st;
 			std::memcpy(&st, input, ClientTCP::size_header[START_GAME]);
 			factory.create_all_snake(snake_array, st.nu);
-			univers.getWorld_().getEventManager().emitEvent<StartEvent>(st.time_duration);
+			univers.getWorld_().getEventsManager().emitEvent<StartEvent>(st.time_duration);
 			break;
 		}
 		case INPUT: {
@@ -241,8 +238,7 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 			break;
 		}
 		case POCK: {
-			log_info("eHeader::POCK");
-			univers.getWorld_().getEventManager().emitEvent<NextFrame>();
+			univers.getWorld_().getEventsManager().emitEvent<NextFrame>();
 		}
 		default:
 			break;
@@ -253,10 +249,10 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 void ClientTCP::deliverEvents() {
 	mu.lock();
 	for (auto foodCreation : foodCreations) {
-		univers.getWorld_().getEventManager().emitEvent(foodCreation);
+		univers.getWorld_().getEventsManager().emitEvent(foodCreation);
 	}
 //	for (auto joystickEvent : joystickEvents) {
-//		univers.getWorld_().getEventManager().emitEvent(joystickEvent);
+//		univers.getWorld_().getEventsManager().emitEvent(joystickEvent);
 //	}
 //	joystickEvents.clear();
 	foodCreations.clear();

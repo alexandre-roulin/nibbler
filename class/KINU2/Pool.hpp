@@ -18,8 +18,9 @@ namespace KINU {
 	template<typename T>
 	class Pool : public AbstractPool {
 	public:
-		Pool(int size) {
-			resize(size);
+		Pool(int size = DEFAULT_POOL_SIZE) {
+			if (size != 0)
+				resize(size);
 		}
 
 		virtual ~Pool() {}

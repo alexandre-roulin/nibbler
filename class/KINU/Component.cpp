@@ -1,8 +1,9 @@
+#include <cassert>
 #include "Component.hpp"
+#include "Config.hpp"
 
-namespace KINU
-{
+namespace KINU {
 
-BaseComponent::Id BaseComponent::nextId = 0;
+	BaseComponent::ID BaseComponent::nextId = 0;
 
 }

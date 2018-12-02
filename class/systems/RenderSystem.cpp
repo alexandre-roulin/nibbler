@@ -3,6 +3,7 @@
 #include "RenderSystem.hpp"
 #include <component/SpriteComponent.hpp>
 #include <list>
+#include <iostream>
 
 RenderSystem::RenderSystem() {
 	requireComponent<PositionComponent>();
@@ -122,17 +123,10 @@ void RenderSystem::update() {
 
 
 	for (auto &entity : getEntities()) {
-		if (entity.isAlive()) {
-			log_info("RenderSystem:: tag[%s] group[%s] x[%d] y[%d] ",
-					 entity.getTag().c_str(),
-					 entity.getGroup().c_str(),
-					 entity.getComponent<PositionComponent>().x,
-					 entity.getComponent<PositionComponent>().y);
-			renderComponents.push_back(
-					std::pair<PositionComponent &, SpriteComponent &>(
-							entity.getComponent<PositionComponent>(),
-							entity.getComponent<SpriteComponent>()));
-		}
+		renderComponents.push_back(
+				std::pair<PositionComponent &, SpriteComponent &>(
+						entity.getComponent<PositionComponent>(),
+						entity.getComponent<SpriteComponent>()));
 	}
 	renderComponents.sort(
 			[](auto const &renderPair1, auto const &renderPair2) -> bool {
@@ -143,7 +137,7 @@ void RenderSystem::update() {
 	grid.clear();
 	for (auto &renderComponent : renderComponents) {
 
-
+		//TODO chekc x y
 		grid(renderComponent.first.x,
 			 renderComponent.first.y) = RenderSystem::getSpriteSnake_(
 				renderComponent.second.sprite);

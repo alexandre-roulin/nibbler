@@ -108,12 +108,10 @@ void ServerTCP::parse_input(eHeader header, void const *input, size_t len) {
 
 	switch (header) {
 		case SNAKE_ARRAY: {
-			log_info("ServerTCP::SNAKE_ARRAY");
 			std::memcpy(snake_array, input, len);
 			break;
 		}
 		case SNAKE: {
-			log_info("ServerTCP::SNAKE");
 			Snake snake_temp;
 			std::memcpy(&snake_temp, input, sizeof(Snake));
 			assert(snake_temp.id >= 0 && snake_temp.id < MAX_SNAKE);
@@ -121,7 +119,6 @@ void ServerTCP::parse_input(eHeader header, void const *input, size_t len) {
 			break;
 		}
 		case START_GAME: {
-			log_info("ServerTCP::START_GAME");
 			start_game();
 			return;
 		}
@@ -140,7 +137,6 @@ void ServerTCP::parse_input(eHeader header, void const *input, size_t len) {
 		}
 		case INPUT: {
 			mutex.lock();
-			log_info("ServerTCP::INPUT");
 			ClientTCP::InputInfo inputInfo;
 			std::memcpy(&inputInfo, input, len);
 			snake_array[inputInfo.id].direction = inputInfo.dir;
@@ -148,7 +144,6 @@ void ServerTCP::parse_input(eHeader header, void const *input, size_t len) {
 			for (int index = 0; index < nu_; ++index) {
 				if (!snake_array[index].isUpdate) {
 					mutex.unlock();
-					log_info("ServerTCP::INPUT Not updated");
 					return;
 				}
 			}
@@ -159,7 +154,6 @@ void ServerTCP::parse_input(eHeader header, void const *input, size_t len) {
 			foodInfoArray.clear();
 			char data = '#';
 			async_write(ClientTCP::add_prefix(POCK, &data));
-			log_info("ServerTCP::INPUT Updated");
 			mutex.unlock();
 			return;
 		}

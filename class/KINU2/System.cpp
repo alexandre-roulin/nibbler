@@ -26,7 +26,7 @@ World& System::getWorld() const
 
     void SystemManager::addToSystems(Entity e)
 {
-    const auto &entityComponentMask = world.getEntityManager().getComponentMask(e);
+    const auto &entityComponentMask = world.getEntitiesManager().getComponentMask(e);
 
     for (auto &it : systems) {
         auto &system = it.second;

@@ -1,48 +1,29 @@
 #pragma once
 
-#include "Config.hpp"
-#include <bitset>
 #include <cstdint>
-#include <cassert>
+#include <bitset>
+#include "Config.hpp"
 
-namespace KINU
-{
+namespace KINU {
 
-/*
-    Example component:
+	struct BaseComponent {
+	public:
+		using ID = uint8_t;
+	protected:
+		static ID nextId;
+	};
 
-    struct PositionComponent
-    {
-        // important that we have a default constructor (i.e. no args required) in order for the creation of components to work
-        PositionComponent(float x = 0.0f, float y = 0.0f) : x(x), y(y) {}
-        float x, y;
-    };
-*/
+	template <typename T>
+	struct Component : BaseComponent {
+		static ID getId();
+	};
 
-// Used to be able to assign unique ids to each component type.
-struct BaseComponent
-{
-    using Id = uint8_t;
-    static const Id MaxComponents = MAX_COMPONENTS;
-protected:
-    static Id nextId;
-};
+	template<typename T>
+	BaseComponent::ID Component<T>::getId() {
+		static ID id = nextId++;
+		assert(id < eConfig::MAX_COMPONENT);
+		return id;
+	}
 
-// Used to assign a unique id to a component type, we don't really have to make our components derive from this though.
-template <typename T>
-struct Component : BaseComponent
-{
-    // Returns the unique id of Component<T>
-    static Id getId()
-    {
-		std::bitset<8> b;
-        static auto id = nextId++;
-        assert(id < MaxComponents);
-        return id;
-    }
-};
-
-// Used to keep track of which components an entity has and also which entities a system is interested in.
-using ComponentMask = std::bitset<BaseComponent::MaxComponents>;
-
+	using ComponentMask = std::bitset<eConfig::MAX_COMPONENT>;
 }

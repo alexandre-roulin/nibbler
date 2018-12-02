@@ -1,7 +1,7 @@
 #pragma once
 
 
-#include <KINU/System.hpp>
+#include <KINU/SystemsManager.hpp>
 
 class FoodEatSystem : public KINU::System {
 public:

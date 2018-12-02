@@ -12,8 +12,6 @@
 #include <events/NextFrame.hpp>
 #include <events/FoodEat.hpp>
 #include <dlfcn.h>
-#include <network/ClientTCP.hpp>
-#include <logger.h>
 
 Univers::Univers()
 		: timer_start(boost::asio::deadline_timer(io_start)),
@@ -21,7 +19,7 @@ Univers::Univers()
 												 boost::posix_time::milliseconds(
 														 100))),
 		  mapSize(MAP_MIN),
-		  gameSpeed(280),
+		  gameSpeed(120),
 		  dlHandleDisplay(nullptr),
 		  dlHandleSound(nullptr),
 		  display(nullptr),
@@ -100,22 +98,23 @@ bool Univers::load_external_display_library(std::string const &title,
 
 void Univers::manage_input() {
 	ClientTCP::InputInfo inputInfo;
-	inputInfo.id = clientTCP_->getId();
-	inputInfo.dir = display->getDirection();
 
-	if (world_->getEntityManager().hasTag(
-			Factory::factory_name(HEAD, inputInfo.id)))
-		clientTCP_->write_socket(ClientTCP::add_prefix(INPUT, &inputInfo));
-	if (clientTCP_->getId() == 0 && false) {
+
+//	inputInfo.id = clientTCP_->getId();
+//	inputInfo.dir = display->getDirection();
+//
+//	if (world_->getEntitiesManager().hasEntityByTagId(eTag::HEAD_TAG + inputInfo.id))
+//		clientTCP_->write_socket(ClientTCP::add_prefix(INPUT, &inputInfo));
+	if (clientTCP_->getId() == 0) {
 		inputInfo.id = 0;
 		inputInfo.dir = display->getDirection();
 
-		if (world_->getEntityManager().hasTag(
-				Factory::factory_name(HEAD, inputInfo.id)))
+		if (world_->getEntitiesManager().hasEntityByTagId(
+				eTag::HEAD_TAG + inputInfo.id))
 			clientTCP_->write_socket(ClientTCP::add_prefix(INPUT, &inputInfo));
 		inputInfo.id = 1;
-		if (world_->getEntityManager().hasTag(
-				Factory::factory_name(HEAD, inputInfo.id)))
+		if (world_->getEntitiesManager().hasEntityByTagId(
+				eTag::HEAD_TAG + inputInfo.id))
 			clientTCP_->write_socket(ClientTCP::add_prefix(INPUT, &inputInfo));
 	}
 }
@@ -123,7 +122,7 @@ void Univers::manage_input() {
 void Univers::manage_start() {
 	ClientTCP::StartInfo startInfo;
 	std::vector<StartEvent> startEvent;
-	for (; startEvent.empty(); startEvent = world_->getEventManager().getEvents<StartEvent>());
+	for (; startEvent.empty(); startEvent = world_->getEventsManager().getEvents<StartEvent>());
 	auto ptime = startEvent.front().start_time;
 	timer_start.expires_at(ptime);
 	io_start.run();
@@ -134,17 +133,17 @@ void Univers::manage_start() {
 
 void Univers::loop() {
 
-	world_->getSystemManager().addSystem<CollisionSystem>();
-	world_->getSystemManager().addSystem<FollowSystem>();
-	world_->getSystemManager().addSystem<JoystickSystem>();
-	world_->getSystemManager().addSystem<MotionSystem>();
-	world_->getSystemManager().addSystem<SpriteSystem>();
-	world_->getSystemManager().addSystem<RenderSystem>();
-	world_->getSystemManager().addSystem<FoodCreationSystem>();
-	world_->getSystemManager().addSystem<FoodEatSystem>();
+	world_->getSystemsManager().addSystem<CollisionSystem>();
+	world_->getSystemsManager().addSystem<FollowSystem>();
+	world_->getSystemsManager().addSystem<JoystickSystem>();
+	world_->getSystemsManager().addSystem<MotionSystem>();
+	world_->getSystemsManager().addSystem<SpriteSystem>();
+	world_->getSystemsManager().addSystem<RenderSystem>();
+	world_->getSystemsManager().addSystem<FoodCreationSystem>();
+	world_->getSystemsManager().addSystem<FoodEatSystem>();
 
-	world_->getEventManager().emitEvent<StartEvent>();
-	world_->getEventManager().destroyEvents();
+	world_->getEventsManager().emitEvent<StartEvent>();
+	world_->getEventsManager().destroyEvents();
 	manage_start();
 	log_success("Univers::loop");
 
@@ -171,24 +170,24 @@ void Univers::loop_world() {
 	manage_input();
 
 	// GET REFRESH DATA
-	for (; world_->getEventManager().getEvents<NextFrame>().empty(););
-	world_->getEventManager().destroy<NextFrame>();
+	for (; world_->getEventsManager().getEvents<NextFrame>().empty(););
+	world_->getEventsManager().destroy<NextFrame>();
 
 	clientTCP_->deliverEvents();
 
 	world_->update();
 
-	world_->getSystemManager().getSystem<FollowSystem>().update();
-	world_->getSystemManager().getSystem<JoystickSystem>().update();
-	world_->getEventManager().destroy<JoystickEvent>();
-	world_->getSystemManager().getSystem<MotionSystem>().update();
-	world_->getSystemManager().getSystem<CollisionSystem>().update();
-	world_->getSystemManager().getSystem<FoodCreationSystem>().update();
-	world_->getEventManager().destroy<FoodCreation>();
-	world_->getSystemManager().getSystem<SpriteSystem>().update();
-	world_->getSystemManager().getSystem<RenderSystem>().update();
-	world_->getSystemManager().getSystem<FoodEatSystem>().update();
-	world_->getEventManager().destroy<FoodEat>();
+	world_->getSystemsManager().getSystem<FollowSystem>().update();
+	world_->getSystemsManager().getSystem<JoystickSystem>().update();
+	world_->getEventsManager().destroy<JoystickEvent>();
+	world_->getSystemsManager().getSystem<MotionSystem>().update();
+	world_->getSystemsManager().getSystem<CollisionSystem>().update();
+	world_->getSystemsManager().getSystem<FoodCreationSystem>().update();
+	world_->getEventsManager().destroy<FoodCreation>();
+	world_->getSystemsManager().getSystem<SpriteSystem>().update();
+	world_->getSystemsManager().getSystem<RenderSystem>().update();
+	world_->getSystemsManager().getSystem<FoodEatSystem>().update();
+	world_->getEventsManager().destroy<FoodEat>();
 
 	timer_loop.expires_at(
 			timer_loop.expires_at() +

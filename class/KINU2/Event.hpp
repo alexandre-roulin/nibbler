@@ -26,9 +26,9 @@ namespace KINU {
 		}
 	};
 
-	class EventManager {
+	class EventsManager {
 	public:
-		EventManager(World &world) : world(world) {}
+		EventsManager(World &world) : world(world) {}
 
 		template<typename T>
 		void emitEvent(T event);
@@ -54,19 +54,19 @@ namespace KINU {
 	};
 
 	template<typename T>
-	void EventManager::emitEvent(T event) {
+	void EventsManager::emitEvent(T event) {
 		std::shared_ptr<Pool<T>> eventPool = accommodateEvent<T>();
 		eventPool->add(event);
 	}
 
 	template<typename T, typename ... Args>
-	void EventManager::emitEvent(Args &&... args) {
+	void EventsManager::emitEvent(Args &&... args) {
 		T event(std::forward<Args>(args) ...);
 		emitEvent<T>(event);
 	}
 
 	template<typename T>
-	std::shared_ptr<Pool<T>> EventManager::accommodateEvent() {
+	std::shared_ptr<Pool<T>> EventsManager::accommodateEvent() {
 		if (eventPools.find(std::type_index(typeid(T))) == eventPools.end()) {
 			std::shared_ptr<Pool<T>> pool(new Pool<T>(0));
 			eventPools.insert(std::make_pair(std::type_index(typeid(T)), pool));
@@ -77,12 +77,12 @@ namespace KINU {
 	}
 
 	template<typename T>
-	std::vector<T> EventManager::getEvents() {
+	std::vector<T> EventsManager::getEvents() {
 		return accommodateEvent<T>()->getData();
 	}
 
 	template<typename T>
-	void EventManager::destroy() {
+	void EventsManager::destroy() {
 		eventPools[typeid(T)]->clear();
 	}
 }
