@@ -73,7 +73,7 @@ set(FIND_SFML_PATHS
         /opt/csw
         /opt
         $ENV{HOME}/.brew
-
+        /usr/local/Cellar/sfml/2.4.2_1/
         $ENV{HOME}/.brew/lib
         $ENV{HOME}/.brew/
         $ENV{HOME}/.brew/include
