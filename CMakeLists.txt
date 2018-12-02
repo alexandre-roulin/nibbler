@@ -63,6 +63,9 @@ find_package(SDL2_mixer REQUIRED)
 add_subdirectory(cmake/boost-cmake)
 find_package(SFML REQUIRED)
 
+include_directories(${SFML_INCLUDE_DIR})
+message("SFML_INCLUDE_DIR: ${SFML_INCLUDE_DIR}")
+message("SFML_LIBRARIES: ${SFML_LIBRARIES}")
 
 add_subdirectory(imgui)
 add_subdirectory(extern/display_sdl)

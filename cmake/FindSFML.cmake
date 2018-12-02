@@ -72,7 +72,8 @@ set(FIND_SFML_PATHS
         /opt/local
         /opt/csw
         /opt
-        $ENV{HOME}/.brew)
+        $ENV{HOME}/.brew
+        /usr/local/Cellar/sfml/2.4.2_1/)
 
 # find the SFML include directory
 find_path(SFML_INCLUDE_DIR SFML/Config.hpp

@@ -1,0 +1,5 @@
+[ 14%] Built target sfml-system
+[ 23%] Built target sfml-network
+[ 40%] Built target sfml-audio
+[ 74%] Built target sfml-window
+[100%] Built target sfml-graphics
