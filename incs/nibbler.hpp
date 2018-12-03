@@ -199,7 +199,7 @@ struct		Snake
 
 //ADD SIZE IN ClientTCP::size_header
 
-enum eHeader {
+enum class eHeader {
 	CHAT,				//0
 	FOOD,				//1
 	ID,					//2

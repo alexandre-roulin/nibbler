@@ -24,6 +24,8 @@ else()
 endif()
 
 include_directories(Glitter/Headers/
+        include/
+        ../../incs/
         Glitter/Vendor/assimp/include/
         Glitter/Vendor/glad/include/
         Glitter/Vendor/glfw/include/
@@ -31,12 +33,12 @@ include_directories(Glitter/Headers/
         Glitter/Vendor/stb/)
 
 file(GLOB VENDORS_SOURCES Glitter/Vendor/glad/src/glad.c)
-file(GLOB PROJECT_HEADERS Glitter/Headers/*.hpp)
-file(GLOB PROJECT_SOURCES Glitter/Sources/*.cpp)
-file(GLOB PROJECT_SHADERS Glitter/Shaders/*.comp
-        Glitter/Shaders/*.frag
-        Glitter/Shaders/*.geom
-        Glitter/Shaders/*.vert)
+file(GLOB PROJECT_HEADERS src/*.hpp include/*.hpp)
+file(GLOB PROJECT_SOURCES src/*.cpp)
+#file(GLOB PROJECT_SHADERS Glitter/Shaders/*.comp
+##        Glitter/Shaders/*.frag
+ #       Glitter/Shaders/*.geom
+ #       Glitter/Shaders/*.vert)
 file(GLOB PROJECT_CONFIGS CMakeLists.txt
         Readme.md
         .gitattributes
@@ -44,14 +46,15 @@ file(GLOB PROJECT_CONFIGS CMakeLists.txt
         .gitmodules)
 
 source_group("Headers" FILES ${PROJECT_HEADERS})
-source_group("Shaders" FILES ${PROJECT_SHADERS})
+#source_group("Shaders" FILES ${PROJECT_SHADERS})
 source_group("Sources" FILES ${PROJECT_SOURCES})
 source_group("Vendors" FILES ${VENDORS_SOURCES})
 
 add_definitions(-DGLFW_INCLUDE_NONE
         -DPROJECT_SOURCE_DIR=\"${PROJECT_SOURCE_DIR}\")
 add_executable(${PROJECT_NAME} ${PROJECT_SOURCES} ${PROJECT_HEADERS}
-        ${PROJECT_SHADERS} ${PROJECT_CONFIGS}
+        #${PROJECT_SHADERS}
+        ${PROJECT_CONFIGS}
         ${VENDORS_SOURCES})
 target_link_libraries(${PROJECT_NAME} assimp glfw
         ${GLFW_LIBRARIES} ${GLAD_LIBRARIES})
