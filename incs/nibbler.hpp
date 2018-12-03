@@ -126,7 +126,7 @@ inline eSprite operator>>(eSprite const x, eSprite const y) {
 struct		Snake
 {
 	Snake() : sprite(eSprite::BLUE), isReady(false), id(-1), isUpdate(false), direction(NORTH), isAlive(true) {
-		bzero(name, NAME_BUFFER);
+		memset(name, 0, NAME_BUFFER);
 	};
 
 	char			name[NAME_BUFFER];
