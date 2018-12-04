@@ -32,6 +32,6 @@ private:
 
     void            clean_();
 
-    Glfw(Glfw const &shader);
-    Glfw &operator=(Glfw const &shader);
+    Glfw(Glfw const &shader) = delete;
+    Glfw &operator=(Glfw const &shader) = delete;
 };

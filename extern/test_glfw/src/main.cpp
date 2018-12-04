@@ -1,4 +1,4 @@
-#define STB_IMAGE_IMPLEMENTATION
+//#define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 
 #include "DisplayGlfw.hpp"
@@ -23,11 +23,46 @@ const int mHeight = 800;
 int main() {
     DisplayGlfw lol(NULL, 35, 32, 32, "Issou");
 
-    Shader shader;
-
     lol.update();
     Glfw glfw("Coucou", 1024, 720);
+    Shader shader;
+
+    shader.attach("C:\\Users\\Emmanuelle\\CLionProjects\\nibbler_chronopost\\extern\\test_glfw\\shader\\basic.frag");
+    std::cout << "Frag passed" << std::endl;
+    shader.attach("C:\\Users\\Emmanuelle\\CLionProjects\\nibbler_chronopost\\extern\\test_glfw\\shader\\basic.vert");
+    std::cout << "Vert passed" << std::endl;
+    shader.link();
+    std::cout << "<Linked passed" << std::endl;
+
+    //Add BOth at Constructio :!!!!!
+
+    float vertices[] = {
+            // positions         // colors
+            0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f,  // bottom right
+            -0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,  // bottom left
+            0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f   // top
+
+    };
+
+    unsigned int VBO, VAO;
+    glGenVertexArrays(1, &VAO);
+    glGenBuffers(1, &VBO);
+    // bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
+    glBindVertexArray(VAO);
+
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+    // position attribute
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
+    // color attribute
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+    glEnableVertexAttribArray(1);
+
+
     // Rendering Loop
+    shader.activate();
     while (!glfw.exit()) {
         glfw.update();
         // Background Fill Color
@@ -38,9 +73,14 @@ int main() {
         transform = glm::translate(transform, glm::vec3(0.5f, -0.5f, 0.0f));
         transform = glm::rotate(transform, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
 
+        glBindVertexArray(VAO);
+        glDrawArrays(GL_TRIANGLES, 0, 3);
+
         // Flip Buffers and Draw
         glfw.render();
     }
+    glDeleteVertexArrays(1, &VAO);
+    glDeleteBuffers(1, &VBO);
     return EXIT_SUCCESS;
 
 }
