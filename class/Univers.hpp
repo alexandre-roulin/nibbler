@@ -81,7 +81,14 @@ private:
 	IDisplay	*display;
 	ISound		*sound;
 	bool		isServer_;
+	std::mutex mutex;
+	bool borderless;
+public:
+	bool isBorderless() const;
 
+	void setBorderless(bool borderless);
+
+private:
 	unsigned int mapSize;
 public:
 	void setMapSize(unsigned int mapSize);

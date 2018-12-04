@@ -156,32 +156,40 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 
 	switch (header) {
 		case CHAT: {
+			mutex.lock();
 			log_info("eHeader::CHAT");
 			char *data_deserialize = new char[len];
 			std::memcpy(data_deserialize, input, len);
 			univers.getCore_().addMessageChat(std::string(data_deserialize, len));
 			delete [] data_deserialize;
+			mutex.unlock();
 			break;
 		}
 		case SNAKE_ARRAY: {
+			log_info("eHeader::INPUT");
+			mutex.lock();
 			std::memcpy(snake_array, input, len);
+			mutex.unlock();
 			break;
 		}
 		case SNAKE: {
+			log_info("eHeader::INPUT");
 
 			Snake snake_temp;
 
 			std::memcpy(&snake_temp, input, len);
-
+			mutex.lock();
 			snake_array[snake_temp.id] = snake_temp;
+			mutex.unlock();
 
 			univers.playNoise(eSound::READY);
 			break;
 		}
 		case REMOVE_SNAKE: {
 			log_info("eHeader::REMOVE_SNAKE");
-
+			mutex.lock();
 			snake_array[*(reinterpret_cast< const int16_t *>(input))].id = -1;
+			mutex.unlock();
 
 			univers.playNoise(eSound::DEATH);
 			break;
@@ -191,9 +199,9 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 
 			FoodInfo foodInfo;
 			std::memcpy(&foodInfo, input, len);
-			mu.lock();
+			mutex.lock();
 			foodCreations.push_back(FoodCreation(foodInfo.positionComponent, foodInfo.fromSnake));
-			mu.unlock();
+			mutex.unlock();
 			break;
 		}
 
@@ -221,11 +229,13 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 		}
 		case INPUT: {
 
+			log_info("eHeader::INPUT");
+
 			InputInfo ii;
 			std::memcpy(&ii, input, len);
-			mu.lock();
+			mutex.lock();
 			joystickEvents.push_back(JoystickEvent(ii.id, ii.dir));
-			mu.unlock();
+			mutex.unlock();
 			break;
 		}
 		case RESIZE_MAP: {
@@ -238,10 +248,11 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 			break;
 		}
 		case POCK: {
+			log_info("eHeader::POCK");
 			std::cout << "Pock::begin()" << std::endl;
-			mu.lock();
+			mutex.lock();
 			univers.getWorld_().getEventsManager().emitEvent<NextFrame>();
-			mu.unlock();
+			mutex.unlock();
 			std::cout << "Pock::end()" << std::endl;
 		}
 		default:
@@ -251,7 +262,7 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 
 
 void ClientTCP::deliverEvents() {
-	mu.lock();
+	mutex.lock();
 	for (auto foodCreation : foodCreations) {
 		univers.getWorld_().getEventsManager().emitEvent(foodCreation);
 	}
@@ -260,7 +271,7 @@ void ClientTCP::deliverEvents() {
 //	}
 //	joystickEvents.clear();
 	foodCreations.clear();
-	mu.unlock();
+	mutex.unlock();
 }
 
 

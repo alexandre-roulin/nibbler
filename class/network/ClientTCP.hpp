@@ -110,7 +110,7 @@ private:
 	Factory factory;
 	boost::asio::io_service &io;
 	boost::thread thread;
-	std::mutex mu;
+	std::mutex mutex;
 
 
 };

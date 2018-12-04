@@ -15,7 +15,8 @@ void Factory::create_all_snake(Snake snake_array[MAX_SNAKE], int16_t nu) {
 	for (int index = 0; index < nu; ++index) {
 		create_snake(snake_array[index], nu);
 	}
-	create_walls();
+	if (!univers_.isBorderless())
+		create_walls();
 }
 
 void Factory::create_snake(Snake snake, int max_snakes) {
@@ -80,6 +81,8 @@ void Factory::create_wall(int x, int y) {
 	auto entity = univers_.getWorld_().createEntity();
 	entity.addComponent<PositionComponent>(x, y);
 	entity.addComponent<CollisionComponent>();
+	entity.addComponent<SpriteComponent>(eSprite::WALL);
+
 	entity.groupEntityByGroupId(eTag::WALL_TAG);
 }
 

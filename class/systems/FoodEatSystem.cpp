@@ -9,8 +9,9 @@
 #include <events/FoodEat.hpp>
 
 void FoodEatSystem::update() {
+	mutex.lock();
 	auto events = getWorld().getEventsManager().getEvents<FoodEat>();
-
+	mutex.unlock();
 	for (auto &event : events) {
 		auto entityTail = getWorld().getEntitiesManager()
 				.getEntityByTagId(event.id_ + eTag::TAIL_TAG);

@@ -61,6 +61,9 @@ void nibbler(Univers &univers) {
 	for (;;) {
 		std::cout << "$> ";
 		std::getline(std::cin, buffer);
+		if (buffer == "border") {
+			univers.setBorderless(true);
+		}
 		if (buffer == "autos") {
 			univers.create_server();
 			univers.getClientTCP_().connect("localhost", "4242");

@@ -19,12 +19,13 @@ Univers::Univers()
 												 boost::posix_time::milliseconds(
 														 100))),
 		  mapSize(MAP_MIN),
-		  gameSpeed(80),
+		  gameSpeed(10),
 		  dlHandleDisplay(nullptr),
 		  dlHandleSound(nullptr),
 		  display(nullptr),
 		  sound(nullptr),
-		  isServer_(false) {
+		  isServer_(false),
+		  borderless(false) {
 
 	world_ = std::make_unique<KINU::World>(*this);
 	core_ = nullptr; //std::make_unique<Core>(*this)
@@ -87,7 +88,7 @@ bool Univers::load_external_display_library(std::string const &title,
 
 	world_->grid = Grid<int>(mapSize);
 	world_->grid.fill(SPRITE_GROUND);
-	world_->grid.setBorder(SPRITE_WALL);
+//	world_->grid.setBorder(SPRITE_WALL);
 	display->setBackground(world_->grid);
 	world_->setDisplay(display);
 
@@ -107,16 +108,14 @@ void Univers::manage_input() {
 //		clientTCP_->write_socket(ClientTCP::add_prefix(INPUT, &inputInfo));
 //
 	if (clientTCP_->getId() == 0) {
-		inputInfo.id = 0;
 		inputInfo.dir = display->getDirection();
 
-		if (world_->getEntitiesManager().hasEntityByTagId(
-				eTag::HEAD_TAG + inputInfo.id))
-			clientTCP_->write_socket(ClientTCP::add_prefix(INPUT, &inputInfo));
-		inputInfo.id = 1;
-		if (world_->getEntitiesManager().hasEntityByTagId(
-				eTag::HEAD_TAG + inputInfo.id))
-			clientTCP_->write_socket(ClientTCP::add_prefix(INPUT, &inputInfo));
+		for (int j = 0; j < 5; ++j) {
+			inputInfo.id = j;
+			if (world_->getEntitiesManager().hasEntityByTagId(
+					eTag::HEAD_TAG + inputInfo.id))
+				clientTCP_->write_socket(ClientTCP::add_prefix(INPUT, &inputInfo));
+		}
 	}
 }
 
@@ -172,7 +171,10 @@ void Univers::loop_world() {
 	std::cout << "manage_input" <<std::endl;
 
 	// GET REFRESH DATA
+	std::cout << "NextFrame" <<std::endl;
+	mutex.lock();
 	for (; world_->getEventsManager().getEvents<NextFrame>().empty(););
+	mutex.unlock();
 	std::cout << "getEventsManager" <<std::endl;
 	world_->getEventsManager().destroy<NextFrame>();
 
@@ -292,6 +294,14 @@ bool Univers::dlError() {
 void Univers::setMapSize(unsigned int mapSize) {
 	log_success("New map size [%d]", mapSize);
 	Univers::mapSize = mapSize;
+}
+
+bool Univers::isBorderless() const {
+	return borderless;
+}
+
+void Univers::setBorderless(bool borderless) {
+	Univers::borderless = borderless;
 }
 
 
