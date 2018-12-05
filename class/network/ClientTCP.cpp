@@ -151,74 +151,58 @@ void ClientTCP::write_socket(std::string message) {
 
 void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 
-	std::cout << "ClientTCP::parse_input " << header << 	std::endl;
 
-
+	std::cout << "ClientTCP.lock() " << header << std::endl;
+	mutex.lock();
+	std::cout << "ClientTCP.post_lock() " << header << std::endl;
 	switch (header) {
 		case CHAT: {
-			mutex.lock();
 			log_info("eHeader::CHAT");
 			char *data_deserialize = new char[len];
 			std::memcpy(data_deserialize, input, len);
 			univers.getCore_().addMessageChat(std::string(data_deserialize, len));
 			delete [] data_deserialize;
-			mutex.unlock();
 			break;
 		}
 		case SNAKE_ARRAY: {
 			log_info("eHeader::INPUT");
-			mutex.lock();
 			std::memcpy(snake_array, input, len);
-			mutex.unlock();
 			break;
 		}
 		case SNAKE: {
 			log_info("eHeader::INPUT");
-
 			Snake snake_temp;
-
 			std::memcpy(&snake_temp, input, len);
-			mutex.lock();
 			snake_array[snake_temp.id] = snake_temp;
-			mutex.unlock();
-
 			univers.playNoise(eSound::READY);
 			break;
 		}
 		case REMOVE_SNAKE: {
 			log_info("eHeader::REMOVE_SNAKE");
-			mutex.lock();
 			snake_array[*(reinterpret_cast< const int16_t *>(input))].id = -1;
-			mutex.unlock();
-
 			univers.playNoise(eSound::DEATH);
 			break;
 		}
 		case FOOD: {
 			log_info("eHeader::FOOD");
-
 			FoodInfo foodInfo;
 			std::memcpy(&foodInfo, input, len);
-			mutex.lock();
 			foodCreations.push_back(FoodCreation(foodInfo.positionComponent, foodInfo.fromSnake));
-			mutex.unlock();
 			break;
 		}
-
-		case ID:
+		case ID: {
 			log_info("eHeader::ID");
-
 			std::memcpy(&id_, input, len);
 			break;
+		}
 		case OPEN_GAME: {
 			log_info("eHeader::OPEN_GAME");
-
 			ClientTCP::StartInfo startInfo;
 			bool data;
 			std::memcpy(&data, input, ClientTCP::size_header[OPEN_GAME]);
 			openGame_ = data;
-		}
 			break;
+		}
 		case START_GAME: {
 			log_info("eHeader::START_GAME");
 			StartInfo st;
@@ -228,19 +212,14 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 			break;
 		}
 		case INPUT: {
-
 			log_info("eHeader::INPUT");
-
 			InputInfo ii;
 			std::memcpy(&ii, input, len);
-			mutex.lock();
 			joystickEvents.push_back(JoystickEvent(ii.id, ii.dir));
-			mutex.unlock();
 			break;
 		}
 		case RESIZE_MAP: {
 			log_info("eHeader::RESIZE_MAP");
-
 			unsigned int buffer;
 			std::memcpy(&buffer, input, ClientTCP::size_header[RESIZE_MAP]);
 			univers.setMapSize(buffer);
@@ -249,15 +228,16 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 		}
 		case POCK: {
 			log_info("eHeader::POCK");
-			std::cout << "Pock::begin()" << std::endl;
-			mutex.lock();
 			univers.getWorld_().getEventsManager().emitEvent<NextFrame>();
-			mutex.unlock();
-			std::cout << "Pock::end()" << std::endl;
+			log_info("eHeader::POCK.end()");
+			break;
 		}
 		default:
 			break;
 	}
+	mutex.unlock();
+	std::cout << "ClientTCP.unlock() " << header << std::endl;
+
 }
 
 
@@ -266,10 +246,6 @@ void ClientTCP::deliverEvents() {
 	for (auto foodCreation : foodCreations) {
 		univers.getWorld_().getEventsManager().emitEvent(foodCreation);
 	}
-//	for (auto joystickEvent : joystickEvents) {
-//		univers.getWorld_().getEventsManager().emitEvent(joystickEvent);
-//	}
-//	joystickEvents.clear();
 	foodCreations.clear();
 	mutex.unlock();
 }

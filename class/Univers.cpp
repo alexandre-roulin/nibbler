@@ -19,7 +19,7 @@ Univers::Univers()
 												 boost::posix_time::milliseconds(
 														 100))),
 		  mapSize(MAP_MIN),
-		  gameSpeed(10),
+		  gameSpeed(80),
 		  dlHandleDisplay(nullptr),
 		  dlHandleSound(nullptr),
 		  display(nullptr),
@@ -88,7 +88,7 @@ bool Univers::load_external_display_library(std::string const &title,
 
 	world_->grid = Grid<int>(mapSize);
 	world_->grid.fill(SPRITE_GROUND);
-//	world_->grid.setBorder(SPRITE_WALL);
+	world_->grid.setBorder(SPRITE_WALL);
 	display->setBackground(world_->grid);
 	world_->setDisplay(display);
 
@@ -101,12 +101,13 @@ void Univers::manage_input() {
 	ClientTCP::InputInfo inputInfo;
 
 
-//	inputInfo.id = clientTCP_->getId();
-//	inputInfo.dir = display->getDirection();
-//
-//	if (world_->getEntitiesManager().hasEntityByTagId(eTag::HEAD_TAG + inputInfo.id))
-//		clientTCP_->write_socket(ClientTCP::add_prefix(INPUT, &inputInfo));
-//
+	inputInfo.id = clientTCP_->getId();
+	inputInfo.dir = display->getDirection();
+
+	if (world_->getEntitiesManager().hasEntityByTagId(eTag::HEAD_TAG + inputInfo.id))
+		clientTCP_->write_socket(ClientTCP::add_prefix(INPUT, &inputInfo));
+
+	return;
 	if (clientTCP_->getId() == 0) {
 		inputInfo.dir = display->getDirection();
 
@@ -122,7 +123,11 @@ void Univers::manage_input() {
 void Univers::manage_start() {
 	ClientTCP::StartInfo startInfo;
 	std::vector<StartEvent> startEvent;
-	for (; startEvent.empty(); startEvent = world_->getEventsManager().getEvents<StartEvent>());
+	for (; startEvent.empty(); ) {
+		mutex.lock();
+		startEvent = world_->getEventsManager().getEvents<StartEvent>();
+		mutex.unlock();
+	}
 	auto ptime = startEvent.front().start_time;
 	timer_start.expires_at(ptime);
 	io_start.run();
@@ -171,10 +176,19 @@ void Univers::loop_world() {
 	std::cout << "manage_input" <<std::endl;
 
 	// GET REFRESH DATA
-	std::cout << "NextFrame" <<std::endl;
-	mutex.lock();
-	for (; world_->getEventsManager().getEvents<NextFrame>().empty(););
-	mutex.unlock();
+	std::cout << "NextFrame" << (nextFrame.empty() ? "Empty" : "Not empty ?!") <<std::endl;
+	for (; nextFrame.empty() ;) {
+		std::cout << "loop_world::mutex.lock()" <<std::endl;
+		mutex.lock();
+		std::cout << "loop_world::getEvents()" <<std::endl;
+		nextFrame = world_->getEventsManager().getEvents<NextFrame>();
+		std::cout << "loop_world::getEvents()" <<std::endl;
+
+		mutex.unlock();
+		std::cout << "loop_world::mutex.unlock()" <<std::endl;
+	}
+	std::cout << "NextFrame.clear()" <<std::endl;
+	nextFrame.clear();
 	std::cout << "getEventsManager" <<std::endl;
 	world_->getEventsManager().destroy<NextFrame>();
 

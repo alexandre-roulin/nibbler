@@ -7,6 +7,7 @@
 #include "IDisplay.hpp"
 #include "ISound.hpp"
 #include <boost/asio/deadline_timer.hpp>
+#include <events/NextFrame.hpp>
 
 class ServerTCP;
 
@@ -65,6 +66,7 @@ private:
 
 	void loop_world();
 
+	std::vector<NextFrame> nextFrame;
 	std::bitset<32>			flag;
 	boost::asio::io_service io_server;
 	boost::asio::io_service io_client;
