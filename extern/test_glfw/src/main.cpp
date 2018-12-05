@@ -19,6 +19,8 @@ const int mHeight = 800;
 #include <cstdlib>
 
 #include "Glfw.hpp"
+#include "Model.hpp"
+#include "Mesh.hpp"
 
 int main() {
     DisplayGlfw lol(NULL, 35, 32, 32, "Issou");
@@ -66,6 +68,34 @@ int main() {
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
 
+    Model model;
+
+    std::vector<Vertex> vertex;
+    vertex.emplace_back(Vertex(
+			glm::vec3(0.5f,  0.5f, 0.0f),
+			glm::vec3(0.5f,  0.5f, 0.0f),
+			glm::vec2(0.5f,  0.5f)
+    		));
+	vertex.emplace_back(Vertex(
+			glm::vec3(0.5f, -0.5f, 0.0f),
+			glm::vec3(0.5f, -0.5f, 0.0f),
+			glm::vec2(0.5f, -0.5f)
+	));
+	vertex.emplace_back(Vertex(
+			glm::vec3(-0.5f, -0.5f, 0.0f),
+			glm::vec3(-0.5f, -0.5f, 0.0f),
+			glm::vec2(-0.5f, -0.5f)
+	));
+	vertex.emplace_back(Vertex(
+			glm::vec3(-0.5f,  0.5f, 0.0f),
+			glm::vec3(-0.5f,  0.5f, 0.0f),
+			glm::vec2(-0.5f,  0.5f)
+	));
+
+    std::vector<unsigned int> indices = {0, 1, 3, 1, 2, 3};
+
+    Mesh mesh(vertex, indices);
+
 
     // Rendering Loop
     shader.activate();
@@ -79,9 +109,10 @@ int main() {
         transform = glm::translate(transform, glm::vec3(0.5f, -0.5f, 0.0f));
         transform = glm::rotate(transform, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
 
-        glBindVertexArray(VAO);
+        /*glBindVertexArray(VAO);
         glDrawArrays(GL_TRIANGLES, 0, 3);
-
+		*/
+        mesh.render();
         // Flip Buffers and Draw
         glfw.render();
     }
