@@ -14,6 +14,7 @@ class ServerTCP;
 class ClientTCP;
 
 class Core;
+
 namespace KINU {
 
 	class World;
@@ -21,53 +22,97 @@ namespace KINU {
 
 class Univers {
 public:
-	
-	enum eFlag { SOUND };
-	
+
+	enum eDisplay {
+		EXTERN_LIB_SFML,
+		EXTERN_LIB_SDL,
+		EXTERN_LIB_STB
+	};
+
+	enum eFlag {
+		SOUND
+	};
+
 	Univers();
 
-	bool load_external_display_library(std::string const &title, std::string const &library_path);
-	bool load_external_sound_library(std::string const &title, std::string const &library_path);
+	bool load_extern_lib_display(eDisplay);
+
+	bool load_external_sound_library(std::string const &title,
+									 std::string const &library_path); // TODO GO PRIVATE
 
 	void loop();
 
 	void manage_start();
 
-	void manage_input();
-
-	unsigned int &getMapSize();
-
-	KINU::World &getWorld_() const;
-
-	ClientTCP &getClientTCP_() const;
-	
-	ServerTCP &getServerTCP_() const;
+	void new_game();
 
 	Core &getCore_() const;
-	Core *releaseCore_();
-	
-	ISound &getSound() const;
-	void	playNoise(int i) const;
-	void	playNoise(eSound e) const;
-	void	playMusic(char *path) const;
-	void	playMusic(std::string const &path) const;
 
-	void create_ui();
-	bool isServer() const;
+	Core *releaseCore_();
+
+	/** Sound **/
+
+	void playNoise(int i) const;
+
+	void playNoise(eSound e) const;
+
+	void playMusic(char *path) const;
+
+	void playMusic(std::string const &path) const;
+
+	/** Create function**/
 
 	void create_server(unsigned int port = 4242);
 
-	bool dlError(void);
+	void create_ui(); // TODO PRIVATE
+
+
+	/** Setter && Getter**/
+
+	//Network
+
+	ClientTCP &getClientTCP_() const;
+
+	//Game
+
+	KINU::World &getWorld_() const;
+
+	void setMapSize(unsigned int mapSize);
+
+	bool isBorderless() const;
+
+	void setBorderless(bool borderless);
+
+	unsigned int getMapSize() const;
+
+	//Flag
+
 	void setFlag(eFlag);
+
 	void unsetFlag(eFlag);
+
 	bool testFlag(eFlag);
 
-private:
+	//Sound
+
+	ISound &getSound() const;
+
+	//State
+
+	bool isServer() const;
+
+
+private: // Function
+	void manage_input();
 
 	void loop_world();
 
+	bool dlError(void);
+
+private: // Variable
+
 	std::vector<NextFrame> nextFrame;
-	std::bitset<32>			flag;
+	std::bitset<32> flag;
 	boost::asio::io_service io_server;
 	boost::asio::io_service io_client;
 	boost::asio::io_service io_loop;
@@ -80,30 +125,22 @@ private:
 	boost::shared_ptr<ClientTCP> clientTCP_;
 	void *dlHandleDisplay;
 	void *dlHandleSound;
-	IDisplay	*display;
-	ISound		*sound;
-	bool		isServer_;
-	std::mutex mutex;
+	IDisplay *display;
+	ISound *sound;
 	bool borderless;
-public:
-	bool isBorderless() const;
 
-	void setBorderless(bool borderless);
-
-private:
 	unsigned int mapSize;
-public:
-	void setMapSize(unsigned int mapSize);
-
-private:
 	unsigned int gameSpeed;
-	time_t start = time(NULL);
-private:
+
+	bool load_external_display_library(std::string const &title,
+									   std::string const &libPath);
 
 	IDisplay *(*newDisplay)(char const *, int, int, int, char const *);
+
 	ISound *(*newSound)(char const *);
 
 	void (*deleteDisplay)(IDisplay *);
+
 	void (*deleteSound)(ISound *);
 
 };

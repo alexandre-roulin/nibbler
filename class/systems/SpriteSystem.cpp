@@ -29,7 +29,7 @@ void SpriteSystem::update() {
 
 	FollowComponent *followComponent = nullptr;
 	KINU::Entity entityFollowed;
-	PositionComponent followPosition, positionComponentFollowed;
+	PositionComponent positionComponentFollowed;
 
 	for (auto &entity : getEntities()) {
 			auto &positionComponent = entity.getComponent<PositionComponent>();

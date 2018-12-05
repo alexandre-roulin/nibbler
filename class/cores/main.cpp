@@ -39,7 +39,6 @@ bool demoGui(int ac, char **av, Univers &univers) {
 
 void nibbler(Univers &univers) {
 	std::string buffer;
-
 	if (univers.testFlag(Univers::SOUND)) {
 		univers.load_external_sound_library(std::string("Game pro"),
 											std::string(
@@ -70,9 +69,7 @@ void nibbler(Univers &univers) {
 			sleep(1);
 			univers.getClientTCP_().change_state_ready();
 			univers.setMapSize(35);
-			univers.load_external_display_library(std::string("Game pro"),
-												  std::string(
-														  PATH_DISPLAY_LIBRARY_SFML));
+			univers.load_extern_lib_display(Univers::EXTERN_LIB_SFML);
 
 		}
 		if (buffer == "autoc") {
@@ -80,9 +77,7 @@ void nibbler(Univers &univers) {
 			sleep(1);
 			univers.getClientTCP_().change_state_ready();
 			univers.setMapSize(35);
-			univers.load_external_display_library(std::string("Game pro"),
-												  std::string(
-														  PATH_DISPLAY_LIBRARY_SFML));
+			univers.load_extern_lib_display(Univers::EXTERN_LIB_SFML);
 			univers.loop();
 		}
 		if (buffer == "autocs") {
@@ -92,9 +87,7 @@ void nibbler(Univers &univers) {
 			sleep(1);
 			univers.getClientTCP_().change_state_ready();
 			univers.setMapSize(35);
-			univers.load_external_display_library(std::string("Game pro"),
-												  std::string(
-														  PATH_DISPLAY_LIBRARY_SFML));
+			univers.load_extern_lib_display(Univers::EXTERN_LIB_SFML);
 			univers.loop();
 		}
 		if (buffer == "loop") {
@@ -118,26 +111,6 @@ void nibbler(Univers &univers) {
 			univers.getClientTCP_().change_state_ready();
 		}
 
-		if (buffer == "game") {
-			univers.getClientTCP_().change_state_ready();
-			univers.setMapSize(35);
-			univers.load_external_display_library(std::string("Game pro"),
-												  std::string(
-														  PATH_DISPLAY_LIBRARY_SFML));
-
-			ClientTCP::StartInfo startInfo;
-			univers.getClientTCP_()
-					.write_socket(
-							ClientTCP::add_prefix(START_GAME, &startInfo));
-			univers.loop();
-		}
-		if (buffer == "game1") {
-			univers.setMapSize(35);
-			univers.load_external_display_library(std::string("Game pro"),
-												  std::string(
-														  PATH_DISPLAY_LIBRARY_SFML));
-			univers.loop();
-		}
 		if (buffer == "ui") {
 			univers.create_ui();
 			univers.getCore_().aState();
@@ -149,10 +122,7 @@ void nibbler(Univers &univers) {
 
 				//univers.getClientTCP_().change_state_ready();
 				//sleep(1);
-
-				univers.load_external_display_library(std::string("Game pro"),
-													  std::string(
-															  PATH_DISPLAY_LIBRARY_SFML));
+				univers.load_extern_lib_display(Univers::EXTERN_LIB_SFML);
 
 				ClientTCP::StartInfo startInfo;
 				if (univers.isServer()) {

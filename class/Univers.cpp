@@ -9,7 +9,6 @@
 #include <systems/RenderSystem.hpp>
 #include <network/ServerTCP.hpp>
 #include <systems/FoodEatSystem.hpp>
-#include <events/NextFrame.hpp>
 #include <events/FoodEat.hpp>
 #include <dlfcn.h>
 
@@ -24,10 +23,10 @@ Univers::Univers()
 		  dlHandleSound(nullptr),
 		  display(nullptr),
 		  sound(nullptr),
-		  isServer_(false),
 		  borderless(false) {
 
-	world_ = std::make_unique<KINU::World>(*this);
+
+	world_ = nullptr;
 	core_ = nullptr; //std::make_unique<Core>(*this)
 	clientTCP_ = ClientTCP::create(*this, io_client);
 	serverTCP_ = nullptr;
@@ -58,7 +57,7 @@ bool Univers::load_external_sound_library(std::string const &title,
 }
 
 bool Univers::load_external_display_library(std::string const &title,
-											std::string const &library_path) {
+											std::string const &libPath) {
 
 	if (display != nullptr && dlHandleDisplay != nullptr) {
 		if (deleteDisplay) {
@@ -69,8 +68,7 @@ bool Univers::load_external_display_library(std::string const &title,
 		dlclose(dlHandleDisplay);
 	}
 
-	if (!(dlHandleDisplay = dlopen(library_path.c_str(),
-								   RTLD_LAZY | RTLD_LOCAL)))
+	if (!(dlHandleDisplay = dlopen(libPath.c_str(), RTLD_LAZY | RTLD_LOCAL)))
 		return (dlError());
 
 	if (!(newDisplay = reinterpret_cast<IDisplay *(*)(
@@ -82,15 +80,15 @@ bool Univers::load_external_display_library(std::string const &title,
 			IDisplay *
 	)>(dlsym(dlHandleDisplay, "deleteDisplay"))))
 		return (dlError());
+
 	if (!(display = newDisplay(PATH_TILESET, DEFAULT_SIZE_SPRITE, mapSize,
 							   mapSize, title.c_str())))
 		return (false);
 
-	world_->grid = Grid<int>(mapSize);
-	world_->grid.fill(SPRITE_GROUND);
-	world_->grid.setBorder(SPRITE_WALL);
 	display->setBackground(world_->grid);
-	world_->setDisplay(display);
+
+	if (world_ != nullptr)
+		world_->setDisplay(display);
 
 	display->update();
 	display->render();
@@ -104,7 +102,9 @@ void Univers::manage_input() {
 	inputInfo.id = clientTCP_->getId();
 	inputInfo.dir = display->getDirection();
 
-	if (world_->getEntitiesManager().hasEntityByTagId(eTag::HEAD_TAG + inputInfo.id))
+	assert(world_ != nullptr);
+	if (world_->getEntitiesManager().hasEntityByTagId(
+			eTag::HEAD_TAG + inputInfo.id))
 		clientTCP_->write_socket(ClientTCP::add_prefix(INPUT, &inputInfo));
 
 	return;
@@ -115,7 +115,8 @@ void Univers::manage_input() {
 			inputInfo.id = j;
 			if (world_->getEntitiesManager().hasEntityByTagId(
 					eTag::HEAD_TAG + inputInfo.id))
-				clientTCP_->write_socket(ClientTCP::add_prefix(INPUT, &inputInfo));
+				clientTCP_->write_socket(
+						ClientTCP::add_prefix(INPUT, &inputInfo));
 		}
 	}
 }
@@ -123,10 +124,10 @@ void Univers::manage_input() {
 void Univers::manage_start() {
 	ClientTCP::StartInfo startInfo;
 	std::vector<StartEvent> startEvent;
-	for (; startEvent.empty(); ) {
-		mutex.lock();
+	for (; startEvent.empty();) {
+		clientTCP_->lock();
 		startEvent = world_->getEventsManager().getEvents<StartEvent>();
-		mutex.unlock();
+		clientTCP_->unlock();
 	}
 	auto ptime = startEvent.front().start_time;
 	timer_start.expires_at(ptime);
@@ -173,31 +174,28 @@ void Univers::loop_world() {
 
 	// SEND DIRECTION
 	manage_input();
-	std::cout << "manage_input" <<std::endl;
+	std::cout << "manage_input" << std::endl;
 
 	// GET REFRESH DATA
-	std::cout << "NextFrame" << (nextFrame.empty() ? "Empty" : "Not empty ?!") <<std::endl;
-	for (; nextFrame.empty() ;) {
-		std::cout << "loop_world::mutex.lock()" <<std::endl;
-		mutex.lock();
-		std::cout << "loop_world::getEvents()" <<std::endl;
+	std::cout << "NextFrame" << (nextFrame.empty() ? "Empty" : "Not empty ?!")
+			  << std::endl;
+	for (; nextFrame.empty();) {
+		clientTCP_->lock();
 		nextFrame = world_->getEventsManager().getEvents<NextFrame>();
-		std::cout << "loop_world::getEvents()" <<std::endl;
 
-		mutex.unlock();
-		std::cout << "loop_world::mutex.unlock()" <<std::endl;
+		clientTCP_->unlock();
 	}
-	std::cout << "NextFrame.clear()" <<std::endl;
+	std::cout << "NextFrame.clear()" << std::endl;
 	nextFrame.clear();
-	std::cout << "getEventsManager" <<std::endl;
+	std::cout << "getEventsManager" << std::endl;
 	world_->getEventsManager().destroy<NextFrame>();
 
-	std::cout << "deliverEvents" <<std::endl;
+	std::cout << "deliverEvents" << std::endl;
 	clientTCP_->deliverEvents();
 
-	std::cout << "update" <<std::endl;
+	std::cout << "update" << std::endl;
 	world_->update();
-	std::cout << "getSystemsManager" <<std::endl;
+	std::cout << "getSystemsManager" << std::endl;
 
 	world_->getSystemsManager().getSystem<FollowSystem>().update();
 	world_->getSystemsManager().getSystem<JoystickSystem>().update();
@@ -211,7 +209,7 @@ void Univers::loop_world() {
 	world_->getSystemsManager().getSystem<FoodEatSystem>().update();
 	world_->getEventsManager().destroy<FoodEat>();
 
-	std::cout << "timer_loop" <<std::endl;
+	std::cout << "timer_loop" << std::endl;
 	timer_loop.expires_at(
 			timer_loop.expires_at() +
 			boost::posix_time::milliseconds(gameSpeed));
@@ -223,14 +221,13 @@ void Univers::create_ui() {
 }
 
 void Univers::create_server(unsigned int port) {
-	isServer_ = true;
 	serverTCP_ = std::make_unique<ServerTCP>(io_server, port);
 	boost::thread t2(boost::bind(&boost::asio::io_service::run, &io_server));
 	t2.detach();
 }
 
 bool Univers::isServer() const {
-	return isServer_;
+	return serverTCP_ != nullptr;
 }
 
 KINU::World &Univers::getWorld_() const {
@@ -239,10 +236,6 @@ KINU::World &Univers::getWorld_() const {
 
 ClientTCP &Univers::getClientTCP_() const {
 	return *clientTCP_;
-}
-
-ServerTCP &Univers::getServerTCP_() const {
-	return *serverTCP_;
 }
 
 ISound &Univers::getSound() const {
@@ -282,7 +275,7 @@ Core *Univers::releaseCore_() {
 	return (core_.release());
 }
 
-unsigned int &Univers::getMapSize() {
+unsigned int Univers::getMapSize() const {
 	return mapSize;
 }
 
@@ -315,7 +308,37 @@ bool Univers::isBorderless() const {
 }
 
 void Univers::setBorderless(bool borderless) {
-	Univers::borderless = borderless;
+	if (borderless != Univers::borderless) { // TODO SUPER MOCHE
+		clientTCP_->write_socket(ClientTCP::add_prefix(BORDERLESS, &borderless));
+		Univers::borderless = borderless;
+	}
+}
+
+bool Univers::load_extern_lib_display(Univers::eDisplay eLib) {
+	switch (eLib) {
+		case EXTERN_LIB_SFML : {
+			return load_external_display_library(std::string("Nibbler - SFML"),
+										  std::string(PATH_DISPLAY_LIBRARY_SFML));
+			break;
+		}
+		case EXTERN_LIB_SDL : {
+			// TODO ADD SDL
+			break;
+		}
+		case EXTERN_LIB_STB : {
+			// TODO ADD STB
+			break;
+		}
+	}
+	return false;
+}
+
+void Univers::new_game() {
+	world_ = std::make_unique<KINU::World>(*this);
+	world_->grid = Grid<int>(mapSize);
+	world_->grid.fill(SPRITE_GROUND);
+	world_->setDisplay(display);
+
 }
 
 

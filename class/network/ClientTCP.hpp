@@ -43,6 +43,7 @@ public:
 		bool fromSnake;
 		PositionComponent positionComponent;
 	};
+
 	void deliverEvents();
 
 	void connect(std::string dns, std::string port);
@@ -74,6 +75,9 @@ public:
 	void change_map_size(unsigned int);
 
 	static std::string add_prefix(eHeader);
+
+	void lock();
+	void unlock();
 
 	template<typename T>
 	static std::string add_prefix(eHeader, T *element);

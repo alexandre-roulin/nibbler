@@ -22,6 +22,7 @@ int const ClientTCP::size_header[] = {
 		[RESIZE_MAP] = sizeof(unsigned int),
 		[REMOVE_SNAKE] = sizeof(int16_t),
 		[POCK] = sizeof(char),
+		[BORDERLESS] = sizeof(bool)
 };
 
 ClientTCP::ClientTCP(::Univers &univers, boost::asio::io_service &io)
@@ -226,6 +227,12 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 			univers.playNoise(eSound::RESIZE_MAP);
 			break;
 		}
+		case BORDERLESS : {
+			bool borderless;
+			std::memcpy(&borderless, input, ClientTCP::size_header[BORDERLESS]);
+			univers.setBorderless(borderless);
+			break;
+		}
 		case POCK: {
 			log_info("eHeader::POCK");
 			univers.getWorld_().getEventsManager().emitEvent<NextFrame>();
@@ -286,4 +293,12 @@ std::string ClientTCP::add_prefix(eHeader header) {
 void ClientTCP::killSnake() {
 	snake_array[id_].isAlive = false;
 	write_socket(add_prefix(SNAKE, &(snake_array[id_])));
+}
+
+void ClientTCP::lock() {
+	mutex.lock();
+}
+
+void ClientTCP::unlock() {
+	mutex.unlock();
 }
