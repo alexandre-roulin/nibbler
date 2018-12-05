@@ -27,14 +27,20 @@ int main() {
     Glfw glfw("Coucou", 1024, 720);
     Shader shader;
 
-    shader.attach("C:\\Users\\Emmanuelle\\CLionProjects\\nibbler_chronopost\\extern\\test_glfw\\shader\\basic.frag");
+
+    std::string file_path = __FILE__;
+    std::string dir_path = file_path.substr(0, file_path.rfind("\\"));
+    dir_path = dir_path.substr(0, dir_path.rfind("\\"));
+    std::cout << dir_path << std::endl;
+
+    shader.attach(dir_path + "\\shader\\basic.frag");
     std::cout << "Frag passed" << std::endl;
-    shader.attach("C:\\Users\\Emmanuelle\\CLionProjects\\nibbler_chronopost\\extern\\test_glfw\\shader\\basic.vert");
+    shader.attach(dir_path + "\\shader\\basic.vert");
     std::cout << "Vert passed" << std::endl;
     shader.link();
     std::cout << "<Linked passed" << std::endl;
 
-    //Add BOth at Constructio :!!!!!
+    //Add BOth at Construction :!!!!!
 
     float vertices[] = {
             // positions         // colors

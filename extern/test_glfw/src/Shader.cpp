@@ -4,19 +4,26 @@
 #include <iostream>
 #include <memory>
 
-Shader::Shader() :
-program_(glCreateProgram()) {
+Shader::Shader() noexcept :
+		program_(glCreateProgram()) {
 }
 
-Shader::~Shader() {
+Shader::Shader(std::string const &file1, std::string const &file2) :
+		program_(glCreateProgram()) {
+	attach(file1);
+	attach(file2);
+	link();
+}
+
+Shader::~Shader() noexcept {
 	clean_();
 }
 
-void		Shader::clean_() {
+void		Shader::clean_() noexcept {
 	glDeleteProgram(program_);
 }
 
-Shader &Shader::activate() {
+Shader &Shader::activate() noexcept {
 	glUseProgram(program_);
 	return (*this);
 }
@@ -24,30 +31,32 @@ Shader &Shader::activate() {
 Shader	&Shader::attach(std::string const &filename) {
 	// Get Shader source
 	std::ifstream fd(filename);
-	auto src = std::string(std::istreambuf_iterator<char>(fd),
+	std::string src = std::string(std::istreambuf_iterator<char>(fd),
 						   (std::istreambuf_iterator<char>()));
-
-	// Create a Shader Object
 	const char *source = src.c_str();
-	std::cout << "Source path :" <<  filename << std::endl;
-	std::cout << source << std::endl;
+
+	if (Shader::debug_) {
+		std::cout << "Source path :" <<  filename << std::endl;
+		std::cout << source << std::endl;
+	}
+	
 	auto shader = create(filename);
 	glShaderSource(shader, 1, &source, nullptr);
 	glCompileShader(shader);
 	glGetShaderiv(shader, GL_COMPILE_STATUS, &status_);
 
-	// Display the Build Log on Error
 	if (status_ == false) {
 		glGetShaderiv(shader, GL_INFO_LOG_LENGTH, & length_);
 		std::unique_ptr<char[]> buffer(new char[length_]);
 		glGetShaderInfoLog(shader, length_, nullptr, buffer.get());
-		std::cerr << filename.c_str() << std::endl << buffer.get() << std::endl;
+		if (Shader::debug_)
+			std::cerr << filename.c_str() << std::endl << buffer.get() << std::endl;
+		glDeleteShader(shader);
+		throw (Shader::CreateException(filename + buffer.get()));
 	}
-
-	// Attach the Shader and Free Allocated Memory
+	
 	glAttachShader(program_, shader);
 	glDeleteShader(shader);
-	assert(status_ == true);
 	return (*this);
 }
 
@@ -75,8 +84,40 @@ Shader &Shader::link()
 		glGetProgramiv(program_, GL_INFO_LOG_LENGTH, & length_);
 		std::unique_ptr<char[]> buffer(new char[length_]);
 		glGetProgramInfoLog(program_, length_, nullptr, buffer.get());
-		fprintf(stderr, "%s", buffer.get());
+		if (Shader::debug_)
+			fprintf(stderr, "%s", buffer.get());
+		throw (Shader::LinkException(buffer.get()));
 	}
-	assert(status_ == true);
 	return *this;
 }
+
+bool				Shader::debug_ = true;
+
+
+Shader::CreateException::~CreateException(void) throw(){}
+Shader::CreateException::CreateException(void) throw() :
+		invalid_argument(this->_error),
+		_error("You make a CreateException") {}
+Shader::CreateException::CreateException(std::string s) throw() :
+		invalid_argument(s),
+		_error(s) { }
+Shader::CreateException::CreateException(Shader::CreateException const &src) throw() :
+		invalid_argument(this->_error),
+		_error(src._error)
+{ this->_error = src._error; }
+const char	*Shader::CreateException::what() const throw()
+{ return (this->_error.c_str()); }
+
+Shader::LinkException::~LinkException(void) throw(){}
+Shader::LinkException::LinkException(void) throw() :
+		invalid_argument(this->_error),
+		_error("You make a LinkException") {}
+Shader::LinkException::LinkException(std::string s) throw() :
+		invalid_argument(s),
+		_error(s) { }
+Shader::LinkException::LinkException(Shader::LinkException const &src) throw() :
+		invalid_argument(this->_error),
+		_error(src._error)
+{ this->_error = src._error; }
+const char	*Shader::LinkException::what() const throw()
+{ return (this->_error.c_str()); }
