@@ -40,6 +40,11 @@ public:
 	GLuint		create(std::string const &filename);
 	Shader		&link();
 
+	void		setFloat(const std::string &name, float value) const;
+	void		setMat4(const std::string &name, const glm::mat4 &mat) const;
+
+
+
 private:
 
 	GLuint program_;

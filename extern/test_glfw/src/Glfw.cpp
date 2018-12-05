@@ -5,8 +5,11 @@ Glfw::Glfw(std::string const &name, uint16_t width, uint16_t height) {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+    #ifdef __APPLE__
+        glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+    #endif
     glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
+
     if (!(window_ = glfwCreateWindow(width, height, name.c_str(), nullptr, nullptr))) {
         clean_();
         throw (Glfw::ConstructorException("GlfwConstructorException: window was not created"));
@@ -38,6 +41,9 @@ bool            Glfw::exit() const {
     return (glfwWindowShouldClose(window_));
 }
 
+GLFWwindow     *Glfw::getWindow() const {
+    return (window_);
+}
 
 Glfw::ConstructorException::~ConstructorException(void) throw(){}
 Glfw::ConstructorException::ConstructorException(void) throw() :

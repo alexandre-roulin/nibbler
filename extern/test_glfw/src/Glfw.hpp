@@ -27,6 +27,8 @@ public:
     void            render();
     bool            exit() const;
 
+    GLFWwindow     *getWindow() const;
+
 private:
     GLFWwindow     *window_;
 

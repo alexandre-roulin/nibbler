@@ -8,6 +8,11 @@ class Shader;
 
 struct Vertex {
 
+	Vertex() noexcept :
+			position(glm::vec3(0.0f)),
+			normal(glm::vec3(0.0f)),
+			uv(glm::vec2(0.0f)) {};
+
 	Vertex(glm::vec3 position, glm::vec3 normal, glm::vec2 uv) noexcept :
 			position(position),
 			normal(normal),
@@ -19,10 +24,13 @@ struct Vertex {
 };
 
 struct Texture {
-	enum eType { NONE, DIFFUSE, SPECULAR };
+	enum eType { NONE, DIFFUSE, SPECULAR, NORMAL };
 
 	unsigned int	id;
 	eType			type;
+	std::string		path;
+
+	static unsigned int TextureFromFile(const char *path, const std::string &directory);
 };
 
 class Mesh {
@@ -30,20 +38,24 @@ public:
 
 	enum class eFlag { NONE = 0, TEXTURE = (1 << 0) };
 
-	Mesh(std::vector<Vertex> vertex, std::vector<unsigned int> indice, std::vector<Texture> texture);
-	Mesh(std::vector<Vertex> vertex, std::vector<unsigned int> indice);
+	Mesh(std::vector<Vertex> vertice, std::vector<unsigned int> indice, std::vector<Texture> texture);
+	Mesh(std::vector<Vertex> vertice, std::vector<unsigned int> indice);
+	Mesh(Mesh const &mesh);
+	Mesh &operator=(Mesh const &mesh);
 
 	void render(Shader &shader);
 	void render() const noexcept;
 
 	~Mesh();
 
+	std::vector<Vertex>			vertice_;
+	std::vector<unsigned int>	indice_;
+	std::vector<Texture>		texture_;
+
 private:
 	eFlag						flag_;
 
-	std::vector<Vertex>			vertex_;
-	std::vector<unsigned int>	indice_;
-	std::vector<Texture>		texture_;
+
 
 	unsigned int				VAO;
 	unsigned int				VBO;
@@ -55,6 +67,4 @@ private:
 	static bool				debug_;
 
 	Mesh() = delete;
-	Mesh(Mesh const &Mesh) = delete;
-	Mesh &operator=(Mesh const &Mesh) = delete;
 };

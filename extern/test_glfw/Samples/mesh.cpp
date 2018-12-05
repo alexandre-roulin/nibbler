@@ -113,6 +113,9 @@ namespace Mirage
         std::map<GLuint, std::string> textures;
         auto diffuse  = process(path, scene->mMaterials[mesh->mMaterialIndex], aiTextureType_DIFFUSE);
         auto specular = process(path, scene->mMaterials[mesh->mMaterialIndex], aiTextureType_SPECULAR);
+
+        auto specular2 = process()
+
         textures.insert(diffuse.begin(), diffuse.end());
         textures.insert(specular.begin(), specular.end());
 
