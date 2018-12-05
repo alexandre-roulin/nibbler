@@ -18,7 +18,7 @@ public:
 	void	render() const;
 	void	render(Shader &shader);
 
-	std::vector<Mesh *>	mesh_;
+	std::vector<Mesh>	mesh_;
 	std::string			path_;
 	std::string			directory_;
 
@@ -28,7 +28,7 @@ private:
 	void 					loadModel_();
 
 	void					processNode_(aiNode *node, const aiScene *scene);
-	Mesh					*processMesh_(aiMesh *mesh, const aiScene *scene);
+	void					processMesh_(aiMesh *mesh, const aiScene *scene);
 	std::vector<Texture>	loadMaterialTextures_(aiMaterial *mat, aiTextureType type, Texture::eType eType);
 
     static bool				debug_;

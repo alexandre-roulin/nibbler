@@ -15,7 +15,7 @@ Glfw::Glfw(std::string const &name, uint16_t width, uint16_t height) {
         throw (Glfw::ConstructorException("GlfwConstructorException: window was not created"));
     }
     glfwMakeContextCurrent(window_);
-    gladLoadGL();
+    gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
     std::cout << "OpenGL " << glGetString(GL_VERSION) << std::endl;
 }
 

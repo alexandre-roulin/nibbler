@@ -25,7 +25,7 @@ void    Mesh::clean_() {
 	glDeleteVertexArrays(1, &VAO);
 	glDeleteBuffers(1, &VBO);
 }
-
+/*
 Mesh::Mesh(Mesh const &mesh) {
 	*this = mesh;
 }
@@ -37,7 +37,7 @@ Mesh &Mesh::operator=(Mesh const &mesh) {
 	}
 
 	return (*this);
-}
+}*/
 
 void	Mesh::render(Shader &shader) {
 	unsigned int diffuseNr = 1;

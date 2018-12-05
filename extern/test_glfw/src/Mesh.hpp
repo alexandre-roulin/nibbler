@@ -40,8 +40,8 @@ public:
 
 	Mesh(std::vector<Vertex> vertice, std::vector<unsigned int> indice, std::vector<Texture> texture);
 	Mesh(std::vector<Vertex> vertice, std::vector<unsigned int> indice);
-	Mesh(Mesh const &mesh);
-	Mesh &operator=(Mesh const &mesh);
+	/*Mesh(Mesh const &mesh);
+	Mesh &operator=(Mesh const &mesh);*/
 
 	void render(Shader &shader);
 	void render() const noexcept;

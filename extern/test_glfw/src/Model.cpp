@@ -18,11 +18,11 @@ void    Model::clean_() {
 
 void	Model::render() const {
     for(unsigned int i = 0; i < mesh_.size(); i++)
-        mesh_[i]->render();
+        mesh_[i].render();
 }
 void	Model::render(Shader &shader) {
     for(unsigned int i = 0; i < mesh_.size(); i++)
-        mesh_[i]->render(shader);
+        mesh_[i].render(shader);
 }
 
 void 					Model::loadModel_() {
@@ -40,7 +40,7 @@ void 					Model::loadModel_() {
 void					Model::processNode_(aiNode *node, const aiScene *scene) {
     for(unsigned int i = 0; i < node->mNumMeshes; i++)  {
         aiMesh *mesh = scene->mMeshes[node->mMeshes[i]];
-        mesh_.push_back(processMesh_(mesh, scene));
+        processMesh_(mesh, scene);
     }
     for(unsigned int i = 0; i < node->mNumChildren; i++) {
         processNode_(node->mChildren[i], scene);
@@ -54,7 +54,7 @@ void					Model::processNode_(aiNode *node, const aiScene *scene) {
 }
 
 
-Mesh					*Model::processMesh_(aiMesh *mesh, const aiScene *scene) {
+void					Model::processMesh_(aiMesh *mesh, const aiScene *scene) {
     std::vector<Vertex>         vertices;
     std::vector<unsigned int>   indices;
     std::vector<Texture>        textures;
@@ -63,7 +63,6 @@ Mesh					*Model::processMesh_(aiMesh *mesh, const aiScene *scene) {
         Vertex vertex;
 
         vertex.position = glm::vec3(mesh->mVertices[i].x, mesh->mVertices[i].y, mesh->mVertices[i].z);
-        /*
            vertex.normal = glm::vec3(mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z);
         if(mesh->mTextureCoords[0]) { // Each 1st column = a texture (Jusqu'a 8)
             vertex.uv = glm::vec2(mesh->mTextureCoords[0][i].x, mesh->mTextureCoords[0][i].y);
@@ -71,11 +70,6 @@ Mesh					*Model::processMesh_(aiMesh *mesh, const aiScene *scene) {
         else {
             vertex.uv = glm::vec2(0.0f, 0.0f);
         }
-        */
-		vertex.normal = glm::vec3(0.5f, 0.5f, 0.5f);
-		vertex.uv = glm::vec2(0.5f, 0.5f);
-
-
 		vertices.push_back(vertex);
     }
 
@@ -98,7 +92,7 @@ Mesh					*Model::processMesh_(aiMesh *mesh, const aiScene *scene) {
     std::vector<Texture> normalMaps = loadMaterialTextures_(material, aiTextureType_SPECULAR, Texture::eType::NORMAL);
     textures.insert(textures.end(), normalMaps.begin(), normalMaps.end());
 
-    return new Mesh(vertices, indices, textures);
+    mesh_.emplace_back(vertices, indices, textures);
 }
 
 std::vector<Texture>    Model::loadMaterialTextures_(aiMaterial *mat, aiTextureType type, Texture::eType eType)
