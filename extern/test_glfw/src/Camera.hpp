@@ -20,6 +20,7 @@ public:
 
 	void update();
 	void processPosition(Camera::Movement direction, float deltaTime);
+	void processPosition(glm::vec3 const &, float deltaTime);
 	void processMouseMovement(float xoffset, float yoffset, GLboolean constrainPitch = true);
 
 	glm::mat4 getViewMatrix() const;

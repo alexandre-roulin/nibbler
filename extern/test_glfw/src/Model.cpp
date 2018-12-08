@@ -18,9 +18,10 @@ Model::Model(std::string const &path) :
 	scaling_(1.f),
 	rotation_(0.f),
 	position_(0.f),
-	angle_(0.f) {
-    loadModel_();
+	speed_(1.f) {
+	loadModel_();
 	setupScaling_();
+	resetTransform_();
 }
 
 Model::~Model() {
@@ -67,7 +68,6 @@ void					Model::processNode_(aiNode *node, const aiScene *scene) {
     //for(unsigned int i = 0; i < scene->mMeshes.size(); i++) {
 	//    processMesh_(mesh, scene);
 	//}
-
 }
 
 
@@ -130,9 +130,6 @@ void			Model::setupScaling_()  {
 	glm::vec3	diff;
 	float		scaling;
 
-	std::cout << "positionMin_ : [" << positionMin_.x << "," << positionMin_.y << "," << positionMin_.z << "]" << std::endl;
-	std::cout << "positionMax_ : [" << positionMax_.x << "," << positionMax_.y << "," << positionMax_.z << "]" << std::endl;
-
 	diff = glm::abs(positionMin_ - positionMax_);
 	if (diff.x > diff.y && diff.x > diff.z)
 		scaling = 1.f / diff.x;
@@ -149,46 +146,56 @@ void			Model::setupScaling_()  {
 	diff = diff * 0.5f;
 	positionCenter_ = diff;
 
-	std::cout << "positionCenter_ : [" << positionCenter_.x << "," << positionCenter_.y << "," << positionCenter_.z << "]" << std::endl;
-	std::cout << "interScaling_ : [" << interScaling_ << "]" << std::endl;
-
-
 	updateTransform_();
 }
 
-glm::vec3	Model::getTranslation_()  {
-	glm::vec3	scaling;
-	float		same_scaling;
-	glm::vec3	negativeTrans;
+void	Model::translate(const glm::vec3 &axis, float deltaTime)  {
+	float velocity = speed_ * velocity;
 
-	if (flag_.test(Model::eFlag::SAME_SCALING))  {
-		same_scaling = interScaling_ * sameScaling_;
-		transform_ * same_scaling;
-		negativeTrans = positionCenter_ * interScaling_ * sameScaling_;
-	}
-	else {
-		scaling = scaling_ * interScaling_;
-		negativeTrans = positionCenter_ * scaling;
-		transform_ = glm::scale(transform_, scaling);
-	}
-	return (negativeTrans);
+	position_ += (axis * deltaTime);
+	updateTransform_();
+}
+void	Model::rotate(glm::vec3 const &axis, float angle, float deltaTime)  {
+	float velocity = speed_ * deltaTime;
+
+	rotate_ = glm::rotate(rotate_, (angle * velocity), axis);
+	updateTransform_();
+}
+void	Model::scale(glm::vec3 const &axis, float deltaTime)  {
+	float velocity = speed_ * deltaTime;
+
+	scaling_ += (axis * velocity);
+	updateTransform_();
+}
+void	Model::scale(float scale, float deltaTime)  {
+	float velocity = speed_ * deltaTime;
+
+	sameScaling_ += (scale * velocity);
+	updateTransform_();
+}
+
+void	Model::resetTransform_()  {
+	transform_ = glm::mat4(1.0f);
+	rotate_ = glm::mat4(1.0f);
+
+	scaling_ = glm::vec3(1.f);
+	sameScaling_ = 1.f;
+	position_ = glm::vec3(0.f);
+	updateTransform_();
 }
 
 void			Model::updateTransform_() {
-	glm::vec3	negative_trans;
-	glm::vec3	trans;
+	glm::mat4 scale(1.f);
 
-	transform_ = glm::mat4(1.0f);
-	negative_trans = getTranslation_();
-
-	trans = -negative_trans;
-
-	transform_ = glm::translate(transform_, negative_trans);
-	transform_ = glm::rotate(transform_, glm::radians(rotation_.x), glm::vec3(1.f, 0.f, 0.f));
-	transform_ = glm::rotate(transform_, glm::radians(rotation_.z), glm::vec3(0.f, 0.f, 1.f));
-	transform_ = glm::rotate(transform_, glm::radians(rotation_.y), glm::vec3(0.f, 1.f, 0.f));
-	transform_ = glm::translate(transform_, trans);
-	transform_ = glm::translate(transform_, position_);
+	if (flag_.test(Model::eFlag::SAME_SCALING))
+		scale = glm::scale(scale, glm::vec3(interScaling_ * sameScaling_));
+	else
+		scale = glm::scale(scale, (interScaling_ * scaling_));
+	transform_ = scale
+			* glm::translate(glm::mat4(1.f), position_)
+			* glm::translate(glm::mat4(1.f), positionCenter_)
+			* rotate_
+			* glm::translate(glm::mat4(1.f), -positionCenter_);
 }
 
 std::vector<Texture>    Model::loadMaterialTextures_(aiMaterial *mat, aiTextureType type, Texture::eType eType)
@@ -211,11 +218,6 @@ std::vector<Texture>    Model::loadMaterialTextures_(aiMaterial *mat, aiTextureT
 glm::mat4	Model::getTransform() const {
 	return (transform_);
 }
-void		Model::rotate(glm::vec3 const &rotate) {
-	rotation_ += rotate;
-	updateTransform_();
-}
-
 
 unsigned int Texture::TextureFromFile(const char *path, const std::string &directory)
 {

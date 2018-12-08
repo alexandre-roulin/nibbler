@@ -7,6 +7,7 @@
 #include "Mesh.hpp"
 #include <deque>
 #include <bitset>
+#include <glm/gtc/matrix_transform.hpp>
 
 class Shader;
 
@@ -19,12 +20,18 @@ public:
 	Model(std::string const &path);
 	~Model();
 
-	glm::mat4	getTransform() const;
-
-	void		rotate(glm::vec3 const &rotate);
 
 	void	render() const;
 	void	render(Shader &shader);
+
+	void	resetTransform_();
+	glm::mat4	getTransform() const;
+
+	void	translate(glm::vec3 const &axis, float deltaTime = 1.f);
+	void	rotate(glm::vec3 const &axis, float angle, float deltaTime = 1.f);
+	void	scale(glm::vec3 const &axis, float deltaTime = 1.f);
+	void	scale(float, float deltaTime = 1.f);
+
 
 private:
 	std::bitset<16>		flag_;
@@ -34,6 +41,7 @@ private:
 	std::string			directory_;
 
 	glm::mat4			transform_;
+	glm::mat4			rotate_;
 
 	glm::vec3			positionMax_;
 	glm::vec3			positionMin_;
@@ -45,13 +53,12 @@ private:
 	glm::vec3			rotation_;
 	glm::vec3			position_;
 
-	float				angle_;
+	float				speed_;
 
 
     void					clean_();
 	void 					loadModel_();
 	void					setupScaling_();
-	glm::vec3				getTranslation_();
 	void					updateTransform_();
 
 	void					processNode_(aiNode *node, const aiScene *scene);

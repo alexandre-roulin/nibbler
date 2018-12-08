@@ -2,7 +2,6 @@
 #include "Shader.hpp"
 
 #include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
 
@@ -143,12 +142,32 @@ int main(int argc, char **argv) {
 		if (glfwGetKey(glfw.getWindow(), GLFW_KEY_F) == GLFW_PRESS) {
 		}
 
+
+		if (glfwGetKey(glfw.getWindow(), GLFW_KEY_I) == GLFW_PRESS)
+			model.translate(glm::vec3(0.f, 0.f, 1.f) * deltaTime);
+			//model.processPosition(glm::vec3(0.f, 1.f, 0.f), deltaTime);
+		if (glfwGetKey(glfw.getWindow(), GLFW_KEY_K) == GLFW_PRESS)
+			model.translate(glm::vec3(0.f, 0.f, -1.f) * deltaTime);
+			//model.processPosition(glm::vec3(0.f, -1.f, 0.f), deltaTime);
+		if (glfwGetKey(glfw.getWindow(), GLFW_KEY_J) == GLFW_PRESS)
+			model.translate(glm::vec3(1.f, 0.f, 0.f) * deltaTime);
+			//model.processPosition(glm::vec3(-1.f, 0.f, 0.f), deltaTime);
+		if (glfwGetKey(glfw.getWindow(), GLFW_KEY_L) == GLFW_PRESS)
+			model.translate(glm::vec3(-1.f, 0.f, 0.f) * deltaTime);
+			//model.processPosition(glm::vec3(1.f, 0.f, 0.f), deltaTime);
+
+
 		if (glfwGetKey(glfw.getWindow(), GLFW_KEY_T) == GLFW_PRESS)
-			model.rotate(glm::vec3(1.f, 0.f, 0.f));
+			model.rotate(glm::vec3(1.f, 0.f, 0.f), deltaTime);
+			//model.processRotation(glm::vec3(1.f, 0.f, 0.f));
 		if (glfwGetKey(glfw.getWindow(), GLFW_KEY_G) == GLFW_PRESS)
-			model.rotate(glm::vec3(0.f, 1.f, 0.f));
+			model.rotate(glm::vec3(0.f, 1.f, 0.f), deltaTime);
+			//model.processRotation(glm::vec3(0.f, 1.f, 0.f));
 		if (glfwGetKey(glfw.getWindow(), GLFW_KEY_B) == GLFW_PRESS)
-			model.rotate(glm::vec3(0.f, 0.f, 1.f));
+			model.rotate(glm::vec3(0.f, 0.f, 1.f), deltaTime);
+			//model.processRotation(glm::vec3(0.f, 0.f, 1.f));
+
+			m_model = model.getTransform();
 
 		shader.setMat4("projection", projection);
 		shader.setMat4("view", view);
