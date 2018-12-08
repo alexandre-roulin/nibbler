@@ -113,14 +113,17 @@ int main(int argc, char **argv) {
 	float deltaTime = 0.0f;
 	float lastFrame = 0.0f;
 
-    while (!glfw.exit()) {
+	camera.processPosition(Camera::Movement::BACKWARD, 1.f);
+
+
+	while (!glfw.exit()) {
 
 		float currentFrame = glfwGetTime();
 		deltaTime = currentFrame - lastFrame;
 		lastFrame = currentFrame;
 
 		view = camera.getViewMatrix();
-
+		m_model = model.getTransform();
 
 		camera.update();
 		glfw.update();
@@ -140,8 +143,12 @@ int main(int argc, char **argv) {
 		if (glfwGetKey(glfw.getWindow(), GLFW_KEY_F) == GLFW_PRESS) {
 		}
 
+		if (glfwGetKey(glfw.getWindow(), GLFW_KEY_T) == GLFW_PRESS)
+			model.rotate(glm::vec3(1.f, 0.f, 0.f));
 		if (glfwGetKey(glfw.getWindow(), GLFW_KEY_G) == GLFW_PRESS)
-			m_model = glm::rotate(m_model, glm::radians(-1.0f), glm::vec3(0.f, -1.0f, -0.0f));
+			model.rotate(glm::vec3(0.f, 1.f, 0.f));
+		if (glfwGetKey(glfw.getWindow(), GLFW_KEY_B) == GLFW_PRESS)
+			model.rotate(glm::vec3(0.f, 0.f, 1.f));
 
 		shader.setMat4("projection", projection);
 		shader.setMat4("view", view);

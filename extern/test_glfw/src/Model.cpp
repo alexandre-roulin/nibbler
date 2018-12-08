@@ -3,11 +3,24 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 #include <glad/glad.h>
+#include <glm/gtc/matrix_transform.hpp>
 #include <GLFW/glfw3.h>
+#define GLM_ENABLE_EXPERIMENTAL
+#include <glm/gtx/euler_angles.hpp>
+
 
 Model::Model(std::string const &path) :
-    path_(path){
+	flag_(0),
+    path_(path),
+    transform_(glm::mat4(1.f)),
+	interScaling_(1.f),
+	sameScaling_(1.f),
+	scaling_(1.f),
+	rotation_(0.f),
+	position_(0.f),
+	angle_(0.f) {
     loadModel_();
+	setupScaling_();
 }
 
 Model::~Model() {
@@ -28,8 +41,7 @@ void	Model::render(Shader &shader) {
 
 void 					Model::loadModel_() {
     Assimp::Importer import;
-    const aiScene *scene = import.ReadFile(path_, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
-    //aiProcess_Triangulate | aiProcess_GenUVCoords | aiProcess_GenNormals | aiProcess_FlipUVs);
+    const aiScene *scene = import.ReadFile(path_, aiProcess_Triangulate | aiProcess_GenUVCoords | aiProcess_GenNormals | aiProcess_FlipUVs);
     if(!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)  {
         std::cerr << "ERROR::ASSIMP::" << import.GetErrorString() << std::endl;
         return ;
@@ -68,42 +80,31 @@ void					Model::processMesh_(aiMesh *mesh, const aiScene *scene) {
     for(unsigned int i = 0; i < mesh->mNumVertices; i++)  {
         Vertex vertex;
 
-        /*
         vertex.position = glm::vec3(mesh->mVertices[i].x, mesh->mVertices[i].y, mesh->mVertices[i].z);
-           vertex.normal = glm::vec3(mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z);
-        if(mesh->mTextureCoords[0]) { // Each 1st column = a texture (Jusqu'a 8)
+        vertex.normal = glm::vec3(mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z);
+        if(mesh->mTextureCoords[0])// Each 1st column = a texture (Jusqu'a 8)
             vertex.uv = glm::vec2(mesh->mTextureCoords[0][i].x, mesh->mTextureCoords[0][i].y);
-        }
-        else {
+        else
             vertex.uv = glm::vec2(0.0f, 0.0f);
-        }
-		vertices.push_back(vertex);*/
-
-		glm::vec3 vector; // we declare a placeholder vector since assimp uses its own vector class that doesn't directly convert to glm's vec3 class so we transfer the data to this placeholder glm::vec3 first.
-		// positions
-		vector.x = mesh->mVertices[i].x;
-		vector.y = mesh->mVertices[i].y;
-		vector.z = mesh->mVertices[i].z;
-		vertex.position = vector;
-		// normals
-		vector.x = mesh->mNormals[i].x;
-		vector.y = mesh->mNormals[i].y;
-		vector.z = mesh->mNormals[i].z;
-		vertex.normal = vector;
-		// texture coordinates
-		if(mesh->mTextureCoords[0]) // does the mesh contain texture coordinates?
-		{
-			glm::vec2 vec;
-			// a vertex can contain up to 8 different texture coordinates. We thus make the assumption that we won't
-			// use models where a vertex can have multiple texture coordinates so we always take the first set (0).
-			vec.x = mesh->mTextureCoords[0][i].x;
-			vec.y = mesh->mTextureCoords[0][i].y;
-			vertex.uv = vec;
-		}
-		else
-			vertex.uv = glm::vec2(0.0f, 0.0f);
-
 		vertices.push_back(vertex);
+
+        if (!i)
+        	positionMax_ = positionMin_ = vertex.position;
+        else {
+        	if (vertex.position.x > positionMax_.x)
+        		positionMax_.x = vertex.position.x;
+			if (vertex.position.y > positionMax_.y)
+				positionMax_.y = vertex.position.y;
+			if (vertex.position.z > positionMax_.z)
+				positionMax_.z = vertex.position.z;
+
+			if (vertex.position.x < positionMin_.x)
+				positionMin_.x = vertex.position.x;
+			if (vertex.position.y < positionMin_.y)
+				positionMin_.y = vertex.position.y;
+			if (vertex.position.z < positionMin_.z)
+				positionMin_.z = vertex.position.z;
+        }
     }
 
 
@@ -125,6 +126,71 @@ void					Model::processMesh_(aiMesh *mesh, const aiScene *scene) {
     mesh_.emplace_back(vertices, indices, textures);
 }
 
+void			Model::setupScaling_()  {
+	glm::vec3	diff;
+	float		scaling;
+
+	std::cout << "positionMin_ : [" << positionMin_.x << "," << positionMin_.y << "," << positionMin_.z << "]" << std::endl;
+	std::cout << "positionMax_ : [" << positionMax_.x << "," << positionMax_.y << "," << positionMax_.z << "]" << std::endl;
+
+	diff = glm::abs(positionMin_ - positionMax_);
+	if (diff.x > diff.y && diff.x > diff.z)
+		scaling = 1.f / diff.x;
+	else if (diff.y > diff.x && diff.y > diff.z)
+		scaling = 1.f / diff.y;
+	else
+		scaling = 1.f / diff.z;
+	positionMin_ = -positionMin_;
+	diff = positionMax_ - positionMin_;
+	diff.x = positionMax_.x - positionMin_.x;
+	diff.y = positionMax_.y - positionMin_.y;
+	diff.z = positionMax_.z - positionMin_.z;
+	interScaling_ = scaling;
+	diff = diff * 0.5f;
+	positionCenter_ = diff;
+
+	std::cout << "positionCenter_ : [" << positionCenter_.x << "," << positionCenter_.y << "," << positionCenter_.z << "]" << std::endl;
+	std::cout << "interScaling_ : [" << interScaling_ << "]" << std::endl;
+
+
+	updateTransform_();
+}
+
+glm::vec3	Model::getTranslation_()  {
+	glm::vec3	scaling;
+	float		same_scaling;
+	glm::vec3	negativeTrans;
+
+	if (flag_.test(Model::eFlag::SAME_SCALING))  {
+		same_scaling = interScaling_ * sameScaling_;
+		transform_ * same_scaling;
+		negativeTrans = positionCenter_ * interScaling_ * sameScaling_;
+	}
+	else {
+		scaling = scaling_ * interScaling_;
+		negativeTrans = positionCenter_ * scaling;
+		transform_ = glm::scale(transform_, scaling);
+	}
+	return (negativeTrans);
+}
+
+void			Model::updateTransform_() {
+	glm::vec3	negative_trans;
+	glm::vec3	trans;
+
+	transform_ = glm::mat4(1.0f);
+	negative_trans = getTranslation_();
+
+	trans = -negative_trans;
+
+	transform_ = glm::translate(transform_, negative_trans);
+	transform_ = glm::rotate(transform_, glm::radians(rotation_.x), glm::vec3(1.f, 0.f, 0.f));
+	transform_ = glm::rotate(transform_, glm::radians(rotation_.z), glm::vec3(0.f, 0.f, 1.f));
+	transform_ = glm::rotate(transform_, glm::radians(rotation_.y), glm::vec3(0.f, 1.f, 0.f));
+	transform_ = glm::translate(transform_, trans);
+	transform_ = glm::translate(transform_, position_);
+}
+
 std::vector<Texture>    Model::loadMaterialTextures_(aiMaterial *mat, aiTextureType type, Texture::eType eType)
 {
     std::vector<Texture> textures;
@@ -139,8 +205,17 @@ std::vector<Texture>    Model::loadMaterialTextures_(aiMaterial *mat, aiTextureT
         texture.path = std::string(str.C_Str());
         textures.push_back(texture);
     }
-    return textures;
+    return (textures);
 }
+
+glm::mat4	Model::getTransform() const {
+	return (transform_);
+}
+void		Model::rotate(glm::vec3 const &rotate) {
+	rotation_ += rotate;
+	updateTransform_();
+}
+
 
 unsigned int Texture::TextureFromFile(const char *path, const std::string &directory)
 {
