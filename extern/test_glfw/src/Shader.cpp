@@ -91,10 +91,14 @@ Shader &Shader::link()
 	return *this;
 }
 
-void		Shader::setFloat(const std::string &name, float value) const
-{
+void		Shader::setFloat(const std::string &name, float value) const {
 	glUniform1f(glGetUniformLocation(program_, name.c_str()), value);
 }
+
+GLuint 		Shader::getId() const {
+	return (program_);
+}
+
 
 void		Shader::setMat4(const std::string &name, const glm::mat4 &mat) const  {
 	if (glGetUniformLocation(program_, name.c_str()) == -1) {

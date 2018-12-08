@@ -1,0 +1,1 @@
+C:\Users\ntoniolo\CLionProjects\nibbler\extern\test_glfw\resources\objects\nanosuit\nanosuit.obj

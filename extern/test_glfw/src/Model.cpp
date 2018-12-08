@@ -1,5 +1,6 @@
 #include "Model.hpp"
 #include <iostream>
+#define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -27,12 +28,17 @@ void	Model::render(Shader &shader) {
 
 void 					Model::loadModel_() {
     Assimp::Importer import;
-    const aiScene *scene = import.ReadFile(path_, aiProcess_Triangulate | aiProcess_GenUVCoords | aiProcess_GenNormals | aiProcess_FlipUVs);
+    const aiScene *scene = import.ReadFile(path_, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
+    //aiProcess_Triangulate | aiProcess_GenUVCoords | aiProcess_GenNormals | aiProcess_FlipUVs);
     if(!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)  {
         std::cerr << "ERROR::ASSIMP::" << import.GetErrorString() << std::endl;
         return ;
     }
+#ifdef __APPLE__
     directory_ = path_.substr(0, path_.find_last_of('/'));
+#else
+    directory_ = path_.substr(0, path_.find_last_of("\\"));
+#endif
     processNode_(scene->mRootNode, scene);
 
 }
@@ -46,11 +52,10 @@ void					Model::processNode_(aiNode *node, const aiScene *scene) {
         processNode_(node->mChildren[i], scene);
     }
 
-    /*
-    for(unsigned int i = 0; i < scene->mMeshes.size(); i++) {
-        mesh_.push_back(processMesh_(scene->mMeshes[i], scene));
-    }
-    */
+    //for(unsigned int i = 0; i < scene->mMeshes.size(); i++) {
+	//    processMesh_(mesh, scene);
+	//}
+
 }
 
 
@@ -59,9 +64,11 @@ void					Model::processMesh_(aiMesh *mesh, const aiScene *scene) {
     std::vector<unsigned int>   indices;
     std::vector<Texture>        textures;
 
+	std::cout << "node NumMeshes : " << mesh->mNumVertices << std::endl;
     for(unsigned int i = 0; i < mesh->mNumVertices; i++)  {
         Vertex vertex;
 
+        /*
         vertex.position = glm::vec3(mesh->mVertices[i].x, mesh->mVertices[i].y, mesh->mVertices[i].z);
            vertex.normal = glm::vec3(mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z);
         if(mesh->mTextureCoords[0]) { // Each 1st column = a texture (Jusqu'a 8)
@@ -70,6 +77,32 @@ void					Model::processMesh_(aiMesh *mesh, const aiScene *scene) {
         else {
             vertex.uv = glm::vec2(0.0f, 0.0f);
         }
+		vertices.push_back(vertex);*/
+
+		glm::vec3 vector; // we declare a placeholder vector since assimp uses its own vector class that doesn't directly convert to glm's vec3 class so we transfer the data to this placeholder glm::vec3 first.
+		// positions
+		vector.x = mesh->mVertices[i].x;
+		vector.y = mesh->mVertices[i].y;
+		vector.z = mesh->mVertices[i].z;
+		vertex.position = vector;
+		// normals
+		vector.x = mesh->mNormals[i].x;
+		vector.y = mesh->mNormals[i].y;
+		vector.z = mesh->mNormals[i].z;
+		vertex.normal = vector;
+		// texture coordinates
+		if(mesh->mTextureCoords[0]) // does the mesh contain texture coordinates?
+		{
+			glm::vec2 vec;
+			// a vertex can contain up to 8 different texture coordinates. We thus make the assumption that we won't
+			// use models where a vertex can have multiple texture coordinates so we always take the first set (0).
+			vec.x = mesh->mTextureCoords[0][i].x;
+			vec.y = mesh->mTextureCoords[0][i].y;
+			vertex.uv = vec;
+		}
+		else
+			vertex.uv = glm::vec2(0.0f, 0.0f);
+
 		vertices.push_back(vertex);
     }
 
@@ -88,9 +121,6 @@ void					Model::processMesh_(aiMesh *mesh, const aiScene *scene) {
 
     std::vector<Texture> specularMaps = loadMaterialTextures_(material, aiTextureType_SPECULAR, Texture::eType::SPECULAR);
     textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
-
-    std::vector<Texture> normalMaps = loadMaterialTextures_(material, aiTextureType_SPECULAR, Texture::eType::NORMAL);
-    textures.insert(textures.end(), normalMaps.begin(), normalMaps.end());
 
     mesh_.emplace_back(vertices, indices, textures);
 }
@@ -121,7 +151,11 @@ unsigned int Texture::TextureFromFile(const char *path, const std::string &direc
     int                 width, height, nrComponents;
 
     filename = std::string(path);
+#ifdef __APPLE__
     filename = directory + '/' + filename;
+#else
+    filename = directory + "\\" + filename;
+#endif
     glGenTextures(1, &textureID);
 
     data = stbi_load(filename.c_str(), &width, &height, &nrComponents, 0);
@@ -147,6 +181,7 @@ unsigned int Texture::TextureFromFile(const char *path, const std::string &direc
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        std::cout << "Texture : " << path << std::endl;
     }
     else
         std::cerr << "Texture failed to load at path: " << path << std::endl;

@@ -1,3 +1,4 @@
+
 #include "Mesh.hpp"
 #include "Shader.hpp"
 #include <iostream>
@@ -25,26 +26,29 @@ void    Mesh::clean_() {
 	glDeleteVertexArrays(1, &VAO);
 	glDeleteBuffers(1, &VBO);
 }
-/*
-Mesh::Mesh(Mesh const &mesh) {
-	*this = mesh;
-}
-Mesh &Mesh::operator=(Mesh const &mesh) {
-	if (this != &mesh) {
-		vertice_ = mesh.vertice_;
-		indice_ = mesh.indice_;
-		texture_ = mesh.texture_;
-	}
 
-	return (*this);
-}*/
+//Mesh::Mesh(Mesh const &mesh) {
+//	*this = mesh;
+//}
+//Mesh &Mesh::operator=(Mesh const &mesh) {
+//	if (this != &mesh) {
+//		vertice_ = mesh.vertice_;
+//		indice_ = mesh.indice_;
+//		texture_ = mesh.texture_;
+//	}
+//
+//	return (*this);
+//}
 
 void	Mesh::render(Shader &shader) {
 	unsigned int diffuseNr = 1;
 	unsigned int specularNr = 1;
 	unsigned int normalNr = 1;
 
+	std::cout << "render" << std::endl;
+
 	for(unsigned int i = 0; i < texture_.size(); i++) {
+
 		glActiveTexture(GL_TEXTURE0 + i);
 		std::string number;
 		std::string name;
@@ -54,16 +58,11 @@ void	Mesh::render(Shader &shader) {
 		if (texture_[i].type == Texture::eType::DIFFUSE) {
 			name = "texture_diffuse";
 		}
-		if (texture_[i].type == Texture::eType::NORMAL) {
-			name = "texture_normal";
-		}
 
 		if(name == "texture_diffuse")
 			number = std::to_string(diffuseNr++);
 		else if(name == "texture_specular")
 			number = std::to_string(specularNr++);
-		else if(name == "texture_normal")
-			number = std::to_string(normalNr++);
 		shader.setFloat(("material." + name + number).c_str(), i);
 		glBindTexture(GL_TEXTURE_2D, texture_[i].id);
 	}
@@ -73,32 +72,45 @@ void	Mesh::render(Shader &shader) {
 
 void	Mesh::render() const noexcept {
 
+	std::cout << "VAO" << std::endl;
 	glBindVertexArray(VAO);
+	std::cout << "GL_TRIANGLES " << indice_.size() << std::endl;
 	glDrawElements(GL_TRIANGLES, indice_.size(), GL_UNSIGNED_INT, 0);
+	std::cout << "glBindVertexArray" << std::endl;
 	glBindVertexArray(0);
 }
 
 
 void	Mesh::setupMesh_() {
+
+
 	glGenVertexArrays(1, &VAO);
-	glGenBuffers(1, &VBO);
-	glGenBuffers(1, &EBO);
 	glBindVertexArray(VAO);
+
+	glGenBuffers(1, &VBO);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferData(GL_ARRAY_BUFFER, vertice_.size() * sizeof(Vertex), &vertice_[0], GL_STATIC_DRAW);
+
+
+	glGenBuffers(1, &EBO);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indice_.size() * sizeof(unsigned int), &indice_[0], GL_STATIC_DRAW);
 
 
-	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void *)offsetof(Vertex, position));
-
-	glEnableVertexAttribArray(1);
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void *)offsetof(Vertex, normal));
-
-	glEnableVertexAttribArray(2);
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void *)offsetof(Vertex, uv));
+
+
+	glEnableVertexAttribArray(0);
+	glEnableVertexAttribArray(1);
+	glEnableVertexAttribArray(2);
+
 	glBindVertexArray(0);
+
+
+	glDeleteBuffers(1, & VBO);
+	glDeleteBuffers(1, & EBO);
 }
 
 bool        Mesh::debug_ = true;

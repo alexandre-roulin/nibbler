@@ -5,6 +5,7 @@
 #include <assimp/postprocess.h>
 #include <assimp/scene.h>
 #include "Mesh.hpp"
+#include <deque>
 
 class Shader;
 
@@ -18,7 +19,7 @@ public:
 	void	render() const;
 	void	render(Shader &shader);
 
-	std::vector<Mesh>	mesh_;
+	std::deque<Mesh>	mesh_;
 	std::string			path_;
 	std::string			directory_;
 
