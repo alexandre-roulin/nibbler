@@ -31,6 +31,7 @@ public:
 
 private:
     GLFWwindow     *window_;
+    bool            cursor_;
 
     void            clean_();
 

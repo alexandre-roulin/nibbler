@@ -8,7 +8,7 @@ class Shader;
 
 struct Vertex {
 
-	/*Vertex() noexcept :
+	Vertex() noexcept :
 			position(glm::vec3(0.0f)),
 			normal(glm::vec3(0.0f)),
 			uv(glm::vec2(0.0f)) {};
@@ -16,7 +16,7 @@ struct Vertex {
 	Vertex(glm::vec3 position, glm::vec3 normal, glm::vec2 uv) noexcept :
 			position(position),
 			normal(normal),
-			uv(uv) {};*/
+			uv(uv) {};
 
 	glm::vec3		position;
 	glm::vec3		normal;
@@ -40,20 +40,18 @@ public:
 
 	Mesh(std::vector<Vertex> vertice, std::vector<unsigned int> indice, std::vector<Texture> texture);
 	Mesh(std::vector<Vertex> vertice, std::vector<unsigned int> indice);
-	//Mesh(Mesh const &mesh);
-	//Mesh &operator=(Mesh const &mesh);
 
 	void render(Shader &shader);
 	void render() const noexcept;
 
 	~Mesh();
 
+private:
+
+	eFlag						flag_;
 	std::vector<Vertex>			vertice_;
 	std::vector<unsigned int>	indice_;
 	std::vector<Texture>		texture_;
-
-private:
-	eFlag						flag_;
 
 
 

@@ -27,25 +27,10 @@ void    Mesh::clean_() {
 	glDeleteBuffers(1, &VBO);
 }
 
-//Mesh::Mesh(Mesh const &mesh) {
-//	*this = mesh;
-//}
-//Mesh &Mesh::operator=(Mesh const &mesh) {
-//	if (this != &mesh) {
-//		vertice_ = mesh.vertice_;
-//		indice_ = mesh.indice_;
-//		texture_ = mesh.texture_;
-//	}
-//
-//	return (*this);
-//}
-
 void	Mesh::render(Shader &shader) {
 	unsigned int diffuseNr = 1;
 	unsigned int specularNr = 1;
 	unsigned int normalNr = 1;
-
-	std::cout << "render" << std::endl;
 
 	for(unsigned int i = 0; i < texture_.size(); i++) {
 
@@ -72,11 +57,8 @@ void	Mesh::render(Shader &shader) {
 
 void	Mesh::render() const noexcept {
 
-	std::cout << "VAO" << std::endl;
 	glBindVertexArray(VAO);
-	std::cout << "GL_TRIANGLES " << indice_.size() << std::endl;
 	glDrawElements(GL_TRIANGLES, indice_.size(), GL_UNSIGNED_INT, 0);
-	std::cout << "glBindVertexArray" << std::endl;
 	glBindVertexArray(0);
 }
 

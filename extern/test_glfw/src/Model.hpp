@@ -19,11 +19,10 @@ public:
 	void	render() const;
 	void	render(Shader &shader);
 
+private:
 	std::deque<Mesh>	mesh_;
 	std::string			path_;
 	std::string			directory_;
-
-private:
 
     void					clean_();
 	void 					loadModel_();

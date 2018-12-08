@@ -1,6 +1,7 @@
 #include "Glfw.hpp"
 #include <iostream>
-Glfw::Glfw(std::string const &name, uint16_t width, uint16_t height) {
+Glfw::Glfw(std::string const &name, uint16_t width, uint16_t height) :
+    cursor_(true) {
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
@@ -30,6 +31,14 @@ void    Glfw::clean_() {
 void            Glfw::update() {
     if (glfwGetKey(window_, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window_, true);
+    if (glfwGetKey(window_, GLFW_KEY_SPACE) == GLFW_PRESS) {
+        if (cursor_)
+            glfwSetInputMode(window_, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+        else
+            glfwSetInputMode(window_, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+        cursor_ = !cursor_;
+    }
+
 }
 
 void            Glfw::render() {
