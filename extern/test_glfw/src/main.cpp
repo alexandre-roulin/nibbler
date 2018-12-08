@@ -114,12 +114,29 @@ int main(int argc, char **argv) {
 
 	camera.processPosition(Camera::Movement::BACKWARD, 1.f);
 
+	Model block("/Users/ntoniolo/CLionProjects/nibbler/extern/test_glfw/resources/untitled.obj");
+
+	block.scale(glm::vec3(-0.40f));
+
+	bool second = true;
+	float time = 0.f;
+
+	model.translate(glm::vec3(0.f, 0.f, 0.5f));
+
+	glm::vec3 nextDirection = glm::vec3(0.f, 1.f, 0.f);
+	glm::vec3 currentDirection = glm::vec3(0.f, 1.f, 0.f);
 
 	while (!glfw.exit()) {
 
 		float currentFrame = glfwGetTime();
 		deltaTime = currentFrame - lastFrame;
 		lastFrame = currentFrame;
+		time += deltaTime;
+		if (time > 1.f) {
+			time -= 1.f;
+			second = true;
+			currentDirection = nextDirection;
+		}
 
 		view = camera.getViewMatrix();
 		m_model = model.getTransform();
@@ -142,45 +159,60 @@ int main(int argc, char **argv) {
 		if (glfwGetKey(glfw.getWindow(), GLFW_KEY_F) == GLFW_PRESS) {
 		}
 
-
 		if (glfwGetKey(glfw.getWindow(), GLFW_KEY_I) == GLFW_PRESS)
 			model.translate(glm::vec3(0.f, 0.f, 1.f) * deltaTime);
-			//model.processPosition(glm::vec3(0.f, 1.f, 0.f), deltaTime);
 		if (glfwGetKey(glfw.getWindow(), GLFW_KEY_K) == GLFW_PRESS)
 			model.translate(glm::vec3(0.f, 0.f, -1.f) * deltaTime);
-			//model.processPosition(glm::vec3(0.f, -1.f, 0.f), deltaTime);
 		if (glfwGetKey(glfw.getWindow(), GLFW_KEY_J) == GLFW_PRESS)
 			model.translate(glm::vec3(1.f, 0.f, 0.f) * deltaTime);
-			//model.processPosition(glm::vec3(-1.f, 0.f, 0.f), deltaTime);
 		if (glfwGetKey(glfw.getWindow(), GLFW_KEY_L) == GLFW_PRESS)
 			model.translate(glm::vec3(-1.f, 0.f, 0.f) * deltaTime);
-			//model.processPosition(glm::vec3(1.f, 0.f, 0.f), deltaTime);
-
 
 		if (glfwGetKey(glfw.getWindow(), GLFW_KEY_T) == GLFW_PRESS)
 			model.rotate(glm::vec3(1.f, 0.f, 0.f), deltaTime);
-			//model.processRotation(glm::vec3(1.f, 0.f, 0.f));
 		if (glfwGetKey(glfw.getWindow(), GLFW_KEY_G) == GLFW_PRESS)
 			model.rotate(glm::vec3(0.f, 1.f, 0.f), deltaTime);
-			//model.processRotation(glm::vec3(0.f, 1.f, 0.f));
 		if (glfwGetKey(glfw.getWindow(), GLFW_KEY_B) == GLFW_PRESS)
 			model.rotate(glm::vec3(0.f, 0.f, 1.f), deltaTime);
-			//model.processRotation(glm::vec3(0.f, 0.f, 1.f));
 
-			m_model = model.getTransform();
+
+		if (glfwGetKey(glfw.getWindow(), GLFW_KEY_KP_8) == GLFW_PRESS) {
+			nextDirection = glm::vec3(0.f, 1.f, 0.f);
+		}
+		if (glfwGetKey(glfw.getWindow(), GLFW_KEY_KP_5) == GLFW_PRESS) {
+			nextDirection = glm::vec3(0.f, -1.f, 0.f);
+		}
+		if (glfwGetKey(glfw.getWindow(), GLFW_KEY_KP_4) == GLFW_PRESS) {
+			nextDirection = glm::vec3(-1.f, 0.f, 0.f);
+		}
+		if (glfwGetKey(glfw.getWindow(), GLFW_KEY_KP_6) == GLFW_PRESS) {
+			nextDirection = glm::vec3(1.f, 0.f, 0.f);
+		}
+
+		model.translate(currentDirection * deltaTime);
+
+
+
+		m_model = model.getTransform();
+
+
 
 		shader.setMat4("projection", projection);
 		shader.setMat4("view", view);
 		shader.setMat4("model", m_model);
-
-		GLint total_mem_kb = 0;
-		glGetIntegerv(0x9048, &total_mem_kb);
-		GLint cur_avail_mem_kb = 0;
-		glGetIntegerv(0x9049, &cur_avail_mem_kb);
-		//std::cout << "total_mem_kb : " << total_mem_kb << std::endl;
-		//std::cout << "cur_avail_mem_kb : " << cur_avail_mem_kb << std::endl;
-
 		model.render(shader);
+
+		for (int y = 0; y < 10; y++) {
+			for (int x = 0; x < 10; x++) {
+				block.resetTransform();
+				block.translate(glm::vec3(y, x, 0.f));
+				block.scale(glm::vec3(-0.10f));
+				m_model = block.getTransform();
+				shader.setMat4("model", m_model);
+
+				block.render(shader);
+			}
+		}
 
         glfw.render();
     }

@@ -24,7 +24,7 @@ public:
 	void	render() const;
 	void	render(Shader &shader);
 
-	void	resetTransform_();
+	void		resetTransform();
 	glm::mat4	getTransform() const;
 
 	void	translate(glm::vec3 const &axis, float deltaTime = 1.f);

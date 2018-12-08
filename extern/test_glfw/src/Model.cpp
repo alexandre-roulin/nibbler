@@ -21,7 +21,7 @@ Model::Model(std::string const &path) :
 	speed_(1.f) {
 	loadModel_();
 	setupScaling_();
-	resetTransform_();
+	resetTransform();
 }
 
 Model::~Model() {
@@ -150,9 +150,9 @@ void			Model::setupScaling_()  {
 }
 
 void	Model::translate(const glm::vec3 &axis, float deltaTime)  {
-	float velocity = speed_ * velocity;
+	float velocity = speed_ * deltaTime;
 
-	position_ += (axis * deltaTime);
+	position_ += (axis * velocity);
 	updateTransform_();
 }
 void	Model::rotate(glm::vec3 const &axis, float angle, float deltaTime)  {
@@ -174,25 +174,24 @@ void	Model::scale(float scale, float deltaTime)  {
 	updateTransform_();
 }
 
-void	Model::resetTransform_()  {
+void	Model::resetTransform() {
 	transform_ = glm::mat4(1.0f);
 	rotate_ = glm::mat4(1.0f);
-
 	scaling_ = glm::vec3(1.f);
 	sameScaling_ = 1.f;
 	position_ = glm::vec3(0.f);
 	updateTransform_();
 }
 
-void			Model::updateTransform_() {
+void	Model::updateTransform_() {
 	glm::mat4 scale(1.f);
 
 	if (flag_.test(Model::eFlag::SAME_SCALING))
 		scale = glm::scale(scale, glm::vec3(interScaling_ * sameScaling_));
 	else
 		scale = glm::scale(scale, (interScaling_ * scaling_));
-	transform_ = scale
-			* glm::translate(glm::mat4(1.f), position_)
+	transform_ = glm::translate(glm::mat4(1.f), position_)
+			* scale
 			* glm::translate(glm::mat4(1.f), positionCenter_)
 			* rotate_
 			* glm::translate(glm::mat4(1.f), -positionCenter_);
