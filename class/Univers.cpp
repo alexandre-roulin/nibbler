@@ -17,14 +17,13 @@ Univers::Univers()
 		  timer_loop(boost::asio::deadline_timer(io_loop,
 												 boost::posix_time::milliseconds(
 														 100))),
-		  mapSize(MAP_MIN),
+		  mapSize(MAP_DEFAULT),
 		  gameSpeed(80),
 		  dlHandleDisplay(nullptr),
 		  dlHandleSound(nullptr),
 		  display(nullptr),
 		  sound(nullptr),
 		  borderless(false) {
-
 
 	world_ = nullptr;
 	core_ = nullptr; //std::make_unique<Core>(*this)
@@ -59,15 +58,6 @@ bool Univers::load_external_sound_library(std::string const &title,
 bool Univers::load_external_display_library(std::string const &title,
 											std::string const &libPath) {
 
-	if (display != nullptr && dlHandleDisplay != nullptr) {
-		if (deleteDisplay) {
-			deleteDisplay(display);
-			deleteDisplay = nullptr;
-			newDisplay = nullptr;
-		}
-		dlclose(dlHandleDisplay);
-	}
-
 	if (!(dlHandleDisplay = dlopen(libPath.c_str(), RTLD_LAZY | RTLD_LOCAL)))
 		return (dlError());
 
@@ -85,7 +75,8 @@ bool Univers::load_external_display_library(std::string const &title,
 							   mapSize, title.c_str())))
 		return (false);
 
-	display->setBackground(world_->grid);
+	if (world_ != nullptr)
+		display->setBackground(world_->grid);
 
 	if (world_ != nullptr)
 		world_->setDisplay(display);
@@ -148,25 +139,28 @@ void Univers::loop() {
 	world_->getSystemsManager().addSystem<FoodCreationSystem>();
 	world_->getSystemsManager().addSystem<FoodEatSystem>();
 
-	world_->getEventsManager().emitEvent<StartEvent>();
-	world_->getEventsManager().destroyEvents();
-	manage_start();
-	log_success("Univers::loop");
 
+	manage_start();
+
+	log_success("Univers::async_wait");
 	timer_loop.async_wait(boost::bind(&Univers::loop_world, this));
-	boost::thread thread(boost::bind(&boost::asio::io_service::run, &io_loop));
+	thread = boost::thread(boost::bind(&boost::asio::io_service::run, &io_loop));
+	log_success("Univers::detach");
 	thread.detach();
+	log_success("Univers::loop");
 
 	world_->grid.clear();
 	playMusic("./ressource/sound/zelda.ogg");
 
-	while (display == nullptr || !display->exit()) {
+	while ((display == nullptr || !display->exit()) && !clientTCP_->all_snake_is_dead()) {
 		if (display != nullptr) {
 			display->update();
 			display->drawGrid(world_->grid); //TODO REFRESH WITH CACHE
 			display->render();
 		}
 	}
+	unload_external_library();
+	world_ = nullptr;
 }
 
 void Univers::loop_world() {
@@ -210,10 +204,12 @@ void Univers::loop_world() {
 	world_->getEventsManager().destroy<FoodEat>();
 
 	std::cout << "timer_loop" << std::endl;
-	timer_loop.expires_at(
-			timer_loop.expires_at() +
-			boost::posix_time::milliseconds(gameSpeed));
-	timer_loop.async_wait(boost::bind(&Univers::loop_world, this));
+	if (!clientTCP_->all_snake_is_dead()) {
+		timer_loop.expires_at(
+				timer_loop.expires_at() +
+				boost::posix_time::milliseconds(gameSpeed));
+		timer_loop.async_wait(boost::bind(&Univers::loop_world, this));
+	}
 }
 
 void Univers::create_ui() {
@@ -308,10 +304,7 @@ bool Univers::isBorderless() const {
 }
 
 void Univers::setBorderless(bool borderless) {
-	if (borderless != Univers::borderless) { // TODO SUPER MOCHE
-		clientTCP_->write_socket(ClientTCP::add_prefix(BORDERLESS, &borderless));
 		Univers::borderless = borderless;
-	}
 }
 
 bool Univers::load_extern_lib_display(Univers::eDisplay eLib) {
@@ -319,7 +312,6 @@ bool Univers::load_extern_lib_display(Univers::eDisplay eLib) {
 		case EXTERN_LIB_SFML : {
 			return load_external_display_library(std::string("Nibbler - SFML"),
 										  std::string(PATH_DISPLAY_LIBRARY_SFML));
-			break;
 		}
 		case EXTERN_LIB_SDL : {
 			// TODO ADD SDL
@@ -338,7 +330,20 @@ void Univers::new_game() {
 	world_->grid = Grid<int>(mapSize);
 	world_->grid.fill(SPRITE_GROUND);
 	world_->setDisplay(display);
-
+	display->setBackground(world_->grid);
+	loop();
 }
+
+void Univers::unload_external_library() {
+	log_error("Univers::unload_external_library");
+	if (display != nullptr && dlHandleDisplay != nullptr) {
+		display->exit();
+		if (deleteDisplay) {
+			deleteDisplay(display);
+			deleteDisplay = nullptr;
+			newDisplay = nullptr;
+		}
+		dlclose(dlHandleDisplay);
+	}}
 
 

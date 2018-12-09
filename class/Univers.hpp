@@ -8,7 +8,7 @@
 #include "ISound.hpp"
 #include <boost/asio/deadline_timer.hpp>
 #include <events/NextFrame.hpp>
-
+#include <boost/thread.hpp>
 class ServerTCP;
 
 class ClientTCP;
@@ -39,7 +39,7 @@ public:
 
 	bool load_external_sound_library(std::string const &title,
 									 std::string const &library_path); // TODO GO PRIVATE
-
+	void unload_external_library();
 	void loop();
 
 	void manage_start();
@@ -128,6 +128,7 @@ private: // Variable
 	IDisplay *display;
 	ISound *sound;
 	bool borderless;
+	boost::thread thread;
 
 	unsigned int mapSize;
 	unsigned int gameSpeed;

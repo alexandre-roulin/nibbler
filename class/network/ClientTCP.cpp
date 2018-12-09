@@ -166,12 +166,10 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 			break;
 		}
 		case SNAKE_ARRAY: {
-			log_info("eHeader::INPUT");
 			std::memcpy(snake_array, input, len);
 			break;
 		}
 		case SNAKE: {
-			log_info("eHeader::INPUT");
 			Snake snake_temp;
 			std::memcpy(&snake_temp, input, len);
 			snake_array[snake_temp.id] = snake_temp;
@@ -213,7 +211,6 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 			break;
 		}
 		case INPUT: {
-			log_info("eHeader::INPUT");
 			InputInfo ii;
 			std::memcpy(&ii, input, len);
 			joystickEvents.push_back(JoystickEvent(ii.id, ii.dir));
@@ -234,9 +231,7 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 			break;
 		}
 		case POCK: {
-			log_info("eHeader::POCK");
 			univers.getWorld_().getEventsManager().emitEvent<NextFrame>();
-			log_info("eHeader::POCK.end()");
 			break;
 		}
 		default:
@@ -284,13 +279,8 @@ Snake	const &ClientTCP::getSnake(void) const {
 	return this->snake_array[this->id_];
 }
 
-std::string ClientTCP::add_prefix(eHeader header) {
-	std::string message;
-	message.append(reinterpret_cast<char *>(&header), sizeof(eHeader));
-	return message;
-}
-
 void ClientTCP::killSnake() {
+	log_warn("ClientTCP::killSnake.%d", getId());
 	snake_array[id_].isAlive = false;
 	write_socket(add_prefix(SNAKE, &(snake_array[id_])));
 }
@@ -301,4 +291,15 @@ void ClientTCP::lock() {
 
 void ClientTCP::unlock() {
 	mutex.unlock();
+}
+
+void ClientTCP::send_borderless(bool borderless) {
+	write_socket(ClientTCP::add_prefix(BORDERLESS, &borderless));
+}
+
+bool ClientTCP::all_snake_is_dead() {
+	for (int index = 0; index < MAX_SNAKE; ++index)
+		if (snake_array[index].id != -1 && snake_array[index].isAlive)
+			return false;
+	return true;
 }

@@ -65,6 +65,8 @@ public:
 	void refreshMySnake(void);
 
 	void send_host_open_game(void);
+
+	void send_borderless(bool borderless);
 	
 	void change_name(char const *name);
 
@@ -74,9 +76,10 @@ public:
 
 	void change_map_size(unsigned int);
 
-	static std::string add_prefix(eHeader);
-
 	void lock();
+
+	bool all_snake_is_dead();
+
 	void unlock();
 
 	template<typename T>

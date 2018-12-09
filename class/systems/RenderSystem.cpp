@@ -62,6 +62,8 @@ int RenderSystem::getSpriteSnake_(eSprite sprite) {
 	eSprite from = (sprite & eSprite::MASK_FROM) >> eSprite::BITWISE_FROM;
 	eSprite to = (sprite & eSprite::MASK_TO) >> eSprite::BITWISE_TO;
 
+	if ((sprite & eSprite::WALL) == eSprite::WALL)
+		return (SPRITE_WALL);
 	if ((sprite & eSprite::FOOD) == eSprite::FOOD)
 		return (SPRITE_FOOD);
 	if ((sprite & eSprite::MASK_BODY) == eSprite::HEAD)
@@ -138,9 +140,10 @@ void RenderSystem::update() {
 	for (auto &renderComponent : renderComponents) {
 
 		//TODO chekc x y
-		grid(renderComponent.first.x,
-			 renderComponent.first.y) = RenderSystem::getSpriteSnake_(
+		auto e = RenderSystem::getSpriteSnake_(
 				renderComponent.second.sprite);
+		grid(renderComponent.first.x,
+			 renderComponent.first.y) = e;
 	}
 }
 

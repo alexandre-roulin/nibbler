@@ -108,7 +108,7 @@ void ServerTCP::parse_input(eHeader header, void const *input, size_t len) {
 			assert(snake_temp.id >= 0 && snake_temp.id < MAX_SNAKE);
 			snake_array[snake_temp.id] = snake_temp;
 			if (!snake_array[snake_temp.id].isAlive)
-				log_warn("Snake is die %d", snake_temp.id);
+				log_warn("Snake is die %d", snake_array[snake_temp.id].id);
 			break;
 		}
 		case START_GAME: {
