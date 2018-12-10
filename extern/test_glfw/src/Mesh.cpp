@@ -28,7 +28,7 @@ void    Mesh::clean_() {
 	glDeleteBuffers(1, &EBO);
 }
 
-void	Mesh::render(Shader &shader) {
+void	Mesh::render(Shader &shader) const {
 	unsigned int diffuseNr = 1;
 	unsigned int specularNr = 1;
 	unsigned int normalNr = 1;

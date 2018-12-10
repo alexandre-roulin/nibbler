@@ -18,7 +18,9 @@
 #include "Model.hpp"
 #include "Mesh.hpp"
 #include "Camera.hpp"
+#include "ActModel.hpp"
 #include <fstream>
+#include <map>
 
 
 #define DISPLAY_GLFW_WIN_WIDTH 1024
@@ -60,11 +62,14 @@ public:
 
     virtual ~DisplayGlfw(void);
 
+    void		setTileHeadDirection(int, eDirection);
+
     void render(void);
     void update(float deltaTime = 0.16f);
     eDirection getDirection(void) const;
 
 private:
+	std::map< eDirection, int >	tileDirection_;
     eDirection          direction_;
     int                 tileSize_;
     Vector2D<int> const winTileSize_;
@@ -81,6 +86,9 @@ private:
     Shader              shader_;
 	Model               snake_;
 	Model               block_;
+
+	ActModel						asnake_;
+	std::unique_ptr< ActModel[] > 	ablock_;
 
     Camera				camera_;
 

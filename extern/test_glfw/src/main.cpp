@@ -19,7 +19,7 @@
 
 
 int main(int argc, char **argv) {
-    DisplayGlfw lol(NULL, 35, 32, 32, "Issou");
+    DisplayGlfw lol(NULL, 35, 10, 10, "Issou");
 
 
 	float deltaTime = 0.0f;
@@ -32,7 +32,9 @@ int main(int argc, char **argv) {
 		deltaTime = currentFrame - lastFrame;
 		lastFrame = currentFrame;
 
-		lol.update();
+		//std::cout << deltaTime << std::endl;
+
+		lol.update(deltaTime);
 		lol.render();
 	}
 

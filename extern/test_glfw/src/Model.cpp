@@ -10,25 +10,17 @@
 
 
 Model::Model() :
-		flag_(0),
-		transform_(glm::mat4(1.f)),
-		interScaling_(1.f),
-		sameScaling_(1.f),
-		scaling_(1.f),
-		rotation_(0.f),
-		position_(0.f),
-		speed_(1.f) {
+		positionMax_(0.f),
+		positionMin_(0.f),
+		positionCenter_(0.f),
+		interScaling_(1.f) {
 }
 
 Model::Model(std::string const &path) :
-	flag_(0),
-    transform_(glm::mat4(1.f)),
-	interScaling_(1.f),
-	sameScaling_(1.f),
-	scaling_(1.f),
-	rotation_(0.f),
-	position_(0.f),
-	speed_(1.f) {
+		positionMax_(0.f),
+		positionMin_(0.f),
+		positionCenter_(0.f),
+		interScaling_(1.f) {
 	setModel(path);
 }
 
@@ -37,7 +29,6 @@ void	Model::setModel(std::string const &path) {
 	path_ = path;
 	loadModel_();
 	setupScaling_();
-	resetTransform();
 }
 
 Model::~Model() {
@@ -48,11 +39,19 @@ void    Model::clean_() {
 	mesh_.clear();
 }
 
+float	Model::getInterScaling() const {
+	return (interScaling_);
+}
+glm::vec3	Model::getPositionCenter() const {
+	return (positionCenter_);
+}
+
+
 void	Model::render() const {
     for(unsigned int i = 0; i < mesh_.size(); i++)
         mesh_[i].render();
 }
-void	Model::render(Shader &shader) {
+void	Model::render(Shader &shader) const {
     for(unsigned int i = 0; i < mesh_.size(); i++)
         mesh_[i].render(shader);
 }
@@ -162,56 +161,6 @@ void			Model::setupScaling_()  {
 	interScaling_ = scaling;
 	diff = diff * 0.5f;
 	positionCenter_ = diff;
-
-	updateTransform_();
-}
-
-void	Model::translate(const glm::vec3 &axis, float deltaTime)  {
-	float velocity = speed_ * deltaTime;
-
-	position_ += (axis * velocity);
-	updateTransform_();
-}
-void	Model::rotate(glm::vec3 const &axis, float angle, float deltaTime)  {
-	float velocity = speed_ * deltaTime;
-
-	rotate_ = glm::rotate(rotate_, (angle * velocity), axis);
-	updateTransform_();
-}
-void	Model::scale(glm::vec3 const &axis, float deltaTime)  {
-	float velocity = speed_ * deltaTime;
-
-	scaling_ += (axis * velocity);
-	updateTransform_();
-}
-void	Model::scale(float scale, float deltaTime)  {
-	float velocity = speed_ * deltaTime;
-
-	sameScaling_ += (scale * velocity);
-	updateTransform_();
-}
-
-void	Model::resetTransform() {
-	transform_ = glm::mat4(1.0f);
-	rotate_ = glm::mat4(1.0f);
-	scaling_ = glm::vec3(1.f);
-	sameScaling_ = 1.f;
-	position_ = glm::vec3(0.f);
-	updateTransform_();
-}
-
-void	Model::updateTransform_() {
-	glm::mat4 scale(1.f);
-
-	if (flag_.test(Model::eFlag::SAME_SCALING))
-		scale = glm::scale(scale, glm::vec3(interScaling_ * sameScaling_));
-	else
-		scale = glm::scale(scale, (interScaling_ * scaling_));
-	transform_ = glm::translate(glm::mat4(1.f), position_)
-			* scale
-			* glm::translate(glm::mat4(1.f), positionCenter_)
-			* rotate_
-			* glm::translate(glm::mat4(1.f), -positionCenter_);
 }
 
 std::vector<Texture>    Model::loadMaterialTextures_(aiMaterial *mat, aiTextureType type, Texture::eType eType)
@@ -229,10 +178,6 @@ std::vector<Texture>    Model::loadMaterialTextures_(aiMaterial *mat, aiTextureT
         textures.push_back(texture);
     }
     return (textures);
-}
-
-glm::mat4	Model::getTransform() const {
-	return (transform_);
 }
 
 unsigned int Texture::TextureFromFile(const char *path, const std::string &directory)

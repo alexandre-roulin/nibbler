@@ -2,6 +2,7 @@
 #include "DisplayGlfw.hpp"
 #include <fstream>
 #include <algorithm>
+#include <memory>
 //IDisplay *newDisplay(char const *tileset,
 //                     int tileSize,
 //                     int width,
@@ -24,7 +25,7 @@ direction_(NORTH),
 tileSize_(tileSize),
 winTileSize_(Vector2D<int>(width, height)),
 winPixelSize_(Vector2D<int>(width * tileSize, height * tileSize)),
-deltaTime_(0.16f),
+deltaTime_(0.016f),
 projection_(1.f),
 view_(1.f),
 model_(1.f) {
@@ -41,7 +42,7 @@ model_(1.f) {
 
     getPath_();
 
-    glfwSetCursorPosCallback(getWindow(), &this->mouseCallback_);
+    glfwSetCursorPosCallback(getWindow(),  DisplayGlfw::mouseCallback_);
 
 
     glEnable(GL_DEPTH_TEST);
@@ -58,6 +59,21 @@ model_(1.f) {
 
     snake_.setModel(pathModel_);
     block_.setModel(pathBlock_);
+
+    asnake_.assign(&snake_);
+    ablock_ = std::make_unique< ActModel[] >(winTileSize_.getX() * winTileSize_.getY());
+    int i = 0;
+    for (int y = -winTileSize_.getY() / 2; y < winTileSize_.getY() / 2; y++) { //TODO Compute vec / 2
+        for (int x = -winTileSize_.getX() / 2; x < winTileSize_.getX() / 2; x++) {
+            ablock_[i].assign(&block_);
+            ablock_[i].resetTransform();
+            ablock_[i].translate(glm::vec3(x, y, 0.f));
+            ablock_[i].scale(glm::vec3(-0.10f));
+            i++;
+        }
+    }
+
+    asnake_.translate(glm::vec3(0.f, 0.f, 1.f));
 
     camera_.processPosition(Camera::Movement::BACKWARD, std::max(winTileSize_.getX(), winTileSize_.getY()) / 2);
 
@@ -76,7 +92,9 @@ void                DisplayGlfw::getPath_() {
     std::ifstream t(pathRoot_ + DISPLAY_GLFW_SLASH + "file.txt");
     pathModel_ = std::string((std::istreambuf_iterator<char>(t)),
                            std::istreambuf_iterator<char>());
-    pathBlock_ = std::string(pathRoot_ + DISPLAY_GLFW_SLASH + "resources" + DISPLAY_GLFW_SLASH + "objects" + DISPLAY_GLFW_SLASH + "untitled.obj");
+	//pathBlock_ = std::string(pathRoot_ + DISPLAY_GLFW_SLASH + "resources" + DISPLAY_GLFW_SLASH + "objects" + DISPLAY_GLFW_SLASH + "untitled.obj");
+	pathBlock_ = std::string(pathRoot_ + DISPLAY_GLFW_SLASH + "resources" + DISPLAY_GLFW_SLASH + "objects/nanosuit/nanosuit.obj");
+	//pathBlock_ = std::string(pathRoot_ + DISPLAY_GLFW_SLASH + "resources" + DISPLAY_GLFW_SLASH + "block.fbx");
     pathShaderVert_ = std::string(pathRoot_ + DISPLAY_GLFW_SLASH + "shader" + DISPLAY_GLFW_SLASH + "basic.vert");
     pathShaderFrag_ = std::string(pathRoot_ + DISPLAY_GLFW_SLASH + "shader" + DISPLAY_GLFW_SLASH + "basic.frag");
 }
@@ -94,6 +112,11 @@ void DisplayGlfw::error_(std::string const &s) {
 void DisplayGlfw::clean_() {
     //_win.close();
 }
+
+void DisplayGlfw::setTileHeadDirection(int tileIndex, eDirection direction) {
+    tileDirection_[direction] = tileIndex;
+}
+
 
 void DisplayGlfw::render(void) {
     glClearColor(0.25f, 0.25f, 0.25f, 1.0f);
@@ -113,39 +136,33 @@ void DisplayGlfw::render(void) {
     }
 
     if (glfwGetKey(getWindow(), GLFW_KEY_I) == GLFW_PRESS)
-        snake_.translate(glm::vec3(0.f, 0.f, 1.f) , deltaTime_);
+        asnake_.translate(glm::vec3(0.f, 0.f, 1.f) , deltaTime_);
     if (glfwGetKey(getWindow(), GLFW_KEY_K) == GLFW_PRESS)
-        snake_.translate(glm::vec3(0.f, 0.f, -1.f) , deltaTime_);
+        asnake_.translate(glm::vec3(0.f, 0.f, -1.f) , deltaTime_);
     if (glfwGetKey(getWindow(), GLFW_KEY_J) == GLFW_PRESS)
-        snake_.translate(glm::vec3(1.f, 0.f, 0.f) , deltaTime_);
+        asnake_.translate(glm::vec3(1.f, 0.f, 0.f) , deltaTime_);
     if (glfwGetKey(getWindow(), GLFW_KEY_L) == GLFW_PRESS)
-        snake_.translate(glm::vec3(-1.f, 0.f, 0.f) , deltaTime_);
+        asnake_.translate(glm::vec3(-1.f, 0.f, 0.f) , deltaTime_);
 
     if (glfwGetKey(getWindow(), GLFW_KEY_T) == GLFW_PRESS)
-        snake_.rotate(glm::vec3(1.f, 0.f, 0.f), deltaTime_);
+        asnake_.rotate(glm::vec3(1.f, 0.f, 0.f), deltaTime_);
     if (glfwGetKey(getWindow(), GLFW_KEY_G) == GLFW_PRESS)
-        snake_.rotate(glm::vec3(0.f, 1.f, 0.f), deltaTime_);
+        asnake_.rotate(glm::vec3(0.f, 1.f, 0.f), deltaTime_);
     if (glfwGetKey(getWindow(), GLFW_KEY_B) == GLFW_PRESS)
-        snake_.rotate(glm::vec3(0.f, 0.f, 1.f), deltaTime_);
+        asnake_.rotate(glm::vec3(0.f, 0.f, 1.f), deltaTime_);
 
     view_ = camera_.getViewMatrix();
-    model_ = snake_.getTransform();
-    model_ = snake_.getTransform();
+    model_ = asnake_.getTransform();
     shader_.setMat4("projection", projection_);
     shader_.setMat4("view", view_);
     shader_.setMat4("model", model_);
 
     snake_.render(shader_);
 
-    for (int y = -winTileSize_.getY(); y < winTileSize_.getY(); y++) {
-        for (int x = -winTileSize_.getX(); x < winTileSize_.getX(); x++) {
-            block_.resetTransform();
-            block_.translate(glm::vec3(x, y, 0.f));
-            block_.scale(glm::vec3(-0.10f));
-            model_ = block_.getTransform();
-            shader_.setMat4("model", model_);
-            block_.render(shader_);
-        }
+    for (int i = 0; i < winTileSize_.getX() * winTileSize_.getY(); i++) {
+        model_ = ablock_[i].getTransform();
+        shader_.setMat4("model", model_);
+		ablock_[i].getModel()->render(shader_);
     }
     Glfw::render();
 
@@ -157,7 +174,6 @@ void DisplayGlfw::render(void) {
 
 void DisplayGlfw::update(float deltaTime) {
     deltaTime_ = deltaTime;
-    camera_.update();
     Glfw::update();
     if (DisplayGlfw::mouseCallbackCalled_) {
         camera_.processMouseMovement(DisplayGlfw::offsetX_, DisplayGlfw::offsetY_);
@@ -201,9 +217,10 @@ void DisplayGlfw::mouseCallback_(GLFWwindow* window, double xpos, double ypos) {
         DisplayGlfw::firstMouse_ = false;
     }
 
-     DisplayGlfw::offsetX_ = xpos - DisplayGlfw::lastX_;
-     DisplayGlfw::offsetY_ = DisplayGlfw::lastY_ - ypos;
+    DisplayGlfw::offsetX_ = xpos - DisplayGlfw::lastX_;
+    DisplayGlfw::offsetY_ = DisplayGlfw::lastY_ - ypos;
 
     DisplayGlfw::lastX_ = xpos;
     DisplayGlfw::lastY_ = ypos;
+	mouseCallbackCalled_ = true;
 }

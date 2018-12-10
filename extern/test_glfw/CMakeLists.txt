@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 3.0)
 project(Glitter)
 
+set(CMAKE_CXX_STANDARD 14)
+
+
 add_subdirectory(Glitter/Vendor/glad)
 add_subdirectory(Glitter/Vendor/glm)
 

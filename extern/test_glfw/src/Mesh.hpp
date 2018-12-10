@@ -41,7 +41,7 @@ public:
 	Mesh(std::vector<Vertex> vertice, std::vector<unsigned int> indice, std::vector<Texture> texture);
 	Mesh(std::vector<Vertex> vertice, std::vector<unsigned int> indice);
 
-	void render(Shader &shader);
+	void render(Shader &shader) const;
 	void render() const noexcept;
 
 	~Mesh();
