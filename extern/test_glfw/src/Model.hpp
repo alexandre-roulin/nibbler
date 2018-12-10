@@ -17,9 +17,11 @@ public:
 
 	enum eFlag { SAME_SCALING };
 
+	Model();
 	Model(std::string const &path);
 	~Model();
 
+	void	setModel(std::string const &path);
 
 	void	render() const;
 	void	render(Shader &shader);
@@ -67,7 +69,6 @@ private:
 
     static bool				debug_;
 
-	Model() = delete;
 	Model(Model const &Model) = delete;
     Model &operator=(Model const &Model) = delete;
 };

@@ -25,6 +25,7 @@ Mesh::~Mesh() {
 void    Mesh::clean_() {
 	glDeleteVertexArrays(1, &VAO);
 	glDeleteBuffers(1, &VBO);
+	glDeleteBuffers(1, &EBO);
 }
 
 void	Mesh::render(Shader &shader) {

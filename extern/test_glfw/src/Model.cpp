@@ -9,9 +9,19 @@
 #include <glm/gtx/euler_angles.hpp>
 
 
+Model::Model() :
+		flag_(0),
+		transform_(glm::mat4(1.f)),
+		interScaling_(1.f),
+		sameScaling_(1.f),
+		scaling_(1.f),
+		rotation_(0.f),
+		position_(0.f),
+		speed_(1.f) {
+}
+
 Model::Model(std::string const &path) :
 	flag_(0),
-    path_(path),
     transform_(glm::mat4(1.f)),
 	interScaling_(1.f),
 	sameScaling_(1.f),
@@ -19,6 +29,12 @@ Model::Model(std::string const &path) :
 	rotation_(0.f),
 	position_(0.f),
 	speed_(1.f) {
+	setModel(path);
+}
+
+void	Model::setModel(std::string const &path) {
+	clean_();
+	path_ = path;
 	loadModel_();
 	setupScaling_();
 	resetTransform();
@@ -29,6 +45,7 @@ Model::~Model() {
 }
 
 void    Model::clean_() {
+	mesh_.clear();
 }
 
 void	Model::render() const {

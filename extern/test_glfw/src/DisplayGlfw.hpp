@@ -3,8 +3,34 @@
 #include <exception>
 #include "IDisplay.hpp"
 #include "Vector2D.tpp"
+#include "Glfw.hpp"
+#include "Shader.hpp"
+#include <glm/glm.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
-class DisplayGlfw {
+
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+#include <cstdio>
+#include <cstdlib>
+
+#include "Glfw.hpp"
+#include "Model.hpp"
+#include "Mesh.hpp"
+#include "Camera.hpp"
+#include <fstream>
+
+
+#define DISPLAY_GLFW_WIN_WIDTH 1024
+#define DISPLAY_GLFW_WIN_HEIGHT 720
+
+#ifdef _WIN32
+    #define DISPLAY_GLFW_SLASH "\\"
+#else
+    #define DISPLAY_GLFW_SLASH "/"
+#endif
+
+class DisplayGlfw : public Glfw {
 public:
 
     class GlfwConstructorException : public std::exception {
@@ -23,7 +49,7 @@ public:
         GlfwConstructorException &
         operator=(GlfwConstructorException const &rhs) throw();
 
-        std::string _error;
+        std::string error_;
     };
 
     DisplayGlfw(char const *tileset,
@@ -34,28 +60,51 @@ public:
 
     virtual ~DisplayGlfw(void);
 
-    bool exit(void) const;
     void render(void);
-    void update(void);
+    void update(float deltaTime = 0.16f);
     eDirection getDirection(void) const;
 
 private:
-    bool _exit;
-    eDirection _direction;
-    int _tileSize;
-    Vector2D<int> const _winTileSize;
-    Vector2D<int> const _winPixelSize;
+    eDirection          direction_;
+    int                 tileSize_;
+    Vector2D<int> const winTileSize_;
+    Vector2D<int> const winPixelSize_;
 
-    int _tilesetWidth;
-    void _error(std::string);
-    void _clean(void);
+	float				deltaTime_;
+
+    std::string         pathRoot_;
+    std::string         pathModel_;
+    std::string         pathBlock_;
+    std::string         pathShaderVert_;
+    std::string         pathShaderFrag_;
+
+    Shader              shader_;
+	Model               snake_;
+	Model               block_;
+
+    Camera				camera_;
+
+	glm::mat4			projection_;
+	glm::mat4			view_;
+	glm::mat4			model_;
 
 
-    DisplayGlfw &operator=(DisplayGlfw const &rhs);
+    void                error_(std::string const &s = std::string("Error"));
+    void                clean_();
+    void                getPath_();
 
-    DisplayGlfw(DisplayGlfw const &src);
+	static float				lastX_;
+	static float				lastY_;
+	static float				offsetX_;
+	static float				offsetY_;
+	static bool					firstMouse_;
+	static bool					mouseCallbackCalled_;
+	static void					mouseCallback_(GLFWwindow* window, double xpos, double ypos);
 
-    DisplayGlfw(void);
+
+	DisplayGlfw &operator=(DisplayGlfw const &rhs) = delete;
+    DisplayGlfw(DisplayGlfw const &src) = delete;
+    DisplayGlfw(void) = delete;
 };
 
 //extern "C" {

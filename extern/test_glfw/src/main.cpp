@@ -17,106 +17,29 @@
 #include <fstream>
 
 
-#define WIN_WIDTH 1024
-#define WIN_HEIGHT 720
-
-bool firstMouse = true;
-float lastX = WIN_WIDTH / 2.0f;
-float lastY = WIN_HEIGHT / 2.0f;
-Camera camera;
-void mouseCallback(GLFWwindow* window, double xpos, double ypos)
-{
-	if (firstMouse) {
-		lastX = xpos;
-		lastY = ypos;
-		firstMouse = false;
-	}
-
-	float xoffset = xpos - lastX;
-	float yoffset = lastY - ypos; // reversed since y-coordinates go from bottom to top
-
-	lastX = xpos;
-	lastY = ypos;
-
-	camera.processMouseMovement(xoffset, yoffset);
-}
-
 
 int main(int argc, char **argv) {
     DisplayGlfw lol(NULL, 35, 32, 32, "Issou");
 
 
-    lol.update();
-    Glfw glfw("Coucou", WIN_WIDTH, WIN_HEIGHT);
-
-
-	glEnable(GL_DEPTH_TEST);
-	glPointSize(5.0);
-	glDepthFunc(GL_LESS);
-
-    Shader shader;
-
-
-	std::string file_path = __FILE__;
-
-#ifdef __APPLE__
-
-	std::string dir_path = file_path.substr(0, file_path.rfind("/"));
-    dir_path = dir_path.substr(0, dir_path.rfind("/"));
-    std::cout << dir_path << std::endl;
-
-	std::ifstream t(dir_path + "/file.txt");
-	std::string path_model((std::istreambuf_iterator<char>(t)),
-					std::istreambuf_iterator<char>());
-
-
-    shader.attach(dir_path + "/shader/basic.frag");
-    std::cout << "Frag passed" << std::endl;
-    shader.attach(dir_path + "/shader/basic.vert");
-    std::cout << "Vert passed" << std::endl;
-
-#else
-	std::string dir_path = file_path.substr(0, file_path.rfind("\\"));
-	dir_path = dir_path.substr(0, dir_path.rfind("\\"));
-	std::cout << dir_path << std::endl;
-
-	std::ifstream t(dir_path + "\\file.txt");
-	std::string path_model((std::istreambuf_iterator<char>(t)),
-						   std::istreambuf_iterator<char>());
-
-
-	shader.attach(dir_path + "\\shader\\basic.frag");
-	std::cout << "Frag passed" << std::endl;
-	shader.attach(dir_path + "\\shader\\basic.vert");
-	std::cout << "Vert passed" << std::endl;
-#endif
-
-	shader.link();
-	std::cout << "<Linked passed" << std::endl;
-
-	std::cout << path_model << std::endl;
-
-	Model model(path_model);
-
-	glm::mat4 projection = glm::mat4(1.0);
-	projection = glm::perspective(glm::radians(45.0f), (float)WIN_WIDTH / (float)WIN_HEIGHT, 0.1f, 100000.0f);
-	glm::mat4 view = glm::mat4(1.0);
-	view = glm::translate(view, glm::vec3(0.0f, 0.0f, -0.0f));
-	glm::mat4 m_model = glm::mat4(1.0);
-	m_model = glm::translate(m_model, glm::vec3(0.0f, -10.0f, -30.0f));
-
-
-	glfwSetCursorPosCallback(glfw.getWindow(), mouseCallback);
-
-
 	float deltaTime = 0.0f;
 	float lastFrame = 0.0f;
 
-	camera.processPosition(Camera::Movement::BACKWARD, 1.f);
 
-	Model block("/Users/ntoniolo/CLionProjects/nibbler/extern/test_glfw/resources/untitled.obj");
+	while (!lol.exit()) {
 
-	block.scale(glm::vec3(-0.40f));
+		float currentFrame = glfwGetTime();
+		deltaTime = currentFrame - lastFrame;
+		lastFrame = currentFrame;
+
+		lol.update();
+		lol.render();
+	}
+
+/*
+	float deltaTime = 0.0f;
+	float lastFrame = 0.0f;
+
 
 	bool second = true;
 	float time = 0.f;
@@ -202,10 +125,10 @@ int main(int argc, char **argv) {
 		shader.setMat4("model", m_model);
 		model.render(shader);
 
-		for (int y = 0; y < 10; y++) {
-			for (int x = 0; x < 10; x++) {
+		for (int y = -25; y < 25; y++) {
+			for (int x = -25; x < 25; x++) {
 				block.resetTransform();
-				block.translate(glm::vec3(y, x, 0.f));
+				block.translate(glm::vec3(x, y, 0.f));
 				block.scale(glm::vec3(-0.10f));
 				m_model = block.getTransform();
 				shader.setMat4("model", m_model);
@@ -215,7 +138,7 @@ int main(int argc, char **argv) {
 		}
 
         glfw.render();
-    }
+    }*/
 
     return (0);
 
