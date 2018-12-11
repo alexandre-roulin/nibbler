@@ -21,7 +21,7 @@
 #include "ActModel.hpp"
 #include <fstream>
 #include <map>
-
+#include "Grid.tpp"
 
 #define DISPLAY_GLFW_WIN_WIDTH 1024
 #define DISPLAY_GLFW_WIN_HEIGHT 720
@@ -62,39 +62,49 @@ public:
 
     virtual ~DisplayGlfw(void);
 
-    void		setTileHeadDirection(int, eDirection);
-
-    void render(void);
+	void render(void);
+    void setFrameTime(float);
     void update(float deltaTime = 0.16f);
     eDirection getDirection(void) const;
+	//void		drawGrid(Grid<int> const &grid);
+
+	void		setBackground(Grid<int> const &grid);
+
 
 private:
-	std::map< eDirection, int >	tileDirection_;
     eDirection          direction_;
+    float				frameTime_;
     int                 tileSize_;
     Vector2D<int> const winTileSize_;
     Vector2D<int> const winPixelSize_;
+
+	Grid< int >	tileBackground_;
+    Grid< ActModel >	background_;
 
 	float				deltaTime_;
 
     std::string         pathRoot_;
     std::string         pathModel_;
-    std::string         pathBlock_;
+	std::string         pathBlock_;
+	std::string         pathGround_;
+	std::string         pathWall_;
     std::string         pathShaderVert_;
     std::string         pathShaderFrag_;
 
-    Shader              shader_;
-	Model               snake_;
-	Model               block_;
+    Shader							shader_;
+	Model							snake_;
+	Model							block_;
+	Model							ground_;
+	Model							wall_;
 
 	ActModel						asnake_;
 	std::unique_ptr< ActModel[] > 	ablock_;
 
-    Camera				camera_;
+    Camera							camera_;
 
-	glm::mat4			projection_;
-	glm::mat4			view_;
-	glm::mat4			model_;
+	glm::mat4						projection_;
+	glm::mat4						view_;
+	glm::mat4						model_;
 
 
     void                error_(std::string const &s = std::string("Error"));

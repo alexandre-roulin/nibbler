@@ -25,20 +25,12 @@ direction_(NORTH),
 tileSize_(tileSize),
 winTileSize_(Vector2D<int>(width, height)),
 winPixelSize_(Vector2D<int>(width * tileSize, height * tileSize)),
+background_(winTileSize_.getX(), winTileSize_.getY()),
+tileBackground_(winTileSize_.getX(), winTileSize_.getY()),
 deltaTime_(0.016f),
 projection_(1.f),
 view_(1.f),
 model_(1.f) {
-
-    //if (!_tileset.loadFromFile(tileset))
-    //    _error("Tileset cannot be load");
-    //if (!_textureBackground.create(_winPixelSize.getX(),
-    //                                     _winPixelSize.getY()))
-    //    _error("Error during creation of Texture background");
-    //_tilesetWidth = (_tileset.getSize().x / _tileSize);
-    //_win.clear();
-    //_textureBackground.clear();
-    //_win.display();
 
     getPath_();
 
@@ -59,6 +51,8 @@ model_(1.f) {
 
     snake_.setModel(pathModel_);
     block_.setModel(pathBlock_);
+    ground_.setModel(pathGround_);
+    wall_.setModel(pathWall_);
 
     asnake_.assign(&snake_);
     ablock_ = std::make_unique< ActModel[] >(winTileSize_.getX() * winTileSize_.getY());
@@ -90,11 +84,11 @@ void                DisplayGlfw::getPath_() {
     std::cout << pathRoot_ << std::endl;
 
     std::ifstream t(pathRoot_ + DISPLAY_GLFW_SLASH + "file.txt");
-    pathModel_ = std::string((std::istreambuf_iterator<char>(t)),
-                           std::istreambuf_iterator<char>());
-	//pathBlock_ = std::string(pathRoot_ + DISPLAY_GLFW_SLASH + "resources" + DISPLAY_GLFW_SLASH + "objects" + DISPLAY_GLFW_SLASH + "untitled.obj");
-	pathBlock_ = std::string(pathRoot_ + DISPLAY_GLFW_SLASH + "resources" + DISPLAY_GLFW_SLASH + "objects" + DISPLAY_GLFW_SLASH + "nanosuit" + DISPLAY_GLFW_SLASH + "nanosuit.obj");
-	//pathBlock_ = std::string(pathRoot_ + DISPLAY_GLFW_SLASH + "resources" + DISPLAY_GLFW_SLASH + "block.fbx");
+    pathModel_ = std::string((std::istreambuf_iterator<char>(t)), std::istreambuf_iterator<char>());
+    //pathBlock_ = std::string(pathRoot_ + DISPLAY_GLFW_SLASH + "resources" + DISPLAY_GLFW_SLASH + "objects" + DISPLAY_GLFW_SLASH + "nanosuit" + DISPLAY_GLFW_SLASH + "nanosuit.obj");
+    pathBlock_ = std::string(pathRoot_ + DISPLAY_GLFW_SLASH + "resources" + DISPLAY_GLFW_SLASH + "try.obj");
+    pathGround_ = std::string(pathRoot_ + DISPLAY_GLFW_SLASH + "resources" + DISPLAY_GLFW_SLASH + "try.obj");
+    pathWall_ = std::string(pathRoot_ + DISPLAY_GLFW_SLASH + "resources" + DISPLAY_GLFW_SLASH + "wall.obj");
     pathShaderVert_ = std::string(pathRoot_ + DISPLAY_GLFW_SLASH + "shader" + DISPLAY_GLFW_SLASH + "basic.vert");
     pathShaderFrag_ = std::string(pathRoot_ + DISPLAY_GLFW_SLASH + "shader" + DISPLAY_GLFW_SLASH + "basic.frag");
 }
@@ -113,8 +107,24 @@ void DisplayGlfw::clean_() {
     //_win.close();
 }
 
-void DisplayGlfw::setTileHeadDirection(int tileIndex, eDirection direction) {
-    tileDirection_[direction] = tileIndex;
+void		DisplayGlfw::setBackground(Grid<int> const &grid) {
+    tileBackground_ = grid;
+    for (int y = 0; y < winTileSize_.getY(); ++y) {
+        for (int x = 0; x < winTileSize_.getX(); ++x) {
+            if (tileBackground_(x, y) == SPRITE_WALL) {
+                background_(x, y).assign(&wall_);
+				background_(x, y).resetTransform();
+				background_(x, y).translate(glm::vec3(x, y, 0.f));
+				background_(x, y).scale(glm::vec3(-0.10f));
+            }
+            else if (tileBackground_(x, y) == SPRITE_GROUND) {
+                background_(x, y).assign(&ground_);
+				background_(x, y).resetTransform();
+				background_(x, y).translate(glm::vec3(x, y, 0.f));
+				background_(x, y).scale(glm::vec3(-0.10f));
+            }
+        }
+    }
 }
 
 
@@ -159,10 +169,19 @@ void DisplayGlfw::render(void) {
 
     snake_.render(shader_);
 
+    /*
     for (int i = 0; i < winTileSize_.getX() * winTileSize_.getY(); i++) {
         model_ = ablock_[i].getTransform();
         shader_.setMat4("model", model_);
 		ablock_[i].getModel()->render(shader_);
+    }
+    */
+    for (int y = 0; y < winTileSize_.getY(); y++) {
+        for (int x = 0; x < winTileSize_.getX(); x++) {
+            model_ = background_(x, y).getTransform();
+            shader_.setMat4("model", model_);
+            background_(x, y).getModel()->render(shader_);
+        }
     }
     Glfw::render();
 
@@ -180,6 +199,11 @@ void DisplayGlfw::update(float deltaTime) {
         DisplayGlfw::mouseCallbackCalled_ = false;
     }
 }
+
+void        DisplayGlfw::setFrameTime(float frameTime) {
+    frameTime_ = frameTime;
+}
+
 
 eDirection DisplayGlfw::getDirection(void) const {
     return (direction_);

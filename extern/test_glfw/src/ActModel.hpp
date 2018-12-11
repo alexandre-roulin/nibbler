@@ -12,7 +12,8 @@ public:
 	ActModel();
 	ActModel(Model const *model);
 	~ActModel();
-
+	ActModel(ActModel const &src);
+	ActModel &operator=(ActModel const &src);
 
 	Model const		*getModel() const;
 	void			assign(Model const *model);
@@ -40,7 +41,4 @@ private:
 	void				updateTransform_();
 
 	static bool			debug_;
-
-	ActModel(ActModel const &src) = delete;
-	ActModel &operator=(ActModel const &src) = delete;
 };

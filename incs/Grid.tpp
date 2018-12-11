@@ -26,13 +26,13 @@ public:
 
 	void clear(void);
 
-	int *operator[](size_t row);
+	T *operator[](size_t row);
 
-	int &operator()(size_t row, size_t column);
+	T &operator()(size_t row, size_t column);
 
-	int *operator[](size_t row) const;
+	T *operator[](size_t row) const;
 
-	int &operator()(size_t row, size_t column) const;
+	T &operator()(size_t row, size_t column) const;
 
 private:
 	size_t _rows;
@@ -115,22 +115,22 @@ void Grid<T>::clear(void) {
 }
 
 template<typename T>
-int *Grid<T>::operator[](size_t row) {
+T *Grid<T>::operator[](size_t row) {
 	return (this->_grid + (row * this->_columns));
 }
 
 template<typename T>
-int &Grid<T>::operator()(size_t row, size_t column) {
+T &Grid<T>::operator()(size_t row, size_t column) {
 	return (this->_grid[row * this->_columns + column]);
 }
 
 template<typename T>
-int *Grid<T>::operator[](size_t row) const {
+T *Grid<T>::operator[](size_t row) const {
 	return (this->_grid + (row * this->_columns));
 }
 
 template<typename T>
-int &Grid<T>::operator()(size_t row, size_t column) const {
+T &Grid<T>::operator()(size_t row, size_t column) const {
 	return (this->_grid[row * this->_columns + column]);
 }
 

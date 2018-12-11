@@ -32,6 +32,23 @@ ActModel::~ActModel() {
 void ActModel::clean_() {
 }
 
+ActModel::ActModel(ActModel const &src) {
+	*this = src;
+}
+ActModel &ActModel::operator=(ActModel const &src) {
+	if (this != &src) {
+		model_ = src.model_;
+		flag_ = src.flag_;
+		transform_ = src.transform_;
+		rotate_ = src.rotate_;
+		sameScaling_ = src.sameScaling_;
+		scaling_ = src.scaling_;
+		rotation_ = src.rotation_;
+		position_ = src.position_;
+		speed_ = src.speed_;
+	}
+}
+
 void ActModel::assign(Model const *model) {
 	model_ = model;
 }

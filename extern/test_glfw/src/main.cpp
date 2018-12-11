@@ -15,12 +15,18 @@
 #include "Mesh.hpp"
 #include "Camera.hpp"
 #include <fstream>
-
+#include "Grid.tpp"
 
 
 int main(int argc, char **argv) {
     DisplayGlfw lol(NULL, 35, 10, 10, "Issou");
 
+    Grid<int> background(10);
+
+	background.fill(SPRITE_GROUND);
+	background.setBorder(SPRITE_WALL);
+
+	lol.setBackground(background);
 
 	float deltaTime = 0.0f;
 	float lastFrame = 0.0f;
