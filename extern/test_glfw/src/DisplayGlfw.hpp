@@ -67,6 +67,7 @@ public:
     void update(float deltaTime = 0.16f);
     eDirection getDirection(void) const;
 	//void		drawGrid(Grid<int> const &grid);
+	void		drawGrid(Grid<int> const &grid);
 
 	void		setBackground(Grid<int> const &grid);
 

@@ -21,10 +21,20 @@
 int main(int argc, char **argv) {
     DisplayGlfw lol(NULL, 35, 10, 10, "Issou");
 
-    Grid<int> background(10);
+	Grid<int> background(10);
+	Grid<int> al(10);
 
 	background.fill(SPRITE_GROUND);
 	background.setBorder(SPRITE_WALL);
+
+	al.fill(-1);
+
+	al(0, 0) = SPRITE_FOOD;
+	al(1, 1) = 1;
+	al(3, 3) = SPRITE_FOOD;
+	al(9, 1) = 1;
+	al(1, 9) = 1;
+
 
 	lol.setBackground(background);
 
@@ -41,6 +51,7 @@ int main(int argc, char **argv) {
 		//std::cout << deltaTime << std::endl;
 
 		lol.update(deltaTime);
+		lol.drawGrid(al);
 		lol.render();
 	}
 

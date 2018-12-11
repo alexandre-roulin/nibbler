@@ -127,11 +127,35 @@ void		DisplayGlfw::setBackground(Grid<int> const &grid) {
     }
 }
 
+void		DisplayGlfw::drawGrid(Grid<int> const &grid) {
+	shader_.activate();
+
+	shader_.setMat4("projection", projection_);
+	shader_.setMat4("view", view_);
+
+	for (int y = 0; y < winTileSize_.getY(); ++y) {
+		for (int x = 0; x < winTileSize_.getX(); ++x) {
+			if (grid(x, y) == SPRITE_FOOD) {
+				asnake_.resetTransform();
+				asnake_.translate(glm::vec3(x, y, 1.2f));
+				model_ = asnake_.getTransform();
+				shader_.setMat4("model", model_);
+				asnake_.getModel()->render(shader_);
+
+			}
+			else if (grid(x, y) != -1) {
+				ablock_[0].resetTransform();
+				ablock_[0].translate(glm::vec3(x, y, 1.2f));
+				model_ = ablock_[0].getTransform();
+				shader_.setMat4("model", model_);
+				ablock_[0].getModel()->render(shader_);
+			}
+		}
+	}
+}
+
 
 void DisplayGlfw::render(void) {
-    glClearColor(0.25f, 0.25f, 0.25f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-
     shader_.activate();
 
     if (glfwGetKey(getWindow(), GLFW_KEY_W) == GLFW_PRESS)
@@ -184,7 +208,8 @@ void DisplayGlfw::render(void) {
         }
     }
     Glfw::render();
-
+	glClearColor(0.25f, 0.25f, 0.25f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 }
 
 /*

@@ -18,6 +18,7 @@ Glfw::Glfw(std::string const &name, uint16_t width, uint16_t height) :
     glfwMakeContextCurrent(window_);
     gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
     std::cout << "OpenGL " << glGetString(GL_VERSION) << std::endl;
+    glfwSwapInterval(0);
 }
 
 Glfw::~Glfw() {
