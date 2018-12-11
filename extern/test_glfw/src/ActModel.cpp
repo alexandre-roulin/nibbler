@@ -36,25 +36,25 @@ void ActModel::assign(Model const *model) {
 	model_ = model;
 }
 
-void	ActModel::translate(const glm::vec3 &axis, float deltaTime)  {
+void	ActModel::translate(const glm::vec3 &axis, float deltaTime) {
 	float velocity = speed_ * deltaTime;
 
 	position_ += (axis * velocity);
 	updateTransform_();
 }
-void	ActModel::rotate(glm::vec3 const &axis, float angle, float deltaTime)  {
+void	ActModel::rotate(glm::vec3 const &axis, float angle, float deltaTime) {
 	float velocity = speed_ * deltaTime;
 
 	rotate_ = glm::rotate(rotate_, (angle * velocity), axis);
 	updateTransform_();
 }
-void	ActModel::scale(glm::vec3 const &axis, float deltaTime)  {
+void	ActModel::scale(glm::vec3 const &axis, float deltaTime) {
 	float velocity = speed_ * deltaTime;
 
 	scaling_ += (axis * velocity);
 	updateTransform_();
 }
-void	ActModel::scale(float scale, float deltaTime)  {
+void	ActModel::scale(float scale, float deltaTime) {
 	float velocity = speed_ * deltaTime;
 
 	sameScaling_ += (scale * velocity);

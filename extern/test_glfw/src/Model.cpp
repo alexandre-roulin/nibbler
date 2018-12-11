@@ -7,6 +7,7 @@
 #include <GLFW/glfw3.h>
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/euler_angles.hpp>
+#include "DisplayGlfw.hpp"
 
 
 Model::Model() :
@@ -63,11 +64,9 @@ void 					Model::loadModel_() {
         std::cerr << "ERROR::ASSIMP::" << import.GetErrorString() << std::endl;
         return ;
     }
-#ifdef __APPLE__
-    directory_ = path_.substr(0, path_.find_last_of('/'));
-#else
-    directory_ = path_.substr(0, path_.find_last_of("\\"));
-#endif
+	std::cout << "[path_] : " << path_ << std::endl;
+    directory_ = path_.substr(0, path_.find_last_of(DISPLAY_GLFW_SLASH));
+	std::cout << "[directory_] : " << directory_ << std::endl;
     processNode_(scene->mRootNode, scene);
 
 }
@@ -189,11 +188,9 @@ unsigned int Texture::TextureFromFile(const char *path, const std::string &direc
     int                 width, height, nrComponents;
 
     filename = std::string(path);
-#ifdef __APPLE__
-    filename = directory + '/' + filename;
-#else
-    filename = directory + "\\" + filename;
-#endif
+
+    filename = directory + DISPLAY_GLFW_SLASH + filename;
+
     glGenTextures(1, &textureID);
 
     data = stbi_load(filename.c_str(), &width, &height, &nrComponents, 0);
@@ -219,10 +216,10 @@ unsigned int Texture::TextureFromFile(const char *path, const std::string &direc
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        std::cout << "Texture : " << path << std::endl;
+        std::cout << "Texture : " << filename << std::endl;
     }
     else
-        std::cerr << "Texture failed to load at path: " << path << std::endl;
+        std::cerr << "Texture failed to load at path: " << filename << std::endl;
     stbi_image_free(data);
 
     return (textureID);
