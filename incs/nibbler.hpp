@@ -14,16 +14,16 @@
 #define DIRECTION_VERTICAL 1			// 0000 0001
 #define DIRECTION_HORIZONTAL 4			// 0000 0100
 
-#define MAP_MAX 100
 #define MAP_MIN 5
+#define MAP_DEFAULT 35
+#define MAP_MAX 100
 
 enum eTag {
+	HEAD_TAG = 0,
+	TAIL_TAG = 8,
 	FOOD_TAG,
 	FOOD_TAG_FROM_SNAKE,
 	WALL_TAG,
-	HEAD_TAG,
-	BODY_TAG,
-	TAIL_TAG,
 };
 
 enum class eSound {
@@ -93,33 +93,33 @@ enum class eSprite {
 	WALL = (1 << 23),
 	FOOD = (1 << 24)
 };
-inline eSprite operator|(eSprite const x, eSprite const y) {
-	return static_cast<eSprite> (static_cast<int>(x) | static_cast<int>(y));
+inline eSprite operator|(eSprite const lhs, eSprite const rhs) {
+	return static_cast<eSprite> (static_cast<int>(lhs) | static_cast<int>(rhs));
 }
-inline eSprite const &operator|=(eSprite &x, eSprite const &y) {
-	x = static_cast<eSprite> (static_cast<int>(x) | static_cast<int>(y));
-	return (x);
+inline eSprite const &operator|=(eSprite &lhs, eSprite const &rhs) {
+	lhs = static_cast<eSprite> (static_cast<int>(lhs) | static_cast<int>(rhs));
+	return (lhs);
 }
-inline eSprite operator&(eSprite const x, eSprite const y) {
-	return static_cast<eSprite> (static_cast<int>(x) &  static_cast<int>(y));
+inline eSprite operator&(eSprite const lhs, eSprite const rhs) {
+	return static_cast<eSprite> (static_cast<int>(lhs) &  static_cast<int>(rhs));
 }
-inline eSprite operator&(int const x, eSprite const y) {
-	return static_cast<eSprite> (x &  static_cast<int>(y));
+inline eSprite operator&(int const lhs, eSprite const rhs) {
+	return static_cast<eSprite> (lhs &  static_cast<int>(rhs));
 }
-inline eSprite operator&(eSprite const x, int const y) {
-	return static_cast<eSprite> (static_cast<int>(x) & y);
+inline eSprite operator&(eSprite const lhs, int const rhs) {
+	return static_cast<eSprite> (static_cast<int>(lhs) & rhs);
 }
-inline eSprite operator^(int const x, eSprite const y) {
-	return static_cast<eSprite> (x ^  static_cast<int>(y));
+inline eSprite operator^(int const lhs, eSprite const rhs) {
+	return static_cast<eSprite> (lhs ^  static_cast<int>(rhs));
 }
-inline eSprite operator^(eSprite const x, int const y) {
-	return static_cast<eSprite> (static_cast<int>(x) ^ y);
+inline eSprite operator^(eSprite const lhs, int const rhs) {
+	return static_cast<eSprite> (static_cast<int>(lhs) ^ rhs);
 }
-inline eSprite operator<<(eSprite const x, eSprite const y) {
-	return static_cast<eSprite> (static_cast<int>(x) << static_cast<int>(y));
+inline eSprite operator<<(eSprite const lhs, eSprite const rhs) {
+	return static_cast<eSprite> (static_cast<int>(lhs) << static_cast<int>(rhs));
 }
-inline eSprite operator>>(eSprite const x, eSprite const y) {
-	return static_cast<eSprite> (static_cast<int>(x) >> static_cast<int>(y));
+inline eSprite operator>>(eSprite const lhs, eSprite const rhs) {
+	return static_cast<eSprite> (static_cast<int>(lhs) >> static_cast<int>(rhs));
 }
 
 
@@ -139,12 +139,16 @@ struct		Snake
 
 	friend std::ostream &operator<<(std::ostream &os, const Snake &snake);
 
+
 	Snake &operator=(Snake  const &snake) {
 		if (this != &snake) {
 			std::memcpy(name, snake.name, NAME_BUFFER);
 			sprite = snake.sprite;
 			isReady = snake.isReady;
 			id = snake.id;
+			isUpdate = snake.isUpdate;
+			direction = snake.direction;
+			isAlive = snake.isAlive;
 		}
 		return *this;
 	}
@@ -212,5 +216,5 @@ enum class eHeader {
 	RESIZE_MAP,			//9
 	REMOVE_SNAKE,		//10
 	POCK,				//11
-	ALIVE				//12
+	BORDERLESS			//12
 };

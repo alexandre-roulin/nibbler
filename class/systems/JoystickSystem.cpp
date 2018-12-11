@@ -18,8 +18,7 @@ void JoystickSystem::update() {
 			if (getWorld().getEntitiesManager().hasEntityByTagId(
 					snake_array[index].id + eTag::HEAD_TAG)) {
 				auto entity = getWorld().getEntitiesManager().
-						getEntityByTagId(
-						snake_array[index].id + eTag::HEAD_TAG);
+						getEntityByTagId(snake_array[index].id + eTag::HEAD_TAG);
 				if (entity.hasComponent<JoystickComponent>()) {
 					auto &joystickComponent = entity.getComponent<JoystickComponent>();
 					joystickComponent.direction = snake_array[index].direction;

@@ -143,8 +143,6 @@ add_executable(${NAME}
         class/logger/utils/logger_init_open_file.cpp
         class/network/ClientTCP.cpp
         class/network/ClientTCP.hpp
-        class/network/Network.cpp
-        class/network/Network.hpp
         class/network/ServerTCP.cpp
         class/network/ServerTCP.hpp
         class/network/UtilsTCP.cpp

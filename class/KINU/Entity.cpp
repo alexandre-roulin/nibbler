@@ -103,7 +103,7 @@ namespace KINU {
 		validId.erase(std::remove_if(validId.begin(), validId.end(),
 									 [entity](Entity::ID id) {
 										 return entity.id_ == id;
-									 }));
+									 }), validId.end());
 		// Remove groupId if exist
 
 		if (hasGroupIdByEntity(entity)) {

@@ -1,6 +1,5 @@
 #include "ServerTCP.hpp"
-#include "ClientTCP.hpp"
-#include <logger.h>
+
 ServerTCP::ServerTCP(boost::asio::io_service &io_service, unsigned int port)
 		: nu_(0),
 		  acceptor_(io_service, tcp::endpoint(tcp::v4(), port)),
@@ -50,19 +49,10 @@ void ServerTCP::erase_snake(Snake const &snake) {
 void ServerTCP::refresh_data_snake_array(
 		TCPConnection::pointer &connection,
 		int16_t id) {
-	{
-//		std::cout << "ServerTCP::refresh_data_snake_array : " << id << std::endl;
-		connection->write_socket(ClientTCP::add_prefix(eHeader::ID, &id));
-	}
-	{
-//		std::cout << "ServerTCP::refresh_data_snake_array : " << std::endl;
-		connection->write_socket(
-				ClientTCP::add_prefix(eHeader::SNAKE_ARRAY, snake_array));
-	}
-	{
-//		std::cout << "ServerTCP::refresh_data_snake_array : " << std::endl;
-		async_write(ClientTCP::add_prefix(eHeader::SNAKE, &snake_array[id]));
-	}
+	connection->write_socket(ClientTCP::add_prefix(eHeader::ID, &id));
+	connection->write_socket(
+			ClientTCP::add_prefix(eHeader::SNAKE_ARRAY, snake_array));
+	async_write(ClientTCP::add_prefix(eHeader::SNAKE, &snake_array[id]));
 }
 
 void ServerTCP::refresh_data_map_size(TCPConnection::pointer &connection) {
@@ -104,7 +94,9 @@ void ServerTCP::async_write(void const *input, size_t len) {
 }
 
 void ServerTCP::parse_input(eHeader header, void const *input, size_t len) {
+	std::cout << "ServerTCP::lock()" << static_cast<int>(header) << std::endl;
 
+	mutex.lock();
 	switch (header) {
 		case eHeader::SNAKE_ARRAY: {
 			std::memcpy(snake_array, input, len);
@@ -115,19 +107,23 @@ void ServerTCP::parse_input(eHeader header, void const *input, size_t len) {
 			std::memcpy(&snake_temp, input, sizeof(Snake));
 			assert(snake_temp.id >= 0 && snake_temp.id < MAX_SNAKE);
 			snake_array[snake_temp.id] = snake_temp;
+			if (!snake_array[snake_temp.id].isAlive)
+				log_warn("Snake is die %d", snake_array[snake_temp.id].id);
 			break;
 		}
 		case eHeader::START_GAME: {
 			start_game();
+			mutex.unlock();
+			std::cout << "ServerTCP::unlock()" << std::endl;
 			return;
 		}
 		case eHeader::FOOD: {
-			mutex.lock();
 			log_info("ServerTCP::FOOD");
 			ClientTCP::FoodInfo foodInfo;
 			std::memcpy(&foodInfo, input, len);
 			foodInfoArray.push_back(foodInfo);
 			mutex.unlock();
+			std::cout << "ServerTCP::unlock()" << std::endl;
 			return;
 		}
 		case eHeader::RESIZE_MAP: {
@@ -135,19 +131,16 @@ void ServerTCP::parse_input(eHeader header, void const *input, size_t len) {
 			std::memcpy(&mapSize, input, len);
 			break;
 		}
-		case eHeader::ALIVE: {
-
-			return;
-		}
 		case eHeader::INPUT: {
-			mutex.lock();
 			ClientTCP::InputInfo inputInfo;
 			std::memcpy(&inputInfo, input, len);
 			snake_array[inputInfo.id].direction = inputInfo.dir;
 			snake_array[inputInfo.id].isUpdate = true;
 			for (int index = 0; index < nu_; ++index) {
-				if (snake_array[index].isAlive && !snake_array[index].isUpdate) {
+				if (snake_array[index].isAlive &&
+					!snake_array[index].isUpdate) {
 					mutex.unlock();
+					std::cout << "ServerTCP::unlock()" << std::endl;
 					return;
 				}
 			}
@@ -162,12 +155,16 @@ void ServerTCP::parse_input(eHeader header, void const *input, size_t len) {
 				snake_array[index].isUpdate = false;
 			}
 			mutex.unlock();
+			std::cout << "ServerTCP::unlock()" << std::endl;
 			return;
 		}
-		default:
+		default: {
 			break;
+		}
 	}
 	async_write(ClientTCP::add_prefix(header, const_cast<void *>(input)));
+	mutex.unlock();
+	std::cout << "ServerTCP::unlock()" << std::endl;
 }
 
 void ServerTCP::remove(TCPConnection::pointer remove) {

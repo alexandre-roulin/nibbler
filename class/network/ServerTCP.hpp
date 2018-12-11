@@ -66,12 +66,12 @@ public:
 	void parse_input(eHeader, void const *, size_t);
 
 	void erase_snake(Snake const &);
+
 	void refresh_data_snake_array(TCPConnection::pointer &, int16_t);
+
 	void refresh_data_map_size(TCPConnection::pointer &connection);
 
 	void start_game();
-
-	void create_food();
 
 	void remove(TCPConnection::pointer);
 

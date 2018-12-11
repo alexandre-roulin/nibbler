@@ -13,7 +13,7 @@ public:
 	void	render(void);
 
 private:
-	unsigned int		&_mapSize;
+	unsigned int		_mapSize;
 	char				_nameBuffer[NAME_BUFFER];
 
 	WidgetOption &operator=(const WidgetOption&);

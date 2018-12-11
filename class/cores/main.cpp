@@ -39,7 +39,6 @@ bool demoGui(int ac, char **av, Univers &univers) {
 
 void nibbler(Univers &univers) {
 	std::string buffer;
-
 	if (univers.testFlag(Univers::SOUND)) {
 		univers.load_external_sound_library(std::string("Game pro"),
 											std::string(
@@ -61,26 +60,23 @@ void nibbler(Univers &univers) {
 	for (;;) {
 		std::cout << "$> ";
 		std::getline(std::cin, buffer);
+		if (buffer == "border") {
+			univers.setBorderless(true);
+		}
 		if (buffer == "autos") {
 			univers.create_server();
 			univers.getClientTCP_().connect("localhost", "4242");
 			sleep(1);
 			univers.getClientTCP_().change_state_ready();
-			univers.setMapSize(35);
-			univers.load_external_display_library(std::string("Game pro"),
-												  std::string(
-														  PATH_DISPLAY_LIBRARY_SFML));
+			univers.load_extern_lib_display(Univers::EXTERN_LIB_SFML);
 
 		}
 		if (buffer == "autoc") {
 			univers.getClientTCP_().connect("localhost", "4242");
 			sleep(1);
 			univers.getClientTCP_().change_state_ready();
-			univers.setMapSize(35);
-			univers.load_external_display_library(std::string("Game pro"),
-												  std::string(
-														  PATH_DISPLAY_LIBRARY_SFML));
-			univers.loop();
+			univers.load_extern_lib_display(Univers::EXTERN_LIB_SFML);
+			univers.new_game();
 		}
 		if (buffer == "autocs") {
 			std::cout << "connect > ";
@@ -88,18 +84,15 @@ void nibbler(Univers &univers) {
 			univers.getClientTCP_().connect(buffer.c_str(), "4242");
 			sleep(1);
 			univers.getClientTCP_().change_state_ready();
-			univers.setMapSize(35);
-			univers.load_external_display_library(std::string("Game pro"),
-												  std::string(
-														  PATH_DISPLAY_LIBRARY_SFML));
+			univers.load_extern_lib_display(Univers::EXTERN_LIB_SFML);
 			univers.loop();
 		}
 		if (buffer == "loop") {
 			ClientTCP::StartInfo startInfo;
 			univers.getClientTCP_()
 					.write_socket(
-							ClientTCP::add_prefix(eHeader::START_GAME, &startInfo));
-			univers.loop();
+					ClientTCP::add_prefix(eHeader::START_GAME, &startInfo));
+			univers.new_game();
 		}
 		if (buffer == "server")
 			univers.create_server();
@@ -115,26 +108,6 @@ void nibbler(Univers &univers) {
 			univers.getClientTCP_().change_state_ready();
 		}
 
-		if (buffer == "game") {
-			univers.getClientTCP_().change_state_ready();
-			univers.setMapSize(35);
-			univers.load_external_display_library(std::string("Game pro"),
-												  std::string(
-														  PATH_DISPLAY_LIBRARY_SFML));
-
-			ClientTCP::StartInfo startInfo;
-			univers.getClientTCP_()
-					.write_socket(
-							ClientTCP::add_prefix(eHeader::START_GAME, &startInfo));
-			univers.loop();
-		}
-		if (buffer == "game1") {
-			univers.setMapSize(35);
-			univers.load_external_display_library(std::string("Game pro"),
-												  std::string(
-														  PATH_DISPLAY_LIBRARY_SFML));
-			univers.loop();
-		}
 		if (buffer == "ui") {
 			univers.create_ui();
 			univers.getCore_().aState();
@@ -146,10 +119,7 @@ void nibbler(Univers &univers) {
 
 				//univers.getClientTCP_().change_state_ready();
 				//sleep(1);
-
-				univers.load_external_display_library(std::string("Game pro"),
-													  std::string(
-															  PATH_DISPLAY_LIBRARY_SFML));
+				univers.load_extern_lib_display(Univers::EXTERN_LIB_SFML);
 
 				ClientTCP::StartInfo startInfo;
 				if (univers.isServer()) {
@@ -160,14 +130,16 @@ void nibbler(Univers &univers) {
 				} else {
 					std::cout << "I launch " << std::endl;
 				}
-				univers.loop();
+				univers.new_game();
 			}
-			return;
 		}
 	}
 }
 
 int main(int argc, char **argv) {
+	char hostname[64];
+	gethostname(hostname, 64);
+	std::cout << hostname << std::endl;
 	srand(time(NULL));
 	char path[] = "/tmp/log.out";
 	logger_init(path);

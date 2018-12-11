@@ -11,8 +11,11 @@ FoodCreationSystem::FoodCreationSystem() {
 }
 
 void FoodCreationSystem::update() {
+	mutex.lock();
 
 	auto foodCreationEvents = getWorld().getEventsManager().getEvents<FoodCreation>();
+	mutex.unlock();
+
 	for (auto foodCreationEvent : foodCreationEvents) {
 		log_info("FoodCreationSystem:: x[%d] y[%d]", foodCreationEvent.positionComponent_.x, foodCreationEvent.positionComponent_.y);
 		auto food = getWorld().createEntity();

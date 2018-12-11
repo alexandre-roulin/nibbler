@@ -159,13 +159,17 @@ void DisplayGlfw::render(void) {
     shader_.activate();
 
     if (glfwGetKey(getWindow(), GLFW_KEY_W) == GLFW_PRESS)
-        camera_.processPosition(Camera::Movement::FORWARD, deltaTime_);
+    	direction_ = SOUTH;
+        //camera_.processPosition(Camera::Movement::FORWARD, deltaTime_);
     if (glfwGetKey(getWindow(), GLFW_KEY_S) == GLFW_PRESS)
-        camera_.processPosition(Camera::Movement::BACKWARD, deltaTime_);
+    	direction_ = NORTH;
+        //camera_.processPosition(Camera::Movement::BACKWARD, deltaTime_);
     if (glfwGetKey(getWindow(), GLFW_KEY_A) == GLFW_PRESS)
-        camera_.processPosition(Camera::Movement::LEFT, deltaTime_);
+    	direction_ = WEST;
+        //camera_.processPosition(Camera::Movement::LEFT, deltaTime_);
     if (glfwGetKey(getWindow(), GLFW_KEY_D) == GLFW_PRESS)
-        camera_.processPosition(Camera::Movement::RIGHT, deltaTime_);
+    	direction_ = EAST;
+        //camera_.processPosition(Camera::Movement::RIGHT, deltaTime_);
     if (glfwGetKey(getWindow(), GLFW_KEY_F) == GLFW_PRESS) {
     }
 
@@ -202,9 +206,12 @@ void DisplayGlfw::render(void) {
     */
     for (int y = 0; y < winTileSize_.getY(); y++) {
         for (int x = 0; x < winTileSize_.getX(); x++) {
-            model_ = background_(x, y).getTransform();
-            shader_.setMat4("model", model_);
-            background_(x, y).getModel()->render(shader_);
+        	if (background_(x, y).getModel()) {
+				model_ = background_(x, y).getTransform();
+				shader_.setMat4("model", model_);
+				background_(x, y).getModel()->render(shader_);
+
+        	}
         }
     }
     Glfw::render();

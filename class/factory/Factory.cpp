@@ -15,7 +15,8 @@ void Factory::create_all_snake(Snake snake_array[MAX_SNAKE], int16_t nu) {
 	for (int index = 0; index < nu; ++index) {
 		create_snake(snake_array[index], nu);
 	}
-	create_walls();
+	if (!univers_.isBorderless())
+		create_walls();
 }
 
 void Factory::create_snake(Snake snake, int max_snakes) {
@@ -25,8 +26,8 @@ void Factory::create_snake(Snake snake, int max_snakes) {
 	// (0 + 1) * 35 / (2 + 1) = 11
 	// 35 / 2 = 17
 
-	int base_x = (snake.id + 1) * univers_.getMapSize() / (max_snakes + 1);
-	int base_y = univers_.getMapSize() / 2;
+	int base_y = (snake.id + 1) * univers_.getMapSize() / (max_snakes + 1);
+	int base_x = univers_.getMapSize() / 2;
 	for (int index = 0; index < 4; ++index) {
 
 		new_snake = univers_.getWorld_().createEntity();
@@ -38,7 +39,7 @@ void Factory::create_snake(Snake snake, int max_snakes) {
 			new_snake.addComponent<CollisionComponent>();
 			new_snake.addComponent<SpriteComponent>(eSprite::HEAD | snake.sprite, SPECIFIC_LAST);
 			new_snake.addComponent<PositionComponent>(base_x, base_y);
-			log_warn("Factory::creationHead x[%d] y[%d]",base_x, base_y);
+			log_warn("Factory::creationHead x[%d] y[%d] id[%d] tag[%d]",base_x, base_y,snake.id,  eTag::HEAD_TAG + snake.id);
 		}
 		else if (index == 3) {
 			new_snake.tagByTagId(eTag::TAIL_TAG + snake.id);
@@ -46,7 +47,7 @@ void Factory::create_snake(Snake snake, int max_snakes) {
 			new_snake.addComponent<CollisionComponent>();
 			new_snake.addComponent<SpriteComponent>(eSprite::TAIL | snake.sprite, SPECIFIC_LAST);
 			new_snake.addComponent<PositionComponent>(base_x + 1, base_y);
-			log_warn("Factory::creationTail x[%d] y[%d]",base_x + 1, base_y);
+			log_warn("Factory::creationTail x[%d] y[%d] id[%d] tag[%d]",base_x + 1, base_y,snake.id, eTag::TAIL_TAG + snake.id);
 		}
 		else {
 			new_snake.addComponent<FollowComponent>(snake_follow.getId(), false);
@@ -80,6 +81,8 @@ void Factory::create_wall(int x, int y) {
 	auto entity = univers_.getWorld_().createEntity();
 	entity.addComponent<PositionComponent>(x, y);
 	entity.addComponent<CollisionComponent>();
+	entity.addComponent<SpriteComponent>(eSprite::WALL, NO_PRIORITY); //TODO Sprite ?
+
 	entity.groupEntityByGroupId(eTag::WALL_TAG);
 }
 

@@ -9,7 +9,6 @@
 #include <systems/RenderSystem.hpp>
 #include <network/ServerTCP.hpp>
 #include <systems/FoodEatSystem.hpp>
-#include <events/NextFrame.hpp>
 #include <events/FoodEat.hpp>
 #include <dlfcn.h>
 
@@ -18,15 +17,15 @@ Univers::Univers()
 		  timer_loop(boost::asio::deadline_timer(io_loop,
 												 boost::posix_time::milliseconds(
 														 100))),
-		  mapSize(MAP_MIN),
+		  mapSize(MAP_DEFAULT),
 		  gameSpeed(80),
 		  dlHandleDisplay(nullptr),
 		  dlHandleSound(nullptr),
 		  display(nullptr),
 		  sound(nullptr),
-		  isServer_(false) {
+		  borderless(false) {
 
-	world_ = std::make_unique<KINU::World>(*this);
+	world_ = nullptr;
 	core_ = nullptr; //std::make_unique<Core>(*this)
 	clientTCP_ = ClientTCP::create(*this, io_client);
 	serverTCP_ = nullptr;
@@ -57,19 +56,9 @@ bool Univers::load_external_sound_library(std::string const &title,
 }
 
 bool Univers::load_external_display_library(std::string const &title,
-											std::string const &library_path) {
+											std::string const &libPath) {
 
-	if (display != nullptr && dlHandleDisplay != nullptr) {
-		if (deleteDisplay) {
-			deleteDisplay(display);
-			deleteDisplay = nullptr;
-			newDisplay = nullptr;
-		}
-		dlclose(dlHandleDisplay);
-	}
-
-	if (!(dlHandleDisplay = dlopen(library_path.c_str(),
-								   RTLD_LAZY | RTLD_LOCAL)))
+	if (!(dlHandleDisplay = dlopen(libPath.c_str(), RTLD_LAZY | RTLD_LOCAL)))
 		return (dlError());
 
 	if (!(newDisplay = reinterpret_cast<IDisplay *(*)(
@@ -81,15 +70,16 @@ bool Univers::load_external_display_library(std::string const &title,
 			IDisplay *
 	)>(dlsym(dlHandleDisplay, "deleteDisplay"))))
 		return (dlError());
+
 	if (!(display = newDisplay(PATH_TILESET, DEFAULT_SIZE_SPRITE, mapSize,
 							   mapSize, title.c_str())))
 		return (false);
 
-	world_->grid = Grid<int>(mapSize);
-	world_->grid.fill(SPRITE_GROUND);
-	world_->grid.setBorder(SPRITE_WALL);
-	display->setBackground(world_->grid);
-	world_->setDisplay(display);
+	if (world_ != nullptr)
+		display->setBackground(world_->grid);
+
+	if (world_ != nullptr)
+		world_->setDisplay(display);
 
 	display->update();
 	display->render();
@@ -103,27 +93,33 @@ void Univers::manage_input() {
 	inputInfo.id = clientTCP_->getId();
 	inputInfo.dir = display->getDirection();
 
-	if (world_->getEntitiesManager().hasEntityByTagId(eTag::HEAD_TAG + inputInfo.id))
+	assert(world_ != nullptr);
+	if (world_->getEntitiesManager().hasEntityByTagId(
+			eTag::HEAD_TAG + inputInfo.id))
 		clientTCP_->write_socket(ClientTCP::add_prefix(eHeader::INPUT, &inputInfo));
 
-//	if (clientTCP_->getId() == 0) {
-//		inputInfo.id = 0;
-//		inputInfo.dir = display->getDirection();
-//
-//		if (world_->getEntitiesManager().hasEntityByTagId(
-//				eTag::HEAD_TAG + inputInfo.id))
-//			clientTCP_->write_socket(ClientTCP::add_prefix(eHeader::INPUT, &inputInfo));
-//		inputInfo.id = 1;
-//		if (world_->getEntitiesManager().hasEntityByTagId(
-//				eTag::HEAD_TAG + inputInfo.id))
-//			clientTCP_->write_socket(ClientTCP::add_prefix(eHeader::INPUT, &inputInfo));
-//	}
+	return;
+	if (clientTCP_->getId() == 0) {
+		inputInfo.dir = display->getDirection();
+
+		for (int j = 0; j < 5; ++j) {
+			inputInfo.id = j;
+			if (world_->getEntitiesManager().hasEntityByTagId(
+					eTag::HEAD_TAG + inputInfo.id))
+				clientTCP_->write_socket(
+						ClientTCP::add_prefix(eHeader::INPUT, &inputInfo));
+		}
+	}
 }
 
 void Univers::manage_start() {
 	ClientTCP::StartInfo startInfo;
 	std::vector<StartEvent> startEvent;
-	for (; startEvent.empty(); startEvent = world_->getEventsManager().getEvents<StartEvent>());
+	for (; startEvent.empty();) {
+		clientTCP_->lock();
+		startEvent = world_->getEventsManager().getEvents<StartEvent>();
+		clientTCP_->unlock();
+	}
 	auto ptime = startEvent.front().start_time;
 	timer_start.expires_at(ptime);
 	io_start.run();
@@ -143,25 +139,28 @@ void Univers::loop() {
 	world_->getSystemsManager().addSystem<FoodCreationSystem>();
 	world_->getSystemsManager().addSystem<FoodEatSystem>();
 
-	world_->getEventsManager().emitEvent<StartEvent>();
-	world_->getEventsManager().destroyEvents();
-	manage_start();
-	log_success("Univers::loop");
 
+	manage_start();
+
+	log_success("Univers::async_wait");
 	timer_loop.async_wait(boost::bind(&Univers::loop_world, this));
-	boost::thread thread(boost::bind(&boost::asio::io_service::run, &io_loop));
+	thread = boost::thread(boost::bind(&boost::asio::io_service::run, &io_loop));
+	log_success("Univers::detach");
 	thread.detach();
+	log_success("Univers::loop");
 
 	world_->grid.clear();
 	playMusic("./ressource/sound/zelda.ogg");
 
-	while (display == nullptr || !display->exit()) {
+	while ((display == nullptr || !display->exit()) && !clientTCP_->all_snake_is_dead()) {
 		if (display != nullptr) {
 			display->update();
 			display->drawGrid(world_->grid); //TODO REFRESH WITH CACHE
 			display->render();
 		}
 	}
+	unload_external_library();
+	world_ = nullptr;
 }
 
 void Univers::loop_world() {
@@ -169,14 +168,28 @@ void Univers::loop_world() {
 
 	// SEND DIRECTION
 	manage_input();
+	std::cout << "manage_input" << std::endl;
 
 	// GET REFRESH DATA
-	for (; world_->getEventsManager().getEvents<NextFrame>().empty(););
+	std::cout << "NextFrame" << (nextFrame.empty() ? "Empty" : "Not empty ?!")
+			  << std::endl;
+	for (; nextFrame.empty();) {
+		clientTCP_->lock();
+		nextFrame = world_->getEventsManager().getEvents<NextFrame>();
+
+		clientTCP_->unlock();
+	}
+	std::cout << "NextFrame.clear()" << std::endl;
+	nextFrame.clear();
+	std::cout << "getEventsManager" << std::endl;
 	world_->getEventsManager().destroy<NextFrame>();
 
+	std::cout << "deliverEvents" << std::endl;
 	clientTCP_->deliverEvents();
 
+	std::cout << "update" << std::endl;
 	world_->update();
+	std::cout << "getSystemsManager" << std::endl;
 
 	world_->getSystemsManager().getSystem<FollowSystem>().update();
 	world_->getSystemsManager().getSystem<JoystickSystem>().update();
@@ -190,10 +203,13 @@ void Univers::loop_world() {
 	world_->getSystemsManager().getSystem<FoodEatSystem>().update();
 	world_->getEventsManager().destroy<FoodEat>();
 
-	timer_loop.expires_at(
-			timer_loop.expires_at() +
-			boost::posix_time::milliseconds(gameSpeed));
-	timer_loop.async_wait(boost::bind(&Univers::loop_world, this));
+	std::cout << "timer_loop" << std::endl;
+	if (!clientTCP_->all_snake_is_dead()) {
+		timer_loop.expires_at(
+				timer_loop.expires_at() +
+				boost::posix_time::milliseconds(gameSpeed));
+		timer_loop.async_wait(boost::bind(&Univers::loop_world, this));
+	}
 }
 
 void Univers::create_ui() {
@@ -201,14 +217,13 @@ void Univers::create_ui() {
 }
 
 void Univers::create_server(unsigned int port) {
-	isServer_ = true;
 	serverTCP_ = std::make_unique<ServerTCP>(io_server, port);
 	boost::thread t2(boost::bind(&boost::asio::io_service::run, &io_server));
 	t2.detach();
 }
 
 bool Univers::isServer() const {
-	return isServer_;
+	return serverTCP_ != nullptr;
 }
 
 KINU::World &Univers::getWorld_() const {
@@ -217,10 +232,6 @@ KINU::World &Univers::getWorld_() const {
 
 ClientTCP &Univers::getClientTCP_() const {
 	return *clientTCP_;
-}
-
-ServerTCP &Univers::getServerTCP_() const {
-	return *serverTCP_;
 }
 
 ISound &Univers::getSound() const {
@@ -260,7 +271,7 @@ Core *Univers::releaseCore_() {
 	return (core_.release());
 }
 
-unsigned int &Univers::getMapSize() {
+unsigned int Univers::getMapSize() const {
 	return mapSize;
 }
 
@@ -287,5 +298,52 @@ void Univers::setMapSize(unsigned int mapSize) {
 	log_success("New map size [%d]", mapSize);
 	Univers::mapSize = mapSize;
 }
+
+bool Univers::isBorderless() const {
+	return borderless;
+}
+
+void Univers::setBorderless(bool borderless) {
+		Univers::borderless = borderless;
+}
+
+bool Univers::load_extern_lib_display(Univers::eDisplay eLib) {
+	switch (eLib) {
+		case EXTERN_LIB_SFML : {
+			return load_external_display_library(std::string("Nibbler - SFML"),
+										  std::string(PATH_DISPLAY_LIBRARY_SFML));
+		}
+		case EXTERN_LIB_SDL : {
+			// TODO ADD SDL
+			break;
+		}
+		case EXTERN_LIB_STB : {
+			// TODO ADD STB
+			break;
+		}
+	}
+	return false;
+}
+
+void Univers::new_game() {
+	world_ = std::make_unique<KINU::World>(*this);
+	world_->grid = Grid<int>(mapSize);
+	world_->grid.fill(SPRITE_GROUND);
+	world_->setDisplay(display);
+	display->setBackground(world_->grid);
+	loop();
+}
+
+void Univers::unload_external_library() {
+	log_error("Univers::unload_external_library");
+	if (display != nullptr && dlHandleDisplay != nullptr) {
+		display->exit();
+		if (deleteDisplay) {
+			deleteDisplay(display);
+			deleteDisplay = nullptr;
+			newDisplay = nullptr;
+		}
+		dlclose(dlHandleDisplay);
+	}}
 
 
