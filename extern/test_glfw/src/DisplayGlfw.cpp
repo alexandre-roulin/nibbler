@@ -212,6 +212,10 @@ void DisplayGlfw::render(void) {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 }
 
+bool        DisplayGlfw::exit(void) const {
+	Glfw::exit();
+}
+
 /*
 **####################ID_TILE
 */
@@ -223,6 +227,13 @@ void DisplayGlfw::update(float deltaTime) {
         camera_.processMouseMovement(DisplayGlfw::offsetX_, DisplayGlfw::offsetY_);
         DisplayGlfw::mouseCallbackCalled_ = false;
     }
+}
+void DisplayGlfw::update() {
+	Glfw::update();
+	if (DisplayGlfw::mouseCallbackCalled_) {
+		camera_.processMouseMovement(DisplayGlfw::offsetX_, DisplayGlfw::offsetY_);
+		DisplayGlfw::mouseCallbackCalled_ = false;
+	}
 }
 
 void        DisplayGlfw::setFrameTime(float frameTime) {

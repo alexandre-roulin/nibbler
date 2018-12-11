@@ -16,9 +16,6 @@
 class IDisplay {
 public:
 
-	enum eColor {};
-	enum eTile { APPLE, WALL, HEAD, TAIL, BODY_HONRIZONTAL,  };
-
 	virtual ~IDisplay() {}
     virtual bool        exit(void) const = 0;
     virtual void        render(void) = 0;

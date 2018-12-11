@@ -32,7 +32,7 @@
     #define DISPLAY_GLFW_SLASH "/"
 #endif
 
-class DisplayGlfw : public Glfw {
+class DisplayGlfw : public Glfw, public IDisplay {
 public:
 
     class GlfwConstructorException : public std::exception {
@@ -65,7 +65,9 @@ public:
 	void render(void);
     void setFrameTime(float);
     void update(float deltaTime = 0.16f);
-    eDirection getDirection(void) const;
+	void update();
+	bool        exit(void) const;
+	eDirection getDirection(void) const;
 	//void		drawGrid(Grid<int> const &grid);
 	void		drawGrid(Grid<int> const &grid);
 
