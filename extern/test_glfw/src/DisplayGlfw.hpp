@@ -128,11 +128,11 @@ private:
     DisplayGlfw(void) = delete;
 };
 
-//extern "C" {
-//IDisplay *newDisplay(char const *tileset,
-//                     int tileSize,
-//                     int width,
-//                     int height,
-//                     char const *windowName);
-//void deleteDisplay(IDisplay *display);
-//}
+extern "C" {
+IDisplay *newDisplay(char const *tileset,
+                     int tileSize,
+                     int width,
+                     int height,
+                     char const *windowName);
+void deleteDisplay(IDisplay *display);
+}

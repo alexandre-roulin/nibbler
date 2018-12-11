@@ -43,7 +43,7 @@ void ServerTCP::erase_snake(Snake const &snake) {
 	nu_--;
 	int16_t id = snake.id;
 	snake_array[id].id = -1;
-	async_write(ClientTCP::add_prefix(REMOVE_SNAKE, &id));
+	async_write(ClientTCP::add_prefix(eHeader::REMOVE_SNAKE, &id));
 }
 
 
@@ -52,21 +52,21 @@ void ServerTCP::refresh_data_snake_array(
 		int16_t id) {
 	{
 //		std::cout << "ServerTCP::refresh_data_snake_array : " << id << std::endl;
-		connection->write_socket(ClientTCP::add_prefix(ID, &id));
+		connection->write_socket(ClientTCP::add_prefix(eHeader::ID, &id));
 	}
 	{
 //		std::cout << "ServerTCP::refresh_data_snake_array : " << std::endl;
 		connection->write_socket(
-				ClientTCP::add_prefix(SNAKE_ARRAY, snake_array));
+				ClientTCP::add_prefix(eHeader::SNAKE_ARRAY, snake_array));
 	}
 	{
 //		std::cout << "ServerTCP::refresh_data_snake_array : " << std::endl;
-		async_write(ClientTCP::add_prefix(SNAKE, &snake_array[id]));
+		async_write(ClientTCP::add_prefix(eHeader::SNAKE, &snake_array[id]));
 	}
 }
 
 void ServerTCP::refresh_data_map_size(TCPConnection::pointer &connection) {
-	async_write(ClientTCP::add_prefix(RESIZE_MAP, &mapSize));
+	async_write(ClientTCP::add_prefix(eHeader::RESIZE_MAP, &mapSize));
 }
 
 void ServerTCP::start_game() {
@@ -86,9 +86,9 @@ void ServerTCP::start_game() {
 		foodInfo.positionComponent = PositionComponent((rand() % (30 - 2)) + 1,
 													   (rand() % (30 - 2)) + 1);
 		foodInfo.fromSnake = false;
-		async_write(ClientTCP::add_prefix(FOOD, &foodInfo));
+		async_write(ClientTCP::add_prefix(eHeader::FOOD, &foodInfo));
 	}
-	async_write(ClientTCP::add_prefix(START_GAME, &startInfo));
+	async_write(ClientTCP::add_prefix(eHeader::START_GAME, &startInfo));
 }
 
 void ServerTCP::async_write(std::string message) {
@@ -106,22 +106,22 @@ void ServerTCP::async_write(void const *input, size_t len) {
 void ServerTCP::parse_input(eHeader header, void const *input, size_t len) {
 
 	switch (header) {
-		case SNAKE_ARRAY: {
+		case eHeader::SNAKE_ARRAY: {
 			std::memcpy(snake_array, input, len);
 			break;
 		}
-		case SNAKE: {
+		case eHeader::SNAKE: {
 			Snake snake_temp;
 			std::memcpy(&snake_temp, input, sizeof(Snake));
 			assert(snake_temp.id >= 0 && snake_temp.id < MAX_SNAKE);
 			snake_array[snake_temp.id] = snake_temp;
 			break;
 		}
-		case START_GAME: {
+		case eHeader::START_GAME: {
 			start_game();
 			return;
 		}
-		case FOOD: {
+		case eHeader::FOOD: {
 			mutex.lock();
 			log_info("ServerTCP::FOOD");
 			ClientTCP::FoodInfo foodInfo;
@@ -130,16 +130,16 @@ void ServerTCP::parse_input(eHeader header, void const *input, size_t len) {
 			mutex.unlock();
 			return;
 		}
-		case RESIZE_MAP: {
+		case eHeader::RESIZE_MAP: {
 			log_info("ServerTCP::RESIZE_MAP");
 			std::memcpy(&mapSize, input, len);
 			break;
 		}
-		case ALIVE: {
+		case eHeader::ALIVE: {
 
 			return;
 		}
-		case INPUT: {
+		case eHeader::INPUT: {
 			mutex.lock();
 			ClientTCP::InputInfo inputInfo;
 			std::memcpy(&inputInfo, input, len);
@@ -151,13 +151,13 @@ void ServerTCP::parse_input(eHeader header, void const *input, size_t len) {
 					return;
 				}
 			}
-			async_write(ClientTCP::add_prefix(SNAKE_ARRAY, snake_array));
+			async_write(ClientTCP::add_prefix(eHeader::SNAKE_ARRAY, snake_array));
 			for (auto infoArray : foodInfoArray) {
-				async_write(ClientTCP::add_prefix(FOOD, &infoArray));
+				async_write(ClientTCP::add_prefix(eHeader::FOOD, &infoArray));
 			}
 			foodInfoArray.clear();
 			char data = '#';
-			async_write(ClientTCP::add_prefix(POCK, &data));
+			async_write(ClientTCP::add_prefix(eHeader::POCK, &data));
 			for (int index = 0; index < nu_; ++index) {
 				snake_array[index].isUpdate = false;
 			}
@@ -236,7 +236,7 @@ void TCPConnection::read_socket_header() {
 	//std::cout << "TCPConnection::read_socket_header" << std::endl;
 	boost::asio::async_read(socket_,
 							boost::asio::buffer(buffer_data,
-												ClientTCP::size_header[HEADER]),
+												ClientTCP::size_header[static_cast<int>(eHeader::HEADER)]),
 							boost::bind(&TCPConnection::handle_read_header,
 										shared_from_this(),
 										boost::asio::placeholders::error,
@@ -246,7 +246,7 @@ void TCPConnection::read_socket_header() {
 void TCPConnection::read_socket_data(eHeader header) {
 	//std::cout << "TCPConnection::read_socket_data" << std::endl;
 	boost::asio::async_read(socket_, boost::asio::buffer(buffer_data,
-														 ClientTCP::size_header[header]),
+														 ClientTCP::size_header[static_cast<int>(header)]),
 							boost::bind(&TCPConnection::handle_read_data,
 										shared_from_this(),
 										header,

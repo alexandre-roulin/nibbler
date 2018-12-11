@@ -10,19 +10,19 @@
 #include <exception>
 #include <events/NextFrame.hpp>
 int const ClientTCP::size_header[] = {
-		[CHAT] = SIZEOF_CHAT_PCKT,
-		[FOOD] = sizeof(FoodInfo),
-		[ID] = sizeof(int16_t),
-		[OPEN_GAME] = sizeof(bool),
-		[START_GAME] = sizeof(StartInfo),
-		[SNAKE] = sizeof(Snake),
-		[SNAKE_ARRAY] = sizeof(Snake) * MAX_SNAKE,
-		[HEADER] = sizeof(eHeader),
-		[INPUT] = sizeof(InputInfo),
-		[RESIZE_MAP] = sizeof(unsigned int),
-		[REMOVE_SNAKE] = sizeof(int16_t),
-		[POCK] = sizeof(char),
-		[ALIVE] = sizeof(bool)
+		[static_cast<int>(eHeader::CHAT)] = SIZEOF_CHAT_PCKT,
+		[static_cast<int>(eHeader::FOOD)] = sizeof(FoodInfo),
+		[static_cast<int>(eHeader::ID)] = sizeof(int16_t),
+		[static_cast<int>(eHeader::OPEN_GAME)] = sizeof(bool),
+		[static_cast<int>(eHeader::START_GAME)] = sizeof(StartInfo),
+		[static_cast<int>(eHeader::SNAKE)] = sizeof(Snake),
+		[static_cast<int>(eHeader::SNAKE_ARRAY)] = sizeof(Snake) * MAX_SNAKE,
+		[static_cast<int>(eHeader::HEADER)] = sizeof(eHeader),
+		[static_cast<int>(eHeader::INPUT)] = sizeof(InputInfo),
+		[static_cast<int>(eHeader::RESIZE_MAP)] = sizeof(unsigned int),
+		[static_cast<int>(eHeader::REMOVE_SNAKE)] = sizeof(int16_t),
+		[static_cast<int>(eHeader::POCK)] = sizeof(char),
+		[static_cast<int>(eHeader::ALIVE)] = sizeof(bool)
 };
 
 ClientTCP::ClientTCP(::Univers &univers, boost::asio::io_service &io)
@@ -40,12 +40,12 @@ ClientTCP::ClientTCP(::Univers &univers, boost::asio::io_service &io)
 void ClientTCP::send_host_open_game(void) {
 	bool data;
 	data = true;
-	write_socket(add_prefix(OPEN_GAME, &data));
+	write_socket(add_prefix(eHeader::OPEN_GAME, &data));
 }
 
 void ClientTCP::change_map_size(unsigned int size) {
 
-	write_socket(add_prefix(RESIZE_MAP, &size));
+	write_socket(add_prefix(eHeader::RESIZE_MAP, &size));
 }
 
 void ClientTCP::change_name(char const *name) {
@@ -68,7 +68,7 @@ void ClientTCP::change_state_ready(void) {
 }
 
 void ClientTCP::refreshMySnake(void) {
-	write_socket(add_prefix(SNAKE, &snake_array[id_]));
+	write_socket(add_prefix(eHeader::SNAKE, &snake_array[id_]));
 }
 
 void ClientTCP::connect(std::string dns, std::string port) {
@@ -99,7 +99,7 @@ void ClientTCP::checkError_(boost::system::error_code const &error_code) {
 
 void ClientTCP::read_socket_header() {
 	boost::asio::async_read(socket, boost::asio::buffer(buffer_data,
-														ClientTCP::size_header[HEADER]),
+														ClientTCP::size_header[static_cast<int>(eHeader::HEADER)]),
 							boost::bind(&ClientTCP::handle_read_header,
 										shared_from_this(),
 										boost::asio::placeholders::error,
@@ -108,7 +108,7 @@ void ClientTCP::read_socket_header() {
 
 void ClientTCP::read_socket_data(eHeader header) {
 	boost::asio::async_read(socket, boost::asio::buffer(buffer_data,
-														ClientTCP::size_header[header]),
+														ClientTCP::size_header[static_cast<int>(header)]),
 							boost::bind(&ClientTCP::handle_read_data,
 										shared_from_this(),
 										header,
@@ -155,7 +155,7 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 
 
 	switch (header) {
-		case CHAT: {
+		case eHeader::CHAT: {
 			log_info("eHeader::CHAT");
 			char *data_deserialize = new char[len];
 			std::memcpy(data_deserialize, input, len);
@@ -163,11 +163,11 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 			delete [] data_deserialize;
 			break;
 		}
-		case SNAKE_ARRAY: {
+		case eHeader::SNAKE_ARRAY: {
 			std::memcpy(snake_array, input, len);
 			break;
 		}
-		case SNAKE: {
+		case eHeader::SNAKE: {
 
 			Snake snake_temp;
 
@@ -178,7 +178,7 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 			univers.playNoise(eSound::READY);
 			break;
 		}
-		case REMOVE_SNAKE: {
+		case eHeader::REMOVE_SNAKE: {
 			log_info("eHeader::REMOVE_SNAKE");
 
 			snake_array[*(reinterpret_cast< const int16_t *>(input))].id = -1;
@@ -186,7 +186,7 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 			univers.playNoise(eSound::DEATH);
 			break;
 		}
-		case FOOD: {
+		case eHeader::FOOD: {
 			log_info("eHeader::FOOD");
 
 			FoodInfo foodInfo;
@@ -197,29 +197,29 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 			break;
 		}
 
-		case ID:
+		case eHeader::ID:
 			log_info("eHeader::ID");
 
 			std::memcpy(&id_, input, len);
 			break;
-		case OPEN_GAME: {
+		case eHeader::OPEN_GAME: {
 			log_info("eHeader::OPEN_GAME");
 
 			ClientTCP::StartInfo startInfo;
 			bool data;
-			std::memcpy(&data, input, ClientTCP::size_header[OPEN_GAME]);
+			std::memcpy(&data, input, ClientTCP::size_header[static_cast<int>(eHeader::OPEN_GAME)]);
 			openGame_ = data;
 		}
 			break;
-		case START_GAME: {
+		case eHeader::START_GAME: {
 			log_info("eHeader::START_GAME");
 			StartInfo st;
-			std::memcpy(&st, input, ClientTCP::size_header[START_GAME]);
+			std::memcpy(&st, input, ClientTCP::size_header[static_cast<int>(eHeader::START_GAME)]);
 			factory.create_all_snake(snake_array, st.nu);
 			univers.getWorld_().getEventsManager().emitEvent<StartEvent>(st.time_duration);
 			break;
 		}
-		case INPUT: {
+		case eHeader::INPUT: {
 
 			InputInfo ii;
 			std::memcpy(&ii, input, len);
@@ -228,16 +228,16 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 			mu.unlock();
 			break;
 		}
-		case RESIZE_MAP: {
+		case eHeader::RESIZE_MAP: {
 			log_info("eHeader::RESIZE_MAP");
 
 			unsigned int buffer;
-			std::memcpy(&buffer, input, ClientTCP::size_header[RESIZE_MAP]);
+			std::memcpy(&buffer, input, ClientTCP::size_header[static_cast<int>(eHeader::RESIZE_MAP)]);
 			univers.setMapSize(buffer);
 			univers.playNoise(eSound::RESIZE_MAP);
 			break;
 		}
-		case POCK: {
+		case eHeader::POCK: {
 			univers.getWorld_().getEventsManager().emitEvent<NextFrame>();
 		}
 		default:
@@ -294,5 +294,5 @@ std::string ClientTCP::add_prefix(eHeader header) {
 
 void ClientTCP::killSnake() {
 	snake_array[id_].isAlive = false;
-	write_socket(add_prefix(SNAKE, &(snake_array[id_])));
+	write_socket(add_prefix(eHeader::SNAKE, &(snake_array[id_])));
 }

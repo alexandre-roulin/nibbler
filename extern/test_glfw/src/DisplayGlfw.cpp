@@ -3,13 +3,14 @@
 #include <fstream>
 #include <algorithm>
 #include <memory>
-//IDisplay *newDisplay(char const *tileset,
-//                     int tileSize,
-//                     int width,
-//                     int height,
-//                     char const *windowName) {
-//    return (new DisplayGlfw(tileset, tileSize, width, height, windowName));
-//}
+
+IDisplay *newDisplay(char const *tileset,
+                     int tileSize,
+                     int width,
+                     int height,
+                     char const *windowName) {
+    return (new DisplayGlfw(tileset, tileSize, width, height, windowName));
+}
 
 void deleteDisplay(IDisplay *display) {
     delete display;
@@ -85,8 +86,7 @@ void                DisplayGlfw::getPath_() {
 
     std::ifstream t(pathRoot_ + DISPLAY_GLFW_SLASH + "file.txt");
     pathModel_ = std::string((std::istreambuf_iterator<char>(t)), std::istreambuf_iterator<char>());
-    //pathBlock_ = std::string(pathRoot_ + DISPLAY_GLFW_SLASH + "resources" + DISPLAY_GLFW_SLASH + "objects" + DISPLAY_GLFW_SLASH + "nanosuit" + DISPLAY_GLFW_SLASH + "nanosuit.obj");
-    pathBlock_ = std::string(pathRoot_ + DISPLAY_GLFW_SLASH + "resources" + DISPLAY_GLFW_SLASH + "try.obj");
+    pathBlock_ = std::string(pathRoot_ + DISPLAY_GLFW_SLASH + "resources" + DISPLAY_GLFW_SLASH + "objects" + DISPLAY_GLFW_SLASH + "nanosuit" + DISPLAY_GLFW_SLASH + "nanosuit.obj");
     pathGround_ = std::string(pathRoot_ + DISPLAY_GLFW_SLASH + "resources" + DISPLAY_GLFW_SLASH + "try.obj");
     pathWall_ = std::string(pathRoot_ + DISPLAY_GLFW_SLASH + "resources" + DISPLAY_GLFW_SLASH + "wall.obj");
     pathShaderVert_ = std::string(pathRoot_ + DISPLAY_GLFW_SLASH + "shader" + DISPLAY_GLFW_SLASH + "basic.vert");
@@ -114,13 +114,13 @@ void		DisplayGlfw::setBackground(Grid<int> const &grid) {
             if (tileBackground_(x, y) == SPRITE_WALL) {
                 background_(x, y).assign(&wall_);
 				background_(x, y).resetTransform();
-				background_(x, y).translate(glm::vec3(x, y, 0.f));
+				background_(x, y).translate(glm::vec3(x - winTileSize_.getX() / 2, y - winTileSize_.getY() / 2, 0.f));
 				background_(x, y).scale(glm::vec3(-0.10f));
             }
             else if (tileBackground_(x, y) == SPRITE_GROUND) {
                 background_(x, y).assign(&ground_);
 				background_(x, y).resetTransform();
-				background_(x, y).translate(glm::vec3(x, y, 0.f));
+				background_(x, y).translate(glm::vec3(x - winTileSize_.getX() / 2, y - winTileSize_.getY() / 2, 0.f));
 				background_(x, y).scale(glm::vec3(-0.10f));
             }
         }
@@ -137,7 +137,7 @@ void		DisplayGlfw::drawGrid(Grid<int> const &grid) {
 		for (int x = 0; x < winTileSize_.getX(); ++x) {
 			if (grid(x, y) == SPRITE_FOOD) {
 				asnake_.resetTransform();
-				asnake_.translate(glm::vec3(x, y, 1.2f));
+				asnake_.translate(glm::vec3(x - winTileSize_.getX() / 2, y - winTileSize_.getY() / 2, 1.2f));
 				model_ = asnake_.getTransform();
 				shader_.setMat4("model", model_);
 				asnake_.getModel()->render(shader_);
@@ -145,7 +145,7 @@ void		DisplayGlfw::drawGrid(Grid<int> const &grid) {
 			}
 			else if (grid(x, y) != -1) {
 				ablock_[0].resetTransform();
-				ablock_[0].translate(glm::vec3(x, y, 1.2f));
+				ablock_[0].translate(glm::vec3(x - winTileSize_.getX() / 2, y - winTileSize_.getY() / 2, 1.2f));
 				model_ = ablock_[0].getTransform();
 				shader_.setMat4("model", model_);
 				ablock_[0].getModel()->render(shader_);

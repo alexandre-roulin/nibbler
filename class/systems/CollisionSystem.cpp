@@ -38,7 +38,7 @@ void CollisionSystem::checkCollision(
 						rand() % (30 - 2) + 1, rand() % (30 - 2) + 1);
 				foodInfo.fromSnake = false;
 				getWorld().getUnivers().getClientTCP_().write_socket(
-						ClientTCP::add_prefix(FOOD, &foodInfo));
+						ClientTCP::add_prefix(eHeader::FOOD, &foodInfo));
 			}
 		} else if (tagId == eTag::FOOD_TAG_FROM_SNAKE) {
 			log_info("FOOD_TAG_FROM_SNAKE::FoodCollision");
@@ -64,7 +64,7 @@ void CollisionSystem::checkCollision(
 				foodInfo.fromSnake = true;
 				if (snake.hasComponent<PositionComponent>())
 					getWorld().getUnivers().getClientTCP_().write_socket(
-							ClientTCP::add_prefix(FOOD, &foodInfo));
+							ClientTCP::add_prefix(eHeader::FOOD, &foodInfo));
 			}
 //			getWorld().getUnivers().getClientTCP_().killSnake();
 

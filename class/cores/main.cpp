@@ -98,7 +98,7 @@ void nibbler(Univers &univers) {
 			ClientTCP::StartInfo startInfo;
 			univers.getClientTCP_()
 					.write_socket(
-							ClientTCP::add_prefix(START_GAME, &startInfo));
+							ClientTCP::add_prefix(eHeader::START_GAME, &startInfo));
 			univers.loop();
 		}
 		if (buffer == "server")
@@ -125,7 +125,7 @@ void nibbler(Univers &univers) {
 			ClientTCP::StartInfo startInfo;
 			univers.getClientTCP_()
 					.write_socket(
-							ClientTCP::add_prefix(START_GAME, &startInfo));
+							ClientTCP::add_prefix(eHeader::START_GAME, &startInfo));
 			univers.loop();
 		}
 		if (buffer == "game1") {
@@ -155,7 +155,7 @@ void nibbler(Univers &univers) {
 				if (univers.isServer()) {
 					univers.getClientTCP_()
 							.write_socket(
-									ClientTCP::add_prefix(START_GAME,
+									ClientTCP::add_prefix(eHeader::START_GAME,
 														  &startInfo));
 				} else {
 					std::cout << "I launch " << std::endl;

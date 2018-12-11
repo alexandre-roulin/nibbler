@@ -47,7 +47,7 @@ void WidgetChat::render(void) {
 		if (!this->_chatCommand()) {
 			this->_core.univers.getClientTCP_()
 					.write_socket(ClientTCP::add_prefix(
-							CHAT,
+							eHeader::CHAT,
 							Factory::factory_chat_message(
 									this->_core.univers.getClientTCP_().getSnake().name,
 									this->_bufferMessage))
