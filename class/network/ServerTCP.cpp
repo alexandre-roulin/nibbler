@@ -1,11 +1,12 @@
 #include "ServerTCP.hpp"
 
-ServerTCP::ServerTCP(boost::asio::io_service &io_service, unsigned int port)
+ServerTCP::ServerTCP(unsigned int port)
 		: nu_(0),
-		  acceptor_(io_service, tcp::endpoint(tcp::v4(), port)),
-		  mapSize(35) {
-	//std::cout << "Server created" << std::endl;
+		  acceptor_(io_service_, tcp::endpoint(tcp::v4(), port)),
+		  mapSize(MAP_DEFAULT) {
 	start_accept();
+	thread = boost::thread(boost::bind(&boost::asio::io_service::run, &io_service_));
+	thread.detach();
 }
 
 void ServerTCP::start_accept() {
@@ -26,13 +27,14 @@ void ServerTCP::start_accept() {
 				}
 			}
 
-			snake_array[first_id].id = first_id;
 			snake_array[first_id] = Snake::randomSnake(first_id);
 			new_connection->read_socket_header();
 			pointers.push_back(new_connection);
 			refresh_data_snake_array(new_connection, first_id);
 			refresh_data_map_size(new_connection);
 			++nu_;
+		} else {
+			std::cerr << "Error accept in server" << std::endl;
 		}
 		start_accept();
 	});
@@ -71,7 +73,7 @@ void ServerTCP::start_game() {
 	startInfo.time_duration = boost::posix_time::microsec_clock::universal_time();
 	int max_food = (nu_ > 1 ? nu_ - 1 : nu_);
 	for (int index = 0; index < max_food; ++index) {
-		std::cout << max_food << std::endl;
+//		std::cout << max_food << std::endl;
 		ClientTCP::FoodInfo foodInfo;
 		foodInfo.positionComponent = PositionComponent((rand() % (30 - 2)) + 1,
 													   (rand() % (30 - 2)) + 1);
@@ -94,7 +96,7 @@ void ServerTCP::async_write(void const *input, size_t len) {
 }
 
 void ServerTCP::parse_input(eHeader header, void const *input, size_t len) {
-	std::cout << "ServerTCP::lock()" << header << std::endl;
+//	std::cout << "ServerTCP::lock()" << header << std::endl;
 
 	mutex.lock();
 	switch (header) {
@@ -114,7 +116,7 @@ void ServerTCP::parse_input(eHeader header, void const *input, size_t len) {
 		case START_GAME: {
 			start_game();
 			mutex.unlock();
-			std::cout << "ServerTCP::unlock()" << std::endl;
+//			std::cout << "ServerTCP::unlock()" << std::endl;
 			return;
 		}
 		case FOOD: {
@@ -123,7 +125,7 @@ void ServerTCP::parse_input(eHeader header, void const *input, size_t len) {
 			std::memcpy(&foodInfo, input, len);
 			foodInfoArray.push_back(foodInfo);
 			mutex.unlock();
-			std::cout << "ServerTCP::unlock()" << std::endl;
+//			std::cout << "ServerTCP::unlock()" << std::endl;
 			return;
 		}
 		case RESIZE_MAP: {
@@ -140,7 +142,7 @@ void ServerTCP::parse_input(eHeader header, void const *input, size_t len) {
 				if (snake_array[index].isAlive &&
 					!snake_array[index].isUpdate) {
 					mutex.unlock();
-					std::cout << "ServerTCP::unlock()" << std::endl;
+//					std::cout << "ServerTCP::unlock()" << std::endl;
 					return;
 				}
 			}
@@ -155,7 +157,7 @@ void ServerTCP::parse_input(eHeader header, void const *input, size_t len) {
 				snake_array[index].isUpdate = false;
 			}
 			mutex.unlock();
-			std::cout << "ServerTCP::unlock()" << std::endl;
+//			std::cout << "ServerTCP::unlock()" << std::endl;
 			return;
 		}
 		default: {
@@ -164,16 +166,28 @@ void ServerTCP::parse_input(eHeader header, void const *input, size_t len) {
 	}
 	async_write(ClientTCP::add_prefix(header, const_cast<void *>(input)));
 	mutex.unlock();
-	std::cout << "ServerTCP::unlock()" << std::endl;
+//	std::cout << "ServerTCP::unlock()" << std::endl;
 }
 
 void ServerTCP::remove(TCPConnection::pointer remove) {
-	std::cout << "Romve a Snake + Connection" << std::endl;
+//	std::cout << "Romve a Snake + Connection" << std::endl;
 
 	pointers.erase(std::remove_if(pointers.begin(), pointers.end(),
 								  [remove](TCPConnection::pointer pointer) {
 									  return remove == pointer;
 								  }));
+}
+
+ServerTCP::~ServerTCP() {
+	std::for_each(pointers.begin(), pointers.end(), [](TCPConnection::pointer connection){
+		connection->close();
+	});
+	io_service_.stop();
+	acceptor_.cancel();
+	acceptor_.close();
+	thread.interrupt();
+	std::cout << "ServerTCP::close" << std::endl;
+
 }
 
 /** ---------------------- TCPConnection ---------------------- **/
@@ -192,7 +206,7 @@ void TCPConnection::checkError_(boost::system::error_code const &error_code) {
 	if ((boost::asio::error::eof == error_code) ||
 		(boost::asio::error::connection_reset == error_code)) {
 		//Need to reset the Snake;
-		std::cout << "Disconnected" << std::endl;
+//		std::cout << "Disconnected" << std::endl;
 		serverTCP_.erase_snake(snake_);
 		serverTCP_.remove(shared_from_this());
 	}
@@ -207,8 +221,8 @@ TCPConnection::handle_read_data(eHeader header,
 
 	if (error_code.value() == 0 && len > 0) {
 		serverTCP_.parse_input(header, buffer_data.data(), len);
+		read_socket_header();
 	}
-	read_socket_header();
 }
 
 void TCPConnection::handle_write(const boost::system::error_code &error_code,
@@ -278,4 +292,9 @@ TCPConnection::create(Snake const &snake, boost::asio::io_service &io_service,
 
 tcp::socket &TCPConnection::socket() {
 	return socket_;
+}
+
+void TCPConnection::close() {
+	std::cout << "Close socket" << std::endl;
+	socket_.close();
 }

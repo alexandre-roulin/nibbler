@@ -9,6 +9,7 @@
 #include <gui/Core.hpp>
 #include <exception>
 #include <events/NextFrame.hpp>
+
 int const ClientTCP::size_header[] = {
 		[CHAT] = SIZEOF_CHAT_PCKT,
 		[FOOD] = sizeof(FoodInfo),
@@ -22,54 +23,31 @@ int const ClientTCP::size_header[] = {
 		[RESIZE_MAP] = sizeof(unsigned int),
 		[REMOVE_SNAKE] = sizeof(int16_t),
 		[POCK] = sizeof(char),
-		[BORDERLESS] = sizeof(bool)
+		[BORDERLESS] = sizeof(bool),
+		[DISCONNECT] = sizeof(bool)
+
 };
 
-ClientTCP::ClientTCP(::Univers &univers, boost::asio::io_service &io)
-		: isConnect_(false),
-		  openGame_(false),
+ClientTCP::ClientTCP(Univers &univers)
+		: openGame_(false),
 		  id_(0),
 		  univers(univers),
 		  resolver(io),
 		  socket(io),
-		  factory(univers),
-		  io(io){
-
+		  factory(univers) {
 }
 
-void ClientTCP::send_host_open_game(void) {
-	bool data;
-	data = true;
-	write_socket(add_prefix(OPEN_GAME, &data));
+ClientTCP::pointer_client
+
+ClientTCP::create(Univers &univers) {
+	return pointer_client(new ClientTCP(univers));
 }
 
-void ClientTCP::change_map_size(unsigned int size) {
-
-	write_socket(add_prefix(RESIZE_MAP, &size));
+ClientTCP::~ClientTCP() {
+	socket.close();
 }
 
-void ClientTCP::change_name(char const *name) {
-	bzero(snake_array[id_].name, NAME_BUFFER);
-	if (strlen(name) > NAME_BUFFER)
-		strncpy(snake_array[id_].name, name, NAME_BUFFER - 1);
-	else
-		strcpy(snake_array[id_].name, name);
-	this->refreshMySnake();
-}
-
-void ClientTCP::change_sprite(eSprite snakeSprite) {
-	snake_array[id_].sprite = snakeSprite;
-	this->refreshMySnake();
-}
-
-void ClientTCP::change_state_ready(void) {
-	snake_array[id_].isReady = !snake_array[id_].isReady;
-	this->refreshMySnake();
-}
-
-void ClientTCP::refreshMySnake(void) {
-	write_socket(add_prefix(SNAKE, &snake_array[id_]));
-}
+/** Network Management **/
 
 void ClientTCP::connect(std::string dns, std::string port) {
 	try {
@@ -79,7 +57,6 @@ void ClientTCP::connect(std::string dns, std::string port) {
 		read_socket_header();
 		thread = boost::thread(boost::bind(&boost::asio::io_service::run, &io));
 		thread.detach();
-		isConnect_ = true;
 	} catch (std::exception &exception) {
 		std::cout << exception.what() << std::endl;
 	}
@@ -91,8 +68,9 @@ void ClientTCP::checkError_(boost::system::error_code const &error_code) {
 	if ((boost::asio::error::eof == error_code) ||
 		(boost::asio::error::connection_reset == error_code))
 	{
-		std::cout << "Lost signal" << std::endl;
-		throw std::runtime_error("Lost signal from server");
+		thread.interrupt();
+		socket.close();
+//		throw std::runtime_error("Lost signal from server");
 	}
 }
 
@@ -118,7 +96,6 @@ void ClientTCP::read_socket_data(eHeader header) {
 
 void ClientTCP::handle_read_header(const boost::system::error_code &error_code,
 								   size_t len) {
-//	std::cout << "ClientTCP::handle_read_header > len : " << len << std::endl;
 
 	checkError_(error_code);
 
@@ -126,19 +103,8 @@ void ClientTCP::handle_read_header(const boost::system::error_code &error_code,
 		assert(len == sizeof(eHeader));
 		eHeader header;
 		std::memcpy(&header, buffer_data.data(), sizeof(eHeader));
-//		std::cout << "Header : " << header << std::endl;
 		read_socket_data(header);
 	}
-}
-
-int16_t ClientTCP::getId() const {
-	return id_;
-}
-bool	ClientTCP::isConnect() const {
-	return isConnect_;
-}
-bool	ClientTCP::isOpenGame() const {
-	return openGame_;
 }
 
 
@@ -151,14 +117,9 @@ void ClientTCP::write_socket(std::string message) {
 }
 
 void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
-
-
-	std::cout << "ClientTCP.lock() " << header << std::endl;
 	mutex.lock();
-	std::cout << "ClientTCP.post_lock() " << header << std::endl;
 	switch (header) {
 		case CHAT: {
-			log_info("eHeader::CHAT");
 			char *data_deserialize = new char[len];
 			std::memcpy(data_deserialize, input, len);
 			univers.getCore_().addMessageChat(std::string(data_deserialize, len));
@@ -211,9 +172,6 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 			break;
 		}
 		case INPUT: {
-			InputInfo ii;
-			std::memcpy(&ii, input, len);
-			joystickEvents.push_back(JoystickEvent(ii.id, ii.dir));
 			break;
 		}
 		case RESIZE_MAP: {
@@ -238,21 +196,8 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 			break;
 	}
 	mutex.unlock();
-	std::cout << "ClientTCP.unlock() " << header << std::endl;
 
 }
-
-
-void ClientTCP::deliverEvents() {
-	mutex.lock();
-	for (auto foodCreation : foodCreations) {
-		univers.getWorld_().getEventsManager().emitEvent(foodCreation);
-	}
-	foodCreations.clear();
-	mutex.unlock();
-}
-
-
 void ClientTCP::handle_read_data(eHeader header, boost::system::error_code const &error_code,
 								 size_t len) {
 	checkError_(error_code);
@@ -263,19 +208,76 @@ void ClientTCP::handle_read_data(eHeader header, boost::system::error_code const
 }
 
 void ClientTCP::handle_write(const boost::system::error_code &error_code,
-							 size_t len) {
+							 size_t) {
 	checkError_(error_code);
 }
 
-ClientTCP::pointer_client
-ClientTCP::create(Univers &univers, boost::asio::io_service &io) {
-	return pointer_client(new ClientTCP(univers, io));
+void ClientTCP::close_connection() {
+	bool data = true;
+	write_socket(ClientTCP::add_prefix(DISCONNECT, &data));
 }
+
+/** Game Management **/
+
+void ClientTCP::send_host_open_game(void) {
+	bool data;
+	data = true;
+	write_socket(add_prefix(OPEN_GAME, &data));
+}
+
+void ClientTCP::change_map_size(unsigned int size) {
+	write_socket(add_prefix(RESIZE_MAP, &size));
+}
+
+void ClientTCP::change_name(char const *name) {
+	bzero(snake_array[id_].name, NAME_BUFFER);
+	if (strlen(name) > NAME_BUFFER)
+		strncpy(snake_array[id_].name, name, NAME_BUFFER - 1);
+	else
+		strcpy(snake_array[id_].name, name);
+	this->refreshMySnake();
+}
+
+void ClientTCP::change_sprite(eSprite snakeSprite) {
+	snake_array[id_].sprite = snakeSprite;
+	this->refreshMySnake();
+}
+
+void ClientTCP::change_state_ready(void) {
+	snake_array[id_].isReady = !snake_array[id_].isReady;
+	this->refreshMySnake();
+}
+
+void ClientTCP::refreshMySnake(void) {
+	write_socket(add_prefix(SNAKE, &snake_array[id_]));
+}
+
+int16_t ClientTCP::getId() const {
+	return id_;
+}
+
+bool	ClientTCP::isConnect() const {
+	return socket.is_open();
+}
+
+bool	ClientTCP::isOpenGame() const {
+	return openGame_;
+}
+
+void ClientTCP::deliverEvents() {
+	mutex.lock();
+	for (auto foodCreation : foodCreations) {
+		univers.getWorld_().getEventsManager().emitEvent(foodCreation);
+	}
+	foodCreations.clear();
+	mutex.unlock();
+}
+
 Snake const *ClientTCP::getSnakes() const {
 	return snake_array;
 }
+
 Snake	const &ClientTCP::getSnake(void) const {
-	std::cout << this->snake_array[this->id_] << std::endl;
 	return this->snake_array[this->id_];
 }
 
@@ -283,14 +285,6 @@ void ClientTCP::killSnake() {
 	log_warn("ClientTCP::killSnake.%d", getId());
 	snake_array[id_].isAlive = false;
 	write_socket(add_prefix(SNAKE, &(snake_array[id_])));
-}
-
-void ClientTCP::lock() {
-	mutex.lock();
-}
-
-void ClientTCP::unlock() {
-	mutex.unlock();
 }
 
 void ClientTCP::send_borderless(bool borderless) {
@@ -302,4 +296,14 @@ bool ClientTCP::all_snake_is_dead() {
 		if (snake_array[index].id != -1 && snake_array[index].isAlive)
 			return false;
 	return true;
+}
+
+/** Mutex Management **/
+
+void ClientTCP::lock() {
+	mutex.lock();
+}
+
+void ClientTCP::unlock() {
+	mutex.unlock();
 }

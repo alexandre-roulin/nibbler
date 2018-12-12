@@ -216,5 +216,6 @@ enum eHeader {
 	RESIZE_MAP,			//9
 	REMOVE_SNAKE,		//10
 	POCK,				//11
-	BORDERLESS			//12
+	BORDERLESS,			//12
+	DISCONNECT			//13
 };

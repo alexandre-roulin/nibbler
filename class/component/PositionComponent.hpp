@@ -5,9 +5,9 @@
 struct PositionComponent {
 public:
 
-	explicit PositionComponent(int x = 0, int y = 0);
+	PositionComponent(int x = 0, int y = 0);
 	PositionComponent(PositionComponent const &);
-
+	PositionComponent(std::pair<size_t, size_t >);
 	int y, x;
 
 

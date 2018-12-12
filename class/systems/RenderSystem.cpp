@@ -57,7 +57,7 @@ void RenderSystem::debugSpriteSnake_(eSprite sprite) {
 }
 
 
-int RenderSystem::getSpriteSnake_(eSprite sprite) {
+int RenderSystem::getSprite_(eSprite sprite) {
 
 	eSprite from = (sprite & eSprite::MASK_FROM) >> eSprite::BITWISE_FROM;
 	eSprite to = (sprite & eSprite::MASK_TO) >> eSprite::BITWISE_TO;
@@ -140,7 +140,7 @@ void RenderSystem::update() {
 	for (auto &renderComponent : renderComponents) {
 
 		//TODO chekc x y
-		auto e = RenderSystem::getSpriteSnake_(
+		auto e = RenderSystem::getSprite_(
 				renderComponent.second.sprite);
 		grid(renderComponent.first.x,
 			 renderComponent.first.y) = e;

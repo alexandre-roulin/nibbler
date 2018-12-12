@@ -17,6 +17,7 @@
 #include <events/JoystickEvent.hpp>
 #include <events/StartEvent.hpp>
 #include <events/FoodCreation.hpp>
+
 using boost::asio::ip::tcp;
 
 class Univers;
@@ -32,19 +33,22 @@ public:
 		boost::posix_time::ptime time_duration;
 	};
 
-
 	struct InputInfo {
 		int16_t id;
 		eDirection dir;
 	};
 
-
 	struct FoodInfo {
 		bool fromSnake;
 		PositionComponent positionComponent;
+
 	};
 
-	void deliverEvents();
+	static pointer_client create(Univers &univers);
+
+	virtual ~ClientTCP();
+
+	/** Network Management **/
 
 	void connect(std::string dns, std::string port);
 
@@ -62,12 +66,26 @@ public:
 
 	void parse_input(eHeader header, void const *, size_t);
 
+	bool isConnect() const;
+
+	void close_connection();
+
+	template<typename T>
+	static std::string add_prefix(eHeader, T *element);
+
+	bool isOpenGame() const;
+
+	/** Game Management **/
+
+
+	void deliverEvents();
+
 	void refreshMySnake(void);
 
 	void send_host_open_game(void);
 
 	void send_borderless(bool borderless);
-	
+
 	void change_name(char const *name);
 
 	void change_sprite(eSprite snakeSprite);
@@ -76,38 +94,34 @@ public:
 
 	void change_map_size(unsigned int);
 
-	void lock();
-
 	bool all_snake_is_dead();
-
-	void unlock();
-
-	template<typename T>
-	static std::string add_prefix(eHeader, T *element);
-
-	static pointer_client
-	create(Univers &univers, boost::asio::io_service &io);
 
 	const Snake *getSnakes() const;
 
 	Snake const &getSnake(void) const;
 
 	int16_t getId(void) const;
-	bool	isConnect() const;
-	bool	isOpenGame() const;
+
 	void killSnake();
+
+	/** Mutex Management **/
+
+	void lock();
+
+	void unlock();
+
+
 	static int const size_header[];
+
 private:
-	ClientTCP(::Univers &univers, boost::asio::io_service &io);
+
+	ClientTCP(Univers &univers);
 
 	void checkError_(boost::system::error_code const &error_code);
 
-
-		bool isConnect_;
+	boost::asio::io_service io;
 	bool openGame_;
 	std::vector<FoodCreation> foodCreations;
-	std::vector<JoystickEvent> joystickEvents;
-	std::vector<StartEvent> startEvents;
 	Snake snake_array[MAX_SNAKE];
 	tcp::socket socket;
 	boost::array<char, 512> buffer_data;
@@ -115,11 +129,8 @@ private:
 	tcp::resolver resolver;
 	Univers &univers;
 	Factory factory;
-	boost::asio::io_service &io;
 	boost::thread thread;
 	std::mutex mutex;
-
-
 };
 
 template<typename T>

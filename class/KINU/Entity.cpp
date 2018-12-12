@@ -122,6 +122,7 @@ namespace KINU {
 			taggedEntityId.erase(entity.id_);
 			taggedEntities.erase(tagId);
 		}
+		log_fatal("hasTagIdByEntity(%d)", hasEntityByTagId(eTag::FOOD_TAG));
 	}
 
 

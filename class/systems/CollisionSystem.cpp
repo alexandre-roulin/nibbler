@@ -3,6 +3,7 @@
 #include <events/FoodEat.hpp>
 #include <network/ClientTCP.hpp>
 #include <logger.h>
+#include <Grid.tpp>
 
 CollisionSystem::CollisionSystem() {
 	requireComponent<CollisionComponent>();
@@ -33,9 +34,11 @@ void CollisionSystem::checkCollision(
 			getWorld().getEventsManager().emitEvent<FoodEat>(entityHead.getGroupIdByEntity());
 
 			if (getWorld().getUnivers().getClientTCP_().getId() == entityHead.getGroupIdByEntity()) {
+				log_info("RAND.begin()", time(NULL));
 				ClientTCP::FoodInfo foodInfo;
 				foodInfo.positionComponent = PositionComponent(
-						rand() % (30 - 2) + 1, rand() % (30 - 2) + 1);
+						getWorld().grid.getRandomSlot(FREE_SLOT));
+				log_info("RAND.end()", time(NULL));
 				foodInfo.fromSnake = false;
 				getWorld().getUnivers().getClientTCP_().write_socket(
 						ClientTCP::add_prefix(FOOD, &foodInfo));

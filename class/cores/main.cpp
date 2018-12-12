@@ -3,7 +3,6 @@
 
 #include <iostream>
 #include <KINU/Entity.hpp>
-#include <boost/thread/thread.hpp>
 
 #include <KINU/World.hpp>
 
@@ -15,6 +14,7 @@
 #include <gui/Core.hpp>
 #include <boost/program_options.hpp>
 #include <logger.h>
+
 std::string const Snake::basicName[MAX_SNAKE] = {"Jack O'Lantern", "Eden",
 												 "Jacky", "Emerald",
 												 "Broutille", "Veggie-vie",
@@ -63,10 +63,20 @@ void nibbler(Univers &univers) {
 		if (buffer == "border") {
 			univers.setBorderless(true);
 		}
+		if (buffer == "ia") {
+			univers.create_ia();
+		}
+		if (buffer == "dlia") {
+			univers.delete_ia();
+		}
+		if (buffer == "dls") {
+			univers.delete_server();
+		}
 		if (buffer == "autos") {
 			univers.create_server();
 			univers.getClientTCP_().connect("localhost", "4242");
 			sleep(1);
+			std::cout << univers.getClientTCP_().isConnect() << std::endl;
 			univers.getClientTCP_().change_state_ready();
 			univers.load_extern_lib_display(Univers::EXTERN_LIB_SFML);
 
@@ -94,8 +104,9 @@ void nibbler(Univers &univers) {
 							ClientTCP::add_prefix(START_GAME, &startInfo));
 			univers.new_game();
 		}
-		if (buffer == "server")
+		if (buffer == "server") {
 			univers.create_server();
+		}
 		if (buffer == "connect") {
 			std::string dns, port;
 			std::cout << "dns > ";
@@ -137,6 +148,7 @@ void nibbler(Univers &univers) {
 }
 
 int main(int argc, char **argv) {
+
 	char hostname[64];
 	gethostname(hostname, 64);
 	std::cout << hostname << std::endl;

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <ia/Bobby.hpp>
 #include <memory>
 #include <boost/shared_ptr.hpp>
 #include <boost/asio/io_service.hpp>
@@ -9,6 +10,7 @@
 #include <boost/asio/deadline_timer.hpp>
 #include <events/NextFrame.hpp>
 #include <boost/thread.hpp>
+
 class ServerTCP;
 
 class ClientTCP;
@@ -40,6 +42,7 @@ public:
 	bool load_external_sound_library(std::string const &title,
 									 std::string const &library_path); // TODO GO PRIVATE
 	void unload_external_library();
+
 	void loop();
 
 	void manage_start();
@@ -50,22 +53,23 @@ public:
 
 	Core *releaseCore_();
 
-	/** Sound **/
-
-	void playNoise(int i) const;
-
 	void playNoise(eSound e) const;
-
-	void playMusic(char *path) const;
 
 	void playMusic(std::string const &path) const;
 
-	/** Create function**/
+	/** Create && Delete function**/
+
+	void create_ia();
 
 	void create_server(unsigned int port = 4242);
 
 	void create_ui(); // TODO PRIVATE
 
+	void delete_ia();
+
+	void delete_server();
+
+	void delete_client();
 
 	/** Setter && Getter**/
 
@@ -99,6 +103,8 @@ public:
 
 	//State
 
+	bool isIA() const;
+
 	bool isServer() const;
 
 
@@ -113,7 +119,6 @@ private: // Variable
 
 	std::vector<NextFrame> nextFrame;
 	std::bitset<32> flag;
-	boost::asio::io_service io_server;
 	boost::asio::io_service io_client;
 	boost::asio::io_service io_loop;
 	boost::asio::io_service io_start;
@@ -122,6 +127,7 @@ private: // Variable
 	std::unique_ptr<KINU::World> world_;
 	std::unique_ptr<ServerTCP> serverTCP_;
 	std::unique_ptr<Core> core_;
+	std::unique_ptr<Bobby> bobby;
 	boost::shared_ptr<ClientTCP> clientTCP_;
 	void *dlHandleDisplay;
 	void *dlHandleSound;

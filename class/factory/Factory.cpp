@@ -81,7 +81,7 @@ void Factory::create_wall(int x, int y) {
 	auto entity = univers_.getWorld_().createEntity();
 	entity.addComponent<PositionComponent>(x, y);
 	entity.addComponent<CollisionComponent>();
-	entity.addComponent<SpriteComponent>(eSprite::WALL, NO_PRIORITY); //TODO Sprite ?
+	entity.addComponent<SpriteComponent>(eSprite::WALL, NO_PRIORITY);
 
 	entity.groupEntityByGroupId(eTag::WALL_TAG);
 }

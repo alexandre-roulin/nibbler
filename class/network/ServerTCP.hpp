@@ -51,13 +51,17 @@ public:
 
 	void handle_write(const boost::system::error_code &, size_t);
 
+	void close();
+
 	tcp::socket &socket();
 };
 
 
 class ServerTCP {
 public:
-	ServerTCP(boost::asio::io_service &io_service, unsigned int port);
+	ServerTCP(unsigned int port);
+
+	virtual ~ServerTCP();
 
 	void async_write(std::string message);
 
@@ -84,6 +88,8 @@ private:
 	void start_accept();
 
 	std::vector<TCPConnection::pointer> pointers;
-	boost::thread thread_accept;
+	boost::asio::io_service io_service_;
 	tcp::acceptor acceptor_;
+	boost::thread thread;
 };
+
