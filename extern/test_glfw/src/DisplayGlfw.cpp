@@ -168,7 +168,7 @@ void                DisplayGlfw::getPath_() {
     std::ifstream t(pathRoot_ + DISPLAY_GLFW_SLASH + "file.txt");
     pathModel_ = std::string((std::istreambuf_iterator<char>(t)), std::istreambuf_iterator<char>());
     pathBlock_ = std::string(pathRoot_ + DISPLAY_GLFW_SLASH + "resources" + DISPLAY_GLFW_SLASH + "objects" + DISPLAY_GLFW_SLASH + "nanosuit" + DISPLAY_GLFW_SLASH + "nanosuit.obj");
-    pathGround_ = std::string(pathRoot_ + DISPLAY_GLFW_SLASH + "resources" + DISPLAY_GLFW_SLASH + "try.obj");
+    pathGround_ = std::string(pathRoot_ + DISPLAY_GLFW_SLASH + "resources" + DISPLAY_GLFW_SLASH + "grass_test.obj");
     pathWall_ = std::string(pathRoot_ + DISPLAY_GLFW_SLASH + "resources" + DISPLAY_GLFW_SLASH + "wall.obj");
 	pathShaderBasic_ = std::string(pathRoot_ + DISPLAY_GLFW_SLASH + "shader" + DISPLAY_GLFW_SLASH + "basic");
 	pathShaderSkyBox_ = std::string(pathRoot_ + DISPLAY_GLFW_SLASH + "shader" + DISPLAY_GLFW_SLASH + "skybox");
@@ -246,24 +246,24 @@ void		DisplayGlfw::drawGrid(Grid<int> const &grid) {
 void DisplayGlfw::render(void) {
     shader_.activate();
 
-    if (glfwGetKey(getWindow(), GLFW_KEY_W) == GLFW_PRESS)
+    if (glfwGetKey(getWindow(), GLFW_KEY_UP) == GLFW_PRESS)
     	direction_ = SOUTH;
-    if (glfwGetKey(getWindow(), GLFW_KEY_S) == GLFW_PRESS)
+    if (glfwGetKey(getWindow(), GLFW_KEY_DOWN) == GLFW_PRESS)
     	direction_ = NORTH;
-    if (glfwGetKey(getWindow(), GLFW_KEY_A) == GLFW_PRESS)
+    if (glfwGetKey(getWindow(), GLFW_KEY_LEFT) == GLFW_PRESS)
     	direction_ = WEST;
-    if (glfwGetKey(getWindow(), GLFW_KEY_D) == GLFW_PRESS)
+    if (glfwGetKey(getWindow(), GLFW_KEY_RIGHT) == GLFW_PRESS)
     	direction_ = EAST;
-	if (glfwGetKey(getWindow(), GLFW_KEY_RIGHT) == GLFW_PRESS)
+	if (glfwGetKey(getWindow(), GLFW_KEY_D) == GLFW_PRESS)
 		camera_.processPosition(Camera::Movement::RIGHT, deltaTime_);
-	if (glfwGetKey(getWindow(), GLFW_KEY_LEFT) == GLFW_PRESS)
+	if (glfwGetKey(getWindow(), GLFW_KEY_A) == GLFW_PRESS)
 		camera_.processPosition(Camera::Movement::LEFT, deltaTime_);
-	if (glfwGetKey(getWindow(), GLFW_KEY_UP) == GLFW_PRESS)
-		camera_.processPosition(Camera::Movement::BACKWARD, deltaTime_);
-	if (glfwGetKey(getWindow(), GLFW_KEY_DOWN) == GLFW_PRESS)
+	if (glfwGetKey(getWindow(), GLFW_KEY_S) == GLFW_PRESS)
 		camera_.processPosition(Camera::Movement::FORWARD, deltaTime_);
+	if (glfwGetKey(getWindow(), GLFW_KEY_W) == GLFW_PRESS)
+		camera_.processPosition(Camera::Movement::BACKWARD, deltaTime_);
 
-		if (glfwGetKey(getWindow(), GLFW_KEY_F) == GLFW_PRESS) {
+	if (glfwGetKey(getWindow(), GLFW_KEY_F) == GLFW_PRESS) {
     }
 
     if (glfwGetKey(getWindow(), GLFW_KEY_I) == GLFW_PRESS)
@@ -325,6 +325,7 @@ void DisplayGlfw::render(void) {
     Glfw::render();
 	glClearColor(0.25f, 0.25f, 0.25f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+	view_ = camera_.getViewMatrix();
 	shader_.activate();
 }
 
