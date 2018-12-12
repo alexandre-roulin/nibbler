@@ -91,10 +91,17 @@ private:
 	std::string         pathBlock_;
 	std::string         pathGround_;
 	std::string         pathWall_;
-    std::string         pathShaderVert_;
-    std::string         pathShaderFrag_;
+	std::string			pathDirectorySkyBox_;
+	std::string			pathShaderBasic_;
+    std::string			pathShaderSkyBox_;
+    std::string			pathSkyBox_[6];
 
-    Shader							shader_;
+    unsigned int		textureSkyBox_;
+	unsigned int		skyboxVAO_;
+	unsigned int		skyboxVBO_;
+
+	Shader							shader_;
+	Shader							shaderSkyBox_;
 	Model							snake_;
 	Model							block_;
 	Model							ground_;
@@ -113,6 +120,7 @@ private:
     void                error_(std::string const &s = std::string("Error"));
     void                clean_();
     void                getPath_();
+    void				loadSkyBox_();
 
 	static float				lastX_;
 	static float				lastY_;

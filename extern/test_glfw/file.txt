@@ -1,1 +1,1 @@
-/Users/ntoniolo/CLionProjects/nibbler/extern/test_glfw/resources/objects/cyborg/cyborg.obj
+/Users/ntoniolo/CLionProjects/nibbler/extern/test_glfw/resources/snakest2/Snake_by_Swp.obj

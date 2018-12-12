@@ -47,7 +47,6 @@ glm::vec3	Model::getPositionCenter() const {
 	return (positionCenter_);
 }
 
-
 void	Model::render() const {
     for(unsigned int i = 0; i < mesh_.size(); i++)
         mesh_[i].render();

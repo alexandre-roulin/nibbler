@@ -28,6 +28,10 @@ void    Mesh::clean_() {
 	glDeleteBuffers(1, &EBO);
 }
 
+unsigned int		Mesh::getVAO() const {
+	return (VAO);
+}
+
 void	Mesh::render(Shader &shader) const {
 	unsigned int diffuseNr = 1;
 	unsigned int specularNr = 1;

@@ -3,6 +3,7 @@
 #include <fstream>
 #include <algorithm>
 #include <memory>
+#include <stb_image.h>
 
 IDisplay *newDisplay(char const *tileset,
                      int tileSize,
@@ -46,9 +47,13 @@ model_(1.f) {
             (float)DISPLAY_GLFW_WIN_WIDTH / (float)DISPLAY_GLFW_WIN_HEIGHT,
             0.1f, 1000.0f);
 
-    shader_.attach(pathShaderVert_);
-    shader_.attach(pathShaderFrag_);
+    shader_.attach(pathShaderBasic_ + ".vert");
+    shader_.attach(pathShaderBasic_ + ".frag");
     shader_.link();
+
+	shaderSkyBox_.attach(pathShaderSkyBox_ + ".vert");
+	shaderSkyBox_.attach(pathShaderSkyBox_ + ".frag");
+	shaderSkyBox_.link();
 
     snake_.setModel(pathModel_);
     block_.setModel(pathBlock_);
@@ -72,9 +77,85 @@ model_(1.f) {
 
     camera_.processPosition(Camera::Movement::BACKWARD, std::max(winTileSize_.getX(), winTileSize_.getY()) / 2);
 
+    loadSkyBox_();
 
+	float skyboxVertices[] = {
+			// positions
+			-1.0f,  1.0f, -1.0f,
+			-1.0f, -1.0f, -1.0f,
+			1.0f, -1.0f, -1.0f,
+			1.0f, -1.0f, -1.0f,
+			1.0f,  1.0f, -1.0f,
+			-1.0f,  1.0f, -1.0f,
+
+			-1.0f, -1.0f,  1.0f,
+			-1.0f, -1.0f, -1.0f,
+			-1.0f,  1.0f, -1.0f,
+			-1.0f,  1.0f, -1.0f,
+			-1.0f,  1.0f,  1.0f,
+			-1.0f, -1.0f,  1.0f,
+
+			1.0f, -1.0f, -1.0f,
+			1.0f, -1.0f,  1.0f,
+			1.0f,  1.0f,  1.0f,
+			1.0f,  1.0f,  1.0f,
+			1.0f,  1.0f, -1.0f,
+			1.0f, -1.0f, -1.0f,
+
+			-1.0f, -1.0f,  1.0f,
+			-1.0f,  1.0f,  1.0f,
+			1.0f,  1.0f,  1.0f,
+			1.0f,  1.0f,  1.0f,
+			1.0f, -1.0f,  1.0f,
+			-1.0f, -1.0f,  1.0f,
+
+			-1.0f,  1.0f, -1.0f,
+			1.0f,  1.0f, -1.0f,
+			1.0f,  1.0f,  1.0f,
+			1.0f,  1.0f,  1.0f,
+			-1.0f,  1.0f,  1.0f,
+			-1.0f,  1.0f, -1.0f,
+
+			-1.0f, -1.0f, -1.0f,
+			-1.0f, -1.0f,  1.0f,
+			1.0f, -1.0f, -1.0f,
+			1.0f, -1.0f, -1.0f,
+			-1.0f, -1.0f,  1.0f,
+			1.0f, -1.0f,  1.0f
+	};
+
+
+	glGenVertexArrays(1, &skyboxVAO_);
+	glGenBuffers(1, &skyboxVBO_);
+	glBindVertexArray(skyboxVAO_);
+	glBindBuffer(GL_ARRAY_BUFFER, skyboxVBO_);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(skyboxVertices), &skyboxVertices, GL_STATIC_DRAW);
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 
 }
+
+void				DisplayGlfw::loadSkyBox_() {
+	glGenTextures(1, &textureSkyBox_);
+	glBindTexture(GL_TEXTURE_CUBE_MAP, textureSkyBox_);
+	int width, height, nrChannels;
+	for (unsigned int i = 0; i < 6; i++) {
+		unsigned char *data = stbi_load((pathDirectorySkyBox_ + pathSkyBox_[i]).c_str(), &width, &height, &nrChannels, 0);
+		if (data) {
+			std::cout << "loadSkyBox_ : " << (pathDirectorySkyBox_ + pathSkyBox_[i]).c_str() << std::endl;
+			glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+		}
+		else
+			std::cerr << "loadSkyBox_ : " << (pathDirectorySkyBox_ + pathSkyBox_[i]).c_str() << " failed." << std::endl;
+		stbi_image_free(data);
+	}
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+}
+
 
 void                DisplayGlfw::getPath_() {
 
@@ -89,8 +170,15 @@ void                DisplayGlfw::getPath_() {
     pathBlock_ = std::string(pathRoot_ + DISPLAY_GLFW_SLASH + "resources" + DISPLAY_GLFW_SLASH + "objects" + DISPLAY_GLFW_SLASH + "nanosuit" + DISPLAY_GLFW_SLASH + "nanosuit.obj");
     pathGround_ = std::string(pathRoot_ + DISPLAY_GLFW_SLASH + "resources" + DISPLAY_GLFW_SLASH + "try.obj");
     pathWall_ = std::string(pathRoot_ + DISPLAY_GLFW_SLASH + "resources" + DISPLAY_GLFW_SLASH + "wall.obj");
-    pathShaderVert_ = std::string(pathRoot_ + DISPLAY_GLFW_SLASH + "shader" + DISPLAY_GLFW_SLASH + "basic.vert");
-    pathShaderFrag_ = std::string(pathRoot_ + DISPLAY_GLFW_SLASH + "shader" + DISPLAY_GLFW_SLASH + "basic.frag");
+	pathShaderBasic_ = std::string(pathRoot_ + DISPLAY_GLFW_SLASH + "shader" + DISPLAY_GLFW_SLASH + "basic");
+	pathShaderSkyBox_ = std::string(pathRoot_ + DISPLAY_GLFW_SLASH + "shader" + DISPLAY_GLFW_SLASH + "skybox");
+	pathDirectorySkyBox_ = std::string(pathRoot_ + DISPLAY_GLFW_SLASH + "resources" + DISPLAY_GLFW_SLASH + "ame_nebula" + DISPLAY_GLFW_SLASH);
+	pathSkyBox_[0] = "purplenebula_rt.tga";
+	pathSkyBox_[1] = "purplenebula_lf.tga";
+	pathSkyBox_[2] = "purplenebula_up.tga";
+	pathSkyBox_[3] = "purplenebula_dn.tga";
+	pathSkyBox_[4] = "purplenebula_ft.tga";
+	pathSkyBox_[5] = "purplenebula_bk.tga";
 }
 
 
@@ -160,17 +248,22 @@ void DisplayGlfw::render(void) {
 
     if (glfwGetKey(getWindow(), GLFW_KEY_W) == GLFW_PRESS)
     	direction_ = SOUTH;
-        //camera_.processPosition(Camera::Movement::FORWARD, deltaTime_);
     if (glfwGetKey(getWindow(), GLFW_KEY_S) == GLFW_PRESS)
     	direction_ = NORTH;
-        //camera_.processPosition(Camera::Movement::BACKWARD, deltaTime_);
     if (glfwGetKey(getWindow(), GLFW_KEY_A) == GLFW_PRESS)
     	direction_ = WEST;
-        //camera_.processPosition(Camera::Movement::LEFT, deltaTime_);
     if (glfwGetKey(getWindow(), GLFW_KEY_D) == GLFW_PRESS)
     	direction_ = EAST;
-        //camera_.processPosition(Camera::Movement::RIGHT, deltaTime_);
-    if (glfwGetKey(getWindow(), GLFW_KEY_F) == GLFW_PRESS) {
+	if (glfwGetKey(getWindow(), GLFW_KEY_RIGHT) == GLFW_PRESS)
+		camera_.processPosition(Camera::Movement::RIGHT, deltaTime_);
+	if (glfwGetKey(getWindow(), GLFW_KEY_LEFT) == GLFW_PRESS)
+		camera_.processPosition(Camera::Movement::LEFT, deltaTime_);
+	if (glfwGetKey(getWindow(), GLFW_KEY_UP) == GLFW_PRESS)
+		camera_.processPosition(Camera::Movement::BACKWARD, deltaTime_);
+	if (glfwGetKey(getWindow(), GLFW_KEY_DOWN) == GLFW_PRESS)
+		camera_.processPosition(Camera::Movement::FORWARD, deltaTime_);
+
+		if (glfwGetKey(getWindow(), GLFW_KEY_F) == GLFW_PRESS) {
     }
 
     if (glfwGetKey(getWindow(), GLFW_KEY_I) == GLFW_PRESS)
@@ -191,7 +284,7 @@ void DisplayGlfw::render(void) {
 
     view_ = camera_.getViewMatrix();
     model_ = asnake_.getTransform();
-    shader_.setMat4("projection", projection_);
+	shader_.setMat4("projection", projection_);
     shader_.setMat4("view", view_);
     shader_.setMat4("model", model_);
 
@@ -210,13 +303,29 @@ void DisplayGlfw::render(void) {
 				model_ = background_(x, y).getTransform();
 				shader_.setMat4("model", model_);
 				background_(x, y).getModel()->render(shader_);
-
         	}
         }
     }
+
+	glDepthFunc(GL_LEQUAL);
+	shaderSkyBox_.activate();
+
+	view_ = glm::mat4(glm::mat3(camera_.getViewMatrix()));
+
+	shaderSkyBox_.setMat4("view", view_);
+	shaderSkyBox_.setMat4("projection", projection_);
+	// skybox cube
+	glBindVertexArray(skyboxVAO_);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_CUBE_MAP, textureSkyBox_);
+	glDrawArrays(GL_TRIANGLES, 0, 36);
+	glBindVertexArray(0);
+	glDepthFunc(GL_LESS);
+
     Glfw::render();
 	glClearColor(0.25f, 0.25f, 0.25f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+	shader_.activate();
 }
 
 bool        DisplayGlfw::exit(void) const {
