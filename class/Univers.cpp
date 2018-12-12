@@ -148,7 +148,7 @@ void Univers::loop() {
 	thread.detach();
 	log_success("Univers::loop");
 
-	world_->grid.clear();
+	world_->grid.fill(eSprite::NONE);
 	playMusic("./ressource/sound/zelda.ogg");
 
 	while ((display == nullptr || !display->exit()) && !clientTCP_->all_snake_is_dead()) {
@@ -326,8 +326,8 @@ bool Univers::load_extern_lib_display(Univers::eDisplay eLib) {
 
 void Univers::new_game() {
 	world_ = std::make_unique<KINU::World>(*this);
-	world_->grid = Grid<int>(mapSize);
-	world_->grid.fill(SPRITE_GROUND);
+	world_->grid = Grid< eSprite >(mapSize);
+	world_->grid.fill(eSprite::GROUND);
 	world_->setDisplay(display);
 	display->setBackground(world_->grid);
 	loop();

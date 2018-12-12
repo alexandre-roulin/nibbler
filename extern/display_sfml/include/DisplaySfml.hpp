@@ -35,28 +35,10 @@ public:
 	virtual ~DisplaySfml(void);
 
 	bool exit(void) const;
-
 	void render(void);
-
 	void update(void);
-
-	void drawTileGrid(int indexTile, int indexWidthGrid, int indexHeightGrid);
-
-	void
-	drawTileGrid(int indexWidthTile, int indexHeightTile, int indexWidthGrid,
-				 int indexHeightGrid);
-
-	void
-	drawTilePixel(int indexTile, int indexWidthPixel, int indexHeightPixel);
-
-	void
-	drawTilePixel(int indexWidthTile, int indexHeightTile, int indexWidthPixel,
-				  int indexHeightPixel);
-
-	void drawGrid(Grid<int> const &grid);
-
-	void setBackground(Grid<int> const &grid);
-
+	void drawGrid(Grid< eSprite > const &grid);
+	void setBackground(Grid< eSprite > const &grid);
 	eDirection getDirection(void) const;
 
 private:
@@ -76,11 +58,10 @@ private:
 	int _tilesetWidth;
 	sf::Event _ev;
 
-	void _drawGrid(sf::RenderTarget &, Grid<int> const &grid);
-
+	void _drawTileGrid(int indexTile, int indexWidthGrid, int indexHeightGrid);
+	void _drawGrid(sf::RenderTarget &, Grid< eSprite > const &grid);
 	void _drawTileGrid(sf::RenderTarget &, int indexTile, int indexWidthGrid,
 					   int indexHeightGrid);
-
 	void
 	_drawTileGrid(sf::RenderTarget &, int indexWidthTile, int indexHeightTile,
 				  int indexWidthGrid, int indexHeightGrid);
@@ -89,11 +70,15 @@ private:
 									  int indexWidthGrid, int indexHeightGrid);
 
 	void _error(std::string);
-
 	void _clean(void);
 
 
-	DisplaySfml &operator=(DisplaySfml const &rhs);
+	int			getSpriteSnake_(eSprite sprite);
+	void		debugSpriteSnake_(eSprite sprite);
+	int			direction_(eSprite to);
+
+
+		DisplaySfml &operator=(DisplaySfml const &rhs);
 
 	DisplaySfml(DisplaySfml const &src);
 

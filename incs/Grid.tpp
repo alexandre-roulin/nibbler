@@ -24,8 +24,6 @@ public:
 
 	void fill(T const &fill);
 
-	void clear(void);
-
 	T *operator[](size_t row);
 
 	T &operator()(size_t row, size_t column);
@@ -105,13 +103,6 @@ template<typename T>
 void Grid<T>::fill(T const &fill) {
 	for (size_t i = 0; i < this->_rows * this->_columns; i++)
 		this->_grid[i] = fill;
-}
-
-
-template<typename T>
-void Grid<T>::clear(void) {
-	for (size_t i = 0; i < this->_rows * this->_columns; i++)
-		this->_grid[i] = -1;
 }
 
 template<typename T>

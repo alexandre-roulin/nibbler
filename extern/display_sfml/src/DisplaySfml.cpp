@@ -78,11 +78,121 @@ DisplaySfml::_getQuadTilePixel(int indexWidthTile, int indexHeightTile,
 	return (quad);
 }
 
+int DisplaySfml::direction_(eSprite to) {
+	if ((to & eSprite::SOUTH) == eSprite::SOUTH)
+		return (0);
+	if ((to & eSprite::WEST) == eSprite::WEST)
+		return (1);
+	if ((to & eSprite::NORTH) == eSprite::NORTH)
+		return (2);
+	return (3);
+}
+
+void DisplaySfml::debugSpriteSnake_(eSprite sprite) {
+	eSprite from = (sprite & eSprite::MASK_FROM) >> eSprite::BITWISE_FROM;
+	eSprite to = (sprite & eSprite::MASK_TO) >> eSprite::BITWISE_TO;
+
+	std::cout << "Entity : [";
+
+	if ((sprite & eSprite::MASK_BODY) == eSprite::HEAD)
+		std::cout << "HEAD";
+	if ((sprite & eSprite::MASK_BODY) == eSprite::BODY)
+		std::cout << "BODY";
+	if ((sprite & eSprite::MASK_BODY) == eSprite::TAIL)
+		std::cout << "TAIL";
+
+	std::cout << "] FROM [";
+	if ((from & eSprite::NORTH) == eSprite::NORTH)
+		std::cout << "NORTH";
+	if ((from & eSprite::SOUTH) == eSprite::SOUTH)
+		std::cout << "SOUTH";
+	if ((from & eSprite::WEST) == eSprite::WEST)
+		std::cout << "WEST";
+	if ((from & eSprite::EAST) == eSprite::EAST)
+		std::cout << "EAST";
+	std::cout << "]TO [";
+	if ((to & eSprite::NORTH) == eSprite::NORTH)
+		std::cout << "NORTH";
+	if ((to & eSprite::SOUTH) == eSprite::SOUTH)
+		std::cout << "SOUTH";
+	if ((to & eSprite::WEST) == eSprite::WEST)
+		std::cout << "WEST";
+	if ((to & eSprite::EAST) == eSprite::EAST)
+		std::cout << "EAST";
+	std::bitset<32> c(static_cast<int>(sprite));
+
+	std::cout << "::  : [" << c << "]" << std::endl;
+}
+
+
+int DisplaySfml::getSpriteSnake_(eSprite sprite) {
+
+	eSprite from = (sprite & eSprite::MASK_FROM) >> eSprite::BITWISE_FROM;
+	eSprite to = (sprite & eSprite::MASK_TO) >> eSprite::BITWISE_TO;
+
+	if ((sprite & eSprite::WALL) == eSprite::WALL)
+		return (SPRITE_WALL);
+	if ((sprite & eSprite::GROUND) == eSprite::GROUND)
+		return (SPRITE_GROUND);
+	if ((sprite & eSprite::FOOD) == eSprite::FOOD)
+		return (SPRITE_FOOD);
+	if ((sprite & eSprite::MASK_BODY) == eSprite::HEAD)
+		return (SIZE_LINE_TILESET *
+			(static_cast<int>(sprite & eSprite::MASK_COLOR) - 1) + 5 +
+				DisplaySfml::direction_(to));
+	if ((sprite & eSprite::MASK_BODY) == eSprite::BODY) {
+
+		if (from == to && (from == eSprite::NORTH || from == eSprite::SOUTH))
+			return (SIZE_LINE_TILESET *
+				(static_cast<int>(sprite & eSprite::MASK_COLOR) - 1) + 14);
+		else if (from == to && (from == eSprite::EAST || from == eSprite::WEST))
+			return (SIZE_LINE_TILESET *
+				(static_cast<int>(sprite & eSprite::MASK_COLOR) - 1) + 13);
+
+		else if (from == eSprite::NORTH && to == eSprite::EAST)
+			return (SIZE_LINE_TILESET *
+				(static_cast<int>(sprite & eSprite::MASK_COLOR) - 1) + 1);
+		else if (from == eSprite::NORTH && to == eSprite::WEST)
+			return (SIZE_LINE_TILESET *
+				(static_cast<int>(sprite & eSprite::MASK_COLOR) - 1) + 2);
+
+		else if (from == eSprite::SOUTH && to == eSprite::EAST)
+			return (SIZE_LINE_TILESET *
+				(static_cast<int>(sprite & eSprite::MASK_COLOR) - 1) + 3);
+		else if (from == eSprite::SOUTH && to == eSprite::WEST)
+			return (SIZE_LINE_TILESET *
+				(static_cast<int>(sprite & eSprite::MASK_COLOR) - 1) + 4);
+
+		else if (from == eSprite::WEST && to == eSprite::SOUTH)
+			return (SIZE_LINE_TILESET *
+				(static_cast<int>(sprite & eSprite::MASK_COLOR) - 1) + 1);
+		else if (from == eSprite::EAST && to == eSprite::SOUTH)
+			return (SIZE_LINE_TILESET *
+				(static_cast<int>(sprite & eSprite::MASK_COLOR) - 1) + 2);
+
+		else if (from == eSprite::WEST && to == eSprite::NORTH)
+			return (SIZE_LINE_TILESET *
+				(static_cast<int>(sprite & eSprite::MASK_COLOR) - 1) + 3);
+		else if (from == eSprite::EAST && to == eSprite::NORTH)
+			return (SIZE_LINE_TILESET *
+				(static_cast<int>(sprite & eSprite::MASK_COLOR) - 1) + 4);
+
+		else
+			return (SIZE_LINE_TILESET);
+	}
+	if ((sprite & eSprite::MASK_BODY) == eSprite::TAIL)
+		return (SIZE_LINE_TILESET *
+			(static_cast<int>(sprite & eSprite::MASK_COLOR) - 1) + 9 +
+				DisplaySfml::direction_(to));
+
+	return (0);
+}
+
 /*
 **####################ID_TILE
 */
 
-void DisplaySfml::drawTileGrid(int indexTile, int indexWidthGrid,
+void DisplaySfml::_drawTileGrid(int indexTile, int indexWidthGrid,
 							   int indexHeightGrid) {
 	this->_win.draw(this->_getQuadTilePixel(indexTile % this->_tilesetWidth,
 											indexTile / this->_tilesetWidth,
@@ -100,27 +210,9 @@ void DisplaySfml::_drawTileGrid(sf::RenderTarget &target, int indexTile,
 				&this->_tileset);
 }
 
-void DisplaySfml::drawTilePixel(int indexTile, int indexWidthPixel,
-								int indexHeightPixel) {
-	this->_win.draw(this->_getQuadTilePixel(indexTile % this->_tilesetWidth,
-											indexTile / this->_tilesetWidth,
-											indexWidthPixel,
-											indexHeightPixel),
-					&this->_tileset);
-}
-
 /*
 **####################INDEX_TILE X Y
 */
-
-void DisplaySfml::drawTileGrid(int indexWidthTile, int indexHeightTile,
-							   int indexWidthGrid, int indexHeightGrid) {
-	this->_win.draw(this->_getQuadTilePixel(indexWidthTile,
-											indexHeightTile,
-											indexWidthGrid * this->_tileSize,
-											indexHeightGrid * this->_tileSize),
-					&this->_tileset);
-}
 
 void DisplaySfml::_drawTileGrid(sf::RenderTarget &target,
 								int indexWidthTile, int indexHeightTile,
@@ -132,34 +224,25 @@ void DisplaySfml::_drawTileGrid(sf::RenderTarget &target,
 				&this->_tileset);
 }
 
-void DisplaySfml::drawTilePixel(int indexWidthTile, int indexHeightTile,
-								int indexWidthPixel, int indexHeightPixel) {
-	this->_win.draw(this->_getQuadTilePixel(indexWidthTile,
-											indexHeightTile,
-											indexWidthPixel,
-											indexHeightPixel),
-					&this->_tileset);
-}
-
 /*
 **####################DRAW_GRID
 */
 
-void DisplaySfml::drawGrid(Grid<int> const &grid) {
+void DisplaySfml::drawGrid(Grid< eSprite > const &grid) {
 	for (int y = 0; y < this->_winTileSize.getY(); ++y)
 		for (int x = 0; x < this->_winTileSize.getX(); ++x)
-			if (grid(x, y) != -1)
-				this->drawTileGrid(grid(x, y), x, y);
+			if (grid(x, y) != eSprite::NONE)
+				this->_drawTileGrid(DisplaySfml::getSpriteSnake_(grid(x, y)), x, y);
 }
 
-void DisplaySfml::_drawGrid(sf::RenderTarget &target, Grid<int> const &grid) {
+void DisplaySfml::_drawGrid(sf::RenderTarget &target, Grid< eSprite > const &grid) {
 	for (int y = 0; y < this->_winTileSize.getY(); ++y)
 		for (int x = 0; x < this->_winTileSize.getX(); ++x)
-			if (grid(x, y) != -1)
-				this->_drawTileGrid(target, grid(x, y), x, y);
+			if (grid(x, y) != eSprite::NONE)
+				this->_drawTileGrid(target, DisplaySfml::getSpriteSnake_(grid(x, y)), x, y);
 }
 
-void DisplaySfml::setBackground(Grid<int> const &grid) {
+void DisplaySfml::setBackground(Grid< eSprite > const &grid) {
 	this->_drawGrid(this->_textureBackground, grid);
 	this->_textureBackground.display();
 	this->_spriteBackground = sf::Sprite(this->_textureBackground.getTexture());

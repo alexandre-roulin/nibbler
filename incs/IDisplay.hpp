@@ -68,7 +68,8 @@ enum class eSprite {
 
 
 	WALL = (1 << 23),
-	FOOD = (1 << 24)
+	FOOD = (1 << 24),
+	GROUND = (1 << 24)
 };
 
 inline eSprite operator|(eSprite const lhs, eSprite const rhs) {
@@ -114,11 +115,8 @@ public:
     virtual bool        exit(void) const = 0;
     virtual void        render(void) = 0;
     virtual void        update(void) = 0;
-    //virtual void		drawTileGrid(int indexTile, int indexWidthGrid, int indexHeightGrid) = 0;
-	//virtual void		drawTileGrid(int indexWidthTile, int indexHeightTile, int indexWidthGrid, int indexHeightGrid) = 0;
-    //virtual void		drawTilePixel(int indexTile, int indexWidthPixel, int indexHeightPixel) = 0;
-	//virtual void		drawTilePixel(int indexWidthTile, int indexHeightTile, int indexWidthPixel, int indexHeightPixel) = 0;
-	virtual void		drawGrid(Grid<int> const &grid) = 0;
-	virtual void		setBackground(Grid<int> const &grid) = 0;
+	virtual void		drawGrid(Grid< eSprite > const &grid) = 0;
+	virtual void		setBackground(Grid< eSprite > const &grid) = 0;
     virtual eDirection  getDirection(void) const = 0;
 };
+
