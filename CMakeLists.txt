@@ -66,7 +66,7 @@ message("SFML_INCLUDE_DIR: ${SFML_INCLUDE_DIR}")
 message("SFML_LIBRARIES: ${SFML_LIBRARIES}")
 
 add_subdirectory(imgui)
-#add_subdirectory(extern/display_sdl)
+add_subdirectory(extern/display_sdl)
 add_subdirectory(extern/display_sfml)
 #add_subdirectory(extern/test_glfw)
 add_subdirectory(extern/sound_sdl)
@@ -166,6 +166,7 @@ add_executable(${NAME}
         class/Univers.hpp
 
         incs/IDisplay.hpp
+        incs/Display2D.hpp
         incs/ISound.hpp
         incs/IWidget.hpp
         incs/logger.h
