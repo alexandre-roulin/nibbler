@@ -19,7 +19,7 @@
 
 
 int main(int argc, char **argv) {
-    DisplayGlfw lol(NULL, 35, 10, 10, "Issou");
+    DisplayGlfw lol(10, 10, "Issou");
 
 	Grid<int> background(10);
 	Grid<int> al(10);

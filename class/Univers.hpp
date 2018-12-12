@@ -4,7 +4,7 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/asio/io_service.hpp>
 #include <bitset>
-#include "IDisplay.hpp"
+#include "nibbler.hpp"
 #include "ISound.hpp"
 #include <boost/asio/deadline_timer.hpp>
 #include <events/NextFrame.hpp>
@@ -136,7 +136,7 @@ private: // Variable
 	bool load_external_display_library(std::string const &title,
 									   std::string const &libPath);
 
-	IDisplay *(*newDisplay)(char const *, int, int, int, char const *);
+	IDisplay *(*newDisplay)(int, int, char const *);
 
 	ISound *(*newSound)(char const *);
 

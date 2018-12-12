@@ -62,7 +62,7 @@ bool Univers::load_external_display_library(std::string const &title,
 		return (dlError());
 
 	if (!(newDisplay = reinterpret_cast<IDisplay *(*)(
-			const char *, int, int, int, const char *
+			int, int, const char *
 	)>(dlsym(dlHandleDisplay, "newDisplay"))))
 		return (dlError());
 
@@ -71,8 +71,7 @@ bool Univers::load_external_display_library(std::string const &title,
 	)>(dlsym(dlHandleDisplay, "deleteDisplay"))))
 		return (dlError());
 
-	if (!(display = newDisplay(PATH_TILESET, DEFAULT_SIZE_SPRITE, mapSize,
-							   mapSize, title.c_str())))
+	if (!(display = newDisplay(mapSize, mapSize, title.c_str())))
 		return (false);
 
 	if (world_ != nullptr)

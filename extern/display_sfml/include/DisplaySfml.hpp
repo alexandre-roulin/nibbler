@@ -28,9 +28,7 @@ public:
 		std::string _error;
 	};
 
-	DisplaySfml(char const *tileset,
-				int tile,
-				int width,
+	DisplaySfml(int width,
 				int height,
 				char const *windowName);
 
@@ -103,9 +101,7 @@ private:
 };
 
 extern "C" {
-IDisplay *newDisplay(char const *tileset,
-					 int tileSize,
-					 int width,
+IDisplay *newDisplay(int width,
 					 int height,
 					 char const *windowName);
 void deleteDisplay(IDisplay *display);

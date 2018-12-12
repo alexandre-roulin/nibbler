@@ -1,13 +1,11 @@
 #include "DisplaySdl.hpp"
 #include "../include/DisplaySdl.hpp"
 
-IDisplay			*newDisplay(char const *tileset,
-						int tileSize,
-						int width,
+IDisplay			*newDisplay(int width,
 						int height,
 						char const *windowName)
 {
-	return (new DisplaySdl(tileset, tileSize, width, height, windowName));
+	return (new DisplaySdl(width, height, windowName));
 }
 
 void				deleteDisplay(IDisplay *display)
@@ -15,16 +13,14 @@ void				deleteDisplay(IDisplay *display)
 	delete display;
 }
 
-DisplaySdl::DisplaySdl(char const *tileset,
-						int tileSize,
-						int width,
+DisplaySdl::DisplaySdl(int width,
 						int height,
 						char const *windowName) :
     _exit(false),
 	_direction(NORTH),
-	_tileSize(tileSize),
+	_tileSize(DISPLAY_DEFAULT_TILE_SIZE),
 	_winTileSize(Vector2D<int>(width, height)),
-    _winPixelSize(Vector2D<int>(width * tileSize, height * tileSize)),
+    _winPixelSize(Vector2D<int>(width * _tileSize, height * _tileSize)),
     _win(NULL),
     _rendererSurface(NULL),
     _rendererTexture(NULL),
@@ -33,7 +29,11 @@ DisplaySdl::DisplaySdl(char const *tileset,
     if (SDL_Init(SDL_INIT_VIDEO) < 0 || IMG_Init(IMG_INIT_PNG) < 0)
         this->_error();
 
-	if (!(this->_tileset = IMG_Load(tileset)))
+	std::string pathFile = __FILE__;
+	std::string pathRoot = pathFile.substr(0, pathFile.rfind(DISPLAY_SLASH));
+	pathRoot = pathFile.substr(0, pathRoot.rfind(DISPLAY_SLASH));
+
+	if (!(this->_tileset = IMG_Load((pathRoot + DISPLAY_SLASH + "snake_tileset.png").c_str())))
 		this->_error();
 	this->_tilesetWidth = (this->_tileset->w / this->_tileSize);
     if (!(this->_win = SDL_CreateWindow(windowName, SDL_WINDOWPOS_CENTERED,

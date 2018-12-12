@@ -1,34 +1,34 @@
 #include <nibbler.hpp>
 #include "DisplaySfml.hpp"
 
-IDisplay *newDisplay(char const *tileset,
-					 int tileSize,
-					 int width,
+IDisplay *newDisplay(int width,
 					 int height,
 					 char const *windowName) {
-	return (new DisplaySfml(tileset, tileSize, width, height, windowName));
+	return (new DisplaySfml(width, height, windowName));
 }
 
 void deleteDisplay(IDisplay *display) {
 	delete display;
 }
 
-DisplaySfml::DisplaySfml(char const *tileset,
-						 int tileSize,
-						 int width,
+DisplaySfml::DisplaySfml(int width,
 						 int height,
 						 char const *windowName) :
 		_exit(false),
 		_direction(NORTH),
-		_tileSize(tileSize),
+		_tileSize(DISPLAY_DEFAULT_TILE_SIZE),
 		_winTileSize(Vector2D<int>(width, height)),
-		_winPixelSize(Vector2D<int>(width * tileSize, height * tileSize)),
+		_winPixelSize(Vector2D<int>(width * _tileSize, height * _tileSize)),
 		_win(sf::VideoMode(this->_winPixelSize.getX(),
 						   this->_winPixelSize.getY()),
 			 windowName) {
 	this->_win.setFramerateLimit(60);
 
-	if (!this->_tileset.loadFromFile(tileset))
+	std::string pathFile = __FILE__;
+	std::string pathRoot = pathFile.substr(0, pathFile.rfind(DISPLAY_SLASH));
+	pathRoot = pathFile.substr(0, pathRoot.rfind(DISPLAY_SLASH));
+
+	if (!this->_tileset.loadFromFile(pathRoot + DISPLAY_SLASH + DISPLAY_DEFAULT_TILESET_PATH))
 		this->_error("Tileset cannot be load");
 	if (!this->_textureBackground.create(this->_winPixelSize.getX(),
 										 this->_winPixelSize.getY()))

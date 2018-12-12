@@ -2,5 +2,13 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/cmake/boost-cmake" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/extern/test_glfw/Glitter/Vendor/assimp" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/extern/test_glfw/Glitter/Vendor/glad" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/extern/test_glfw/Glitter/Vendor/glfw" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/extern/test_glfw/Glitter/Vendor/glm" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/extern/test_glfw/Glitter/Vendor/stb" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/imgui/imgui" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/imgui/imgui-sfml" vcs="Git" />
   </component>
 </project>

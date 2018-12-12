@@ -5,28 +5,22 @@
 #include <memory>
 #include <stb_image.h>
 
-IDisplay *newDisplay(char const *tileset,
-                     int tileSize,
-                     int width,
+IDisplay *newDisplay(int width,
                      int height,
                      char const *windowName) {
-    return (new DisplayGlfw(tileset, tileSize, width, height, windowName));
+    return (new DisplayGlfw(width, height, windowName));
 }
 
 void deleteDisplay(IDisplay *display) {
     delete display;
 }
 
-DisplayGlfw::DisplayGlfw(char const *tileset,
-                         int tileSize,
-                         int width,
+DisplayGlfw::DisplayGlfw(int width,
                          int height,
                          char const *windowName) :
 Glfw(windowName, DISPLAY_GLFW_WIN_WIDTH, DISPLAY_GLFW_WIN_HEIGHT),
 direction_(NORTH),
-tileSize_(tileSize),
 winTileSize_(Vector2D<int>(width, height)),
-winPixelSize_(Vector2D<int>(width * tileSize, height * tileSize)),
 background_(winTileSize_.getX(), winTileSize_.getY()),
 tileBackground_(winTileSize_.getX(), winTileSize_.getY()),
 deltaTime_(0.016f),
