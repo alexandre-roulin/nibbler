@@ -71,6 +71,8 @@ public:
 
 	void delete_client();
 
+	void close_acceptor();
+
 	/** Setter && Getter**/
 
 	//Network
@@ -142,6 +144,7 @@ private: // Variable
 	bool load_external_display_library(std::string const &title,
 									   std::string const &libPath);
 
+	void finish_game();
 	IDisplay *(*newDisplay)(char const *, int, int, int, char const *);
 
 	ISound *(*newSound)(char const *);

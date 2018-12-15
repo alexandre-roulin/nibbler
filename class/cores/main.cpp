@@ -60,6 +60,9 @@ void nibbler(Univers &univers) {
 	for (;;) {
 		std::cout << "$> ";
 		std::getline(std::cin, buffer);
+		if (buffer == "closea") {
+			univers.close_acceptor();
+		}
 		if (buffer == "border") {
 			univers.setBorderless(true);
 		}
@@ -71,6 +74,9 @@ void nibbler(Univers &univers) {
 		}
 		if (buffer == "dls") {
 			univers.delete_server();
+		}
+		if (buffer == "sfml") {
+			univers.load_extern_lib_display(Univers::EXTERN_LIB_SFML);
 		}
 		if (buffer == "autos") {
 			univers.create_server();

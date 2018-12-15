@@ -30,6 +30,8 @@ public:
 
 	void clear(void);
 
+	size_t size() const;
+
 	std::pair<size_t, size_t> getRandomSlot(T value);
 	void print();
 
@@ -152,14 +154,20 @@ T &Grid<T>::operator()(size_t column, size_t row) const {
 
 template<typename T>
 Grid<T> &Grid<T>::operator=(Grid<T> const &src) {
-	if (this->_grid)
-		delete[] _grid;
-	this->_columns = src._columns;
-	this->_rows = src._rows;
-	size_ = src.size_;
-	this->_grid = new T[src._columns * src._rows];
-	for (size_t i = 0; i < size_; ++i)
-		this->_grid[i] = src._grid[i];
+
+	if (src.size_ == size_) {
+		for (size_t i = 0; i < size_; ++i)
+			this->_grid[i] = src._grid[i];
+	} else {
+		if (this->_grid)
+			delete[] _grid;
+		this->_columns = src._columns;
+		this->_rows = src._rows;
+		size_ = src.size_;
+		this->_grid = new T[src._columns * src._rows];
+		for (size_t i = 0; i < size_; ++i)
+			this->_grid[i] = src._grid[i];
+	}
 	return (*this);
 }
 
@@ -181,7 +189,7 @@ std::pair<size_t, size_t> Grid<T>::getRandomSlot(T value) {
 				if (isFreeSlot(base_y, base_x, value))
 					--rand_x;
 				if (rand_x == 0) {
-					print();
+//					print();
 					return std::make_pair(base_x, base_y);
 				}
 			}
@@ -211,4 +219,9 @@ void Grid<T>::print() {
 		}
 		std::cout << std::endl;
 	}
+}
+
+template<typename T>
+size_t Grid<T>::size() const {
+	return size_;
 }

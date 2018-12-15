@@ -4,7 +4,7 @@
 #include "PositionComponent.hpp"
 
 
-PositionComponent::PositionComponent(int y, int x) : y(y), x(x) {
+PositionComponent::PositionComponent(int x, int y) : y(y), x(x) {
 }
 
 PositionComponent::PositionComponent(std::pair<size_t, size_t> pair) : x(

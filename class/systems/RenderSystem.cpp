@@ -121,8 +121,8 @@ int RenderSystem::getSprite_(eSprite sprite) {
 
 void RenderSystem::update() {
 	std::list<std::pair<PositionComponent &, SpriteComponent &>> renderComponents;
-	Grid<int> &grid = getWorld().grid;
-
+	Grid<int> grid_cache(getWorld().getUnivers().getMapSize());
+	grid_cache.fill(FREE_SLOT);
 
 	for (auto &entity : getEntities()) {
 		renderComponents.push_back(
@@ -136,15 +136,15 @@ void RenderSystem::update() {
 					   renderPair2.second.priority;
 			});
 
-	grid.clear();
+
 	for (auto &renderComponent : renderComponents) {
 
-		//TODO chekc x y
 		auto e = RenderSystem::getSprite_(
 				renderComponent.second.sprite);
-		grid(renderComponent.first.x,
+		grid_cache(renderComponent.first.x,
 			 renderComponent.first.y) = e;
 	}
+	getWorld().grid = grid_cache;
 }
 
 

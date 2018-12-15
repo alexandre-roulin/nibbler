@@ -33,10 +33,10 @@ void ServerTCP::start_accept() {
 			refresh_data_snake_array(new_connection, first_id);
 			refresh_data_map_size(new_connection);
 			++nu_;
+			start_accept();
 		} else {
 			std::cerr << "Error accept in server" << std::endl;
 		}
-		start_accept();
 	});
 }
 
@@ -178,13 +178,17 @@ void ServerTCP::remove(TCPConnection::pointer remove) {
 								  }));
 }
 
+void ServerTCP::close_acceptor() {
+	acceptor_.cancel();
+	acceptor_.close();
+}
+
 ServerTCP::~ServerTCP() {
 	std::for_each(pointers.begin(), pointers.end(), [](TCPConnection::pointer connection){
 		connection->close();
 	});
 	io_service_.stop();
-	acceptor_.cancel();
-	acceptor_.close();
+	close_acceptor();
 	thread.interrupt();
 	std::cout << "ServerTCP::close" << std::endl;
 

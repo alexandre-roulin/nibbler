@@ -77,6 +77,8 @@ public:
 
 	void start_game();
 
+	void close_acceptor();
+
 	void remove(TCPConnection::pointer);
 
 private:

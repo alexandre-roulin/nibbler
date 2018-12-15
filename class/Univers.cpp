@@ -180,12 +180,12 @@ void Univers::loop() {
 	while ((display == nullptr || !display->exit()) && !clientTCP_->all_snake_is_dead()) {
 		if (display != nullptr) {
 			display->update();
-			display->drawGrid(world_->grid); //TODO REFRESH WITH CACHE
+			display->drawGrid(world_->grid);
 			display->render();
 		}
 	}
 	unload_external_library();
-	world_ = nullptr;
+	finish_game();
 }
 
 void Univers::loop_world() {
@@ -242,8 +242,9 @@ void Univers::create_server(unsigned int port) {
 }
 
 void Univers::create_ia() {
-	if (bobby == nullptr)
+	if (bobby == nullptr) {
 		bobby = std::make_unique<Bobby>(*this);
+	}
 }
 
 void Univers::delete_ia() {
@@ -259,6 +260,17 @@ void Univers::delete_server() {
 
 void Univers::delete_client() {
 	clientTCP_ = ClientTCP::create(*this);
+}
+
+void Univers::finish_game() {
+	thread.interrupt();
+	io_loop.reset();
+	world_ = nullptr;
+}
+
+
+void Univers::close_acceptor() {
+	serverTCP_->close_acceptor();
 }
 
 /** Getter && Setter **/
@@ -337,6 +349,7 @@ void Univers::unsetFlag(eFlag flag) {
 bool Univers::testFlag(eFlag flag) {
 	return (this->flag.test(flag));
 }
+
 
 /** Error **/
 

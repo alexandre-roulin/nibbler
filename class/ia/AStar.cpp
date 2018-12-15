@@ -164,12 +164,9 @@ void AStar::Generator::releaseNodes(NodeSet &nodes_) {
 }
 
 bool AStar::Generator::detectCollision(Vec2i coordinates_) {
-	if (coordinates_.x < 0 || coordinates_.x >= worldSize.x ||
+	return coordinates_.x < 0 || coordinates_.x >= worldSize.x ||
 		coordinates_.y < 0 || coordinates_.y >= worldSize.y ||
-		std::find(walls.begin(), walls.end(), coordinates_) != walls.end()) {
-		return true;
-	}
-	return false;
+		std::find(walls.begin(), walls.end(), coordinates_) != walls.end();
 }
 
 AStar::Vec2i AStar::Heuristic::getDelta(Vec2i source_, Vec2i target_) {
