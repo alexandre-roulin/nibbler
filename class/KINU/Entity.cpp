@@ -89,6 +89,7 @@ namespace KINU {
 		validId.push_back(newInstance);
 		if (newInstance >= componentMasks.size())
 			componentMasks.resize(newInstance + 1);
+
 		assert(!componentMasks[e.getId()].any());
 		assert(!hasGroupIdByEntity(e));
 		assert(!hasTagIdByEntity(e));

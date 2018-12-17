@@ -3,8 +3,8 @@
 
 #include <nibbler.hpp>
 #include <string>
-#include <factory/Factory.hpp>
 #include <ostream>
+#include <KINU/Entity.hpp>
 
 struct JoystickEvent {
 

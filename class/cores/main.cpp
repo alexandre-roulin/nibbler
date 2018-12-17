@@ -82,7 +82,6 @@ void nibbler(Univers &univers) {
 			univers.create_server();
 			univers.getClientTCP_().connect("localhost", "4242");
 			sleep(1);
-			std::cout << univers.getClientTCP_().isConnect() << std::endl;
 			univers.getClientTCP_().change_state_ready();
 			univers.load_extern_lib_display(Univers::EXTERN_LIB_SFML);
 

@@ -33,7 +33,7 @@ public:
 	size_t size() const;
 
 	std::pair<size_t, size_t> getRandomSlot(T value);
-	void print();
+	void print() const;
 
 
 	T *operator[](size_t row);
@@ -212,7 +212,7 @@ bool Grid<T>::isFreeSlot(size_t row, size_t column, T clear) const {
 }
 //y 1 x 1
 template<typename T>
-void Grid<T>::print() {
+void Grid<T>::print() const {
 	for (int y = 0; y < _rows; ++y) {
 		for (int x = 0; x < _columns; ++x) {
 			std::cout << std::setw(4) << _grid[_rows * y + x];

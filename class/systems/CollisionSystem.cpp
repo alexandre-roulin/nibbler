@@ -4,6 +4,9 @@
 #include <network/ClientTCP.hpp>
 #include <logger.h>
 #include <Grid.tpp>
+#include <component/CollisionComponent.hpp>
+#include <KINU/Entity.hpp>
+#include <KINU/World.hpp>
 
 CollisionSystem::CollisionSystem() {
 	requireComponent<CollisionComponent>();
@@ -33,13 +36,14 @@ void CollisionSystem::checkCollision(
 			entityCheck.kill();
 			getWorld().getEventsManager().emitEvent<FoodEat>(entityHead.getGroupIdByEntity());
 
-			if (getWorld().getUnivers().getClientTCP_().getId() == entityHead.getGroupIdByEntity()) {
-				log_info("RAND.begin()", time(NULL));
+			if (getWorld().getUnivers().getClientTCP_().getId() == entityHead.getGroupIdByEntity() ||
+				getWorld().getUnivers().isIASnake(entityHead.getGroupIdByEntity())) {
+
 				ClientTCP::FoodInfo foodInfo;
 				foodInfo.positionComponent = PositionComponent(
 						getWorld().grid.getRandomSlot(FREE_SLOT));
-				log_info("RAND.end()", time(NULL));
 				foodInfo.fromSnake = false;
+
 				getWorld().getUnivers().getClientTCP_().write_socket(
 						ClientTCP::add_prefix(FOOD, &foodInfo));
 			}
@@ -50,14 +54,16 @@ void CollisionSystem::checkCollision(
 			getWorld().getEventsManager().emitEvent<FoodEat>(entityHead.getGroupIdByEntity());
 		} else if (tagId == WALL_TAG) {
 			log_info("WALL_TAG::WallCollision");
-			if (entityHead.getGroupIdByEntity() == getWorld().getUnivers().getClientTCP_().getId())
-				getWorld().getUnivers().getClientTCP_().killSnake();
+			if (entityHead.getGroupIdByEntity() == getWorld().getUnivers().getClientTCP_().getId() ||
+					getWorld().getUnivers().isIASnake(entityHead.getGroupIdByEntity()))
+				getWorld().getUnivers().getClientTCP_().killSnake(entityHead.getGroupIdByEntity());
 			entityHead.killGroup();
 
 		} else if (entityCheck.getGroupIdByEntity() == entityHead.getGroupIdByEntity()) {
 			log_info("HIMSELF::CollisionOnHimself");
-			if (entityHead.getGroupIdByEntity() == getWorld().getUnivers().getClientTCP_().getId())
-				getWorld().getUnivers().getClientTCP_().killSnake();
+			if (entityHead.getGroupIdByEntity() == getWorld().getUnivers().getClientTCP_().getId() ||
+					getWorld().getUnivers().isIASnake(entityHead.getGroupIdByEntity()))
+				getWorld().getUnivers().getClientTCP_().killSnake(entityHead.getGroupIdByEntity());
 			entityHead.killGroup();
 		} else {
 			log_info("SNAKE::CollisionSnake");
@@ -71,8 +77,9 @@ void CollisionSystem::checkCollision(
 					getWorld().getUnivers().getClientTCP_().write_socket(
 							ClientTCP::add_prefix(FOOD, &foodInfo));
 			}
-			if (entityHead.getGroupIdByEntity() == getWorld().getUnivers().getClientTCP_().getId())
-				getWorld().getUnivers().getClientTCP_().killSnake();
+			if (entityHead.getGroupIdByEntity() == getWorld().getUnivers().getClientTCP_().getId() ||
+					getWorld().getUnivers().isIASnake(entityHead.getGroupIdByEntity()))
+				getWorld().getUnivers().getClientTCP_().killSnake(entityHead.getGroupIdByEntity());
 
 			entityHead.killGroup();
 		}

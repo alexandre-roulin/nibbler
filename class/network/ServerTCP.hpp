@@ -81,6 +81,8 @@ public:
 
 	void remove(TCPConnection::pointer);
 
+	bool isFull() const;
+
 private:
 	int16_t nu_;
 	Snake snake_array[MAX_SNAKE];

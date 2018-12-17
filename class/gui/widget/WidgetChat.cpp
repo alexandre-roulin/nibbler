@@ -1,6 +1,7 @@
 #include "WidgetChat.hpp"
 #include <gui/Core.hpp>
 #include "imgui.h"
+#include <Univers.hpp>
 
 WidgetChat::WidgetChat(Core &core) :
 		AWidget(core) {

@@ -11,6 +11,10 @@
 #include <systems/FoodEatSystem.hpp>
 #include <events/FoodEat.hpp>
 #include <dlfcn.h>
+#include <KINU/World.hpp>
+#include <events/StartEvent.hpp>
+#include <events/FoodCreation.hpp>
+#include <events/JoystickEvent.hpp>
 
 Univers::Univers()
 		: timer_start(boost::asio::deadline_timer(io_start)),
@@ -23,7 +27,7 @@ Univers::Univers()
 		  sound(nullptr),
 		  borderless(false) {
 
-	clientTCP_ = ClientTCP::create(*this);
+	clientTCP_ = ClientTCP::create(*this, false);
 	serverTCP_ = nullptr;
 	world_ = nullptr;
 	core_ = nullptr; //std::make_unique<Core>(*this)
@@ -43,15 +47,15 @@ bool Univers::load_external_sound_library(std::string const &title,
 	}
 
 	if (!(dlHandleSound = dlopen(library_path.c_str(), RTLD_LAZY | RTLD_LOCAL)))
-		return (dlError());
+		return (dlError("dlopen"));
 
 	if (!(newSound = reinterpret_cast<ISound *(*)(
 			const char *) >(dlsym(dlHandleSound, "newSound"))))
-		return (dlError());
+		return (dlError("dlsym"));
 
 	if (!(deleteSound = reinterpret_cast<void (*)(
 			ISound *)>(dlsym(dlHandleSound, "deleteSound"))))
-		return (dlError());
+		return (dlError("dlsym"));
 	return (sound = newSound(library_path.c_str())) != nullptr;
 }
 
@@ -59,17 +63,17 @@ bool Univers::load_external_display_library(std::string const &title,
 											std::string const &libPath) {
 
 	if (!(dlHandleDisplay = dlopen(libPath.c_str(), RTLD_LAZY | RTLD_LOCAL)))
-		return (dlError());
+		return (dlError("dlopen"));
 
 	if (!(newDisplay = reinterpret_cast<IDisplay *(*)(
 			const char *, int, int, int, const char *
 	)>(dlsym(dlHandleDisplay, "newDisplay"))))
-		return (dlError());
+		return (dlError("dlsym"));
 
 	if (!(deleteDisplay = reinterpret_cast<void (*)(
 			IDisplay *
 	)>(dlsym(dlHandleDisplay, "deleteDisplay"))))
-		return (dlError());
+		return (dlError("dlsym"));
 
 	if (!(display = newDisplay(PATH_TILESET, DEFAULT_SIZE_SPRITE, mapSize,
 							   mapSize, title.c_str())))
@@ -90,7 +94,8 @@ bool Univers::load_extern_lib_display(Univers::eDisplay eLib) {
 	switch (eLib) {
 		case EXTERN_LIB_SFML : {
 			return load_external_display_library(std::string("Nibbler - SFML"),
-												 std::string(PATH_DISPLAY_LIBRARY_SFML));
+												 std::string(
+														 PATH_DISPLAY_LIBRARY_SFML));
 		}
 		case EXTERN_LIB_SDL : {
 			// TODO ADD SDL
@@ -113,7 +118,8 @@ void Univers::unload_external_library() {
 			newDisplay = nullptr;
 		}
 		dlclose(dlHandleDisplay);
-	}}
+	}
+}
 
 /** Game Management **/
 
@@ -123,28 +129,40 @@ void Univers::new_game() {
 	world_->grid.fill(SPRITE_GROUND);
 	world_->setDisplay(display);
 	display->setBackground(world_->grid);
+	if (isServer()) {
+		for (auto &bobby : vecBobby) {
+			bobby->setGrid_(&world_->grid);
+			bobby->buildIA();
+		}
+	}
 	loop();
 }
 
 void Univers::manage_input() {
 	ClientTCP::InputInfo inputInfo;
 
+
+	if (isServer()) {
+		for (auto &bobby : vecBobby) {
+			bobby->sendDirection();
+		}
+	}
+
+
 	inputInfo.id = clientTCP_->getId();
-
-	if (isIA())
-		inputInfo.dir = bobby->getDirection();
-	else
-		inputInfo.dir = display->getDirection();
-
+	inputInfo.dir = display->getDirection();
 	assert(world_ != nullptr);
-	if (world_->getEntitiesManager().hasEntityByTagId(eTag::HEAD_TAG + inputInfo.id))
+	if (world_->getEntitiesManager().hasEntityByTagId(
+			eTag::HEAD_TAG + inputInfo.id)) {
 		clientTCP_->write_socket(ClientTCP::add_prefix(INPUT, &inputInfo));
+	}
 }
 
 void Univers::manage_start() {
 	ClientTCP::StartInfo startInfo;
-	std::vector<StartEvent> startEvent;
+	std::vector <StartEvent> startEvent;
 	for (; startEvent.empty();) {
+		std::cout << "stuck" << std::endl;
 		clientTCP_->lock();
 		startEvent = world_->getEventsManager().getEvents<StartEvent>();
 		clientTCP_->unlock();
@@ -171,13 +189,15 @@ void Univers::loop() {
 	manage_start();
 
 	timer_loop.async_wait(boost::bind(&Univers::loop_world, this));
-	thread = boost::thread(boost::bind(&boost::asio::io_service::run, &io_loop));
+	thread = boost::thread(
+			boost::bind(&boost::asio::io_service::run, &io_loop));
 	thread.detach();
 
 	world_->grid.clear();
 	playMusic("./ressource/sound/zelda.ogg");
 
-	while ((display == nullptr || !display->exit()) && !clientTCP_->all_snake_is_dead()) {
+	while ((display == nullptr || !display->exit()) &&
+		   !clientTCP_->all_snake_is_dead()) {
 		if (display != nullptr) {
 			display->update();
 			display->drawGrid(world_->grid);
@@ -191,11 +211,11 @@ void Univers::loop() {
 void Univers::loop_world() {
 
 	manage_input();
+	int i = 0;
 
 	for (; nextFrame.empty();) {
 		clientTCP_->lock();
 		nextFrame = world_->getEventsManager().getEvents<NextFrame>();
-
 		clientTCP_->unlock();
 	}
 	nextFrame.clear();
@@ -210,11 +230,16 @@ void Univers::loop_world() {
 	world_->getEventsManager().destroy<JoystickEvent>();
 	world_->getSystemsManager().getSystem<MotionSystem>().update();
 
-	if (isIA()) {
-		boost::thread t2(boost::bind(&Bobby::calculateDirection, bobby.get()));
-		t2.detach();
-	}
+	if (isServer()) {
+		for (auto &bobby : vecBobby) {
+			if (world_->getEntitiesManager().hasEntityByTagId(bobby->getId() + eTag::HEAD_TAG)) {
+				boost::thread
+						t2(boost::bind(&Bobby::calculateDirection, bobby.get()));
+				t2.detach();
+			}
 
+		}
+	}
 	world_->getSystemsManager().getSystem<CollisionSystem>().update();
 	world_->getSystemsManager().getSystem<FoodCreationSystem>().update();
 	world_->getEventsManager().destroy<FoodCreation>();
@@ -224,6 +249,8 @@ void Univers::loop_world() {
 	world_->getEventsManager().destroy<FoodEat>();
 
 	if (!clientTCP_->all_snake_is_dead()) {
+//		std::cout << "Recursive" << std::endl;
+
 		timer_loop.expires_at(
 				timer_loop.expires_at() +
 				boost::posix_time::milliseconds(gameSpeed));
@@ -242,13 +269,19 @@ void Univers::create_server(unsigned int port) {
 }
 
 void Univers::create_ia() {
-	if (bobby == nullptr) {
-		bobby = std::make_unique<Bobby>(*this);
+	if (isServer() && !serverTCP_->isFull()) {
+		ClientTCP::pointer_client clientTCPIA = ClientTCP::create(*this, true);
+		clientTCPIA->connect(clientTCP_->getDns(), clientTCP_->getPort());
+		sleep(1);
+		std::cout << clientTCPIA->getId() << std::endl;
+		clientTCPIA->change_state_ready();
+		vecBobby.push_back(
+				std::make_unique<Bobby>(*this, clientTCPIA));
 	}
 }
 
 void Univers::delete_ia() {
-	bobby = nullptr;
+//	bobby = nullptr;
 }
 
 void Univers::delete_server() {
@@ -259,7 +292,7 @@ void Univers::delete_server() {
 }
 
 void Univers::delete_client() {
-	clientTCP_ = ClientTCP::create(*this);
+	clientTCP_ = ClientTCP::create(*this, false);
 }
 
 void Univers::finish_game() {
@@ -310,10 +343,6 @@ bool Univers::isServer() const {
 	return serverTCP_ != nullptr;
 }
 
-bool Univers::isIA() const {
-	return bobby != nullptr;
-}
-
 bool Univers::isBorderless() const {
 	return borderless;
 }
@@ -353,10 +382,19 @@ bool Univers::testFlag(eFlag flag) {
 
 /** Error **/
 
-bool Univers::dlError() {
-	std::cerr << "Error : " << dlerror() << std::endl;
+bool Univers::dlError(char const *from) {
+	std::cerr << "Error " << from << " : " << dlerror() << std::endl;
 	dlclose(dlHandleDisplay);
 	return (false);
+}
+
+bool Univers::isIASnake(uint16_t client_id) const {
+
+	for (auto &bobby : vecBobby) {
+		if (bobby->getId() == client_id)
+			return true;
+	}
+	return false;
 }
 
 

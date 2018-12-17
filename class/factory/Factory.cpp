@@ -2,7 +2,14 @@
 #include <component/SpriteComponent.hpp>
 #include <events/FoodCreation.hpp>
 #include <logger.h>
+#include <KINU/Entity.hpp>
+#include <component/JoystickComponent.hpp>
+#include <component/MotionComponent.hpp>
+#include <component/CollisionComponent.hpp>
+#include <component/FollowComponent.hpp>
+#include <Univers.hpp>
 #include "Factory.hpp"
+#include <KINU/World.hpp>
 
 Factory::Factory(Univers &univers)
 		: univers_(univers) {
@@ -78,7 +85,8 @@ void Factory::create_walls() {
 }
 
 void Factory::create_wall(int x, int y) {
-	auto entity = univers_.getWorld_().createEntity();
+	KINU::Entity entity = univers_.getWorld_().createEntity();
+
 	entity.addComponent<PositionComponent>(x, y);
 	entity.addComponent<CollisionComponent>();
 	entity.addComponent<SpriteComponent>(eSprite::WALL, NO_PRIORITY);

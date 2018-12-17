@@ -9,6 +9,9 @@
 #include <gui/Core.hpp>
 #include <exception>
 #include <events/NextFrame.hpp>
+#include <KINU/World.hpp>
+#include <events/FoodCreation.hpp>
+#include <events/StartEvent.hpp>
 
 int const ClientTCP::size_header[] = {
 		[CHAT] = SIZEOF_CHAT_PCKT,
@@ -28,8 +31,9 @@ int const ClientTCP::size_header[] = {
 
 };
 
-ClientTCP::ClientTCP(Univers &univers)
-		: openGame_(false),
+ClientTCP::ClientTCP(Univers &univers, bool fromIA)
+		: fromIA_(fromIA),
+		  openGame_(false),
 		  id_(0),
 		  univers(univers),
 		  resolver(io),
@@ -39,8 +43,8 @@ ClientTCP::ClientTCP(Univers &univers)
 
 ClientTCP::pointer_client
 
-ClientTCP::create(Univers &univers) {
-	return pointer_client(new ClientTCP(univers));
+ClientTCP::create(Univers &univers, bool fromIA) {
+	return pointer_client(new ClientTCP(univers, fromIA));
 }
 
 ClientTCP::~ClientTCP() {
@@ -57,6 +61,8 @@ void ClientTCP::connect(std::string dns, std::string port) {
 		read_socket_header();
 		thread = boost::thread(boost::bind(&boost::asio::io_service::run, &io));
 		thread.detach();
+		dns_ = dns;
+		port_ = port;
 	} catch (std::exception &exception) {
 		std::cout << exception.what() << std::endl;
 	}
@@ -107,7 +113,6 @@ void ClientTCP::handle_read_header(const boost::system::error_code &error_code,
 	}
 }
 
-
 void ClientTCP::write_socket(std::string message) {
 	boost::asio::async_write(socket, boost::asio::buffer(message),
 							 boost::bind(&ClientTCP::handle_write,
@@ -120,10 +125,14 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 	mutex.lock();
 	switch (header) {
 		case CHAT: {
-			char *data_deserialize = new char[len];
-			std::memcpy(data_deserialize, input, len);
-			univers.getCore_().addMessageChat(std::string(data_deserialize, len));
-			delete [] data_deserialize;
+			if (!fromIA_) {
+
+				char *data_deserialize = new char[len];
+				std::memcpy(data_deserialize, input, len);
+				univers.getCore_().addMessageChat(
+						std::string(data_deserialize, len));
+				delete[] data_deserialize;
+			}
 			break;
 		}
 		case SNAKE_ARRAY: {
@@ -131,10 +140,12 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 			break;
 		}
 		case SNAKE: {
-			Snake snake_temp;
-			std::memcpy(&snake_temp, input, len);
-			snake_array[snake_temp.id] = snake_temp;
-			univers.playNoise(eSound::READY);
+			if (!fromIA_) {
+				Snake snake_temp;
+				std::memcpy(&snake_temp, input, len);
+				snake_array[snake_temp.id] = snake_temp;
+				univers.playNoise(eSound::READY);
+			}
 			break;
 		}
 		case REMOVE_SNAKE: {
@@ -147,7 +158,8 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 			log_info("eHeader::FOOD");
 			FoodInfo foodInfo;
 			std::memcpy(&foodInfo, input, len);
-			foodCreations.push_back(FoodCreation(foodInfo.positionComponent, foodInfo.fromSnake));
+			foodCreations.push_back(FoodCreation(foodInfo.positionComponent,
+												 foodInfo.fromSnake));
 			break;
 		}
 		case ID: {
@@ -157,39 +169,52 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 		}
 		case OPEN_GAME: {
 			log_info("eHeader::OPEN_GAME");
-			ClientTCP::StartInfo startInfo;
-			bool data;
-			std::memcpy(&data, input, ClientTCP::size_header[OPEN_GAME]);
-			openGame_ = data;
+			if (!fromIA_) {
+				ClientTCP::StartInfo startInfo;
+				bool data;
+				std::memcpy(&data, input, ClientTCP::size_header[OPEN_GAME]);
+				openGame_ = data;
+			}
 			break;
 		}
 		case START_GAME: {
-			log_info("eHeader::START_GAME");
-			StartInfo st;
-			std::memcpy(&st, input, ClientTCP::size_header[START_GAME]);
-			factory.create_all_snake(snake_array, st.nu);
-			univers.getWorld_().getEventsManager().emitEvent<StartEvent>(st.time_duration);
+			if (!fromIA_) {
+				log_info("eHeader::START_GAME");
+				StartInfo st;
+				std::memcpy(&st, input, ClientTCP::size_header[START_GAME]);
+				factory.create_all_snake(snake_array, st.nu);
+				univers.getWorld_().getEventsManager().emitEvent<StartEvent>(
+						st.time_duration);
+			}
 			break;
 		}
 		case INPUT: {
 			break;
 		}
 		case RESIZE_MAP: {
-			log_info("eHeader::RESIZE_MAP");
-			unsigned int buffer;
-			std::memcpy(&buffer, input, ClientTCP::size_header[RESIZE_MAP]);
-			univers.setMapSize(buffer);
-			univers.playNoise(eSound::RESIZE_MAP);
+			if (!fromIA_) {
+				log_info("eHeader::RESIZE_MAP");
+				unsigned int buffer;
+				std::memcpy(&buffer, input, ClientTCP::size_header[RESIZE_MAP]);
+				univers.setMapSize(buffer);
+				univers.playNoise(eSound::RESIZE_MAP);
+			}
 			break;
 		}
 		case BORDERLESS : {
-			bool borderless;
-			std::memcpy(&borderless, input, ClientTCP::size_header[BORDERLESS]);
-			univers.setBorderless(borderless);
+			if (!fromIA_) {
+				bool borderless;
+				std::memcpy(&borderless, input,
+							ClientTCP::size_header[BORDERLESS]);
+				univers.setBorderless(borderless);
+			}
 			break;
 		}
 		case POCK: {
-			univers.getWorld_().getEventsManager().emitEvent<NextFrame>();
+			if (!fromIA_) {
+				std::cout << "POCK" << std::endl;
+				univers.getWorld_().getEventsManager().emitEvent<NextFrame>();
+			}
 			break;
 		}
 		default:
@@ -217,7 +242,20 @@ void ClientTCP::close_connection() {
 	write_socket(ClientTCP::add_prefix(DISCONNECT, &data));
 }
 
+const std::string &ClientTCP::getDns() const {
+	return dns_;
+}
+
+const std::string &ClientTCP::getPort() const {
+	return port_;
+}
+
 /** Game Management **/
+
+
+void ClientTCP::addScore(uint16_t score) {
+	snake_array[id_].score += score;
+}
 
 void ClientTCP::send_host_open_game(void) {
 	bool data;
@@ -281,10 +319,10 @@ Snake	const &ClientTCP::getSnake(void) const {
 	return this->snake_array[this->id_];
 }
 
-void ClientTCP::killSnake() {
-	log_warn("ClientTCP::killSnake.%d", getId());
-	snake_array[id_].isAlive = false;
-	write_socket(add_prefix(SNAKE, &(snake_array[id_])));
+void ClientTCP::killSnake(uint16_t id) {
+	log_warn("ClientTCP::killSnake. %d", id);
+	snake_array[id].isAlive = false;
+	write_socket(add_prefix(SNAKE, &(snake_array[id])));
 }
 
 void ClientTCP::send_borderless(bool borderless) {
@@ -307,3 +345,4 @@ void ClientTCP::lock() {
 void ClientTCP::unlock() {
 	mutex.unlock();
 }
+

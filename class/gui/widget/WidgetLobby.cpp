@@ -1,4 +1,5 @@
 #include "WidgetLobby.hpp"
+#include <Univers.hpp>
 #include <gui/Core.hpp>
 
 WidgetLobby::WidgetLobby(Core &core, Snake const *snakes) :

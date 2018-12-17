@@ -1,5 +1,5 @@
 #include "ServerTCP.hpp"
-
+#include <logger.h>
 ServerTCP::ServerTCP(unsigned int port)
 		: nu_(0),
 		  acceptor_(io_service_, tcp::endpoint(tcp::v4(), port)),
@@ -64,7 +64,7 @@ void ServerTCP::refresh_data_map_size(TCPConnection::pointer &connection) {
 void ServerTCP::start_game() {
 	for (int index = 0; index < MAX_SNAKE; ++index) {
 		if (!snake_array[index].isReady && snake_array[index].id != -1) {
-			std::cerr << "Error " << index << std::endl;
+			std::cerr << "ServerTCP::Error " << index << std::endl;
 			return;
 		}
 	}
@@ -116,7 +116,6 @@ void ServerTCP::parse_input(eHeader header, void const *input, size_t len) {
 		case START_GAME: {
 			start_game();
 			mutex.unlock();
-//			std::cout << "ServerTCP::unlock()" << std::endl;
 			return;
 		}
 		case FOOD: {
@@ -139,6 +138,7 @@ void ServerTCP::parse_input(eHeader header, void const *input, size_t len) {
 			snake_array[inputInfo.id].direction = inputInfo.dir;
 			snake_array[inputInfo.id].isUpdate = true;
 			for (int index = 0; index < nu_; ++index) {
+				std::cout << "Snake id :" << snake_array[index].id << "color :" << snake_array[index].sprite << " is alive : " << snake_array[index].isAlive << " update : " << snake_array[index].isUpdate <<std::endl;
 				if (snake_array[index].isAlive &&
 					!snake_array[index].isUpdate) {
 					mutex.unlock();
@@ -192,6 +192,14 @@ ServerTCP::~ServerTCP() {
 	thread.interrupt();
 	std::cout << "ServerTCP::close" << std::endl;
 
+}
+
+bool ServerTCP::isFull() const {
+	for (int index = 0; index < MAX_SNAKE; ++index) {
+		if (snake_array[index].id == -1)
+			return false;
+	}
+	return true;
 }
 
 /** ---------------------- TCPConnection ---------------------- **/

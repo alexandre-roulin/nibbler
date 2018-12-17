@@ -11,8 +11,8 @@
 #define SIZEOF_CHAT_PCKT CHAT_BUFFER + NAME_BUFFER + OFFSET
 #define DEFAULT_SIZE_SPRITE 32
 
-#define DIRECTION_VERTICAL 1			// 0000 0001
-#define DIRECTION_HORIZONTAL 4			// 0000 0100
+#define DIRECTION_VERTICAL 1            // 0000 0001
+#define DIRECTION_HORIZONTAL 4            // 0000 0100
 
 #define MAP_MIN 5
 #define MAP_DEFAULT 35
@@ -35,10 +35,10 @@ enum class eSound {
 };
 
 enum eDirection {
-	NORTH = 1,							// 0000 0001
-	SOUTH = 3,							// 0000 0011
-	EAST = 4,							// 0000 0100
-	WEST = 12							// 0000 1100
+	NORTH = 1,                            // 0000 0001
+	SOUTH = 3,                            // 0000 0011
+	EAST = 4,                            // 0000 0100
+	WEST = 12                            // 0000 1100
 };
 
 enum ePriority {
@@ -93,54 +93,99 @@ enum class eSprite {
 	WALL = (1 << 23),
 	FOOD = (1 << 24)
 };
+
+inline std::ostream &operator<<(std::ostream &os, eSprite &sprite) {
+	switch (sprite) {
+		case eSprite ::GREEN :
+			os << "GREEN";
+			break;
+		case eSprite ::BLUE :
+			os << "BLUE";
+			break;
+		case eSprite ::PURPLE :
+			os << "PURPLE";
+			break;
+		case eSprite ::PINK :
+			os << "PINK";
+			break;
+		case eSprite ::GREY :
+			os << "GREY";
+			break;
+		case eSprite ::YELLOW :
+			os << "YELLOW";
+			break;
+		case eSprite ::ORANGE :
+			os << "ORANGE";
+			break;
+		case eSprite ::RED :
+			os << "RED";
+			break;
+		default :
+			os << "Hello";
+			break;
+	}
+	return os;
+}
+
 inline eSprite operator|(eSprite const lhs, eSprite const rhs) {
 	return static_cast<eSprite> (static_cast<int>(lhs) | static_cast<int>(rhs));
 }
+
 inline eSprite const &operator|=(eSprite &lhs, eSprite const &rhs) {
 	lhs = static_cast<eSprite> (static_cast<int>(lhs) | static_cast<int>(rhs));
 	return (lhs);
 }
+
 inline eSprite operator&(eSprite const lhs, eSprite const rhs) {
-	return static_cast<eSprite> (static_cast<int>(lhs) &  static_cast<int>(rhs));
+	return static_cast<eSprite> (static_cast<int>(lhs) & static_cast<int>(rhs));
 }
+
 inline eSprite operator&(int const lhs, eSprite const rhs) {
-	return static_cast<eSprite> (lhs &  static_cast<int>(rhs));
+	return static_cast<eSprite> (lhs & static_cast<int>(rhs));
 }
+
 inline eSprite operator&(eSprite const lhs, int const rhs) {
 	return static_cast<eSprite> (static_cast<int>(lhs) & rhs);
 }
+
 inline eSprite operator^(int const lhs, eSprite const rhs) {
-	return static_cast<eSprite> (lhs ^  static_cast<int>(rhs));
+	return static_cast<eSprite> (lhs ^ static_cast<int>(rhs));
 }
+
 inline eSprite operator^(eSprite const lhs, int const rhs) {
 	return static_cast<eSprite> (static_cast<int>(lhs) ^ rhs);
 }
+
 inline eSprite operator<<(eSprite const lhs, eSprite const rhs) {
-	return static_cast<eSprite> (static_cast<int>(lhs) << static_cast<int>(rhs));
+	return static_cast<eSprite> (static_cast<int>(lhs)
+			<< static_cast<int>(rhs));
 }
+
 inline eSprite operator>>(eSprite const lhs, eSprite const rhs) {
-	return static_cast<eSprite> (static_cast<int>(lhs) >> static_cast<int>(rhs));
+	return static_cast<eSprite> (static_cast<int>(lhs)
+			>> static_cast<int>(rhs));
 }
 
 
-struct		Snake
-{
-	Snake() : sprite(eSprite::BLUE), isReady(false), id(-1), isUpdate(false), direction(NORTH), isAlive(true) {
+struct Snake {
+	Snake() : sprite(eSprite::BLUE), isReady(false), id(-1), isUpdate(false),
+			  direction(NORTH), isAlive(true) {
 		bzero(name, NAME_BUFFER);
 	};
 
-	char			name[NAME_BUFFER];
-	eSprite			sprite;
-	bool			isReady;
-	int16_t			id;
-	bool			isUpdate;
-	eDirection		direction;
-	bool			isAlive;
+	char name[NAME_BUFFER];
+	eSprite sprite;
+	bool isReady;
+	int16_t id;
+	bool isUpdate;
+	eDirection direction;
+	bool isAlive;
+	uint16_t score;
 
 	friend std::ostream &operator<<(std::ostream &os, const Snake &snake);
 
 
-	Snake &operator=(Snake  const &snake) {
+	Snake &operator=(Snake const &snake) {
 		if (this != &snake) {
 			std::memcpy(name, snake.name, NAME_BUFFER);
 			sprite = snake.sprite;
@@ -149,6 +194,7 @@ struct		Snake
 			isUpdate = snake.isUpdate;
 			direction = snake.direction;
 			isAlive = snake.isAlive;
+			score = snake.score;
 		}
 		return *this;
 	}
@@ -157,14 +203,14 @@ struct		Snake
 		Snake snake;
 
 		snake.sprite = static_cast<eSprite>(rand() % MAX_COLOR);
-		strncpy(snake.name, Snake::basicName[rand() % MAX_SNAKE].c_str(), NAME_BUFFER);
+		strncpy(snake.name, Snake::basicName[rand() % MAX_SNAKE].c_str(),
+				NAME_BUFFER);
 		snake.id = id;
 		return (snake);
 	}
 
 	static int getlastSnakeIndex(Snake const *snakes, unsigned int range) {
-		for (unsigned int i = 0; i < range; i++)
-		{
+		for (unsigned int i = 0; i < range; i++) {
 			if (snakes[i].id == -1)
 				return (i);
 		}
@@ -172,26 +218,24 @@ struct		Snake
 	}
 
 	static int isFull(Snake const *snakes, unsigned int range) {
-		for (unsigned int i = 0; i < range; i++)
-		{
+		for (unsigned int i = 0; i < range; i++) {
 			if (snakes[i].id == -1)
 				return (false);
 		}
 		return (true);
 	}
 
-	static int getSnakeById(Snake const *snakes, unsigned int range, int16_t id) {
-		for (unsigned int i = 0; i < range; i++)
-		{
+	static int
+	getSnakeById(Snake const *snakes, unsigned int range, int16_t id) {
+		for (unsigned int i = 0; i < range; i++) {
 			if (snakes[i].id == id)
 				return (i);
 		}
 		return (-1);
 	}
-	
+
 	static int allSnakesReady(Snake const *snakes, unsigned int range) {
-		for (unsigned int i = 0; i < range; i++)
-		{
+		for (unsigned int i = 0; i < range; i++) {
 			if (snakes[i].id != -1 && !snakes[i].isReady)
 				return (false);
 		}
@@ -204,18 +248,18 @@ struct		Snake
 //ADD SIZE IN ClientTCP::size_header
 
 enum eHeader {
-	CHAT,				//0
-	FOOD,				//1
-	ID,					//2
-	OPEN_GAME,			//3
-	START_GAME,			//4
-	SNAKE,				//5
-	SNAKE_ARRAY,		//6
-	HEADER,				//7
-	INPUT,				//8
-	RESIZE_MAP,			//9
-	REMOVE_SNAKE,		//10
-	POCK,				//11
-	BORDERLESS,			//12
-	DISCONNECT			//13
+	CHAT,                //0
+	FOOD,                //1
+	ID,                    //2
+	OPEN_GAME,            //3
+	START_GAME,            //4
+	SNAKE,                //5
+	SNAKE_ARRAY,        //6
+	HEADER,                //7
+	INPUT,                //8
+	RESIZE_MAP,            //9
+	REMOVE_SNAKE,        //10
+	POCK,                //11
+	BORDERLESS,            //12
+	DISCONNECT            //13
 };

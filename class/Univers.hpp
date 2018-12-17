@@ -57,6 +57,8 @@ public:
 
 	void playMusic(std::string const &path) const;
 
+	bool isIASnake(uint16_t client_id) const;
+
 	/** Create && Delete function**/
 
 	void create_ia();
@@ -105,8 +107,6 @@ public:
 
 	//State
 
-	bool isIA() const;
-
 	bool isServer() const;
 
 
@@ -115,7 +115,7 @@ private: // Function
 
 	void loop_world();
 
-	bool dlError(void);
+	bool dlError(char const *from);
 
 private: // Variable
 
@@ -129,8 +129,10 @@ private: // Variable
 	std::unique_ptr<KINU::World> world_;
 	std::unique_ptr<ServerTCP> serverTCP_;
 	std::unique_ptr<Core> core_;
-	std::unique_ptr<Bobby> bobby;
 	boost::shared_ptr<ClientTCP> clientTCP_;
+
+	std::vector<std::unique_ptr<Bobby>> vecBobby;
+
 	void *dlHandleDisplay;
 	void *dlHandleSound;
 	IDisplay *display;

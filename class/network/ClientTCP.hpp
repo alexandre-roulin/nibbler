@@ -13,18 +13,21 @@
 #include <boost/asio/io_service.hpp>
 #include <boost/array.hpp>
 #include <nibbler.hpp>
+#include <component/PositionComponent.hpp>
 #include <factory/Factory.hpp>
-#include <events/JoystickEvent.hpp>
-#include <events/StartEvent.hpp>
-#include <events/FoodCreation.hpp>
+#include "IGameNetwork.hpp"
+
+class JoystickEvent;
+
+class StartEvent;
+
+class FoodCreation;
 
 using boost::asio::ip::tcp;
 
 class Univers;
 
-class Factory;
-
-class ClientTCP : public boost::enable_shared_from_this<ClientTCP> {
+class ClientTCP : public boost::enable_shared_from_this<ClientTCP>, public IGameNetwork {
 public:
 	typedef boost::shared_ptr<ClientTCP> pointer_client;
 
@@ -44,7 +47,7 @@ public:
 
 	};
 
-	static pointer_client create(Univers &univers);
+	static pointer_client create(Univers &univers, bool fromIA);
 
 	virtual ~ClientTCP();
 
@@ -77,33 +80,35 @@ public:
 
 	/** Game Management **/
 
+	virtual void addScore(uint16_t uint16);
 
-	void deliverEvents();
+	virtual void deliverEvents();
 
-	void refreshMySnake(void);
+	virtual void refreshMySnake(void);
 
-	void send_host_open_game(void);
+	virtual void send_host_open_game(void);
 
-	void send_borderless(bool borderless);
+	virtual void send_borderless(bool borderless);
 
-	void change_name(char const *name);
+	virtual void change_name(char const *name);
 
-	void change_sprite(eSprite snakeSprite);
+	virtual void change_sprite(eSprite snakeSprite);
 
-	void change_state_ready(void);
+	virtual void change_state_ready(void);
 
-	void change_map_size(unsigned int);
+	virtual void change_map_size(unsigned int i);
 
-	bool all_snake_is_dead();
+	virtual bool all_snake_is_dead();
 
-	const Snake *getSnakes() const;
+	virtual const Snake *getSnakes() const;
 
-	Snake const &getSnake(void) const;
+	virtual const Snake &getSnake(void) const;
 
-	int16_t getId(void) const;
+	virtual int16_t getId(void) const;
 
-	void killSnake();
+	virtual void killSnake(uint16_t);
 
+public:
 	/** Mutex Management **/
 
 	void lock();
@@ -111,16 +116,17 @@ public:
 	void unlock();
 
 
-	static int const size_header[];
+	static const int size_header[];
 
 private:
 
-	ClientTCP(Univers &univers);
+	ClientTCP(Univers &univers, bool fromIA);
 
-	void checkError_(boost::system::error_code const &error_code);
+	void checkError_(boost::system::error_code const &);
 
 	boost::asio::io_service io;
 	bool openGame_;
+	bool fromIA_;
 	std::vector<FoodCreation> foodCreations;
 	Snake snake_array[MAX_SNAKE];
 	tcp::socket socket;
@@ -131,13 +137,21 @@ private:
 	Factory factory;
 	boost::thread thread;
 	std::mutex mutex;
+	std::string dns_;
+public:
+	const std::string &getDns() const;
+
+	const std::string &getPort() const;
+
+private:
+	std::string port_;
 };
+
 
 template<typename T>
 std::string ClientTCP::add_prefix(eHeader header, T *element) {
 	std::string message;
 	message.append(reinterpret_cast<char *>(&header), sizeof(eHeader));
-	message.append(reinterpret_cast<char *>(element),
-				   ClientTCP::size_header[header]);
+	message.append(reinterpret_cast<char *>(element), size_header[header]);
 	return message;
 }
