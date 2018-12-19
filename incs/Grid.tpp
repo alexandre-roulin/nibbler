@@ -3,8 +3,9 @@
 #include <memory>
 #include <iostream>
 #include <iomanip>
+#include <logger.h>
 
-#define FREE_SLOT -1
+#define FREE_SLOT (15 * 8 + 3)
 
 template<typename T>
 class Grid {
@@ -33,8 +34,10 @@ public:
 	size_t size() const;
 
 	std::pair<size_t, size_t> getRandomSlot(T value);
+
 	void print() const;
 
+	bool isTwoSlotNear(int x, int y, T value, bool checkDiagonal = false) const;
 
 	T *operator[](size_t row);
 
@@ -47,6 +50,7 @@ public:
 private:
 
 	bool isAnyFreeSlotInRow(size_t row, T clear) const;
+
 	bool isFreeSlot(size_t row, size_t column, T clear) const;
 
 	size_t _rows;
@@ -68,7 +72,7 @@ Grid<T>::Grid(size_t rows, size_t columns) :
 		_rows(rows),
 		_columns(columns),
 		_grid(new T[rows * columns]()),
-		size_(rows * columns){
+		size_(rows * columns) {
 
 }
 
@@ -86,7 +90,7 @@ Grid<T>::Grid(Grid const &src) :
 		_rows(src._rows),
 		_columns(src._columns),
 		_grid(new T[src._rows * src._columns]()),
-		size_(src.size_){
+		size_(src.size_) {
 	for (size_t i = 0; i < size_; i++)
 		this->_grid[i] = src._grid[i];
 }
@@ -210,6 +214,7 @@ template<typename T>
 bool Grid<T>::isFreeSlot(size_t row, size_t column, T clear) const {
 	return _grid[row * _columns + column] == clear;
 }
+
 //y 1 x 1
 template<typename T>
 void Grid<T>::print() const {
@@ -224,4 +229,30 @@ void Grid<T>::print() const {
 template<typename T>
 size_t Grid<T>::size() const {
 	return size_;
+}
+
+template<typename T>
+bool Grid<T>::isTwoSlotNear(int x, int y, T value, bool checkDiagonal) const {
+
+	static int constexpr direction[8][2] = {
+			{0,  -1},
+			{0,  1},
+			{-1, 0},
+			{1,  0},
+			{-1, -1},
+			{-1, 1},
+			{1,  -1},
+			{1,  1}
+	};
+
+	uint16_t count = 0;
+	unsigned int max = (checkDiagonal ? 8 : 4);
+	for (int index = 0; index < max; ++index) {
+
+		log_success("y : %d x : %d",y + direction[index][1], x + direction[index][0]);
+		if ( y + direction[index][1] < _rows && y + direction[index][1] >= 0 && x + direction[index][0] < _columns && x + direction[index][0] >= 0 && ((*this)(x + direction[index][0], y + direction[index][1]) & value) == value)
+			count++;
+	}
+	log_error("COUNT %d", count);
+	return count >= 2;
 }

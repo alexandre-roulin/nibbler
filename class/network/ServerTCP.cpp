@@ -1,7 +1,11 @@
 #include "ServerTCP.hpp"
 #include <logger.h>
-ServerTCP::ServerTCP(unsigned int port)
-		: nu_(0),
+#include <KINU/World.hpp>
+
+
+ServerTCP::ServerTCP(Univers &univers, unsigned int port)
+		: univers_(univers),
+		  nu_(0),
 		  acceptor_(io_service_, tcp::endpoint(tcp::v4(), port)),
 		  mapSize(MAP_DEFAULT) {
 	start_accept();
@@ -51,10 +55,10 @@ void ServerTCP::erase_snake(Snake const &snake) {
 void ServerTCP::refresh_data_snake_array(
 		TCPConnection::pointer &connection,
 		int16_t id) {
+
 	connection->write_socket(ClientTCP::add_prefix(ID, &id));
-	connection->write_socket(
-			ClientTCP::add_prefix(SNAKE_ARRAY, snake_array));
-	async_write(ClientTCP::add_prefix(SNAKE, &snake_array[id]));
+	connection->write_socket(ClientTCP::add_prefix(SNAKE_ARRAY, snake_array));
+	async_write(ClientTCP::add_prefix(SNAKE_ARRAY, &snake_array));
 }
 
 void ServerTCP::refresh_data_map_size(TCPConnection::pointer &connection) {
@@ -64,23 +68,15 @@ void ServerTCP::refresh_data_map_size(TCPConnection::pointer &connection) {
 void ServerTCP::start_game() {
 	for (int index = 0; index < MAX_SNAKE; ++index) {
 		if (!snake_array[index].isReady && snake_array[index].id != -1) {
-			std::cerr << "ServerTCP::Error " << index << std::endl;
+			log_trace("Nop index %d with id : ", index, snake_array[index].id );
 			return;
 		}
 	}
 	ClientTCP::StartInfo startInfo;
 	startInfo.nu = nu_;
 	startInfo.time_duration = boost::posix_time::microsec_clock::universal_time();
-	int max_food = (nu_ > 1 ? nu_ - 1 : nu_);
-	for (int index = 0; index < max_food; ++index) {
-//		std::cout << max_food << std::endl;
-		ClientTCP::FoodInfo foodInfo;
-		foodInfo.positionComponent = PositionComponent((rand() % (30 - 2)) + 1,
-													   (rand() % (30 - 2)) + 1);
-		foodInfo.fromSnake = false;
-		async_write(ClientTCP::add_prefix(FOOD, &foodInfo));
-	}
 	async_write(ClientTCP::add_prefix(START_GAME, &startInfo));
+
 }
 
 void ServerTCP::async_write(std::string message) {
@@ -119,7 +115,7 @@ void ServerTCP::parse_input(eHeader header, void const *input, size_t len) {
 			return;
 		}
 		case FOOD: {
-			log_info("ServerTCP::FOOD");
+//			log_info("ServerTCP::FOOD");
 			ClientTCP::FoodInfo foodInfo;
 			std::memcpy(&foodInfo, input, len);
 			foodInfoArray.push_back(foodInfo);

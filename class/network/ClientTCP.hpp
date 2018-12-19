@@ -55,12 +55,18 @@ public:
 
 	void connect(std::string dns, std::string port);
 
+private:
 	void read_socket_header();
 
 	void read_socket_data(eHeader);
 
+public:
+
 	void write_socket(std::string message);
 
+	bool isConnect() const;
+
+private:
 	void handle_read_data(eHeader, const boost::system::error_code &, size_t);
 
 	void handle_read_header(const boost::system::error_code &, size_t);
@@ -69,10 +75,9 @@ public:
 
 	void parse_input(eHeader header, void const *, size_t);
 
-	bool isConnect() const;
-
 	void close_connection();
 
+public:
 	template<typename T>
 	static std::string add_prefix(eHeader, T *element);
 

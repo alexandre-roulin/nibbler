@@ -75,7 +75,7 @@ namespace KINU {
 	/** Constructor && Destructor entity **/
 
 	Entity EntitiesManager::createEntity() {
-
+		mutex_.lock();
 		Entity::ID newInstance;
 
 		if (freeIds.empty()) {
@@ -93,37 +93,42 @@ namespace KINU {
 		assert(!componentMasks[e.getId()].any());
 		assert(!hasGroupIdByEntity(e));
 		assert(!hasTagIdByEntity(e));
+		mutex_.unlock();
 		return e;
 	}
 
 	void EntitiesManager::destroyEntity(Entity entity) {
-
 		// Reset componentMask of entity destroyed
 		componentMasks[entity.id_].reset();
 
+		mutex_.lock();
 		validId.erase(std::remove_if(validId.begin(), validId.end(),
 									 [entity](Entity::ID id) {
 										 return entity.id_ == id;
 									 }), validId.end());
+		mutex_.unlock();
 		// Remove groupId if exist
 
 		if (hasGroupIdByEntity(entity)) {
 			TagId groupId = getGroupIdByEntity(entity);
+			mutex_.lock();
 			std::remove_if(groupedEntities[groupId].begin(),
 						   groupedEntities[groupId].end(),
 						   [entity](auto const entity1) {
 							   return entity == entity1;
 						   });
 			groupedEntityId.erase(entity.id_);
+			mutex_.unlock();
 		}
 		// Remove tagId if exist
 
 		if (hasTagIdByEntity(entity)) {
 			TagId tagId = getTagIdByEntity(entity);
+			mutex_.lock();
 			taggedEntityId.erase(entity.id_);
 			taggedEntities.erase(tagId);
+			mutex_.unlock();
 		}
-		log_fatal("hasTagIdByEntity(%d)", hasEntityByTagId(eTag::FOOD_TAG));
 	}
 
 
@@ -140,8 +145,8 @@ namespace KINU {
 	void EntitiesManager::killGroupEntity(Entity entity) {
 		if (hasGroupIdByEntity(entity)) {
 			std::vector<Entity> entities = getEntitiesByGroupId(getGroupIdByEntity(entity));
-			for (auto entity : entities) {
-				killEntity(entity);
+			for (auto entity_ : entities) {
+				killEntity(entity_);
 			}
 		}
 	}
@@ -166,7 +171,10 @@ namespace KINU {
 
 	TagId EntitiesManager::getTagIdByEntity(Entity entity) {
 		assert(hasTagIdByEntity(entity));
-		return taggedEntityId[entity.id_];
+		mutex_.lock();
+		TagId tag = taggedEntityId[entity.id_];
+		mutex_.unlock();
+		return tag;
 	}
 
 	bool EntitiesManager::hasEntityByTagId(TagId tagId) const {
@@ -175,7 +183,10 @@ namespace KINU {
 
 	Entity EntitiesManager::getEntityByTagId(TagId tagId) {
 		assert(hasEntityByTagId(tagId));
-		return taggedEntities[tagId];
+		mutex_.lock();
+		Entity e = taggedEntities[tagId];
+		mutex_.unlock();
+		return e;
 	}
 
 	void EntitiesManager::tagEntityByTagId(Entity entity,
@@ -188,20 +199,26 @@ namespace KINU {
 
 	bool
 	EntitiesManager::hasEntitiesGroupId(TagId tagId) const {
-		return groupedEntities.find(tagId) != groupedEntities.end() &&
-				!groupedEntities.at(tagId).empty();
+		bool has = groupedEntities.find(tagId) != groupedEntities.end() &&
+				   !groupedEntities.at(tagId).empty();
+		return has;
 	}
 
 	std::vector<Entity>
 	EntitiesManager::getEntitiesByGroupId(TagId tagId) {
 		assert(hasEntitiesGroupId(tagId));
-		return groupedEntities[tagId];
+		mutex_.lock();
+		std::vector<Entity> entities = groupedEntities[tagId];
+		mutex_.unlock();
+		return entities;
 	}
 
 	void EntitiesManager::groupEntityByGroupId(Entity entity,
 											   TagId tagId) {
+		mutex_.lock();
 		groupedEntityId[entity.id_] = tagId;
 		groupedEntities[tagId].push_back(entity);
+		mutex_.unlock();
 	}
 
 	bool EntitiesManager::hasGroupIdByEntity(Entity entity) const {
@@ -210,7 +227,10 @@ namespace KINU {
 
 	TagId EntitiesManager::getGroupIdByEntity(Entity entity) {
 		assert(hasGroupIdByEntity(entity));
-		return groupedEntityId[entity.id_];
+		mutex_.lock();
+		TagId tag = groupedEntityId[entity.id_];
+		mutex_.unlock();
+		return tag;
 	}
 
 }

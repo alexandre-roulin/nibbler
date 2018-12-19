@@ -36,7 +36,7 @@ void CollisionSystem::checkCollision(
 			entityCheck.kill();
 			getWorld().getEventsManager().emitEvent<FoodEat>(entityHead.getGroupIdByEntity());
 
-			if (getWorld().getUnivers().getClientTCP_().getId() == entityHead.getGroupIdByEntity() ||
+			if (getWorld().getUnivers().getGameNetwork()->getId() == entityHead.getGroupIdByEntity() ||
 				getWorld().getUnivers().isIASnake(entityHead.getGroupIdByEntity())) {
 
 				ClientTCP::FoodInfo foodInfo;
@@ -44,7 +44,7 @@ void CollisionSystem::checkCollision(
 						getWorld().grid.getRandomSlot(FREE_SLOT));
 				foodInfo.fromSnake = false;
 
-				getWorld().getUnivers().getClientTCP_().write_socket(
+				getWorld().getUnivers().getGameNetwork()->write_socket(
 						ClientTCP::add_prefix(FOOD, &foodInfo));
 			}
 		} else if (tagId == eTag::FOOD_TAG_FROM_SNAKE) {
@@ -54,16 +54,18 @@ void CollisionSystem::checkCollision(
 			getWorld().getEventsManager().emitEvent<FoodEat>(entityHead.getGroupIdByEntity());
 		} else if (tagId == WALL_TAG) {
 			log_info("WALL_TAG::WallCollision");
-			if (entityHead.getGroupIdByEntity() == getWorld().getUnivers().getClientTCP_().getId() ||
+			if (entityHead.getGroupIdByEntity() ==
+						getWorld().getUnivers().getGameNetwork()->getId() ||
 					getWorld().getUnivers().isIASnake(entityHead.getGroupIdByEntity()))
-				getWorld().getUnivers().getClientTCP_().killSnake(entityHead.getGroupIdByEntity());
+				getWorld().getUnivers().getGameNetwork()->killSnake(entityHead.getGroupIdByEntity());
 			entityHead.killGroup();
 
 		} else if (entityCheck.getGroupIdByEntity() == entityHead.getGroupIdByEntity()) {
 			log_info("HIMSELF::CollisionOnHimself");
-			if (entityHead.getGroupIdByEntity() == getWorld().getUnivers().getClientTCP_().getId() ||
+			if (entityHead.getGroupIdByEntity() ==
+						getWorld().getUnivers().getGameNetwork()->getId() ||
 					getWorld().getUnivers().isIASnake(entityHead.getGroupIdByEntity()))
-				getWorld().getUnivers().getClientTCP_().killSnake(entityHead.getGroupIdByEntity());
+				getWorld().getUnivers().getGameNetwork()->killSnake(entityHead.getGroupIdByEntity());
 			entityHead.killGroup();
 		} else {
 			log_info("SNAKE::CollisionSnake");
@@ -74,12 +76,13 @@ void CollisionSystem::checkCollision(
 				foodInfo.positionComponent = snake.getComponent<PositionComponent>();
 				foodInfo.fromSnake = true;
 				if (snake.hasComponent<PositionComponent>())
-					getWorld().getUnivers().getClientTCP_().write_socket(
+					getWorld().getUnivers().getGameNetwork()->write_socket(
 							ClientTCP::add_prefix(FOOD, &foodInfo));
 			}
-			if (entityHead.getGroupIdByEntity() == getWorld().getUnivers().getClientTCP_().getId() ||
+			if (entityHead.getGroupIdByEntity() ==
+						getWorld().getUnivers().getGameNetwork()->getId() ||
 					getWorld().getUnivers().isIASnake(entityHead.getGroupIdByEntity()))
-				getWorld().getUnivers().getClientTCP_().killSnake(entityHead.getGroupIdByEntity());
+				getWorld().getUnivers().getGameNetwork()->killSnake(entityHead.getGroupIdByEntity());
 
 			entityHead.killGroup();
 		}

@@ -135,6 +135,8 @@ void Univers::new_game() {
 			bobby->buildIA();
 		}
 	}
+	ClientTCP::StartInfo startInfo;
+	clientTCP_->write_socket(ClientTCP::add_prefix(START_GAME, &startInfo));
 	loop();
 }
 
@@ -147,7 +149,6 @@ void Univers::manage_input() {
 			bobby->sendDirection();
 		}
 	}
-
 
 	inputInfo.id = clientTCP_->getId();
 	inputInfo.dir = display->getDirection();
@@ -265,7 +266,7 @@ void Univers::create_ui() {
 }
 
 void Univers::create_server(unsigned int port) {
-	serverTCP_ = std::make_unique<ServerTCP>(port);
+	serverTCP_ = std::make_unique<ServerTCP>(*this, port);
 }
 
 void Univers::create_ia() {
@@ -312,8 +313,8 @@ KINU::World &Univers::getWorld_() const {
 	return *world_;
 }
 
-ClientTCP &Univers::getClientTCP_() const {
-	return *clientTCP_;
+IGameNetwork *Univers::getGameNetwork() const {
+	return clientTCP_.get();
 }
 
 ISound &Univers::getSound() const {

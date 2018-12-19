@@ -28,7 +28,6 @@ int const ClientTCP::size_header[] = {
 		[POCK] = sizeof(char),
 		[BORDERLESS] = sizeof(bool),
 		[DISCONNECT] = sizeof(bool)
-
 };
 
 ClientTCP::ClientTCP(Univers &univers, bool fromIA)
@@ -155,7 +154,7 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 			break;
 		}
 		case FOOD: {
-			log_info("eHeader::FOOD");
+//			log_info("eHeader::FOOD");
 			FoodInfo foodInfo;
 			std::memcpy(&foodInfo, input, len);
 			foodCreations.push_back(FoodCreation(foodInfo.positionComponent,
@@ -178,11 +177,27 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 			break;
 		}
 		case START_GAME: {
+			log_info("eHeader::START_GAME : %d", fromIA_);
 			if (!fromIA_) {
-				log_info("eHeader::START_GAME");
 				StartInfo st;
 				std::memcpy(&st, input, ClientTCP::size_header[START_GAME]);
 				factory.create_all_snake(snake_array, st.nu);
+				if (univers.isServer()) {
+
+					uint16_t  nu_ = Snake::getlastSnakeIndex(snake_array, MAX_SNAKE);
+					int max_food = (nu_ > 1 ? nu_ - 1 : nu_);
+					log_warn("Number of food %d", max_food);
+
+					for (int index = 0; index < max_food; ++index) {
+//						log_warn("%d created", index);
+						ClientTCP::FoodInfo foodInfo;
+						foodInfo.positionComponent = PositionComponent(univers.getWorld_()
+																			   .grid.getRandomSlot(FREE_SLOT));
+						foodInfo.fromSnake = false;
+						write_socket(ClientTCP::add_prefix(FOOD, &foodInfo));
+					}
+				}
+
 				univers.getWorld_().getEventsManager().emitEvent<StartEvent>(
 						st.time_duration);
 			}

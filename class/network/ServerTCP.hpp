@@ -59,7 +59,7 @@ public:
 
 class ServerTCP {
 public:
-	ServerTCP(unsigned int port);
+	ServerTCP(Univers &univers, unsigned int port);
 
 	virtual ~ServerTCP();
 
@@ -84,6 +84,7 @@ public:
 	bool isFull() const;
 
 private:
+	Univers &univers_;
 	int16_t nu_;
 	Snake snake_array[MAX_SNAKE];
 	unsigned int	mapSize;

@@ -79,7 +79,7 @@ public:
 
 	//Network
 
-	ClientTCP &getClientTCP_() const;
+	IGameNetwork *getGameNetwork() const;
 
 	//Game
 
@@ -121,7 +121,6 @@ private: // Variable
 
 	std::vector<NextFrame> nextFrame;
 	std::bitset<32> flag;
-	boost::asio::io_service io_client;
 	boost::asio::io_service io_loop;
 	boost::asio::io_service io_start;
 	boost::asio::deadline_timer timer_loop;
@@ -139,6 +138,7 @@ private: // Variable
 	ISound *sound;
 	bool borderless;
 	boost::thread thread;
+	IGameNetwork *gameNetwork;
 
 	unsigned int mapSize;
 	unsigned int gameSpeed;

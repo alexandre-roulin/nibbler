@@ -80,33 +80,29 @@ void nibbler(Univers &univers) {
 		}
 		if (buffer == "autos") {
 			univers.create_server();
-			univers.getClientTCP_().connect("localhost", "4242");
+			univers.getGameNetwork()->connect("localhost", "4242");
 			sleep(1);
-			univers.getClientTCP_().change_state_ready();
+			univers.getGameNetwork()->change_state_ready();
 			univers.load_extern_lib_display(Univers::EXTERN_LIB_SFML);
 
 		}
 		if (buffer == "autoc") {
-			univers.getClientTCP_().connect("localhost", "4242");
+			univers.getGameNetwork()->connect("localhost", "4242");
 			sleep(1);
-			univers.getClientTCP_().change_state_ready();
+			univers.getGameNetwork()->change_state_ready();
 			univers.load_extern_lib_display(Univers::EXTERN_LIB_SFML);
 			univers.new_game();
 		}
 		if (buffer == "autocs") {
 			std::cout << "connect > ";
 			std::getline(std::cin, buffer);
-			univers.getClientTCP_().connect(buffer.c_str(), "4242");
+			univers.getGameNetwork()->connect(buffer.c_str(), "4242");
 			sleep(1);
-			univers.getClientTCP_().change_state_ready();
+			univers.getGameNetwork()->change_state_ready();
 			univers.load_extern_lib_display(Univers::EXTERN_LIB_SFML);
 			univers.loop();
 		}
 		if (buffer == "loop") {
-			ClientTCP::StartInfo startInfo;
-			univers.getClientTCP_()
-					.write_socket(
-							ClientTCP::add_prefix(START_GAME, &startInfo));
 			univers.new_game();
 		}
 		if (buffer == "server") {
@@ -118,10 +114,10 @@ void nibbler(Univers &univers) {
 			std::getline(std::cin, dns);
 			std::cout << "port > ";
 			std::getline(std::cin, port);
-			univers.getClientTCP_().connect(dns, port);
+			univers.getGameNetwork()->connect(dns, port);
 		}
 		if (buffer == "ready") {
-			univers.getClientTCP_().change_state_ready();
+			univers.getGameNetwork()->change_state_ready();
 		}
 
 		if (buffer == "ui") {
@@ -131,7 +127,7 @@ void nibbler(Univers &univers) {
 			if (core)
 				delete core;
 
-			if (univers.getClientTCP_().isOpenGame()) {
+			if (univers.getGameNetwork()->isOpenGame()) {
 
 				//univers.getClientTCP_().change_state_ready();
 				//sleep(1);
@@ -139,8 +135,8 @@ void nibbler(Univers &univers) {
 
 				ClientTCP::StartInfo startInfo;
 				if (univers.isServer()) {
-					univers.getClientTCP_()
-							.write_socket(
+					univers.getGameNetwork()
+							->write_socket(
 									ClientTCP::add_prefix(START_GAME,
 														  &startInfo));
 				} else {

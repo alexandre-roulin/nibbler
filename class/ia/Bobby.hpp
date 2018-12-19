@@ -31,6 +31,8 @@ private:
 
 	AStar::Vec2i getVecSnakeTail();
 
+
+
 	AStar::Vec2i getVecFood(AStar::Vec2i head);
 
 	void addCollision();

@@ -40,9 +40,22 @@ void Bobby::sendDirection() {
 
 void Bobby::findDirection(AStar::Vec2i vecSource, AStar::CoordinateList list) {
 
-
 	int index = (list.size() > 2 ? list.size() - 2 : 0);
 	log_info("Direction > x : %d - y : %d", list[index].x, list[index].y);
+
+	log_warn("COMPARE << ");
+	if (grid_->isTwoSlotNear(
+
+			list[index].x % univers_.getMapSize(),
+			list[index].y % univers_.getMapSize(),
+			static_cast<int>(eSprite::HEAD),
+			false
+
+	)) {
+		log_warn("ATTENTION YA UNE TETE !!!");
+		throw std::exception();
+	}
+
 
 	if (list[index].x == vecSource.x - 1 &&
 		list[index].y == vecSource.y) {
@@ -159,31 +172,33 @@ AStar::Vec2i Bobby::getVecSnakeTail() {
 
 AStar::Vec2i Bobby::getVecFood(AStar::Vec2i head) {
 
-	auto foods = univers_.getWorld_().getEntitiesManager()
-			.getEntitiesByGroupId(eTag::FOOD_TAG);
-
 	PositionComponent positionComponent;
 	double base_sqrt = -1;
 
-	for (auto food : foods) {
-		if (food.hasComponent<PositionComponent>()) {
+	if (univers_.getWorld_().getEntitiesManager().hasEntitiesGroupId(eTag::FOOD_TAG)) {
+		auto foods = univers_.getWorld_().getEntitiesManager()
+				.getEntitiesByGroupId(eTag::FOOD_TAG);
 
-			auto positionFood = food.getComponent<PositionComponent>();
+		for (auto food : foods) {
+			if (food.hasComponent<PositionComponent>()) {
 
-			for (int base_y = 0; base_y < baseIndex; ++base_y) {
-				for (int base_x = 0; base_x < baseIndex; ++base_x) {
+				auto positionFood = food.getComponent<PositionComponent>();
 
-					int sqrt_x = (positionFood.x + base_x * mapSize) - head.x;
-					int sqrt_y = (positionFood.y + base_y * mapSize) - head.y;
+				for (int base_y = 0; base_y < baseIndex; ++base_y) {
+					for (int base_x = 0; base_x < baseIndex; ++base_x) {
+
+						int sqrt_x = (positionFood.x + base_x * mapSize) - head.x;
+						int sqrt_y = (positionFood.y + base_y * mapSize) - head.y;
+
 //					log_trace("(%d + %d * %d) - (%d + (%d ? %d: 0))",
 //							  positionFood.x, base_x, mapSize, head.x,
 //							  univers_.isBorderless(), mapSize);
 //					log_trace("(%d + %d * %d) - (%d + (%d ? %d: 0))",
 //							  positionFood.y, base_y, mapSize, head.y,
 //							  univers_.isBorderless(), mapSize);
-					double compare = std::sqrt(
-							sqrt_x * sqrt_x +
-							sqrt_y * sqrt_y);
+						double compare = std::sqrt(
+								sqrt_x * sqrt_x +
+								sqrt_y * sqrt_y);
 
 //					log_warn("%d = %d - %d", sqrt_x,
 //							 (positionFood.x + base_x * mapSize), (head.x +
@@ -197,15 +212,66 @@ AStar::Vec2i Bobby::getVecFood(AStar::Vec2i head) {
 //																	: 0)));
 //					log_warn("%f = std::sqrt(%d * %d + %d * %d)", compare,
 //							 sqrt_x, sqrt_x, sqrt_y, sqrt_y);
-					if (base_sqrt == -1 || compare < base_sqrt) {
-						base_sqrt = compare;
+						if (base_sqrt == -1 || compare < base_sqrt) {
+							base_sqrt = compare;
 //						log_success("{mapSize : %d} Position saved { %d , %d }",
 //									mapSize, positionFood.x + base_x * mapSize,
 //									positionFood.y + base_y * mapSize);
-						positionComponent = PositionComponent(
-								positionFood.x + base_x * mapSize,
-								positionFood.y + base_y * mapSize
-						);
+							positionComponent = PositionComponent(
+									positionFood.x + base_x * mapSize,
+									positionFood.y + base_y * mapSize
+							);
+						}
+					}
+				}
+			}
+		}
+	}
+	if (univers_.getWorld_().getEntitiesManager().hasEntitiesGroupId(eTag::FOOD_TAG_FROM_SNAKE)) {
+		auto foods_snake = univers_.getWorld_().getEntitiesManager().getEntitiesByGroupId(eTag::FOOD_TAG_FROM_SNAKE);
+		for (auto food : foods_snake) {
+			if (food.hasComponent<PositionComponent>()) {
+
+				auto positionFood = food.getComponent<PositionComponent>();
+
+				for (int base_y = 0; base_y < baseIndex; ++base_y) {
+					for (int base_x = 0; base_x < baseIndex; ++base_x) {
+
+						int sqrt_x = (positionFood.x + base_x * mapSize) - head.x;
+						int sqrt_y = (positionFood.y + base_y * mapSize) - head.y;
+
+//					log_trace("(%d + %d * %d) - (%d + (%d ? %d: 0))",
+//							  positionFood.x, base_x, mapSize, head.x,
+//							  univers_.isBorderless(), mapSize);
+//					log_trace("(%d + %d * %d) - (%d + (%d ? %d: 0))",
+//							  positionFood.y, base_y, mapSize, head.y,
+//							  univers_.isBorderless(), mapSize);
+						double compare = std::sqrt(
+								sqrt_x * sqrt_x +
+								sqrt_y * sqrt_y);
+
+//					log_warn("%d = %d - %d", sqrt_x,
+//							 (positionFood.x + base_x * mapSize), (head.x +
+//																   (univers_.isBorderless()
+//																	? mapSize
+//																	: 0)));
+//					log_warn("%d = %d - %d", sqrt_y,
+//							 (positionFood.y + base_y * mapSize), (head.y +
+//																   (univers_.isBorderless()
+//																	? mapSize
+//																	: 0)));
+//					log_warn("%f = std::sqrt(%d * %d + %d * %d)", compare,
+//							 sqrt_x, sqrt_x, sqrt_y, sqrt_y);
+						if (base_sqrt == -1 || compare < base_sqrt) {
+							base_sqrt = compare;
+//						log_success("{mapSize : %d} Position saved { %d , %d }",
+//									mapSize, positionFood.x + base_x * mapSize,
+//									positionFood.y + base_y * mapSize);
+							positionComponent = PositionComponent(
+									positionFood.x + base_x * mapSize,
+									positionFood.y + base_y * mapSize
+							);
+						}
 					}
 				}
 			}
@@ -220,7 +286,7 @@ void Bobby::addCollision() {
 		for (int base_x = 0; base_x < baseIndex; ++base_x) {
 			for (int index_y = 0; index_y < mapSize; ++index_y) {
 				for (int index_x = 0; index_x < mapSize; ++index_x) {
-					if ((*grid_)(index_x, index_y) != -1) {
+					if ((*grid_)(index_x, index_y) != FREE_SLOT) {
 						generator.addCollision(
 								AStar::Vec2i(
 										index_x + base_x * mapSize,

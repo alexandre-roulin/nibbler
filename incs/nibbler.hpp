@@ -21,9 +21,9 @@
 enum eTag {
 	HEAD_TAG = 0,
 	TAIL_TAG = 8,
-	FOOD_TAG,
-	FOOD_TAG_FROM_SNAKE,
-	WALL_TAG,
+	FOOD_TAG,					//9
+	FOOD_TAG_FROM_SNAKE,		//10
+	WALL_TAG,					//11
 };
 
 enum class eSound {
@@ -210,11 +210,12 @@ struct Snake {
 	}
 
 	static int getlastSnakeIndex(Snake const *snakes, unsigned int range) {
-		for (unsigned int i = 0; i < range; i++) {
+		unsigned int i;
+		for (i = 0; i < range; ++i) {
 			if (snakes[i].id == -1)
 				return (i);
 		}
-		return (-1);
+		return (i == range ? i - 1 : -1);
 	}
 
 	static int isFull(Snake const *snakes, unsigned int range) {
@@ -227,11 +228,12 @@ struct Snake {
 
 	static int
 	getSnakeById(Snake const *snakes, unsigned int range, int16_t id) {
-		for (unsigned int i = 0; i < range; i++) {
+		unsigned int i;
+		for (i = 0; i < range; i++) {
 			if (snakes[i].id == id)
 				return (i);
 		}
-		return (-1);
+		return (i == range ? i - 1 : -1);
 	}
 
 	static int allSnakesReady(Snake const *snakes, unsigned int range) {
