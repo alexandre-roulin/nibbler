@@ -21,19 +21,19 @@
 int main(int argc, char **argv) {
     DisplayGlfw lol(10, 10, "Issou");
 
-	Grid<int> background(10);
-	Grid<int> al(10);
+	Grid< eSprite > background(10);
+	Grid< eSprite > al(10);
 
-	background.fill(SPRITE_GROUND);
-	background.setBorder(SPRITE_WALL);
+	background.fill(eSprite::GROUND);
+	background.setBorder(eSprite::WALL);
 
-	al.fill(-1);
+	al.fill(eSprite::NONE);
 
-	al(0, 0) = SPRITE_FOOD;
-	al(1, 1) = 1;
-	al(3, 3) = SPRITE_FOOD;
-	al(9, 1) = 1;
-	al(1, 9) = 1;
+	al(0, 0) = eSprite::FOOD;
+	al(1, 1) = eSprite::WALL;
+	al(3, 3) = eSprite::FOOD;
+	al(9, 1) = eSprite::WALL;
+	al(1, 9) = eSprite::WALL;
 
 
 	lol.setBackground(background);

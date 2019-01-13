@@ -7,8 +7,8 @@
 #define PATH_TILESET "./ressource/snake_tileset.png"
 #define SIZE_LINE_TILESET 15
 //#define PATH_DISPLAY_LIBRARY_SFML "./extern/display_sfml/libdisplay_sfml.so"
-//#define PATH_DISPLAY_LIBRARY_SFML "./extern/test_glfw/cmake-build-debug/libGlitterd.so"
-#define PATH_DISPLAY_LIBRARY_SFML "./extern/display_sdl/libdisplay_sdl.so"
+#define PATH_DISPLAY_LIBRARY_SFML "./extern/test_glfw/cmake-build-debug/libGlitterd.so"
+//#define PATH_DISPLAY_LIBRARY_SFML "./extern/display_sdl/libdisplay_sdl.so"
 
 #define PATH_DISPLAY_LIBRARY_SDL "./extern/display_sdl/libdisplay_sdl.so"
 #define PATH_SOUND_LIBRARY_SFML "./extern/sound_sfml/libsound_sfml.so"
