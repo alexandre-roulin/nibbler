@@ -67,9 +67,8 @@ public:
 	bool        exit(void) const;
 	eDirection getDirection(void) const;
 	//void		drawGrid(Grid<int> const &grid);
-	void		drawGrid(Grid<int> const &grid);
-
-	void		setBackground(Grid<int> const &grid);
+	void		drawGrid(Grid< eSprite > const &grid);
+	void		setBackground(Grid< eSprite > const &grid);
 
 
 private:
@@ -79,7 +78,7 @@ private:
     Vector2D<int> const winTileSize_;
     Vector2D<int> const winPixelSize_;
 
-	Grid< int >	tileBackground_;
+	Grid< eSprite >		tileBackground_;
     Grid< ActModel >	background_;
 
 	float				deltaTime_;
@@ -94,9 +93,9 @@ private:
     std::string			pathShaderSkyBox_;
     std::string			pathSkyBox_[6];
 
-    unsigned int		textureSkyBox_;
-	unsigned int		skyboxVAO_;
-	unsigned int		skyboxVBO_;
+    unsigned int					textureSkyBox_;
+	unsigned int					skyboxVAO_;
+	unsigned int					skyboxVBO_;
 
 	Shader							shader_;
 	Shader							shaderSkyBox_;
