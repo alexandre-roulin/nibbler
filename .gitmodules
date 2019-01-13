@@ -13,6 +13,7 @@
 [submodule "extern/test_glfw/Glitter/Vendor/glad"]
 	path = extern/test_glfw/Glitter/Vendor/glad
 	url = https://github.com/Dav1dde/glad.git
+	branch = c
 [submodule "extern/test_glfw/Glitter/Vendor/glm"]
 	path = extern/test_glfw/Glitter/Vendor/glm
 	url = https://github.com/g-truc/glm.git
