@@ -4,9 +4,7 @@ project(Glitter)
 set(CMAKE_CXX_STANDARD 14)
 
 
-add_subdirectory(Glitter/Vendor/glad)
 add_subdirectory(Glitter/Vendor/glm)
-
 option(GLFW_BUILD_DOCS OFF)
 option(GLFW_BUILD_EXAMPLES OFF)
 option(GLFW_BUILD_TESTS OFF)
