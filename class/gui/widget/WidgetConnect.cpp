@@ -20,7 +20,7 @@ WidgetConnect::~WidgetConnect(void)
 void			WidgetConnect::render(void)
 {
 
-	if (this->_core.univers.getClientTCP_().isConnect())
+	if (this->_core.univers.getGameNetwork()->isConnect())
 		ImGui::Begin("Connect", NULL, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse);
 	else
 		ImGui::Begin("Connect", NULL, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse);
@@ -61,14 +61,14 @@ void			WidgetConnect::render(void)
 	Core::beginColor(Core::HUE_GREEN);
 	if (this->_client) {
 		if (ImGui::Button("Join", sf::Vector2f(ImGui::GetWindowSize().x, 20))) {
-			this->_core.univers.getClientTCP_().connect(this->_dnsBuffer, this->_portBuffer);
+			this->_core.univers.getGameNetwork()->connect(this->_dnsBuffer, this->_portBuffer);
 		}
 
 	}
 	else {
 		if (ImGui::Button("Create", sf::Vector2f(ImGui::GetWindowSize().x, 20))) {
 			this->_core.univers.create_server();
-			this->_core.univers.getClientTCP_().connect(this->_dnsBuffer, this->_portBuffer);
+			this->_core.univers.getGameNetwork()->connect(this->_dnsBuffer, this->_portBuffer);
 		}
 	}
 	Core::endColor();

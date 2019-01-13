@@ -9,7 +9,7 @@ class RenderSystem : public KINU::System {
 public:
 	RenderSystem();
 	virtual void update();
-private:
+	static int getSprite_(eSprite sprite);
 };
 
 

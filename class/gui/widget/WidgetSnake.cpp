@@ -1,3 +1,4 @@
+#include <Univers.hpp>
 #include "WidgetSnake.hpp"
 #include <gui/Core.hpp>
 
@@ -52,13 +53,13 @@ void			WidgetSnake::_renderOtherSnake(void)
 	{
 		Core::beginColor(Core::HUE_RED);
 		if (ImGui::Button("Ready ?", sf::Vector2f(sizeTexture, ImGui::GetFrameHeight())))
-			this->_core.univers.getClientTCP_().change_state_ready();;
+			this->_core.univers.getGameNetwork()->change_state_ready();;
 	}
 	else
 	{
 		Core::beginColor(Core::HUE_GREEN);
 		if (ImGui::Button("Ready !", sf::Vector2f(sizeTexture, ImGui::GetFrameHeight())))
-			this->_core.univers.getClientTCP_().change_state_ready();
+			this->_core.univers.getGameNetwork()->change_state_ready();
 	}
 	Core::endColor();
 
@@ -69,7 +70,7 @@ void			WidgetSnake::_renderOtherSnake(void)
 		for (auto const &e : this->_color)
 		{
 			if (ImGui::Selectable(e.c_str(), i == static_cast<int>(this->_snake.sprite)))
-				this->_core.univers.getClientTCP_().change_sprite( static_cast<eSprite>(i));
+				this->_core.univers.getGameNetwork()->change_sprite( static_cast<eSprite>(i));
 			i++;
 		}
 
@@ -109,7 +110,7 @@ void			WidgetSnake::_renderYourSnake(void)
 		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4)ImColor::HSV(0.0f, 0.8f, 0.8f));
 		ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)ImColor::HSV(0.0f, 0.9f, 0.9f));
 		if (ImGui::Button("Ready ?", sf::Vector2f(sizeTexture, ImGui::GetFrameHeight())))
-			this->_core.univers.getClientTCP_().change_state_ready();
+			this->_core.univers.getGameNetwork()->change_state_ready();
 	}
 	else
 	{
@@ -117,7 +118,7 @@ void			WidgetSnake::_renderYourSnake(void)
 		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4)ImColor::HSV(0.33f, 0.8f, 0.8f));
 		ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)ImColor::HSV(0.33f, 0.9f, 0.9f));
 		if (ImGui::Button("Ready !", sf::Vector2f(sizeTexture, ImGui::GetFrameHeight())))
-			this->_core.univers.getClientTCP_().change_state_ready();
+			this->_core.univers.getGameNetwork()->change_state_ready();
 	}
 	ImGui::PopStyleColor(3);
 	ImGui::PopID();
@@ -129,7 +130,7 @@ void			WidgetSnake::_renderYourSnake(void)
 		for (auto const &e : this->_color)
 		{
 			if (ImGui::Selectable(e.c_str(), i == static_cast<int>(this->_snake.sprite)))
-				this->_core.univers.getClientTCP_().change_sprite(static_cast<eSprite>(i));
+				this->_core.univers.getGameNetwork()->change_sprite(static_cast<eSprite>(i));
 			i++;
 		}
 

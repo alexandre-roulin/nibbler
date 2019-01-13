@@ -7,8 +7,8 @@
 #define PATH_TILESET "./ressource/snake_tileset.png"
 #define SIZE_LINE_TILESET 15
 //#define PATH_DISPLAY_LIBRARY_SFML "./extern/display_sfml/libdisplay_sfml.so"
-#define PATH_DISPLAY_LIBRARY_SFML "./extern/test_glfw/cmake-build-debug/libGlitterd.so"
-//#define PATH_DISPLAY_LIBRARY_SFML "./extern/display_sdl/libdisplay_sdl.so"
+//#define PATH_DISPLAY_LIBRARY_SFML "./extern/test_glfw/cmake-build-debug/libGlitterd.so"
+#define PATH_DISPLAY_LIBRARY_SFML "./extern/display_sdl/libdisplay_sdl.so"
 
 #define PATH_DISPLAY_LIBRARY_SDL "./extern/display_sdl/libdisplay_sdl.so"
 #define PATH_SOUND_LIBRARY_SFML "./extern/sound_sfml/libsound_sfml.so"
@@ -73,6 +73,39 @@ enum class eSprite {
 	FOOD = (1 << 24),
 	GROUND = (1 << 25)
 };
+
+inline std::ostream &operator<<(std::ostream &os, eSprite &sprite) {
+	switch (sprite) {
+		case eSprite ::GREEN :
+			os << "GREEN";
+			break;
+		case eSprite ::BLUE :
+			os << "BLUE";
+			break;
+		case eSprite ::PURPLE :
+			os << "PURPLE";
+			break;
+		case eSprite ::PINK :
+			os << "PINK";
+			break;
+		case eSprite ::GREY :
+			os << "GREY";
+			break;
+		case eSprite ::YELLOW :
+			os << "YELLOW";
+			break;
+		case eSprite ::ORANGE :
+			os << "ORANGE";
+			break;
+		case eSprite ::RED :
+			os << "RED";
+			break;
+		default :
+			os << "Hello";
+			break;
+	}
+	return os;
+}
 
 inline eSprite operator|(eSprite const lhs, eSprite const rhs) {
 	return static_cast<eSprite> (static_cast<int>(lhs) | static_cast<int>(rhs));

@@ -1,4 +1,5 @@
 #include "WidgetLobby.hpp"
+#include <Univers.hpp>
 #include <gui/Core.hpp>
 
 WidgetLobby::WidgetLobby(Core &core, Snake const *snakes) :
@@ -6,8 +7,9 @@ AWidget(core)
 {
 	for (unsigned i = 0; i < MAX_SNAKE; i++)
 	{
-		std::cout << snakes[i].id << "  |  isYour ? i[" << i <<  "] id[" << this->_core.univers.getClientTCP_().getId() << "] = [" << (i == this->_core.univers.getClientTCP_().getId()) << "]" << std::endl;
-		this->addSnake(snakes[i], (i == this->_core.univers.getClientTCP_().getId()));
+		std::cout << snakes[i].id << "  |  isYour ? i[" << i <<  "] id[" << this->_core.univers.getGameNetwork()->getId() << "] = [" << (i ==
+				this->_core.univers.getGameNetwork()->getId()) << "]" << std::endl;
+		this->addSnake(snakes[i], (i == this->_core.univers.getGameNetwork()->getId()));
 	}
 	this->addColor("Green", "ressource/snake_presentation/snake_green.png");
 	this->addColor("Blue", "ressource/snake_presentation/snake_blue.png");

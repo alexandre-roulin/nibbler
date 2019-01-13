@@ -3,7 +3,6 @@
 
 #include <iostream>
 #include <KINU/Entity.hpp>
-#include <boost/thread/thread.hpp>
 
 #include <KINU/World.hpp>
 
@@ -15,6 +14,7 @@
 #include <gui/Core.hpp>
 #include <boost/program_options.hpp>
 #include <logger.h>
+
 std::string const Snake::basicName[MAX_SNAKE] = {"Jack O'Lantern", "Eden",
 												 "Jacky", "Emerald",
 												 "Broutille", "Veggie-vie",
@@ -60,52 +60,64 @@ void nibbler(Univers &univers) {
 	for (;;) {
 		std::cout << "$> ";
 		std::getline(std::cin, buffer);
+		if (buffer == "closea") {
+			univers.close_acceptor();
+		}
 		if (buffer == "border") {
 			univers.setBorderless(true);
 		}
+		if (buffer == "ia") {
+			univers.create_ia();
+		}
+		if (buffer == "dlia") {
+			univers.delete_ia();
+		}
+		if (buffer == "dls") {
+			univers.delete_server();
+		}
+		if (buffer == "sfml") {
+			univers.load_extern_lib_display(Univers::EXTERN_LIB_SFML);
+		}
 		if (buffer == "autos") {
 			univers.create_server();
-			univers.getClientTCP_().connect("localhost", "4242");
+			univers.getGameNetwork()->connect("localhost", "4242");
 			sleep(1);
-			univers.getClientTCP_().change_state_ready();
+			univers.getGameNetwork()->change_state_ready();
 			univers.load_extern_lib_display(Univers::EXTERN_LIB_SFML);
 
 		}
 		if (buffer == "autoc") {
-			univers.getClientTCP_().connect("localhost", "4242");
+			univers.getGameNetwork()->connect("localhost", "4242");
 			sleep(1);
-			univers.getClientTCP_().change_state_ready();
+			univers.getGameNetwork()->change_state_ready();
 			univers.load_extern_lib_display(Univers::EXTERN_LIB_SFML);
 			univers.new_game();
 		}
 		if (buffer == "autocs") {
 			std::cout << "connect > ";
 			std::getline(std::cin, buffer);
-			univers.getClientTCP_().connect(buffer.c_str(), "4242");
+			univers.getGameNetwork()->connect(buffer.c_str(), "4242");
 			sleep(1);
-			univers.getClientTCP_().change_state_ready();
+			univers.getGameNetwork()->change_state_ready();
 			univers.load_extern_lib_display(Univers::EXTERN_LIB_SFML);
 			univers.loop();
 		}
 		if (buffer == "loop") {
-			ClientTCP::StartInfo startInfo;
-			univers.getClientTCP_()
-					.write_socket(
-					ClientTCP::add_prefix(eHeader::START_GAME, &startInfo));
 			univers.new_game();
 		}
-		if (buffer == "server")
+		if (buffer == "server") {
 			univers.create_server();
+		}
 		if (buffer == "connect") {
 			std::string dns, port;
 			std::cout << "dns > ";
 			std::getline(std::cin, dns);
 			std::cout << "port > ";
 			std::getline(std::cin, port);
-			univers.getClientTCP_().connect(dns, port);
+			univers.getGameNetwork()->connect(dns, port);
 		}
 		if (buffer == "ready") {
-			univers.getClientTCP_().change_state_ready();
+			univers.getGameNetwork()->change_state_ready();
 		}
 
 		if (buffer == "ui") {
@@ -115,7 +127,7 @@ void nibbler(Univers &univers) {
 			if (core)
 				delete core;
 
-			if (univers.getClientTCP_().isOpenGame()) {
+			if (univers.getGameNetwork()->isOpenGame()) {
 
 				//univers.getClientTCP_().change_state_ready();
 				//sleep(1);
@@ -123,8 +135,8 @@ void nibbler(Univers &univers) {
 
 				ClientTCP::StartInfo startInfo;
 				if (univers.isServer()) {
-					univers.getClientTCP_()
-							.write_socket(
+					univers.getGameNetwork()
+							->write_socket(
 									ClientTCP::add_prefix(eHeader::START_GAME,
 														  &startInfo));
 				} else {
@@ -137,6 +149,7 @@ void nibbler(Univers &univers) {
 }
 
 int main(int argc, char **argv) {
+
 	char hostname[64];
 	gethostname(hostname, 64);
 	std::cout << hostname << std::endl;

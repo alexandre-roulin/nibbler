@@ -1,6 +1,7 @@
 #include "WidgetChat.hpp"
 #include <gui/Core.hpp>
 #include "imgui.h"
+#include <Univers.hpp>
 
 WidgetChat::WidgetChat(Core &core) :
 		AWidget(core) {
@@ -45,11 +46,11 @@ void WidgetChat::render(void) {
 						 ImGuiInputTextFlags_EnterReturnsTrue)) {
 
 		if (!this->_chatCommand()) {
-			this->_core.univers.getClientTCP_()
-					.write_socket(ClientTCP::add_prefix(
+			this->_core.univers.getGameNetwork()
+					->write_socket(ClientTCP::add_prefix(
 							eHeader::CHAT,
 							Factory::factory_chat_message(
-									this->_core.univers.getClientTCP_().getSnake().name,
+									this->_core.univers.getGameNetwork()->getSnake().name,
 									this->_bufferMessage))
 					);
 		}
@@ -65,7 +66,7 @@ bool WidgetChat::_chatCommand(void) {
 	if (strstr(this->_bufferMessage, "/help"))
 		this->addLog("/help\n/name Aname\n", this->_bufferMessage);
 	else if (strstr(this->_bufferMessage, "/name "))
-		this->_core.univers.getClientTCP_().change_name(
+		this->_core.univers.getGameNetwork()->change_name(
 				this->_bufferMessage + sizeof("/name ") - 1);
 	else
 		this->addLog("{%s} n'est pas une commande valide\n",

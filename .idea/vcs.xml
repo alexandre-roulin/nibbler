@@ -3,6 +3,7 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/cmake/boost-cmake" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/extern/SFML" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/extern/test_glfw/Glitter/Vendor/assimp" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/extern/test_glfw/Glitter/Vendor/glad" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/extern/test_glfw/Glitter/Vendor/glfw" vcs="Git" />

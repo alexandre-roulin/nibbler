@@ -1,3 +1,4 @@
+#include <Univers.hpp>
 #include "Core.hpp"
 #include "widget/WidgetExit.hpp"
 #include "widget/WidgetSnake.hpp"
@@ -96,8 +97,8 @@ void			Core::aState(void)
 	WidgetConnect optionConnect(*this);
 
 
-	lobby = new WidgetLobby(*this, this->univers.getClientTCP_().getSnakes());
-	while (this->_win.isOpen() && !this->univers.getClientTCP_().isOpenGame())
+	lobby = new WidgetLobby(*this, this->univers.getGameNetwork()->getSnakes());
+	while (this->_win.isOpen() && !this->univers.getGameNetwork()->isOpenGame())
 	{
 		sf::Event event;
 		while (this->_win.pollEvent(event))
@@ -117,11 +118,10 @@ void			Core::aState(void)
 		ImGui::SetNextWindowPos(this->positionByPercent(sf::Vector2<unsigned int>(95, 0)), 0, sf::Vector2f(0.5f, 0.5f));
 		wexit.render();
 
-		if (this->univers.getClientTCP_().isConnect()) {
+		if (this->univers.getGameNetwork()->isConnect()) {
 			if (!optionSnake) {
-				if (lobby)
-					delete lobby;
-				lobby = new WidgetLobby(*this, this->univers.getClientTCP_().getSnakes());
+				delete lobby;
+				lobby = new WidgetLobby(*this, this->univers.getGameNetwork()->getSnakes());
 				optionSnake = new WidgetOption(*this);
 			}
 			ImGui::SetNextWindowPos(this->positionByPercent(sf::Vector2<unsigned int>(70, 50)));

@@ -13,17 +13,21 @@
 #include <boost/asio/io_service.hpp>
 #include <boost/array.hpp>
 #include <nibbler.hpp>
+#include <component/PositionComponent.hpp>
 #include <factory/Factory.hpp>
-#include <events/JoystickEvent.hpp>
-#include <events/StartEvent.hpp>
-#include <events/FoodCreation.hpp>
+#include "IGameNetwork.hpp"
+
+class JoystickEvent;
+
+class StartEvent;
+
+class FoodCreation;
+
 using boost::asio::ip::tcp;
 
 class Univers;
 
-class Factory;
-
-class ClientTCP : public boost::enable_shared_from_this<ClientTCP> {
+class ClientTCP : public boost::enable_shared_from_this<ClientTCP>, public IGameNetwork {
 public:
 	typedef boost::shared_ptr<ClientTCP> pointer_client;
 
@@ -32,28 +36,37 @@ public:
 		boost::posix_time::ptime time_duration;
 	};
 
-
 	struct InputInfo {
 		int16_t id;
 		eDirection dir;
 	};
 
-
 	struct FoodInfo {
 		bool fromSnake;
 		PositionComponent positionComponent;
+
 	};
 
-	void deliverEvents();
+	static pointer_client create(Univers &univers, bool fromIA);
+
+	virtual ~ClientTCP();
+
+	/** Network Management **/
 
 	void connect(std::string dns, std::string port);
 
+private:
 	void read_socket_header();
 
 	void read_socket_data(eHeader);
 
+public:
+
 	void write_socket(std::string message);
 
+	bool isConnect() const;
+
+private:
 	void handle_read_data(eHeader, const boost::system::error_code &, size_t);
 
 	void handle_read_header(const boost::system::error_code &, size_t);
@@ -62,52 +75,64 @@ public:
 
 	void parse_input(eHeader header, void const *, size_t);
 
-	void refreshMySnake(void);
+	void close_connection();
 
-	void send_host_open_game(void);
-
-	void send_borderless(bool borderless);
-	
-	void change_name(char const *name);
-
-	void change_sprite(eSprite snakeSprite);
-
-	void change_state_ready(void);
-
-	void change_map_size(unsigned int);
-
-	void lock();
-
-	bool all_snake_is_dead();
-
-	void unlock();
-
+public:
 	template<typename T>
 	static std::string add_prefix(eHeader, T *element);
 
-	static pointer_client
-	create(Univers &univers, boost::asio::io_service &io);
+	bool isOpenGame() const;
 
-	const Snake *getSnakes() const;
+	/** Game Management **/
 
-	Snake const &getSnake(void) const;
+	virtual void addScore(uint16_t uint16);
 
-	int16_t getId(void) const;
-	bool	isConnect() const;
-	bool	isOpenGame() const;
-	void killSnake();
-	static int const size_header[];
+	virtual void deliverEvents();
+
+	virtual void refreshMySnake(void);
+
+	virtual void send_host_open_game(void);
+
+	virtual void send_borderless(bool borderless);
+
+	virtual void change_name(char const *name);
+
+	virtual void change_sprite(eSprite snakeSprite);
+
+	virtual void change_state_ready(void);
+
+	virtual void change_map_size(unsigned int i);
+
+	virtual bool all_snake_is_dead();
+
+	virtual const Snake *getSnakes() const;
+
+	virtual const Snake &getSnake(void) const;
+
+	virtual int16_t getId(void) const;
+
+	virtual void killSnake(uint16_t);
+
+public:
+	/** Mutex Management **/
+
+	void lock();
+
+	void unlock();
+
+
+	static const int size_header[];
+
 private:
-	ClientTCP(::Univers &univers, boost::asio::io_service &io);
 
-	void checkError_(boost::system::error_code const &error_code);
+	ClientTCP(Univers &univers, bool fromIA);
 
+	void checkError_(boost::system::error_code const &);
 
-		bool isConnect_;
+	boost::asio::io_service io;
 	bool openGame_;
+	bool fromIA_;
 	std::vector<FoodCreation> foodCreations;
-	std::vector<JoystickEvent> joystickEvents;
-	std::vector<StartEvent> startEvents;
 	Snake snake_array[MAX_SNAKE];
 	tcp::socket socket;
 	boost::array<char, 512> buffer_data;
@@ -115,18 +140,23 @@ private:
 	tcp::resolver resolver;
 	Univers &univers;
 	Factory factory;
-	boost::asio::io_service &io;
 	boost::thread thread;
 	std::mutex mutex;
+	std::string dns_;
+public:
+	const std::string &getDns() const;
 
+	const std::string &getPort() const;
 
+private:
+	std::string port_;
 };
+
 
 template<typename T>
 std::string ClientTCP::add_prefix(eHeader header, T *element) {
 	std::string message;
 	message.append(reinterpret_cast<char *>(&header), sizeof(eHeader));
-	message.append(reinterpret_cast<char *>(element),
-				   ClientTCP::size_header[static_cast<int>(header)]);
+	message.append(reinterpret_cast<char *>(element), ClientTCP::size_header[static_cast<int>(header)]);
 	return message;
 }

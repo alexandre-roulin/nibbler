@@ -3,7 +3,8 @@
 
 namespace KINU {
 
-	World::World(Univers &univers) : grid(0), univers_(univers) {
+	World::World(Univers &univers) : grid(univers.getMapSize()), univers_(univers) {
+		grid.fill(eSprite::NONE);
 		entitiesManager = std::make_unique<EntitiesManager>(*this);
 		systemsManager = std::make_unique<SystemsManager>(*this);
 		eventsManager = std::make_unique<EventsManager>(*this);

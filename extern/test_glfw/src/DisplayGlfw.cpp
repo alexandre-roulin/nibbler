@@ -189,17 +189,17 @@ void DisplayGlfw::clean_() {
     //_win.close();
 }
 
-void		DisplayGlfw::setBackground(Grid<int> const &grid) {
+void		DisplayGlfw::setBackground(Grid< eSprite > const &grid) {
     tileBackground_ = grid;
     for (int y = 0; y < winTileSize_.getY(); ++y) {
         for (int x = 0; x < winTileSize_.getX(); ++x) {
-            if (tileBackground_(x, y) == SPRITE_WALL) {
+            if (tileBackground_(x, y) == eSprite::WALL) {
                 background_(x, y).assign(&wall_);
 				background_(x, y).resetTransform();
 				background_(x, y).translate(glm::vec3(x - winTileSize_.getX() / 2, y - winTileSize_.getY() / 2, 0.f));
 				background_(x, y).scale(glm::vec3(-0.10f));
             }
-            else if (tileBackground_(x, y) == SPRITE_GROUND) {
+            else if (tileBackground_(x, y) == eSprite::GROUND) {
                 background_(x, y).assign(&ground_);
 				background_(x, y).resetTransform();
 				background_(x, y).translate(glm::vec3(x - winTileSize_.getX() / 2, y - winTileSize_.getY() / 2, 0.f));
@@ -209,7 +209,7 @@ void		DisplayGlfw::setBackground(Grid<int> const &grid) {
     }
 }
 
-void		DisplayGlfw::drawGrid(Grid<int> const &grid) {
+void		DisplayGlfw::drawGrid(Grid< eSprite > const &grid) {
 	shader_.activate();
 
 	shader_.setMat4("projection", projection_);
@@ -217,7 +217,7 @@ void		DisplayGlfw::drawGrid(Grid<int> const &grid) {
 
 	for (int y = 0; y < winTileSize_.getY(); ++y) {
 		for (int x = 0; x < winTileSize_.getX(); ++x) {
-			if (grid(x, y) == SPRITE_FOOD) {
+			if (grid(x, y) == eSprite::FOOD) {
 				asnake_.resetTransform();
 				asnake_.translate(glm::vec3(x - winTileSize_.getX() / 2, y - winTileSize_.getY() / 2, 1.2f));
 				model_ = asnake_.getTransform();
@@ -225,7 +225,7 @@ void		DisplayGlfw::drawGrid(Grid<int> const &grid) {
 				asnake_.getModel()->render(shader_);
 
 			}
-			else if (grid(x, y) != -1) {
+			else if (grid(x, y) != eSprite::NONE) {
 				ablock_[0].resetTransform();
 				ablock_[0].translate(glm::vec3(x - winTileSize_.getX() / 2, y - winTileSize_.getY() / 2, 1.2f));
 				model_ = ablock_[0].getTransform();

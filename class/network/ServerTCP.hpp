@@ -51,13 +51,17 @@ public:
 
 	void handle_write(const boost::system::error_code &, size_t);
 
+	void close();
+
 	tcp::socket &socket();
 };
 
 
 class ServerTCP {
 public:
-	ServerTCP(boost::asio::io_service &io_service, unsigned int port);
+	ServerTCP(Univers &univers, unsigned int port);
+
+	virtual ~ServerTCP();
 
 	void async_write(std::string message);
 
@@ -73,9 +77,14 @@ public:
 
 	void start_game();
 
+	void close_acceptor();
+
 	void remove(TCPConnection::pointer);
 
+	bool isFull() const;
+
 private:
+	Univers &univers_;
 	int16_t nu_;
 	Snake snake_array[MAX_SNAKE];
 	unsigned int	mapSize;
@@ -84,6 +93,8 @@ private:
 	void start_accept();
 
 	std::vector<TCPConnection::pointer> pointers;
-	boost::thread thread_accept;
+	boost::asio::io_service io_service_;
 	tcp::acceptor acceptor_;
+	boost::thread thread;
 };
+

@@ -1,6 +1,10 @@
 #pragma once
 
 #include <memory>
+#include <iostream>
+#include <iomanip>
+#include <logger.h>
+#include "IDisplay.hpp"
 
 template<typename T>
 class Grid {
@@ -24,19 +28,32 @@ public:
 
 	void fill(T const &fill);
 
-	T *operator[](size_t row);
+	size_t size() const;
 
-	T &operator()(size_t row, size_t column);
+	std::pair<size_t, size_t> getRandomSlot(T value);
 
-	T *operator[](size_t row) const;
+	void print() const;
 
-	T &operator()(size_t row, size_t column) const;
+	bool isTwoSlotNear(int x, int y, T value, bool checkDiagonal = false) const;
+
+	T *operator[](size_t y);
+
+	T &operator()(size_t x, size_t y);
+
+	T *operator[](size_t y) const;
+
+	T &operator()(size_t x, size_t y) const;
 
 private:
+
+	bool isAnyFreeSlotInRow(size_t row, T clear) const;
+
+	bool isFreeSlot(size_t row, size_t column, T clear) const;
+
 	size_t _rows;
 	size_t _columns;
 	T *_grid;
-
+	size_t size_;
 
 	Grid(void);
 };
@@ -48,11 +65,30 @@ Grid<T>::Grid(void) {
 }
 
 template<typename T>
+Grid<T>::Grid(size_t rows, size_t columns) :
+		_rows(rows),
+		_columns(columns),
+		_grid(new T[rows * columns]()),
+		size_(rows * columns) {
+
+}
+
+template<typename T>
+Grid<T>::Grid(size_t size)
+		:_rows(size),
+		 _columns(size),
+		 _grid(new T[size * size]()),
+		 size_(size * size) {
+
+}
+
+template<typename T>
 Grid<T>::Grid(Grid const &src) :
 		_rows(src._rows),
 		_columns(src._columns),
-		_grid(new T[src._rows * src._columns]()) {
-	for (size_t i = 0; i < this->_rows * this->_columns; i++)
+		_grid(new T[src._rows * src._columns]()),
+		size_(src.size_) {
+	for (size_t i = 0; i < size_; i++)
 		this->_grid[i] = src._grid[i];
 }
 
@@ -63,24 +99,10 @@ Grid<T>::~Grid(void) {
 }
 
 template<typename T>
-Grid<T>::Grid(size_t rows, size_t columns) :
-		_rows(rows),
-		_columns(columns),
-		_grid(new T[rows * columns]()) {}
-
-
-template<typename T>
-Grid<T>::Grid(size_t size)
-		:_rows(size),
-		 _columns(size),
-		 _grid(new T[size * size]()) {
-
-}
-
-template<typename T>
 size_t Grid<T>::getRows(void) const {
 	return (this->_rows);
 }
+
 
 template<typename T>
 size_t Grid<T>::getColumns(void) const {
@@ -101,39 +123,127 @@ void Grid<T>::setBorder(T const &border) {
 
 template<typename T>
 void Grid<T>::fill(T const &fill) {
-	for (size_t i = 0; i < this->_rows * this->_columns; i++)
+	for (size_t i = 0; i < size_; i++)
 		this->_grid[i] = fill;
 }
 
 template<typename T>
-T *Grid<T>::operator[](size_t row) {
-	return (this->_grid + (row * this->_columns));
+T *Grid<T>::operator[](size_t y) {
+	return (this->_grid + (y * this->_columns));
 }
 
 template<typename T>
-T &Grid<T>::operator()(size_t row, size_t column) {
-	return (this->_grid[row * this->_columns + column]);
+T &Grid<T>::operator()(size_t x, size_t y) {
+	return (this->_grid[y * this->_columns + x]);
 }
 
 template<typename T>
-T *Grid<T>::operator[](size_t row) const {
-	return (this->_grid + (row * this->_columns));
+T *Grid<T>::operator[](size_t y) const {
+	return (this->_grid + (y * this->_columns));
 }
 
 template<typename T>
-T &Grid<T>::operator()(size_t row, size_t column) const {
-	return (this->_grid[row * this->_columns + column]);
+T &Grid<T>::operator()(size_t x, size_t y) const {
+	return (this->_grid[y * this->_columns + x]);
 }
 
 template<typename T>
 Grid<T> &Grid<T>::operator=(Grid<T> const &src) {
-	if (this->_grid)
-		delete [] _grid;
-	this->_columns = src._columns;
-	this->_rows = src._rows;
-	this->_grid = new T[src._columns * src._rows];
-	for (size_t i = 0; i < this->_rows * this->_columns; ++i)
-		this->_grid[i] = src._grid[i];
+
+	if (src.size_ == size_) {
+		for (size_t i = 0; i < size_; ++i)
+			this->_grid[i] = src._grid[i];
+	} else {
+		if (this->_grid)
+			delete[] _grid;
+		this->_columns = src._columns;
+		this->_rows = src._rows;
+		size_ = src.size_;
+		this->_grid = new T[src._columns * src._rows];
+		for (size_t i = 0; i < size_; ++i)
+			this->_grid[i] = src._grid[i];
+	}
 	return (*this);
 }
 
+template<typename T>
+std::pair<size_t, size_t> Grid<T>::getRandomSlot(T value) {
+
+	size_t rand_y = rand() % _rows + 1;
+	size_t rand_x = rand() % _columns + 1;
+
+	for (int base_y = 0;; ++base_y) {
+		if (base_y >= _rows)
+			base_y = 0;
+		if (isAnyFreeSlotInRow(base_y, value))
+			rand_y--;
+		if (rand_y == 0)
+			for (int base_x = 0;; ++base_x) {
+				if (base_x >= _columns)
+					base_x = 0;
+				if (isFreeSlot(base_y, base_x, value))
+					--rand_x;
+				if (rand_x == 0) {
+//					print();
+					return std::make_pair(base_x, base_y);
+				}
+			}
+	}
+
+}
+
+template<typename T>
+bool Grid<T>::isAnyFreeSlotInRow(size_t row, T free) const {
+	for (int index = 0; index < _columns; ++index) {
+		if (_grid[row * _columns + index] == free)
+			return true;
+	}
+	return false;
+}
+
+template<typename T>
+bool Grid<T>::isFreeSlot(size_t row, size_t column, T clear) const {
+	return _grid[row * _columns + column] == clear;
+}
+
+//y 1 x 1
+template<typename T>
+void Grid<T>::print() const {
+	for (int y = 0; y < _rows; ++y) {
+		for (int x = 0; x < _columns; ++x) {
+			std::cout << std::setw(4) << _grid[_rows * y + x];
+		}
+		std::cout << std::endl;
+	}
+}
+
+template<typename T>
+size_t Grid<T>::size() const {
+	return size_;
+}
+
+template<typename T>
+bool Grid<T>::isTwoSlotNear(int x, int y, T value, bool checkDiagonal) const {
+
+	static int constexpr direction[8][2] = {
+			{0,  -1},
+			{0,  1},
+			{-1, 0},
+			{1,  0},
+			{-1, -1},
+			{-1, 1},
+			{1,  -1},
+			{1,  1}
+	};
+
+	uint16_t count = 0;
+	unsigned int max = (checkDiagonal ? 8 : 4);
+	for (int index = 0; index < max; ++index) {
+
+		log_success("y : %d x : %d",y + direction[index][1], x + direction[index][0]);
+		if ( y + direction[index][1] < _rows && y + direction[index][1] >= 0 && x + direction[index][0] < _columns && x + direction[index][0] >= 0 && ((*this)(x + direction[index][0], y + direction[index][1]) & value) == value)
+			count++;
+	}
+	log_error("COUNT %d", count);
+	return count >= 2;
+}

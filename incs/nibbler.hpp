@@ -12,8 +12,8 @@
 #define SIZEOF_CHAT_PCKT CHAT_BUFFER + NAME_BUFFER + OFFSET
 #define DEFAULT_SIZE_SPRITE 32
 
-#define DIRECTION_VERTICAL 1			// 0000 0001
-#define DIRECTION_HORIZONTAL 4			// 0000 0100
+#define DIRECTION_VERTICAL 1            // 0000 0001
+#define DIRECTION_HORIZONTAL 4            // 0000 0100
 
 #define MAP_MIN 5
 #define MAP_DEFAULT 35
@@ -22,9 +22,9 @@
 enum eTag {
 	HEAD_TAG = 0,
 	TAIL_TAG = 8,
-	FOOD_TAG,
-	FOOD_TAG_FROM_SNAKE,
-	WALL_TAG,
+	FOOD_TAG,					//9
+	FOOD_TAG_FROM_SNAKE,		//10
+	WALL_TAG,					//11
 };
 
 enum class eSound {
@@ -35,30 +35,32 @@ enum class eSound {
 	DEATH = 4
 };
 
+
 enum ePriority {
 	NO_PRIORITY,
 	MINOR_PRIORITY,
 	SPECIFIC_LAST,
 };
 
-struct		Snake
-{
-	Snake() : sprite(eSprite::BLUE), isReady(false), id(-1), isUpdate(false), direction(NORTH), isAlive(true) {
-		memset(name, 0, NAME_BUFFER);
+struct Snake {
+	Snake() : sprite(eSprite::BLUE), isReady(false), id(-1), isUpdate(false),
+			  direction(NORTH), isAlive(true) {
+		bzero(name, NAME_BUFFER);
 	};
 
-	char			name[NAME_BUFFER];
-	eSprite			sprite;
-	bool			isReady;
-	int16_t			id;
-	bool			isUpdate;
-	eDirection		direction;
-	bool			isAlive;
+	char name[NAME_BUFFER];
+	eSprite sprite;
+	bool isReady;
+	int16_t id;
+	bool isUpdate;
+	eDirection direction;
+	bool isAlive;
+	uint16_t score;
 
 	friend std::ostream &operator<<(std::ostream &os, const Snake &snake);
 
 
-	Snake &operator=(Snake  const &snake) {
+	Snake &operator=(Snake const &snake) {
 		if (this != &snake) {
 			std::memcpy(name, snake.name, NAME_BUFFER);
 			sprite = snake.sprite;
@@ -67,6 +69,7 @@ struct		Snake
 			isUpdate = snake.isUpdate;
 			direction = snake.direction;
 			isAlive = snake.isAlive;
+			score = snake.score;
 		}
 		return *this;
 	}
@@ -75,41 +78,41 @@ struct		Snake
 		Snake snake;
 
 		snake.sprite = static_cast<eSprite>(rand() % MAX_COLOR);
-		strncpy(snake.name, Snake::basicName[rand() % MAX_SNAKE].c_str(), NAME_BUFFER);
+		strncpy(snake.name, Snake::basicName[rand() % MAX_SNAKE].c_str(),
+				NAME_BUFFER);
 		snake.id = id;
 		return (snake);
 	}
 
 	static int getlastSnakeIndex(Snake const *snakes, unsigned int range) {
-		for (unsigned int i = 0; i < range; i++)
-		{
+		unsigned int i;
+		for (i = 0; i < range; ++i) {
 			if (snakes[i].id == -1)
 				return (i);
 		}
-		return (-1);
+		return (i == range ? i - 1 : -1);
 	}
 
 	static int isFull(Snake const *snakes, unsigned int range) {
-		for (unsigned int i = 0; i < range; i++)
-		{
+		for (unsigned int i = 0; i < range; i++) {
 			if (snakes[i].id == -1)
 				return (false);
 		}
 		return (true);
 	}
 
-	static int getSnakeById(Snake const *snakes, unsigned int range, int16_t id) {
-		for (unsigned int i = 0; i < range; i++)
-		{
+	static int
+	getSnakeById(Snake const *snakes, unsigned int range, int16_t id) {
+		unsigned int i;
+		for (i = 0; i < range; i++) {
 			if (snakes[i].id == id)
 				return (i);
 		}
-		return (-1);
+		return (i == range ? i - 1 : -1);
 	}
-	
+
 	static int allSnakesReady(Snake const *snakes, unsigned int range) {
-		for (unsigned int i = 0; i < range; i++)
-		{
+		for (unsigned int i = 0; i < range; i++) {
 			if (snakes[i].id != -1 && !snakes[i].isReady)
 				return (false);
 		}
@@ -134,5 +137,6 @@ enum class eHeader {
 	RESIZE_MAP,			//9
 	REMOVE_SNAKE,		//10
 	POCK,				//11
-	BORDERLESS			//12
+	BORDERLESS,			//12
+	DISCONNECT          //13
 };

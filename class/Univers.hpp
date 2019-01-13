@@ -1,5 +1,6 @@
 #pragma once
 
+#include <ia/Bobby.hpp>
 #include <memory>
 #include <boost/shared_ptr.hpp>
 #include <boost/asio/io_service.hpp>
@@ -9,6 +10,7 @@
 #include <boost/asio/deadline_timer.hpp>
 #include <events/NextFrame.hpp>
 #include <boost/thread.hpp>
+
 class ServerTCP;
 
 class ClientTCP;
@@ -40,6 +42,7 @@ public:
 	bool load_external_sound_library(std::string const &title,
 									 std::string const &library_path); // TODO GO PRIVATE
 	void unload_external_library();
+
 	void loop();
 
 	void manage_start();
@@ -50,28 +53,33 @@ public:
 
 	Core *releaseCore_();
 
-	/** Sound **/
-
-	void playNoise(int i) const;
-
 	void playNoise(eSound e) const;
-
-	void playMusic(char *path) const;
 
 	void playMusic(std::string const &path) const;
 
-	/** Create function**/
+	bool isIASnake(uint16_t client_id) const;
+
+	/** Create && Delete function**/
+
+	void create_ia();
 
 	void create_server(unsigned int port = 4242);
 
 	void create_ui(); // TODO PRIVATE
 
+	void delete_ia();
+
+	void delete_server();
+
+	void delete_client();
+
+	void close_acceptor();
 
 	/** Setter && Getter**/
 
 	//Network
 
-	ClientTCP &getClientTCP_() const;
+	IGameNetwork *getGameNetwork() const;
 
 	//Game
 
@@ -107,14 +115,12 @@ private: // Function
 
 	void loop_world();
 
-	bool dlError(void);
+	bool dlError(char const *from);
 
 private: // Variable
 
 	std::vector<NextFrame> nextFrame;
 	std::bitset<32> flag;
-	boost::asio::io_service io_server;
-	boost::asio::io_service io_client;
 	boost::asio::io_service io_loop;
 	boost::asio::io_service io_start;
 	boost::asio::deadline_timer timer_loop;
@@ -123,12 +129,16 @@ private: // Variable
 	std::unique_ptr<ServerTCP> serverTCP_;
 	std::unique_ptr<Core> core_;
 	boost::shared_ptr<ClientTCP> clientTCP_;
+
+	std::vector<std::unique_ptr<Bobby>> vecBobby;
+
 	void *dlHandleDisplay;
 	void *dlHandleSound;
 	IDisplay *display;
 	ISound *sound;
 	bool borderless;
 	boost::thread thread;
+	IGameNetwork *gameNetwork;
 
 	unsigned int mapSize;
 	unsigned int gameSpeed;
@@ -136,6 +146,7 @@ private: // Variable
 	bool load_external_display_library(std::string const &title,
 									   std::string const &libPath);
 
+	void finish_game();
 	IDisplay *(*newDisplay)(int, int, char const *);
 
 	ISound *(*newSound)(char const *);

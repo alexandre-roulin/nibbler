@@ -8,6 +8,7 @@
 #include <map>
 #include <unordered_map>
 #include <logger.h>
+#include <mutex>
 
 namespace KINU {
 
@@ -193,6 +194,8 @@ namespace KINU {
 		std::vector<Entity::ID> validId;
 
 		World &world_;
+
+		std::mutex mutex_;
 	};
 
 	/** Component Management from Entity **/

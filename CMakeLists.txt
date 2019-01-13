@@ -148,6 +148,7 @@ add_executable(${NAME}
         class/network/ServerTCP.hpp
         class/network/UtilsTCP.cpp
         class/network/UtilsTCP.hpp
+        class/network/IGameNetwork.hpp
         class/systems/FoodEatSystem.cpp
         class/systems/FoodEatSystem.hpp
         class/systems/CollisionSystem.cpp
@@ -164,6 +165,10 @@ add_executable(${NAME}
         class/systems/RenderSystem.hpp
         class/Univers.cpp
         class/Univers.hpp
+        class/ia/Bobby.cpp
+        class/ia/Bobby.hpp
+        class/ia/AStar.cpp
+        class/ia/AStar.hpp
 
         incs/IDisplay.hpp
         incs/Display2D.hpp
@@ -173,7 +178,7 @@ add_executable(${NAME}
         incs/logger_utils.h
         incs/nibbler.hpp
         incs/stb_image.h
-        class/systems/SpriteSystem.cpp class/systems/SpriteSystem.hpp class/gui/widget/WidgetConnect.cpp class/gui/widget/WidgetConnect.hpp class/KINU/Component.cpp class/KINU/Component.hpp class/KINU/Entity.cpp class/KINU/Entity.hpp class/KINU/EventsManager.cpp class/KINU/EventsManager.hpp class/KINU/Pool.hpp class/KINU/SystemsManager.cpp class/KINU/SystemsManager.hpp class/KINU/World.cpp class/KINU/World.hpp class/KINU/Config.hpp)
+        class/systems/SpriteSystem.cpp class/systems/SpriteSystem.hpp class/gui/widget/WidgetConnect.cpp class/gui/widget/WidgetConnect.hpp class/KINU/Component.cpp class/KINU/Component.hpp class/KINU/Entity.cpp class/KINU/Entity.hpp class/KINU/EventsManager.cpp class/KINU/EventsManager.hpp class/KINU/Pool.hpp class/KINU/SystemsManager.cpp class/KINU/SystemsManager.hpp class/KINU/World.cpp class/KINU/World.hpp class/KINU/Config.hpp class/ia/Bobby.cpp class/ia/Bobby.hpp class/network/IGameNetwork.hpp)
 
 target_include_directories(
         ${NAME} PUBLIC

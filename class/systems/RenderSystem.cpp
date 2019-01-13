@@ -13,7 +13,8 @@ RenderSystem::RenderSystem() {
 void RenderSystem::update() {
 	std::list<std::pair<PositionComponent &, SpriteComponent &>> renderComponents;
 	Grid< eSprite > &grid = getWorld().grid;
-
+	Grid< eSprite > grid_cache(getWorld().getUnivers().getMapSize());
+	grid_cache.fill(eSprite::NONE);
 
 	for (auto &entity : getEntities()) {
 		renderComponents.push_back(
@@ -27,10 +28,10 @@ void RenderSystem::update() {
 					   renderPair2.second.priority;
 			});
 
-	grid.fill(eSprite::NONE);
 	for (auto &renderComponent : renderComponents) {
-		grid(renderComponent.first.x, renderComponent.first.y) = renderComponent.second.sprite;
+		grid_cache(renderComponent.first.x, renderComponent.first.y) = renderComponent.second.sprite;
 	}
+	getWorld().grid = grid_cache;
 }
 
 

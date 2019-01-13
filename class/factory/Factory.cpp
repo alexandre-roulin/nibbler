@@ -2,7 +2,14 @@
 #include <component/SpriteComponent.hpp>
 #include <events/FoodCreation.hpp>
 #include <logger.h>
+#include <KINU/Entity.hpp>
+#include <component/JoystickComponent.hpp>
+#include <component/MotionComponent.hpp>
+#include <component/CollisionComponent.hpp>
+#include <component/FollowComponent.hpp>
+#include <Univers.hpp>
 #include "Factory.hpp"
+#include <KINU/World.hpp>
 
 Factory::Factory(Univers &univers)
 		: univers_(univers) {
@@ -12,6 +19,8 @@ Factory::Factory(Univers &univers)
 void Factory::create_all_snake(Snake snake_array[MAX_SNAKE], int16_t nu) {
 
 	log_info("Create %d snake(s)", nu);
+	univers_.getWorld_().grid.fill(eSprite::NONE);
+
 	for (int index = 0; index < nu; ++index) {
 		create_snake(snake_array[index], nu);
 	}
@@ -26,8 +35,8 @@ void Factory::create_snake(Snake snake, int max_snakes) {
 	// (0 + 1) * 35 / (2 + 1) = 11
 	// 35 / 2 = 17
 
-	int base_y = (snake.id + 1) * univers_.getMapSize() / (max_snakes + 1);
-	int base_x = univers_.getMapSize() / 2;
+	int base_x = (snake.id + 1) * univers_.getMapSize() / (max_snakes + 1);
+	int base_y = univers_.getMapSize() / 2;
 	for (int index = 0; index < 4; ++index) {
 
 		new_snake = univers_.getWorld_().createEntity();
@@ -78,10 +87,11 @@ void Factory::create_walls() {
 }
 
 void Factory::create_wall(int x, int y) {
-	auto entity = univers_.getWorld_().createEntity();
+	KINU::Entity entity = univers_.getWorld_().createEntity();
+
 	entity.addComponent<PositionComponent>(x, y);
 	entity.addComponent<CollisionComponent>();
-	entity.addComponent<SpriteComponent>(eSprite::WALL, NO_PRIORITY); //TODO Sprite ?
+	entity.addComponent<SpriteComponent>(eSprite::WALL, NO_PRIORITY);
 
 	entity.groupEntityByGroupId(eTag::WALL_TAG);
 }

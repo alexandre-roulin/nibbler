@@ -1,11 +1,15 @@
-#include <cassert>
 
-#include <logger.h>
+
 #include <iostream>
 #include "PositionComponent.hpp"
 
 
-PositionComponent::PositionComponent(int y, int x) : y(y), x(x) {
+PositionComponent::PositionComponent(int x, int y) : y(y), x(x) {
+}
+
+PositionComponent::PositionComponent(std::pair<size_t, size_t> pair) : x(
+		pair.first), y(pair.second) {
+
 }
 
 bool PositionComponent::operator==(const PositionComponent &rhs) const {
@@ -16,7 +20,8 @@ bool PositionComponent::operator!=(const PositionComponent &rhs) const {
 	return !(rhs == *this);
 }
 
-PositionComponent::PositionComponent(PositionComponent const &positionComponent) {
+PositionComponent::PositionComponent(
+		PositionComponent const &positionComponent) {
 	*this = positionComponent;
 }
 
