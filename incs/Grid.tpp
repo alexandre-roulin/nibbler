@@ -37,7 +37,7 @@ public:
 
 	void print() const;
 
-	bool isTwoSlotNear(int x, int y, T value, bool checkDiagonal = false) const;
+	int countNearSlot(int x, int y, T value, bool checkDiagonal = false) const;
 
 	T *operator[](size_t row);
 
@@ -232,7 +232,7 @@ size_t Grid<T>::size() const {
 }
 
 template<typename T>
-bool Grid<T>::isTwoSlotNear(int x, int y, T value, bool checkDiagonal) const {
+int Grid<T>::countNearSlot(int x, int y, T value, bool checkDiagonal) const {
 
 	static int constexpr direction[8][2] = {
 			{0,  -1},
@@ -254,5 +254,5 @@ bool Grid<T>::isTwoSlotNear(int x, int y, T value, bool checkDiagonal) const {
 			count++;
 	}
 	log_error("COUNT %d", count);
-	return count >= 2;
+	return count;
 }
