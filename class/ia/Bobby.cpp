@@ -44,14 +44,14 @@ void Bobby::findDirection(AStar::Vec2i vecSource, AStar::CoordinateList list) {
 	log_info("Direction > x : %d - y : %d", list[index].x, list[index].y);
 
 	log_warn("COMPARE << ");
-	if (grid_->isTwoSlotNear(
+	if (grid_->countNearSlot(
 
 			list[index].x % univers_.getMapSize(),
 			list[index].y % univers_.getMapSize(),
 			static_cast< eSprite >(eSprite::HEAD),
 			false
 
-	)) {
+	) > 2) {
 		log_warn("ATTENTION YA UNE TETE !!!");
 		throw std::exception();
 	}
