@@ -39,10 +39,7 @@ ClientTCP::ClientTCP(Univers &univers, bool fromIA)
 		  factory(univers) {
 }
 
-ClientTCP::pointer_client
-
-
-ClientTCP::create(Univers &univers, bool fromIA) {
+ClientTCP::pointer_client ClientTCP::create(Univers &univers, bool fromIA) {
 	return pointer_client(new ClientTCP(univers, fromIA));
 }
 

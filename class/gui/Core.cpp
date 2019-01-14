@@ -14,20 +14,20 @@
 Core::Core(Univers &univers) :
 univers(univers),
 _winSize(sf::Vector2<unsigned int>(1000, 900)),
-_win(sf::VideoMode(this->_winSize.x, this->_winSize.y), "Project Sanke"),
-_io(this->_createContext()),
+_win(sf::VideoMode(_winSize.x, _winSize.y), "Project Sanke"),
+_io(_createContext()),
 _chat(*this),
 _mapSize(sf::Vector2<int>(20, 20))
 {
-	if (!this->_imageTitleScreen.loadFromFile("ressource/ecran_titre.png"))
+	if (!_imageTitleScreen.loadFromFile("ressource/ecran_titre.png"))
 		(throw(Core::CoreConstructorException("Cannot load background")));
-	this->_io.IniFilename = NULL;
+	_io.IniFilename = NULL;
 }
 
 ImGuiIO			&Core::_createContext(void)
 {
-	this->_win.setFramerateLimit(60);
-	ImGui::SFML::Init(this->_win);
+	_win.setFramerateLimit(60);
+	ImGui::SFML::Init(_win);
 	ImGui::CreateContext();
 	return (ImGui::GetIO());
 }
@@ -39,14 +39,14 @@ Core::~Core(void)
 
 void			Core::_updateGenCoreEvent() {
 	sf::Event event;
-	while (this->_win.pollEvent(event))
+	while (_win.pollEvent(event))
 	{
 		ImGui::SFML::ProcessEvent(event);
 
 		if (event.type == sf::Event::Closed)
-			this->_win.close();
+			_win.close();
 	}
-	ImGui::SFML::Update(this->_win, this->_deltaClock.restart());
+	ImGui::SFML::Update(_win, _deltaClock.restart());
 }
 
 void			Core::titleScreen()
@@ -54,34 +54,34 @@ void			Core::titleScreen()
 	sf::Event	event;
 	bool		titleScreen = true;
 
-	while (this->_win.isOpen() && titleScreen)
+	while (_win.isOpen() && titleScreen)
 	{
-		while (this->_win.pollEvent(event))
+		while (_win.pollEvent(event))
 		{
 			ImGui::SFML::ProcessEvent(event);
 
 			if (event.type == sf::Event::Closed)
-				this->_win.close();
+				_win.close();
 			else if (event.type == sf::Event::KeyPressed)
 				titleScreen = false;
 		}
-		ImGui::SFML::Update(this->_win, this->_deltaClock.restart());
+		ImGui::SFML::Update(_win, _deltaClock.restart());
 		ImGui::SetNextWindowPosCenter();
 		ImGui::Begin("Titlescreen", NULL, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoMove);
-		ImGui::Image(this->_imageTitleScreen);
+		ImGui::Image(_imageTitleScreen);
 		ImGui::End();
-		this->_render();
+		_render();
 	}
 }
 
 void			Core::demo(void)
 {
-	while (this->_win.isOpen())
+	while (_win.isOpen())
 	{
-		this->_updateGenCoreEvent();
+		_updateGenCoreEvent();
 
 		ImGui::ShowDemoWindow();
-		this->_render();
+		_render();
 	}
 }
 
@@ -93,57 +93,53 @@ void			callbackExit(void *ptr)
 void			Core::aState(void)
 {
 	WidgetExit wexit(*this, &callbackExit, this);
-	WidgetLobby *lobby = nullptr;
+	WidgetLobby lobby(*this, univers.getGameNetwork()->getSnakes());
 	WidgetOption *optionSnake = nullptr;
 	WidgetConnect optionConnect(*this);
 	WidgetMassiveButton massiveButton(*this);
 
 
-	lobby = new WidgetLobby(*this, this->univers.getGameNetwork()->getSnakes());
-	while (this->_win.isOpen() && !this->univers.getGameNetwork()->isOpenGame())
+	while (_win.isOpen() && !univers.getGameNetwork()->isOpenGame())
 	{
 		sf::Event event;
-		while (this->_win.pollEvent(event))
+		while (_win.pollEvent(event))
 		{
-			this->_processEvent(event);
+			_processEvent(event);
 			ImGui::SFML::ProcessEvent(event);
 		}
 
-		ImGui::SFML::Update(this->_win, this->_deltaClock.restart());
+		ImGui::SFML::Update(_win, _deltaClock.restart());
 
-		ImGui::SetNextWindowPos(this->positionByPercent(sf::Vector2<unsigned int>(0, 50)));
-		ImGui::SetNextWindowSize(this->positionByPercent(sf::Vector2<unsigned int>(50, 50)));
-		this->_chat.render();
+		ImGui::SetNextWindowPos(positionByPercent(sf::Vector2<unsigned int>(0, 50)));
+		ImGui::SetNextWindowSize(positionByPercent(sf::Vector2<unsigned int>(50, 50)));
+		_chat.render();
 
-		lobby->render();
+		lobby.render();
 
-		ImGui::SetNextWindowPos(this->positionByPercent(sf::Vector2<unsigned int>(95, 0)), 0, sf::Vector2f(0.5f, 0.5f));
+		ImGui::SetNextWindowPos(positionByPercent(sf::Vector2<unsigned int>(95, 0)), 0, sf::Vector2f(0.5f, 0.5f));
 		wexit.render();
 
-		if (this->univers.getGameNetwork()->isConnect()) {
-			if (!optionSnake) {
-				delete lobby;
-				lobby = new WidgetLobby(*this, this->univers.getGameNetwork()->getSnakes());
+		if (univers.getGameNetwork()->isConnect()) {
+			if (!optionSnake)
 				optionSnake = new WidgetOption(*this);
-			}
-			ImGui::SetNextWindowPos(this->positionByPercent(sf::Vector2<unsigned int>(70, 50)));
-			ImGui::SetNextWindowSize(this->positionByPercent(sf::Vector2<unsigned int>(30, 25)));
+			ImGui::SetNextWindowPos(positionByPercent(sf::Vector2<unsigned int>(70, 50)));
+			ImGui::SetNextWindowSize(positionByPercent(sf::Vector2<unsigned int>(30, 25)));
 			optionSnake->render();
-			ImGui::SetNextWindowPos(this->positionByPercent(sf::Vector2<unsigned int>(70, 75)));
-			ImGui::SetNextWindowSize(this->positionByPercent(sf::Vector2<unsigned int>(30, 25)));
+			ImGui::SetNextWindowPos(positionByPercent(sf::Vector2<unsigned int>(70, 75)));
+			ImGui::SetNextWindowSize(positionByPercent(sf::Vector2<unsigned int>(30, 25)));
 			optionConnect.render();
 		}
 		else {
-			ImGui::SetNextWindowPos(this->positionByPercent(sf::Vector2<unsigned int>(70, 50)));
-			ImGui::SetNextWindowSize(this->positionByPercent(sf::Vector2<unsigned int>(30, 50)));
+			ImGui::SetNextWindowPos(positionByPercent(sf::Vector2<unsigned int>(70, 50)));
+			ImGui::SetNextWindowSize(positionByPercent(sf::Vector2<unsigned int>(30, 50)));
 			optionConnect.render();
 		}
 
-		ImGui::SetNextWindowPos(this->positionByPercent(sf::Vector2<unsigned int>(50, 50)));
-		ImGui::SetNextWindowSize(this->positionByPercent(sf::Vector2<unsigned int>(20, 50)));
+		ImGui::SetNextWindowPos(positionByPercent(sf::Vector2<unsigned int>(50, 50)));
+		ImGui::SetNextWindowSize(positionByPercent(sf::Vector2<unsigned int>(20, 50)));
 		massiveButton.render();
 
-		this->_render();
+		_render();
 	}
 	if (optionSnake)
 		delete optionSnake;
@@ -151,38 +147,38 @@ void			Core::aState(void)
 
 void				Core::addMessageChat(std::string const &msg)
 {
-	this->_chat.addLog(msg.c_str());
+	_chat.addLog(msg.c_str());
 }
 
 void				Core::_render(void)
 {
-	this->_win.clear();
-	ImGui::SFML::Render(this->_win);
-	this->_win.display();
+	_win.clear();
+	ImGui::SFML::Render(_win);
+	_win.display();
 }
 
 void 				Core::exit(void)
 {
-	this->_win.close();
+	_win.close();
 }
 
 sf::Vector2<unsigned int>	Core::positionByPercent(sf::Vector2<unsigned int> const &percent) const
 {
-	return (sf::Vector2<unsigned int>(this->_winSize.x * percent.x / 100,
-										this->_winSize.y * percent.y / 100));
+	return (sf::Vector2<unsigned int>(_winSize.x * percent.x / 100,
+										_winSize.y * percent.y / 100));
 }
 
 void					Core::_processEvent(sf::Event const &event)
 {
 	if (event.type == sf::Event::Resized)
-		this->_winSize = sf::Vector2<unsigned int>(event.size.width, event.size.height);
+		_winSize = sf::Vector2<unsigned int>(event.size.width, event.size.height);
 	else if (event.type == sf::Event::Closed)
-		this->_win.close();
+		_win.close();
 }
 
 
 void					Core::beginColor(float const color) {
-	assert(Core::_useColor == false);
+	assert(!Core::_useColor);
 	Core::_useColor = true;
 	ImGui::PushStyleColor(ImGuiCol_Button, static_cast<ImVec4>(ImColor::HSV(color, 0.7f, 0.7f)));
 	ImGui::PushStyleColor(ImGuiCol_ButtonHovered, static_cast<ImVec4>(ImColor::HSV(color, 0.8f, 0.8f)));
@@ -206,7 +202,7 @@ Core::CoreConstructorException::CoreConstructorException(std::string s) throw() 
 	_error(s) { }
 Core::CoreConstructorException::CoreConstructorException(Core::CoreConstructorException const &src) throw() :
 	_error(src._error)
-	{ this->_error = src._error; }
+	{ _error = src._error; }
 const char	*Core::CoreConstructorException::what() const throw()
-	{ return (this->_error.c_str()); }
+	{ return (_error.c_str()); }
 

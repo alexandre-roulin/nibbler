@@ -13,12 +13,15 @@ public:
 	WidgetLobby(Core &core, Snake const *snakes);
 	~WidgetLobby(void);
 
-	bool	addSnake(Snake const &snake, bool isYourSnake = false);
+	void	addSnake(Snake const &snake, bool isYourSnake = false);
 	void	addColor(std::string const &name, std::string const &pathColor);
 
 	void	render(void);
 
 private:
+
+	void		_reload();
+
 	std::vector< WidgetSnake * >				_snake;
 	std::vector<sf::Texture>					_texture;
 	std::vector<std::string>					_color;
