@@ -21,6 +21,8 @@ DisplayGlfw::DisplayGlfw(int width,
                          char const *windowName) :
 Glfw(windowName, DISPLAY_GLFW_WIN_WIDTH, DISPLAY_GLFW_WIN_HEIGHT),
 direction_(NORTH),
+currentTimer_(0.f),
+maxTimer_(0.f),
 winTileSize_(Vector2D<int>(width, height)),
 tileBackground_(winTileSize_.getX(), winTileSize_.getY()),
 background_(winTileSize_.getX(), winTileSize_.getY()),
@@ -139,6 +141,7 @@ void		DisplayGlfw::drawGrid(Grid< eSprite > const &grid) {
 			if (grid(x, y) == eSprite::FOOD) {
 				asnake_.resetTransform();
 				asnake_.translate(glm::vec3(x - winTileSize_.getX() / 2, y - winTileSize_.getY() / 2, 1.2f));
+				asnake_.translate(glm::vec3(0.f, 1.f * (currentTimer_ / maxTimer_), 0.f));
 				model_ = asnake_.getTransform();
 				shader_.setMat4("model", model_);
 				asnake_.getModel()->render(shader_);
@@ -153,6 +156,11 @@ void		DisplayGlfw::drawGrid(Grid< eSprite > const &grid) {
 			}
 		}
 	}
+}
+
+void DisplayGlfw::setTimers(float currentTimer, float maxTimer) {
+	currentTimer_ = currentTimer;
+	maxTimer_ = maxTimer;
 }
 
 
@@ -205,13 +213,6 @@ void DisplayGlfw::render() {
 
     snake_.render(shader_);
 
-    /*
-    for (int i = 0; i < winTileSize_.getX() * winTileSize_.getY(); i++) {
-        model_ = ablock_[i].getTransform();
-        shader_.setMat4("model", model_);
-		ablock_[i].getModel()->render(shader_);
-    }
-    */
     for (int y = 0; y < winTileSize_.getY(); y++) {
         for (int x = 0; x < winTileSize_.getX(); x++) {
         	if (background_(x, y).getModel()) {
@@ -228,7 +229,6 @@ void DisplayGlfw::render() {
     Glfw::render();
 	glClearColor(0.25f, 0.25f, 0.25f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-	/*yiuhopkgihujoikpol;*/view_ = camera_.getViewMatrix();
 	shader_.activate();
 }
 
@@ -242,7 +242,7 @@ bool        DisplayGlfw::exit() const {
 
 void DisplayGlfw::update(float deltaTime) {
     deltaTime_ = deltaTime;
-    Glfw::update();
+	Glfw::update();
     if (DisplayGlfw::mouseCallbackCalled_) {
         camera_.processMouseMovement(DisplayGlfw::offsetX_, DisplayGlfw::offsetY_);
         DisplayGlfw::mouseCallbackCalled_ = false;
@@ -255,11 +255,6 @@ void DisplayGlfw::update() {
 		DisplayGlfw::mouseCallbackCalled_ = false;
 	}
 }
-
-void        DisplayGlfw::setFrameTime(float frameTime) {
-    frameTime_ = frameTime;
-}
-
 
 eDirection DisplayGlfw::getDirection() const {
     return (direction_);

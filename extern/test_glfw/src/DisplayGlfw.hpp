@@ -60,7 +60,6 @@ public:
 	~DisplayGlfw() override;
 
 	void render() override;
-    void setFrameTime(float);
     void update(float deltaTime = 0.16f);
 	void update() override;
 	bool        exit() const override;
@@ -68,13 +67,17 @@ public:
 	void		drawGrid(Grid< eSprite > const &grid) override;
 	void		setBackground(Grid< eSprite > const &grid) override;
 
+	void setTimers(float currentTimer, float maxTimer);
+
 	DisplayGlfw &operator=(DisplayGlfw const &rhs) = delete;
 	DisplayGlfw(DisplayGlfw const &src) = delete;
 	DisplayGlfw() = delete;
 
 private:
     eDirection          direction_;
-    float				frameTime_;
+	float				currentTimer_;
+	float				maxTimer_;
+	float				refreshMaxTimer_;
     int                 tileSize_;
     Vector2D<int> const winTileSize_;
     Vector2D<int> const winPixelSize_;
@@ -114,7 +117,6 @@ private:
     void                error_(std::string const &s = std::string("Error"));
     void                clean_();
     void                getPath_();
-    void				loadSkyBox_();
 
 	static float				lastX_;
 	static float				lastY_;
