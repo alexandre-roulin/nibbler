@@ -5,6 +5,7 @@
 #include "widget/WidgetLobby.hpp"
 #include "gui/widget/WidgetOption.hpp"
 #include "gui/widget/WidgetConnect.hpp"
+#include "gui/widget/WidgetMassiveButton.hpp"
 #include <vector>
 #include <iostream>
 #include <logger.h>
@@ -95,6 +96,7 @@ void			Core::aState(void)
 	WidgetLobby *lobby = nullptr;
 	WidgetOption *optionSnake = nullptr;
 	WidgetConnect optionConnect(*this);
+	WidgetMassiveButton massiveButton(*this);
 
 
 	lobby = new WidgetLobby(*this, this->univers.getGameNetwork()->getSnakes());
@@ -110,7 +112,7 @@ void			Core::aState(void)
 		ImGui::SFML::Update(this->_win, this->_deltaClock.restart());
 
 		ImGui::SetNextWindowPos(this->positionByPercent(sf::Vector2<unsigned int>(0, 50)));
-		ImGui::SetNextWindowSize(this->positionByPercent(sf::Vector2<unsigned int>(70, 50)));
+		ImGui::SetNextWindowSize(this->positionByPercent(sf::Vector2<unsigned int>(50, 50)));
 		this->_chat.render();
 
 		lobby->render();
@@ -137,12 +139,14 @@ void			Core::aState(void)
 			optionConnect.render();
 		}
 
+		ImGui::SetNextWindowPos(this->positionByPercent(sf::Vector2<unsigned int>(50, 50)));
+		ImGui::SetNextWindowSize(this->positionByPercent(sf::Vector2<unsigned int>(20, 50)));
+		massiveButton.render();
+
 		this->_render();
 	}
 	if (optionSnake)
 		delete optionSnake;
-	if (lobby)
-		delete lobby;
 }
 
 void				Core::addMessageChat(std::string const &msg)
