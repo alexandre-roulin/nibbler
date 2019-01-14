@@ -283,17 +283,17 @@ void ClientTCP::change_name(char const *name) {
 		strncpy(snake_array[id_].name, name, NAME_BUFFER - 1);
 	else
 		strcpy(snake_array[id_].name, name);
-	this->refreshMySnake();
+	refreshMySnake();
 }
 
 void ClientTCP::change_sprite(eSprite snakeSprite) {
 	snake_array[id_].sprite = snakeSprite;
-	this->refreshMySnake();
+	refreshMySnake();
 }
 
 void ClientTCP::change_state_ready(void) {
 	snake_array[id_].isReady = !snake_array[id_].isReady;
-	this->refreshMySnake();
+	refreshMySnake();
 }
 
 void ClientTCP::refreshMySnake(void) {
@@ -326,7 +326,7 @@ Snake const *ClientTCP::getSnakes() const {
 }
 
 Snake	const &ClientTCP::getSnake(void) const {
-	return this->snake_array[this->id_];
+	return snake_array[id_];
 }
 
 void ClientTCP::killSnake(uint16_t id) {

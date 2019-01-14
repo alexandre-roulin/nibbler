@@ -20,19 +20,19 @@ WidgetSnake::~WidgetSnake(void)
 
 void			WidgetSnake::render(void)
 {
-	if (this->_snake.id == -1)
+	if (_snake.id == -1)
 		return ;
-	if (this->_isYourSnake)
-		this->_renderYourSnake();
+	if (_isYourSnake)
+		_renderYourSnake();
 	else
-		this->_renderOtherSnake();
+		_renderOtherSnake();
 }
 
 void			WidgetSnake::_renderOtherSnake(void)
 {
 	unsigned int		sizeTexture;
 
-	ImGui::Begin(std::string(std::to_string(this->_snake.id) + std::string(this->_snake.name)).c_str(), NULL, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoInputs);
+	ImGui::Begin(std::string(std::to_string(_snake.id) + std::string(_snake.name)).c_str(), NULL, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoInputs);
 
 	if (ImGui::GetWindowSize().x < ImGui::GetWindowSize().y - ImGui::GetFrameHeightWithSpacing() * 3)
 		sizeTexture = ImGui::GetWindowSize().x * 0.8;
@@ -41,36 +41,36 @@ void			WidgetSnake::_renderOtherSnake(void)
 
 	ImGui::PushItemWidth(sizeTexture);
 	ImGui::SetCursorPosX(4);
-	ImGui::LabelText(this->_snake.name, "Name : ");
+	ImGui::LabelText(_snake.name, "Name : ");
 
 
 	ImGui::SetCursorPosX((ImGui::GetWindowSize().x - sizeTexture) / 2);
-	ImGui::Image(this->_texture[static_cast<int>(this->_snake.sprite)], sf::Vector2f(sizeTexture, sizeTexture));
+	ImGui::Image(_texture[static_cast<int>(_snake.sprite)], sf::Vector2f(sizeTexture, sizeTexture));
 
 
 	ImGui::SetCursorPosX((ImGui::GetWindowSize().x - sizeTexture) / 2);
-	if (!this->_snake.isReady)
+	if (!_snake.isReady)
 	{
 		Core::beginColor(Core::HUE_RED);
 		if (ImGui::Button("Ready ?", sf::Vector2f(sizeTexture, ImGui::GetFrameHeight())))
-			this->_core.univers.getGameNetwork()->change_state_ready();;
+			_core.univers.getGameNetwork()->change_state_ready();;
 	}
 	else
 	{
 		Core::beginColor(Core::HUE_GREEN);
 		if (ImGui::Button("Ready !", sf::Vector2f(sizeTexture, ImGui::GetFrameHeight())))
-			this->_core.univers.getGameNetwork()->change_state_ready();
+			_core.univers.getGameNetwork()->change_state_ready();
 	}
 	Core::endColor();
 
 	ImGui::SetCursorPosX((ImGui::GetWindowSize().x - sizeTexture) / 2);
-	if (ImGui::BeginCombo("", this->_color[static_cast<int>(this->_snake.sprite)].c_str(), ImGuiComboFlags_NoArrowButton))
+	if (ImGui::BeginCombo("", _color[static_cast<int>(_snake.sprite)].c_str(), ImGuiComboFlags_NoArrowButton))
 	{
 		unsigned int i = 0;
-		for (auto const &e : this->_color)
+		for (auto const &e : _color)
 		{
-			if (ImGui::Selectable(e.c_str(), i == static_cast<int>(this->_snake.sprite)))
-				this->_core.univers.getGameNetwork()->change_sprite( static_cast<eSprite>(i));
+			if (ImGui::Selectable(e.c_str(), i == static_cast<int>(_snake.sprite)))
+				_core.univers.getGameNetwork()->change_sprite( static_cast<eSprite>(i));
 			i++;
 		}
 
@@ -84,7 +84,7 @@ void			WidgetSnake::_renderYourSnake(void)
 {
 	unsigned int		sizeTexture;
 
-	ImGui::Begin(std::string(std::to_string(this->_snake.id) + std::string(this->_snake.name)).c_str(), NULL, ImGuiWindowFlags_NoDecoration);
+	ImGui::Begin(std::string(std::to_string(_snake.id) + std::string(_snake.name)).c_str(), NULL, ImGuiWindowFlags_NoDecoration);
 
 	if (ImGui::GetWindowSize().x < ImGui::GetWindowSize().y - ImGui::GetFrameHeightWithSpacing() * 3)
 		sizeTexture = ImGui::GetWindowSize().x * 0.8;
@@ -95,22 +95,22 @@ void			WidgetSnake::_renderYourSnake(void)
 
 	ImGui::PushItemWidth(sizeTexture);
 	ImGui::SetCursorPosX(4);
-	ImGui::LabelText(this->_snake.name, "Name : ");
+	ImGui::LabelText(_snake.name, "Name : ");
 
 
 	ImGui::SetCursorPosX((ImGui::GetWindowSize().x - sizeTexture) / 2);
-	ImGui::Image(this->_texture[static_cast<int>(this->_snake.sprite) - static_cast<unsigned int>(eSprite::GREEN)], sf::Vector2f(sizeTexture, sizeTexture));
+	ImGui::Image(_texture[static_cast<int>(_snake.sprite) - static_cast<unsigned int>(eSprite::GREEN)], sf::Vector2f(sizeTexture, sizeTexture));
 
 
 	ImGui::SetCursorPosX((ImGui::GetWindowSize().x - sizeTexture) / 2);
 	ImGui::PushID(0);
-	if (!this->_snake.isReady)
+	if (!_snake.isReady)
 	{
 		ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor::HSV(0.0f, 0.7f, 0.7f));
 		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4)ImColor::HSV(0.0f, 0.8f, 0.8f));
 		ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)ImColor::HSV(0.0f, 0.9f, 0.9f));
 		if (ImGui::Button("Ready ?", sf::Vector2f(sizeTexture, ImGui::GetFrameHeight())))
-			this->_core.univers.getGameNetwork()->change_state_ready();
+			_core.univers.getGameNetwork()->change_state_ready();
 	}
 	else
 	{
@@ -118,19 +118,19 @@ void			WidgetSnake::_renderYourSnake(void)
 		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4)ImColor::HSV(0.33f, 0.8f, 0.8f));
 		ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)ImColor::HSV(0.33f, 0.9f, 0.9f));
 		if (ImGui::Button("Ready !", sf::Vector2f(sizeTexture, ImGui::GetFrameHeight())))
-			this->_core.univers.getGameNetwork()->change_state_ready();
+			_core.univers.getGameNetwork()->change_state_ready();
 	}
 	ImGui::PopStyleColor(3);
 	ImGui::PopID();
 
 	ImGui::SetCursorPosX((ImGui::GetWindowSize().x - sizeTexture) / 2);
-	if (ImGui::BeginCombo("", this->_color[static_cast<int>(this->_snake.sprite) - static_cast<unsigned int>(eSprite::GREEN)].c_str(), ImGuiComboFlags_None))
+	if (ImGui::BeginCombo("", _color[static_cast<int>(_snake.sprite) - static_cast<unsigned int>(eSprite::GREEN)].c_str(), ImGuiComboFlags_None))
 	{
 		unsigned int i = static_cast<unsigned int>(eSprite::GREEN);
-		for (auto const &e : this->_color)
+		for (auto const &e : _color)
 		{
-			if (ImGui::Selectable(e.c_str(), i == static_cast<int>(this->_snake.sprite)))
-				this->_core.univers.getGameNetwork()->change_sprite(static_cast<eSprite>(i));
+			if (ImGui::Selectable(e.c_str(), i == static_cast<int>(_snake.sprite)))
+				_core.univers.getGameNetwork()->change_sprite(static_cast<eSprite>(i));
 			i++;
 		}
 
