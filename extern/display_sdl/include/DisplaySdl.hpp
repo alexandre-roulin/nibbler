@@ -29,9 +29,7 @@ public:
 		std::string _error;
 	};
 
-	DisplaySdl(char const *tileset,
-			   int tile,
-			   int width,
+	DisplaySdl(int width,
 			   int height,
 			   char const *windowName);
 
@@ -42,22 +40,9 @@ public:
 	void render(void);
 
 	void update(void);
+	void drawGrid(Grid< eSprite > const &grid);
 
-	void drawTileGrid(int indexTile, int indexWidth, int indexHeight);
-
-	void drawTileGrid(int indexWidthTile, int indexHeightTile, int indexWidth,
-					  int indexHeight);
-
-	void
-	drawTilePixel(int indexTile, int indexWidthPixel, int indexHeightPixel);
-
-	void
-	drawTilePixel(int indexWidthTile, int indexHeightTile, int indexWidthPixel,
-				  int indexHeightPixel);
-
-	void drawGrid(Grid<int> const &grid);
-
-	void setBackground(Grid<int> const &grid);
+	void setBackground(Grid< eSprite > const &grid);
 
 	eDirection getDirection(void) const;
 
@@ -77,8 +62,10 @@ private:
 	int _tilesetWidth;
 	SDL_Event _ev;
 
-	void _drawGrid(SDL_Surface *, Grid<int> const &grid);
 
+	void _drawGrid(SDL_Surface *, Grid< eSprite > const &grid);
+
+	void _drawTileGrid(int indexTile, int indexWidth, int indexHeight);
 	void _drawTileGrid(SDL_Surface *, int indexWidthTile, int indexHeightTile,
 					   int indexWidth, int indexHeight);
 
@@ -103,9 +90,7 @@ private:
 };
 
 extern "C" {
-IDisplay *newDisplay(char const *tileset,
-					 int tileSize,
-					 int width,
+IDisplay *newDisplay(int width,
 					 int height,
 					 char const *windowName);
 void deleteDisplay(IDisplay *display);

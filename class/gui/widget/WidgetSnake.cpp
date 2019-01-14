@@ -99,7 +99,7 @@ void			WidgetSnake::_renderYourSnake(void)
 
 
 	ImGui::SetCursorPosX((ImGui::GetWindowSize().x - sizeTexture) / 2);
-	ImGui::Image(this->_texture[static_cast<int>(this->_snake.sprite)], sf::Vector2f(sizeTexture, sizeTexture));
+	ImGui::Image(this->_texture[static_cast<int>(this->_snake.sprite) - static_cast<unsigned int>(eSprite::GREEN)], sf::Vector2f(sizeTexture, sizeTexture));
 
 
 	ImGui::SetCursorPosX((ImGui::GetWindowSize().x - sizeTexture) / 2);
@@ -124,9 +124,9 @@ void			WidgetSnake::_renderYourSnake(void)
 	ImGui::PopID();
 
 	ImGui::SetCursorPosX((ImGui::GetWindowSize().x - sizeTexture) / 2);
-	if (ImGui::BeginCombo("", this->_color[static_cast<int>(this->_snake.sprite)].c_str(), ImGuiComboFlags_None))
+	if (ImGui::BeginCombo("", this->_color[static_cast<int>(this->_snake.sprite) - static_cast<unsigned int>(eSprite::GREEN)].c_str(), ImGuiComboFlags_None))
 	{
-		unsigned int i = 0;
+		unsigned int i = static_cast<unsigned int>(eSprite::GREEN);
 		for (auto const &e : this->_color)
 		{
 			if (ImGui::Selectable(e.c_str(), i == static_cast<int>(this->_snake.sprite)))

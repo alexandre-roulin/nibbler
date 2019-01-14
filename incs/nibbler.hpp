@@ -2,6 +2,7 @@
 
 #include <string>
 #include <ostream>
+#include "IDisplay.hpp"
 
 #define MAX_SNAKE 8
 #define MAX_COLOR 8
@@ -34,138 +35,12 @@ enum class eSound {
 	DEATH = 4
 };
 
-enum eDirection {
-	NORTH = 1,                            // 0000 0001
-	SOUTH = 3,                            // 0000 0011
-	EAST = 4,                            // 0000 0100
-	WEST = 12                            // 0000 1100
-};
 
 enum ePriority {
 	NO_PRIORITY,
 	MINOR_PRIORITY,
 	SPECIFIC_LAST,
 };
-
-enum class eSprite {
-	GREEN = 0,
-	BLUE = 1,
-	PURPLE = 2,
-	PINK = 3,
-	GREY = 4,
-	YELLOW = 5,
-	ORANGE = 6,
-	RED = 7,
-
-	MASK_COLOR = 0xFF,
-
-	HEAD = (1 << 8),
-	BODY = (1 << 9),
-	TAIL = (1 << 10),
-
-	MASK_BODY = HEAD | BODY | TAIL,
-
-	NORTH = (1 << 11),
-	SOUTH = (1 << 12),
-	EAST = (1 << 13),
-	WEST = (1 << 14),
-
-	MASK_DIRECTION = NORTH | SOUTH | EAST | WEST,
-
-	FROM_NORTH = (1 << 15),
-	FROM_SOUTH = (1 << 16),
-	FROM_EAST = (1 << 17),
-	FROM_WEST = (1 << 18),
-
-	MASK_FROM = FROM_NORTH | FROM_SOUTH | FROM_EAST | FROM_WEST,
-
-	TO_NORTH = (1 << 19),
-	TO_SOUTH = (1 << 20),
-	TO_EAST = (1 << 21),
-	TO_WEST = (1 << 22),
-
-	MASK_TO = TO_NORTH | TO_SOUTH | TO_EAST | TO_WEST,
-
-	BITWISE_TO = 8,
-	BITWISE_FROM = 4,
-
-
-	WALL = (1 << 23),
-	FOOD = (1 << 24)
-};
-
-inline std::ostream &operator<<(std::ostream &os, eSprite &sprite) {
-	switch (sprite) {
-		case eSprite ::GREEN :
-			os << "GREEN";
-			break;
-		case eSprite ::BLUE :
-			os << "BLUE";
-			break;
-		case eSprite ::PURPLE :
-			os << "PURPLE";
-			break;
-		case eSprite ::PINK :
-			os << "PINK";
-			break;
-		case eSprite ::GREY :
-			os << "GREY";
-			break;
-		case eSprite ::YELLOW :
-			os << "YELLOW";
-			break;
-		case eSprite ::ORANGE :
-			os << "ORANGE";
-			break;
-		case eSprite ::RED :
-			os << "RED";
-			break;
-		default :
-			os << "Hello";
-			break;
-	}
-	return os;
-}
-
-inline eSprite operator|(eSprite const lhs, eSprite const rhs) {
-	return static_cast<eSprite> (static_cast<int>(lhs) | static_cast<int>(rhs));
-}
-
-inline eSprite const &operator|=(eSprite &lhs, eSprite const &rhs) {
-	lhs = static_cast<eSprite> (static_cast<int>(lhs) | static_cast<int>(rhs));
-	return (lhs);
-}
-
-inline eSprite operator&(eSprite const lhs, eSprite const rhs) {
-	return static_cast<eSprite> (static_cast<int>(lhs) & static_cast<int>(rhs));
-}
-
-inline eSprite operator&(int const lhs, eSprite const rhs) {
-	return static_cast<eSprite> (lhs & static_cast<int>(rhs));
-}
-
-inline eSprite operator&(eSprite const lhs, int const rhs) {
-	return static_cast<eSprite> (static_cast<int>(lhs) & rhs);
-}
-
-inline eSprite operator^(int const lhs, eSprite const rhs) {
-	return static_cast<eSprite> (lhs ^ static_cast<int>(rhs));
-}
-
-inline eSprite operator^(eSprite const lhs, int const rhs) {
-	return static_cast<eSprite> (static_cast<int>(lhs) ^ rhs);
-}
-
-inline eSprite operator<<(eSprite const lhs, eSprite const rhs) {
-	return static_cast<eSprite> (static_cast<int>(lhs)
-			<< static_cast<int>(rhs));
-}
-
-inline eSprite operator>>(eSprite const lhs, eSprite const rhs) {
-	return static_cast<eSprite> (static_cast<int>(lhs)
-			>> static_cast<int>(rhs));
-}
-
 
 struct Snake {
 	Snake() : sprite(eSprite::BLUE), isReady(false), id(-1), isUpdate(false),
@@ -249,19 +124,19 @@ struct Snake {
 
 //ADD SIZE IN ClientTCP::size_header
 
-enum eHeader {
-	CHAT,                //0
-	FOOD,                //1
-	ID,                    //2
-	OPEN_GAME,            //3
-	START_GAME,            //4
-	SNAKE,                //5
-	SNAKE_ARRAY,        //6
-	HEADER,                //7
-	INPUT,                //8
-	RESIZE_MAP,            //9
-	REMOVE_SNAKE,        //10
-	POCK,                //11
-	BORDERLESS,            //12
-	DISCONNECT            //13
+enum class eHeader {
+	CHAT,				//0
+	FOOD,				//1
+	ID,					//2
+	OPEN_GAME,			//3
+	START_GAME,			//4
+	SNAKE,				//5
+	SNAKE_ARRAY,		//6
+	HEADER,				//7
+	INPUT,				//8
+	RESIZE_MAP,			//9
+	REMOVE_SNAKE,		//10
+	POCK,				//11
+	BORDERLESS,			//12
+	DISCONNECT          //13
 };

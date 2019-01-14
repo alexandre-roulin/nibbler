@@ -41,11 +41,10 @@ void CollisionSystem::checkCollision(
 
 				ClientTCP::FoodInfo foodInfo;
 				foodInfo.positionComponent = PositionComponent(
-						getWorld().grid.getRandomSlot(FREE_SLOT));
+						getWorld().grid.getRandomSlot(eSprite::NONE));
 				foodInfo.fromSnake = false;
-
 				getWorld().getUnivers().getGameNetwork()->write_socket(
-						ClientTCP::add_prefix(FOOD, &foodInfo));
+						ClientTCP::add_prefix(eHeader::FOOD, &foodInfo));
 			}
 		} else if (tagId == eTag::FOOD_TAG_FROM_SNAKE) {
 			log_info("FOOD_TAG_FROM_SNAKE::FoodCollision");
@@ -77,7 +76,7 @@ void CollisionSystem::checkCollision(
 				foodInfo.fromSnake = true;
 				if (snake.hasComponent<PositionComponent>())
 					getWorld().getUnivers().getGameNetwork()->write_socket(
-							ClientTCP::add_prefix(FOOD, &foodInfo));
+							ClientTCP::add_prefix(eHeader::FOOD, &foodInfo));
 			}
 			if (entityHead.getGroupIdByEntity() ==
 						getWorld().getUnivers().getGameNetwork()->getId() ||

@@ -137,7 +137,7 @@ void nibbler(Univers &univers) {
 				if (univers.isServer()) {
 					univers.getGameNetwork()
 							->write_socket(
-									ClientTCP::add_prefix(START_GAME,
+									ClientTCP::add_prefix(eHeader::START_GAME,
 														  &startInfo));
 				} else {
 					std::cout << "I launch " << std::endl;

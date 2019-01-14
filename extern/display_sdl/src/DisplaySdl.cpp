@@ -1,13 +1,12 @@
 #include "DisplaySdl.hpp"
 #include "../include/DisplaySdl.hpp"
+#include "Display2D.hpp"
 
-IDisplay			*newDisplay(char const *tileset,
-						int tileSize,
-						int width,
+IDisplay			*newDisplay(int width,
 						int height,
 						char const *windowName)
 {
-	return (new DisplaySdl(tileset, tileSize, width, height, windowName));
+	return (new DisplaySdl(width, height, windowName));
 }
 
 void				deleteDisplay(IDisplay *display)
@@ -15,16 +14,14 @@ void				deleteDisplay(IDisplay *display)
 	delete display;
 }
 
-DisplaySdl::DisplaySdl(char const *tileset,
-						int tileSize,
-						int width,
+DisplaySdl::DisplaySdl(int width,
 						int height,
 						char const *windowName) :
     _exit(false),
 	_direction(NORTH),
-	_tileSize(tileSize),
+	_tileSize(DISPLAY_DEFAULT_TILE_SIZE),
 	_winTileSize(Vector2D<int>(width, height)),
-    _winPixelSize(Vector2D<int>(width * tileSize, height * tileSize)),
+    _winPixelSize(Vector2D<int>(width * _tileSize, height * _tileSize)),
     _win(NULL),
     _rendererSurface(NULL),
     _rendererTexture(NULL),
@@ -33,7 +30,11 @@ DisplaySdl::DisplaySdl(char const *tileset,
     if (SDL_Init(SDL_INIT_VIDEO) < 0 || IMG_Init(IMG_INIT_PNG) < 0)
         this->_error();
 
-	if (!(this->_tileset = IMG_Load(tileset)))
+	std::string pathFile = __FILE__;
+	std::string pathRoot = pathFile.substr(0, pathFile.rfind(DISPLAY_SLASH));
+	pathRoot = pathFile.substr(0, pathRoot.rfind(DISPLAY_SLASH));
+
+	if (!(this->_tileset = IMG_Load((pathRoot + DISPLAY_SLASH + "snake_tileset.png").c_str())))
 		this->_error();
 	this->_tilesetWidth = (this->_tileset->w / this->_tileSize);
     if (!(this->_win = SDL_CreateWindow(windowName, SDL_WINDOWPOS_CENTERED,
@@ -123,7 +124,7 @@ SDL_Rect	DisplaySdl::_getRectTilePixel(int width, int height)
 **####################ID_TILE
 */
 
-void			DisplaySdl::drawTileGrid(int indexTile,
+void			DisplaySdl::_drawTileGrid(int indexTile,
 										int indexWidthGrid, int indexHeightGrid)
 {
 	SDL_Rect rectToDraw = this->_getRectTile(indexWidthGrid, indexHeightGrid);
@@ -138,59 +139,27 @@ void			DisplaySdl::_drawTileGrid(SDL_Surface *surface,
 	SDL_Rect rectTilset = this->_getRectTile(indexTile % this->_tilesetWidth, indexTile / this->_tilesetWidth);
 	SDL_BlitSurface(this->_tileset, &rectTilset, surface, &rectToDraw);
 }
-void			DisplaySdl::drawTilePixel(int indexTile, int indexWidthPixel, int indexHeightPixel)
-{
-	SDL_Rect rectToDraw = this->_getRectTilePixel(indexWidthPixel, indexHeightPixel);
-	SDL_Rect rectTilset = this->_getRectTile(indexTile % this->_tilesetWidth, indexTile / this->_tilesetWidth);
-	SDL_BlitSurface(this->_tileset, &rectTilset, this->_rendererSurface, &rectToDraw);
-}
-
-/*
-**####################INDEX_TILE X Y
-*/
-void			DisplaySdl::drawTileGrid(int indexWidthTile, int indexHeightTile,
-										int indexWidthGrid, int indexHeightGrid)
-{
-	SDL_Rect rectToDraw = this->_getRectTile(indexWidthGrid, indexHeightGrid);
-	SDL_Rect rectTilset = this->_getRectTile(indexWidthTile, indexHeightTile);
-	SDL_BlitSurface(this->_tileset, &rectTilset, this->_rendererSurface, &rectToDraw);
-}
-void			DisplaySdl::_drawTileGrid(SDL_Surface *surface,
-										int indexWidthTile, int indexHeightTile,
-										int indexWidthGrid, int indexHeightGrid)
-{
-	SDL_Rect rectToDraw = this->_getRectTile(indexWidthGrid, indexHeightGrid);
-	SDL_Rect rectTilset = this->_getRectTile(indexWidthTile, indexHeightTile);
-	SDL_BlitSurface(this->_tileset, &rectTilset, surface, &rectToDraw);
-}
-void			DisplaySdl::drawTilePixel(int indexWidthTile, int indexHeightTile,
-											int indexWidthPixel, int indexHeightPixel)
-{
-	SDL_Rect rectToDraw = this->_getRectTilePixel(indexWidthPixel, indexHeightPixel);
-	SDL_Rect rectTilset = this->_getRectTile(indexWidthTile, indexHeightTile);
-	SDL_BlitSurface(this->_tileset, &rectTilset, this->_rendererSurface, &rectToDraw);
-}
 
 /*
 **####################DRAW_GRID
 */
 
-void			DisplaySdl::drawGrid(Grid<int> const &grid)
+void			DisplaySdl::drawGrid(Grid< eSprite > const &grid)
 {
 	for (int y = 0; y < this->_winTileSize.getY(); ++y)
 		for (int x = 0; x < this->_winTileSize.getX(); ++x)
-			if (grid(x, y) != -1)
-				this->drawTileGrid(grid(x, y), x, y);
+			if (grid(x, y) != eSprite::NONE)
+				this->_drawTileGrid(Display2D::getSpriteSnake(grid(x, y)), x, y);
 }
-void			DisplaySdl::_drawGrid(SDL_Surface *surface, Grid<int> const &grid)
+void			DisplaySdl::_drawGrid(SDL_Surface *surface, Grid< eSprite > const &grid)
 {
 	for (int y = 0; y < this->_winTileSize.getY(); ++y)
 		for (int x = 0; x < this->_winTileSize.getX(); ++x)
-			if (grid(x, y) != -1)
-				this->_drawTileGrid(surface, grid(x, y), x, y);
+			if (grid(x, y) != eSprite::NONE)
+				this->_drawTileGrid(surface, Display2D::getSpriteSnake(grid(x, y)), x, y);
 }
 
-void		DisplaySdl::setBackground(Grid<int> const &grid)
+void		DisplaySdl::setBackground(Grid< eSprite > const &grid)
 {
 	this->_drawGrid(this->_background, grid);
 }

@@ -4,7 +4,7 @@
 namespace KINU {
 
 	World::World(Univers &univers) : grid(univers.getMapSize()), univers_(univers) {
-		grid.fill(FREE_SLOT);
+		grid.fill(eSprite::NONE);
 		entitiesManager = std::make_unique<EntitiesManager>(*this);
 		systemsManager = std::make_unique<SystemsManager>(*this);
 		eventsManager = std::make_unique<EventsManager>(*this);

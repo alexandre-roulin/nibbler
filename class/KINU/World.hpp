@@ -34,7 +34,7 @@ namespace KINU {
 
 		void destroyEntity(Entity e);
 
-		Grid<int> grid;
+		Grid< eSprite > grid;
 	private:
 		// vector of entities that are awaiting creation
 		std::vector<Entity> createdEntities;

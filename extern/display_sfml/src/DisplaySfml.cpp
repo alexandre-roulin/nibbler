@@ -1,34 +1,35 @@
 #include <nibbler.hpp>
 #include "DisplaySfml.hpp"
+#include "Display2D.hpp"
 
-IDisplay *newDisplay(char const *tileset,
-					 int tileSize,
-					 int width,
+IDisplay *newDisplay(int width,
 					 int height,
 					 char const *windowName) {
-	return (new DisplaySfml(tileset, tileSize, width, height, windowName));
+	return (new DisplaySfml(width, height, windowName));
 }
 
 void deleteDisplay(IDisplay *display) {
 	delete display;
 }
 
-DisplaySfml::DisplaySfml(char const *tileset,
-						 int tileSize,
-						 int width,
+DisplaySfml::DisplaySfml(int width,
 						 int height,
 						 char const *windowName) :
 		_exit(false),
 		_direction(NORTH),
-		_tileSize(tileSize),
+		_tileSize(DISPLAY_DEFAULT_TILE_SIZE),
 		_winTileSize(Vector2D<int>(width, height)),
-		_winPixelSize(Vector2D<int>(width * tileSize, height * tileSize)),
+		_winPixelSize(Vector2D<int>(width * _tileSize, height * _tileSize)),
 		_win(sf::VideoMode(this->_winPixelSize.getX(),
 						   this->_winPixelSize.getY()),
 			 windowName) {
 	this->_win.setFramerateLimit(60);
 
-	if (!this->_tileset.loadFromFile(tileset))
+	std::string pathFile = __FILE__;
+	std::string pathRoot = pathFile.substr(0, pathFile.rfind(DISPLAY_SLASH));
+	pathRoot = pathFile.substr(0, pathRoot.rfind(DISPLAY_SLASH));
+
+	if (!this->_tileset.loadFromFile(pathRoot + DISPLAY_SLASH + DISPLAY_DEFAULT_TILESET_PATH))
 		this->_error("Tileset cannot be load");
 	if (!this->_textureBackground.create(this->_winPixelSize.getX(),
 										 this->_winPixelSize.getY()))
@@ -82,7 +83,7 @@ DisplaySfml::_getQuadTilePixel(int indexWidthTile, int indexHeightTile,
 **####################ID_TILE
 */
 
-void DisplaySfml::drawTileGrid(int indexTile, int indexWidthGrid,
+void DisplaySfml::_drawTileGrid(int indexTile, int indexWidthGrid,
 							   int indexHeightGrid) {
 	this->_win.draw(this->_getQuadTilePixel(indexTile % this->_tilesetWidth,
 											indexTile / this->_tilesetWidth,
@@ -100,27 +101,9 @@ void DisplaySfml::_drawTileGrid(sf::RenderTarget &target, int indexTile,
 				&this->_tileset);
 }
 
-void DisplaySfml::drawTilePixel(int indexTile, int indexWidthPixel,
-								int indexHeightPixel) {
-	this->_win.draw(this->_getQuadTilePixel(indexTile % this->_tilesetWidth,
-											indexTile / this->_tilesetWidth,
-											indexWidthPixel,
-											indexHeightPixel),
-					&this->_tileset);
-}
-
 /*
 **####################INDEX_TILE X Y
 */
-
-void DisplaySfml::drawTileGrid(int indexWidthTile, int indexHeightTile,
-							   int indexWidthGrid, int indexHeightGrid) {
-	this->_win.draw(this->_getQuadTilePixel(indexWidthTile,
-											indexHeightTile,
-											indexWidthGrid * this->_tileSize,
-											indexHeightGrid * this->_tileSize),
-					&this->_tileset);
-}
 
 void DisplaySfml::_drawTileGrid(sf::RenderTarget &target,
 								int indexWidthTile, int indexHeightTile,
@@ -132,34 +115,25 @@ void DisplaySfml::_drawTileGrid(sf::RenderTarget &target,
 				&this->_tileset);
 }
 
-void DisplaySfml::drawTilePixel(int indexWidthTile, int indexHeightTile,
-								int indexWidthPixel, int indexHeightPixel) {
-	this->_win.draw(this->_getQuadTilePixel(indexWidthTile,
-											indexHeightTile,
-											indexWidthPixel,
-											indexHeightPixel),
-					&this->_tileset);
-}
-
 /*
 **####################DRAW_GRID
 */
 
-void DisplaySfml::drawGrid(Grid<int> const &grid) {
+void DisplaySfml::drawGrid(Grid< eSprite > const &grid) {
 	for (int y = 0; y < this->_winTileSize.getY(); ++y)
 		for (int x = 0; x < this->_winTileSize.getX(); ++x)
-			if (grid(x, y) != -1)
-				this->drawTileGrid(grid(x, y), x, y);
+			if (grid(x, y) != eSprite::NONE)
+				this->_drawTileGrid(Display2D::getSpriteSnake(grid(x, y)), x, y);
 }
 
-void DisplaySfml::_drawGrid(sf::RenderTarget &target, Grid<int> const &grid) {
+void DisplaySfml::_drawGrid(sf::RenderTarget &target, Grid< eSprite > const &grid) {
 	for (int y = 0; y < this->_winTileSize.getY(); ++y)
 		for (int x = 0; x < this->_winTileSize.getX(); ++x)
-			if (grid(x, y) != -1)
-				this->_drawTileGrid(target, grid(x, y), x, y);
+			if (grid(x, y) != eSprite::NONE)
+				this->_drawTileGrid(target, Display2D::getSpriteSnake(grid(x, y)), x, y);
 }
 
-void DisplaySfml::setBackground(Grid<int> const &grid) {
+void DisplaySfml::setBackground(Grid< eSprite > const &grid) {
 	this->_drawGrid(this->_textureBackground, grid);
 	this->_textureBackground.display();
 	this->_spriteBackground = sf::Sprite(this->_textureBackground.getTexture());

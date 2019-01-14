@@ -1,4 +1,6 @@
 
+SFML
+
 extern/display_sdl/Makefile
 ./Makefile
 extern/display_sfml/Makefile
@@ -31,7 +33,6 @@ cmake-build-debug
 *.slo
 *.lo
 *.o
-*.obj
 
 # Precompiled Headers
 *.gch
@@ -56,3 +57,24 @@ cmake-build-debug
 *.exe
 *.out
 *.app
+.idea/.name
+.idea/encodings.xml
+extern/SFML/.editorconfig
+extern/SFML/.gitattributes
+extern/SFML/.github/
+extern/SFML/.travis.yml
+extern/SFML/CMakeLists.txt
+extern/SFML/CONTRIBUTING.md
+extern/SFML/appveyor.yml
+extern/SFML/changelog.md
+extern/SFML/cmake/
+extern/SFML/doc/
+extern/SFML/examples/
+extern/SFML/extlibs/Android.mk
+extern/SFML/extlibs/headers/
+extern/SFML/extlibs/libs-osx/
+extern/SFML/include/
+extern/SFML/license.md
+extern/SFML/readme.md
+extern/SFML/src/
+extern/SFML/tools/

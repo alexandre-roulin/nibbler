@@ -7,6 +7,19 @@
 [submodule "cmake/boost-cmake"]
 	path = cmake/boost-cmake
 	url = https://github.com/Orphis/boost-cmake
-[submodule "extern/SFML"]
-	path = extern/SFML
-	url = https://github.com/SFML/SFML
+[submodule "extern/test_glfw/Glitter/Vendor/assimp"]
+	path = extern/test_glfw/Glitter/Vendor/assimp
+	url = https://github.com/assimp/assimp.git
+[submodule "extern/test_glfw/Glitter/Vendor/glad"]
+	path = extern/test_glfw/Glitter/Vendor/glad
+	url = https://github.com/Dav1dde/glad.git
+	branch = c
+[submodule "extern/test_glfw/Glitter/Vendor/glm"]
+	path = extern/test_glfw/Glitter/Vendor/glm
+	url = https://github.com/g-truc/glm.git
+[submodule "extern/test_glfw/Glitter/Vendor/glfw"]
+	path = extern/test_glfw/Glitter/Vendor/glfw
+	url = https://github.com/glfw/glfw.git
+[submodule "extern/test_glfw/Glitter/Vendor/stb"]
+	path = extern/test_glfw/Glitter/Vendor/stb
+	url = https://github.com/nothings/stb.git

@@ -4,8 +4,7 @@
 #include <iostream>
 #include <iomanip>
 #include <logger.h>
-
-#define FREE_SLOT (15 * 8 + 3)
+#include "IDisplay.hpp"
 
 template<typename T>
 class Grid {
@@ -29,8 +28,6 @@ public:
 
 	void fill(T const &fill);
 
-	void clear(void);
-
 	size_t size() const;
 
 	std::pair<size_t, size_t> getRandomSlot(T value);
@@ -39,13 +36,13 @@ public:
 
 	int countNearSlot(int x, int y, T value, bool checkDiagonal = false) const;
 
-	T *operator[](size_t row);
+	T *operator[](size_t y);
 
-	T &operator()(size_t row, size_t column);
+	T &operator()(size_t x, size_t y);
 
-	T *operator[](size_t row) const;
+	T *operator[](size_t y) const;
 
-	T &operator()(size_t row, size_t column) const;
+	T &operator()(size_t x, size_t y) const;
 
 private:
 
@@ -131,29 +128,23 @@ void Grid<T>::fill(T const &fill) {
 }
 
 template<typename T>
-void Grid<T>::clear(void) {
-	for (size_t i = 0; i < size_; i++)
-		this->_grid[i] = FREE_SLOT;
+T *Grid<T>::operator[](size_t y) {
+	return (this->_grid + (y * this->_columns));
 }
 
 template<typename T>
-T *Grid<T>::operator[](size_t row) {
-	return (this->_grid + (row * this->_columns));
+T &Grid<T>::operator()(size_t x, size_t y) {
+	return (this->_grid[y * this->_columns + x]);
 }
 
 template<typename T>
-T &Grid<T>::operator()(size_t column, size_t row) {
-	return (this->_grid[row * this->_columns + column]);
+T *Grid<T>::operator[](size_t y) const {
+	return (this->_grid + (y * this->_columns));
 }
 
 template<typename T>
-T *Grid<T>::operator[](size_t row) const {
-	return (this->_grid + (row * this->_columns));
-}
-
-template<typename T>
-T &Grid<T>::operator()(size_t column, size_t row) const {
-	return (this->_grid[row * this->_columns + column]);
+T &Grid<T>::operator()(size_t x, size_t y) const {
+	return (this->_grid[y * this->_columns + x]);
 }
 
 template<typename T>

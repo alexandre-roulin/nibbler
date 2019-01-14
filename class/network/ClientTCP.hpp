@@ -157,6 +157,6 @@ template<typename T>
 std::string ClientTCP::add_prefix(eHeader header, T *element) {
 	std::string message;
 	message.append(reinterpret_cast<char *>(&header), sizeof(eHeader));
-	message.append(reinterpret_cast<char *>(element), size_header[header]);
+	message.append(reinterpret_cast<char *>(element), ClientTCP::size_header[static_cast<int>(header)]);
 	return message;
 }

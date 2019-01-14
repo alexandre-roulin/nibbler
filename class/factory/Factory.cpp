@@ -19,7 +19,7 @@ Factory::Factory(Univers &univers)
 void Factory::create_all_snake(Snake snake_array[MAX_SNAKE], int16_t nu) {
 
 	log_info("Create %d snake(s)", nu);
-	univers_.getWorld_().grid.fill(FREE_SLOT);
+	univers_.getWorld_().grid.fill(eSprite::NONE);
 
 	for (int index = 0; index < nu; ++index) {
 		create_snake(snake_array[index], nu);

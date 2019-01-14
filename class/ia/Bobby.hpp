@@ -18,9 +18,9 @@ private:
 	Univers &univers_;
 	unsigned int mapSize;
 	unsigned int baseIndex;
-	Grid<int> const * grid_;
+	Grid< eSprite > const * grid_;
 public:
-	void setGrid_(const Grid<int> *grid_);
+	void setGrid_(const Grid< eSprite > *grid_);
 
 	uint16_t getId() const;
 private:

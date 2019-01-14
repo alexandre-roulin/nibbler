@@ -32,7 +32,7 @@ void Bobby::sendDirection() {
 	inputInfo.dir = direction;
 
 	if (univers_.getWorld_().getEntitiesManager().hasEntityByTagId(eTag::HEAD_TAG + inputInfo.id))
-		clientTCP_->write_socket(ClientTCP::add_prefix(INPUT, &inputInfo));
+		clientTCP_->write_socket(ClientTCP::add_prefix(eHeader::INPUT, &inputInfo));
 	mutex.unlock();
 
 }
@@ -48,7 +48,7 @@ void Bobby::findDirection(AStar::Vec2i vecSource, AStar::CoordinateList list) {
 
 			list[index].x % univers_.getMapSize(),
 			list[index].y % univers_.getMapSize(),
-			static_cast<int>(eSprite::HEAD),
+			static_cast< eSprite >(eSprite::HEAD),
 			false
 
 	) > 2) {
@@ -286,7 +286,7 @@ void Bobby::addCollision() {
 		for (int base_x = 0; base_x < baseIndex; ++base_x) {
 			for (int index_y = 0; index_y < mapSize; ++index_y) {
 				for (int index_x = 0; index_x < mapSize; ++index_x) {
-					if ((*grid_)(index_x, index_y) != FREE_SLOT) {
+					if ((*grid_)(index_x, index_y) != eSprite::NONE) {
 						generator.addCollision(
 								AStar::Vec2i(
 										index_x + base_x * mapSize,
@@ -300,7 +300,7 @@ void Bobby::addCollision() {
 //	grid_->print();
 }
 
-void Bobby::setGrid_(const Grid<int> *grid_) {
+void Bobby::setGrid_(const Grid< eSprite > *grid_) {
 	Bobby::grid_ = grid_;
 }
 

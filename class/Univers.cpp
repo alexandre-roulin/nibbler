@@ -66,7 +66,7 @@ bool Univers::load_external_display_library(std::string const &title,
 		return (dlError("dlopen"));
 
 	if (!(newDisplay = reinterpret_cast<IDisplay *(*)(
-			const char *, int, int, int, const char *
+			int, int, const char *
 	)>(dlsym(dlHandleDisplay, "newDisplay"))))
 		return (dlError("dlsym"));
 
@@ -75,8 +75,7 @@ bool Univers::load_external_display_library(std::string const &title,
 	)>(dlsym(dlHandleDisplay, "deleteDisplay"))))
 		return (dlError("dlsym"));
 
-	if (!(display = newDisplay(PATH_TILESET, DEFAULT_SIZE_SPRITE, mapSize,
-							   mapSize, title.c_str())))
+	if (!(display = newDisplay(mapSize, mapSize, title.c_str())))
 		return (false);
 
 	if (world_ != nullptr)
@@ -125,8 +124,8 @@ void Univers::unload_external_library() {
 
 void Univers::new_game() {
 	world_ = std::make_unique<KINU::World>(*this);
-	world_->grid = Grid<int>(mapSize);
-	world_->grid.fill(SPRITE_GROUND);
+	world_->grid = Grid< eSprite >(mapSize);
+	world_->grid.fill(eSprite::GROUND);
 	world_->setDisplay(display);
 	display->setBackground(world_->grid);
 	if (isServer()) {
@@ -136,7 +135,7 @@ void Univers::new_game() {
 		}
 	}
 	ClientTCP::StartInfo startInfo;
-	clientTCP_->write_socket(ClientTCP::add_prefix(START_GAME, &startInfo));
+	clientTCP_->write_socket(ClientTCP::add_prefix(eHeader::START_GAME, &startInfo));
 	loop();
 }
 
@@ -155,7 +154,7 @@ void Univers::manage_input() {
 	assert(world_ != nullptr);
 	if (world_->getEntitiesManager().hasEntityByTagId(
 			eTag::HEAD_TAG + inputInfo.id)) {
-		clientTCP_->write_socket(ClientTCP::add_prefix(INPUT, &inputInfo));
+		clientTCP_->write_socket(ClientTCP::add_prefix(eHeader::INPUT, &inputInfo));
 	}
 }
 
@@ -194,7 +193,7 @@ void Univers::loop() {
 			boost::bind(&boost::asio::io_service::run, &io_loop));
 	thread.detach();
 
-	world_->grid.clear();
+	world_->grid.fill(eSprite::NONE);
 	playMusic("./ressource/sound/zelda.ogg");
 
 	while ((display == nullptr || !display->exit()) &&
@@ -397,8 +396,6 @@ bool Univers::isIASnake(uint16_t client_id) const {
 	}
 	return false;
 }
-
-
 
 
 
