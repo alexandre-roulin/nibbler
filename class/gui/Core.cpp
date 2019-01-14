@@ -93,13 +93,13 @@ void			callbackExit(void *ptr)
 void			Core::aState(void)
 {
 	WidgetExit wexit(*this, &callbackExit, this);
-	WidgetLobby lobby(*this, univers.getGameNetwork()->getSnakes());
+	WidgetLobby lobby(*this);
 	WidgetOption *optionSnake = nullptr;
 	WidgetConnect optionConnect(*this);
 	WidgetMassiveButton massiveButton(*this);
 
 
-	while (_win.isOpen() && !univers.getGameNetwork()->isOpenGame())
+	while (_win.isOpen() && univers.getGameNetwork() && !univers.getGameNetwork()->isOpenGame())
 	{
 		sf::Event event;
 		while (_win.pollEvent(event))
@@ -119,7 +119,7 @@ void			Core::aState(void)
 		ImGui::SetNextWindowPos(positionByPercent(sf::Vector2<unsigned int>(95, 0)), 0, sf::Vector2f(0.5f, 0.5f));
 		wexit.render();
 
-		if (univers.getGameNetwork()->isConnect()) {
+		if (univers.getGameNetwork() && univers.getGameNetwork()->isConnect()) {
 			if (!optionSnake)
 				optionSnake = new WidgetOption(*this);
 			ImGui::SetNextWindowPos(positionByPercent(sf::Vector2<unsigned int>(70, 50)));

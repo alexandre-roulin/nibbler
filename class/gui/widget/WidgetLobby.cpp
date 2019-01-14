@@ -2,7 +2,7 @@
 #include <Univers.hpp>
 #include <gui/Core.hpp>
 
-WidgetLobby::WidgetLobby(Core &core, Snake const *snakes) :
+WidgetLobby::WidgetLobby(Core &core) :
 AWidget(core)
 {
 	_reload();

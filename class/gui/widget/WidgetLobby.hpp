@@ -10,7 +10,7 @@ class Core;
 
 class WidgetLobby : public AWidget {
 public:
-	WidgetLobby(Core &core, Snake const *snakes);
+	WidgetLobby(Core &core);
 	~WidgetLobby(void);
 
 	void	addSnake(Snake const &snake, bool isYourSnake = false);
