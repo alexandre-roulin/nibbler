@@ -1,5 +1,6 @@
 #include "Entity.hpp"
 #include "World.hpp"
+#include <iostream>
 
 namespace KINU {
 
@@ -199,9 +200,9 @@ namespace KINU {
 
 	bool
 	EntitiesManager::hasEntitiesGroupId(TagId tagId) const {
-		bool has = groupedEntities.find(tagId) != groupedEntities.end() &&
-				   !groupedEntities.at(tagId).empty();
-		return has;
+		std::cout << (groupedEntities.find(tagId) != groupedEntities.end()) << std::endl;
+		return groupedEntities.find(tagId) != groupedEntities.end() &&
+			   !groupedEntities.at(tagId).empty();
 	}
 
 	std::vector<Entity>

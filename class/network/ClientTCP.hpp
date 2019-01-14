@@ -77,6 +77,8 @@ private:
 
 	void close_connection();
 
+	bool accept_data();
+
 public:
 	template<typename T>
 	static std::string add_prefix(eHeader, T *element);

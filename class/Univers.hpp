@@ -65,6 +65,8 @@ public:
 
 	void create_server(unsigned int port = 4242);
 
+	void create_client();
+
 	void create_ui(); // TODO PRIVATE
 
 	void delete_ia();
@@ -74,6 +76,8 @@ public:
 	void delete_client();
 
 	void close_acceptor();
+
+
 
 	/** Setter && Getter**/
 
@@ -107,6 +111,8 @@ public:
 
 	//State
 
+	bool isOnlyIA() const;
+
 	bool isServer() const;
 
 
@@ -117,8 +123,16 @@ private: // Function
 
 	bool dlError(char const *from);
 
-private: // Variable
+private:
 
+	//const
+
+	static const std::string WarningServerCreateIA;
+	static const std::string WarningServerFull;
+	static const std::string WarningServerIsUp;
+	static const std::string SuccessServerIsCreate;
+
+	// Variable
 	std::vector<NextFrame> nextFrame;
 	std::bitset<32> flag;
 	boost::asio::io_service io_loop;

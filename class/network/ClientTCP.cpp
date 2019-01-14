@@ -120,11 +120,13 @@ void ClientTCP::write_socket(std::string message) {
 										 boost::asio::placeholders::bytes_transferred));
 }
 
+
+
 void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 	mutex.lock();
 	switch (header) {
 		case eHeader::CHAT: {
-			if (!fromIA_) {
+			if (accept_data()) {
 
 				char *data_deserialize = new char[len];
 				std::memcpy(data_deserialize, input, len);
@@ -139,7 +141,7 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 			break;
 		}
 		case eHeader::SNAKE: {
-			if (!fromIA_) {
+			if (accept_data()) {
 				Snake snake_temp;
 				std::memcpy(&snake_temp, input, len);
 				snake_array[snake_temp.id] = snake_temp;
@@ -168,19 +170,21 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 		}
 		case eHeader::OPEN_GAME: {
 			log_info("eHeader::OPEN_GAME");
-			if (!fromIA_) {
+			if (accept_data()) {
 				ClientTCP::StartInfo startInfo;
 				bool data;
-				std::memcpy(&data, input, static_cast<int>(ClientTCP::size_header[static_cast<int>(eHeader::OPEN_GAME)]));
+				std::memcpy(&data, input,
+							ClientTCP::size_header[static_cast<int>(eHeader::OPEN_GAME)]);
 				openGame_ = data;
 			}
 			break;
 		}
 		case eHeader::START_GAME: {
 			log_info("eHeader::START_GAME : %d", fromIA_);
-			if (!fromIA_) {
+			if (accept_data()) {
 				StartInfo st;
-				std::memcpy(&st, input, static_cast<int>(ClientTCP::size_header[static_cast<int>(eHeader::START_GAME)]));
+				std::memcpy(&st, input,
+							ClientTCP::size_header[static_cast<int>(eHeader::START_GAME)]);
 				factory.create_all_snake(snake_array, st.nu);
 				if (univers.isServer()) {
 
@@ -207,7 +211,7 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 			break;
 		}
 		case eHeader::RESIZE_MAP: {
-			if (!fromIA_) {
+			if (accept_data()) {
 				log_info("eHeader::RESIZE_MAP");
 				unsigned int buffer;
 				std::memcpy(&buffer, input, static_cast<int>(ClientTCP::size_header[static_cast<int>(eHeader::RESIZE_MAP)]));
@@ -217,7 +221,7 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 			break;
 		}
 		case eHeader::BORDERLESS : {
-			if (!fromIA_) {
+			if (accept_data()) {
 				bool borderless;
 				std::memcpy(&borderless, input,
 							static_cast<int>(ClientTCP::size_header[static_cast<int>(eHeader::BORDERLESS)]));
@@ -226,7 +230,7 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 			break;
 		}
 		case eHeader::POCK: {
-			if (!fromIA_) {
+			if (accept_data()) {
 				std::cout << "POCK" << std::endl;
 				univers.getWorld_().getEventsManager().emitEvent<NextFrame>();
 			}
@@ -357,5 +361,9 @@ void ClientTCP::lock() {
 
 void ClientTCP::unlock() {
 	mutex.unlock();
+}
+
+bool ClientTCP::accept_data() {
+	return !fromIA_ || (univers.isOnlyIA() && id_ == 0);
 }
 

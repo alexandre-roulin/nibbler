@@ -25,6 +25,10 @@ public:
 	uint16_t getId() const;
 private:
 	ClientTCP::pointer_client clientTCP_;
+public:
+	const ClientTCP::pointer_client &getClientTCP_() const;
+
+private:
 	void findDirection(AStar::Vec2i, AStar::CoordinateList);
 
 	AStar::Vec2i getVecSnakeHead();

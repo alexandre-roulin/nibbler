@@ -126,24 +126,6 @@ void nibbler(Univers &univers) {
 			Core *core = univers.releaseCore_();
 			if (core)
 				delete core;
-
-			if (univers.getGameNetwork()->isOpenGame()) {
-
-				//univers.getClientTCP_().change_state_ready();
-				//sleep(1);
-				univers.load_extern_lib_display(Univers::EXTERN_LIB_SFML);
-
-				ClientTCP::StartInfo startInfo;
-				if (univers.isServer()) {
-					univers.getGameNetwork()
-							->write_socket(
-									ClientTCP::add_prefix(eHeader::START_GAME,
-														  &startInfo));
-				} else {
-					std::cout << "I launch " << std::endl;
-				}
-				univers.new_game();
-			}
 		}
 	}
 }

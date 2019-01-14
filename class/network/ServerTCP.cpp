@@ -4,7 +4,8 @@
 
 
 ServerTCP::ServerTCP(Univers &univers, unsigned int port)
-		: univers_(univers),
+		: port_(port),
+		univers_(univers),
 		  nu_(0),
 		  acceptor_(io_service_, tcp::endpoint(tcp::v4(), port)),
 		  mapSize(MAP_DEFAULT) {
@@ -107,7 +108,6 @@ void ServerTCP::parse_input(eHeader header, void const *input, size_t len) {
 			break;
 		}
 		case eHeader::START_GAME: {
-			start_game();
 			mutex.unlock();
 			return;
 		}
@@ -193,6 +193,10 @@ bool ServerTCP::isFull() const {
 			return false;
 	}
 	return true;
+}
+
+unsigned int ServerTCP::getPort_() const {
+	return port_;
 }
 
 /** ---------------------- TCPConnection ---------------------- **/

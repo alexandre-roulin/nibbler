@@ -84,6 +84,11 @@ public:
 	bool isFull() const;
 
 private:
+	unsigned int port_;
+public:
+	unsigned int getPort_() const;
+
+private:
 	Univers &univers_;
 	int16_t nu_;
 	Snake snake_array[MAX_SNAKE];

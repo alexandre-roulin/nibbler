@@ -98,7 +98,6 @@ void			Core::aState(void)
 	WidgetConnect optionConnect(*this);
 	WidgetMassiveButton massiveButton(*this);
 
-
 	lobby = new WidgetLobby(*this, this->univers.getGameNetwork()->getSnakes());
 	while (this->_win.isOpen() && !this->univers.getGameNetwork()->isOpenGame())
 	{
@@ -182,7 +181,7 @@ void					Core::_processEvent(sf::Event const &event)
 
 
 void					Core::beginColor(float const color) {
-	assert(Core::_useColor == false);
+	assert(!Core::_useColor);
 	Core::_useColor = true;
 	ImGui::PushStyleColor(ImGuiCol_Button, static_cast<ImVec4>(ImColor::HSV(color, 0.7f, 0.7f)));
 	ImGui::PushStyleColor(ImGuiCol_ButtonHovered, static_cast<ImVec4>(ImColor::HSV(color, 0.8f, 0.8f)));

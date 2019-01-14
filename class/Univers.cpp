@@ -10,11 +10,17 @@
 #include <network/ServerTCP.hpp>
 #include <systems/FoodEatSystem.hpp>
 #include <events/FoodEat.hpp>
-#include <dlfcn.h>
 #include <KINU/World.hpp>
 #include <events/StartEvent.hpp>
 #include <events/FoodCreation.hpp>
 #include <events/JoystickEvent.hpp>
+#include <dlfcn.h>
+/** Const Variable **/
+
+const std::string Univers::WarningServerCreateIA = "Only the server owner can create IA";
+const std::string Univers::WarningServerFull = "Server have reach the maximum player";
+const std::string Univers::WarningServerIsUp = "Server is already in place";
+const std::string Univers::SuccessServerIsCreate = "Server is up.";
 
 Univers::Univers()
 		: timer_start(boost::asio::deadline_timer(io_start)),
@@ -27,7 +33,7 @@ Univers::Univers()
 		  sound(nullptr),
 		  borderless(false) {
 
-	clientTCP_ = ClientTCP::create(*this, false);
+	clientTCP_ = nullptr;
 	serverTCP_ = nullptr;
 	world_ = nullptr;
 	core_ = nullptr; //std::make_unique<Core>(*this)
@@ -124,7 +130,7 @@ void Univers::unload_external_library() {
 
 void Univers::new_game() {
 	world_ = std::make_unique<KINU::World>(*this);
-	world_->grid = Grid< eSprite >(mapSize);
+	world_->grid = Grid<eSprite>(mapSize);
 	world_->grid.fill(eSprite::GROUND);
 	world_->setDisplay(display);
 	display->setBackground(world_->grid);
@@ -133,9 +139,8 @@ void Univers::new_game() {
 			bobby->setGrid_(&world_->grid);
 			bobby->buildIA();
 		}
+		serverTCP_->start_game();
 	}
-	ClientTCP::StartInfo startInfo;
-	clientTCP_->write_socket(ClientTCP::add_prefix(eHeader::START_GAME, &startInfo));
 	loop();
 }
 
@@ -154,15 +159,15 @@ void Univers::manage_input() {
 	assert(world_ != nullptr);
 	if (world_->getEntitiesManager().hasEntityByTagId(
 			eTag::HEAD_TAG + inputInfo.id)) {
-		clientTCP_->write_socket(ClientTCP::add_prefix(eHeader::INPUT, &inputInfo));
+		clientTCP_->write_socket(
+				ClientTCP::add_prefix(eHeader::INPUT, &inputInfo));
 	}
 }
 
 void Univers::manage_start() {
 	ClientTCP::StartInfo startInfo;
-	std::vector <StartEvent> startEvent;
+	std::vector<StartEvent> startEvent;
 	for (; startEvent.empty();) {
-		std::cout << "stuck" << std::endl;
 		clientTCP_->lock();
 		startEvent = world_->getEventsManager().getEvents<StartEvent>();
 		clientTCP_->unlock();
@@ -211,10 +216,10 @@ void Univers::loop() {
 void Univers::loop_world() {
 
 	manage_input();
-	int i = 0;
 
 	for (; nextFrame.empty();) {
 		clientTCP_->lock();
+		std::cout << "Stuck nextFrame" << std::endl;
 		nextFrame = world_->getEventsManager().getEvents<NextFrame>();
 		clientTCP_->unlock();
 	}
@@ -232,9 +237,11 @@ void Univers::loop_world() {
 
 	if (isServer()) {
 		for (auto &bobby : vecBobby) {
-			if (world_->getEntitiesManager().hasEntityByTagId(bobby->getId() + eTag::HEAD_TAG)) {
+			if (world_->getEntitiesManager().hasEntityByTagId(
+					bobby->getId() + eTag::HEAD_TAG)) {
 				boost::thread
-						t2(boost::bind(&Bobby::calculateDirection, bobby.get()));
+						t2(
+						boost::bind(&Bobby::calculateDirection, bobby.get()));
 				t2.detach();
 			}
 
@@ -249,7 +256,6 @@ void Univers::loop_world() {
 	world_->getEventsManager().destroy<FoodEat>();
 
 	if (!clientTCP_->all_snake_is_dead()) {
-//		std::cout << "Recursive" << std::endl;
 
 		timer_loop.expires_at(
 				timer_loop.expires_at() +
@@ -260,24 +266,40 @@ void Univers::loop_world() {
 
 /** Create and delete **/
 
+
+void Univers::create_client() {
+	clientTCP_ = ClientTCP::create(*this, false);
+}
+
 void Univers::create_ui() {
 	core_ = std::make_unique<Core>(*this);
 }
 
 void Univers::create_server(unsigned int port) {
-	serverTCP_ = std::make_unique<ServerTCP>(*this, port);
+	if (serverTCP_)
+		core_->addMessageChat(WarningServerIsUp);
+	else {
+		serverTCP_ = std::make_unique<ServerTCP>(*this, port);
+		core_->addMessageChat(SuccessServerIsCreate);
+	}
 }
 
 void Univers::create_ia() {
-	if (isServer() && !serverTCP_->isFull()) {
-		ClientTCP::pointer_client clientTCPIA = ClientTCP::create(*this, true);
-		clientTCPIA->connect(clientTCP_->getDns(), clientTCP_->getPort());
-		sleep(1);
-		std::cout << clientTCPIA->getId() << std::endl;
-		clientTCPIA->change_state_ready();
-		vecBobby.push_back(
-				std::make_unique<Bobby>(*this, clientTCPIA));
+	if (!isServer()) {
+		core_->addMessageChat(WarningServerCreateIA);
+		return;
 	}
+	if (serverTCP_->isFull()) {
+		core_->addMessageChat(WarningServerFull);
+		return;
+	}
+	ClientTCP::pointer_client clientTCPIA = ClientTCP::create(*this, true);
+	clientTCPIA->connect("localhost", std::to_string(serverTCP_->getPort_()));
+	sleep(1);
+	std::cout << clientTCPIA->getId() << std::endl;
+	clientTCPIA->change_state_ready();
+	vecBobby.push_back(
+			std::make_unique<Bobby>(*this, clientTCPIA));
 }
 
 void Univers::delete_ia() {
@@ -313,7 +335,11 @@ KINU::World &Univers::getWorld_() const {
 }
 
 IGameNetwork *Univers::getGameNetwork() const {
-	return clientTCP_.get();
+	if (clientTCP_)
+		return clientTCP_.get();
+	else if (vecBobby.size() > 0)
+		return vecBobby[0]->getClientTCP_().get();
+	return nullptr;
 }
 
 ISound &Univers::getSound() const {
@@ -345,6 +371,10 @@ bool Univers::isServer() const {
 
 bool Univers::isBorderless() const {
 	return borderless;
+}
+
+bool Univers::isOnlyIA() const {
+	return clientTCP_ == nullptr && vecBobby.size() != 0;
 }
 
 /** Sound **/
