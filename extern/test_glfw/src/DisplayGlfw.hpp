@@ -1,27 +1,26 @@
 #pragma once
 
 #include <exception>
-#include "IDisplay.hpp"
-#include "Vector2D.tpp"
-#include "Glfw.hpp"
-#include "Shader.hpp"
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
-
-
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <cstdio>
 #include <cstdlib>
+#include <fstream>
+#include <map>
 
+#include "IDisplay.hpp"
+#include "Vector2D.tpp"
+#include "Glfw.hpp"
+#include "Shader.hpp"
 #include "Glfw.hpp"
 #include "Model.hpp"
 #include "Mesh.hpp"
 #include "Camera.hpp"
 #include "ActModel.hpp"
-#include <fstream>
-#include <map>
 #include "Grid.tpp"
+#include "Skybox.hpp"
 
 #define DISPLAY_GLFW_WIN_WIDTH 1024
 #define DISPLAY_GLFW_WIN_HEIGHT 720
@@ -37,19 +36,19 @@ public:
 
     class GlfwConstructorException : public std::exception {
     public:
-        GlfwConstructorException(void) throw();
+        GlfwConstructorException() noexcept;
 
-        GlfwConstructorException(std::string) throw();
+		explicit GlfwConstructorException(std::string) noexcept;
 
-        virtual const char *what() const throw();
+		const char *what() const noexcept override;
 
-        ~GlfwConstructorException(void) throw();
+        ~GlfwConstructorException() noexcept override;
 
-        GlfwConstructorException(GlfwConstructorException const &src) throw();
+        GlfwConstructorException(GlfwConstructorException const &src) noexcept;
 
     private:
         GlfwConstructorException &
-        operator=(GlfwConstructorException const &rhs) throw();
+        operator=(GlfwConstructorException const &rhs) noexcept;
 
         std::string error_;
     };
@@ -58,22 +57,27 @@ public:
                 int height,
                 char const *windowName);
 
-    virtual ~DisplayGlfw(void);
+	~DisplayGlfw() override;
 
-	void render(void);
-    void setFrameTime(float);
+	void render() override;
     void update(float deltaTime = 0.16f);
-	void update();
-	bool        exit(void) const;
-	eDirection getDirection(void) const;
-	//void		drawGrid(Grid<int> const &grid);
-	void		drawGrid(Grid< eSprite > const &grid);
-	void		setBackground(Grid< eSprite > const &grid);
+	void update() override;
+	bool        exit() const override;
+	eDirection getDirection() const override;
+	void		drawGrid(Grid< eSprite > const &grid) override;
+	void		setBackground(Grid< eSprite > const &grid) override;
 
+	void setTimers(float currentTimer, float maxTimer);
+
+	DisplayGlfw &operator=(DisplayGlfw const &rhs) = delete;
+	DisplayGlfw(DisplayGlfw const &src) = delete;
+	DisplayGlfw() = delete;
 
 private:
     eDirection          direction_;
-    float				frameTime_;
+	float				currentTimer_;
+	float				maxTimer_;
+	float				refreshMaxTimer_;
     int                 tileSize_;
     Vector2D<int> const winTileSize_;
     Vector2D<int> const winPixelSize_;
@@ -91,14 +95,10 @@ private:
 	std::string			pathDirectorySkyBox_;
 	std::string			pathShaderBasic_;
     std::string			pathShaderSkyBox_;
-    std::string			pathSkyBox_[6];
-
-    unsigned int					textureSkyBox_;
-	unsigned int					skyboxVAO_;
-	unsigned int					skyboxVBO_;
+    std::vector< std::string >		pathSkyBox_;
 
 	Shader							shader_;
-	Shader							shaderSkyBox_;
+	std::unique_ptr< Skybox >		skybox_;
 	Model							snake_;
 	Model							block_;
 	Model							ground_;
@@ -117,7 +117,6 @@ private:
     void                error_(std::string const &s = std::string("Error"));
     void                clean_();
     void                getPath_();
-    void				loadSkyBox_();
 
 	static float				lastX_;
 	static float				lastY_;
@@ -126,11 +125,6 @@ private:
 	static bool					firstMouse_;
 	static bool					mouseCallbackCalled_;
 	static void					mouseCallback_(GLFWwindow* window, double xpos, double ypos);
-
-
-	DisplayGlfw &operator=(DisplayGlfw const &rhs) = delete;
-    DisplayGlfw(DisplayGlfw const &src) = delete;
-    DisplayGlfw(void) = delete;
 };
 
 extern "C" {

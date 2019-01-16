@@ -42,14 +42,24 @@ int main(int argc, char **argv) {
 	float lastFrame = 0.0f;
 
 
+
+	float dist = 0;
+	float maxDist = 1.4f;
+
 	while (!lol.exit()) {
 
 		float currentFrame = glfwGetTime();
 		deltaTime = currentFrame - lastFrame;
 		lastFrame = currentFrame;
+		dist += deltaTime;
+
+		if (dist > maxDist) {
+			dist = 0;
+		}
 
 		//std::cout << deltaTime << std::endl;
 
+		lol.setTimers(dist, maxDist);
 		lol.update(deltaTime);
 		lol.drawGrid(al);
 		lol.render();
