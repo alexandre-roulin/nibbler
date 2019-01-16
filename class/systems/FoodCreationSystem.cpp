@@ -17,8 +17,8 @@ void FoodCreationSystem::update() {
 	mutex.unlock();
 
 	for (auto foodCreationEvent : foodCreationEvents) {
-		log_info("FoodCreationSystem:: x[%d] y[%d]", foodCreationEvent.positionComponent_.x, foodCreationEvent.positionComponent_.y);
 		auto food = getWorld().createEntity();
+		log_info("FoodCreationSystem:: x[%d] y[%d]", foodCreationEvent.positionComponent_.x, foodCreationEvent.positionComponent_.y);
 		food.addComponent(foodCreationEvent.positionComponent_);
 		food.addComponent<CollisionComponent>();
 		food.addComponent<SpriteComponent>(eSprite::FOOD, NO_PRIORITY);

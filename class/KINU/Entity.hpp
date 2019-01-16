@@ -28,6 +28,10 @@ namespace KINU {
 
 		bool operator!=(const Entity &rhs) const;
 
+		Entity operator=(Entity const &entity);
+
+		void is(EntitiesManager &); //TODO REMOVE THIS SHIT
+
 		ID getId() const;
 
 		/** Kill Management**/
@@ -35,6 +39,8 @@ namespace KINU {
 		void kill();
 
 		void killGroup();
+
+		void destroy();
 
 		/** Tag Management **/
 
@@ -79,9 +85,10 @@ namespace KINU {
 	private:
 		friend class EntitiesManager;
 
-		Entity(Entity::ID);
 
 	public:
+		Entity(Entity::ID);
+
 		EntitiesManager &getEntitiesManager_() const;
 
 	private:
@@ -112,7 +119,7 @@ namespace KINU {
 
 		/** ID Management **/
 
-		bool hasEntityById(Entity::ID);
+		bool hasEntityById(Entity::ID) const;
 
 		Entity getEntityById(Entity::ID);
 

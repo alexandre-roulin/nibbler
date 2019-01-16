@@ -74,6 +74,39 @@ enum class eSprite {
 	GROUND = (1 << 25)
 };
 
+inline bool operator==(eSprite const lhs, eSprite const rhs) {
+	return static_cast<int>(lhs) == static_cast<int>(rhs);
+}
+
+inline eSprite operator|(eSprite const lhs, eSprite const rhs) {
+	return static_cast<eSprite> (static_cast<int>(lhs) | static_cast<int>(rhs));
+}
+
+inline eSprite const &operator|=(eSprite &lhs, eSprite const &rhs) {
+	lhs = static_cast<eSprite> (static_cast<int>(lhs) | static_cast<int>(rhs));
+	return (lhs);
+}
+inline eSprite operator&(eSprite const lhs, eSprite const rhs) {
+	return static_cast<eSprite> (static_cast<int>(lhs) &  static_cast<int>(rhs));
+}
+inline eSprite operator&(int const lhs, eSprite const rhs) {
+	return static_cast<eSprite> (lhs &  static_cast<int>(rhs));
+}
+inline eSprite operator&(eSprite const lhs, int const rhs) {
+	return static_cast<eSprite> (static_cast<int>(lhs) & rhs);
+}
+inline eSprite operator^(int const lhs, eSprite const rhs) {
+	return static_cast<eSprite> (lhs ^  static_cast<int>(rhs));
+}
+inline eSprite operator^(eSprite const lhs, int const rhs) {
+	return static_cast<eSprite> (static_cast<int>(lhs) ^ rhs);
+}
+inline eSprite operator<<(eSprite const lhs, eSprite const rhs) {
+	return static_cast<eSprite> (static_cast<int>(lhs) << static_cast<int>(rhs));
+}
+inline eSprite operator>>(eSprite const lhs, eSprite const rhs) {
+	return static_cast<eSprite> (static_cast<int>(lhs) >> static_cast<int>(rhs));
+}
 inline std::ostream &operator<<(std::ostream &os, eSprite &sprite) {
 	switch (sprite) {
 		case eSprite ::GREEN :
@@ -101,39 +134,24 @@ inline std::ostream &operator<<(std::ostream &os, eSprite &sprite) {
 			os << "RED";
 			break;
 		default :
-			os << "Hello";
 			break;
 	}
-	return os;
-}
 
-inline eSprite operator|(eSprite const lhs, eSprite const rhs) {
-	return static_cast<eSprite> (static_cast<int>(lhs) | static_cast<int>(rhs));
-}
-inline eSprite const &operator|=(eSprite &lhs, eSprite const &rhs) {
-	lhs = static_cast<eSprite> (static_cast<int>(lhs) | static_cast<int>(rhs));
-	return (lhs);
-}
-inline eSprite operator&(eSprite const lhs, eSprite const rhs) {
-	return static_cast<eSprite> (static_cast<int>(lhs) &  static_cast<int>(rhs));
-}
-inline eSprite operator&(int const lhs, eSprite const rhs) {
-	return static_cast<eSprite> (lhs &  static_cast<int>(rhs));
-}
-inline eSprite operator&(eSprite const lhs, int const rhs) {
-	return static_cast<eSprite> (static_cast<int>(lhs) & rhs);
-}
-inline eSprite operator^(int const lhs, eSprite const rhs) {
-	return static_cast<eSprite> (lhs ^  static_cast<int>(rhs));
-}
-inline eSprite operator^(eSprite const lhs, int const rhs) {
-	return static_cast<eSprite> (static_cast<int>(lhs) ^ rhs);
-}
-inline eSprite operator<<(eSprite const lhs, eSprite const rhs) {
-	return static_cast<eSprite> (static_cast<int>(lhs) << static_cast<int>(rhs));
-}
-inline eSprite operator>>(eSprite const lhs, eSprite const rhs) {
-	return static_cast<eSprite> (static_cast<int>(lhs) >> static_cast<int>(rhs));
+	if ((sprite & eSprite::HEAD) == eSprite::HEAD)
+		os << "Head";
+	else if ((sprite & eSprite::TAIL) == eSprite::TAIL)
+		os << "Tail";
+	else if ((sprite & eSprite::BODY) == eSprite::BODY)
+		os << "Body";
+	else if ((sprite & eSprite::WALL) == eSprite::WALL)
+		os << "WALL";
+	else if ((sprite & eSprite::FOOD) == eSprite::FOOD)
+		os << "OOOO";
+	else if ((sprite & eSprite::NONE) == eSprite::NONE)
+		os << "-N-";
+	else
+		os << static_cast<int>(sprite);
+	return os;
 }
 
 enum eDirection {
@@ -147,11 +165,17 @@ class IDisplay {
 public:
 
 	virtual ~IDisplay() {}
-    virtual bool        exit(void) const = 0;
-    virtual void        render(void) = 0;
-    virtual void        update(void) = 0;
-	virtual void		drawGrid(Grid< eSprite > const &grid) = 0;
-	virtual void		setBackground(Grid< eSprite > const &grid) = 0;
-    virtual eDirection  getDirection(void) const = 0;
+
+	virtual bool exit(void) const = 0;
+
+	virtual void render(void) = 0;
+
+	virtual void update(void) = 0;
+
+	virtual void drawGrid(Grid<eSprite> const &grid) = 0;
+
+	virtual void setBackground(Grid<eSprite> const &grid) = 0;
+
+	virtual eDirection getDirection(void) const = 0;
 };
 

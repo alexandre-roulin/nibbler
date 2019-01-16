@@ -26,7 +26,7 @@ Univers::Univers()
 		: timer_start(boost::asio::deadline_timer(io_start)),
 		  timer_loop(boost::asio::deadline_timer(io_loop)),
 		  mapSize(MAP_DEFAULT),
-		  gameSpeed(80),
+		  gameSpeed(100),
 		  dlHandleDisplay(nullptr),
 		  dlHandleSound(nullptr),
 		  display(nullptr),
@@ -153,14 +153,15 @@ void Univers::manage_input() {
 			bobby->sendDirection();
 		}
 	}
-
-	inputInfo.id = clientTCP_->getId();
-	inputInfo.dir = display->getDirection();
-	assert(world_ != nullptr);
-	if (world_->getEntitiesManager().hasEntityByTagId(
-			eTag::HEAD_TAG + inputInfo.id)) {
-		clientTCP_->write_socket(
-				ClientTCP::add_prefix(eHeader::INPUT, &inputInfo));
+	if (clientTCP_) {
+		inputInfo.id = clientTCP_->getId();
+		inputInfo.dir = display->getDirection();
+		assert(world_ != nullptr);
+		if (world_->getEntitiesManager().hasEntityByTagId(
+				eTag::HEAD_TAG + inputInfo.id)) {
+			clientTCP_->write_socket(
+					ClientTCP::add_prefix(eHeader::INPUT, &inputInfo));
+		}
 	}
 }
 
@@ -168,9 +169,10 @@ void Univers::manage_start() {
 	ClientTCP::StartInfo startInfo;
 	std::vector<StartEvent> startEvent;
 	for (; startEvent.empty();) {
-		clientTCP_->lock();
+
+		getMainClientTCP()->lock();
 		startEvent = world_->getEventsManager().getEvents<StartEvent>();
-		clientTCP_->unlock();
+		getMainClientTCP()->unlock();
 	}
 	auto ptime = startEvent.front().start_time;
 	timer_start.expires_at(ptime);
@@ -202,7 +204,7 @@ void Univers::loop() {
 	playMusic("./ressource/sound/zelda.ogg");
 
 	while ((display == nullptr || !display->exit()) &&
-		   !clientTCP_->all_snake_is_dead()) {
+		   !getMainClientTCP()->all_snake_is_dead()) {
 		if (display != nullptr) {
 			display->update();
 			display->drawGrid(world_->grid);
@@ -218,23 +220,30 @@ void Univers::loop_world() {
 	manage_input();
 
 	for (; nextFrame.empty();) {
-		clientTCP_->lock();
-		std::cout << "Stuck nextFrame" << std::endl;
+		getMainClientTCP()->lock();
+//		std::cout << "Stuck nextFrame" << std::endl;
 		nextFrame = world_->getEventsManager().getEvents<NextFrame>();
-		clientTCP_->unlock();
+		getMainClientTCP()->unlock();
 	}
 	nextFrame.clear();
 	world_->getEventsManager().destroy<NextFrame>();
 
-	clientTCP_->deliverEvents();
+	getMainClientTCP()->deliverEvents();
 
 	world_->update();
 
+	log_info("Univers::FollowSystem");
 	world_->getSystemsManager().getSystem<FollowSystem>().update();
+	log_info("Univers::JoystickSystem");
 	world_->getSystemsManager().getSystem<JoystickSystem>().update();
+	log_info("Univers::JoystickEvent");
 	world_->getEventsManager().destroy<JoystickEvent>();
+	log_info("Univers::MotionSystem");
 	world_->getSystemsManager().getSystem<MotionSystem>().update();
+	log_info("Univers::CollisionSystem");
+	world_->getSystemsManager().getSystem<CollisionSystem>().update();
 
+	log_info("Univers::vecBobby");
 	if (isServer()) {
 		for (auto &bobby : vecBobby) {
 			if (world_->getEntitiesManager().hasEntityByTagId(
@@ -247,21 +256,26 @@ void Univers::loop_world() {
 
 		}
 	}
-	world_->getSystemsManager().getSystem<CollisionSystem>().update();
+
+	log_info("Univers::FoodCreationSystem");
 	world_->getSystemsManager().getSystem<FoodCreationSystem>().update();
 	world_->getEventsManager().destroy<FoodCreation>();
+	log_info("Univers::SpriteSystem");
 	world_->getSystemsManager().getSystem<SpriteSystem>().update();
+	log_info("Univers::RenderSystem");
 	world_->getSystemsManager().getSystem<RenderSystem>().update();
+	log_info("Univers::FoodEatSystem");
 	world_->getSystemsManager().getSystem<FoodEatSystem>().update();
 	world_->getEventsManager().destroy<FoodEat>();
 
-	if (!clientTCP_->all_snake_is_dead()) {
+	if (!getMainClientTCP()->all_snake_is_dead()) {
 
 		timer_loop.expires_at(
 				timer_loop.expires_at() +
 				boost::posix_time::milliseconds(gameSpeed));
 		timer_loop.async_wait(boost::bind(&Univers::loop_world, this));
 	}
+	world_->grid.print();
 }
 
 /** Create and delete **/
@@ -330,6 +344,15 @@ void Univers::close_acceptor() {
 
 /** Getter && Setter **/
 
+ClientTCP *Univers::getMainClientTCP() const {
+	if (clientTCP_)
+		return clientTCP_.get();
+	else if (vecBobby.size() != 0)
+		return vecBobby.front()->getClientTCP_().get();
+	return nullptr;
+
+}
+
 KINU::World &Univers::getWorld_() const {
 	return *world_;
 }
@@ -337,8 +360,9 @@ KINU::World &Univers::getWorld_() const {
 IGameNetwork *Univers::getGameNetwork() const {
 	if (clientTCP_)
 		return clientTCP_.get();
-	else if (vecBobby.size() > 0)
-		return vecBobby[0]->getClientTCP_().get();
+	else if (vecBobby.size() != 0) {
+		return vecBobby.front()->getClientTCP_().get();
+	}
 	return nullptr;
 }
 

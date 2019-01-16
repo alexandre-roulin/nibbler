@@ -123,8 +123,8 @@ void Grid<T>::setBorder(T const &border) {
 
 template<typename T>
 void Grid<T>::fill(T const &fill) {
-	for (size_t i = 0; i < size_; i++)
-		this->_grid[i] = fill;
+	for (size_t i = 0; i < size_; ++i)
+		_grid[i] = fill;
 }
 
 template<typename T>
@@ -184,7 +184,8 @@ std::pair<size_t, size_t> Grid<T>::getRandomSlot(T value) {
 				if (isFreeSlot(base_y, base_x, value))
 					--rand_x;
 				if (rand_x == 0) {
-//					print();
+					std::cout << "free_slot : " << _grid[base_y * _rows + base_x] << std::endl;
+					assert(_grid[base_y * _rows + base_x] == value);
 					return std::make_pair(base_x, base_y);
 				}
 			}
@@ -206,12 +207,11 @@ bool Grid<T>::isFreeSlot(size_t row, size_t column, T clear) const {
 	return _grid[row * _columns + column] == clear;
 }
 
-//y 1 x 1
 template<typename T>
 void Grid<T>::print() const {
 	for (int y = 0; y < _rows; ++y) {
 		for (int x = 0; x < _columns; ++x) {
-			std::cout << std::setw(4) << _grid[_rows * y + x];
+			std::cout << std::setw(6) << _grid[_rows * y + x];
 		}
 		std::cout << std::endl;
 	}
@@ -235,13 +235,17 @@ int Grid<T>::countNearSlot(int x, int y, T value, bool checkDiagonal) const {
 			{1,  -1},
 			{1,  1}
 	};
+	static int const SCALE_X = 0;
+	static int const SCALE_Y = 1;
 
 	uint16_t count = 0;
 	unsigned int max = (checkDiagonal ? 8 : 4);
 	for (int index = 0; index < max; ++index) {
-
-		log_success("y : %d x : %d",y + direction[index][1], x + direction[index][0]);
-		if ( y + direction[index][1] < _rows && y + direction[index][1] >= 0 && x + direction[index][0] < _columns && x + direction[index][0] >= 0 && ((*this)(x + direction[index][0], y + direction[index][1]) & value) == value)
+		if (
+				x + direction[index][SCALE_X] < _columns && x + direction[index][SCALE_X] >= 0 &&
+				y + direction[index][SCALE_Y] < _rows && y + direction[index][SCALE_Y] >= 0 &&
+				(_grid[(y + direction[index][SCALE_Y]) * _columns + (x + direction[index][SCALE_X])] & value) == value
+				)
 			count++;
 	}
 	log_error("COUNT %d", count);

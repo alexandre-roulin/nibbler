@@ -34,3 +34,8 @@ PositionComponent::operator=(PositionComponent const &motionComponent) {
 	return *this;
 }
 
+std::ostream &operator<<(std::ostream &os, const PositionComponent &component) {
+	os << "y: " << component.y << " x: " << component.x;
+	return os;
+}
+

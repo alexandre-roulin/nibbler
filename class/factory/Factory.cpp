@@ -20,6 +20,7 @@ void Factory::create_all_snake(Snake snake_array[MAX_SNAKE], int16_t nu) {
 
 	log_info("Create %d snake(s)", nu);
 	univers_.getWorld_().grid.fill(eSprite::NONE);
+	univers_.getWorld_().grid.print();
 
 	for (int index = 0; index < nu; ++index) {
 		create_snake(snake_array[index], nu);
@@ -48,20 +49,25 @@ void Factory::create_snake(Snake snake, int max_snakes) {
 			new_snake.addComponent<CollisionComponent>();
 			new_snake.addComponent<SpriteComponent>(eSprite::HEAD | snake.sprite, SPECIFIC_LAST);
 			new_snake.addComponent<PositionComponent>(base_x, base_y);
+			univers_.getWorld_().grid(base_x, base_y) = eSprite::HEAD | snake.sprite;
 			log_warn("Factory::creationHead x[%d] y[%d] id[%d] tag[%d]",base_x, base_y,snake.id,  eTag::HEAD_TAG + snake.id);
 		}
 		else if (index == 3) {
+			std::cout << "tagByTagId" << "eTag::TAIL" << eTag::TAIL_TAG + snake.id << std::endl;
+
 			new_snake.tagByTagId(eTag::TAIL_TAG + snake.id);
 			new_snake.addComponent<FollowComponent>(snake_follow.getId(), false);
 			new_snake.addComponent<CollisionComponent>();
 			new_snake.addComponent<SpriteComponent>(eSprite::TAIL | snake.sprite, SPECIFIC_LAST);
 			new_snake.addComponent<PositionComponent>(base_x + 1, base_y);
+			univers_.getWorld_().grid(base_x + 1, base_y) = eSprite::TAIL | snake.sprite;
 			log_warn("Factory::creationTail x[%d] y[%d] id[%d] tag[%d]",base_x + 1, base_y,snake.id, eTag::TAIL_TAG + snake.id);
 		}
 		else {
 			new_snake.addComponent<FollowComponent>(snake_follow.getId(), false);
 			new_snake.addComponent<CollisionComponent>();
 			new_snake.addComponent<PositionComponent>(base_x + (index - 1), base_y + 1);
+			univers_.getWorld_().grid(base_x + (index - 1), base_y + 1) = eSprite::BODY | snake.sprite;
 			new_snake.addComponent<SpriteComponent>(eSprite::BODY | snake.sprite, MINOR_PRIORITY);
 			log_warn("Factory::creationBody x[%d] y[%d]",base_x + (index - 1), base_y + 1);
 		}
@@ -74,6 +80,7 @@ void Factory::create_snake(Snake snake, int max_snakes) {
 
 void Factory::create_walls() {
 	int max = univers_.getMapSize();
+	std::cout << "max > " << max << std::endl;
 	int x = 0;
 	int y = 1;
 	for (; x < max; ++x) {
@@ -87,8 +94,9 @@ void Factory::create_walls() {
 }
 
 void Factory::create_wall(int x, int y) {
+	std::cout << x << " " << y << std::endl;
 	KINU::Entity entity = univers_.getWorld_().createEntity();
-
+	univers_.getWorld_().grid(x, y) = eSprite::WALL;
 	entity.addComponent<PositionComponent>(x, y);
 	entity.addComponent<CollisionComponent>();
 	entity.addComponent<SpriteComponent>(eSprite::WALL, NO_PRIORITY);

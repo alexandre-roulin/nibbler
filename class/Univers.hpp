@@ -117,6 +117,8 @@ public:
 
 
 private: // Function
+	ClientTCP *getMainClientTCP() const;
+
 	void manage_input();
 
 	void loop_world();

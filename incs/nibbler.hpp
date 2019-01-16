@@ -22,9 +22,9 @@
 enum eTag {
 	HEAD_TAG = 0,
 	TAIL_TAG = 8,
-	FOOD_TAG,					//9
-	FOOD_TAG_FROM_SNAKE,		//10
-	WALL_TAG,					//11
+	FOOD_TAG = 16,				//16
+	FOOD_TAG_FROM_SNAKE,		//17
+	WALL_TAG,					//18
 };
 
 enum class eSound {

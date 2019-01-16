@@ -55,6 +55,8 @@ namespace AStar {
 		void releaseNodes(NodeSet &nodes_);
 
 	public:
+		void print();
+
 		Generator();
 
 		void setWorldSize(Vec2i worldSize_);

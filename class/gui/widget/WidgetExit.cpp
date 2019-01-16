@@ -28,8 +28,8 @@ void			WidgetExit::render(void)
 		if (ImGui::Button("OK", ImVec2(120, 0)))
 		{
 			ImGui::CloseCurrentPopup();
-			if (this->_callback)
-				this->_callback(this->_ptr);
+			if (_callback)
+				_callback(_ptr);
 		}
 		ImGui::SetItemDefaultFocus();
 		ImGui::SameLine();

@@ -12,6 +12,7 @@
 #include <KINU/World.hpp>
 #include <events/FoodCreation.hpp>
 #include <events/StartEvent.hpp>
+#include <systems/RenderSystem.hpp>
 
 int const ClientTCP::size_header[] = {
 		[static_cast<int>(eHeader::CHAT)] = SIZEOF_CHAT_PCKT,
@@ -39,10 +40,7 @@ ClientTCP::ClientTCP(Univers &univers, bool fromIA)
 		  factory(univers) {
 }
 
-ClientTCP::pointer_client
-
-
-ClientTCP::create(Univers &univers, bool fromIA) {
+ClientTCP::pointer_client ClientTCP::create(Univers &univers, bool fromIA) {
 	return pointer_client(new ClientTCP(univers, fromIA));
 }
 
@@ -186,24 +184,29 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 				std::memcpy(&st, input,
 							ClientTCP::size_header[static_cast<int>(eHeader::START_GAME)]);
 				factory.create_all_snake(snake_array, st.nu);
+
 				if (univers.isServer()) {
 
 					uint16_t  nu_ = Snake::getlastSnakeIndex(snake_array, MAX_SNAKE);
 					int max_food = (nu_ > 1 ? nu_ - 1 : nu_);
 					log_warn("Number of food %d", max_food);
-
+					std::cout << "Post" << std::endl;
+					univers.getWorld_().grid.print();
 					for (int index = 0; index < max_food; ++index) {
-//						log_warn("%d created", index);
-						ClientTCP::FoodInfo foodInfo;
-						foodInfo.positionComponent = PositionComponent(univers.getWorld_()
-																			   .grid.getRandomSlot(eSprite::NONE));
-						foodInfo.fromSnake = false;
+						std::cout << "Post" << std::endl;
+						ClientTCP::FoodInfo foodInfo(
+								PositionComponent(univers.getWorld_()
+								.grid.getRandomSlot(eSprite::NONE))
+								, false);
+						std::cout << "Post" << std::endl;
 						write_socket(ClientTCP::add_prefix(eHeader::FOOD, &foodInfo));
+						std::cout << "Post" << std::endl;
 					}
+
+					univers.getWorld_().getEventsManager().emitEvent<StartEvent>(
+							st.time_duration);
 				}
 
-				univers.getWorld_().getEventsManager().emitEvent<StartEvent>(
-						st.time_duration);
 			}
 			break;
 		}
@@ -214,7 +217,8 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 			if (accept_data()) {
 				log_info("eHeader::RESIZE_MAP");
 				unsigned int buffer;
-				std::memcpy(&buffer, input, static_cast<int>(ClientTCP::size_header[static_cast<int>(eHeader::RESIZE_MAP)]));
+				std::memcpy(&buffer, input,
+							ClientTCP::size_header[static_cast<int>(eHeader::RESIZE_MAP)]);
 				univers.setMapSize(buffer);
 				univers.playNoise(eSound::RESIZE_MAP);
 			}
@@ -290,17 +294,17 @@ void ClientTCP::change_name(char const *name) {
 		strncpy(snake_array[id_].name, name, NAME_BUFFER - 1);
 	else
 		strcpy(snake_array[id_].name, name);
-	this->refreshMySnake();
+	refreshMySnake();
 }
 
 void ClientTCP::change_sprite(eSprite snakeSprite) {
 	snake_array[id_].sprite = snakeSprite;
-	this->refreshMySnake();
+	refreshMySnake();
 }
 
 void ClientTCP::change_state_ready(void) {
 	snake_array[id_].isReady = !snake_array[id_].isReady;
-	this->refreshMySnake();
+	refreshMySnake();
 }
 
 void ClientTCP::refreshMySnake(void) {
@@ -333,7 +337,7 @@ Snake const *ClientTCP::getSnakes() const {
 }
 
 Snake	const &ClientTCP::getSnake(void) const {
-	return this->snake_array[this->id_];
+	return snake_array[id_];
 }
 
 void ClientTCP::killSnake(uint16_t id) {
@@ -367,3 +371,11 @@ bool ClientTCP::accept_data() {
 	return !fromIA_ || (univers.isOnlyIA() && id_ == 0);
 }
 
+ClientTCP::FoodInfo::FoodInfo() {
+
+}
+
+ClientTCP::FoodInfo::FoodInfo(PositionComponent component, bool from) {
+	positionComponent = component;
+	fromSnake = from;
+}

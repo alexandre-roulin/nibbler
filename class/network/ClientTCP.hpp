@@ -42,8 +42,11 @@ public:
 	};
 
 	struct FoodInfo {
-		bool fromSnake;
+		FoodInfo();
+		FoodInfo(PositionComponent component, bool b);
+
 		PositionComponent positionComponent;
+		bool fromSnake;
 
 	};
 

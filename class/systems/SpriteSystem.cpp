@@ -73,7 +73,7 @@ void SpriteSystem::update() {
 							<< eSprite::BITWISE_TO);
 		}
 
-		if (followComponent) {
+		if (followComponent && getWorld().getEntitiesManager().hasEntityById(followComponent->idFollowed)) {
 			entityFollowed.getComponent<SpriteComponent>().sprite |=
 					(SpriteSystem::spriteDirection(positionComponent,
 												   positionComponentFollowed)

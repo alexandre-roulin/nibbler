@@ -1,6 +1,24 @@
 #include "AStar.hpp"
 #include <cmath>
+#include <iomanip>
+#include <iostream>
 using namespace std::placeholders;
+
+
+void AStar::Generator::print() {
+	for (int y = 0; y < worldSize.y; ++y) {
+		for (int x = 0; x < worldSize.x; ++x) {
+			if (std::find_if(walls.begin(), walls.end(), [this, y, x](Vec2i vec2i){
+				return vec2i.x == x && vec2i.y == y;
+			}) != walls.end())
+				std::cout << std::setw(6) << "____";
+			else
+				std::cout << std::setw(6) << "WALL";
+		}
+		std::cout << std::endl;
+	}
+}
+
 
 std::ostream &AStar::operator<<(std::ostream &os, const AStar::Vec2i &i) {
 	os << "x: " << i.x << " y: " << i.y;
