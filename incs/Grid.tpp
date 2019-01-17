@@ -4,6 +4,7 @@
 #include <iostream>
 #include <iomanip>
 #include <logger.h>
+#include <assert.h>
 #include "IDisplay.hpp"
 
 template<typename T>

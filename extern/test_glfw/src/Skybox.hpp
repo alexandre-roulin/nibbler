@@ -2,6 +2,7 @@
 
 #include <glad/glad.h>
 #include <string>
+#include <list>
 #include "Shader.hpp"
 
 # define SKYBOX_NUMBER_OF_FACES 6
@@ -24,7 +25,7 @@ public:
 
 	Skybox(std::string const &pathSkybox,
 			std::string const &pathDirectorySkyBox,
-			std::vector< std::string > const &skyboxFile);
+			std::list< std::string > const &skyboxFile);
 	~Skybox() noexcept;
 	Skybox() noexcept = delete;
 	Skybox(Skybox const &shader) = delete;

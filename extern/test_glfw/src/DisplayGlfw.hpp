@@ -82,20 +82,21 @@ private:
     Vector2D<int> const winTileSize_;
     Vector2D<int> const winPixelSize_;
 
-	Grid< eSprite >		tileBackground_;
-    Grid< ActModel >	background_;
+	Grid< eSprite >					tileBackground_;
+    Grid< ActModel >				background_;
+	Grid< ActModel >				grid_;
 
-	float				deltaTime_;
+	float							deltaTime_;
 
-    std::string         pathRoot_;
-    std::string         pathModel_;
-	std::string         pathBlock_;
-	std::string         pathGround_;
-	std::string         pathWall_;
-	std::string			pathDirectorySkyBox_;
-	std::string			pathShaderBasic_;
-    std::string			pathShaderSkyBox_;
-    std::vector< std::string >		pathSkyBox_;
+    std::string 			        pathRoot_;
+    std::string     			    pathModel_;
+	std::string     			    pathBlock_;
+	std::string     			    pathGround_;
+	std::string     			    pathWall_;
+	std::string						pathDirectorySkyBox_;
+	std::string						pathShaderBasic_;
+    std::string						pathShaderSkyBox_;
+    std::list< std::string >		pathSkyBox_;
 
 	Shader							shader_;
 	std::unique_ptr< Skybox >		skybox_;
@@ -103,9 +104,6 @@ private:
 	Model							block_;
 	Model							ground_;
 	Model							wall_;
-
-	ActModel						asnake_;
-	std::unique_ptr< ActModel[] > 	ablock_;
 
     Camera							camera_;
 
@@ -117,6 +115,7 @@ private:
     void                error_(std::string const &s = std::string("Error"));
     void                clean_();
     void                getPath_();
+	void				drawGridCase(eSprite sprite, int x, int y);
 
 	static float				lastX_;
 	static float				lastY_;
