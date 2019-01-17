@@ -47,7 +47,7 @@ void WidgetSnake::_renderOtherSnake(void) {
 
 	ImGui::SetCursorPosX((ImGui::GetWindowSize().x - sizeTexture) / 2);
 
-	ImGui::Image(_texture[static_cast<int>(_snake.sprite)], sf::Vector2f(sizeTexture, sizeTexture));
+	ImGui::Image(_texture[static_cast<int>(_snake.sprite) - static_cast<unsigned int>(eSprite::GREEN)], sf::Vector2f(sizeTexture, sizeTexture));
 
 
 	ImGui::SetCursorPosX((ImGui::GetWindowSize().x - sizeTexture) / 2);
@@ -66,9 +66,9 @@ void WidgetSnake::_renderOtherSnake(void) {
 	Core::endColor();
 
 	ImGui::SetCursorPosX((ImGui::GetWindowSize().x - sizeTexture) / 2);
-	if (ImGui::BeginCombo("", _color[static_cast<int>(_snake.sprite)].c_str(), ImGuiComboFlags_NoArrowButton))
+	if (ImGui::BeginCombo("", _color[static_cast<int>(_snake.sprite) - static_cast<unsigned int>(eSprite::GREEN)].c_str(), ImGuiComboFlags_NoArrowButton))
 	{
-		unsigned int i = 0;
+		unsigned int i = static_cast<int>(eSprite::GREEN);
 		for (auto const &e : _color)
 		{
 			if (ImGui::Selectable(e.c_str(), i == static_cast<int>(_snake.sprite)) && _core.univers.getGameNetwork())
@@ -78,7 +78,6 @@ void WidgetSnake::_renderOtherSnake(void) {
 
 		ImGui::EndCombo();
 	}
-
 	ImGui::End();
 }
 
@@ -99,6 +98,8 @@ void WidgetSnake::_renderYourSnake(void) {
 	ImGui::SetCursorPosX(4);
 	ImGui::LabelText(_snake.name, "Name : ");
 
+	ImGui::SetCursorPosX((ImGui::GetWindowSize().x - sizeTexture) / 2);
+	ImGui::Image(_texture[static_cast<int>(_snake.sprite) - static_cast<unsigned int>(eSprite::GREEN)], sf::Vector2f(sizeTexture, sizeTexture));
 
 	ImGui::SetCursorPosX((ImGui::GetWindowSize().x - sizeTexture) / 2);
 
