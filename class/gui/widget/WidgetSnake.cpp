@@ -99,7 +99,7 @@ void WidgetSnake::_renderOtherSnake(void) {
 
 void WidgetSnake::_renderYourSnake(void) {
 	unsigned int sizeTexture;
-	unsigned int debug = 0;
+
 	ImGui::Begin(std::string(std::to_string(_snake.id) + std::string(_snake.name)).c_str(), NULL, ImGuiWindowFlags_NoDecoration);
 
 	sizeTexture = _sizeTexture();

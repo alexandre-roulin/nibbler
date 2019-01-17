@@ -53,7 +53,7 @@ void DisplaySfml::_clean(void) {
 	this->_win.close();
 }
 
-void DisplaySfml::render(void) {
+void DisplaySfml::render(float currentDelayFrame, float maxDelayFrame) {
 	this->_win.display();
 	this->_win.draw(this->_spriteBackground);
 }
@@ -139,7 +139,7 @@ void DisplaySfml::setBackground(Grid< eSprite > const &grid) {
 	this->_spriteBackground = sf::Sprite(this->_textureBackground.getTexture());
 }
 
-void DisplaySfml::update(void) {
+void DisplaySfml::update(float deltaTime) {
 	while (this->_win.pollEvent(this->_ev)) {
 		if (this->_ev.type == sf::Event::Closed)
 			this->_exit = true;

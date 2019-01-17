@@ -35,16 +35,12 @@ public:
 
 	virtual ~DisplaySdl(void);
 
-	bool exit(void) const;
-
-	void render(void);
-
-	void update(void);
-	void drawGrid(Grid< eSprite > const &grid);
-
-	void setBackground(Grid< eSprite > const &grid);
-
-	eDirection getDirection(void) const;
+	bool exit(void) const override;
+	void render(float currentDelayFrame, float maxDelayFram) override;
+	void update(float delaTime) override;
+	void drawGrid(Grid< eSprite > const &grid) override;
+	void setBackground(Grid< eSprite > const &grid) override;
+	eDirection getDirection(void) const override;
 
 private:
 	bool _exit;

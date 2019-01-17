@@ -34,12 +34,12 @@ public:
 
 	virtual ~DisplaySfml(void);
 
-	bool exit(void) const;
-	void render(void);
-	void update(void);
-	void drawGrid(Grid< eSprite > const &grid);
-	void setBackground(Grid< eSprite > const &grid);
-	eDirection getDirection(void) const;
+	bool exit(void) const override;
+	void render(float currentDelayFrame, float maxDelayFrame) override;
+	void update(float deltaTime) override;
+	void drawGrid(Grid< eSprite > const &grid) override;
+	void setBackground(Grid< eSprite > const &grid) override;
+	eDirection getDirection(void) const override;
 
 private:
 	bool _exit;

@@ -98,7 +98,7 @@ void DisplaySdl::_clean(void)
     SDL_Quit();
 }
 
-void DisplaySdl::render(void) {
+void DisplaySdl::render(float currentDelayFrame, float maxDelayFrame) {
     if (this->_rendererTexture)
         SDL_DestroyTexture(this->_rendererTexture);
     this->_rendererTexture = SDL_CreateTextureFromSurface(this->_renderer, this->_rendererSurface);
@@ -164,7 +164,7 @@ void		DisplaySdl::setBackground(Grid< eSprite > const &grid)
 	this->_drawGrid(this->_background, grid);
 }
 
-void			DisplaySdl::update(void)
+void			DisplaySdl::update(float deltaTime)
 {
 
     while (SDL_PollEvent(&this->_ev))
