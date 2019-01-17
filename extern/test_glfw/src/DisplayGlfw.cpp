@@ -26,6 +26,7 @@ maxTimer_(0.f),
 winTileSize_(Vector2D<int>(width, height)),
 tileBackground_(winTileSize_.getX(), winTileSize_.getY()),
 background_(winTileSize_.getX(), winTileSize_.getY()),
+tileGrid_(winTileSize_.getX(), winTileSize_.getY()),
 grid_(winTileSize_.getX(), winTileSize_.getY()),
 deltaTime_(0.016f),
 skybox_(nullptr),
@@ -150,33 +151,16 @@ void		DisplayGlfw::setBackground(Grid< eSprite > const &grid) {
     }
 }
 
-void		DisplayGlfw::drawGridCase(eSprite sprite, int x, int y) {
+void		DisplayGlfw::drawGridCase_(eSprite sprite, int x, int y) {
 	grid_(x, y).resetTransform();
 	grid_(x, y).translate(glm::vec3(x - winTileSize_.getX() / 2, y - winTileSize_.getY() / 2, 1.2f));
-
-	if ((sprite & eSprite::MASK_BODY) != eSprite::NONE) {
-
-		eSprite from = (sprite & eSprite::MASK_FROM) >> eSprite::BITWISE_FROM;
-		eSprite to = (sprite & eSprite::MASK_TO) >> eSprite::BITWISE_TO;
-
-		float distInterpelated = (currentTimer_ / maxTimer_);
-
-		if (to == eSprite::EAST)
-			grid_(x, y).translate(glm::vec3(distInterpelated, 0.0f, 0.0f));
-		else if (to == eSprite::WEST)
-			grid_(x, y).translate(glm::vec3(-distInterpelated, 0.0f, 0.0f));
-		else if (to == eSprite::SOUTH)
-			grid_(x, y).translate(glm::vec3(0.0f, -distInterpelated, 0.0f));
-		else if (to == eSprite::NORTH)
-			grid_(x, y).translate(glm::vec3(0.0f, distInterpelated, 0.0f));
-	}
-
 	model_ = grid_(x, y).getTransform();
 	shader_.setMat4("model", model_);
 	grid_(x, y).getModel()->render(shader_);
 }
 
 void		DisplayGlfw::drawGrid(Grid< eSprite > const &grid) {
+	tileGrid_ = grid;
 	shader_.activate();
 
 	shader_.setMat4("projection", projection_);
@@ -190,18 +174,45 @@ void		DisplayGlfw::drawGrid(Grid< eSprite > const &grid) {
 				grid_(x, y).assign(&block_);
 
 			if (grid(x, y) != eSprite::NONE)
-				drawGridCase(grid(x, y), x, y);
+				drawGridCase_(grid(x, y), x, y);
 		}
 	}
 }
 
-void DisplayGlfw::setTimers(float currentTimer, float maxTimer) {
-	currentTimer_ = currentTimer;
-	maxTimer_ = maxTimer;
+void		DisplayGlfw::interpolateGrid_() {
+	for (int y = 0; y < winTileSize_.getY(); ++y) {
+		for (int x = 0; x < winTileSize_.getX(); ++x) {
+			eSprite sprite = tileGrid_(x, y);
+
+			if ((sprite & eSprite::MASK_BODY) == eSprite::HEAD
+				|| (sprite & eSprite::MASK_BODY) == eSprite::BODY
+				|| (sprite & eSprite::MASK_BODY) == eSprite::TAIL) {
+
+				eSprite from = (sprite & eSprite::MASK_FROM) >> eSprite::BITWISE_FROM;
+				eSprite to = (sprite & eSprite::MASK_TO) >> eSprite::BITWISE_TO;
+
+				float distInterpelated = 1.f * (currentTimer_ / maxTimer_);
+
+				if (to == eSprite::EAST)
+					grid_(x, y).translate(glm::vec3(distInterpelated, 0.0f, 0.0f));
+				else if (to == eSprite::WEST)
+					grid_(x, y).translate(glm::vec3(-distInterpelated, 0.0f, 0.0f));
+				else if (to == eSprite::SOUTH)
+					grid_(x, y).translate(glm::vec3(0.0f, -distInterpelated, 0.0f));
+				else if (to == eSprite::NORTH)
+					grid_(x, y).translate(glm::vec3(0.0f, distInterpelated, 0.0f));
+			}
+
+		}
+	}
 }
 
+void DisplayGlfw::render(float currentDelayFrame, float maxDelayFrame) {
+	currentTimer_ = currentDelayFrame;
+	maxTimer_ = maxDelayFrame;
 
-void DisplayGlfw::render() {
+	interpolateGrid_();
+
     shader_.activate();
 
     if (glfwGetKey(getWindow(), GLFW_KEY_UP) == GLFW_PRESS)
@@ -277,24 +288,13 @@ bool        DisplayGlfw::exit() const {
 	Glfw::exit();
 }
 
-/*
-**####################ID_TILE
-*/
-
 void DisplayGlfw::update(float deltaTime) {
     deltaTime_ = deltaTime;
 	Glfw::update();
-    if (DisplayGlfw::mouseCallbackCalled_) {
-        camera_.processMouseMovement(DisplayGlfw::offsetX_, DisplayGlfw::offsetY_);
-        DisplayGlfw::mouseCallbackCalled_ = false;
-    }
-}
-void DisplayGlfw::update() {
-	Glfw::update();
-	if (DisplayGlfw::mouseCallbackCalled_) {
-		camera_.processMouseMovement(DisplayGlfw::offsetX_, DisplayGlfw::offsetY_);
-		DisplayGlfw::mouseCallbackCalled_ = false;
-	}
+	//if (DisplayGlfw::mouseCallbackCalled_) {
+	//	camera_.processMouseMovement(DisplayGlfw::offsetX_, DisplayGlfw::offsetY_);
+	//	DisplayGlfw::mouseCallbackCalled_ = false;
+	//}
 }
 
 eDirection DisplayGlfw::getDirection() const {

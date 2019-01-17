@@ -59,31 +59,29 @@ public:
 
 	~DisplayGlfw() override;
 
-	void render() override;
-    void update(float deltaTime = 0.16f);
-	void update() override;
+	void render(float currentDelayFrame, float maxDelayFrame) override;
+    void update(float deltaTime) override;
 	bool        exit() const override;
 	eDirection getDirection() const override;
 	void		drawGrid(Grid< eSprite > const &grid) override;
 	void		setBackground(Grid< eSprite > const &grid) override;
-
-	void setTimers(float currentTimer, float maxTimer);
 
 	DisplayGlfw &operator=(DisplayGlfw const &rhs) = delete;
 	DisplayGlfw(DisplayGlfw const &src) = delete;
 	DisplayGlfw() = delete;
 
 private:
-    eDirection          direction_;
-	float				currentTimer_;
-	float				maxTimer_;
-	float				refreshMaxTimer_;
-    int                 tileSize_;
-    Vector2D<int> const winTileSize_;
-    Vector2D<int> const winPixelSize_;
+    eDirection          			direction_;
+	float							currentTimer_;
+	float							maxTimer_;
+	float							refreshMaxTimer_;
+    int                 			tileSize_;
+    Vector2D<int> const 			winTileSize_;
+    Vector2D<int> const 			winPixelSize_;
 
 	Grid< eSprite >					tileBackground_;
     Grid< ActModel >				background_;
+	Grid< eSprite >					tileGrid_;
 	Grid< ActModel >				grid_;
 
 	float							deltaTime_;
@@ -115,9 +113,11 @@ private:
     void                error_(std::string const &s = std::string("Error"));
     void                clean_();
     void                getPath_();
-	void				drawGridCase(eSprite sprite, int x, int y);
+	void				drawGridCase_(eSprite sprite, int x, int y);
+	void				interpolateGrid_();
 
-	static float				lastX_;
+
+		static float				lastX_;
 	static float				lastY_;
 	static float				offsetX_;
 	static float				offsetY_;
