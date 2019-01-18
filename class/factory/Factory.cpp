@@ -17,8 +17,8 @@ Factory::Factory(Univers &univers)
 }
 
 void Factory::create_all_snake(Snake snake_array[MAX_SNAKE], int16_t nu) {
-
 	log_info("Create %d snake(s)", nu);
+
 	univers_.getWorld_().grid.fill(eSprite::NONE);
 	univers_.getWorld_().grid.print();
 
@@ -33,22 +33,32 @@ void Factory::create_snake(Snake snake, int max_snakes) {
 	KINU::Entity	snake_follow;
 	KINU::Entity	new_snake;
 
+	log_info("Debug " );
 	// (0 + 1) * 35 / (2 + 1) = 11
 	// 35 / 2 = 17
 
 	int base_x = (snake.id + 1) * univers_.getMapSize() / (max_snakes + 1);
 	int base_y = univers_.getMapSize() / 2;
+	log_info("Debug ");
 	for (int index = 0; index < 4; ++index) {
 
 		new_snake = univers_.getWorld_().createEntity();
+		log_info("Debug %d" ,index );
 
 		if (index == 0) {
+			log_info("Debug");
 			new_snake.tagByTagId(eTag::HEAD_TAG + snake.id);
+			log_info("Debug");
 			new_snake.addComponent<JoystickComponent>(NORTH);
+			log_info("Debug");
 			new_snake.addComponent<MotionComponent>(NORTH);
+			log_info("Debug");
 			new_snake.addComponent<CollisionComponent>();
+			log_info("Debug");
 			new_snake.addComponent<SpriteComponent>(eSprite::HEAD | snake.sprite, SPECIFIC_LAST);
+			log_info("Debug");
 			new_snake.addComponent<PositionComponent>(base_x, base_y);
+			log_info("Debug");
 			univers_.getWorld_().grid(base_x, base_y) = eSprite::HEAD | snake.sprite;
 			log_warn("Factory::creationHead x[%d] y[%d] id[%d] tag[%d]",base_x, base_y,snake.id,  eTag::HEAD_TAG + snake.id);
 		}

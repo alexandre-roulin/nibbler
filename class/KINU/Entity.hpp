@@ -119,7 +119,7 @@ namespace KINU {
 
 		/** ID Management **/
 
-		bool hasEntityById(Entity::ID) const;
+		bool hasEntityById(Entity::ID);
 
 		Entity getEntityById(Entity::ID);
 
@@ -129,13 +129,13 @@ namespace KINU {
 		Entity getEntityByTagId(TagId);
 
 		// Check if there is any entity tag by tag id
-		bool hasEntityByTagId(TagId) const;
+		bool hasEntityByTagId(TagId);
 
 		// Tag entity with tag id
 		void tagEntityByTagId(Entity, TagId);
 
 		// Check if entity has any tag id
-		bool hasTagIdByEntity(Entity) const;
+		bool hasTagIdByEntity(Entity);
 
 		// Getter tag id by entity
 		TagId getTagIdByEntity(Entity);
@@ -147,13 +147,13 @@ namespace KINU {
 		getEntitiesByGroupId(TagId);
 
 		// Check if there is any group with tag id
-		bool hasEntitiesGroupId(TagId) const;
+		bool hasEntitiesGroupId(TagId);
 
 		// Group entity by tag id
 		void groupEntityByGroupId(Entity, TagId);
 
 		// Check if entity has any group id
-		bool hasGroupIdByEntity(Entity) const;
+		bool hasGroupIdByEntity(Entity);
 
 		// get group id of possible group entity
 		TagId getGroupIdByEntity(Entity);
