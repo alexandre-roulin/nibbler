@@ -59,10 +59,9 @@ int main(int argc, char **argv) {
 
 		//std::cout << deltaTime << std::endl;
 
-		lol.setTimers(dist, maxDist);
 		lol.update(deltaTime);
 		lol.drawGrid(al);
-		lol.render();
+		lol.render(dist, maxDist);
 	}
 
 /*

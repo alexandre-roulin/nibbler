@@ -77,7 +77,7 @@ struct Snake {
 	static Snake randomSnake(int16_t id) {
 		Snake snake;
 
-		snake.sprite = static_cast<eSprite>(rand() % MAX_COLOR);
+		snake.sprite = static_cast<eSprite>(static_cast<int>(eSprite::GREEN) + rand() % MAX_COLOR);
 		strncpy(snake.name, Snake::basicName[rand() % MAX_SNAKE].c_str(),
 				NAME_BUFFER);
 		snake.id = id;

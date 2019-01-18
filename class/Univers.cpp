@@ -90,8 +90,8 @@ bool Univers::load_external_display_library(std::string const &title,
 	if (world_ != nullptr)
 		world_->setDisplay(display);
 
-	display->update();
-	display->render();
+	display->update(0.17f);
+	display->render(1.f, 1.f);
 	return (true);
 }
 
@@ -206,9 +206,9 @@ void Univers::loop() {
 	while ((display == nullptr || !display->exit()) &&
 		   !getMainClientTCP()->all_snake_is_dead()) {
 		if (display != nullptr) {
-			display->update();
+			display->update(0.2f);
 			display->drawGrid(world_->grid);
-			display->render();
+			display->render(1.f, 1.f);
 		}
 	}
 	unload_external_library();

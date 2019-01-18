@@ -6,9 +6,9 @@
 #define SPRITE_FOOD SIZE_LINE_TILESET
 #define PATH_TILESET "./ressource/snake_tileset.png"
 #define SIZE_LINE_TILESET 15
-//#define PATH_DISPLAY_LIBRARY_SFML "./extern/display_sfml/libdisplay_sfml.so"
-//#define PATH_DISPLAY_LIBRARY_SFML "./extern/test_glfw/cmake-build-debug/libGlitterd.so"
-#define PATH_DISPLAY_LIBRARY_SFML "./extern/display_sdl/libdisplay_sdl.so"
+#define PATH_DISPLAY_LIBRARY_SFML "./extern/display_sfml/libdisplay_sfml.so"
+//#define PATH_DISPLAY_LIBRARY_SFML "./extern/test_glfw/libGlitter.so"
+//#define PATH_DISPLAY_LIBRARY_SFML "./extern/display_sdl/libdisplay_sdl.so"
 
 #define PATH_DISPLAY_LIBRARY_SDL "./extern/display_sdl/libdisplay_sdl.so"
 #define PATH_SOUND_LIBRARY_SFML "./extern/sound_sfml/libsound_sfml.so"
@@ -168,9 +168,9 @@ public:
 
 	virtual bool exit(void) const = 0;
 
-	virtual void render(void) = 0;
+	virtual void render(float currentDelayFrame, float maxDelayFrame) = 0;
 
-	virtual void update(void) = 0;
+	virtual void update(float deltaTime) = 0;
 
 	virtual void drawGrid(Grid<eSprite> const &grid) = 0;
 

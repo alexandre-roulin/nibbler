@@ -23,6 +23,10 @@ private:
 
 	void		_renderYourSnake(void);
 	void		_renderOtherSnake(void);
+	void			_renderName(unsigned int sizeTexture) const;
+	void			_renderImage(unsigned int sizeTexture) const;
+	unsigned int 	_sizeTexture(void) const;
+	void 			_renderSelectionColor(unsigned int sizeTexture) const;
 
 	WidgetSnake &operator=(const WidgetSnake&);
 	WidgetSnake(const WidgetSnake&);

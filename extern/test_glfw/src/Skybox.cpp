@@ -10,7 +10,7 @@
 
 Skybox::Skybox(std::string const &pathShader,
 				std::string const &pathDirectorySkyBox,
-				std::vector< std::string > const &skyboxFile) {
+				std::list< std::string > const &skyboxFile) {
 
 	if (skyboxFile.size() < SKYBOX_NUMBER_OF_FACES)
 		throw (Skybox::ConstructorException("Missing file during construct Skybox"));
@@ -23,15 +23,16 @@ Skybox::Skybox(std::string const &pathShader,
 	glBindTexture(GL_TEXTURE_CUBE_MAP, textureSkyBox_);
 
 	int width, height, nrChannels;
-	for (unsigned int i = 0; i < SKYBOX_NUMBER_OF_FACES; i++) {
-		unsigned char *data = stbi_load((pathDirectorySkyBox + skyboxFile[i]).c_str(), &width, &height, &nrChannels, 0);
+	std::list<std::string>::const_iterator it = skyboxFile.begin();
+	for (unsigned int i = 0; i < SKYBOX_NUMBER_OF_FACES && it != skyboxFile.end(); i++, it++) {
+		unsigned char *data = stbi_load((pathDirectorySkyBox + *it).c_str(), &width, &height, &nrChannels, 0);
 		if (data) {
-			std::cout << "loadSkyBox_ : " << (pathDirectorySkyBox + skyboxFile[i]).c_str() << std::endl;
+			std::cout << "loadSkyBox_ : " << (pathDirectorySkyBox + *it).c_str() << std::endl;
 			glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
 		}
 		else {
 			stbi_image_free(data);
-			throw (Skybox::ConstructorException(std::string("loadSkyBox_ : ") + pathDirectorySkyBox + skyboxFile[i].c_str() + " failed."));
+			throw (Skybox::ConstructorException(std::string("loadSkyBox_ : ") + pathDirectorySkyBox + (*it).c_str() + " failed."));
 		}
 		stbi_image_free(data);
 	}
