@@ -16,7 +16,7 @@
 #define DIRECTION_HORIZONTAL 4            // 0000 0100
 
 #define MAP_MIN 5
-#define MAP_DEFAULT 20
+#define MAP_DEFAULT 30
 #define MAP_MAX 100
 
 enum eTag {

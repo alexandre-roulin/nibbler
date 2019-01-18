@@ -235,6 +235,7 @@ namespace KINU {
 
 	void EntitiesManager::groupEntityByGroupId(Entity entity,
 											   TagId tagId) {
+
 		mutex_.lock();
 		groupedEntityId[entity.id_] = tagId;
 		groupedEntities[tagId].push_back(entity);
