@@ -102,17 +102,14 @@ void Bobby::calculateDirection() {
 
 			generator.removeCollision(vecFood);
 
-			std::cout << "KOUKOU" << std::endl;
 			generator.print();
 
 			AStar::CoordinateList coordinateList = generator.findPath(vecSnake,
 																	  vecFood);
 			try {
-				std::cout << "Position to food : " << vecFood << std::endl;
 				if (coordinateList.size() > 1)
 					findDirection(vecSnake, coordinateList);
 				mutex.unlock();
-				std::cout << "Find path to food" << std::endl;
 				return;
 			} catch (std::exception const &e) {
 				std::cout << "ALERT FOOD" << std::endl;
@@ -128,11 +125,7 @@ void Bobby::calculateDirection() {
 			generator.removeCollision(vectail);
 
 			try {
-				std::cout << "1" << std::endl;
 				AStar::CoordinateList coordinateList = generator.findPath(vecSnake, vectail);
-				std::cout << "2" << std::endl;
-				std::cout << "VecSnake : " << vecSnake << " VecTail  : " << vectail << std::endl;
-				std::cout << "Find path to tail size of AStar::CoordinateList : " << coordinateList.size() <<  std::endl;
 				findDirection(vecSnake, coordinateList);
 				mutex.unlock();
 				return;
@@ -192,7 +185,6 @@ AStar::Vec2i Bobby::getVecFood(AStar::Vec2i head) {
 			if (food.hasComponent<PositionComponent>()) {
 
 				auto positionFood = food.getComponent<PositionComponent>();
-				std::cout << "PositionFood : " << positionFood << std::endl;
 				for (int base_y = 0; base_y < baseIndex; ++base_y) {
 					for (int base_x = 0; base_x < baseIndex; ++base_x) {
 

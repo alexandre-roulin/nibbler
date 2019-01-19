@@ -26,7 +26,7 @@ Univers::Univers()
 		: timer_start(boost::asio::deadline_timer(io_start)),
 		  timer_loop(boost::asio::deadline_timer(io_loop)),
 		  mapSize(MAP_DEFAULT),
-		  gameSpeed(100),
+		  gameSpeed(40),
 		  dlHandleDisplay(nullptr),
 		  dlHandleSound(nullptr),
 		  display(nullptr),
@@ -285,7 +285,7 @@ void Univers::loop_world() {
 				boost::posix_time::milliseconds(gameSpeed));
 		timer_loop.async_wait(boost::bind(&Univers::loop_world, this));
 	}
-	world_->grid.print();
+//	world_->grid.print();
 }
 
 /** Create and delete **/

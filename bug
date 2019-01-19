@@ -1,0 +1,3 @@
+#0 0x107302b0e in __asan_memcpy (libclang_rt.asan_osx_dynamic.dylib:x86_64h+0x54b0e)
+    #1 0x106be24b7 in KINU::EntitiesManager::hasEntitiesGroupId(short) const algorithm:939
+    #2 0x106b8b5a6 in Bobby::calculateDirection() Bobby.cpp:99
