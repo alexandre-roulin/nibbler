@@ -19,10 +19,10 @@
 
 
 int main(int argc, char **argv) {
-    DisplayGlfw lol(10, 10, "Issou");
+    DisplayGlfw lol(35, 35, "Issou");
 
-	Grid< eSprite > background(10);
-	Grid< eSprite > al(10);
+	Grid< eSprite > background(35);
+	Grid< eSprite > al(35);
 
 	background.fill(eSprite::GROUND);
 	background.setBorder(eSprite::WALL);
@@ -46,12 +46,24 @@ int main(int argc, char **argv) {
 	float dist = 0;
 	float maxDist = 1.4f;
 
+	float start = 0.f;
+
+	float count = 0.f;
+
+	bool f = true;
+
 	while (!lol.exit()) {
 
 		float currentFrame = glfwGetTime();
 		deltaTime = currentFrame - lastFrame;
 		lastFrame = currentFrame;
 		dist += deltaTime;
+		if (f) {
+			f = false;
+		} else {
+			start += deltaTime;
+		}
+
 
 		if (dist > maxDist) {
 			dist = 0;
@@ -62,6 +74,16 @@ int main(int argc, char **argv) {
 		lol.update(deltaTime);
 		lol.drawGrid(al);
 		lol.render(dist, maxDist);
+
+		count += 1.f;
+
+		if (start > 10.f) {
+			std::cout << "Average " << start << " for " << count << " So : " << (start / count) << " seconds.";
+			exit(0);
+		}
+
+
+		std::cout << "It took me " << deltaTime << " seconds." << std::endl;
 	}
 
 /*

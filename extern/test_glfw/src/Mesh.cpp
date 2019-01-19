@@ -31,8 +31,11 @@ void    Mesh::clean_() {
 unsigned int		Mesh::getVAO() const {
 	return (VAO);
 }
+std::vector<unsigned int> const	&Mesh::getIndice() const {
+	return (indice_);
+}
 
-void	Mesh::render(Shader &shader) const {
+void Mesh::activeTexture(Shader &shader) const {
 	unsigned int diffuseNr = 1;
 	unsigned int specularNr = 1;
 	unsigned int normalNr = 1;
@@ -57,6 +60,10 @@ void	Mesh::render(Shader &shader) const {
 		glBindTexture(GL_TEXTURE_2D, texture_[i].id);
 	}
 	glActiveTexture(GL_TEXTURE0);
+}
+
+void	Mesh::render(Shader &shader) const {
+	activeTexture(shader);
 	render();
 }
 
@@ -94,10 +101,6 @@ void	Mesh::setupMesh_() {
 	glEnableVertexAttribArray(2);
 
 	glBindVertexArray(0);
-
-
-	glDeleteBuffers(1, & VBO);
-	glDeleteBuffers(1, & EBO);
 }
 
 bool        Mesh::debug_ = true;

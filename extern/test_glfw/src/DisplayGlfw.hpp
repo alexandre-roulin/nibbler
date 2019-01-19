@@ -21,6 +21,7 @@
 #include "ActModel.hpp"
 #include "Grid.tpp"
 #include "Skybox.hpp"
+#include "Particle.hpp"
 
 #define DISPLAY_GLFW_WIN_WIDTH 1024
 #define DISPLAY_GLFW_WIN_HEIGHT 720
@@ -97,11 +98,15 @@ private:
     std::list< std::string >		pathSkyBox_;
 
 	Shader							shader_;
+	Shader							shaderMultiple_;
 	std::unique_ptr< Skybox >		skybox_;
 	Model							snake_;
 	Model							block_;
 	Model							ground_;
 	Model							wall_;
+	Particle						*testParticle_;
+
+
 
     Camera							camera_;
 

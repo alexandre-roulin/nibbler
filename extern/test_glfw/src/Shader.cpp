@@ -102,9 +102,8 @@ GLuint 		Shader::getId() const {
 
 void		Shader::setMat4(const std::string &name, const glm::mat4 &mat) const  {
 	if (glGetUniformLocation(program_, name.c_str()) == -1) {
-		std::cerr << "LOL" << std::endl;
+		std::cerr << "glGetUniformLocation::setMat4 failed [" << name << "]" << std::endl;
 	}
-
 	glUniformMatrix4fv(glGetUniformLocation(program_, name.c_str()), 1, GL_FALSE, &mat[0][0]);
 }
 
