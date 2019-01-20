@@ -44,6 +44,8 @@ public:
 	void				render(Shader &shader) const;
 	void				render() const noexcept;
 	unsigned int		getVAO() const;
+	void				activeTexture(Shader &shader) const;
+	std::vector<unsigned int> const	&getIndice() const;
 
 	~Mesh();
 

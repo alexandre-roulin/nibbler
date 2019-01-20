@@ -28,6 +28,7 @@ tileBackground_(winTileSize_.getX(), winTileSize_.getY()),
 background_(winTileSize_.getX(), winTileSize_.getY()),
 tileGrid_(winTileSize_.getX(), winTileSize_.getY()),
 grid_(winTileSize_.getX(), winTileSize_.getY()),
+testParticle_(nullptr),
 deltaTime_(0.016f),
 skybox_(nullptr),
 projection_(1.f),
@@ -47,16 +48,28 @@ model_(1.f) {
             (float)DISPLAY_GLFW_WIN_WIDTH / (float)DISPLAY_GLFW_WIN_HEIGHT,
             0.1f, 1000.0f);
 
+	shaderMultiple_.attach(pathShaderBasic_ + "Multiple.vert");
+	shaderMultiple_.attach(pathShaderBasic_ + ".frag");
+	shaderMultiple_.link();
+
     shader_.attach(pathShaderBasic_ + ".vert");
     shader_.attach(pathShaderBasic_ + ".frag");
     shader_.link();
 
+    std::cout << "Step : 1" << std::endl;
     snake_.setModel(pathModel_);
+	std::cout << "Step : 2" << std::endl;
     block_.setModel(pathBlock_);
+	std::cout << "Step : 3" << std::endl;
     ground_.setModel(pathGround_);
+	std::cout << "Step : 4" << std::endl;
     wall_.setModel(pathWall_);
+	std::cout << "Step : 5" << std::endl;
 
-    //asnake_.assign(&snake_);
+	testParticle_ = new Particle(ground_, winTileSize_.getX() * winTileSize_.getY());
+
+
+	//asnake_.assign(&snake_);
     //ablock_ = std::make_unique< ActModel[] >(static_cast<size_t>(winTileSize_.getX() * winTileSize_.getY()));
     //int i = 0;
     //for (int y = -winTileSize_.getY() / 2; y < winTileSize_.getY() / 2; y++) { //TODO Compute vec / 2
@@ -70,9 +83,12 @@ model_(1.f) {
     //}
     //asnake_.translate(glm::vec3(0.f, 0.f, 1.f));
 
+	std::cout << "Step : 6" << std::endl;
     camera_.processPosition(Camera::Movement::BACKWARD, std::max(winTileSize_.getX(), winTileSize_.getY()) / 2);
+	std::cout << "Step : 7" << std::endl;
 
 	skybox_ = std::make_unique< Skybox >(pathShaderSkyBox_, pathDirectorySkyBox_, pathSkyBox_);
+	std::cout << "Step : 8" << std::endl;
 }
 
 void                DisplayGlfw::getPath_() {
@@ -133,8 +149,10 @@ void DisplayGlfw::clean_() {
 
 void		DisplayGlfw::setBackground(Grid< eSprite > const &grid) {
     tileBackground_ = grid;
-    for (int y = 0; winTileSize_.getY() > y; ++y) {
+	//actModelBackground_.resize(winTileSize_.getX() * winTileSize_.getY());
+	for (int y = 0; winTileSize_.getY() > y; ++y) {
         for (int x = 0; x < winTileSize_.getX(); ++x) {
+        	/*
             if (tileBackground_(x, y) == eSprite::WALL) {
                 background_(x, y).assign(&wall_);
 				background_(x, y).resetTransform();
@@ -147,8 +165,14 @@ void		DisplayGlfw::setBackground(Grid< eSprite > const &grid) {
 				background_(x, y).translate(glm::vec3(x - winTileSize_.getX() / 2, y - winTileSize_.getY() / 2, 0.f));
 				background_(x, y).scale(glm::vec3(-0.10f));
             }
+*/
+			testParticle_->transforms[y * winTileSize_.getX() + x].resetTransform();
+			testParticle_->transforms[y * winTileSize_.getX() + x].translate(glm::vec3(glm::vec3(x - winTileSize_.getX() / 2, y - winTileSize_.getY() / 2, 0.f)));
+			testParticle_->transforms[y * winTileSize_.getX() + x].scale(glm::vec3(-0.10f));
+
         }
     }
+	testParticle_->update();
 }
 
 void		DisplayGlfw::drawGridCase_(eSprite sprite, int x, int y) {
@@ -265,6 +289,7 @@ void DisplayGlfw::render(float currentDelayFrame, float maxDelayFrame) {
     snake_.render(shader_);
     */
 
+/*
     for (int y = 0; y < winTileSize_.getY(); y++) {
         for (int x = 0; x < winTileSize_.getX(); x++) {
         	if (background_(x, y).getModel()) {
@@ -274,7 +299,13 @@ void DisplayGlfw::render(float currentDelayFrame, float maxDelayFrame) {
         	}
         }
     }
-
+*/
+	shaderMultiple_.activate();
+	shaderMultiple_.setMat4("projection", projection_);
+	shaderMultiple_.setMat4("view", view_);
+	testParticle_->update();
+	testParticle_->render(shaderMultiple_);
+	//actModelBackground_.render(shaderMultiple_);
 
     skybox_->render(view_, projection_);
 

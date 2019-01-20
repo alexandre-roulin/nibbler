@@ -208,12 +208,22 @@ void Univers::loop() {
 	world_->grid.fill(eSprite::NONE);
 	playMusic("./ressource/sound/zelda.ogg");
 
+
+
+	//std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
+
 	while ((display == nullptr || !display->exit()) &&
 		   !getMainClientTCP()->all_snake_is_dead()) {
+		//std::chrono::high_resolution_clock::time_point t2 = std::chrono::high_resolution_clock::now();
+		//std::chrono::duration<double> time_span = std::chrono::duration_cast<std::chrono::duration<double>>(t2 - t1);
+		//t1 = t2;
+
+		//std::cout << "It took me " << time_span.count() << " seconds.";
+		//std::cout << std::endl;
 		if (display != nullptr) {
 			display->update(0.2f);
 			display->drawGrid(world_->grid);
-			display->render(1.f, 1.f);
+			display->render(gameSpeed, gameSpeed);
 		}
 	}
 	unload_external_library();

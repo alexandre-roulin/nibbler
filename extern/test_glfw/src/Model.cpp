@@ -40,6 +40,11 @@ void    Model::clean_() {
 	mesh_.clear();
 }
 
+std::deque<Mesh> const &Model::getMeshes() const {
+	return (mesh_);
+}
+
+
 float	Model::getInterScaling() const {
 	return (interScaling_);
 }
@@ -48,12 +53,12 @@ glm::vec3	Model::getPositionCenter() const {
 }
 
 void	Model::render() const {
-    for(unsigned int i = 0; i < mesh_.size(); i++)
-        mesh_[i].render();
+    for (const auto &i : mesh_)
+		i.render();
 }
 void	Model::render(Shader &shader) const {
-    for(unsigned int i = 0; i < mesh_.size(); i++)
-        mesh_[i].render(shader);
+    for (const auto &i : mesh_)
+		i.render(shader);
 }
 
 void 					Model::loadModel_() {

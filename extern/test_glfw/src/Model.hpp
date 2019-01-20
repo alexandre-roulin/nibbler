@@ -20,6 +20,7 @@ public:
 	~Model();
 
 	void	setModel(std::string const &path);
+	std::deque<Mesh> const &getMeshes() const;
 
 	float		getInterScaling() const;
 	glm::vec3	getPositionCenter() const;
