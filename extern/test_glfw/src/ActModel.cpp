@@ -109,5 +109,9 @@ glm::mat4	ActModel::getTransform() const {
 	return (transform_);
 }
 
+glm::vec3	ActModel::getPosition() const {
+	return (position_);
+}
+
 bool	ActModel::debug_ = true;
 

@@ -6,6 +6,10 @@
 #include "nibbler.hpp"
 #include "Skybox.hpp"
 
+#define PARTICULE_SIZE 1
+#define NEAR_PLANE 0.1f
+#define MAX_PLANE 1000.f
+
 IDisplay *newDisplay(int width,
                      int height,
                      char const *windowName) {
@@ -46,7 +50,7 @@ model_(1.f) {
 
     projection_ = glm::perspective(glm::radians(45.0f),
             (float)DISPLAY_GLFW_WIN_WIDTH / (float)DISPLAY_GLFW_WIN_HEIGHT,
-            0.1f, 1000.0f);
+            NEAR_PLANE, MAX_PLANE);
 
 	shaderMultiple_.attach(pathShaderBasic_ + "Multiple.vert");
 	shaderMultiple_.attach(pathShaderBasic_ + ".frag");
@@ -66,71 +70,42 @@ model_(1.f) {
     wall_.setModel(pathWall_);
 	std::cout << "Step : 5" << std::endl;
 
-	testParticle_ = new Particle(ground_, winTileSize_.getX() * winTileSize_.getY());
+	testParticle_ = new Particle(ground_, PARTICULE_SIZE*PARTICULE_SIZE*PARTICULE_SIZE);
+	for (int y = 0; y < PARTICULE_SIZE; ++y) {
+		for (int x = 0; x < PARTICULE_SIZE; ++x) {
+			for (int z = 0; z < PARTICULE_SIZE; ++z) {
+				testParticle_->transforms[x + PARTICULE_SIZE * (y + PARTICULE_SIZE * z)].translate(glm::vec3(x, y, z));
+				testParticle_->transforms[x + PARTICULE_SIZE * (y + PARTICULE_SIZE * z)].scale(glm::vec3(-0.10f));
+			}
+		}
+	}
 
-
-	//asnake_.assign(&snake_);
-    //ablock_ = std::make_unique< ActModel[] >(static_cast<size_t>(winTileSize_.getX() * winTileSize_.getY()));
-    //int i = 0;
-    //for (int y = -winTileSize_.getY() / 2; y < winTileSize_.getY() / 2; y++) { //TODO Compute vec / 2
-    //    for (int x = -winTileSize_.getX() / 2; x < winTileSize_.getX() / 2; x++) {
-    //        ablock_[i].assign(&block_);
-    //        ablock_[i].resetTransform();
-    //        ablock_[i].translate(glm::vec3(x, y, 0.f));
-    //        ablock_[i].scale(glm::vec3(-0.10f));
-    //        i++;
-    //    }
-    //}
-    //asnake_.translate(glm::vec3(0.f, 0.f, 1.f));
-
-	std::cout << "Step : 6" << std::endl;
     camera_.processPosition(Camera::Movement::BACKWARD, std::max(winTileSize_.getX(), winTileSize_.getY()) / 2);
-	std::cout << "Step : 7" << std::endl;
-
 	skybox_ = std::make_unique< Skybox >(pathShaderSkyBox_, pathDirectorySkyBox_, pathSkyBox_);
-	std::cout << "Step : 8" << std::endl;
 }
 
 void                DisplayGlfw::getPath_() {
 
-	int i = 1;
-	std::cout << "Debug : " << ++i << std::endl;
     std::string pathFile = __FILE__;
-	std::cout << "Debug : " << ++i << std::endl;
 
     std::string pathRoot = pathFile.substr(0, pathFile.rfind(DISPLAY_GLFW_SLASH));
     pathRoot_ = pathRoot.substr(0, pathRoot.rfind(DISPLAY_GLFW_SLASH));
     std::cout << pathRoot_ << std::endl;
-	std::cout << "Debug : " << ++i << std::endl;
 
     std::ifstream t(pathRoot_ + DISPLAY_GLFW_SLASH + "file.txt");
-	std::cout << "Debug : " << ++i << std::endl;
 	pathModel_ = std::string((std::istreambuf_iterator<char>(t)), std::istreambuf_iterator<char>());
-	std::cout << "Debug : " << ++i << std::endl;
     pathBlock_ = std::string(pathRoot_ + DISPLAY_GLFW_SLASH + "resources" + DISPLAY_GLFW_SLASH + "objects" + DISPLAY_GLFW_SLASH + "nanosuit" + DISPLAY_GLFW_SLASH + "nanosuit.obj");
-	std::cout << "Debug : " << ++i << std::endl;
     pathGround_ = std::string(pathRoot_ + DISPLAY_GLFW_SLASH + "resources" + DISPLAY_GLFW_SLASH + "grass_test.obj");
-	std::cout << "Debug : " << ++i << std::endl;
     pathWall_ = std::string(pathRoot_ + DISPLAY_GLFW_SLASH + "resources" + DISPLAY_GLFW_SLASH + "wall.obj");
-	std::cout << "Debug : " << ++i << std::endl;
 	pathShaderBasic_ = std::string(pathRoot_ + DISPLAY_GLFW_SLASH + "shader" + DISPLAY_GLFW_SLASH + "basic");
-	std::cout << "Debug : " << ++i << std::endl;
 	pathShaderSkyBox_ = std::string(pathRoot_ + DISPLAY_GLFW_SLASH + "shader" + DISPLAY_GLFW_SLASH + "skybox");
-	std::cout << "Debug 11: " << ++i << std::endl;
 	pathDirectorySkyBox_ = std::string(pathRoot_ + DISPLAY_GLFW_SLASH + "resources" + DISPLAY_GLFW_SLASH + "ame_nebula" + DISPLAY_GLFW_SLASH);
-	std::cout << "Debug 12: " << ++i << std::endl;
 	pathSkyBox_.emplace_back("purplenebula_rt.tga");
-	std::cout << "Debug 13: " << ++i << std::endl;
 	pathSkyBox_.emplace_back("purplenebula_lf.tga");
-	std::cout << "Debug 14: " << ++i << std::endl;
 	pathSkyBox_.emplace_back("purplenebula_up.tga");
-	std::cout << "Debug  15: " << ++i << std::endl;
 	pathSkyBox_.emplace_back("purplenebula_dn.tga");
-	std::cout << "Debug  16: " << ++i << std::endl;
 	pathSkyBox_.emplace_back("purplenebula_ft.tga");
-	std::cout << "Debug : 17 : " << ++i << std::endl;
 	pathSkyBox_.emplace_back("purplenebula_bk.tga");
-	std::cout << "Debug : " << ++i << std::endl;
 }
 
 
@@ -149,10 +124,9 @@ void DisplayGlfw::clean_() {
 
 void		DisplayGlfw::setBackground(Grid< eSprite > const &grid) {
     tileBackground_ = grid;
-	//actModelBackground_.resize(winTileSize_.getX() * winTileSize_.getY());
 	for (int y = 0; winTileSize_.getY() > y; ++y) {
         for (int x = 0; x < winTileSize_.getX(); ++x) {
-        	/*
+
             if (tileBackground_(x, y) == eSprite::WALL) {
                 background_(x, y).assign(&wall_);
 				background_(x, y).resetTransform();
@@ -165,14 +139,8 @@ void		DisplayGlfw::setBackground(Grid< eSprite > const &grid) {
 				background_(x, y).translate(glm::vec3(x - winTileSize_.getX() / 2, y - winTileSize_.getY() / 2, 0.f));
 				background_(x, y).scale(glm::vec3(-0.10f));
             }
-*/
-			testParticle_->transforms[y * winTileSize_.getX() + x].resetTransform();
-			testParticle_->transforms[y * winTileSize_.getX() + x].translate(glm::vec3(glm::vec3(x - winTileSize_.getX() / 2, y - winTileSize_.getY() / 2, 0.f)));
-			testParticle_->transforms[y * winTileSize_.getX() + x].scale(glm::vec3(-0.10f));
-
         }
     }
-	testParticle_->update();
 }
 
 void		DisplayGlfw::drawGridCase_(eSprite sprite, int x, int y) {
@@ -248,13 +216,13 @@ void DisplayGlfw::render(float currentDelayFrame, float maxDelayFrame) {
     if (glfwGetKey(getWindow(), GLFW_KEY_RIGHT) == GLFW_PRESS)
     	direction_ = EAST;
 	if (glfwGetKey(getWindow(), GLFW_KEY_D) == GLFW_PRESS)
-		camera_.processPosition(Camera::Movement::RIGHT, deltaTime_);
+		camera_.processPosition(Camera::Movement::RIGHT, deltaTime_ * 5);
 	if (glfwGetKey(getWindow(), GLFW_KEY_A) == GLFW_PRESS)
-		camera_.processPosition(Camera::Movement::LEFT, deltaTime_);
+		camera_.processPosition(Camera::Movement::LEFT, deltaTime_ * 5);
 	if (glfwGetKey(getWindow(), GLFW_KEY_S) == GLFW_PRESS)
-		camera_.processPosition(Camera::Movement::BACKWARD, deltaTime_);
+		camera_.processPosition(Camera::Movement::BACKWARD, deltaTime_ * 5);
 	if (glfwGetKey(getWindow(), GLFW_KEY_W) == GLFW_PRESS)
-		camera_.processPosition(Camera::Movement::FORWARD, deltaTime_);
+		camera_.processPosition(Camera::Movement::FORWARD, deltaTime_ * 5);
 
 	if (glfwGetKey(getWindow(), GLFW_KEY_F) == GLFW_PRESS) {
     }
@@ -282,14 +250,7 @@ void DisplayGlfw::render(float currentDelayFrame, float maxDelayFrame) {
 	view_ = camera_.getViewMatrix();
 	shader_.setMat4("projection", projection_);
 	shader_.setMat4("view", view_);
-	/*
-    model_ = asnake_.getTransform();
-    shader_.setMat4("model", model_);
 
-    snake_.render(shader_);
-    */
-
-/*
     for (int y = 0; y < winTileSize_.getY(); y++) {
         for (int x = 0; x < winTileSize_.getX(); x++) {
         	if (background_(x, y).getModel()) {
@@ -299,14 +260,16 @@ void DisplayGlfw::render(float currentDelayFrame, float maxDelayFrame) {
         	}
         }
     }
-*/
+
 	shaderMultiple_.activate();
 	shaderMultiple_.setMat4("projection", projection_);
 	shaderMultiple_.setMat4("view", view_);
+
+/*
+	testParticle_->updatePhysicsMovement(attractor, deltaTime_);
 	testParticle_->update();
 	testParticle_->render(shaderMultiple_);
-	//actModelBackground_.render(shaderMultiple_);
-
+*/
     skybox_->render(view_, projection_);
 
     Glfw::render();
@@ -322,10 +285,10 @@ bool        DisplayGlfw::exit() const {
 void DisplayGlfw::update(float deltaTime) {
     deltaTime_ = deltaTime;
 	Glfw::update();
-	//if (DisplayGlfw::mouseCallbackCalled_) {
-	//	camera_.processMouseMovement(DisplayGlfw::offsetX_, DisplayGlfw::offsetY_);
-	//	DisplayGlfw::mouseCallbackCalled_ = false;
-	//}
+	if (!cursor_ && DisplayGlfw::mouseCallbackCalled_) {
+		camera_.processMouseMovement(DisplayGlfw::offsetX_, DisplayGlfw::offsetY_);
+		DisplayGlfw::mouseCallbackCalled_ = false;
+	}
 }
 
 eDirection DisplayGlfw::getDirection() const {
@@ -356,7 +319,7 @@ float       DisplayGlfw::lastY_ = DISPLAY_GLFW_WIN_HEIGHT / 2.0f;
 float       DisplayGlfw::offsetX_ = 0.f;
 float       DisplayGlfw::offsetY_ = 0.f;
 
-void DisplayGlfw::mouseCallback_(GLFWwindow* window, double xpos, double ypos) {
+void DisplayGlfw::mouseCallback_(GLFWwindow *window, double xpos, double ypos) {
     if (DisplayGlfw::firstMouse_) {
         DisplayGlfw::lastX_ = static_cast<float>(xpos);
         DisplayGlfw::lastY_ = static_cast<float>(ypos);

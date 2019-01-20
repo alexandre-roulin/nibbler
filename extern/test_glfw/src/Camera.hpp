@@ -24,6 +24,7 @@ public:
 	void processMouseMovement(float xoffset, float yoffset, GLboolean constrainPitch = true);
 
 	glm::mat4 getViewMatrix() const;
+	glm::vec3 getPosition() const;
 
 
 private:

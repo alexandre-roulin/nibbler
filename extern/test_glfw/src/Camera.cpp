@@ -57,6 +57,9 @@ void		Camera::processMouseMovement(float xoffset, float yoffset, GLboolean const
 glm::mat4	Camera::getViewMatrix() const {
 	return glm::lookAt(position_, position_ + front_, up_);
 }
+glm::vec3	Camera::getPosition() const {
+	return (position_);
+}
 
 void		Camera::updateCameraVectors_() {
 	glm::vec3 front;

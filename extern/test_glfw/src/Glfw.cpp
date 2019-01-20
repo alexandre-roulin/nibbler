@@ -33,7 +33,6 @@ void            Glfw::update() {
     if (glfwGetKey(window_, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window_, true);
     if (glfwGetKey(window_, GLFW_KEY_SPACE) == GLFW_PRESS) {
-        std::cout << "LOL" << std::endl;
         if (cursor_)
             glfwSetInputMode(window_, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
         else
@@ -49,7 +48,7 @@ void            Glfw::render() {
 }
 
 bool            Glfw::exit() const {
-    return (glfwWindowShouldClose(window_));
+    return static_cast<bool>(glfwWindowShouldClose(window_));
 }
 
 GLFWwindow     *Glfw::getWindow() const {
