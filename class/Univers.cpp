@@ -26,7 +26,7 @@ Univers::Univers()
 		: timer_start(boost::asio::deadline_timer(io_start)),
 		  timer_loop(boost::asio::deadline_timer(io_loop)),
 		  mapSize(MAP_DEFAULT),
-		  gameSpeed(40),
+		  gameSpeed(1000),
 		  dlHandleDisplay(nullptr),
 		  dlHandleSound(nullptr),
 		  display(nullptr),
@@ -205,21 +205,29 @@ void Univers::loop() {
 
 
 
-	//std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
+	std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
+	std::chrono::milliseconds current(0);
 
 	while ((display == nullptr || !display->exit()) &&
 		   !getMainClientTCP()->all_snake_is_dead()) {
-		//std::chrono::high_resolution_clock::time_point t2 = std::chrono::high_resolution_clock::now();
-		//std::chrono::duration<double> time_span = std::chrono::duration_cast<std::chrono::duration<double>>(t2 - t1);
-		//t1 = t2;
+		std::chrono::high_resolution_clock::time_point t2 = std::chrono::high_resolution_clock::now();
+		std::chrono::milliseconds time_span = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1);
+		t1 = t2;
+		current += time_span;
 
-		//std::cout << "It took me " << time_span.count() << " seconds.";
-		//std::cout << std::endl;
+		if (current > std::chrono::milliseconds(gameSpeed))
+			current = std::chrono::milliseconds(gameSpeed);
+
+		//std::cout << "It took me " << current.count() << "," << gameSpeed << " seconds." << std::endl;
 		if (display != nullptr) {
 			display->update(0.2f);
 			display->drawGrid(world_->grid);
-			display->render(gameSpeed, gameSpeed);
+			display->render(current.count(), gameSpeed);
 		}
+		if (current >= std::chrono::milliseconds(gameSpeed)) {
+			current = std::chrono::milliseconds(0);
+		}
+
 	}
 	unload_external_library();
 	finish_game();
@@ -231,7 +239,7 @@ void Univers::loop_world() {
 
 	for (; nextFrame.empty();) {
 		getMainClientTCP()->lock();
-//		std::cout << "Stuck nextFrame" << std::endl;
+		// std::cout << "Stuck nextFrame" << std::endl;
 		nextFrame = world_->getEventsManager().getEvents<NextFrame>();
 		getMainClientTCP()->unlock();
 	}

@@ -154,7 +154,7 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 			break;
 		}
 		case eHeader::FOOD: {
-//			log_info("eHeader::FOOD");
+	//		log_info("eHeader::FOOD");
 			FoodInfo foodInfo;
 			std::memcpy(&foodInfo, input, len);
 			foodCreations.push_back(FoodCreation(foodInfo.positionComponent,

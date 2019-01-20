@@ -37,16 +37,19 @@ class Core {
 
 	Univers						&univers;
 
+	bool						getStartGane() const;
+	void 						setStartGame(bool gameStart);
+
 
 	static void					beginColor(float const color);
 	static void					endColor();
-
 
 	static float const 				HUE_RED;
 	static float const 				HUE_GREEN;
 
 private:
 	//				GUI				//
+	bool						startGame_;
 	sf::Vector2<unsigned int>	_winSize;
 	sf::RenderWindow			_win;
 	ImGuiIO						&_io;

@@ -210,6 +210,7 @@ bool Grid<T>::isFreeSlot(size_t row, size_t column, T clear) const {
 
 template<typename T>
 void Grid<T>::print() const {
+	return ;
 	for (int y = 0; y < _rows; ++y) {
 		for (int x = 0; x < _columns; ++x) {
 			std::cout << std::setw(6) << _grid[_rows * y + x];

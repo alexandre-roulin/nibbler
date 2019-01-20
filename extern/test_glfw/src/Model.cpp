@@ -65,8 +65,7 @@ void 					Model::loadModel_() {
     Assimp::Importer import;
     const aiScene *scene = import.ReadFile(path_, aiProcess_Triangulate | aiProcess_GenUVCoords | aiProcess_GenNormals | aiProcess_FlipUVs);
     if(!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)  {
-        std::cerr << "ERROR::ASSIMP::" << import.GetErrorString() << std::endl;
-        return ;
+        throw(Model::ModelException(std::string("ERROR::ASSIMP::") + import.GetErrorString()));
     }
 	std::cout << "[path_] : " << path_ << std::endl;
     directory_ = path_.substr(0, path_.find_last_of(DISPLAY_GLFW_SLASH));
@@ -149,7 +148,7 @@ void			Model::setupScaling_()  {
 	glm::vec3	diff;
 	float		scaling;
 
-	diff = glm::abs(positionMin_ - positionMax_);
+	diff = glm::abs(positionMax_ - positionMin_);
 	if (diff.x > diff.y && diff.x > diff.z)
 		scaling = 1.f / diff.x;
 	else if (diff.y > diff.x && diff.y > diff.z)
@@ -198,9 +197,8 @@ unsigned int Texture::TextureFromFile(const char *path, const std::string &direc
     glGenTextures(1, &textureID);
 
     data = stbi_load(filename.c_str(), &width, &height, &nrComponents, 0);
-    if (data && nrComponents == 2) {
-        std::cerr << "Texture cannot be GREY_ALPHA at path: " << path << std::endl;
-    }
+    if (data && nrComponents == 2)
+		throw(Model::ModelException(std::string("Texture cannot be GREY_ALPHA at path: ") + path));
     else if (data) {
 
         if (nrComponents == 1)
@@ -223,10 +221,30 @@ unsigned int Texture::TextureFromFile(const char *path, const std::string &direc
         std::cout << "Texture : " << filename << std::endl;
     }
     else
-        std::cerr << "Texture failed to load at path: " << filename << std::endl;
-    stbi_image_free(data);
+	{
+		stbi_image_free(data);
+		throw(Model::ModelException(std::string("Texture failed to load at path: ") + filename));
+
+	}
+	stbi_image_free(data);
 
     return (textureID);
 }
 
 bool        Model::debug_ = true;
+
+Model::ModelException::~ModelException() noexcept = default;
+
+Model::ModelException::ModelException() noexcept :
+		error_("Error on Glfw constructor") { }
+
+Model::ModelException::ModelException(
+		std::string s) noexcept :
+		error_(s) {}
+
+Model::ModelException::ModelException(
+		Model::ModelException const &src) noexcept :
+		error_(src.error_) { error_ = src.error_; }
+
+const char *
+Model::ModelException::what() const noexcept { return (error_.c_str()); }

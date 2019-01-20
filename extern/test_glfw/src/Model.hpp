@@ -15,6 +15,25 @@ class Shader;
 class Model {
 public:
 
+	class ModelException : public std::exception {
+	public:
+		ModelException() noexcept;
+
+		explicit ModelException(std::string) noexcept;
+
+		const char *what() const noexcept override;
+
+		~ModelException() noexcept override;
+
+		ModelException(ModelException const &src) noexcept;
+
+	private:
+		ModelException &
+		operator=(ModelException const &rhs) noexcept;
+
+		std::string error_;
+	};
+	
 	Model();
 	Model(std::string const &path);
 	~Model();

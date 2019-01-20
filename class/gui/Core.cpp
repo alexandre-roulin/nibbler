@@ -12,6 +12,7 @@
 
 
 Core::Core(Univers &univers) :
+startGame_(false),
 univers(univers),
 _winSize(sf::Vector2<unsigned int>(1000, 900)),
 _win(sf::VideoMode(_winSize.x, _winSize.y), "Project Sanke"),
@@ -99,7 +100,7 @@ void			Core::aState(void)
 	WidgetMassiveButton massiveButton(*this);
 
 
-	while (_win.isOpen())
+	while (_win.isOpen() && !startGame_)
 	{
 		sf::Event event;
 		while (_win.pollEvent(event))
@@ -143,6 +144,15 @@ void			Core::aState(void)
 	}
 	if (optionSnake)
 		delete optionSnake;
+}
+
+void 				Core::setStartGame(bool gameStart) {
+	startGame_ = gameStart;
+}
+
+
+bool				Core::getStartGane() const {
+	return (startGame_);
 }
 
 void				Core::addMessageChat(std::string const &msg)

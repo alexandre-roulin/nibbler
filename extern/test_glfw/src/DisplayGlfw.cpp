@@ -39,7 +39,6 @@ projection_(1.f),
 view_(1.f),
 model_(1.f) {
 
-	std::cout << "Debug : 1" << std::endl;
 	getPath_();
 
     glfwSetCursorPosCallback(getWindow(),  DisplayGlfw::mouseCallback_);
@@ -60,15 +59,11 @@ model_(1.f) {
     shader_.attach(pathShaderBasic_ + ".frag");
     shader_.link();
 
-    std::cout << "Step : 1" << std::endl;
     snake_.setModel(pathModel_);
-	std::cout << "Step : 2" << std::endl;
     block_.setModel(pathBlock_);
-	std::cout << "Step : 3" << std::endl;
     ground_.setModel(pathGround_);
-	std::cout << "Step : 4" << std::endl;
     wall_.setModel(pathWall_);
-	std::cout << "Step : 5" << std::endl;
+	appleModel_.setModel(pathAppleModel_);
 
 	testParticle_ = new Particle(ground_, PARTICULE_SIZE*PARTICULE_SIZE*PARTICULE_SIZE);
 	for (int y = 0; y < PARTICULE_SIZE; ++y) {
@@ -100,6 +95,7 @@ void                DisplayGlfw::getPath_() {
 	pathShaderBasic_ = std::string(pathRoot_ + DISPLAY_GLFW_SLASH + "shader" + DISPLAY_GLFW_SLASH + "basic");
 	pathShaderSkyBox_ = std::string(pathRoot_ + DISPLAY_GLFW_SLASH + "shader" + DISPLAY_GLFW_SLASH + "skybox");
 	pathDirectorySkyBox_ = std::string(pathRoot_ + DISPLAY_GLFW_SLASH + "resources" + DISPLAY_GLFW_SLASH + "ame_nebula" + DISPLAY_GLFW_SLASH);
+	pathAppleModel_ = std::string(pathRoot_ + DISPLAY_GLFW_SLASH + "resources" + DISPLAY_GLFW_SLASH + "Apple_obj" + DISPLAY_GLFW_SLASH + "apple.obj");
 	pathSkyBox_.emplace_back("purplenebula_rt.tga");
 	pathSkyBox_.emplace_back("purplenebula_lf.tga");
 	pathSkyBox_.emplace_back("purplenebula_up.tga");
@@ -146,6 +142,7 @@ void		DisplayGlfw::setBackground(Grid< eSprite > const &grid) {
 void		DisplayGlfw::drawGridCase_(eSprite sprite, int x, int y) {
 	grid_(x, y).resetTransform();
 	grid_(x, y).translate(glm::vec3(x - winTileSize_.getX() / 2, y - winTileSize_.getY() / 2, 1.2f));
+	interpolateGridCase_(x, y);
 	model_ = grid_(x, y).getTransform();
 	shader_.setMat4("model", model_);
 	grid_(x, y).getModel()->render(shader_);
@@ -160,8 +157,8 @@ void		DisplayGlfw::drawGrid(Grid< eSprite > const &grid) {
 
 	for (int y = 0; y < winTileSize_.getY(); ++y) {
 		for (int x = 0; x < winTileSize_.getX(); ++x) {
-			if (grid(x, y) == eSprite::FOOD)
-				grid_(x, y).assign(&snake_);
+			if ((grid(x, y) & eSprite::FOOD) == eSprite::FOOD)
+				grid_(x, y).assign(&appleModel_);
 			else if (grid(x, y) != eSprite::HEAD)
 				grid_(x, y).assign(&block_);
 
@@ -171,39 +168,32 @@ void		DisplayGlfw::drawGrid(Grid< eSprite > const &grid) {
 	}
 }
 
-void		DisplayGlfw::interpolateGrid_() {
-	for (int y = 0; y < winTileSize_.getY(); ++y) {
-		for (int x = 0; x < winTileSize_.getX(); ++x) {
-			eSprite sprite = tileGrid_(x, y);
+void		DisplayGlfw::interpolateGridCase_(int x, int y) {
+	eSprite sprite = tileGrid_(x, y);
 
-			if ((sprite & eSprite::MASK_BODY) == eSprite::HEAD
-				|| (sprite & eSprite::MASK_BODY) == eSprite::BODY
-				|| (sprite & eSprite::MASK_BODY) == eSprite::TAIL) {
+	if ((sprite & eSprite::MASK_BODY) == eSprite::HEAD
+		|| (sprite & eSprite::MASK_BODY) == eSprite::BODY
+		|| (sprite & eSprite::MASK_BODY) == eSprite::TAIL) {
 
-				eSprite from = (sprite & eSprite::MASK_FROM) >> eSprite::BITWISE_FROM;
-				eSprite to = (sprite & eSprite::MASK_TO) >> eSprite::BITWISE_TO;
+		eSprite from = (sprite & eSprite::MASK_FROM) >> eSprite::BITWISE_FROM;
+		eSprite to = (sprite & eSprite::MASK_TO) >> eSprite::BITWISE_TO;
 
-				float distInterpelated = 1.f * (currentTimer_ / maxTimer_);
+		float distInterpelated = 1.f * (currentTimer_ / maxTimer_);
 
-				if (to == eSprite::EAST)
-					grid_(x, y).translate(glm::vec3(distInterpelated, 0.0f, 0.0f));
-				else if (to == eSprite::WEST)
-					grid_(x, y).translate(glm::vec3(-distInterpelated, 0.0f, 0.0f));
-				else if (to == eSprite::SOUTH)
-					grid_(x, y).translate(glm::vec3(0.0f, -distInterpelated, 0.0f));
-				else if (to == eSprite::NORTH)
-					grid_(x, y).translate(glm::vec3(0.0f, distInterpelated, 0.0f));
-			}
-
-		}
+		if (to == eSprite::EAST)
+			grid_(x, y).translate(glm::vec3(distInterpelated, 0.0f, 0.0f));
+		else if (to == eSprite::WEST)
+			grid_(x, y).translate(glm::vec3(-distInterpelated, 0.0f, 0.0f));
+		else if (to == eSprite::SOUTH)
+			grid_(x, y).translate(glm::vec3(0.0f, distInterpelated, 0.0f));
+		else if (to == eSprite::NORTH)
+			grid_(x, y).translate(glm::vec3(0.0f, -distInterpelated, 0.0f));
 	}
 }
 
 void DisplayGlfw::render(float currentDelayFrame, float maxDelayFrame) {
 	currentTimer_ = currentDelayFrame;
 	maxTimer_ = maxDelayFrame;
-
-	interpolateGrid_();
 
     shader_.activate();
 
