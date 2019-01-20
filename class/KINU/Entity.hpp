@@ -176,6 +176,9 @@ namespace KINU {
 		T &getComponent(Entity) const;
 
 		template<typename T>
+		std::vector<T> getComponents();
+
+		template<typename T>
 		std::shared_ptr<Pool<T>> accommodateComponent();
 
 	private:
@@ -304,6 +307,22 @@ namespace KINU {
 				componentPools[componentId]);
 	}
 
+	template<typename T>
+	std::vector<T> EntitiesManager::getComponents() {
+		auto const componentId = Component<T>::getId();
+
+		if (componentId >= componentPools.size()) {
+			componentPools.resize(componentId + 1, nullptr);
+		}
+
+		if (!componentPools[componentId]) {
+			std::shared_ptr<Pool<T>> pool(new Pool<T>(DEFAULT_POOL_SIZE_COMPONENT));
+			componentPools[componentId] = pool;
+		}
+
+		return std::static_pointer_cast<Pool<T>>(
+				componentPools[componentId])->getData();
+	}
 
 
 }

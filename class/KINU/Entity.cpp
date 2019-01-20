@@ -114,6 +114,7 @@ namespace KINU {
 
 	void EntitiesManager::destroyEntity(Entity entity) {
 		// Reset componentMask of entity destroyed
+		log_fatal("Entity destroy %d", entity.getId());
 		componentMasks[entity.id_].reset();
 
 		mutex_.lock();
@@ -125,8 +126,9 @@ namespace KINU {
 		// Remove groupId if exist
 
 		if (hasGroupIdByEntity(entity)) {
-			TagId groupId = getGroupIdByEntity(entity);
+			TagId groupId = groupedEntityId[entity.id_];
 			mutex_.lock();
+
 			groupedEntities[groupId].erase(std::remove_if(
 					groupedEntities[groupId].begin(),
 						   groupedEntities[groupId].end(),
@@ -145,6 +147,9 @@ namespace KINU {
 			taggedEntities.erase(tagId);
 			mutex_.unlock();
 		}
+		assert(!hasTagIdByEntity(entity));
+		assert(!hasGroupIdByEntity(entity));
+		assert(!hasEntityById(entity.getId()));
 	}
 
 
@@ -170,9 +175,11 @@ namespace KINU {
 	}
 
 	bool EntitiesManager::hasEntityById(Entity::ID id) {
-		mutex_.lock();
+
+		bool mu_lock = mutex_.try_lock();
 		bool has = std::find(validId.begin(), validId.end(), id) != validId.end();
-		mutex_.unlock();
+		if (mu_lock)
+			mutex_.unlock();
 		return has;
 	}
 
@@ -206,8 +213,8 @@ namespace KINU {
 		auto it = taggedEntities.find(tagId);
 		bool tagged = it != taggedEntities.end();
 		mutex_.unlock();
-		bool has = hasEntityById(it->second.getId());
-		return tagged && has;
+		bool has = tagged && hasEntityById(it->second.getId());
+		return has;
 	}
 
 	Entity EntitiesManager::getEntityByTagId(TagId tagId) {
@@ -230,16 +237,19 @@ namespace KINU {
 	bool
 	EntitiesManager::hasEntitiesGroupId(TagId tagId) {
 		mutex_.lock();
+		std::cout << "EntitiesManager::hasEntitiesGroupId1" << std::endl;
 		auto it = groupedEntities.find(tagId);
-		bool has = it != groupedEntities.end() && std::any_of(it->second.begin(), it->second.end(), [this](Entity entity){
-			mutex_.unlock();
-			bool has = hasEntityById(entity.getId());
-			mutex_.lock();
-			return has;
-		}
-		);
+		std::cout << "EntitiesManager::hasEntitiesGroupId2" << std::endl;
+		bool grp = it != groupedEntities.end();
+		std::cout << "EntitiesManager::hasEntitiesGroupId3" << std::endl;
+		std::cout << "EntitiesManager::hasEntitiesGroupId4" << std::endl;
+		bool anyHas = grp && std::any_of(it->second.begin(), it->second.end(), [this](Entity entity){
+			bool hasId = hasEntityById(entity.getId());
+			return hasId;
+		});
 		mutex_.unlock();
-		return has;
+		std::cout << "EntitiesManager::hasEntitiesGroupId5" << std::endl;
+		return grp && anyHas;
 	}
 
 	std::vector<Entity>

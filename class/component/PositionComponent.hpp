@@ -5,7 +5,7 @@
 struct PositionComponent {
 public:
 
-	PositionComponent(int x = 0, int y = 0);
+	PositionComponent(int x = -1, int y = -1);
 	PositionComponent(PositionComponent const &);
 	PositionComponent(std::pair<size_t, size_t >);
 	int y, x;

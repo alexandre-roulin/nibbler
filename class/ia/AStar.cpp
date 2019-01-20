@@ -6,7 +6,6 @@ using namespace std::placeholders;
 
 
 void AStar::Generator::print() {
-	return;
 	for (int y = 0; y < worldSize.y; ++y) {
 		for (int x = 0; x < worldSize.x; ++x) {
 			if (std::find_if(walls.begin(), walls.end(), [this, y, x](Vec2i vec2i){

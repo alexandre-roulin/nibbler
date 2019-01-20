@@ -9,6 +9,7 @@ public:
 	virtual void update();
 
 private:
+	void createAppleBySnake(KINU::Entity);
 	void checkCollision(KINU::Entity entityHead, KINU::Entity entityCheck);
 };
 

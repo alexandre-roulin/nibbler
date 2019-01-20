@@ -183,16 +183,11 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 				StartInfo st;
 				std::memcpy(&st, input,
 							ClientTCP::size_header[static_cast<int>(eHeader::START_GAME)]);
-				log_warn("Number of food1");
 				factory.create_all_snake(snake_array, st.nu);
-				log_warn("Number of food2");
 
 				if (univers.isServer()) {
-					log_warn("Number of food");
-
 					uint16_t  nu_ = Snake::getlastSnakeIndex(snake_array, MAX_SNAKE);
 					int max_food = (nu_ > 1 ? nu_ - 1 : nu_);
-
 					log_warn("Number of food %d", max_food);
 
 					univers.getWorld_().grid.print();
