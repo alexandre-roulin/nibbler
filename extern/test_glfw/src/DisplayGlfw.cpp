@@ -61,11 +61,11 @@ model_(1.f) {
 
     snake_.setModel(pathModel_);
     block_.setModel(pathBlock_);
-    ground_.setModel(pathGround_);
-    wall_.setModel(pathWall_);
+    modelGrass_.setModel(pathGrass_);
+    modelWall_.setModel(pathWall_);
 	appleModel_.setModel(pathAppleModel_);
 
-	testParticle_ = new Particle(ground_, PARTICULE_SIZE*PARTICULE_SIZE*PARTICULE_SIZE);
+	testParticle_ = new Particle(modelGrass_, PARTICULE_SIZE*PARTICULE_SIZE*PARTICULE_SIZE);
 	for (int y = 0; y < PARTICULE_SIZE; ++y) {
 		for (int x = 0; x < PARTICULE_SIZE; ++x) {
 			for (int z = 0; z < PARTICULE_SIZE; ++z) {
@@ -90,7 +90,7 @@ void                DisplayGlfw::getPath_() {
     std::ifstream t(pathRoot_ + DISPLAY_GLFW_SLASH + "file.txt");
 	pathModel_ = std::string((std::istreambuf_iterator<char>(t)), std::istreambuf_iterator<char>());
     pathBlock_ = std::string(pathRoot_ + DISPLAY_GLFW_SLASH + "resources" + DISPLAY_GLFW_SLASH + "objects" + DISPLAY_GLFW_SLASH + "nanosuit" + DISPLAY_GLFW_SLASH + "nanosuit.obj");
-    pathGround_ = std::string(pathRoot_ + DISPLAY_GLFW_SLASH + "resources" + DISPLAY_GLFW_SLASH + "grass_test.obj");
+    pathGrass_ = std::string(pathRoot_ + DISPLAY_GLFW_SLASH + "resources" + DISPLAY_GLFW_SLASH + "objects" + DISPLAY_GLFW_SLASH + "grass" + DISPLAY_GLFW_SLASH + "grass.obj");
     pathWall_ = std::string(pathRoot_ + DISPLAY_GLFW_SLASH + "resources" + DISPLAY_GLFW_SLASH + "wall.obj");
 	pathShaderBasic_ = std::string(pathRoot_ + DISPLAY_GLFW_SLASH + "shader" + DISPLAY_GLFW_SLASH + "basic");
 	pathShaderSkyBox_ = std::string(pathRoot_ + DISPLAY_GLFW_SLASH + "shader" + DISPLAY_GLFW_SLASH + "skybox");
@@ -124,15 +124,17 @@ void		DisplayGlfw::setBackground(Grid< eSprite > const &grid) {
         for (int x = 0; x < winTileSize_.getX(); ++x) {
 
             if (tileBackground_(x, y) == eSprite::WALL) {
-                background_(x, y).assign(&wall_);
+                background_(x, y).assign(&modelWall_);
 				background_(x, y).resetTransform();
 				background_(x, y).translate(glm::vec3(x - winTileSize_.getX() / 2, y - winTileSize_.getY() / 2, 0.f));
 				background_(x, y).scale(glm::vec3(-0.10f));
             }
             else if (tileBackground_(x, y) == eSprite::GROUND) {
-                background_(x, y).assign(&ground_);
+				std::cout << "yes\n";
+                background_(x, y).assign(&modelGrass_);
 				background_(x, y).resetTransform();
 				background_(x, y).translate(glm::vec3(x - winTileSize_.getX() / 2, y - winTileSize_.getY() / 2, 0.f));
+				background_(x, y).rotate(glm::vec3(1.f, 0.f, 0.f), glm::radians(90.f), 1.f);
 				background_(x, y).scale(glm::vec3(-0.10f));
             }
         }

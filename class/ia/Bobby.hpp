@@ -1,9 +1,9 @@
 #pragma once
 
 #include <nibbler.hpp>
-#include <Grid.tpp>
 #include <map>
 #include <network/ClientTCP.hpp>
+#include <KINU/Entity.hpp>
 #include "AStar.hpp"
 
 
@@ -12,27 +12,29 @@ class Univers;
 class Bobby {
 private:
 
-	std::mutex mutex;
+	enum ePriority {
+		UNDEFINED,		//0
+		NO_PRIORITY,	//1
+		PRIORITY		//2
+	};
+
+	static std::unordered_map<KINU::Entity::ID, ePriority> mapPriority;
+
 	eDirection direction;
 	AStar::Generator generator;
 	Univers &univers_;
 	unsigned int mapSize;
 	unsigned int baseIndex;
-	Grid< eSprite > const * grid_;
 public:
-	void setGrid_(const Grid< eSprite > *grid_);
-
+	static std::mutex mutex;
+	static void clearPriority();
 	uint16_t getId() const;
-private:
-	ClientTCP::pointer_client clientTCP_;
-public:
 	const ClientTCP::pointer_client &getClientTCP_() const;
-
-private:
+	ClientTCP::pointer_client clientTCP_;
 	void findDirection(AStar::Vec2i, AStar::CoordinateList);
-
+	bool define_priority(int x, int y);
 	AStar::Vec2i getVecSnakeHead();
-
+	void findAnyDirectionValid(AStar::Vec2i );
 	AStar::Vec2i getVecSnakeTail();
 
 
@@ -40,6 +42,7 @@ private:
 	AStar::Vec2i getVecFood(AStar::Vec2i head);
 
 	void addCollision();
+
 
 public:
 

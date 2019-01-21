@@ -136,8 +136,8 @@ void Univers::new_game() {
 	display->setBackground(world_->grid);
 	if (isServer()) {
 		for (auto &bobby : vecBobby) {
-			bobby->setGrid_(&world_->grid);
 			bobby->buildIA();
+			bobby->sendDirection();
 		}
 		serverTCP_->start_game();
 	}
@@ -145,15 +145,15 @@ void Univers::new_game() {
 }
 
 void Univers::manage_input() {
-	ClientTCP::InputInfo inputInfo;
 
 
-	if (isServer()) {
-		for (auto &bobby : vecBobby) {
-			bobby->sendDirection();
-		}
-	}
+//	if (isServer()) {
+//		for (auto &bobby : vecBobby) {
+//			bobby->sendDirection();
+//		}
+//	}
 	if (clientTCP_) {
+		ClientTCP::InputInfo inputInfo;
 		inputInfo.id = clientTCP_->getId();
 		inputInfo.dir = display->getDirection();
 		assert(world_ != nullptr);
@@ -179,6 +179,11 @@ void Univers::manage_start() {
 	io_start.run();
 	timer_start.wait();
 	timer_loop.expires_at(ptime + boost::posix_time::milliseconds(gameSpeed));
+	if (isServer()) {
+		for (auto &bobby : vecBobby) {
+			bobby->sendDirection();
+		}
+	}
 }
 
 
@@ -250,18 +255,19 @@ void Univers::loop_world() {
 
 	world_->update();
 
-	log_info("Univers::FollowSystem");
+	//log_info("Univers::FollowSystem");
 	world_->getSystemsManager().getSystem<FollowSystem>().update();
-	log_info("Univers::JoystickSystem");
+	//log_info("Univers::JoystickSystem");
 	world_->getSystemsManager().getSystem<JoystickSystem>().update();
-	log_info("Univers::JoystickEvent");
+	//log_info("Univers::JoystickEvent");
 	world_->getEventsManager().destroy<JoystickEvent>();
-	log_info("Univers::MotionSystem");
+	//log_info("Univers::MotionSystem");
 	world_->getSystemsManager().getSystem<MotionSystem>().update();
-	log_info("Univers::CollisionSystem");
+	//log_info("Univers::CollisionSystem");
 	world_->getSystemsManager().getSystem<CollisionSystem>().update();
 
-	log_info("Univers::vecBobby");
+
+	Bobby::clearPriority();
 	if (isServer()) {
 		for (auto &bobby : vecBobby) {
 			if (world_->getEntitiesManager().hasEntityByTagId(
@@ -275,14 +281,18 @@ void Univers::loop_world() {
 		}
 	}
 
-	log_info("Univers::FoodCreationSystem");
+	//log_info("Univers::FoodCreationSystem");
 	world_->getSystemsManager().getSystem<FoodCreationSystem>().update();
 	world_->getEventsManager().destroy<FoodCreation>();
-	log_info("Univers::SpriteSystem");
+	//log_info("Univers::SpriteSystem");
 	world_->getSystemsManager().getSystem<SpriteSystem>().update();
-	log_info("Univers::RenderSystem");
+	//log_info("Univers::RenderSystem");
 	world_->getSystemsManager().getSystem<RenderSystem>().update();
-	log_info("Univers::FoodEatSystem");
+	//log_info("Univers::FoodEatSystem");
+
+	//log_info("Univers::vecBobby");
+
+
 	world_->getSystemsManager().getSystem<FoodEatSystem>().update();
 	world_->getEventsManager().destroy<FoodEat>();
 

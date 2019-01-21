@@ -90,7 +90,7 @@ private:
     std::string 			        pathRoot_;
     std::string     			    pathModel_;
 	std::string     			    pathBlock_;
-	std::string     			    pathGround_;
+	std::string     			    pathGrass_;
 	std::string     			    pathWall_;
 	std::string						pathDirectorySkyBox_;
 	std::string						pathShaderBasic_;
@@ -103,8 +103,8 @@ private:
 	std::unique_ptr< Skybox >		skybox_;
 	Model							snake_;
 	Model							block_;
-	Model							ground_;
-	Model							wall_;
+	Model							modelGrass_;
+	Model							modelWall_;
 	Model							appleModel_;
 	Particle						*testParticle_;
 

@@ -104,17 +104,17 @@ namespace KINU {
 		validId.push_back(newInstance);
 		if (newInstance >= componentMasks.size())
 			componentMasks.resize(newInstance + 1);
-
+		mutex_.unlock();
 		assert(!componentMasks[e.getId()].any());
 		assert(!hasGroupIdByEntity(e));
 		assert(!hasTagIdByEntity(e));
 		assert(e.entitiesManager_ != nullptr);
-		mutex_.unlock();
 		return e;
 	}
 
 	void EntitiesManager::destroyEntity(Entity entity) {
 		// Reset componentMask of entity destroyed
+		log_fatal("Entity destroy %d", entity.getId());
 		componentMasks[entity.id_].reset();
 
 		mutex_.lock();
@@ -126,8 +126,9 @@ namespace KINU {
 		// Remove groupId if exist
 
 		if (hasGroupIdByEntity(entity)) {
-			TagId groupId = getGroupIdByEntity(entity);
+			TagId groupId = groupedEntityId[entity.id_];
 			mutex_.lock();
+
 			groupedEntities[groupId].erase(std::remove_if(
 					groupedEntities[groupId].begin(),
 						   groupedEntities[groupId].end(),
@@ -146,6 +147,9 @@ namespace KINU {
 			taggedEntities.erase(tagId);
 			mutex_.unlock();
 		}
+		assert(!hasTagIdByEntity(entity));
+		assert(!hasGroupIdByEntity(entity));
+		assert(!hasEntityById(entity.getId()));
 	}
 
 
@@ -170,8 +174,13 @@ namespace KINU {
 		}
 	}
 
-	bool EntitiesManager::hasEntityById(Entity::ID id) const {
-		return std::find(validId.begin(), validId.end(), id) != validId.end();
+	bool EntitiesManager::hasEntityById(Entity::ID id) {
+
+		bool mu_lock = mutex_.try_lock();
+		bool has = std::find(validId.begin(), validId.end(), id) != validId.end();
+		if (mu_lock)
+			mutex_.unlock();
+		return has;
 	}
 
 	Entity EntitiesManager::getEntityById(Entity::ID id) {
@@ -183,8 +192,12 @@ namespace KINU {
 
 	/** TAG FUNCTION **/
 
-	bool EntitiesManager::hasTagIdByEntity(Entity entity) const {
-		return taggedEntityId.find(entity.id_) != taggedEntityId.end() && hasEntityById(entity.getId());
+	bool EntitiesManager::hasTagIdByEntity(Entity entity) {
+		mutex_.lock();
+		bool tag = taggedEntityId.find(entity.id_) != taggedEntityId.end();
+		mutex_.unlock();
+		bool has = hasEntityById(entity.getId());
+		return tag && has;
 	}
 
 	TagId EntitiesManager::getTagIdByEntity(Entity entity) {
@@ -195,10 +208,13 @@ namespace KINU {
 		return tag;
 	}
 
-	bool EntitiesManager::hasEntityByTagId(TagId tagId) const {
+	bool EntitiesManager::hasEntityByTagId(TagId tagId) {
+		mutex_.lock();
 		auto it = taggedEntities.find(tagId);
-
-		return it != taggedEntities.end() && hasEntityById(it->second.getId());
+		bool tagged = it != taggedEntities.end();
+		mutex_.unlock();
+		bool has = tagged && hasEntityById(it->second.getId());
+		return has;
 	}
 
 	Entity EntitiesManager::getEntityByTagId(TagId tagId) {
@@ -219,9 +235,21 @@ namespace KINU {
 	/** GROUP FUNCTION */
 
 	bool
-	EntitiesManager::hasEntitiesGroupId(TagId tagId) const {
+	EntitiesManager::hasEntitiesGroupId(TagId tagId) {
+		mutex_.lock();
+		std::cout << "EntitiesManager::hasEntitiesGroupId1" << std::endl;
 		auto it = groupedEntities.find(tagId);
-		return it != groupedEntities.end() && std::any_of(it->second.begin(), it->second.end(), [this](Entity entity){ return hasEntityById(entity.getId());});
+		std::cout << "EntitiesManager::hasEntitiesGroupId2" << std::endl;
+		bool grp = it != groupedEntities.end();
+		std::cout << "EntitiesManager::hasEntitiesGroupId3" << std::endl;
+		std::cout << "EntitiesManager::hasEntitiesGroupId4" << std::endl;
+		bool anyHas = grp && std::any_of(it->second.begin(), it->second.end(), [this](Entity entity){
+			bool hasId = hasEntityById(entity.getId());
+			return hasId;
+		});
+		mutex_.unlock();
+		std::cout << "EntitiesManager::hasEntitiesGroupId5" << std::endl;
+		return grp && anyHas;
 	}
 
 	std::vector<Entity>
@@ -235,16 +263,18 @@ namespace KINU {
 
 	void EntitiesManager::groupEntityByGroupId(Entity entity,
 											   TagId tagId) {
-
 		mutex_.lock();
 		groupedEntityId[entity.id_] = tagId;
 		groupedEntities[tagId].push_back(entity);
 		mutex_.unlock();
 	}
 
-	bool EntitiesManager::hasGroupIdByEntity(Entity entity) const {
-		log_trace("hasGroupIdByEntity %d",  (groupedEntityId.find(entity.id_) != groupedEntityId.end()));
-		return groupedEntityId.find(entity.id_) != groupedEntityId.end() && hasEntityById(entity.getId());
+	bool EntitiesManager::hasGroupIdByEntity(Entity entity) {
+		mutex_.lock();
+		bool grp = groupedEntityId.find(entity.id_) != groupedEntityId.end();
+		mutex_.unlock();
+		bool has = hasEntityById(entity.getId());
+		return grp && has;
 	}
 
 	TagId EntitiesManager::getGroupIdByEntity(Entity entity) {

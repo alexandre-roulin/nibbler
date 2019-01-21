@@ -5,7 +5,7 @@
 #include <iomanip>
 #include <logger.h>
 #include <assert.h>
-#include "IDisplay.hpp"
+#include <Sprite.hpp>
 
 template<typename T>
 class Grid {
@@ -34,6 +34,7 @@ public:
 	std::pair<size_t, size_t> getRandomSlot(T value);
 
 	void print() const;
+	void print(int x, int y) const;
 
 	int countNearSlot(int x, int y, T value, bool checkDiagonal = false) const;
 
@@ -112,13 +113,13 @@ size_t Grid<T>::getColumns(void) const {
 
 template<typename T>
 void Grid<T>::setBorder(T const &border) {
-	for (size_t i = 0; i < this->_columns; i++) {
-		this->_grid[i * this->_rows] = border;
-		this->_grid[i * this->_rows + this->_columns - 1] = border;
-	}
 	for (size_t i = 0; i < this->_rows; i++) {
+		this->_grid[i * this->_columns] = border;
+		this->_grid[i * this->_columns + this->_columns - 1] = border;
+	}
+	for (size_t i = 0; i < this->_columns; i++) {
 		this->_grid[i] = border;
-		this->_grid[i + this->_rows * (this->_rows - 1)] = border;
+		this->_grid[i + this->_columns * (this->_columns - 1)] = border;
 	}
 }
 
@@ -209,6 +210,19 @@ bool Grid<T>::isFreeSlot(size_t row, size_t column, T clear) const {
 }
 
 template<typename T>
+void Grid<T>::print(int x_, int y_) const {
+	for (int y = 0; y < _rows; ++y) {
+		for (int x = 0; x < _columns; ++x) {
+			if (x == x_ && y == y_)
+				std::cout << std::setw(6) << "Check";
+			else
+				std::cout << std::setw(6) << _grid[_rows * y + x];
+		}
+		std::cout << std::endl;
+	}
+}
+
+template<typename T>
 void Grid<T>::print() const {
 	return ;
 	for (int y = 0; y < _rows; ++y) {
@@ -243,13 +257,15 @@ int Grid<T>::countNearSlot(int x, int y, T value, bool checkDiagonal) const {
 	uint16_t count = 0;
 	unsigned int max = (checkDiagonal ? 8 : 4);
 	for (int index = 0; index < max; ++index) {
+		size_t base_x = x + direction[index][SCALE_X];
+		size_t base_y = y + direction[index][SCALE_Y];
+
 		if (
-				x + direction[index][SCALE_X] < _columns && x + direction[index][SCALE_X] >= 0 &&
-				y + direction[index][SCALE_Y] < _rows && y + direction[index][SCALE_Y] >= 0 &&
-				(_grid[(y + direction[index][SCALE_Y]) * _columns + (x + direction[index][SCALE_X])] & value) == value
+				base_x < _columns	&& base_x >= 0 &&
+				base_y < _rows		&& base_y >= 0 &&
+				(_grid[base_y * _columns + base_x] & value)	== value
 				)
 			count++;
 	}
-	log_error("COUNT %d", count);
-	return count;
+		return count;
 }
