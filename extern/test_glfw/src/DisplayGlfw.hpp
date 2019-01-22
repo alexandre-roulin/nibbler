@@ -90,11 +90,12 @@ private:
     std::string 			        pathRoot_;
     std::string     			    pathModel_;
 	std::string     			    pathBlock_;
-	std::string     			    pathGround_;
+	std::string     			    pathGrass_;
 	std::string     			    pathWall_;
 	std::string						pathDirectorySkyBox_;
 	std::string						pathShaderBasic_;
-    std::string						pathShaderSkyBox_;
+	std::string						pathShaderSkyBox_;
+	std::string						pathAppleModel_;
     std::list< std::string >		pathSkyBox_;
 
 	Shader							shader_;
@@ -102,8 +103,9 @@ private:
 	std::unique_ptr< Skybox >		skybox_;
 	Model							snake_;
 	Model							block_;
-	Model							ground_;
-	Model							wall_;
+	Model							modelGrass_;
+	Model							modelWall_;
+	Model							appleModel_;
 	Particle						*testParticle_;
 
 
@@ -119,7 +121,7 @@ private:
     void                clean_();
     void                getPath_();
 	void				drawGridCase_(eSprite sprite, int x, int y);
-	void				interpolateGrid_();
+	void				interpolateGridCase_(int x, int y);
 
 
 		static float				lastX_;

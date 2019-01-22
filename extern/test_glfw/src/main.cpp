@@ -77,14 +77,10 @@ int main(int argc, char **argv) {
 
 		count += 1.f;
 
-		if (start > 10.f) {
-			std::cout << "Average " << start << " for " << count << " So : " << (start / count) << " seconds.";
-			exit(0);
-		}
-
 
 		std::cout << "It took me " << deltaTime << " seconds." << std::endl;
 	}
+	std::cout << "Average " << start << " for " << count << " So : " << (start / count) << " seconds.";
 
 /*
 	float deltaTime = 0.0f;

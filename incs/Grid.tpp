@@ -113,13 +113,13 @@ size_t Grid<T>::getColumns(void) const {
 
 template<typename T>
 void Grid<T>::setBorder(T const &border) {
-	for (size_t i = 0; i < this->_columns; i++) {
-		this->_grid[i * this->_rows] = border;
-		this->_grid[i * this->_rows + this->_columns - 1] = border;
-	}
 	for (size_t i = 0; i < this->_rows; i++) {
+		this->_grid[i * this->_columns] = border;
+		this->_grid[i * this->_columns + this->_columns - 1] = border;
+	}
+	for (size_t i = 0; i < this->_columns; i++) {
 		this->_grid[i] = border;
-		this->_grid[i + this->_rows * (this->_rows - 1)] = border;
+		this->_grid[i + this->_columns * (this->_columns - 1)] = border;
 	}
 }
 
@@ -224,6 +224,7 @@ void Grid<T>::print(int x_, int y_) const {
 
 template<typename T>
 void Grid<T>::print() const {
+	return ;
 	for (int y = 0; y < _rows; ++y) {
 		for (int x = 0; x < _columns; ++x) {
 			std::cout << std::setw(6) << _grid[_rows * y + x];

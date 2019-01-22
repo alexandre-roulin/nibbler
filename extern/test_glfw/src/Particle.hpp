@@ -8,6 +8,16 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <vector>
 
+struct PhysicsMovement {
+	glm::vec3	velocity;
+	glm::vec3	direction;
+
+	PhysicsMovement() :
+			velocity(glm::vec3(0.f)),
+			direction(glm::vec3(0.f))
+	{}
+};
+
 class Particle {
 public:
 
@@ -17,15 +27,20 @@ public:
 
 	void render(Shader &shader);
 	void update();
+	void updatePhysicsMovement(glm::vec3 target, float deltaTime = 0.16f);
 
-	std::vector<ActModel>		transforms;
+	void setPhysicsMovement(bool b);
+
+	std::vector<ActModel>			transforms;
 
 private:
+	bool			bPhysicsMovement_;
 	unsigned int	size_;
 	Model			&model_;
 
 	unsigned int				BOParticle_; //Commun a chaque Mesh VAO
 	glm::mat4					*bufferTransform;
+	std::vector<PhysicsMovement>	physicsMovement_;
 
 	void updateTransforms_();
 

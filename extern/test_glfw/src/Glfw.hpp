@@ -29,9 +29,11 @@ public:
 
     GLFWwindow     *getWindow() const;
 
+protected:
+    bool            cursor_;
+
 private:
     GLFWwindow     *window_;
-    bool            cursor_;
 
     void            clean_();
 

@@ -4,9 +4,11 @@
 #include <iostream>
 
 Particle::Particle(Model &model, unsigned int size) :
+bPhysicsMovement_(true),
 size_(size),
 model_(model),
-transforms(size)
+transforms(size),
+physicsMovement_(size)
 {
 	bufferTransform = new glm::mat4[size];
 	for (auto &transform : transforms) {
@@ -39,16 +41,46 @@ transforms(size)
 
 		glBindVertexArray(0);
 	}
+
+	for (auto &transform : transforms) {
+		transform.assign(&model_);
+		transform.resetTransform();
+	}
 }
 
 Particle::~Particle() {
 	delete [] bufferTransform;
 }
 
+void Particle::setPhysicsMovement(bool b) {
+	bPhysicsMovement_ = b;
+}
+
 void Particle::updateTransforms_() {
 	unsigned int i = 0;
 	for (const auto &trans : transforms) {
 		bufferTransform[i] = trans.getTransform();
+		i++;
+	}
+}
+
+void Particle::updatePhysicsMovement(glm::vec3 target, float deltaTime) {
+
+	unsigned int i = 0;
+	for (auto &transform : transforms) {
+		glm::vec3 dist;
+		glm::vec3 acceleration;
+		glm::vec3 position = transform.getPosition();
+
+		dist = target - position;
+
+		if (dist.x && dist.y) {
+			acceleration = glm::normalize(dist);
+			physicsMovement_[i].velocity += acceleration;
+		}
+		else
+			physicsMovement_[i].velocity += glm::vec3(0.000001f);
+		transform.translate(physicsMovement_[i].velocity, deltaTime);
 		i++;
 	}
 }

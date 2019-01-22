@@ -123,9 +123,15 @@ void nibbler(Univers &univers) {
 		if (buffer == "ui") {
 			univers.create_ui();
 			univers.getCore_().aState();
+
+			bool start = univers.getCore_().getStartGane();
 			Core *core = univers.releaseCore_();
 			if (core)
 				delete core;
+			if (start) {
+				univers.load_extern_lib_display(Univers::EXTERN_LIB_SFML);
+				univers.new_game();
+			}
 		}
 	}
 }

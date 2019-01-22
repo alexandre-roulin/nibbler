@@ -154,7 +154,7 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 			break;
 		}
 		case eHeader::FOOD: {
-//			log_info("eHeader::FOOD");
+	//		log_info("eHeader::FOOD");
 			FoodInfo foodInfo;
 			std::memcpy(&foodInfo, input, len);
 			foodCreations.push_back(FoodCreation(foodInfo.positionComponent,
@@ -183,7 +183,7 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 				StartInfo st;
 				std::memcpy(&st, input,
 							ClientTCP::size_header[static_cast<int>(eHeader::START_GAME)]);
-				factory.create_all_snake(snake_array, st.nu);
+				factory.                    create_all_snake(snake_array, st.nu);
 
 				if (univers.isServer()) {
 					uint16_t  nu_ = Snake::getlastSnakeIndex(snake_array, MAX_SNAKE);

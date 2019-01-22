@@ -19,6 +19,7 @@ public:
 	void			assign(Model const *model);
 	void			resetTransform();
 	glm::mat4		getTransform() const;
+	glm::vec3		getPosition() const;
 
 	void	translate(glm::vec3 const &axis, float deltaTime = 1.f);
 	void	rotate(glm::vec3 const &axis, float angle, float deltaTime = 1.f);
