@@ -44,7 +44,7 @@ enum ePriority {
 
 struct Snake {
 	Snake() : sprite(eSprite::BLUE), isReady(false), id(-1), isUpdate(false),
-			  direction(NORTH), isAlive(true) {
+			  direction(NORTH), isAlive(false) {
 		bzero(name, NAME_BUFFER);
 	};
 
@@ -55,10 +55,18 @@ struct Snake {
 	bool isUpdate;
 	eDirection direction;
 	bool isAlive;
-	uint16_t score;
 
 	friend std::ostream &operator<<(std::ostream &os, const Snake &snake);
 
+	void reset() {
+		bzero(name, NAME_BUFFER);
+		sprite = eSprite::GREEN;
+		isReady = false;
+		id = -1;
+		isUpdate = false;
+		direction = NORTH;
+		isAlive = false;
+	}
 
 	Snake &operator=(Snake const &snake) {
 		if (this != &snake) {
@@ -69,7 +77,6 @@ struct Snake {
 			isUpdate = snake.isUpdate;
 			direction = snake.direction;
 			isAlive = snake.isAlive;
-			score = snake.score;
 		}
 		return *this;
 	}
@@ -81,6 +88,7 @@ struct Snake {
 		strncpy(snake.name, Snake::basicName[rand() % MAX_SNAKE].c_str(),
 				NAME_BUFFER);
 		snake.id = id;
+		snake.isAlive = true;
 		return (snake);
 	}
 

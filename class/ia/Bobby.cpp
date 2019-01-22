@@ -18,12 +18,11 @@ std::unordered_map<KINU::Entity::ID, Bobby::ePriority> Bobby::mapPriority = {
 };
 
 
-Bobby::Bobby(Univers &univers,
-			 ClientTCP::pointer_client clientTCP)
+Bobby::Bobby(Univers &univers)
 		: univers_(univers),
 		  direction(NORTH),
 		  mapSize(0),
-		  clientTCP_(clientTCP) {
+		  clientTCP_(std::make_unique<ClientTCP>(univers, true)) {
 
 }
 
@@ -315,8 +314,8 @@ uint16_t Bobby::getId() const {
 	return clientTCP_->getId();
 }
 
-const ClientTCP::pointer_client &Bobby::getClientTCP_() const {
-	return clientTCP_;
+ClientTCP *Bobby::getClientTCP_() {
+	return clientTCP_.get();
 }
 
 void Bobby::clearPriority() {

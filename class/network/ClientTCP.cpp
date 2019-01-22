@@ -27,7 +27,8 @@ int const ClientTCP::size_header[] = {
 		[static_cast<int>(eHeader::RESIZE_MAP)] = sizeof(unsigned int),
 		[static_cast<int>(eHeader::REMOVE_SNAKE)] = sizeof(int16_t),
 		[static_cast<int>(eHeader::POCK)] = sizeof(char),
-		[static_cast<int>(eHeader::BORDERLESS)] = sizeof(bool)
+		[static_cast<int>(eHeader::BORDERLESS)] = sizeof(bool),
+		[static_cast<int>(eHeader::DISCONNECT)] = sizeof(int16_t)
 };
 
 ClientTCP::ClientTCP(Univers &univers, bool fromIA)
@@ -40,11 +41,10 @@ ClientTCP::ClientTCP(Univers &univers, bool fromIA)
 		  factory(univers) {
 }
 
-ClientTCP::pointer_client ClientTCP::create(Univers &univers, bool fromIA) {
-	return pointer_client(new ClientTCP(univers, fromIA));
-}
-
 ClientTCP::~ClientTCP() {
+	log_error("Close clientTCP");
+	io.stop();
+	write_socket(ClientTCP::add_prefix(eHeader::DISCONNECT, &id_));
 	socket.close();
 }
 
@@ -82,7 +82,7 @@ void ClientTCP::read_socket_header() {
 	boost::asio::async_read(socket, boost::asio::buffer(buffer_data,
 														ClientTCP::size_header[static_cast<int>(eHeader::HEADER)]),
 							boost::bind(&ClientTCP::handle_read_header,
-										shared_from_this(),
+										this,
 										boost::asio::placeholders::error,
 										boost::asio::placeholders::bytes_transferred));
 }
@@ -91,7 +91,7 @@ void ClientTCP::read_socket_data(eHeader header) {
 	boost::asio::async_read(socket, boost::asio::buffer(buffer_data,
 														ClientTCP::size_header[static_cast<int>(header)]),
 							boost::bind(&ClientTCP::handle_read_data,
-										shared_from_this(),
+										this,
 										header,
 										boost::asio::placeholders::error,
 										boost::asio::placeholders::bytes_transferred));
@@ -113,7 +113,7 @@ void ClientTCP::handle_read_header(const boost::system::error_code &error_code,
 void ClientTCP::write_socket(std::string message) {
 	boost::asio::async_write(socket, boost::asio::buffer(message),
 							 boost::bind(&ClientTCP::handle_write,
-										 shared_from_this(),
+										 this,
 										 boost::asio::placeholders::error,
 										 boost::asio::placeholders::bytes_transferred));
 }
@@ -149,7 +149,7 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 		}
 		case eHeader::REMOVE_SNAKE: {
 			log_info("eHeader::REMOVE_SNAKE");
-			snake_array[*(reinterpret_cast< const int16_t *>(input))].id = -1;
+			snake_array[*(reinterpret_cast< const int16_t *>(input))].reset();
 			univers.playNoise(eSound::DEATH);
 			break;
 		}
@@ -162,8 +162,8 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 			break;
 		}
 		case eHeader::ID: {
-			log_info("eHeader::ID");
 			std::memcpy(&id_, input, len);
+			log_info("eHeader::ID %d", id_);
 			break;
 		}
 		case eHeader::OPEN_GAME: {
@@ -271,7 +271,6 @@ const std::string &ClientTCP::getPort() const {
 /** Game Management **/
 
 void ClientTCP::addScore(uint16_t score) {
-	snake_array[id_].score += score;
 }
 
 void ClientTCP::send_host_open_game(void) {

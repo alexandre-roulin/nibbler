@@ -37,7 +37,6 @@ void			WidgetMassiveButton::render(void)
 		_core.univers.delete_client();
 	}
 	if (ImGui::Button("start_game()")) {
-		_core.univers.load_extern_lib_display(Univers::EXTERN_LIB_SFML);
 		_core.univers.new_game();
 	}
 	if (ImGui::Button("borderless()")) {

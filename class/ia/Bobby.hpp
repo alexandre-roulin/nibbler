@@ -29,8 +29,8 @@ public:
 	static std::mutex mutex;
 	static void clearPriority();
 	uint16_t getId() const;
-	const ClientTCP::pointer_client &getClientTCP_() const;
-	ClientTCP::pointer_client clientTCP_;
+	ClientTCP *getClientTCP_();
+	std::unique_ptr<ClientTCP> clientTCP_;
 	void findDirection(AStar::Vec2i, AStar::CoordinateList);
 	bool define_priority(int x, int y);
 	AStar::Vec2i getVecSnakeHead();
@@ -46,7 +46,7 @@ public:
 
 public:
 
-	Bobby(Univers &, ClientTCP::pointer_client);
+	Bobby(Univers &);
 
 	void buildIA();
 	void sendDirection() ;

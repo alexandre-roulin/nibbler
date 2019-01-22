@@ -27,12 +27,16 @@ private:
 	boost::array<char, 512> buffer_data;
 	ServerTCP &serverTCP_;
 
+public:
+	virtual ~TCPConnection();
+
+private:
 	TCPConnection(Snake const &, boost::asio::io_service &io_service, ServerTCP &serverTCP);
 
 	void checkError_(boost::system::error_code const &error_code);
 
-
 public:
+	int16_t getId() const;
 	typedef boost::shared_ptr<TCPConnection> pointer;
 
 	static pointer
@@ -51,7 +55,6 @@ public:
 
 	void handle_write(const boost::system::error_code &, size_t);
 
-	void close();
 
 	tcp::socket &socket();
 };
@@ -83,20 +86,21 @@ public:
 
 	bool isFull() const;
 
-private:
-	unsigned int port_;
-public:
+	bool isReady() const;
+
 	unsigned int getPort_() const;
 
 private:
+	unsigned int port_;
+	uint16_t number_clients_;
+
 	Univers &univers_;
-	int16_t nu_;
 	Snake snake_array[MAX_SNAKE];
 	unsigned int	mapSize;
 	std::vector<ClientTCP::FoodInfo> foodInfoArray;
 	std::mutex mutex;
 	void start_accept();
-
+	friend class TCPConnection;
 	std::vector<TCPConnection::pointer> pointers;
 	boost::asio::io_service io_service_;
 	tcp::acceptor acceptor_;

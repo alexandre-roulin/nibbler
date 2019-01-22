@@ -15,12 +15,14 @@
 #include <events/FoodCreation.hpp>
 #include <events/JoystickEvent.hpp>
 #include <dlfcn.h>
+
 /** Const Variable **/
 
 const std::string Univers::WarningServerCreateIA = "Only the server owner can create IA";
 const std::string Univers::WarningServerFull = "Server have reach the maximum player";
 const std::string Univers::WarningServerIsUp = "Server is already in place";
 const std::string Univers::SuccessServerIsCreate = "Server is up.";
+const std::string Univers::WarningClientExist = "Client is already in place.";
 
 Univers::Univers()
 		: timer_start(boost::asio::deadline_timer(io_start)),
@@ -121,14 +123,20 @@ void Univers::unload_external_library() {
 			deleteDisplay(display);
 			deleteDisplay = nullptr;
 			newDisplay = nullptr;
+			display = nullptr;
 		}
 		dlclose(dlHandleDisplay);
+		dlHandleDisplay = nullptr;
 	}
 }
 
 /** Game Management **/
 
 void Univers::new_game() {
+	if (!isServer() || !serverTCP_->isReady()) return;
+	assert(isServer());
+	assert(serverTCP_->isReady());
+	if (!display) load_extern_lib_display(Univers::EXTERN_LIB_SFML);
 	world_ = std::make_unique<KINU::World>(*this);
 	world_->grid = Grid<eSprite>(mapSize);
 	world_->grid.fill(eSprite::GROUND);
@@ -139,8 +147,8 @@ void Univers::new_game() {
 			bobby->buildIA();
 			bobby->sendDirection();
 		}
-		serverTCP_->start_game();
 	}
+	serverTCP_->start_game();
 	loop();
 }
 
@@ -211,7 +219,7 @@ void Univers::loop() {
 
 
 	//std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
-
+	log_error("%d %d %d", display == nullptr ,!display->exit(), !getMainClientTCP()->all_snake_is_dead());
 	while ((display == nullptr || !display->exit()) &&
 		   !getMainClientTCP()->all_snake_is_dead()) {
 		//std::chrono::high_resolution_clock::time_point t2 = std::chrono::high_resolution_clock::now();
@@ -219,7 +227,7 @@ void Univers::loop() {
 		//t1 = t2;
 
 		//std::cout << "It took me " << time_span.count() << " seconds.";
-		//std::cout << std::endl;
+//		std::cout << std::endl;
 		if (display != nullptr) {
 			display->update(0.2f);
 			display->drawGrid(world_->grid);
@@ -258,7 +266,6 @@ void Univers::loop_world() {
 	//log_info("Univers::CollisionSystem");
 	world_->getSystemsManager().getSystem<CollisionSystem>().update();
 
-
 	Bobby::clearPriority();
 	if (isServer()) {
 		for (auto &bobby : vecBobby) {
@@ -288,6 +295,8 @@ void Univers::loop_world() {
 	world_->getSystemsManager().getSystem<FoodEatSystem>().update();
 	world_->getEventsManager().destroy<FoodEat>();
 
+	std::cout << (getMainClientTCP()->all_snake_is_dead()) << std::endl;
+
 	if (!getMainClientTCP()->all_snake_is_dead()) {
 
 		timer_loop.expires_at(
@@ -302,7 +311,11 @@ void Univers::loop_world() {
 
 
 void Univers::create_client() {
-	clientTCP_ = ClientTCP::create(*this, false);
+	log_error("%d", clientTCP_.get() == nullptr);
+	if (!clientTCP_)
+		clientTCP_ = std::make_unique<ClientTCP>(*this, false);
+	else
+		core_->addMessageChat(WarningClientExist);
 }
 
 void Univers::create_ui() {
@@ -327,13 +340,11 @@ void Univers::create_ia() {
 		core_->addMessageChat(WarningServerFull);
 		return;
 	}
-	ClientTCP::pointer_client clientTCPIA = ClientTCP::create(*this, true);
-	clientTCPIA->connect("localhost", std::to_string(serverTCP_->getPort_()));
+	std::unique_ptr<Bobby> bobby = std::make_unique<Bobby>(*this);
+	bobby->getClientTCP_()->connect("localhost", std::to_string(serverTCP_->getPort_()));
 	sleep(1);
-	std::cout << clientTCPIA->getId() << std::endl;
-	clientTCPIA->change_state_ready();
-	vecBobby.push_back(
-			std::make_unique<Bobby>(*this, clientTCPIA));
+	bobby->getClientTCP_()->change_state_ready();
+	vecBobby.push_back(std::move(bobby));
 }
 
 void Univers::delete_ia() {
@@ -341,19 +352,19 @@ void Univers::delete_ia() {
 }
 
 void Univers::delete_server() {
-	if (serverTCP_ != nullptr) {
+	if (serverTCP_) {
 		serverTCP_ = nullptr;
 		delete_client();
 	}
 }
 
 void Univers::delete_client() {
-	clientTCP_ = ClientTCP::create(*this, false);
+	clientTCP_.reset();
 }
 
 void Univers::finish_game() {
 	thread.interrupt();
-	io_loop.reset();
+	io_loop.stop();
 	world_ = nullptr;
 }
 
@@ -368,7 +379,7 @@ ClientTCP *Univers::getMainClientTCP() const {
 	if (clientTCP_)
 		return clientTCP_.get();
 	else if (vecBobby.size() != 0)
-		return vecBobby.front()->getClientTCP_().get();
+		return vecBobby.front()->getClientTCP_();
 	return nullptr;
 
 }
@@ -381,7 +392,7 @@ IGameNetwork *Univers::getGameNetwork() const {
 	if (clientTCP_)
 		return clientTCP_.get();
 	else if (vecBobby.size() != 0) {
-		return vecBobby.front()->getClientTCP_().get();
+		return vecBobby.front()->getClientTCP_();
 	}
 	return nullptr;
 }

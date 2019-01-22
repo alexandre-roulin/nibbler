@@ -1,7 +1,6 @@
 #include <nibbler.hpp>
 #include "DisplaySfml.hpp"
 #include "Display2D.hpp"
-
 IDisplay *newDisplay(int width,
 					 int height,
 					 char const *windowName) {
@@ -23,6 +22,8 @@ DisplaySfml::DisplaySfml(int width,
 		_win(sf::VideoMode(this->_winPixelSize.getX(),
 						   this->_winPixelSize.getY()),
 			 windowName) {
+	std::cout << "DisplaySfml" << std::endl;
+
 	this->_win.setFramerateLimit(60);
 
 	std::string pathFile = __FILE__;
@@ -41,6 +42,7 @@ DisplaySfml::DisplaySfml(int width,
 }
 
 DisplaySfml::~DisplaySfml(void) {
+	std::cout << "~DisplaySfml" << std::endl;
 	this->_clean();
 }
 

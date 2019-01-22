@@ -27,9 +27,8 @@ using boost::asio::ip::tcp;
 
 class Univers;
 
-class ClientTCP : public boost::enable_shared_from_this<ClientTCP>, public IGameNetwork {
+class ClientTCP : public IGameNetwork {
 public:
-	typedef boost::shared_ptr<ClientTCP> pointer_client;
 
 	struct StartInfo {
 		unsigned int nu;
@@ -49,8 +48,6 @@ public:
 		bool fromSnake;
 
 	};
-
-	static pointer_client create(Univers &univers, bool fromIA);
 
 	virtual ~ClientTCP();
 
@@ -127,10 +124,10 @@ public:
 
 
 	static const int size_header[];
+	ClientTCP(Univers &univers, bool fromIA);
 
 private:
 
-	ClientTCP(Univers &univers, bool fromIA);
 
 	void checkError_(boost::system::error_code const &);
 

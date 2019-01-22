@@ -133,6 +133,7 @@ private:
 	static const std::string WarningServerFull;
 	static const std::string WarningServerIsUp;
 	static const std::string SuccessServerIsCreate;
+	static const std::string WarningClientExist;
 
 	// Variable
 	std::vector<NextFrame> nextFrame;
@@ -144,7 +145,7 @@ private:
 	std::unique_ptr<KINU::World> world_;
 	std::unique_ptr<ServerTCP> serverTCP_;
 	std::unique_ptr<Core> core_;
-	boost::shared_ptr<ClientTCP> clientTCP_;
+	std::unique_ptr<ClientTCP> clientTCP_;
 
 	std::vector<std::unique_ptr<Bobby>> vecBobby;
 
@@ -154,7 +155,6 @@ private:
 	ISound *sound;
 	bool borderless;
 	boost::thread thread;
-	IGameNetwork *gameNetwork;
 
 	unsigned int mapSize;
 	unsigned int gameSpeed;
