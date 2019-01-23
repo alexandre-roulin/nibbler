@@ -92,48 +92,55 @@ Shader &Shader::link()
 }
 
 void		Shader::setFloat(const std::string &name, float value) const {
-	glUniform1f(glGetUniformLocation(program_, name.c_str()), value);
+	GLint uniform = glGetUniformLocation(program_, name.c_str());
+	if (uniform == -1)
+		throw (std::invalid_argument(std::string("glGetUniformLocation::setFloat failed [") + name + "]"));
+	glUniform1f(uniform, value);
+}
+void		Shader::setMat4(const std::string &name, const glm::mat4 &mat) const  {
+	GLint uniform = glGetUniformLocation(program_, name.c_str());
+	if (uniform == -1)
+		throw (std::invalid_argument(std::string("glGetUniformLocation::setMat4 failed [") + name + "]"));
+	glUniformMatrix4fv(uniform, 1, GL_FALSE, &mat[0][0]);
+}
+void		Shader::setInt(const std::string &name, const int i) const  {
+	GLint uniform = glGetUniformLocation(program_, name.c_str());
+	if (uniform == -1)
+		throw (std::invalid_argument(std::string("glGetUniformLocation::setInt failed [") + name + "]"));
+	glUniform1i(uniform, i);
 }
 
 GLuint 		Shader::getId() const {
 	return (program_);
 }
 
-
-void		Shader::setMat4(const std::string &name, const glm::mat4 &mat) const  {
-	if (glGetUniformLocation(program_, name.c_str()) == -1) {
-		std::cerr << "glGetUniformLocation::setMat4 failed [" << name << "]" << std::endl;
-	}
-	glUniformMatrix4fv(glGetUniformLocation(program_, name.c_str()), 1, GL_FALSE, &mat[0][0]);
-}
-
 bool				Shader::debug_ = true;
 
 
-Shader::CreateException::~CreateException(void) throw(){}
-Shader::CreateException::CreateException(void) throw() :
+Shader::CreateException::~CreateException() noexcept {}
+Shader::CreateException::CreateException() noexcept :
 		invalid_argument(this->_error),
 		_error("You make a CreateException") {}
-Shader::CreateException::CreateException(std::string s) throw() :
+Shader::CreateException::CreateException(std::string s) noexcept :
 		invalid_argument(s),
 		_error(s) { }
-Shader::CreateException::CreateException(Shader::CreateException const &src) throw() :
+Shader::CreateException::CreateException(Shader::CreateException const &src) noexcept :
 		invalid_argument(this->_error),
 		_error(src._error)
 { this->_error = src._error; }
-const char	*Shader::CreateException::what() const throw()
+const char	*Shader::CreateException::what() const noexcept
 { return (this->_error.c_str()); }
 
-Shader::LinkException::~LinkException(void) throw(){}
-Shader::LinkException::LinkException(void) throw() :
+Shader::LinkException::~LinkException() noexcept {}
+Shader::LinkException::LinkException() noexcept :
 		invalid_argument(this->_error),
 		_error("You make a LinkException") {}
-Shader::LinkException::LinkException(std::string s) throw() :
+Shader::LinkException::LinkException(std::string s) noexcept :
 		invalid_argument(s),
 		_error(s) { }
-Shader::LinkException::LinkException(Shader::LinkException const &src) throw() :
+Shader::LinkException::LinkException(Shader::LinkException const &src) noexcept :
 		invalid_argument(this->_error),
 		_error(src._error)
 { this->_error = src._error; }
-const char	*Shader::LinkException::what() const throw()
+const char	*Shader::LinkException::what() const noexcept
 { return (this->_error.c_str()); }
