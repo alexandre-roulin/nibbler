@@ -5,6 +5,7 @@ layout (location = 2) in vec2 aTexCoords;
 
 out vec2 TexCoords;
 out vec3 Normal;
+out vec3 Position;
 
 uniform mat4 model;
 uniform mat4 view;
@@ -14,5 +15,6 @@ void main()
 {
     TexCoords = aTexCoords;
     Normal = aNormal;
+    Position = vec3(model * vec4(aPos, 1.f));
     gl_Position = projection * view * model * vec4(aPos, 1.0);
 }

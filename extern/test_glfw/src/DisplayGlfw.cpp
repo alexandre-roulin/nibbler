@@ -52,7 +52,7 @@ model_(1.f) {
             NEAR_PLANE, MAX_PLANE);
 
 	shaderMultiple_.attach(pathShaderBasic_ + "Multiple.vert");
-	shaderMultiple_.attach(pathShaderBasic_ + ".frag");
+	shaderMultiple_.attach(pathShaderBasic_ + "Multiple.frag");
 	shaderMultiple_.link();
 
     shader_.attach(pathShaderBasic_ + ".vert");
@@ -128,7 +128,6 @@ void		DisplayGlfw::setBackground(Grid< eSprite > const &grid) {
 				background_(x, y).scale(glm::vec3(-0.10f));
             }
             else if (tileBackground_(x, y) == eSprite::GROUND) {
-				// std::cout << "yes\n";
                 background_(x, y).assign(&modelGrass_);
 				background_(x, y).resetTransform();
 				background_(x, y).translate(glm::vec3(x - winTileSize_.getX() / 2, y - winTileSize_.getY() / 2, 0.f));
@@ -141,8 +140,12 @@ void		DisplayGlfw::setBackground(Grid< eSprite > const &grid) {
 
 void		DisplayGlfw::drawGridCase_(eSprite sprite, int x, int y) {
 	grid_(x, y).resetTransform();
-	grid_(x, y).translate(glm::vec3(x - winTileSize_.getX() / 2, y - winTileSize_.getY() / 2, 1.2f));
+	grid_(x, y).translate(glm::vec3(x - winTileSize_.getX() / 2, y - winTileSize_.getY() / 2, 1.f));
 	interpolateGridCase_(x, y);
+	if (static_cast<int>(sprite & eSprite::MASK_BODY) != 0) {
+		grid_(x, y).rotate(glm::vec3(1.f, 0.f, 0.f), glm::radians(90.f), 1.f);
+		grid_(x, y).scale(glm::vec3(-0.25f));
+	}
 	model_ = grid_(x, y).getTransform();
 	shader_.setMat4("model", model_);
 	grid_(x, y).getModel()->render(shader_);
@@ -161,14 +164,12 @@ void		DisplayGlfw::drawGrid(Grid< eSprite > const &grid) {
 				grid_(x, y).assign(&appleModel_);
 			else if (grid(x, y) != eSprite::HEAD)
 				grid_(x, y).assign(&block_);
-
-			//else if (static_cast<int>(grid(x, y) & eSprite::MASK_BODY) != 0) {
-			else if (((grid(x, y) & eSprite::MASK_BODY) == eSprite::HEAD)
-					|| ((grid(x, y) & eSprite::MASK_BODY) == eSprite::BODY)
-					|| ((grid(x, y) & eSprite::MASK_BODY) == eSprite::TAIL)) {
-				std::cout << "Yes" << std::endl;
+			if (static_cast<int>(grid(x, y) & eSprite::MASK_BODY) != 0) {
+				grid_(x, y).assign(&modelGrass_);
 				shader_.setInt("colorSnake", DisplayGlfw::mapColor_.at(grid(x, y) & eSprite::MASK_COLOR));
 			}
+			else
+				shader_.setInt("colorSnake", 0);
 			if (grid(x, y) != eSprite::NONE)
 				drawGridCase_(grid(x, y), x, y);
 		}
