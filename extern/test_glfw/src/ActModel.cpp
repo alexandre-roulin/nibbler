@@ -95,8 +95,8 @@ void	ActModel::updateTransform_() {
 	else
 		scale = glm::scale(scale, (model_->getInterScaling() * scaling_));
 	transform_ = glm::translate(glm::mat4(1.f), position_)
-				 * scale
 				 * glm::translate(glm::mat4(1.f), model_->getPositionCenter())
+				 * scale
 				 * rotate_
 				 * glm::translate(glm::mat4(1.f), -model_->getPositionCenter());
 }

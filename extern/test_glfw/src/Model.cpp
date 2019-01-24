@@ -82,10 +82,6 @@ void					Model::processNode_(aiNode *node, const aiScene *scene) {
     for(unsigned int i = 0; i < node->mNumChildren; i++) {
         processNode_(node->mChildren[i], scene);
     }
-
-    //for(unsigned int i = 0; i < scene->mMeshes.size(); i++) {
-	//    processMesh_(mesh, scene);
-	//}
 }
 
 

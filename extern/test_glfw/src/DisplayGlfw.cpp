@@ -52,7 +52,7 @@ model_(1.f) {
             NEAR_PLANE, MAX_PLANE);
 
 	shaderMultiple_.attach(pathShaderBasic_ + "Multiple.vert");
-	shaderMultiple_.attach(pathShaderBasic_ + ".frag");
+	shaderMultiple_.attach(pathShaderBasic_ + "Multiple.frag");
 	shaderMultiple_.link();
 
     shader_.attach(pathShaderBasic_ + ".vert");
@@ -86,9 +86,7 @@ void                DisplayGlfw::getPath_() {
     std::string pathRoot = pathFile.substr(0, pathFile.rfind(DISPLAY_GLFW_SLASH));
     pathRoot_ = pathRoot.substr(0, pathRoot.rfind(DISPLAY_GLFW_SLASH));
     std::cout << pathRoot_ << std::endl;
-
-    std::ifstream t(pathRoot_ + DISPLAY_GLFW_SLASH + "file.txt");
-	pathModel_ = std::string((std::istreambuf_iterator<char>(t)), std::istreambuf_iterator<char>());
+	pathModel_ = std::string(pathRoot_ + DISPLAY_GLFW_SLASH + "resources" + DISPLAY_GLFW_SLASH + "snakest2" + DISPLAY_GLFW_SLASH + "Snake_by_Swp.obj");
     pathBlock_ = std::string(pathRoot_ + DISPLAY_GLFW_SLASH + "resources" + DISPLAY_GLFW_SLASH + "objects" + DISPLAY_GLFW_SLASH + "nanosuit" + DISPLAY_GLFW_SLASH + "nanosuit.obj");
     pathGrass_ = std::string(pathRoot_ + DISPLAY_GLFW_SLASH + "resources" + DISPLAY_GLFW_SLASH + "objects" + DISPLAY_GLFW_SLASH + "grass" + DISPLAY_GLFW_SLASH + "grass.obj");
     pathWall_ = std::string(pathRoot_ + DISPLAY_GLFW_SLASH + "resources" + DISPLAY_GLFW_SLASH + "wall.obj");
@@ -130,7 +128,6 @@ void		DisplayGlfw::setBackground(Grid< eSprite > const &grid) {
 				background_(x, y).scale(glm::vec3(-0.10f));
             }
             else if (tileBackground_(x, y) == eSprite::GROUND) {
-				std::cout << "yes\n";
                 background_(x, y).assign(&modelGrass_);
 				background_(x, y).resetTransform();
 				background_(x, y).translate(glm::vec3(x - winTileSize_.getX() / 2, y - winTileSize_.getY() / 2, 0.f));
@@ -143,8 +140,12 @@ void		DisplayGlfw::setBackground(Grid< eSprite > const &grid) {
 
 void		DisplayGlfw::drawGridCase_(eSprite sprite, int x, int y) {
 	grid_(x, y).resetTransform();
-	grid_(x, y).translate(glm::vec3(x - winTileSize_.getX() / 2, y - winTileSize_.getY() / 2, 1.2f));
+	grid_(x, y).translate(glm::vec3(x - winTileSize_.getX() / 2, y - winTileSize_.getY() / 2, 1.f));
 	interpolateGridCase_(x, y);
+	if (static_cast<int>(sprite & eSprite::MASK_BODY) != 0) {
+		grid_(x, y).rotate(glm::vec3(1.f, 0.f, 0.f), glm::radians(90.f), 1.f);
+		grid_(x, y).scale(glm::vec3(-0.25f));
+	}
 	model_ = grid_(x, y).getTransform();
 	shader_.setMat4("model", model_);
 	grid_(x, y).getModel()->render(shader_);
@@ -163,7 +164,12 @@ void		DisplayGlfw::drawGrid(Grid< eSprite > const &grid) {
 				grid_(x, y).assign(&appleModel_);
 			else if (grid(x, y) != eSprite::HEAD)
 				grid_(x, y).assign(&block_);
-
+			if (static_cast<int>(grid(x, y) & eSprite::MASK_BODY) != 0) {
+				grid_(x, y).assign(&modelGrass_);
+				shader_.setInt("colorSnake", DisplayGlfw::mapColor_.at(grid(x, y) & eSprite::MASK_COLOR));
+			}
+			else
+				shader_.setInt("colorSnake", 0);
 			if (grid(x, y) != eSprite::NONE)
 				drawGridCase_(grid(x, y), x, y);
 		}
@@ -242,6 +248,7 @@ void DisplayGlfw::render(float currentDelayFrame, float maxDelayFrame) {
 	view_ = camera_.getViewMatrix();
 	shader_.setMat4("projection", projection_);
 	shader_.setMat4("view", view_);
+	shader_.setInt("colorSnake", 0);
 
     for (int y = 0; y < winTileSize_.getY(); y++) {
         for (int x = 0; x < winTileSize_.getX(); x++) {
@@ -286,6 +293,17 @@ void DisplayGlfw::update(float deltaTime) {
 eDirection DisplayGlfw::getDirection() const {
     return (direction_);
 }
+
+std::map< eSprite, int >		DisplayGlfw::mapColor_ = {
+		{ eSprite::GREEN, 0x73b66f },
+		{ eSprite::BLUE, 0x007fe9 },
+		{ eSprite::PURPLE, 0xcb4fff },
+		{ eSprite::PINK, 0xe60066 },
+		{ eSprite::GREY, 0x8c8a8a },
+		{ eSprite::YELLOW, 0xe6c000 },
+		{ eSprite::ORANGE, 0xf78b00 },
+		{ eSprite::RED, 0xe31c00 }
+};
 
 DisplayGlfw::GlfwConstructorException::~GlfwConstructorException() noexcept = default;
 

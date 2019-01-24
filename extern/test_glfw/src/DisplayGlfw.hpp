@@ -108,8 +108,6 @@ private:
 	Model							appleModel_;
 	Particle						*testParticle_;
 
-
-
     Camera							camera_;
 
 	glm::mat4						projection_;
@@ -124,7 +122,9 @@ private:
 	void				interpolateGridCase_(int x, int y);
 
 
-		static float				lastX_;
+	static std::map< eSprite, int >		mapColor_;
+
+	static float				lastX_;
 	static float				lastY_;
 	static float				offsetX_;
 	static float				offsetY_;

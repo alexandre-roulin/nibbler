@@ -56,7 +56,6 @@ void Mesh::activeTexture(Shader &shader) const {
 			number = std::to_string(diffuseNr++);
 		else if(name == "texture_specular")
 			number = std::to_string(specularNr++);
-		shader.setFloat(("material." + name + number).c_str(), i);
 		glBindTexture(GL_TEXTURE_2D, texture_[i].id);
 	}
 	glActiveTexture(GL_TEXTURE0);

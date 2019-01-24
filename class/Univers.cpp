@@ -28,7 +28,7 @@ Univers::Univers()
 		: timer_start(boost::asio::deadline_timer(io_start)),
 		  timer_loop(boost::asio::deadline_timer(io_loop)),
 		  mapSize(MAP_DEFAULT),
-		  gameSpeed(80),
+		  gameSpeed(1000),
 		  dlHandleDisplay(nullptr),
 		  dlHandleSound(nullptr),
 		  display(nullptr),
@@ -236,7 +236,8 @@ void Univers::loop() {
 		if (display != nullptr) {
 			display->update(0.2f);
 			display->drawGrid(world_->grid);
-			display->render(current.count(), gameSpeed);
+			//display->render(current.count(), gameSpeed);
+			display->render(gameSpeed, gameSpeed);
 		}
 		if (current >= std::chrono::milliseconds(gameSpeed)) {
 			current = std::chrono::milliseconds(0);
