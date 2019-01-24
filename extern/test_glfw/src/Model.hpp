@@ -42,7 +42,7 @@ public:
 	std::deque<Mesh> const &getMeshes() const;
 
 	float		getInterScaling() const;
-	glm::vec3	getPositionCenter() const;
+	glm::vec3	getPositionCenterRelativeToOrigin() const;
 
 	void	render() const;
 	void	render(Shader &shader) const;

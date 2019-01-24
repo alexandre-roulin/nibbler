@@ -106,6 +106,7 @@ private:
 	Model							modelGrass_;
 	Model							modelWall_;
 	Model							appleModel_;
+	Model							modelSphere_;
 	Particle						*testParticle_;
 
     Camera							camera_;
