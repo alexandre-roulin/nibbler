@@ -23,7 +23,7 @@ public:
 
 		std::cout << "] FROM [";
 		if ((from & eSprite::NORTH) == eSprite::NORTH)
-			std::cout << "NORTH";
+			std::cout << "North";
 		if ((from & eSprite::SOUTH) == eSprite::SOUTH)
 			std::cout << "SOUTH";
 		if ((from & eSprite::WEST) == eSprite::WEST)
@@ -32,7 +32,7 @@ public:
 			std::cout << "EAST";
 		std::cout << "]TO [";
 		if ((to & eSprite::NORTH) == eSprite::NORTH)
-			std::cout << "NORTH";
+			std::cout << "North";
 		if ((to & eSprite::SOUTH) == eSprite::SOUTH)
 			std::cout << "SOUTH";
 		if ((to & eSprite::WEST) == eSprite::WEST)

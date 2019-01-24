@@ -21,14 +21,13 @@ int const ClientTCP::size_header[] = {
 		[static_cast<int>(eHeader::OPEN_GAME)] = sizeof(bool),
 		[static_cast<int>(eHeader::START_GAME)] = sizeof(StartInfo),
 		[static_cast<int>(eHeader::SNAKE)] = sizeof(Snake),
-		[static_cast<int>(eHeader::SNAKE_ARRAY)] = sizeof(Snake) * MAX_SNAKE,
 		[static_cast<int>(eHeader::HEADER)] = sizeof(eHeader),
 		[static_cast<int>(eHeader::INPUT)] = sizeof(InputInfo),
 		[static_cast<int>(eHeader::RESIZE_MAP)] = sizeof(unsigned int),
 		[static_cast<int>(eHeader::REMOVE_SNAKE)] = sizeof(int16_t),
 		[static_cast<int>(eHeader::POCK)] = sizeof(char),
 		[static_cast<int>(eHeader::BORDERLESS)] = sizeof(bool),
-		[static_cast<int>(eHeader::DISCONNECT)] = sizeof(int16_t)
+		[static_cast<int>(eHeader::kPause)] = sizeof(eAction)
 };
 
 ClientTCP::ClientTCP(Univers &univers, bool fromIA)
@@ -44,7 +43,6 @@ ClientTCP::ClientTCP(Univers &univers, bool fromIA)
 ClientTCP::~ClientTCP() {
 	log_error("Close clientTCP");
 	io.stop();
-	write_socket(ClientTCP::add_prefix(eHeader::DISCONNECT, &id_));
 	socket.close();
 }
 
@@ -134,22 +132,18 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 			}
 			break;
 		}
-		case eHeader::SNAKE_ARRAY: {
-			std::memcpy(snake_array, input, len);
-			break;
-		}
 		case eHeader::SNAKE: {
 			if (accept_data()) {
 				Snake snake_temp;
 				std::memcpy(&snake_temp, input, len);
-				snake_array[snake_temp.id] = snake_temp;
+				snake_array_[snake_temp.id] = snake_temp;
 				univers.playNoise(eSound::READY);
 			}
 			break;
 		}
 		case eHeader::REMOVE_SNAKE: {
 			log_info("eHeader::REMOVE_SNAKE");
-			snake_array[*(reinterpret_cast< const int16_t *>(input))].reset();
+			snake_array_[*(reinterpret_cast< const int16_t *>(input))].reset();
 			univers.playNoise(eSound::DEATH);
 			break;
 		}
@@ -183,14 +177,14 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 				StartInfo st;
 				std::memcpy(&st, input,
 							ClientTCP::size_header[static_cast<int>(eHeader::START_GAME)]);
-				factory.                    create_all_snake(snake_array, st.nu);
+				factory.create_all_snake(snake_array_, st.nu);
 
 				if (univers.isServer()) {
-					uint16_t  nu_ = Snake::getlastSnakeIndex(snake_array, MAX_SNAKE);
+
+					uint16_t  nu_ = std::count_if(snake_array_.begin(), snake_array_.end(), [](auto snake){ return snake.id != -1;});
 					int max_food = (nu_ > 1 ? nu_ - 1 : nu_);
 					log_warn("Number of food %d", max_food);
 
-					univers.getWorld_().grid.print();
 					for (int index = 0; index < max_food; ++index) {
 						ClientTCP::FoodInfo foodInfo(
 								PositionComponent(univers.getWorld_()
@@ -231,7 +225,6 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 		}
 		case eHeader::POCK: {
 			if (accept_data()) {
-				std::cout << "POCK" << std::endl;
 				univers.getWorld_().getEventsManager().emitEvent<NextFrame>();
 			}
 			break;
@@ -253,11 +246,6 @@ void ClientTCP::handle_read_data(eHeader header, boost::system::error_code const
 void ClientTCP::handle_write(const boost::system::error_code &error_code,
 							 size_t) {
 	checkError_(error_code);
-}
-
-void ClientTCP::close_connection() {
-	bool data = true;
-	write_socket(ClientTCP::add_prefix(eHeader::DISCONNECT, &data));
 }
 
 const std::string &ClientTCP::getDns() const {
@@ -284,26 +272,26 @@ void ClientTCP::change_map_size(unsigned int size) {
 }
 
 void ClientTCP::change_name(char const *name) {
-	bzero(snake_array[id_].name, NAME_BUFFER);
+	bzero(snake_array_[id_].name, NAME_BUFFER);
 	if (strlen(name) > NAME_BUFFER)
-		strncpy(snake_array[id_].name, name, NAME_BUFFER - 1);
+		strncpy(snake_array_[id_].name, name, NAME_BUFFER - 1);
 	else
-		strcpy(snake_array[id_].name, name);
+		strcpy(snake_array_[id_].name, name);
 	refreshMySnake();
 }
 
 void ClientTCP::change_sprite(eSprite snakeSprite) {
-	snake_array[id_].sprite = snakeSprite;
+	snake_array_[id_].sprite = snakeSprite;
 	refreshMySnake();
 }
 
 void ClientTCP::change_state_ready(void) {
-	snake_array[id_].isReady = !snake_array[id_].isReady;
+	snake_array_[id_].isReady = !snake_array_[id_].isReady;
 	refreshMySnake();
 }
 
 void ClientTCP::refreshMySnake(void) {
-	write_socket(add_prefix(eHeader::SNAKE, &snake_array[id_]));
+	write_socket(add_prefix(eHeader::SNAKE, &snake_array_[id_]));
 }
 
 int16_t ClientTCP::getId() const {
@@ -328,17 +316,18 @@ void ClientTCP::deliverEvents() {
 }
 
 Snake const *ClientTCP::getSnakes() const {
-	return snake_array;
+	return snake_array_.data();
 }
 
 Snake	const &ClientTCP::getSnake(void) const {
-	return snake_array[id_];
+	return snake_array_[id_];
 }
 
 void ClientTCP::killSnake(uint16_t id) {
 	log_warn("ClientTCP::killSnake. %d", id);
-	snake_array[id].isAlive = false;
-	write_socket(add_prefix(eHeader::SNAKE, &(snake_array[id])));
+	auto snake  = snake_array_.__elems_[id];
+	snake.isAlive = false;
+	write_socket(add_prefix(eHeader::SNAKE, &snake));
 }
 
 void ClientTCP::send_borderless(bool borderless) {
@@ -346,10 +335,8 @@ void ClientTCP::send_borderless(bool borderless) {
 }
 
 bool ClientTCP::all_snake_is_dead() {
-	for (int index = 0; index < MAX_SNAKE; ++index)
-		if (snake_array[index].id != -1 && snake_array[index].isAlive)
-			return false;
-	return true;
+	return std::all_of(snake_array_.begin(), snake_array_.end(), [](auto snake){
+		return !(snake.id != -1 && snake.isAlive);});
 }
 
 /** Mutex Management **/

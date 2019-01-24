@@ -20,7 +20,7 @@ std::unordered_map<KINU::Entity::ID, Bobby::ePriority> Bobby::mapPriority = {
 
 Bobby::Bobby(Univers &univers)
 		: univers_(univers),
-		  direction(NORTH),
+		  direction(kNorth),
 		  mapSize(0),
 		  clientTCP_(std::make_unique<ClientTCP>(univers, true)) {
 
@@ -101,19 +101,19 @@ void Bobby::findDirection(AStar::Vec2i vecSource, AStar::CoordinateList list) {
 	if (list[index].x == vecSource.x - 1 &&
 		list[index].y == vecSource.y) {
 //		log_success("eDirection::WEST");
-		direction = eDirection::WEST;
+		direction = eDirection::kWest;
 	} else if (list[index].x == vecSource.x &&
 			   list[index].y == vecSource.y - 1) {
-//		log_success("eDirection::NORTH");
-		direction = eDirection::NORTH;
+//		log_success("eDirection::North");
+		direction = eDirection::kNorth;
 	} else if (list[index].x == vecSource.x &&
 			   list[index].y == vecSource.y + 1) {
 //		log_success("eDirection::SOUTH");
-		direction = eDirection::SOUTH;
+		direction = eDirection::kSouth;
 	} else if (list[index].x == vecSource.x + 1 &&
 			   list[index].y == vecSource.y) {
 //		log_success("eDirection::EAST");
-		direction = eDirection::EAST;
+		direction = eDirection::kEast;
 	} else {
 		log_success("eDirection::THROW");
 		throw std::exception();

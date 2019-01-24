@@ -26,9 +26,9 @@ class Univers {
 public:
 
 	enum eDisplay {
-		EXTERN_LIB_SFML,
-		EXTERN_LIB_SDL,
-		EXTERN_LIB_STB
+		kExternSfmlLibrary,
+		kExternSdlLibrary,
+		kExternGlfwLibrary
 	};
 
 	enum eFlag {
@@ -114,7 +114,7 @@ public:
 	bool isOnlyIA() const;
 
 	bool isServer() const;
-
+	void callbackAction(eAction);
 
 private: // Function
 	ClientTCP *getMainClientTCP() const;
@@ -155,7 +155,7 @@ private:
 	ISound *sound;
 	bool borderless;
 	boost::thread thread;
-
+	eDisplay kDisplay;
 	unsigned int mapSize;
 	unsigned int gameSpeed;
 

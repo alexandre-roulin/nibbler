@@ -55,16 +55,16 @@ void SpriteSystem::update() {
 		}
 
 		if ((spriteComponent.sprite & eSprite::HEAD) == eSprite::HEAD) {
-			if (entity.getComponent<MotionComponent>().direction == NORTH)
+			if (entity.getComponent<MotionComponent>().direction == kNorth)
 				spriteComponent.sprite |= eSprite::TO_NORTH;
 			else if (entity.getComponent<MotionComponent>().direction ==
-					 SOUTH)
+					 kSouth)
 				spriteComponent.sprite |= eSprite::TO_SOUTH;
 			else if (entity.getComponent<MotionComponent>().direction ==
-					 EAST)
+					 kEast)
 				spriteComponent.sprite |= eSprite::TO_EAST;
 			else if (entity.getComponent<MotionComponent>().direction ==
-					 WEST)
+					 kWest)
 				spriteComponent.sprite |= eSprite::TO_WEST;
 		} else {
 			spriteComponent.sprite |=

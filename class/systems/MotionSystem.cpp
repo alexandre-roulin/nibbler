@@ -22,16 +22,16 @@ void MotionSystem::update() {
 		auto &positionComponent = entity.getComponent<PositionComponent>();
 		auto &motionComponent = entity.getComponent<MotionComponent>();
 		switch (motionComponent.direction) {
-			case NORTH:
+			case kNorth:
 				(positionComponent.y == 0 ? positionComponent.y = mapSize - 1 : positionComponent.y--);
 				break;
-			case SOUTH:
+			case kSouth:
 				(positionComponent.y == mapSize - 1 ? positionComponent.y = 0 : ++positionComponent.y);
 				break;
-			case EAST:
+			case kEast:
 				(positionComponent.x == mapSize - 1 ? positionComponent.x = 0 : ++positionComponent.x);
 				break;
-			case WEST:
+			case kWest:
 				(positionComponent.x == 0 ? positionComponent.x = mapSize - 1 : positionComponent.x--);
 				break;
 		}

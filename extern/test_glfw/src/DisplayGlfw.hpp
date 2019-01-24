@@ -34,6 +34,7 @@
 
 class DisplayGlfw : public Glfw, public IDisplay {
 public:
+	void registerCallbackAction(std::function<void(eAction)> function) override; // TODO
 
     class GlfwConstructorException : public std::exception {
     public:

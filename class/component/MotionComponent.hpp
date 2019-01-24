@@ -6,7 +6,7 @@
 struct MotionComponent {
 public:
 
-	MotionComponent(eDirection direction = NORTH);
+	MotionComponent(eDirection direction = kNorth);
 
 	eDirection direction;
 };

@@ -5,8 +5,8 @@
 #define SPRITE_FOOD SIZE_LINE_TILESET
 #define PATH_TILESET "./ressource/snake_tileset.png"
 #define SIZE_LINE_TILESET 15
-//#define PATH_DISPLAY_LIBRARY_SFML "./extern/display_sfml/libdisplay_sfml.so"
-#define PATH_DISPLAY_LIBRARY_SFML "./extern/test_glfw/libGlitter.so"
+#define PATH_DISPLAY_LIBRARY_SFML "./extern/display_sfml/libdisplay_sfml.so"
+//#define PATH_DISPLAY_LIBRARY_SFML "./extern/test_glfw/libGlitter.so"
 //#define PATH_DISPLAY_LIBRARY_SFML "./extern/display_sdl/libdisplay_sdl.so"
 
 #define PATH_DISPLAY_LIBRARY_SDL "./extern/display_sdl/libdisplay_sdl.so"
@@ -27,10 +27,15 @@
 #endif
 
 enum eDirection {
-	NORTH = 1,							// 0000 0001
-	SOUTH = 3,							// 0000 0011
-	EAST = 4,							// 0000 0100
-	WEST = 12							// 0000 1100
+	kNorth = 1,							// 0000 0001
+	kSouth = 3,							// 0000 0011
+	kEast = 4,							// 0000 0100
+	kWest = 12							// 0000 1100
+};
+
+enum eAction {
+	kPause,
+	kSwitchDisplayLibrary
 };
 
 class IDisplay {
@@ -49,5 +54,7 @@ public:
 	virtual void setBackground(Grid<eSprite> const &grid) = 0;
 
 	virtual eDirection getDirection(void) const = 0;
+
+	virtual void registerCallbackAction(std::function<void(eAction)>) = 0;
 };
 

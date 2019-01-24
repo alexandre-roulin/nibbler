@@ -28,7 +28,7 @@ Univers::Univers()
 		: timer_start(boost::asio::deadline_timer(io_start)),
 		  timer_loop(boost::asio::deadline_timer(io_loop)),
 		  mapSize(MAP_DEFAULT),
-		  gameSpeed(1000),
+		  gameSpeed(80),
 		  dlHandleDisplay(nullptr),
 		  dlHandleSound(nullptr),
 		  display(nullptr),
@@ -98,17 +98,18 @@ bool Univers::load_external_display_library(std::string const &title,
 }
 
 bool Univers::load_extern_lib_display(Univers::eDisplay eLib) {
+	kDisplay = eLib;
 	switch (eLib) {
-		case EXTERN_LIB_SFML : {
-			return load_external_display_library(std::string("Nibbler - SFML"),
-												 std::string(
-														 PATH_DISPLAY_LIBRARY_SFML));
+		case kExternSfmlLibrary : {
+			return load_external_display_library(
+					std::string("Nibbler - SFML"),
+					std::string(PATH_DISPLAY_LIBRARY_SFML));
 		}
-		case EXTERN_LIB_SDL : {
+		case kExternSdlLibrary : {
 			// TODO ADD SDL
 			break;
 		}
-		case EXTERN_LIB_STB : {
+		case kExternGlfwLibrary : {
 			// TODO ADD STB
 			break;
 		}
@@ -137,12 +138,13 @@ void Univers::new_game() {
 	if (!isServer() || !serverTCP_->isReady()) return;
 	assert(isServer());
 	assert(serverTCP_->isReady());
-	if (!display) load_extern_lib_display(Univers::EXTERN_LIB_SFML);
+	if (!display) load_extern_lib_display(Univers::kExternSfmlLibrary);
 	world_ = std::make_unique<KINU::World>(*this);
 	world_->grid = Grid<eSprite>(mapSize);
 	world_->grid.fill(eSprite::GROUND);
 	world_->setDisplay(display);
 	display->setBackground(world_->grid);
+	display->registerCallbackAction(std::bind(&Univers::callbackAction, this, std::placeholders::_1));
 	if (isServer()) {
 		for (auto &bobby : vecBobby) {
 			bobby->buildIA();
@@ -317,6 +319,19 @@ void Univers::loop_world() {
 //	world_->grid.print();
 }
 
+void Univers::callbackAction(eAction action) {
+	if (getGameNetwork() == nullptr) return;
+	switch (action) {
+		case eAction::kPause :
+			getGameNetwork()->write_socket(ClientTCP::add_prefix<eAction>(eHeader::kPause, &action));
+			break;
+		case eAction::kSwitchDisplayLibrary:
+			kDisplay = (kDisplay == kExternGlfwLibrary) ? kExternSfmlLibrary : static_cast<eDisplay>(kDisplay + 1);
+
+			break;
+	}
+}
+
 /** Create and delete **/
 
 
@@ -363,6 +378,8 @@ void Univers::delete_ia() {
 
 void Univers::delete_server() {
 	if (serverTCP_) {
+		if (clientTCP_->isConnect())
+			clientTCP_ = nullptr;
 		serverTCP_ = nullptr;
 		delete_client();
 	}

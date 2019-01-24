@@ -6,7 +6,7 @@
 struct JoystickComponent {
 public:
 
-	explicit JoystickComponent(eDirection direction = NORTH);
+	explicit JoystickComponent(eDirection direction = kNorth);
 
 	eDirection direction;
 };

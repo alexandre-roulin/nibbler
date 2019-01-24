@@ -9,6 +9,7 @@
 
 class DisplaySdl : public IDisplay {
 public:
+	void registerCallbackAction(std::function<void(eAction)> function) override;
 
 	class SdlConstructorException : public std::exception {
 	public:
@@ -83,6 +84,8 @@ private:
 	DisplaySdl(void);
 
 	static SDL_Surface *_SdlSurface(int widht, int height);
+
+	std::function<void(eAction)> _callback;
 };
 
 extern "C" {

@@ -44,7 +44,7 @@ enum ePriority {
 
 struct Snake {
 	Snake() : sprite(eSprite::BLUE), isReady(false), id(-1), isUpdate(false),
-			  direction(NORTH), isAlive(false) {
+			  direction(kNorth), isAlive(false) {
 		bzero(name, NAME_BUFFER);
 	};
 
@@ -64,7 +64,7 @@ struct Snake {
 		isReady = false;
 		id = -1;
 		isUpdate = false;
-		direction = NORTH;
+		direction = kNorth;
 		isAlive = false;
 	}
 
@@ -133,18 +133,17 @@ struct Snake {
 //ADD SIZE IN ClientTCP::size_header
 
 enum class eHeader {
-	CHAT,				//0
-	FOOD,				//1
-	ID,					//2
-	OPEN_GAME,			//3
-	START_GAME,			//4
-	SNAKE,				//5
-	SNAKE_ARRAY,		//6
-	HEADER,				//7
-	INPUT,				//8
-	RESIZE_MAP,			//9
-	REMOVE_SNAKE,		//10
-	POCK,				//11
-	BORDERLESS,			//12
-	DISCONNECT          //13
+	CHAT,
+	FOOD,
+	ID,
+	OPEN_GAME,
+	START_GAME,
+	SNAKE,
+	HEADER,
+	INPUT,
+	RESIZE_MAP,
+	REMOVE_SNAKE,
+	POCK,
+	BORDERLESS,
+	kPause
 };

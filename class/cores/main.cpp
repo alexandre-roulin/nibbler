@@ -76,21 +76,21 @@ void nibbler(Univers &univers) {
 			univers.delete_server();
 		}
 		if (buffer == "sfml") {
-			univers.load_extern_lib_display(Univers::EXTERN_LIB_SFML);
+			univers.load_extern_lib_display(Univers::kExternSfmlLibrary);
 		}
 		if (buffer == "autos") {
 			univers.create_server();
 			univers.getGameNetwork()->connect("localhost", "4242");
 			sleep(1);
 			univers.getGameNetwork()->change_state_ready();
-			univers.load_extern_lib_display(Univers::EXTERN_LIB_SFML);
+			univers.load_extern_lib_display(Univers::kExternSfmlLibrary);
 
 		}
 		if (buffer == "autoc") {
 			univers.getGameNetwork()->connect("localhost", "4242");
 			sleep(1);
 			univers.getGameNetwork()->change_state_ready();
-			univers.load_extern_lib_display(Univers::EXTERN_LIB_SFML);
+			univers.load_extern_lib_display(Univers::kExternSfmlLibrary);
 			univers.new_game();
 		}
 		if (buffer == "autocs") {
@@ -99,7 +99,7 @@ void nibbler(Univers &univers) {
 			univers.getGameNetwork()->connect(buffer.c_str(), "4242");
 			sleep(1);
 			univers.getGameNetwork()->change_state_ready();
-			univers.load_extern_lib_display(Univers::EXTERN_LIB_SFML);
+			univers.load_extern_lib_display(Univers::kExternSfmlLibrary);
 			univers.loop();
 		}
 		if (buffer == "loop") {
@@ -129,7 +129,7 @@ void nibbler(Univers &univers) {
 			if (core)
 				delete core;
 			if (start) {
-				univers.load_extern_lib_display(Univers::EXTERN_LIB_SFML);
+				univers.load_extern_lib_display(Univers::kExternSfmlLibrary);
 				univers.new_game();
 			}
 		}

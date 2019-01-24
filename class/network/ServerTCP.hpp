@@ -76,6 +76,8 @@ public:
 
 	void refresh_data_snake_array(TCPConnection::pointer &, int16_t);
 
+	void sendSnakeArray();
+
 	void refresh_data_map_size(TCPConnection::pointer &connection);
 
 	void start_game();
@@ -95,7 +97,9 @@ private:
 	uint16_t number_clients_;
 
 	Univers &univers_;
-	Snake snake_array[MAX_SNAKE];
+
+	std::array<Snake, 8> snake_array_;
+
 	unsigned int	mapSize;
 	std::vector<ClientTCP::FoodInfo> foodInfoArray;
 	std::mutex mutex;

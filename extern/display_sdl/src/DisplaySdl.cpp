@@ -1,3 +1,6 @@
+
+#include <DisplaySdl.hpp>
+
 #include "DisplaySdl.hpp"
 #include "../include/DisplaySdl.hpp"
 #include "Display2D.hpp"
@@ -18,7 +21,7 @@ DisplaySdl::DisplaySdl(int width,
 						int height,
 						char const *windowName) :
     _exit(false),
-	_direction(NORTH),
+	_direction(kNorth),
 	_tileSize(DISPLAY_DEFAULT_TILE_SIZE),
 	_winTileSize(Vector2D<int>(width, height)),
     _winPixelSize(Vector2D<int>(width * _tileSize, height * _tileSize)),
@@ -174,13 +177,13 @@ void			DisplaySdl::update(float deltaTime)
 		if (this->_ev.type == SDL_KEYDOWN)
 		{
 			if (this->_ev.key.keysym.scancode == SDL_SCANCODE_A)
-				this->_direction = WEST;
+				this->_direction = kWest;
 			else if (this->_ev.key.keysym.scancode == SDL_SCANCODE_D)
-				this->_direction = EAST;
+				this->_direction = kEast;
 			else if (this->_ev.key.keysym.scancode == SDL_SCANCODE_W)
-				this->_direction = NORTH;
+				this->_direction = kNorth;
 			else if (this->_ev.key.keysym.scancode == SDL_SCANCODE_S)
-				this->_direction = SOUTH;
+				this->_direction = kSouth;
 		}
     }
 }
@@ -200,6 +203,14 @@ SDL_Surface		*DisplaySdl::_SdlSurface(int widht, int height)
 {
     return (SDL_CreateRGBSurface(0, widht, height,
             32, 0xff000000, 0x00ff0000, 0x0000ff00, 0x000000ff));
+}
+
+void DisplaySdl::registerCallbackAction(std::function<void(eAction)> function) {
+	_callback = function;
+}
+
+DisplaySdl::DisplaySdl(void) {
+
 }
 
 DisplaySdl::SdlConstructorException::~SdlConstructorException(void) throw(){}

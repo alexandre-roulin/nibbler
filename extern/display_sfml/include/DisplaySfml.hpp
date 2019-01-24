@@ -8,6 +8,7 @@
 
 class DisplaySfml : public IDisplay {
 public:
+	void registerCallbackAction(std::function<void(eAction)> function) override; // TODO
 
 	class SfmlConstructorException : public std::exception {
 	public:
@@ -42,6 +43,7 @@ public:
 	eDirection getDirection(void) const override;
 
 private:
+	std::function<void(eAction)> _callback;
 	bool _exit;
 	eDirection _direction;
 	int _tileSize;

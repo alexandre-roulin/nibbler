@@ -16,15 +16,14 @@ Factory::Factory(Univers &univers)
 
 }
 
-void Factory::create_all_snake(Snake snake_array[MAX_SNAKE], int16_t nu) {
+void Factory::create_all_snake(std::array<Snake, 8> snake_array, int16_t nu) {
 	log_info("Create %d snake(s)", nu);
 
 	univers_.getWorld_().grid.fill(eSprite::NONE);
 	univers_.getWorld_().grid.print();
-
-	for (int index = 0; index < nu; ++index) {
-		create_snake(snake_array[index], nu);
-	}
+	std::for_each(snake_array.begin(), snake_array.end(), [this, nu](Snake snake){
+		if (snake.id != -1) create_snake(snake,nu);
+	});
 	if (!univers_.isBorderless())
 		create_walls();
 }
@@ -44,8 +43,8 @@ void Factory::create_snake(Snake snake, int max_snakes) {
 
 		if (index == 0) {
 			new_snake.tagByTagId(eTag::HEAD_TAG + snake.id);
-			new_snake.addComponent<JoystickComponent>(NORTH);
-			new_snake.addComponent<MotionComponent>(NORTH);
+			new_snake.addComponent<JoystickComponent>(kNorth);
+			new_snake.addComponent<MotionComponent>(kNorth);
 			new_snake.addComponent<CollisionComponent>();
 			new_snake.addComponent<SpriteComponent>(eSprite::HEAD | snake.sprite, SPECIFIC_LAST);
 			new_snake.addComponent<PositionComponent>(base_x, base_y);

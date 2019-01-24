@@ -75,11 +75,12 @@ private:
 
 	void parse_input(eHeader header, void const *, size_t);
 
-	void close_connection();
-
 	bool accept_data();
 
 public:
+
+
+
 	template<typename T>
 	static std::string add_prefix(eHeader, T *element);
 
@@ -135,7 +136,7 @@ private:
 	bool openGame_;
 	bool fromIA_;
 	std::vector<FoodCreation> foodCreations;
-	Snake snake_array[MAX_SNAKE];
+	std::array<Snake, 8> snake_array_;
 	tcp::socket socket;
 	boost::array<char, 512> buffer_data;
 	int16_t id_;

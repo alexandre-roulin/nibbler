@@ -8,7 +8,7 @@
 
 struct JoystickEvent {
 
-	JoystickEvent(KINU::Entity::ID id = 0, eDirection direction = NORTH);
+	JoystickEvent(KINU::Entity::ID id = 0, eDirection direction = kNorth);
 	KINU::Entity::ID id;
 	eDirection direction;
 };
