@@ -10,10 +10,10 @@ class Shader {
 public:
 	class CreateException : public std::invalid_argument {
 	public:
-		CreateException(void) noexcept;
+		CreateException() noexcept;
 		CreateException(std::string) noexcept;
 		virtual const char* what() const noexcept;
-		~CreateException(void) throw();
+		~CreateException() noexcept;
 		CreateException(CreateException const &src) noexcept;
 	private:
 		CreateException &operator=(CreateException const &rhs) noexcept;
@@ -21,10 +21,10 @@ public:
 	};
 	class LinkException : public std::invalid_argument {
 	public:
-		LinkException(void) noexcept;
-		LinkException(std::string) noexcept;
-		virtual const char* what() const noexcept;
-		~LinkException(void) throw();
+		LinkException() noexcept;
+		explicit LinkException(std::string) noexcept;
+		const char* what() const noexcept override;
+		~LinkException() noexcept override;
 		LinkException(LinkException const &src) noexcept;
 	private:
 		LinkException &operator=(LinkException const &rhs) noexcept;
@@ -42,7 +42,8 @@ public:
 
 	void		setFloat(const std::string &name, float value) const;
 	void		setMat4(const std::string &name, const glm::mat4 &mat) const;
-	void		setInt(const std::string &name, const int aint) const;
+	void		setInt(const std::string &name, int aint) const;
+	void		setVec3(const std::string &name, const glm::vec3 &vec) const;
 
 	GLuint 		getId() const;
 

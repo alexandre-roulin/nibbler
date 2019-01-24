@@ -158,6 +158,7 @@ void		DisplayGlfw::drawGrid(Grid< eSprite > const &grid) {
 
 	shader_.setMat4("projection", projection_);
 	shader_.setMat4("view", view_);
+	shader_.setVec3("cameraPosition", camera_.getPosition());
 
 	for (int y = 0; y < winTileSize_.getY(); ++y) {
 		for (int x = 0; x < winTileSize_.getX(); ++x) {
@@ -256,6 +257,7 @@ void DisplayGlfw::render(float currentDelayFrame, float maxDelayFrame) {
 	shader_.setMat4("projection", projection_);
 	shader_.setMat4("view", view_);
 	shader_.setInt("colorSnake", 0);
+	shader_.setVec3("cameraPosition", camera_.getPosition());
 
     for (int y = 0; y < winTileSize_.getY(); y++) {
         for (int x = 0; x < winTileSize_.getX(); x++) {

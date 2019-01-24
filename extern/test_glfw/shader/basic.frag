@@ -7,16 +7,20 @@ smooth in vec3 Position;
 
 uniform sampler2D texture_diffuse1;
 uniform int colorSnake;
+uniform vec3 cameraPosition;
 
 float       lightAmbient = 0.15f;
 float       lightDiffuse = 1.f;
 float       lightSpecular = 1.f;
 vec3        lightPosition = vec3(0.f, 0.f, 30.f);
 
-float       defaultShininess = 76.8f;
+float       defaultShininess = 102.8f;
 vec3        defaultAmbient = vec3(0.0215f, 0.1745f, 0.0215f);
 vec3        defaultDifuse = vec3(0.0756f, 0.61423f, 0.07568f);
 vec3        defaultSpecular = vec3(0.633f, 0.7278f, 0.633f);
+
+const int levels = 4;
+const float scaleFactor = 1.f / levels;
 
 float celShading(float intensity)
 {
@@ -35,19 +39,23 @@ float celShading(float intensity)
 
 vec3	phong()
 {
-	vec3					dirLight;
-	vec3					norm;
-	vec3					diffuse;
-	vec3					ambient;
-	vec3					result_phong;
+    vec3 posToLight = normalize(lightPosition - Position);
+    vec3 posToCamera = normalize(cameraPosition - Position);
 
-	ambient = defaultAmbient * lightAmbient;
-	norm = normalize(Normal);
-	dirLight = normalize(Position - lightPosition);
-	diffuse = celShading(max(dot(norm, -dirLight), 0)) * defaultDifuse * lightDiffuse;
-	result_phong = (ambient + diffuse);
+    float diffuse =  max(dot(Normal, posToLight), 0);
+    //vec3 diffuseColor = defaultDifuse * floor(diffuse * levels) * scaleFactor;
+    vec3 diffuseColor = defaultDifuse * celShading(diffuse);
 
-	return (result_phong);
+
+    vec3 cameraToLight = normalize(posToLight + posToCamera);
+    float specular = 0.0f;
+    if(dot(posToLight, Normal) > 0.0f)
+        specular = pow(max(0, dot(cameraToLight, Normal)), defaultShininess);
+    float specMask = (pow(dot(cameraToLight, Normal), defaultShininess) > 0.4f) ? 1 : 0;
+
+    vec3 color = (diffuseColor + specular * specMask);
+
+    return (color);
 }
 
 void main()

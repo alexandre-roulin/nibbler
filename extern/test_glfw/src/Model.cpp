@@ -146,8 +146,7 @@ void			Model::setupScaling_()  {
 		scaling = 1.f / diff.y;
 	else
 		scaling = 1.f / diff.z;
-	//positionMin_ = -positionMin_;
-	diff = positionMax_ - positionMin_;// + positionMin_;
+	diff = positionMax_ - positionMin_;
 	interScaling_ = scaling;
 	diff = diff * 0.5f + positionMin_;
 	positionCenter_ = diff;
