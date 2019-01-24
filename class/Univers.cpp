@@ -133,6 +133,7 @@ void Univers::unload_external_library() {
 /** Game Management **/
 
 void Univers::new_game() {
+
 	if (!isServer() || !serverTCP_->isReady()) return;
 	assert(isServer());
 	assert(serverTCP_->isReady());
