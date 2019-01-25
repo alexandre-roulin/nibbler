@@ -23,6 +23,7 @@
 #include "Skybox.hpp"
 #include "Particle.hpp"
 #include "Material.hpp"
+#include "Light.hpp"
 
 #define DISPLAY_GLFW_WIN_WIDTH 1024
 #define DISPLAY_GLFW_WIN_HEIGHT 720
@@ -100,7 +101,6 @@ private:
 	std::string						pathAppleModel_;
     std::list< std::string >		pathSkyBox_;
 
-    Material						materialOne;
 	Shader							shader_;
 	Shader							shaderMultiple_;
 	std::unique_ptr< Skybox >		skybox_;
@@ -111,7 +111,7 @@ private:
 	Model							appleModel_;
 	Model							modelSphere_;
 	Particle						*testParticle_;
-
+	Light							light_;
     Camera							camera_;
 
 	glm::mat4						projection_;

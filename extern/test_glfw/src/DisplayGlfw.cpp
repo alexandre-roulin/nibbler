@@ -38,7 +38,8 @@ deltaTime_(0.016f),
 skybox_(nullptr),
 projection_(1.f),
 view_(1.f),
-model_(1.f) {
+model_(1.f),
+light_(glm::vec3(0.f, 0.f, 30.f)){
 
 	getPath_();
 	constructMaterialMap_();
@@ -178,7 +179,7 @@ void		DisplayGlfw::drawGridCase_(eSprite sprite, int x, int y) {
 void		DisplayGlfw::drawGrid(Grid< eSprite > const &grid) {
 	tileGrid_ = grid;
 	shader_.activate();
-	materialOne.putMaterialToShader(shader_);
+	light_.putLightToShader(shader_);
 
 	shader_.setMat4("projection", projection_);
 	shader_.setMat4("view", view_);
@@ -237,7 +238,7 @@ void DisplayGlfw::render(float currentDelayFrame, float maxDelayFrame) {
 	maxTimer_ = maxDelayFrame;
 
     shader_.activate();
-	materialOne.putMaterialToShader(shader_);
+	light_.putLightToShader(shader_);
 
     if (glfwGetKey(getWindow(), GLFW_KEY_UP) == GLFW_PRESS)
     	direction_ = kSouth;

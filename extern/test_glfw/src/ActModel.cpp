@@ -91,15 +91,21 @@ void	ActModel::resetTransform() {
 void	ActModel::updateTransform_() {
 	glm::mat4 scale(1.f);
 
-	if (flag_.test(ActModel::eFlag::SAME_SCALING))
-		scale = glm::scale(scale, glm::vec3(model_->getInterScaling() * sameScaling_));
-	else
-		scale = glm::scale(scale, (model_->getInterScaling() * scaling_));
+	if (model_) {
+		if (flag_.test(ActModel::eFlag::SAME_SCALING))
+			scale = glm::scale(scale, glm::vec3(model_->getInterScaling() * sameScaling_));
+		else
+			scale = glm::scale(scale, (model_->getInterScaling() * scaling_));
+		transform_ = glm::translate(glm::mat4(1.f), -model_->getPositionCenterRelativeToOrigin());
+	}
+	else {
+		transform_ = glm::mat4(1.f);
+	}
 	transform_ = glm::translate(glm::mat4(1.f), position_)
 				 //* glm::translate(glm::mat4(1.f), model_->getPositionCenterRelativeToOrigin())
 				* rotate_
-				* scale
-				* glm::translate(glm::mat4(1.f), -model_->getPositionCenterRelativeToOrigin());
+				* scale;
+				//* glm::translate(glm::mat4(1.f), -model_->getPositionCenterRelativeToOrigin());
 
 }
 
