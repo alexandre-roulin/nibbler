@@ -22,6 +22,7 @@
 #include "Grid.tpp"
 #include "Skybox.hpp"
 #include "Particle.hpp"
+#include "Material.hpp"
 
 #define DISPLAY_GLFW_WIN_WIDTH 1024
 #define DISPLAY_GLFW_WIN_HEIGHT 720
@@ -34,7 +35,7 @@
 
 class DisplayGlfw : public Glfw, public IDisplay {
 public:
-	void registerCallbackAction(std::function<void(eAction)> function) override; // TODO
+	//void registerCallbackAction(std::function<void(eAction)> function) override; // TODO
 
     class GlfwConstructorException : public std::exception {
     public:
@@ -99,6 +100,7 @@ private:
 	std::string						pathAppleModel_;
     std::list< std::string >		pathSkyBox_;
 
+    Material						materialOne;
 	Shader							shader_;
 	Shader							shaderMultiple_;
 	std::unique_ptr< Skybox >		skybox_;
@@ -124,7 +126,8 @@ private:
 	void				interpolateGridCase_(int x, int y);
 
 
-	static std::map< eSprite, int >		mapColor_;
+	std::map< eSprite, Material >		materialMap_;
+	void				DisplayGlfw::constructMaterialMap_();
 
 	static float				lastX_;
 	static float				lastY_;

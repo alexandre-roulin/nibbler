@@ -47,6 +47,7 @@ ActModel &ActModel::operator=(ActModel const &src) {
 		position_ = src.position_;
 		speed_ = src.speed_;
 	}
+	return (*this);
 }
 
 void ActModel::assign(Model const *model) {

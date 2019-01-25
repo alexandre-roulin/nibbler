@@ -1,13 +1,28 @@
 #version 330 core
 out vec4 FragColor;
 
+struct tMaterial
+{
+    float	shininess;
+	vec3	ambient;
+	vec3	diffuse;
+	vec3	specular;
+};
+
+struct tLight
+{
+	vec3	position;
+	float	intensity;
+};
+
 smooth in vec2 TexCoords;
 smooth in vec3 Normal;
 smooth in vec3 Position;
 
 uniform sampler2D texture_diffuse1;
-uniform int colorSnake;
-uniform vec3 cameraPosition;
+uniform int uColorSnake;
+uniform vec3 uCameraPosition;
+uniform tMaterial		uMaterial;
 
 float       lightAmbient = 0.15f;
 float       lightDiffuse = 1.f;
@@ -25,7 +40,7 @@ const float scaleFactor = 1.f / levels;
 float celShading(float intensity)
 {
     if (intensity > 0.93f)
-        return (1.0f);
+        return (1.f);
     else if (intensity > 0.6f)
         return (0.8f);
     else if (intensity > 0.4f)
@@ -34,26 +49,26 @@ float celShading(float intensity)
         return (0.4f);
     else if (intensity > 0.1f)
         return (0.1f);
-    return (0.0f);
+    return (0.f);
 }
 
 vec3	phong()
 {
     vec3 posToLight = normalize(lightPosition - Position);
-    vec3 posToCamera = normalize(cameraPosition - Position);
+    vec3 posToCamera = normalize(uCameraPosition - Position);
 
     float diffuse =  max(dot(Normal, posToLight), 0);
     //vec3 diffuseColor = defaultDifuse * floor(diffuse * levels) * scaleFactor;
-    vec3 diffuseColor = defaultDifuse * celShading(diffuse);
+    vec3 diffuseColor = uMaterial.diffuse * celShading(diffuse);
 
 
     vec3 cameraToLight = normalize(posToLight + posToCamera);
-    float specular = 0.0f;
-    if(dot(posToLight, Normal) > 0.0f)
-        specular = pow(max(0, dot(cameraToLight, Normal)), defaultShininess);
-    float specMask = (pow(dot(cameraToLight, Normal), defaultShininess) > 0.4f) ? 1 : 0;
+    float specular = 0.f;
+    if(dot(posToLight, Normal) > 0.f)
+        specular = pow(max(0, dot(cameraToLight, Normal)), uMaterial.shininess);
+    float specMask = (pow(dot(cameraToLight, Normal), uMaterial.shininess) > 0.4f) ? 1.f : 0.f;
 
-    vec3 color = (diffuseColor + specular * specMask);
+    vec3 color = (uMaterial.ambient + diffuseColor + (uMaterial.specular * specular * specMask));
 
     return (color);
 }
@@ -61,12 +76,12 @@ vec3	phong()
 void main()
 {
     vec4 color;
-    if (colorSnake != 0) {
-        color = vec4((colorSnake >> 16) & 0xFF, (colorSnake >> 8) & 0xFF, (colorSnake) & 0xFF, 1.f);
+    if (uColorSnake != 0) {
+        color = vec4((uColorSnake >> 16) & 0xFF, (uColorSnake >> 8) & 0xFF, (uColorSnake) & 0xFF, 1.f);
         color /= 255.f;
-        defaultDifuse = color.rgb;
-        defaultSpecular = color.rgb;
-        defaultAmbient = color.rgb * 0.1f;
+        //defaultDifuse = color.rgb;
+        //defaultSpecular = color.rgb;
+        //defaultAmbient = color.rgb * 0.1f;
         color = vec4(phong(), 1.f);
     }
     else {

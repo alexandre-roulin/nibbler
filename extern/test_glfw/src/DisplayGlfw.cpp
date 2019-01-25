@@ -5,6 +5,7 @@
 #include "DisplayGlfw.hpp"
 #include "nibbler.hpp"
 #include "Skybox.hpp"
+#include <algorithm>
 
 #define PARTICULE_SIZE 1
 #define NEAR_PLANE 0.1f
@@ -24,7 +25,7 @@ DisplayGlfw::DisplayGlfw(int width,
                          int height,
                          char const *windowName) :
 Glfw(windowName, DISPLAY_GLFW_WIN_WIDTH, DISPLAY_GLFW_WIN_HEIGHT),
-direction_(NORTH),
+direction_(kNorth),
 currentTimer_(0.f),
 maxTimer_(0.f),
 winTileSize_(Vector2D<int>(width, height)),
@@ -40,7 +41,7 @@ view_(1.f),
 model_(1.f) {
 
 	getPath_();
-
+	constructMaterialMap_();
     glfwSetCursorPosCallback(getWindow(),  DisplayGlfw::mouseCallback_);
 
     glEnable(GL_DEPTH_TEST);
@@ -76,10 +77,32 @@ model_(1.f) {
 		}
 	}
 
-    camera_.processPosition(Camera::Movement::BACKWARD, std::max(winTileSize_.getX(), winTileSize_.getY()) / 2);
+	if (winTileSize_.getX() > winTileSize_.getY())
+    	camera_.processPosition(Camera::Movement::BACKWARD, winTileSize_.getX() / 2);
+	else
+		camera_.processPosition(Camera::Movement::BACKWARD, winTileSize_.getY() / 2);
 	skybox_ = std::make_unique< Skybox >(pathShaderSkyBox_, pathDirectorySkyBox_, pathSkyBox_);
 }
+void				DisplayGlfw::constructMaterialMap_() {
+	materialMap_.try_emplace(eSprite::GREEN, "GREEN");
+	materialMap_.try_emplace(eSprite::BLUE, "BLUE", 31.f,
+			 glm::vec3(0.0f, 0.1f, 0.06f),
+			 glm::vec3(0.0f, 0.50980392f, 0.50980392f),
+			 glm::vec3(0.50196078f, 0.50196078f, 0.50196078f));
+	materialMap_.try_emplace(eSprite::PURPLE, "PURPLE");
+	materialMap_.try_emplace(eSprite::PINK, "PINK");
+	materialMap_.try_emplace(eSprite::GREY, "GREY");
+	materialMap_.try_emplace(eSprite::YELLOW, "YELLOW", 50.6f,
+			glm::vec3(0.24725f, 0.1995f, 0.0745f),
+			glm::vec3(0.75164f, 0.60648f, 0.22648f),
+			glm::vec3(0.628281f, 0.555802f, 0.366065f));
+	materialMap_.try_emplace(eSprite::ORANGE, "ORANGE");
+	materialMap_.try_emplace(eSprite::RED, "RED", 31.f,
+			 glm::vec3(0.0f, 0.0f, 0.0f),
+			 glm::vec3(0.5f, 0.0f, 0.0f),
+			 glm::vec3(0.7f, 0.6f, 0.6f));
 
+}
 void                DisplayGlfw::getPath_() {
 
     std::string pathFile = __FILE__;
@@ -155,10 +178,11 @@ void		DisplayGlfw::drawGridCase_(eSprite sprite, int x, int y) {
 void		DisplayGlfw::drawGrid(Grid< eSprite > const &grid) {
 	tileGrid_ = grid;
 	shader_.activate();
+	materialOne.putMaterialToShader(shader_);
 
 	shader_.setMat4("projection", projection_);
 	shader_.setMat4("view", view_);
-	shader_.setVec3("cameraPosition", camera_.getPosition());
+	shader_.setVec3("uCameraPosition", camera_.getPosition());
 
 	for (int y = 0; y < winTileSize_.getY(); ++y) {
 		for (int x = 0; x < winTileSize_.getX(); ++x) {
@@ -171,13 +195,14 @@ void		DisplayGlfw::drawGrid(Grid< eSprite > const &grid) {
 
 			if (static_cast<int>(grid(x, y) & eSprite::MASK_BODY) != 0) {
 				grid_(x, y).assign(&modelSphere_);
-				shader_.setInt("colorSnake", DisplayGlfw::mapColor_.at(grid(x, y) & eSprite::MASK_COLOR));
+				materialMap_.at(grid(x, y) & eSprite::MASK_COLOR).putMaterialToShader(shader_);
+				std::cout << "ModelSphere" << std::endl;
 			}
 			else if ((grid(x, y) & eSprite::FOOD) == eSprite::FOOD) {
-				shader_.setInt("colorSnake", DisplayGlfw::mapColor_.at(eSprite::RED));
+				materialMap_.at(eSprite::RED).putMaterialToShader(shader_);
 			}
 			else
-				shader_.setInt("colorSnake", 0);
+				shader_.setInt("uColorSnake", 0);
 			if (grid(x, y) != eSprite::NONE)
 				drawGridCase_(grid(x, y), x, y);
 		}
@@ -212,15 +237,16 @@ void DisplayGlfw::render(float currentDelayFrame, float maxDelayFrame) {
 	maxTimer_ = maxDelayFrame;
 
     shader_.activate();
+	materialOne.putMaterialToShader(shader_);
 
     if (glfwGetKey(getWindow(), GLFW_KEY_UP) == GLFW_PRESS)
-    	direction_ = SOUTH;
+    	direction_ = kSouth;
     if (glfwGetKey(getWindow(), GLFW_KEY_DOWN) == GLFW_PRESS)
-    	direction_ = NORTH;
+    	direction_ = kNorth;
     if (glfwGetKey(getWindow(), GLFW_KEY_LEFT) == GLFW_PRESS)
-    	direction_ = WEST;
+    	direction_ = kWest;
     if (glfwGetKey(getWindow(), GLFW_KEY_RIGHT) == GLFW_PRESS)
-    	direction_ = EAST;
+    	direction_ = kEast;
 	if (glfwGetKey(getWindow(), GLFW_KEY_D) == GLFW_PRESS)
 		camera_.processPosition(Camera::Movement::RIGHT, deltaTime_ * 5);
 	if (glfwGetKey(getWindow(), GLFW_KEY_A) == GLFW_PRESS)
@@ -256,8 +282,8 @@ void DisplayGlfw::render(float currentDelayFrame, float maxDelayFrame) {
 	view_ = camera_.getViewMatrix();
 	shader_.setMat4("projection", projection_);
 	shader_.setMat4("view", view_);
-	shader_.setInt("colorSnake", 0);
-	shader_.setVec3("cameraPosition", camera_.getPosition());
+	shader_.setInt("uColorSnake", 0);
+	shader_.setVec3("uCameraPosition", camera_.getPosition());
 
     for (int y = 0; y < winTileSize_.getY(); y++) {
         for (int x = 0; x < winTileSize_.getX(); x++) {
@@ -265,16 +291,16 @@ void DisplayGlfw::render(float currentDelayFrame, float maxDelayFrame) {
 				model_ = background_(x, y).getTransform();
 				shader_.setMat4("model", model_);
 				if (tileBackground_(x, y) == eSprite::WALL)
-					shader_.setInt("colorSnake", DisplayGlfw::mapColor_.at(eSprite::GREY));
-				//else if (tileBackground_(x, y) == eSprite::GROUND)
-				//	shader_.setInt("colorSnake", DisplayGlfw::mapColor_.at(eSprite::GREEN));
+					materialMap_.at(eSprite::GREY).putMaterialToShader(shader_);
+				else if (tileBackground_(x, y) == eSprite::GROUND)
+				 	materialMap_.at(eSprite::GREEN).putMaterialToShader(shader_);
 				else
-					shader_.setInt("colorSnake", 0);
+					shader_.setInt("uColorSnake", 0);
 				background_(x, y).getModel()->render(shader_);
         	}
         }
     }
-	shader_.setInt("colorSnake", 0);
+	shader_.setInt("uColorSnake", 0);
 
 	shaderMultiple_.activate();
 	shaderMultiple_.setMat4("projection", projection_);
@@ -294,7 +320,7 @@ void DisplayGlfw::render(float currentDelayFrame, float maxDelayFrame) {
 }
 
 bool        DisplayGlfw::exit() const {
-	Glfw::exit();
+	return Glfw::exit();
 }
 
 void DisplayGlfw::update(float deltaTime) {
@@ -310,7 +336,8 @@ eDirection DisplayGlfw::getDirection() const {
     return (direction_);
 }
 
-std::map< eSprite, int >		DisplayGlfw::mapColor_ = {
+/*
+std::map< eSprite, Material >		DisplayGlfw::materialMap_ = {
 		{ eSprite::GREEN,  0x33a361}, //
 		{ eSprite::BLUE, 0x124fd1 }, //
 		{ eSprite::PURPLE, 0x4a0078 }, //
@@ -320,6 +347,7 @@ std::map< eSprite, int >		DisplayGlfw::mapColor_ = {
 		{ eSprite::ORANGE, 0xf78b00 },
 		{ eSprite::RED, 0xed3300 } //
 };
+*/
 
 DisplayGlfw::GlfwConstructorException::~GlfwConstructorException() noexcept = default;
 
