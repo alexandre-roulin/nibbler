@@ -52,9 +52,5 @@ namespace KINU {
 		return univers_;
 	}
 
-	void World::setDisplay(IDisplay *display) {
-		display_ = display;
-	}
-
 
 }

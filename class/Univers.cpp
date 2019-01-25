@@ -33,8 +33,9 @@ Univers::Univers()
 		  dlHandleSound(nullptr),
 		  display(nullptr),
 		  sound(nullptr),
-		  borderless(false) {
-
+		  borderless(false),
+		  kDisplay(eDisplay::kExternSfmlLibrary) {
+	switchLib = false;
 	clientTCP_ = nullptr;
 	serverTCP_ = nullptr;
 	world_ = nullptr;
@@ -42,6 +43,7 @@ Univers::Univers()
 }
 
 /** External Library Management **/
+
 
 bool Univers::load_external_sound_library(std::string const &title,
 										  std::string const &library_path) {
@@ -86,33 +88,31 @@ bool Univers::load_external_display_library(std::string const &title,
 	if (!(display = newDisplay(mapSize, mapSize, title.c_str())))
 		return (false);
 
-	if (world_ != nullptr)
-		display->setBackground(world_->grid);
-
-	if (world_ != nullptr)
-		world_->setDisplay(display);
-
-	display->update(0.17f);
-	display->render(1.f, 1.f);
+	log_success("load_external_display_library up !");
 	return (true);
 }
 
 bool Univers::load_extern_lib_display(Univers::eDisplay eLib) {
-	kDisplay = eLib;
 	switch (eLib) {
 		case kExternSfmlLibrary : {
+			log_success("Univers::load_extern_lib_display.kExternSfmlLibrary");
 			return load_external_display_library(
 					std::string("Nibbler - SFML"),
-					std::string(PATH_DISPLAY_LIBRARY_SFML));
+					std::string(PATH_DISPLAY_LIBRARY_SFML)
+					);
 		}
 		case kExternSdlLibrary : {
-			// TODO ADD SDL
-			break;
-		}
+			log_success("Univers::load_extern_lib_display.kExternSdlLibrary");
+			return load_external_display_library(
+					std::string("Nibbler - SDL"),
+					std::string(PATH_DISPLAY_LIBRARY_SDL)
+			);		}
 		case kExternGlfwLibrary : {
-			// TODO ADD STB
-			break;
-		}
+			log_success("Univers::load_extern_lib_display.kExternGlfwLibrary");
+			return load_external_display_library(
+					std::string("Nibbler - GLFW"),
+					std::string(PATH_DISPLAY_LIBRARY_GLFW)
+			);		}
 	}
 	return false;
 }
@@ -129,51 +129,61 @@ void Univers::unload_external_library() {
 		dlclose(dlHandleDisplay);
 		dlHandleDisplay = nullptr;
 	}
+	display = nullptr;
+	log_error("Univers::unload_external_library.unlock()");
 }
 
 /** Game Management **/
 
+
+void Univers::defaultAssignmentLibrary() {
+	if (!display) return;
+
+	Grid<eSprite> grid(mapSize);
+	grid.fill(eSprite::GROUND);
+	display->setBackground(grid);
+	display->registerCallbackAction(std::bind(&Univers::callbackAction, this, std::placeholders::_1));
+	display->update(0.17f);
+	display->render(1.f, 1.f);
+}
+
 void Univers::new_game() {
 
-	if (!isServer() || !serverTCP_->isReady()) return;
+
 	assert(isServer());
 	assert(serverTCP_->isReady());
-	if (!display) load_extern_lib_display(Univers::kExternSfmlLibrary);
+	if (!isServer() || !serverTCP_->isReady()) return;
 	world_ = std::make_unique<KINU::World>(*this);
 	world_->grid = Grid<eSprite>(mapSize);
-	world_->grid.fill(eSprite::GROUND);
-	world_->setDisplay(display);
-	display->setBackground(world_->grid);
-	display->registerCallbackAction(std::bind(&Univers::callbackAction, this, std::placeholders::_1));
+	if (!display) load_extern_lib_display(kDisplay);
+	defaultAssignmentLibrary();
 	if (isServer()) {
 		for (auto &bobby : vecBobby) {
 			bobby->buildIA();
 			bobby->sendDirection();
 		}
+		serverTCP_->start_game();
 	}
-	serverTCP_->start_game();
 	loop();
 }
 
 void Univers::manage_input() {
 
-
-//	if (isServer()) {
-//		for (auto &bobby : vecBobby) {
-//			bobby->sendDirection();
-//		}
-//	}
 	if (clientTCP_) {
 		ClientTCP::InputInfo inputInfo;
 		inputInfo.id = clientTCP_->getId();
-		inputInfo.dir = display->getDirection();
-		assert(world_ != nullptr);
+		if (display) {
+			inputInfo.dir = display->getDirection();
+		}
+		else
+			inputInfo.dir = eDirection::kNorth;
 		if (world_->getEntitiesManager().hasEntityByTagId(
 				eTag::HEAD_TAG + inputInfo.id)) {
 			clientTCP_->write_socket(
 					ClientTCP::add_prefix(eHeader::INPUT, &inputInfo));
 		}
 	}
+
 }
 
 void Univers::manage_start() {
@@ -226,6 +236,8 @@ void Univers::loop() {
 
 	while ((display == nullptr || !display->exit()) &&
 		   !getMainClientTCP()->all_snake_is_dead()) {
+		if (switchLib)
+			manageSwitchLibrary();
 		std::chrono::high_resolution_clock::time_point t2 = std::chrono::high_resolution_clock::now();
 		std::chrono::milliseconds time_span = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1);
 		t1 = t2;
@@ -235,16 +247,16 @@ void Univers::loop() {
 			current = std::chrono::milliseconds(gameSpeed);
 
 		//std::cout << "It took me " << current.count() << "," << gameSpeed << " seconds." << std::endl;
-		if (display != nullptr) {
-			display->update(0.2f);
-			display->drawGrid(world_->grid);
+		display->update(0.17f);
+		display->drawGrid(world_->grid);
+		display->render(1.f, 1.f);
+//			display->update(0.2f);
+//			display->drawGrid(world_->grid);
 			//display->render(current.count(), gameSpeed);
-			display->render(gameSpeed, gameSpeed);
-		}
+//			display->render(gameSpeed, gameSpeed);
 		if (current >= std::chrono::milliseconds(gameSpeed)) {
 			current = std::chrono::milliseconds(0);
 		}
-
 	}
 	unload_external_library();
 	finish_game();
@@ -307,8 +319,6 @@ void Univers::loop_world() {
 	world_->getSystemsManager().getSystem<FoodEatSystem>().update();
 	world_->getEventsManager().destroy<FoodEat>();
 
-	std::cout << (getMainClientTCP()->all_snake_is_dead()) << std::endl;
-
 	if (!getMainClientTCP()->all_snake_is_dead()) {
 
 		timer_loop.expires_at(
@@ -319,6 +329,25 @@ void Univers::loop_world() {
 //	world_->grid.print();
 }
 
+void Univers::manageSwitchLibrary() {
+	if (!getGameNetwork()->isSwitchingLibrary()) {
+		int16_t id = getGameNetwork()->getId();
+		getGameNetwork()->write_socket(ClientTCP::add_prefix(eHeader::kForcePause, &id));
+		kDisplay = (kDisplay == kExternSdlLibrary) ? kExternSfmlLibrary : kExternSdlLibrary;
+//		kDisplay = (kDisplay == kExternGlfwLibrary) ? kExternSfmlLibrary : static_cast<eDisplay>(kDisplay + 1);
+		unload_external_library();
+		load_extern_lib_display(kDisplay);
+		defaultAssignmentLibrary();
+		getGameNetwork()->write_socket(ClientTCP::add_prefix(eHeader::kForcePause, &id));
+	}
+	switchLib = false;
+}
+
+void Univers::refreshTimerLoopWorld() {
+	timer_loop.expires_at(boost::posix_time::microsec_clock::universal_time());
+}
+
+
 void Univers::callbackAction(eAction action) {
 	if (getGameNetwork() == nullptr) return;
 	switch (action) {
@@ -326,8 +355,7 @@ void Univers::callbackAction(eAction action) {
 			getGameNetwork()->write_socket(ClientTCP::add_prefix<eAction>(eHeader::kPause, &action));
 			break;
 		case eAction::kSwitchDisplayLibrary:
-			kDisplay = (kDisplay == kExternGlfwLibrary) ? kExternSfmlLibrary : static_cast<eDisplay>(kDisplay + 1);
-
+			switchLib = true;
 			break;
 	}
 }
@@ -487,10 +515,10 @@ void Univers::unsetFlag(eFlag flag) {
 	this->flag.reset(flag);
 }
 
+
 bool Univers::testFlag(eFlag flag) {
 	return (this->flag.test(flag));
 }
-
 
 /** Error **/
 
@@ -508,13 +536,6 @@ bool Univers::isIASnake(uint16_t client_id) const {
 	}
 	return false;
 }
-
-
-
-
-
-
-
 
 
 

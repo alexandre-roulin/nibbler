@@ -79,7 +79,7 @@ void Factory::create_snake(Snake snake, int max_snakes) {
 
 void Factory::create_walls() {
 	int max = univers_.getMapSize();
-	std::cout << "max > " << max << std::endl;
+//	std::cout << "max > " << max << std::endl;
 	int x = 0;
 	int y = 1;
 	for (; x < max; ++x) {
@@ -93,7 +93,7 @@ void Factory::create_walls() {
 }
 
 void Factory::create_wall(int x, int y) {
-	std::cout << x << " " << y << std::endl;
+//	std::cout << x << " " << y << std::endl;
 	KINU::Entity entity = univers_.getWorld_().createEntity();
 	univers_.getWorld_().grid(x, y) = eSprite::WALL;
 	entity.addComponent<PositionComponent>(x, y);

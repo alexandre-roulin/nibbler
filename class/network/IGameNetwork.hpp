@@ -42,6 +42,8 @@ public:
 
 	virtual bool isConnect() const = 0;
 
+	virtual bool isSwitchingLibrary() const = 0;
+
 	~IGameNetwork() {};
 
 };

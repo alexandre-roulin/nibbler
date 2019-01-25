@@ -27,7 +27,8 @@ int const ClientTCP::size_header[] = {
 		[static_cast<int>(eHeader::REMOVE_SNAKE)] = sizeof(int16_t),
 		[static_cast<int>(eHeader::POCK)] = sizeof(char),
 		[static_cast<int>(eHeader::BORDERLESS)] = sizeof(bool),
-		[static_cast<int>(eHeader::kPause)] = sizeof(eAction)
+		[static_cast<int>(eHeader::kPause)] = sizeof(eAction),
+		[static_cast<int>(eHeader::kForcePause)] = sizeof(int16_t)
 };
 
 ClientTCP::ClientTCP(Univers &univers, bool fromIA)
@@ -229,6 +230,9 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 			}
 			break;
 		}
+		case eHeader::kPause : {
+			univers.refreshTimerLoopWorld();
+		}
 		default:
 			break;
 	}
@@ -351,6 +355,10 @@ void ClientTCP::unlock() {
 
 bool ClientTCP::accept_data() {
 	return !fromIA_ || (univers.isOnlyIA() && id_ == 0);
+}
+
+bool ClientTCP::isSwitchingLibrary() const {
+	return snake_array_[id_].isSwitchingLibrary;
 }
 
 ClientTCP::FoodInfo::FoodInfo() {

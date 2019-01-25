@@ -90,6 +90,8 @@ public:
 
 	bool isReady() const;
 
+	void updateInput();
+
 	unsigned int getPort_() const;
 
 private:
@@ -101,6 +103,9 @@ private:
 	std::array<Snake, 8> snake_array_;
 
 	unsigned int	mapSize;
+	bool pause_;
+	bool forcePause_;
+private:
 	std::vector<ClientTCP::FoodInfo> foodInfoArray;
 	std::mutex mutex;
 	void start_accept();

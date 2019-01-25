@@ -19,8 +19,6 @@ namespace KINU {
 
 		Univers &getUnivers() const;
 
-		void setDisplay(IDisplay *display);
-
 		EntitiesManager &getEntitiesManager() const;
 
 		SystemsManager &getSystemsManager() const;
@@ -47,7 +45,6 @@ namespace KINU {
 		std::unique_ptr<EventsManager> eventsManager;
 
 		Univers &univers_;
-		IDisplay *display_;
 	};
 
 }

@@ -79,8 +79,6 @@ private:
 
 public:
 
-
-
 	template<typename T>
 	static std::string add_prefix(eHeader, T *element);
 
@@ -148,7 +146,7 @@ private:
 	std::string dns_;
 public:
 	const std::string &getDns() const;
-
+	bool isSwitchingLibrary() const;
 	const std::string &getPort() const;
 
 private:

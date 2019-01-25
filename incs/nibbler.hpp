@@ -55,7 +55,7 @@ struct Snake {
 	bool isUpdate;
 	eDirection direction;
 	bool isAlive;
-
+	bool isSwitchingLibrary;
 	friend std::ostream &operator<<(std::ostream &os, const Snake &snake);
 
 	void reset() {
@@ -66,6 +66,7 @@ struct Snake {
 		isUpdate = false;
 		direction = kNorth;
 		isAlive = false;
+		isSwitchingLibrary = false;
 	}
 
 	Snake &operator=(Snake const &snake) {
@@ -77,6 +78,7 @@ struct Snake {
 			isUpdate = snake.isUpdate;
 			direction = snake.direction;
 			isAlive = snake.isAlive;
+			isSwitchingLibrary = snake.isSwitchingLibrary;
 		}
 		return *this;
 	}
@@ -90,33 +92,6 @@ struct Snake {
 		snake.id = id;
 		snake.isAlive = true;
 		return (snake);
-	}
-
-	static int getlastSnakeIndex(Snake const *snakes, unsigned int range) {
-		unsigned int i;
-		for (i = 0; i < range; ++i) {
-			if (snakes[i].id == -1)
-				return (i);
-		}
-		return (i == range ? i - 1 : -1);
-	}
-
-	static int isFull(Snake const *snakes, unsigned int range) {
-		for (unsigned int i = 0; i < range; i++) {
-			if (snakes[i].id == -1)
-				return (false);
-		}
-		return (true);
-	}
-
-	static int
-	getSnakeById(Snake const *snakes, unsigned int range, int16_t id) {
-		unsigned int i;
-		for (i = 0; i < range; i++) {
-			if (snakes[i].id == id)
-				return (i);
-		}
-		return (i == range ? i - 1 : -1);
 	}
 
 	static int allSnakesReady(Snake const *snakes, unsigned int range) {
@@ -145,5 +120,6 @@ enum class eHeader {
 	REMOVE_SNAKE,
 	POCK,
 	BORDERLESS,
-	kPause
+	kPause,
+	kForcePause
 };

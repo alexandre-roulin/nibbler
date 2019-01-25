@@ -16,6 +16,7 @@ ServerTCP::ServerTCP(Univers &univers, unsigned int port)
 void ServerTCP::start_accept() {
 	acceptor_.async_accept([this](std::error_code ec, tcp::socket socket) {
 
+
 		if (!ec) {
 
 			auto it = std::find_if(snake_array_.begin(), snake_array_.end(),
@@ -131,24 +132,43 @@ void ServerTCP::parse_input(eHeader header, void const *input, size_t len) {
 		case eHeader::INPUT: {
 			ClientTCP::InputInfo inputInfo;
 			std::memcpy(&inputInfo, input, len);
-
 			snake_array_[inputInfo.id].direction = inputInfo.dir;
 			snake_array_[inputInfo.id].isUpdate = true;
-			if (std::any_of(snake_array_.begin(), snake_array_.end(), [](auto snake){
-				return snake.isAlive && !snake.isUpdate;})) {
+			updateInput();
+			mutex.unlock();
+//			std::cout << "ServerTCP::unlock()" << std::endl;
+			return;
+		}
+		case eHeader::kPause : {
+			log_info("ServerTCP::kPause");
+			if (std::any_of(snake_array_.begin(), snake_array_.end(),
+					[](auto snake){ return snake.isSwitchingLibrary; })) {
 				mutex.unlock();
 				return;
 			}
-			sendSnakeArray();
-			for (auto infoArray : foodInfoArray) {
-				async_write(ClientTCP::add_prefix(eHeader::FOOD, &infoArray));
+			pause_ = !pause_;
+			if (!pause_)
+				updateInput();
+			log_warn("Pause is %s", pause_ ? "true" : "false");
+			break;
+		}
+		case eHeader::kForcePause : {
+			log_info("ServerTCP::kForcePause");
+
+			int16_t id;
+			std::memcpy(&id, input, len);
+			snake_array_[id].isSwitchingLibrary = !snake_array_[id].isSwitchingLibrary;
+			pause_ = std::any_of(snake_array_.begin(), snake_array_.end(), [](auto snake){
+				return snake.isSwitchingLibrary;
+			});
+			async_write(ClientTCP::add_prefix(eHeader::SNAKE, &(snake_array_.__elems_[id])));
+			log_warn("kPause is %s", pause_ ? "true" : "false");
+			if (!pause_) {
+				eAction pause = eAction::kPause;
+				async_write(ClientTCP::add_prefix(eHeader::kPause, &pause));
+				updateInput();
 			}
-			foodInfoArray.clear();
-			char data = '#';
-			async_write(ClientTCP::add_prefix(eHeader::POCK, &data));
-			std::for_each(snake_array_.begin(), snake_array_.end(), [](auto snake){ snake.isUpdate = false;});
 			mutex.unlock();
-//			std::cout << "ServerTCP::unlock()" << std::endl;
 			return;
 		}
 		default: {
@@ -158,6 +178,20 @@ void ServerTCP::parse_input(eHeader header, void const *input, size_t len) {
 	async_write(ClientTCP::add_prefix(header, const_cast<void *>(input)));
 	mutex.unlock();
 //	std::cout << "ServerTCP::unlock()" << std::endl;
+}
+
+void ServerTCP::updateInput() {
+	log_warn("Pause is %s", pause_ ? "true" : "false");
+	if (pause_ || std::any_of(snake_array_.begin(), snake_array_.end(),
+			[](auto snake){ return snake.isAlive && !snake.isUpdate;} )) return;
+	sendSnakeArray();
+	for (auto infoArray : foodInfoArray) {
+		async_write(ClientTCP::add_prefix(eHeader::FOOD, &infoArray));
+	}
+	foodInfoArray.clear();
+	char data = '#';
+	async_write(ClientTCP::add_prefix(eHeader::POCK, &data));
+	std::for_each(snake_array_.begin(), snake_array_.end(), [](auto snake){ snake.isUpdate = false;});
 }
 
 void ServerTCP::remove(TCPConnection::pointer remove) {
@@ -191,7 +225,7 @@ unsigned int ServerTCP::getPort_() const {
 }
 
 bool ServerTCP::isReady() const {
-	return std::any_of(snake_array_.begin(), snake_array_.end(), [](auto snake){ return snake.id != -1 && !snake.isReady; });
+	return std::none_of(snake_array_.begin(), snake_array_.end(), [](auto snake){ return snake.id != -1 && !snake.isReady; });
 }
 
 /** ---------------------- TCPConnection ---------------------- **/

@@ -49,9 +49,13 @@ public:
 
 	void new_game();
 
+	void defaultAssignmentLibrary();
+
 	Core &getCore_() const;
 
 	Core *releaseCore_();
+
+	void refreshTimerLoopWorld();
 
 	void playNoise(eSound e) const;
 
@@ -115,7 +119,7 @@ public:
 
 	bool isServer() const;
 	void callbackAction(eAction);
-
+	void manageSwitchLibrary();
 private: // Function
 	ClientTCP *getMainClientTCP() const;
 
@@ -134,8 +138,9 @@ private:
 	static const std::string WarningServerIsUp;
 	static const std::string SuccessServerIsCreate;
 	static const std::string WarningClientExist;
-
+	bool switchLib;
 	// Variable
+	std::mutex mutexLoop;
 	std::vector<NextFrame> nextFrame;
 	std::bitset<32> flag;
 	boost::asio::io_service io_loop;
