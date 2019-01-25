@@ -48,7 +48,7 @@ std::deque<Mesh> const &Model::getMeshes() const {
 float	Model::getInterScaling() const {
 	return (interScaling_);
 }
-glm::vec3	Model::getPositionCenter() const {
+glm::vec3	Model::getPositionCenterRelativeToOrigin() const {
 	return (positionCenter_);
 }
 
@@ -71,7 +71,6 @@ void 					Model::loadModel_() {
     directory_ = path_.substr(0, path_.find_last_of(DISPLAY_GLFW_SLASH));
 	std::cout << "[directory_] : " << directory_ << std::endl;
     processNode_(scene->mRootNode, scene);
-
 }
 
 void					Model::processNode_(aiNode *node, const aiScene *scene) {
@@ -102,23 +101,19 @@ void					Model::processMesh_(aiMesh *mesh, const aiScene *scene) {
             vertex.uv = glm::vec2(0.0f, 0.0f);
 		vertices.push_back(vertex);
 
-        if (!i)
-        	positionMax_ = positionMin_ = vertex.position;
-        else {
-        	if (vertex.position.x > positionMax_.x)
-        		positionMax_.x = vertex.position.x;
-			if (vertex.position.y > positionMax_.y)
-				positionMax_.y = vertex.position.y;
-			if (vertex.position.z > positionMax_.z)
-				positionMax_.z = vertex.position.z;
+        if (vertex.position.x > positionMax_.x)
+        	positionMax_.x = vertex.position.x;
+		if (vertex.position.y > positionMax_.y)
+			positionMax_.y = vertex.position.y;
+		if (vertex.position.z > positionMax_.z)
+			positionMax_.z = vertex.position.z;
 
-			if (vertex.position.x < positionMin_.x)
-				positionMin_.x = vertex.position.x;
-			if (vertex.position.y < positionMin_.y)
-				positionMin_.y = vertex.position.y;
-			if (vertex.position.z < positionMin_.z)
-				positionMin_.z = vertex.position.z;
-        }
+		if (vertex.position.x < positionMin_.x)
+			positionMin_.x = vertex.position.x;
+		if (vertex.position.y < positionMin_.y)
+			positionMin_.y = vertex.position.y;
+		if (vertex.position.z < positionMin_.z)
+			positionMin_.z = vertex.position.z;
     }
 
 
@@ -151,13 +146,9 @@ void			Model::setupScaling_()  {
 		scaling = 1.f / diff.y;
 	else
 		scaling = 1.f / diff.z;
-	positionMin_ = -positionMin_;
 	diff = positionMax_ - positionMin_;
-	diff.x = positionMax_.x - positionMin_.x;
-	diff.y = positionMax_.y - positionMin_.y;
-	diff.z = positionMax_.z - positionMin_.z;
 	interScaling_ = scaling;
-	diff = diff * 0.5f;
+	diff = diff * 0.5f + positionMin_;
 	positionCenter_ = diff;
 }
 
