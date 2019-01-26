@@ -20,7 +20,7 @@ smooth in vec3 Normal;
 smooth in vec3 Position;
 
 uniform sampler2D texture_diffuse1;
-uniform int uColorSnake;
+uniform int uBackground;
 uniform vec3 uCameraPosition;
 uniform tLight     		uLight;
 uniform tMaterial		uMaterial;
@@ -52,7 +52,8 @@ vec3	phong()
     float diffuse =  max(dot(Normal, posToLight), 0);
     //vec3 diffuseColor = defaultDifuse * floor(diffuse * levels) * scaleFactor;
     vec3 diffuseColor = uMaterial.diffuse * celShading(diffuse);
-
+    if (uBackground == 1)
+        diffuseColor = uMaterial.diffuse;
 
     vec3 cameraToLight = normalize(posToLight + posToCamera);
     float specular = 0.f;
@@ -69,9 +70,7 @@ void main()
 {
     material = uMaterial;
     vec4 color;
-    if (uColorSnake != 0) {
-        color = vec4((uColorSnake >> 16) & 0xFF, (uColorSnake >> 8) & 0xFF, (uColorSnake) & 0xFF, 1.f);
-        color /= 255.f;
+    if (1 == 1) {
         color = vec4(phong(), 1.f);
     }
     else {

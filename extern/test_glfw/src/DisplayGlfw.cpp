@@ -39,7 +39,7 @@ skybox_(nullptr),
 projection_(1.f),
 view_(1.f),
 model_(1.f),
-light_(glm::vec3(0.f, 0.f, 30.f)){
+light_(glm::vec3(0.f, 0.f, 30.f)) {
 
 	getPath_();
 	constructMaterialMap_();
@@ -86,6 +86,12 @@ light_(glm::vec3(0.f, 0.f, 30.f)){
 }
 void				DisplayGlfw::constructMaterialMap_() {
 	materialMap_.try_emplace(eSprite::GREEN, "GREEN");
+	materialMap_.try_emplace(eSprite::GROUND, "GROUND", 0.f,
+			glm::vec3(0.0756f * 0.f, 0.61423f * 0.1f, 0.07568f * 0.1f),
+			glm::vec3(0.0756f, 0.61423f, 0.07568f),
+			glm::vec3(0.f, 0.f, 0.f));
+
+
 	materialMap_.try_emplace(eSprite::BLUE, "BLUE", 31.f,
 			 glm::vec3(0.0f, 0.1f, 0.06f),
 			 glm::vec3(0.0f, 0.50980392f, 0.50980392f),
@@ -102,7 +108,10 @@ void				DisplayGlfw::constructMaterialMap_() {
 			 glm::vec3(0.0f, 0.0f, 0.0f),
 			 glm::vec3(0.5f, 0.0f, 0.0f),
 			 glm::vec3(0.7f, 0.6f, 0.6f));
-
+	materialMap_.try_emplace(eSprite::WALL, "WALL", 0.f,
+							 glm::vec3(0.1f, 0.1f, 0.1f),
+							 glm::vec3(0.5f, 0.5f, 0.5f),
+							 glm::vec3(0.5f, 0.5f, 0.5f));
 }
 void                DisplayGlfw::getPath_() {
 
@@ -202,8 +211,6 @@ void		DisplayGlfw::drawGrid(Grid< eSprite > const &grid) {
 			else if ((grid(x, y) & eSprite::FOOD) == eSprite::FOOD) {
 				materialMap_.at(eSprite::RED).putMaterialToShader(shader_);
 			}
-			else
-				shader_.setInt("uColorSnake", 0);
 			if (grid(x, y) != eSprite::NONE)
 				drawGridCase_(grid(x, y), x, y);
 		}
@@ -283,7 +290,7 @@ void DisplayGlfw::render(float currentDelayFrame, float maxDelayFrame) {
 	view_ = camera_.getViewMatrix();
 	shader_.setMat4("projection", projection_);
 	shader_.setMat4("view", view_);
-	shader_.setInt("uColorSnake", 0);
+	shader_.setInt("uBackground", 1);
 	shader_.setVec3("uCameraPosition", camera_.getPosition());
 
     for (int y = 0; y < winTileSize_.getY(); y++) {
@@ -292,16 +299,14 @@ void DisplayGlfw::render(float currentDelayFrame, float maxDelayFrame) {
 				model_ = background_(x, y).getTransform();
 				shader_.setMat4("model", model_);
 				if (tileBackground_(x, y) == eSprite::WALL)
-					materialMap_.at(eSprite::GREY).putMaterialToShader(shader_);
+					materialMap_.at(eSprite::WALL).putMaterialToShader(shader_);
 				else if (tileBackground_(x, y) == eSprite::GROUND)
-				 	materialMap_.at(eSprite::GREEN).putMaterialToShader(shader_);
-				else
-					shader_.setInt("uColorSnake", 0);
+				 	materialMap_.at(eSprite::GROUND).putMaterialToShader(shader_);
 				background_(x, y).getModel()->render(shader_);
         	}
         }
     }
-	shader_.setInt("uColorSnake", 0);
+	shader_.setInt("uBackground", 0);
 
 	shaderMultiple_.activate();
 	shaderMultiple_.setMat4("projection", projection_);
