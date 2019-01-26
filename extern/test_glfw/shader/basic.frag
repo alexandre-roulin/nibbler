@@ -46,23 +46,21 @@ float celShading(float intensity)
 
 vec3	phong()
 {
+    vec3 normal = normalize(Normal);
     vec3 posToLight = normalize(uLight.position - Position);
     vec3 posToCamera = normalize(uCameraPosition - Position);
+    vec3 cameraToLight = normalize(posToLight + posToCamera);
 
-    float diffuse =  max(dot(Normal, posToLight), 0);
-    //vec3 diffuseColor = defaultDifuse * floor(diffuse * levels) * scaleFactor;
+    float diffuse =  max(dot(normal, posToLight), 0);
     vec3 diffuseColor = uMaterial.diffuse * celShading(diffuse);
     if (uBackground == 1)
         diffuseColor = uMaterial.diffuse;
 
-    vec3 cameraToLight = normalize(posToLight + posToCamera);
-    float specular = 0.f;
-    if(dot(posToLight, Normal) > 0.f)
-        specular = pow(max(0, dot(cameraToLight, Normal)), uMaterial.shininess);
-    float specMask = (pow(dot(cameraToLight, Normal), uMaterial.shininess) > 0.4f) ? 1.f : 0.f;
+    vec3 reflectDir = reflect(-posToLight, normal);
+    float specular = pow(max(dot(posToCamera, reflectDir), 0.f), uMaterial.shininess);
+    float specMask = (pow(dot(cameraToLight, normal), uMaterial.shininess) > 0.4f) ? 1.f : 0.f;
 
     vec3 color = (uMaterial.ambient + diffuseColor + (uMaterial.specular * specular * specMask)) * uLight.intensity;
-
     return (color);
 }
 

@@ -1,6 +1,5 @@
 
 #include "Mesh.hpp"
-#include "Shader.hpp"
 #include <iostream>
 
 Mesh::Mesh(std::vector<Vertex> vertice, std::vector<unsigned int> indice, std::vector<Texture> texture) :
@@ -61,15 +60,15 @@ void Mesh::activeTexture(Shader &shader) const {
 	glActiveTexture(GL_TEXTURE0);
 }
 
-void	Mesh::render(Shader &shader) const {
+void	Mesh::render(Shader &shader, GLenum typeOfDraw) const {
 	activeTexture(shader);
-	render();
+	render(typeOfDraw);
 }
 
-void	Mesh::render() const noexcept {
+void	Mesh::render(GLenum typeOfDraw) const noexcept {
 
 	glBindVertexArray(VAO);
-	glDrawElements(GL_TRIANGLES, indice_.size(), GL_UNSIGNED_INT, 0);
+	glDrawElements(typeOfDraw, indice_.size(), GL_UNSIGNED_INT, 0);
 	glBindVertexArray(0);
 }
 

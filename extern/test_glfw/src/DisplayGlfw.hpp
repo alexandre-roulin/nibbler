@@ -69,6 +69,7 @@ public:
 	eDirection getDirection() const override;
 	void		drawGrid(Grid< eSprite > const &grid) override;
 	void		setBackground(Grid< eSprite > const &grid) override;
+	void		registerCallbackAction(std::function<void(eAction)>) override;
 
 	DisplayGlfw &operator=(DisplayGlfw const &rhs) = delete;
 	DisplayGlfw(DisplayGlfw const &src) = delete;
@@ -110,9 +111,11 @@ private:
 	Model							modelWall_;
 	Model							appleModel_;
 	Model							modelSphere_;
+	Model							modelHead_;
 	Particle						*testParticle_;
 	Light							light_;
     Camera							camera_;
+    ActModel						lol_;
 
 	glm::mat4						projection_;
 	glm::mat4						view_;
@@ -123,11 +126,12 @@ private:
     void                clean_();
     void                getPath_();
 	void				drawGridCase_(eSprite sprite, int x, int y);
+	void				drawGridCaseBody_(int x, int y);
 	void				interpolateGridCase_(int x, int y);
 
 
 	std::map< eSprite, Material >		materialMap_;
-	void				DisplayGlfw::constructMaterialMap_();
+	void constructMaterialMap_();
 
 	static float				lastX_;
 	static float				lastY_;

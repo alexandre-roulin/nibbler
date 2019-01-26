@@ -150,8 +150,8 @@ void testKstar() {
 }
 
 int main(int argc, char **argv) {
-	testKstar();
-	return 1;
+//	testKstar();
+//	return 1;
 	char hostname[64];
 	gethostname(hostname, 64);
 	std::cout << hostname << std::endl;

@@ -52,13 +52,13 @@ glm::vec3	Model::getPositionCenterRelativeToOrigin() const {
 	return (positionCenter_);
 }
 
-void	Model::render() const {
+void	Model::render(GLenum typeOfDraw) const {
     for (const auto &i : mesh_)
-		i.render();
+		i.render(typeOfDraw);
 }
-void	Model::render(Shader &shader) const {
+void	Model::render(Shader &shader, GLenum typeOfDraw) const {
     for (const auto &i : mesh_)
-		i.render(shader);
+		i.render(shader, typeOfDraw);
 }
 
 void 					Model::loadModel_() {

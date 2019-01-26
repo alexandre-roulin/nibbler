@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.0)
 project(Glitter)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 
 
 add_subdirectory(Glitter/Vendor/glm)
@@ -53,17 +53,17 @@ source_group("Vendors" FILES ${VENDORS_SOURCES})
 
 add_definitions(-DGLFW_INCLUDE_NONE
         -DPROJECT_SOURCE_DIR=\"${PROJECT_SOURCE_DIR}\")
-add_executable(${PROJECT_NAME}
-${PROJECT_SOURCES} ${PROJECT_HEADERS}
-#${PROJECT_SHADERS}
-${PROJECT_CONFIGS}
-${VENDORS_SOURCES})
-
-#add_library(${PROJECT_NAME} MODULE
+#add_executable(${PROJECT_NAME}
 #${PROJECT_SOURCES} ${PROJECT_HEADERS}
 ##${PROJECT_SHADERS}
 #${PROJECT_CONFIGS}
 #${VENDORS_SOURCES})
+
+add_library(${PROJECT_NAME} MODULE
+${PROJECT_SOURCES} ${PROJECT_HEADERS}
+#${PROJECT_SHADERS}
+${PROJECT_CONFIGS}
+${VENDORS_SOURCES})
 
 target_link_libraries(${PROJECT_NAME} assimp glfw
         ${GLFW_LIBRARIES} ${GLAD_LIBRARIES})
