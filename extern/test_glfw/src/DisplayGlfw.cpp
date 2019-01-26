@@ -55,11 +55,11 @@ light_(glm::vec3(0.f, 0.f, 30.f)) {
 	projection_ = glm::perspective(glm::radians(45.0f),
             (float)DISPLAY_GLFW_WIN_WIDTH / (float)DISPLAY_GLFW_WIN_HEIGHT,
             NEAR_PLANE, MAX_PLANE);
-
+/*
 	shaderMultiple_.attach(pathShaderBasic_ + "Multiple.vert");
 	shaderMultiple_.attach(pathShaderBasic_ + "Multiple.frag");
 	shaderMultiple_.link();
-
+*/
     shader_.attach(pathShaderBasic_ + ".vert");
     shader_.attach(pathShaderBasic_ + ".frag");
     shader_.link();
@@ -72,6 +72,7 @@ light_(glm::vec3(0.f, 0.f, 30.f)) {
     modelWall_.setModel(pathWall_);
 	appleModel_.setModel(pathAppleModel_);
 
+	/*
 	testParticle_ = new Particle(modelGrass_, PARTICULE_SIZE*PARTICULE_SIZE*PARTICULE_SIZE);
 	for (int y = 0; y < PARTICULE_SIZE; ++y) {
 		for (int x = 0; x < PARTICULE_SIZE; ++x) {
@@ -80,13 +81,12 @@ light_(glm::vec3(0.f, 0.f, 30.f)) {
 				testParticle_->transforms[x + PARTICULE_SIZE * (y + PARTICULE_SIZE * z)].scale(glm::vec3(-0.10f));
 			}
 		}
-	}
+	}*/
 
 	if (winTileSize_.getY() < winTileSize_.getX())
     	camera_.processPosition(Camera::Movement::BACKWARD, winTileSize_.getX() / 2);
 	else
 		camera_.processPosition(Camera::Movement::BACKWARD, winTileSize_.getY() / 2);
-	skybox_ = std::make_unique< Skybox >(pathShaderSkyBox_, pathDirectorySkyBox_, pathSkyBox_);
 }
 void				DisplayGlfw::constructMaterialMap_() {
 	materialMap_.try_emplace(eSprite::GREEN, "GREEN");
@@ -143,22 +143,7 @@ void                DisplayGlfw::getPath_() {
     pathGrass_ = std::string(pathRoot_ + DISPLAY_GLFW_SLASH + "resources" + DISPLAY_GLFW_SLASH + "objects" + DISPLAY_GLFW_SLASH + "grass" + DISPLAY_GLFW_SLASH + "grass.obj");
     pathWall_ = std::string(pathRoot_ + DISPLAY_GLFW_SLASH + "resources" + DISPLAY_GLFW_SLASH + "wall.obj");
 	pathShaderBasic_ = std::string(pathRoot_ + DISPLAY_GLFW_SLASH + "shader" + DISPLAY_GLFW_SLASH + "basic");
-	pathShaderSkyBox_ = std::string(pathRoot_ + DISPLAY_GLFW_SLASH + "shader" + DISPLAY_GLFW_SLASH + "skybox");
 	pathAppleModel_ = std::string(pathRoot_ + DISPLAY_GLFW_SLASH + "resources" + DISPLAY_GLFW_SLASH + "Apple_obj" + DISPLAY_GLFW_SLASH + "apple.obj");
-	//pathDirectorySkyBox_ = std::string(pathRoot_ + DISPLAY_GLFW_SLASH + "resources" + DISPLAY_GLFW_SLASH + "ame_nebula" + DISPLAY_GLFW_SLASH);
-	//pathSkyBox_.emplace_back("purplenebula_rt.tga");
-	//pathSkyBox_.emplace_back("purplenebula_lf.tga");
-	//pathSkyBox_.emplace_back("purplenebula_up.tga");
-	//pathSkyBox_.emplace_back("purplenebula_dn.tga");
-	//pathSkyBox_.emplace_back("purplenebula_ft.tga");
-	//pathSkyBox_.emplace_back("purplenebula_bk.tga");
-	pathDirectorySkyBox_ = std::string(pathRoot_ + DISPLAY_GLFW_SLASH + "resources" + DISPLAY_GLFW_SLASH + "cubelowpoly2" + DISPLAY_GLFW_SLASH);
-	pathSkyBox_.emplace_back("face-r.jpg");
-	pathSkyBox_.emplace_back("face-l.jpg");
-	pathSkyBox_.emplace_back("face-t.jpg");
-	pathSkyBox_.emplace_back("face-d.jpg");
-	pathSkyBox_.emplace_back("face-f.jpg");
-	pathSkyBox_.emplace_back("face-b.jpg");
 }
 
 
@@ -183,13 +168,13 @@ void		DisplayGlfw::setBackground(Grid< eSprite > const &grid) {
 	for (int y = 0; winTileSize_.getY() > y; ++y) {
         for (int x = 0; x < winTileSize_.getX(); ++x) {
 
-            if (tileBackground_(x, y) == eSprite::WALL) {
+            if ((tileBackground_(x, y) & eSprite::WALL) == eSprite::WALL) {
                 background_(x, y).assign(&modelWall_);
 				background_(x, y).resetTransform();
 				background_(x, y).translate(glm::vec3(x - winTileSize_.getX() / 2, y - winTileSize_.getY() / 2, 0.f));
 				background_(x, y).scale(glm::vec3(-0.10f));
             }
-            else if (tileBackground_(x, y) == eSprite::GROUND) {
+            else if ((tileBackground_(x, y) & eSprite::GROUND) == eSprite::GROUND) {
                 background_(x, y).assign(&modelGrass_);
 				background_(x, y).resetTransform();
 				background_(x, y).translate(glm::vec3(x - winTileSize_.getX() / 2, y - winTileSize_.getY() / 2, 0.f));
@@ -199,13 +184,34 @@ void		DisplayGlfw::setBackground(Grid< eSprite > const &grid) {
     }
 }
 
+void		DisplayGlfw::drawGridCaseBody_(int x, int y) {
+	eSprite sprite = tileGrid_(x, y);
+
+	if ((sprite & eSprite::MASK_BODY) == eSprite::TAIL)
+		grid_(x, y).scale(glm::vec3(-0.1f));
+	else if ((sprite & eSprite::MASK_BODY) == eSprite::HEAD) {
+		eSprite to = (sprite & eSprite::MASK_TO) >> eSprite::BITWISE_TO;
+
+		if (to == eSprite::EAST)
+			grid_(x, y).rotate(glm::vec3(0.f, 1.f, 0.f), glm::radians(-90.f));
+		else if (to == eSprite::WEST)
+			grid_(x, y).rotate(glm::vec3(0.f, 1.f, 0.f), glm::radians(90.f));
+		else if (to == eSprite::SOUTH)
+			grid_(x, y).rotate(glm::vec3(1.f, 0.f, 0.f), glm::radians(90.f));
+		else if (to == eSprite::NORTH) {
+			grid_(x, y).rotate(glm::vec3(1.f, 0.f, 0.f), glm::radians(-90.f));
+			grid_(x, y).rotate(glm::vec3(0.f, 0.f, 1.f), glm::radians(180.f));
+		}
+
+	}
+}
+
 void		DisplayGlfw::drawGridCase_(eSprite sprite, int x, int y) {
 	grid_(x, y).resetTransform();
 	grid_(x, y).translate(glm::vec3(x - winTileSize_.getX() / 2, y - winTileSize_.getY() / 2, 1.f));
 	drawGridCaseBody_(x, y);
 	//interpolateGridCase_(x, y);
 	if (static_cast<int>(sprite & eSprite::MASK_BODY) != 0) {
-		//grid_(x, y).rotate(glm::vec3(1.f, 0.f, 0.f), glm::radians(90.f), 1.f);
 		grid_(x, y).scale(glm::vec3(-0.25f));
 	}
 	model_ = grid_(x, y).getTransform();
@@ -225,48 +231,29 @@ void		DisplayGlfw::drawGrid(Grid< eSprite > const &grid) {
 	for (int y = 0; y < winTileSize_.getY(); ++y) {
 		for (int x = 0; x < winTileSize_.getX(); ++x) {
 			if ((grid(x, y) & eSprite::FOOD) == eSprite::FOOD) {
+				materialMap_.at(eSprite::FOOD).putMaterialToShader(shader_);
 				grid_(x, y).assign(&appleModel_);
 			}
-			else if (grid(x, y) != eSprite::HEAD)
-				grid_(x, y).assign(&block_);
-
-
-			if (static_cast<int>(grid(x, y) & eSprite::MASK_BODY) != 0) {
+			else if (static_cast<int>(grid(x, y) & eSprite::MASK_BODY) != 0) {
 				if ((grid(x, y) & eSprite::MASK_BODY) == eSprite::HEAD)
 					grid_(x, y).assign(&modelHead_);
 				else
 					grid_(x, y).assign(&modelSphere_);
 				materialMap_.at(grid(x, y) & eSprite::MASK_COLOR).putMaterialToShader(shader_);
 			}
-			else if ((grid(x, y) & eSprite::FOOD) == eSprite::FOOD) {
-				materialMap_.at(eSprite::FOOD).putMaterialToShader(shader_);
+			else if ((grid(x, y) & eSprite::WALL) == eSprite::WALL) {
+				grid_(x, y).assign(&modelWall_);
+				materialMap_.at(eSprite::WALL).putMaterialToShader(shader_);
 			}
+			else if (grid(x, y) != eSprite::NONE)
+				grid_(x, y).assign(&block_);
+
 			if (grid(x, y) != eSprite::NONE)
 				drawGridCase_(grid(x, y), x, y);
+
+			if ((grid(x, y) & eSprite::WALL) == eSprite::WALL)
+				renderLine_(grid_(x, y));
 		}
-	}
-}
-
-void		DisplayGlfw::drawGridCaseBody_(int x, int y) {
-	eSprite sprite = tileGrid_(x, y);
-
-	if ((sprite & eSprite::MASK_BODY) == eSprite::TAIL)
-		grid_(x, y).scale(glm::vec3(-0.1f));
-	else if ((sprite & eSprite::MASK_BODY) == eSprite::HEAD) {
-		//grid_(x, y).rotate(glm::vec3(1.f, 0.f, 0.f), glm::radians(90.f));
-		eSprite to = (sprite & eSprite::MASK_TO) >> eSprite::BITWISE_TO;
-
-		if (to == eSprite::EAST)
-			grid_(x, y).rotate(glm::vec3(0.f, 1.f, 0.f), glm::radians(-90.f));
-		else if (to == eSprite::WEST)
-			grid_(x, y).rotate(glm::vec3(0.f, 1.f, 0.f), glm::radians(90.f));
-		else if (to == eSprite::SOUTH)
-			grid_(x, y).rotate(glm::vec3(1.f, 0.f, 0.f), glm::radians(90.f));
-		else if (to == eSprite::NORTH) {
-			grid_(x, y).rotate(glm::vec3(1.f, 0.f, 0.f), glm::radians(-90.f));
-			grid_(x, y).rotate(glm::vec3(0.f, 0.f, 1.f), glm::radians(180.f));
-		}
-
 	}
 }
 
@@ -288,6 +275,15 @@ void		DisplayGlfw::interpolateGridCase_(int x, int y) {
 		else if (to == eSprite::NORTH)
 			grid_(x, y).translate(glm::vec3(0.0f, -distInterpelated, 0.0f));
 	}
+}
+
+void DisplayGlfw::renderLine_(ActModel &model) {
+	materialMap_.at(eSprite::NONE).putMaterialToShader(shader_);
+	model.scale(glm::vec3(0.05f));
+	model_ = model.getTransform();
+	shader_.setMat4("model", model_);
+	model.getModel()->render(shader_, GL_LINE_STRIP);
+	model.scale(glm::vec3(-0.05f));
 }
 
 void DisplayGlfw::render(float currentDelayFrame, float maxDelayFrame) {
@@ -327,33 +323,35 @@ void DisplayGlfw::render(float currentDelayFrame, float maxDelayFrame) {
         	if (background_(x, y).getModel()) {
 				model_ = background_(x, y).getTransform();
 				shader_.setMat4("model", model_);
-				if (tileBackground_(x, y) == eSprite::WALL)
+				if ((tileBackground_(x, y) & eSprite::WALL) == eSprite::WALL) {
 					materialMap_.at(eSprite::WALL).putMaterialToShader(shader_);
+					background_(x, y).translate(glm::vec3(0.f, 0.f, 1.f));
+					model_ = background_(x, y).getTransform();
+					shader_.setMat4("model", model_);
+					background_(x, y).getModel()->render(shader_);
+					renderLine_(background_(x, y));
+					background_(x, y).translate(glm::vec3(0.f, 0.f, -1.f));
+					materialMap_.at(eSprite::WALL).putMaterialToShader(shader_);
+				}
 				else if (tileBackground_(x, y) == eSprite::GROUND)
 				 	materialMap_.at(eSprite::GROUND).putMaterialToShader(shader_);
 				background_(x, y).getModel()->render(shader_);
-				materialMap_.at(eSprite::NONE).putMaterialToShader(shader_);
-				background_(x, y).scale(glm::vec3(0.05f));
-				model_ = background_(x, y).getTransform();
-				shader_.setMat4("model", model_);
-				background_(x, y).getModel()->render(shader_, GL_LINE_STRIP);
-				background_(x, y).scale(glm::vec3(-0.05f));
+				renderLine_(background_(x, y));
         	}
         }
     }
 
 	shader_.setInt("uBackground", 0);
+/*
 
 	shaderMultiple_.activate();
 	shaderMultiple_.setMat4("projection", projection_);
 	shaderMultiple_.setMat4("view", view_);
 
-/*
 	testParticle_->updatePhysicsMovement(attractor, deltaTime_);
 	testParticle_->update();
 	testParticle_->render(shaderMultiple_);
 */
-    //skybox_->render(view_, projection_);
 
     Glfw::render();
 	glClearColor(0.29f * 0.35f, 0.0f, 0.51f * 0.35f, 0.40f);
