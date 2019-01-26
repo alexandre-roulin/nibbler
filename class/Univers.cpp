@@ -149,7 +149,12 @@ void Univers::defaultAssignmentLibrary() {
 
 void Univers::new_game() {
 
-
+	if (isServer()) {
+		for (auto &bobby : vecBobby) {
+			bobby->getClientTCP_()->change_state_ready();
+		}
+	}
+	sleep(1);
 	assert(isServer());
 	assert(serverTCP_->isReady());
 	if (!isServer() || !serverTCP_->isReady()) return;
@@ -159,6 +164,7 @@ void Univers::new_game() {
 	defaultAssignmentLibrary();
 	if (isServer()) {
 		for (auto &bobby : vecBobby) {
+//			bobby->getClientTCP_()->change_state_ready();
 			bobby->buildIA();
 			bobby->sendDirection();
 		}
@@ -333,8 +339,8 @@ void Univers::manageSwitchLibrary() {
 	if (!getGameNetwork()->isSwitchingLibrary()) {
 		int16_t id = getGameNetwork()->getId();
 		getGameNetwork()->write_socket(ClientTCP::add_prefix(eHeader::kForcePause, &id));
-		kDisplay = (kDisplay == kExternSdlLibrary) ? kExternSfmlLibrary : kExternSdlLibrary;
-//		kDisplay = (kDisplay == kExternGlfwLibrary) ? kExternSfmlLibrary : static_cast<eDisplay>(kDisplay + 1);
+//		kDisplay = (kDisplay == kExternSdlLibrary) ? kExternSfmlLibrary : kExternSdlLibrary;
+		kDisplay = (kDisplay == kExternGlfwLibrary) ? kExternSfmlLibrary : static_cast<eDisplay>(kDisplay + 1);
 		unload_external_library();
 		load_extern_lib_display(kDisplay);
 		defaultAssignmentLibrary();
@@ -395,8 +401,6 @@ void Univers::create_ia() {
 	}
 	std::unique_ptr<Bobby> bobby = std::make_unique<Bobby>(*this);
 	bobby->getClientTCP_()->connect("localhost", std::to_string(serverTCP_->getPort_()));
-	sleep(1);
-	bobby->getClientTCP_()->change_state_ready();
 	vecBobby.push_back(std::move(bobby));
 }
 
@@ -431,6 +435,7 @@ void Univers::close_acceptor() {
 /** Getter && Setter **/
 
 ClientTCP *Univers::getMainClientTCP() const {
+	std::cout << "Univers::getMainClientTCP[C:" <<  (clientTCP_ != nullptr) << "-B:" << (vecBobby.size() != 0 ) << "]" << std::endl;
 	if (clientTCP_)
 		return clientTCP_.get();
 	else if (vecBobby.size() != 0)

@@ -158,6 +158,7 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 		}
 		case eHeader::ID: {
 			std::memcpy(&id_, input, len);
+			snake_array_[id_].id = id_;
 			log_info("eHeader::ID %d", id_);
 			break;
 		}

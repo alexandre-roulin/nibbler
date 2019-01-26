@@ -36,8 +36,6 @@ public:
 	void print() const;
 	void print(int x, int y) const;
 
-	int countNearSlot(int x, int y, T value, bool checkDiagonal = false) const;
-
 	T *operator[](size_t y);
 
 	T &operator()(size_t x, size_t y);
@@ -238,34 +236,3 @@ size_t Grid<T>::size() const {
 	return size_;
 }
 
-template<typename T>
-int Grid<T>::countNearSlot(int x, int y, T value, bool checkDiagonal) const {
-
-	static int constexpr direction[8][2] = {
-			{0,  -1},
-			{0,  1},
-			{-1, 0},
-			{1,  0},
-			{-1, -1},
-			{-1, 1},
-			{1,  -1},
-			{1,  1}
-	};
-	static int const SCALE_X = 0;
-	static int const SCALE_Y = 1;
-
-	uint16_t count = 0;
-	unsigned int max = (checkDiagonal ? 8 : 4);
-	for (int index = 0; index < max; ++index) {
-		size_t base_x = x + direction[index][SCALE_X];
-		size_t base_y = y + direction[index][SCALE_Y];
-
-		if (
-				base_x < _columns	&& base_x >= 0 &&
-				base_y < _rows		&& base_y >= 0 &&
-				(_grid[base_y * _columns + base_x] & value)	== value
-				)
-			count++;
-	}
-		return count;
-}

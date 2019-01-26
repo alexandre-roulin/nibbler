@@ -169,6 +169,8 @@ add_executable(${NAME}
         class/ia/Bobby.hpp
         class/ia/AStar.cpp
         class/ia/AStar.hpp
+        class/ia/KStar.cpp
+        class/ia/KStar.hpp
 
         incs/IDisplay.hpp
         incs/Display2D.hpp
@@ -178,7 +180,7 @@ add_executable(${NAME}
         incs/logger_utils.h
         incs/nibbler.hpp
         incs/stb_image.h
-        class/systems/SpriteSystem.cpp class/systems/SpriteSystem.hpp class/gui/widget/WidgetConnect.cpp class/gui/widget/WidgetConnect.hpp class/KINU/Component.cpp class/KINU/Component.hpp class/KINU/Entity.cpp class/KINU/Entity.hpp class/KINU/EventsManager.cpp class/KINU/EventsManager.hpp class/KINU/Pool.hpp class/KINU/SystemsManager.cpp class/KINU/SystemsManager.hpp class/KINU/World.cpp class/KINU/World.hpp class/KINU/Config.hpp class/ia/Bobby.cpp class/ia/Bobby.hpp class/network/IGameNetwork.hpp class/gui/widget/WidgetMassiveButton.cpp class/gui/widget/WidgetMassiveButton.hpp incs/Sprite.hpp)
+        class/systems/SpriteSystem.cpp class/systems/SpriteSystem.hpp class/gui/widget/WidgetConnect.cpp class/gui/widget/WidgetConnect.hpp class/KINU/Component.cpp class/KINU/Component.hpp class/KINU/Entity.cpp class/KINU/Entity.hpp class/KINU/EventsManager.cpp class/KINU/EventsManager.hpp class/KINU/Pool.hpp class/KINU/SystemsManager.cpp class/KINU/SystemsManager.hpp class/KINU/World.cpp class/KINU/World.hpp class/KINU/Config.hpp class/ia/Bobby.cpp class/ia/Bobby.hpp class/network/IGameNetwork.hpp class/gui/widget/WidgetMassiveButton.cpp class/gui/widget/WidgetMassiveButton.hpp incs/Sprite.hpp class/ia/KStar.cpp class/ia/KStar.hpp incs/MutantGrid.tpp)
 
 target_include_directories(
         ${NAME} PUBLIC
