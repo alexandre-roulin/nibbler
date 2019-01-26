@@ -28,7 +28,7 @@ private:
 template<typename T>
 typename std::vector<T>::reference MutantGrid<T>::operator()(size_t x, size_t y) {
 	assert(y * size_ + x < this->size());
-	return this->at(y * size_ + x );
+	return this->at (y * size_ + x );
 }
 
 
