@@ -12,6 +12,7 @@
 #include <ostream>
 
 namespace AStar {
+
 	struct Vec2i {
 
 		Vec2i(int x = 0, int y = 0) : x(x), y(y) {};

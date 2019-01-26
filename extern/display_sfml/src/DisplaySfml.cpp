@@ -24,6 +24,7 @@ DisplaySfml::DisplaySfml(int width,
 			 windowName) {
 	std::cout << "DisplaySfml" << std::endl;
 
+
 	this->_win.setFramerateLimit(60);
 
 	std::string pathFile = __FILE__;

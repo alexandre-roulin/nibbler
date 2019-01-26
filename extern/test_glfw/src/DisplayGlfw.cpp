@@ -24,7 +24,7 @@ DisplayGlfw::DisplayGlfw(int width,
                          int height,
                          char const *windowName) :
 Glfw(windowName, DISPLAY_GLFW_WIN_WIDTH, DISPLAY_GLFW_WIN_HEIGHT),
-direction_(NORTH),
+direction_(kNorth),
 currentTimer_(0.f),
 maxTimer_(0.f),
 winTileSize_(Vector2D<int>(width, height)),
@@ -214,13 +214,13 @@ void DisplayGlfw::render(float currentDelayFrame, float maxDelayFrame) {
     shader_.activate();
 
     if (glfwGetKey(getWindow(), GLFW_KEY_UP) == GLFW_PRESS)
-    	direction_ = SOUTH;
+    	direction_ = kSouth;
     if (glfwGetKey(getWindow(), GLFW_KEY_DOWN) == GLFW_PRESS)
-    	direction_ = NORTH;
+    	direction_ = kNorth;
     if (glfwGetKey(getWindow(), GLFW_KEY_LEFT) == GLFW_PRESS)
-    	direction_ = WEST;
+    	direction_ = kWest;
     if (glfwGetKey(getWindow(), GLFW_KEY_RIGHT) == GLFW_PRESS)
-    	direction_ = EAST;
+    	direction_ = kEast;
 	if (glfwGetKey(getWindow(), GLFW_KEY_D) == GLFW_PRESS)
 		camera_.processPosition(Camera::Movement::RIGHT, deltaTime_ * 5);
 	if (glfwGetKey(getWindow(), GLFW_KEY_A) == GLFW_PRESS)

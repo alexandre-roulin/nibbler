@@ -14,6 +14,7 @@
 #include <gui/Core.hpp>
 #include <boost/program_options.hpp>
 #include <logger.h>
+#include <ia/KStar.hpp>
 
 std::string const Snake::basicName[MAX_SNAKE] = {"Jack O'Lantern", "Eden",
 												 "Jacky", "Emerald",
@@ -136,8 +137,21 @@ void nibbler(Univers &univers) {
 	}
 }
 
-int main(int argc, char **argv) {
+void testKstar() {
+	KStar kStar;
+	kStar.setSearchLevel(5);
+	kStar.setHeuristic(KStar::Heuristic::euclidean);
+	kStar.setWorldSize(10);
+	kStar.setDiagonalMovement(false);
+	KStar::Path path = kStar.searchPath(KStar::Vec2(2, 2), KStar::Vec2(6, 2));
+	for (auto item : path) {
+		std::cout << "Find > " << item << std::endl;
+	}
+}
 
+int main(int argc, char **argv) {
+	testKstar();
+	return 1;
 	char hostname[64];
 	gethostname(hostname, 64);
 	std::cout << hostname << std::endl;
