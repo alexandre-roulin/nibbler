@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <glm/glm.hpp>
+#include "Shader.hpp"
 
 class Shader;
 
@@ -41,8 +42,8 @@ public:
 	Mesh(std::vector<Vertex> vertice, std::vector<unsigned int> indice, std::vector<Texture> texture);
 	Mesh(std::vector<Vertex> vertice, std::vector<unsigned int> indice);
 
-	void				render(Shader &shader) const;
-	void				render() const noexcept;
+	void				render(Shader &shader, GLenum typeOfDraw = GL_TRIANGLES) const;
+	void				render(GLenum typeOfDraw = GL_TRIANGLES) const noexcept;
 	unsigned int		getVAO() const;
 	void				activeTexture(Shader &shader) const;
 	std::vector<unsigned int> const	&getIndice() const;

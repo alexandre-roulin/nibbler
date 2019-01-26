@@ -44,8 +44,8 @@ public:
 	float		getInterScaling() const;
 	glm::vec3	getPositionCenterRelativeToOrigin() const;
 
-	void	render() const;
-	void	render(Shader &shader) const;
+	void	render(GLenum typeOfDraw = GL_TRIANGLES) const;
+	void	render(Shader &shader, GLenum typeOfDraw = GL_TRIANGLES) const;
 
 private:
 	std::deque<Mesh>		mesh_;

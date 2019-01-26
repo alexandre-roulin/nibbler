@@ -47,6 +47,7 @@ ActModel &ActModel::operator=(ActModel const &src) {
 		position_ = src.position_;
 		speed_ = src.speed_;
 	}
+	return (*this);
 }
 
 void ActModel::assign(Model const *model) {
@@ -89,16 +90,20 @@ void	ActModel::resetTransform() {
 
 void	ActModel::updateTransform_() {
 	glm::mat4 scale(1.f);
+	glm::mat4 toOrigin(1.f);
 
-	if (flag_.test(ActModel::eFlag::SAME_SCALING))
-		scale = glm::scale(scale, glm::vec3(model_->getInterScaling() * sameScaling_));
-	else
-		scale = glm::scale(scale, (model_->getInterScaling() * scaling_));
+	if (model_) {
+		if (flag_.test(ActModel::eFlag::SAME_SCALING))
+			scale = glm::scale(scale, glm::vec3(model_->getInterScaling() * sameScaling_));
+		else
+			scale = glm::scale(scale, (model_->getInterScaling() * scaling_));
+		toOrigin = glm::translate(glm::mat4(1.f), -model_->getPositionCenterRelativeToOrigin());
+	}
 	transform_ = glm::translate(glm::mat4(1.f), position_)
 				 //* glm::translate(glm::mat4(1.f), model_->getPositionCenterRelativeToOrigin())
 				* rotate_
 				* scale
-				* glm::translate(glm::mat4(1.f), -model_->getPositionCenterRelativeToOrigin());
+				* toOrigin;
 
 }
 

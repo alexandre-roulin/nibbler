@@ -45,7 +45,7 @@ enum ePriority {
 struct Snake {
 	Snake() : sprite(eSprite::BLUE), isReady(false), id(-1), isUpdate(false),
 			  direction(kNorth), isAlive(false) {
-		bzero(name, NAME_BUFFER);
+		memset(name, NAME_BUFFER, 0);
 	};
 
 	char name[NAME_BUFFER];
@@ -60,7 +60,7 @@ struct Snake {
 	friend std::ostream &operator<<(std::ostream &os, const Snake &snake);
 
 	void reset() {
-		bzero(name, NAME_BUFFER);
+		memset(name, NAME_BUFFER, 0);
 		sprite = eSprite::GREEN;
 		isReady = false;
 		id = -1;

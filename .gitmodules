@@ -22,4 +22,4 @@
 	url = https://github.com/glfw/glfw.git
 [submodule "extern/test_glfw/Glitter/Vendor/stb"]
 	path = extern/test_glfw/Glitter/Vendor/stb
-	url = https://github.com/nothings/stb.git
+	url = https://github.com/nothings/stb

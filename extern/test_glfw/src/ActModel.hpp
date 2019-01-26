@@ -11,7 +11,7 @@ public:
 
 	ActModel();
 	ActModel(Model const *model);
-	~ActModel();
+	virtual ~ActModel();
 	ActModel(ActModel const &src);
 	ActModel &operator=(ActModel const &src);
 

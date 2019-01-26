@@ -19,68 +19,81 @@
 
 
 int main(int argc, char **argv) {
-    DisplayGlfw lol(35, 35, "Issou");
+	try {
+		DisplayGlfw lol(35, 35, "Issou");
 
-	Grid< eSprite > background(35);
-	Grid< eSprite > al(35);
+		Grid< eSprite > background(35);
+		Grid< eSprite > al(35);
 
-	background.fill(eSprite::GROUND);
-	background.setBorder(eSprite::WALL);
+		background.fill(eSprite::GROUND);
+		background.setBorder(eSprite::WALL);
 
-	al.fill(eSprite::NONE);
+		al.fill(eSprite::NONE);
 
-	al(0, 0) = eSprite::FOOD;
-	al(1, 1) = eSprite::WALL;
-	al(3, 3) = eSprite::FOOD;
-	al(9, 1) = eSprite::WALL;
-	al(1, 9) = eSprite::WALL;
+		al(0, 0) = eSprite::FOOD;
+		al(1, 1) = eSprite::WALL;
+		al(3, 3) = (eSprite::BODY | eSprite::BLUE);
+		al(4, 3) = (eSprite::HEAD | eSprite::GREEN);
+		al(5, 3) = (eSprite::HEAD | eSprite::PURPLE);
+		al(6, 3) = (eSprite::HEAD | eSprite::PINK);
+		al(7, 3) = (eSprite::HEAD | eSprite::GREY);
+		al(8, 3) = (eSprite::HEAD | eSprite::YELLOW);
+		al(9, 3) = (eSprite::HEAD | eSprite::ORANGE);
+		al(10, 3) = (eSprite::HEAD | eSprite::RED);
+
+		al(9, 1) = (eSprite::WALL);
+		al(1, 9) = eSprite::WALL;
 
 
-	lol.setBackground(background);
+		lol.setBackground(background);
 
-	float deltaTime = 0.0f;
-	float lastFrame = 0.0f;
+		float deltaTime = 0.0f;
+		float lastFrame = 0.0f;
 
 
 
-	float dist = 0;
-	float maxDist = 1.4f;
+		float dist = 0;
+		float maxDist = 1.4f;
 
-	float start = 0.f;
+		float start = 0.f;
 
-	float count = 0.f;
+		float count = 0.f;
 
-	bool f = true;
+		bool f = true;
 
-	while (!lol.exit()) {
+		while (!lol.exit()) {
 
-		float currentFrame = glfwGetTime();
-		deltaTime = currentFrame - lastFrame;
-		lastFrame = currentFrame;
-		dist += deltaTime;
-		if (f) {
-			f = false;
-		} else {
-			start += deltaTime;
+			float currentFrame = glfwGetTime();
+			deltaTime = currentFrame - lastFrame;
+			lastFrame = currentFrame;
+			dist += deltaTime;
+			if (f) {
+				f = false;
+			} else {
+				start += deltaTime;
+			}
+
+
+			if (dist > maxDist) {
+				dist = 0;
+			}
+
+			//std::cout << deltaTime << std::endl;
+
+			lol.update(deltaTime);
+			lol.drawGrid(al);
+			lol.render(dist, maxDist);
+
+			count += 1.f;
+
+
+			std::cout << "It took me " << deltaTime << " seconds." << std::endl;
 		}
+		std::cout << "Average " << start << " for " << count << " So : " << (start / count) << " seconds.";
 
-
-		if (dist > maxDist) {
-			dist = 0;
-		}
-
-		//std::cout << deltaTime << std::endl;
-
-		lol.update(deltaTime);
-		lol.drawGrid(al);
-		lol.render(dist, maxDist);
-
-		count += 1.f;
-
-
-		std::cout << "It took me " << deltaTime << " seconds." << std::endl;
+	} catch (std::exception const &e) {
+		std::cout << e.what() << std::endl;
 	}
-	std::cout << "Average " << start << " for " << count << " So : " << (start / count) << " seconds.";
 
 /*
 	float deltaTime = 0.0f;

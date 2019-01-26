@@ -26,6 +26,7 @@ Glfw::~Glfw() {
 }
 
 void    Glfw::clean_() {
+    glfwSetInputMode(window_, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
     glfwTerminate();
 }
 

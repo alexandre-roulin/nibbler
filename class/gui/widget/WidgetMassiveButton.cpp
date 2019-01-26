@@ -40,7 +40,7 @@ void			WidgetMassiveButton::render(void)
 		_core.setStartGame(true);
 
 		//_core.univers.load_extern_lib_display(Univers::EXTERN_LIB_SFML);
-		_core.univers.new_game();
+		//_core.univers.new_game();
 		//_core.univers.new_game();
 	}
 	if (ImGui::Button("borderless()")) {
