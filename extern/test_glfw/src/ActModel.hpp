@@ -3,6 +3,7 @@
 #include "Model.hpp"
 #include <glm/gtc/matrix_transform.hpp>
 #include <bitset>
+#include <glad/glad.h>
 
 class ActModel {
 public:
@@ -26,7 +27,9 @@ public:
 	void	scale(glm::vec3 const &axis, float deltaTime = 1.f);
 	void	scale(float, float deltaTime = 1.f);
 
-private:
+	void	render(Shader &shader, GLenum typeOfDraw = GL_TRIANGLES);
+
+		private:
 	Model const			*model_;
 
 	std::bitset<16>		flag_;

@@ -16,6 +16,8 @@ public:
 
 	void 	putMaterialToShader(class Shader const &shader) const;
 
+	static void unsetMaterial(class Shader const &shader);
+
 private:
 	std::string		name_;
 

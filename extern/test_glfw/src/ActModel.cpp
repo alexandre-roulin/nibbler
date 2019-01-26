@@ -22,7 +22,6 @@ ActModel::ActModel(Model const *model) :
 		rotation_(0.f),
 		position_(0.f),
 		speed_(1.f) {
-	updateTransform_();
 }
 
 ActModel::~ActModel() {
@@ -58,25 +57,21 @@ void	ActModel::translate(const glm::vec3 &axis, float deltaTime) {
 	float velocity = speed_ * deltaTime;
 
 	position_ += (axis * velocity);
-	updateTransform_();
 }
 void	ActModel::rotate(glm::vec3 const &axis, float angle, float deltaTime) {
 	float velocity = speed_ * deltaTime;
 
 	rotate_ = glm::rotate(rotate_, (angle * velocity), axis);
-	updateTransform_();
 }
 void	ActModel::scale(glm::vec3 const &axis, float deltaTime) {
 	float velocity = speed_ * deltaTime;
 
 	scaling_ += (axis * velocity);
-	updateTransform_();
 }
 void	ActModel::scale(float scale, float deltaTime) {
 	float velocity = speed_ * deltaTime;
 
 	sameScaling_ += (scale * velocity);
-	updateTransform_();
 }
 
 void	ActModel::resetTransform() {
@@ -85,7 +80,13 @@ void	ActModel::resetTransform() {
 	scaling_ = glm::vec3(1.f);
 	sameScaling_ = 1.f;
 	position_ = glm::vec3(0.f);
+}
+
+void	ActModel::render(Shader &shader, GLenum typeOfDraw) {
 	updateTransform_();
+	glm::mat4 modelMatrix = transform_;
+	shader.setMat4("model", modelMatrix);
+	model_->render(shader, typeOfDraw);
 }
 
 void	ActModel::updateTransform_() {

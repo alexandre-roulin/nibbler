@@ -3,6 +3,7 @@ out vec4 FragColor;
 
 struct tMaterial
 {
+    int     isActive;
     float	shininess;
 	vec3	ambient;
 	vec3	diffuse;
@@ -66,6 +67,11 @@ vec3	phong()
 
 void main()
 {
+    if (uMaterial.isActive == 0) {
+        FragColor = vec4(0.f, 0.f, 0.f, 1.0f);
+        return ;
+    }
+
     material = uMaterial;
     vec4 color;
     if (1 == 1) {

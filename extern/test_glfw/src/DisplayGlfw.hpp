@@ -128,7 +128,7 @@ private:
 	void				drawGridCase_(eSprite sprite, int x, int y);
 	void				drawGridCaseBody_(int x, int y);
 	void				interpolateGridCase_(int x, int y);
-		void				renderLine_(ActModel &model);
+		void				renderLine_(ActModel const &model);
 
 
 	std::map< eSprite, Material >		materialMap_;

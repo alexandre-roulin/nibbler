@@ -214,9 +214,7 @@ void		DisplayGlfw::drawGridCase_(eSprite sprite, int x, int y) {
 	if (static_cast<int>(sprite & eSprite::MASK_BODY) != 0) {
 		grid_(x, y).scale(glm::vec3(-0.25f));
 	}
-	model_ = grid_(x, y).getTransform();
-	shader_.setMat4("model", model_);
-	grid_(x, y).getModel()->render(shader_);
+	grid_(x, y).render(shader_);
 }
 
 void		DisplayGlfw::drawGrid(Grid< eSprite > const &grid) {
@@ -277,13 +275,13 @@ void		DisplayGlfw::interpolateGridCase_(int x, int y) {
 	}
 }
 
-void DisplayGlfw::renderLine_(ActModel &model) {
-	materialMap_.at(eSprite::NONE).putMaterialToShader(shader_);
-	model.scale(glm::vec3(0.05f));
-	model_ = model.getTransform();
-	shader_.setMat4("model", model_);
-	model.getModel()->render(shader_, GL_LINE_STRIP);
-	model.scale(glm::vec3(-0.05f));
+void DisplayGlfw::renderLine_(ActModel const &model) {
+
+	ActModel copy = model;
+
+	Material::unsetMaterial(shader_);
+	copy.scale(glm::vec3(0.05f));
+	copy.render(shader_, GL_LINE_STRIP);
 }
 
 void DisplayGlfw::render(float currentDelayFrame, float maxDelayFrame) {
@@ -321,21 +319,17 @@ void DisplayGlfw::render(float currentDelayFrame, float maxDelayFrame) {
     for (int y = 0; y < winTileSize_.getY(); y++) {
         for (int x = 0; x < winTileSize_.getX(); x++) {
         	if (background_(x, y).getModel()) {
-				model_ = background_(x, y).getTransform();
-				shader_.setMat4("model", model_);
 				if ((tileBackground_(x, y) & eSprite::WALL) == eSprite::WALL) {
 					materialMap_.at(eSprite::WALL).putMaterialToShader(shader_);
 					background_(x, y).translate(glm::vec3(0.f, 0.f, 1.f));
-					model_ = background_(x, y).getTransform();
-					shader_.setMat4("model", model_);
-					background_(x, y).getModel()->render(shader_);
+					background_(x, y).render(shader_);
 					renderLine_(background_(x, y));
 					background_(x, y).translate(glm::vec3(0.f, 0.f, -1.f));
 					materialMap_.at(eSprite::WALL).putMaterialToShader(shader_);
 				}
 				else if (tileBackground_(x, y) == eSprite::GROUND)
 				 	materialMap_.at(eSprite::GROUND).putMaterialToShader(shader_);
-				background_(x, y).getModel()->render(shader_);
+				background_(x, y).render(shader_);
 				renderLine_(background_(x, y));
         	}
         }
