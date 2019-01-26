@@ -10,6 +10,8 @@ public:
 	PositionComponent(std::pair<size_t, size_t >);
 	int y, x;
 
+
+	operator bool() const;
 	friend std::ostream &
 	operator<<(std::ostream &os, const PositionComponent &positionComponent);
 

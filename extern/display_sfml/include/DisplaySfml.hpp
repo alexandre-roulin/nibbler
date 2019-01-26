@@ -38,8 +38,8 @@ public:
 	bool exit(void) const override;
 	void render(float currentDelayFrame, float maxDelayFrame) override;
 	void update(float deltaTime) override;
-	void drawGrid(Grid< eSprite > const &grid) override;
-	void setBackground(Grid< eSprite > const &grid) override;
+	void drawGrid(MutantGrid< eSprite > const &grid) override;
+	void setBackground(MutantGrid< eSprite > const &grid) override;
 	eDirection getDirection(void) const override;
 
 private:
@@ -61,7 +61,7 @@ private:
 	sf::Event _ev;
 
 	void _drawTileGrid(int indexTile, int indexWidthGrid, int indexHeightGrid);
-	void _drawGrid(sf::RenderTarget &, Grid< eSprite > const &grid);
+	void _drawGrid(sf::RenderTarget &, MutantGrid< eSprite > const &grid);
 	void _drawTileGrid(sf::RenderTarget &, int indexTile, int indexWidthGrid,
 					   int indexHeightGrid);
 	void

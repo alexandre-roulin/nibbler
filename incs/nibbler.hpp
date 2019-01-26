@@ -56,6 +56,7 @@ struct Snake {
 	eDirection direction;
 	bool isAlive;
 	bool isSwitchingLibrary;
+
 	friend std::ostream &operator<<(std::ostream &os, const Snake &snake);
 
 	void reset() {
@@ -87,8 +88,7 @@ struct Snake {
 		Snake snake;
 
 		snake.sprite = static_cast<eSprite>(static_cast<int>(eSprite::GREEN) + rand() % MAX_COLOR);
-		strncpy(snake.name, Snake::basicName[rand() % MAX_SNAKE].c_str(),
-				NAME_BUFFER);
+		strncpy(snake.name, Snake::basicName[rand() % MAX_SNAKE].c_str(),NAME_BUFFER);
 		snake.id = id;
 		snake.isAlive = true;
 		return (snake);

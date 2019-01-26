@@ -8,7 +8,7 @@
 #include <memory>
 #include <IDisplay.hpp>
 #include <Univers.hpp>
-
+#include "MutantGrid.tpp"
 
 namespace KINU {
 
@@ -32,7 +32,7 @@ namespace KINU {
 
 		void destroyEntity(Entity e);
 
-		Grid< eSprite > grid;
+		MutantGrid< eSprite > grid;
 	private:
 		// vector of entities that are awaiting creation
 		std::vector<Entity> createdEntities;

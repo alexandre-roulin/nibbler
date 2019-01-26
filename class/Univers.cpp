@@ -139,7 +139,7 @@ void Univers::unload_external_library() {
 void Univers::defaultAssignmentLibrary() {
 	if (!display) return;
 
-	Grid<eSprite> grid(mapSize);
+	MutantGrid<eSprite> grid(mapSize);
 	grid.fill(eSprite::GROUND);
 	display->setBackground(grid);
 	display->registerCallbackAction(std::bind(&Univers::callbackAction, this, std::placeholders::_1));
@@ -159,7 +159,7 @@ void Univers::new_game() {
 	assert(serverTCP_->isReady());
 	if (!isServer() || !serverTCP_->isReady()) return;
 	world_ = std::make_unique<KINU::World>(*this);
-	world_->grid = Grid<eSprite>(mapSize);
+	world_->grid.resize(mapSize);
 	if (!display) load_extern_lib_display(kDisplay);
 	defaultAssignmentLibrary();
 	if (isServer()) {
@@ -170,6 +170,7 @@ void Univers::new_game() {
 		}
 		serverTCP_->start_game();
 	}
+
 	loop();
 }
 
@@ -265,6 +266,7 @@ void Univers::loop() {
 		}
 	}
 	unload_external_library();
+	exit(0);
 	finish_game();
 }
 
@@ -358,9 +360,11 @@ void Univers::callbackAction(eAction action) {
 	if (getGameNetwork() == nullptr) return;
 	switch (action) {
 		case eAction::kPause :
+			log_success(" eAction::kPause");
 			getGameNetwork()->write_socket(ClientTCP::add_prefix<eAction>(eHeader::kPause, &action));
 			break;
 		case eAction::kSwitchDisplayLibrary:
+			log_success("eAction::kSwitchDisplayLibrary");
 			switchLib = true;
 			break;
 	}
@@ -435,7 +439,7 @@ void Univers::close_acceptor() {
 /** Getter && Setter **/
 
 ClientTCP *Univers::getMainClientTCP() const {
-	std::cout << "Univers::getMainClientTCP[C:" <<  (clientTCP_ != nullptr) << "-B:" << (vecBobby.size() != 0 ) << "]" << std::endl;
+//	std::cout << "Univers::getMainClientTCP[C:" <<  (clientTCP_ != nullptr) << "-B:" << (vecBobby.size() != 0 ) << "]" << std::endl;
 	if (clientTCP_)
 		return clientTCP_.get();
 	else if (vecBobby.size() != 0)

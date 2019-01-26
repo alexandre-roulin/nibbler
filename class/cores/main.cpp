@@ -21,10 +21,9 @@ std::string const Snake::basicName[MAX_SNAKE] = {"Jack O'Lantern", "Eden",
 												 "Broutille", "Veggie-vie",
 												 "jinou42", "Dautta c bo"};
 
+
 std::ostream &operator<<(std::ostream &os, const Snake &snake) {
-	os << "name: " << snake.name << " sprite: "
-	   << static_cast<int>(snake.sprite) << " isReady: "
-	   << snake.isReady << " id: " << snake.id;
+	os << " id: " << snake.id << " isAlive: " << snake.isAlive;
 	return os;
 }
 
@@ -137,21 +136,75 @@ void nibbler(Univers &univers) {
 	}
 }
 
+
 void testKstar() {
+	int size = 10;
+
 	KStar kStar;
-	kStar.setSearchLevel(5);
+	KStar::Vec2 source(0, 0);
+	KStar::Vec2 target(9, 9);
+	kStar.setWorldSize(size);
 	kStar.setHeuristic(KStar::Heuristic::euclidean);
-	kStar.setWorldSize(10);
 	kStar.setDiagonalMovement(false);
-	KStar::Path path = kStar.searchPath(KStar::Vec2(2, 2), KStar::Vec2(6, 2));
-	for (auto item : path) {
-		std::cout << "Find > " << item << std::endl;
+
+
+	for (int i = 0; i < size - 1; ++i) {
+		kStar.addCollision({2, i});
+	}
+	for (int i = 1; i < size; ++i) {
+		kStar.addCollision({4, i});
+	}
+
+	for (int i = 0; i < size - 1; ++i) {
+		kStar.addCollision({6, i});
+	}
+
+	for (int i = 1; i < size; ++i) {
+		kStar.addCollision({8, i});
+	}
+
+
+	for (int iy = 0; iy < size; ++iy) {
+		for (int ix = 0; ix < size; ++ix) {
+			if (iy == source.y && ix == source.x)
+				std::cout << std::setw(4) << "_^_";
+			else if (iy == target.y && ix == target.x)
+				std::cout << std::setw(4) << "_O_";
+			else if (kStar.isCollision(KStar::Vec2(ix, iy)))
+				std::cout << std::setw(4) << "_X_";
+			else
+				std::cout << std::setw(4) << "_._";
+		}
+		std::cout << std::endl;
+	}
+	std::cout << std::endl;
+	std::cout << std::endl;
+
+	KStar::Path path = kStar.searchPath(source, target);
+	for (int iy = 0; iy < size; ++iy) {
+		for (int ix = 0; ix < size; ++ix) {
+			if (iy == source.y && ix == source.x)
+				std::cout << std::setw(4) << "_^_";
+			else if (iy == target.y && ix == target.x)
+				std::cout << std::setw(4) << "_O_";
+			else if (kStar.isCollision(KStar::Vec2(ix, iy)))
+				std::cout << std::setw(4) << "_X_";
+			else if (std::find_if(path.begin(), path.end(), [ix, iy](KStar::Vec2 vec){ return vec.x == ix && vec.y == iy; }) != path.end())
+				std::cout << std::setw(4) << "_#_";
+			else
+				std::cout << std::setw(4) << "_._";
+		}
+		std::cout << std::endl;
 	}
 }
 
+//.O
+//
+//
+
 int main(int argc, char **argv) {
-	testKstar();
-	return 1;
+//	testKstar();
+//	return 1;
 	char hostname[64];
 	gethostname(hostname, 64);
 	std::cout << hostname << std::endl;

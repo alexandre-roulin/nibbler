@@ -122,21 +122,21 @@ void DisplaySfml::_drawTileGrid(sf::RenderTarget &target,
 **####################DRAW_GRID
 */
 
-void DisplaySfml::drawGrid(Grid< eSprite > const &grid) {
+void DisplaySfml::drawGrid(MutantGrid< eSprite > const &grid) {
 	for (int y = 0; y < this->_winTileSize.getY(); ++y)
 		for (int x = 0; x < this->_winTileSize.getX(); ++x)
 			if (grid(x, y) != eSprite::NONE)
 				this->_drawTileGrid(Display2D::getSpriteSnake(grid(x, y)), x, y);
 }
 
-void DisplaySfml::_drawGrid(sf::RenderTarget &target, Grid< eSprite > const &grid) {
+void DisplaySfml::_drawGrid(sf::RenderTarget &target, MutantGrid< eSprite > const &grid) {
 	for (int y = 0; y < this->_winTileSize.getY(); ++y)
 		for (int x = 0; x < this->_winTileSize.getX(); ++x)
 			if (grid(x, y) != eSprite::NONE)
 				this->_drawTileGrid(target, Display2D::getSpriteSnake(grid(x, y)), x, y);
 }
 
-void DisplaySfml::setBackground(Grid< eSprite > const &grid) {
+void DisplaySfml::setBackground(MutantGrid< eSprite > const &grid) {
 	this->_drawGrid(this->_textureBackground, grid);
 	this->_textureBackground.display();
 	this->_spriteBackground = sf::Sprite(this->_textureBackground.getTexture());

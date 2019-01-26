@@ -39,3 +39,7 @@ std::ostream &operator<<(std::ostream &os, const PositionComponent &component) {
 	return os;
 }
 
+PositionComponent::operator bool() const {
+	return x != -1 && y != -1;
+}
+

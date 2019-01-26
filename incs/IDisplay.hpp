@@ -17,7 +17,7 @@
 #define DISPLAY_DEFAULT_TILESET_PATH "snake_tileset.png"
 #define DISPLAY_DEFAULT_TILE_SIZE 32
 
-#include <Grid.tpp>
+#include <MutantGrid.tpp>
 #include <Sprite.hpp>
 
 #ifdef _WIN32
@@ -49,9 +49,9 @@ public:
 
 	virtual void update(float deltaTime) = 0;
 
-	virtual void drawGrid(Grid<eSprite> const &grid) = 0;
+	virtual void drawGrid(MutantGrid<eSprite> const &grid) = 0;
 
-	virtual void setBackground(Grid<eSprite> const &grid) = 0;
+	virtual void setBackground(MutantGrid<eSprite> const &grid) = 0;
 
 	virtual eDirection getDirection(void) const = 0;
 

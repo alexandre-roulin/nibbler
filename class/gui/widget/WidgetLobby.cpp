@@ -5,9 +5,7 @@
 WidgetLobby::WidgetLobby(Core &core) :
 AWidget(core)
 {
-	std::cout << "Yo1" <<std::endl;
 	_reload();
-	std::cout << "Yo2" <<std::endl;
 	addColor("Green", "ressource/snake_presentation/snake_green.png");
 	addColor("Blue", "ressource/snake_presentation/snake_blue.png");
 	addColor("Purple", "ressource/snake_presentation/snake_purple.png");

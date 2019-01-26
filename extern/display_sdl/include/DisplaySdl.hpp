@@ -5,7 +5,7 @@
 #include <SDL2/SDL_image.h>
 #include "IDisplay.hpp"
 #include "Vector2D.tpp"
-#include "Grid.tpp"
+#include "MutantGrid.tpp"
 
 class DisplaySdl : public IDisplay {
 public:
@@ -39,8 +39,8 @@ public:
 	bool exit(void) const override;
 	void render(float currentDelayFrame, float maxDelayFram) override;
 	void update(float delaTime) override;
-	void drawGrid(Grid< eSprite > const &grid) override;
-	void setBackground(Grid< eSprite > const &grid) override;
+	void drawGrid(MutantGrid< eSprite > const &grid) override;
+	void setBackground(MutantGrid< eSprite > const &grid) override;
 	eDirection getDirection(void) const override;
 
 private:
@@ -60,7 +60,7 @@ private:
 	SDL_Event _ev;
 
 
-	void _drawGrid(SDL_Surface *, Grid< eSprite > const &grid);
+	void _drawGrid(SDL_Surface *, MutantGrid< eSprite > const &grid);
 
 	void _drawTileGrid(int indexTile, int indexWidth, int indexHeight);
 	void _drawTileGrid(SDL_Surface *, int indexWidthTile, int indexHeightTile,

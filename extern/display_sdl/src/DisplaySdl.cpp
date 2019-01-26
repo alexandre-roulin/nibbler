@@ -147,14 +147,14 @@ void			DisplaySdl::_drawTileGrid(SDL_Surface *surface,
 **####################DRAW_GRID
 */
 
-void			DisplaySdl::drawGrid(Grid< eSprite > const &grid)
+void			DisplaySdl::drawGrid(MutantGrid< eSprite > const &grid)
 {
 	for (int y = 0; y < this->_winTileSize.getY(); ++y)
 		for (int x = 0; x < this->_winTileSize.getX(); ++x)
 			if (grid(x, y) != eSprite::NONE)
 				this->_drawTileGrid(Display2D::getSpriteSnake(grid(x, y)), x, y);
 }
-void			DisplaySdl::_drawGrid(SDL_Surface *surface, Grid< eSprite > const &grid)
+void			DisplaySdl::_drawGrid(SDL_Surface *surface, MutantGrid< eSprite > const &grid)
 {
 	for (int y = 0; y < this->_winTileSize.getY(); ++y)
 		for (int x = 0; x < this->_winTileSize.getX(); ++x)
@@ -162,7 +162,7 @@ void			DisplaySdl::_drawGrid(SDL_Surface *surface, Grid< eSprite > const &grid)
 				this->_drawTileGrid(surface, Display2D::getSpriteSnake(grid(x, y)), x, y);
 }
 
-void		DisplaySdl::setBackground(Grid< eSprite > const &grid)
+void		DisplaySdl::setBackground(MutantGrid< eSprite > const &grid)
 {
 	this->_drawGrid(this->_background, grid);
 }

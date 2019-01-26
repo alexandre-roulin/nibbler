@@ -125,26 +125,31 @@ namespace KINU {
 		mutex_.unlock();
 		// Remove groupId if exist
 
-		if (hasGroupIdByEntity(entity)) {
+		if (groupedEntityId.find(entity.id_) != groupedEntityId.end()) {
 			TagId groupId = groupedEntityId[entity.id_];
 			mutex_.lock();
-
+			int before = groupedEntityId.size();
 			groupedEntities[groupId].erase(std::remove_if(
 					groupedEntities[groupId].begin(),
 						   groupedEntities[groupId].end(),
-						   [entity](auto entity1) {
+						   [entity](KINU::Entity entity1) {
 							   return entity == entity1;
 						   }));
+			int after = groupedEntityId.size();
 			groupedEntityId.erase(entity.id_);
 			mutex_.unlock();
 		}
 		// Remove tagId if exist
 
-		if (hasTagIdByEntity(entity)) {
-			TagId tagId = getTagIdByEntity(entity);
+		if (taggedEntityId.find(entity.id_) != taggedEntityId.end()) {
+			TagId tagId = taggedEntityId[entity.id_];
 			mutex_.lock();
+			int id  = taggedEntityId.size();
+			int tag = taggedEntities.size();
 			taggedEntityId.erase(entity.id_);
 			taggedEntities.erase(tagId);
+			int tagb = taggedEntities.size();
+			int idb  = taggedEntityId.size();
 			mutex_.unlock();
 		}
 		assert(!hasTagIdByEntity(entity));
@@ -242,13 +247,12 @@ namespace KINU {
 		std::cout << "EntitiesManager::hasEntitiesGroupId2" << std::endl;
 		bool grp = it != groupedEntities.end();
 		std::cout << "EntitiesManager::hasEntitiesGroupId3" << std::endl;
-		std::cout << "EntitiesManager::hasEntitiesGroupId4" << std::endl;
 		bool anyHas = grp && std::any_of(it->second.begin(), it->second.end(), [this](Entity entity){
 			bool hasId = hasEntityById(entity.getId());
 			return hasId;
 		});
 		mutex_.unlock();
-		std::cout << "EntitiesManager::hasEntitiesGroupId5" << std::endl;
+		std::cout << "EntitiesManager::hasEntitiesGroupId4" << std::endl;
 		return grp && anyHas;
 	}
 
