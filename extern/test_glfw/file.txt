@@ -1,1 +1,0 @@
-./resources/snakest2/Snake_by_Swp.obj

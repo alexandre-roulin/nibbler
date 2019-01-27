@@ -7,19 +7,19 @@
 [submodule "cmake/boost-cmake"]
 	path = cmake/boost-cmake
 	url = https://github.com/Orphis/boost-cmake
-[submodule "extern/test_glfw/Glitter/Vendor/assimp"]
-	path = extern/test_glfw/Glitter/Vendor/assimp
+[submodule "extern/display_glfw/extern/assimp"]
+	path = extern/display_glfw/extern/assimp
 	url = https://github.com/assimp/assimp.git
-[submodule "extern/test_glfw/Glitter/Vendor/glad"]
-	path = extern/test_glfw/Glitter/Vendor/glad
+[submodule "extern/display_glfw/extern/glad"]
+	path = extern/display_glfw/extern/glad
 	url = https://github.com/Dav1dde/glad.git
 	branch = c
-[submodule "extern/test_glfw/Glitter/Vendor/glm"]
-	path = extern/test_glfw/Glitter/Vendor/glm
+[submodule "extern/display_glfw/extern/glm"]
+	path = extern/display_glfw/extern/glm
 	url = https://github.com/g-truc/glm.git
-[submodule "extern/test_glfw/Glitter/Vendor/glfw"]
-	path = extern/test_glfw/Glitter/Vendor/glfw
+[submodule "extern/display_glfw/extern/glfw"]
+	path = extern/display_glfw/extern/glfw
 	url = https://github.com/glfw/glfw.git
-[submodule "extern/test_glfw/Glitter/Vendor/stb"]
-	path = extern/test_glfw/Glitter/Vendor/stb
+[submodule "extern/display_glfw/extern/stb"]
+	path = extern/display_glfw/extern/stb
 	url = https://github.com/nothings/stb
