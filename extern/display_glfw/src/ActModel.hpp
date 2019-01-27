@@ -28,6 +28,7 @@ public:
 	void	scale(float, float deltaTime = 1.f);
 
 	void	render(Shader &shader, GLenum typeOfDraw = GL_TRIANGLES);
+	void				updateTransform();
 
 		private:
 	Model const			*model_;
@@ -42,7 +43,6 @@ public:
 	float				speed_;
 
 	void				clean_();
-	void				updateTransform_();
 
 	static bool			debug_;
 };

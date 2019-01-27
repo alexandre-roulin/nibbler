@@ -113,6 +113,7 @@ private:
 	Model							modelSphere_;
 	Model							modelHead_;
 	Particle						*testParticle_;
+	Particle						*particuleBackgroundOutline_;
 	Light							light_;
     Camera							camera_;
     ActModel						lol_;

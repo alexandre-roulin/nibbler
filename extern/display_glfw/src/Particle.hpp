@@ -25,7 +25,7 @@ public:
 
 	~Particle();
 
-	void render(Shader &shader);
+	void render(Shader &shader, GLenum typeOfDraw = GL_TRIANGLES);
 	void update();
 	void updatePhysicsMovement(glm::vec3 target, float deltaTime = 0.16f);
 
@@ -38,8 +38,8 @@ private:
 	unsigned int	size_;
 	Model			&model_;
 
-	unsigned int				BOParticle_; //Commun a chaque Mesh VAO
-	glm::mat4					*bufferTransform;
+	unsigned int					BOParticle_; //Commun a chaque Mesh VAO
+	std::vector<glm::mat4>			bufferTransform;
 	std::vector<PhysicsMovement>	physicsMovement_;
 
 	void updateTransforms_();
