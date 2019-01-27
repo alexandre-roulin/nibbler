@@ -3,7 +3,7 @@
 #include <vector>
 #include <cassert>
 #include <KINU/Config.hpp>
-
+#include <logger.h>
 namespace KINU {
 
 // Required to have a vector of pools containing different object types.
@@ -33,6 +33,7 @@ namespace KINU {
 		}
 
 		void resize(int n) {
+			log_warn("resize(%d)",data.size());
 			data.resize(n);
 		}
 

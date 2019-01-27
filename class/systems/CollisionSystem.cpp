@@ -3,7 +3,7 @@
 #include <events/FoodEat.hpp>
 #include <network/ClientTCP.hpp>
 #include <logger.h>
-#include <Grid.tpp>
+#include <MutantGrid.tpp>
 #include <component/CollisionComponent.hpp>
 #include <KINU/Entity.hpp>
 #include <KINU/World.hpp>
@@ -94,10 +94,15 @@ void CollisionSystem::update() {
 void CollisionSystem::createAppleBySnake(KINU::Entity snake) {
 
 	auto appleSnake = getWorld().getEntitiesManager().getEntitiesByGroupId(snake.getGroupIdByEntity());
+	auto positionHead = snake.getComponent<PositionComponent>();
 	for (auto snake : appleSnake) {
-		ClientTCP::FoodInfo foodInfo(snake.getComponent<PositionComponent>(), true);
-		if (snake.hasComponent<PositionComponent>())
-			getWorld().getUnivers().getGameNetwork()->write_socket(
-					ClientTCP::add_prefix(eHeader::FOOD, &foodInfo));
+		if (snake.hasComponent<PositionComponent>()) {
+			auto positionComponent = snake.getComponent<PositionComponent>();
+			if (positionComponent != positionHead) {
+				ClientTCP::FoodInfo foodInfo(positionComponent, true);
+				getWorld().getUnivers().getGameNetwork()->write_socket(
+						ClientTCP::add_prefix(eHeader::FOOD, &foodInfo));
+			}
+		}
 	}
 }

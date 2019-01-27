@@ -4,7 +4,7 @@
 #include <map>
 #include <network/ClientTCP.hpp>
 #include <KINU/Entity.hpp>
-#include "AStar.hpp"
+#include "KStar.hpp"
 
 
 class Univers;
@@ -21,25 +21,19 @@ private:
 	static std::unordered_map<KINU::Entity::ID, ePriority> mapPriority;
 
 	eDirection direction;
-	AStar::Generator generator;
 	Univers &univers_;
 	unsigned int mapSize;
 	unsigned int baseIndex;
-public:
 	static std::mutex mutex;
-	static void clearPriority();
-	uint16_t getId() const;
-	ClientTCP *getClientTCP_();
+	KStar kStar;
+private:
+
 	std::unique_ptr<ClientTCP> clientTCP_;
-	void findDirection(AStar::Vec2i, AStar::CoordinateList);
+	void findDirection(KStar::Vec2 vecSource, KStar::Vec2 vecTarget);
 	bool define_priority(int x, int y);
-	AStar::Vec2i getVecSnakeHead();
-	void findAnyDirectionValid(AStar::Vec2i );
-	AStar::Vec2i getVecSnakeTail();
-
-
-
-	AStar::Vec2i getVecFood(AStar::Vec2i head);
+	KStar::Vec2 getVecSnakeTail();
+	KStar::Vec2 getVecFood(KStar::Vec2 head);
+	KStar::Vec2 getVecSnakeHead();
 
 	void addCollision();
 
@@ -47,9 +41,11 @@ public:
 public:
 
 	Bobby(Univers &);
-
+	static void clearPriority();
 	void buildIA();
 	void sendDirection() ;
 	void calculateDirection();
+	ClientTCP *getClientTCP_();
+	uint16_t getId() const;
 
 };

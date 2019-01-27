@@ -1,6 +1,7 @@
 #ifndef NIBBLER_MUTANTGRID_HPP
 #define NIBBLER_MUTANTGRID_HPP
 
+#include <logger.h>
 #include <vector>
 
 template<typename T>
@@ -17,6 +18,8 @@ public:
 
 	std::pair<size_t, size_t> getRandomSlot(T value);
 
+	void resize(size_t size);
+
 	bool isAnyFreeSlotInRow(size_t row, T clear) const;
 
 	bool isFreeSlot(size_t row, size_t column, T clear) const;
@@ -27,8 +30,10 @@ private:
 
 template<typename T>
 typename std::vector<T>::reference MutantGrid<T>::operator()(size_t x, size_t y) {
-	assert(y * size_ + x < this->size());
-	return this->at (y * size_ + x );
+	if (y * size_ + x >= std::vector<T>::size())
+		log_error("Test : %d , x : %d  y : %d s : %d", y * size_ + x, x, y, size_);
+	assert(y * size_ + x < std::vector<T>::size());
+	return this->at(y * size_ + x );
 }
 
 
@@ -47,7 +52,9 @@ MutantGrid<T>::MutantGrid(size_t size):
 
 template<typename T>
 void MutantGrid<T>::fill(const T &fill) {
-//	std::for_each(std::vector<T>::begin(), std::vector<T>::end(), [fill](T &value){ value = fill; });
+	for (int idx = 0; idx < this->size(); ++idx) {
+		this->at(idx) = fill;
+	}
 }
 
 template<typename T>
@@ -68,7 +75,7 @@ std::pair<size_t, size_t> MutantGrid<T>::getRandomSlot(T value) {
 				if (isFreeSlot(base_y, base_x, value))
 					--rand_x;
 				if (rand_x == 0) {
-					assert(std::vector<T>::__begin_[base_y * size_ + base_x] == value);
+					assert(this->at(base_y * size_ + base_x) == value);
 					return std::make_pair(base_x, base_y);
 				}
 			}
@@ -79,7 +86,7 @@ std::pair<size_t, size_t> MutantGrid<T>::getRandomSlot(T value) {
 template<typename T>
 bool MutantGrid<T>::isAnyFreeSlotInRow(size_t row, T free) const {
 	for (int index = 0; index < size_; ++index) {
-		if (std::vector<T>::begin()[row * size_ + index] == free)
+		if (this->at(row * size_ + index) == free)
 			return true;
 	}
 	return false;
@@ -87,12 +94,18 @@ bool MutantGrid<T>::isAnyFreeSlotInRow(size_t row, T free) const {
 
 template<typename T>
 bool MutantGrid<T>::isFreeSlot(size_t row, size_t column, T clear) const {
-	return std::vector<T>::begin()[row * size_ + column] == clear;
+	return this->at(row * size_ + column) == clear;
 }
 
 template<typename T>
 MutantGrid<T>::MutantGrid() {
 
+}
+
+template<typename T>
+void MutantGrid<T>::resize(size_t size) {
+	size_ = size;
+	std::vector<T>::resize(size * size);
 }
 
 

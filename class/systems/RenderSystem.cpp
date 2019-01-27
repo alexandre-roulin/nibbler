@@ -12,8 +12,8 @@ RenderSystem::RenderSystem() {
 
 void RenderSystem::update() {
 	std::list<std::pair<PositionComponent &, SpriteComponent &>> renderComponents;
-	Grid< eSprite > &grid = getWorld().grid;
-	Grid< eSprite > grid_cache(getWorld().getUnivers().getMapSize());
+	MutantGrid< eSprite > &grid = getWorld().grid;
+	MutantGrid< eSprite > grid_cache(getWorld().getUnivers().getMapSize());
 	grid_cache.fill(eSprite::NONE);
 
 	for (auto &entity : getEntities()) {

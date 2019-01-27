@@ -134,10 +134,11 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 			break;
 		}
 		case eHeader::SNAKE: {
+			Snake snake_temp;
+			std::memcpy(&snake_temp, input, len);
+//			log_info("eHeader::SNAKE f.%d w.%d %d", getId(),  snake_temp.id, snake_temp.isAlive);
+			snake_array_[snake_temp.id] = snake_temp;
 			if (accept_data()) {
-				Snake snake_temp;
-				std::memcpy(&snake_temp, input, len);
-				snake_array_[snake_temp.id] = snake_temp;
 				univers.playNoise(eSound::READY);
 			}
 			break;
@@ -149,11 +150,14 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 			break;
 		}
 		case eHeader::FOOD: {
-	//		log_info("eHeader::FOOD");
-			FoodInfo foodInfo;
-			std::memcpy(&foodInfo, input, len);
-			foodCreations.push_back(FoodCreation(foodInfo.positionComponent,
-												 foodInfo.fromSnake));
+			log_info("eHeader::FOOD");
+			if (accept_data()) {
+
+				FoodInfo foodInfo;
+				std::memcpy(&foodInfo, input, len);
+				foodCreations.push_back(FoodCreation(foodInfo.positionComponent,
+													 foodInfo.fromSnake));
+			}
 			break;
 		}
 		case eHeader::ID: {
@@ -330,9 +334,8 @@ Snake	const &ClientTCP::getSnake(void) const {
 
 void ClientTCP::killSnake(uint16_t id) {
 	log_warn("ClientTCP::killSnake. %d", id);
-	auto snake  = snake_array_.__elems_[id];
-	snake.isAlive = false;
-	write_socket(add_prefix(eHeader::SNAKE, &snake));
+	snake_array_[id].isAlive = false;
+	write_socket(add_prefix(eHeader::SNAKE, &snake_array_[id]));
 }
 
 void ClientTCP::send_borderless(bool borderless) {
@@ -340,8 +343,12 @@ void ClientTCP::send_borderless(bool borderless) {
 }
 
 bool ClientTCP::all_snake_is_dead() {
-	return std::all_of(snake_array_.begin(), snake_array_.end(), [](auto snake){
-		return !(snake.id != -1 && snake.isAlive);});
+	for (auto &snake : snake_array_) {
+		if (snake.id != -1 && snake.isAlive)
+			return false;
+	}
+
+	return true;
 }
 
 /** Mutex Management **/

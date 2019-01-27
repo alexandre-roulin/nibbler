@@ -170,11 +170,37 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="978abcb9-5fc0-46ca-9617-7bce9898edce" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../../.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../test_glfw/Glitter/Vendor/assimp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../test_glfw/Glitter/Vendor/glad" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../test_glfw/Glitter/Vendor/glfw" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../test_glfw/Glitter/Vendor/glm" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../test_glfw/Glitter/Vendor/stb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../class/KINU/Entity.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../class/KINU/Entity.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../class/KINU/Entity.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../class/KINU/Entity.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../class/KINU/Pool.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../class/KINU/Pool.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../class/KINU/World.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../class/KINU/World.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../class/Univers.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../class/Univers.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../class/component/PositionComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../class/component/PositionComponent.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../class/component/PositionComponent.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../class/component/PositionComponent.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../class/cores/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../class/cores/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../class/factory/Factory.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../class/factory/Factory.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../class/gui/widget/WidgetLobby.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../class/gui/widget/WidgetLobby.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../class/ia/Bobby.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../class/ia/Bobby.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../class/ia/Bobby.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../class/ia/Bobby.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../class/ia/KStar.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../class/ia/KStar.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../class/ia/KStar.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../class/ia/KStar.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../class/network/ClientTCP.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../class/network/ClientTCP.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../class/network/ServerTCP.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../class/network/ServerTCP.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../class/systems/CollisionSystem.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../class/systems/CollisionSystem.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../class/systems/RenderSystem.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../class/systems/RenderSystem.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../display_sdl/include/DisplaySdl.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../display_sdl/include/DisplaySdl.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../display_sdl/src/DisplaySdl.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../display_sdl/src/DisplaySdl.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../display_sfml/include/DisplaySfml.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../display_sfml/include/DisplaySfml.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../display_sfml/src/DisplaySfml.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../display_sfml/src/DisplaySfml.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../incs/Grid.tpp" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../../incs/IDisplay.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../incs/IDisplay.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../incs/MutantGrid.tpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../incs/MutantGrid.tpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../incs/nibbler.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../incs/nibbler.hpp" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <ignored path="$PROJECT_DIR$/CMakeFiles/" />
@@ -223,7 +249,7 @@
             <entry file="file://$PROJECT_DIR$/src/DisplayGlfw.cpp">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="188">
-                  <caret line="209" column="33" lean-forward="true" selection-start-line="209" selection-start-column="33" selection-end-line="209" selection-end-column="33" />
+                  <caret line="209" column="33" selection-start-line="209" selection-start-column="33" selection-end-line="209" selection-end-column="33" />
                 </state>
               </provider>
             </entry>
@@ -292,7 +318,7 @@
             <entry file="file://$PROJECT_DIR$/shader/basic.vert">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="195">
-                  <caret line="13" column="11" lean-forward="true" selection-start-line="13" selection-start-column="11" selection-end-line="13" selection-end-column="11" />
+                  <caret line="13" column="11" selection-start-line="13" selection-start-column="11" selection-end-line="13" selection-end-column="11" />
                 </state>
               </provider>
             </entry>
@@ -304,8 +330,8 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/../../incs/nibbler.hpp">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="990">
-                  <caret line="66" column="26" selection-start-line="66" selection-start-column="26" selection-end-line="66" selection-end-column="26" />
+                <state relative-caret-position="1005">
+                  <caret line="67" column="26" selection-start-line="67" selection-start-column="26" selection-end-line="67" selection-end-column="26" />
                 </state>
               </provider>
             </entry>
@@ -353,7 +379,7 @@
             <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="30">
-                  <caret line="2" lean-forward="true" selection-start-line="2" selection-end-line="2" />
+                  <caret line="2" selection-start-line="2" selection-end-line="2" />
                 </state>
               </provider>
             </entry>
@@ -1799,8 +1825,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/../../incs/nibbler.hpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="990">
-          <caret line="66" column="26" selection-start-line="66" selection-start-column="26" selection-end-line="66" selection-end-column="26" />
+        <state relative-caret-position="1005">
+          <caret line="67" column="26" selection-start-line="67" selection-start-column="26" selection-end-line="67" selection-end-column="26" />
         </state>
       </provider>
     </entry>
@@ -1845,7 +1871,7 @@
     <entry file="file://$PROJECT_DIR$/src/DisplayGlfw.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="188">
-          <caret line="209" column="33" lean-forward="true" selection-start-line="209" selection-start-column="33" selection-end-line="209" selection-end-column="33" />
+          <caret line="209" column="33" selection-start-line="209" selection-start-column="33" selection-end-line="209" selection-end-column="33" />
         </state>
       </provider>
     </entry>
@@ -1859,14 +1885,14 @@
     <entry file="file://$PROJECT_DIR$/shader/basic.vert">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="195">
-          <caret line="13" column="11" lean-forward="true" selection-start-line="13" selection-start-column="11" selection-end-line="13" selection-end-column="11" />
+          <caret line="13" column="11" selection-start-line="13" selection-start-column="11" selection-end-line="13" selection-end-column="11" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
-          <caret line="2" lean-forward="true" selection-start-line="2" selection-end-line="2" />
+          <caret line="2" selection-start-line="2" selection-end-line="2" />
         </state>
       </provider>
     </entry>

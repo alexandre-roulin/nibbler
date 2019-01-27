@@ -18,26 +18,29 @@ void ServerTCP::start_accept() {
 
 
 		if (!ec) {
-
-			auto it = std::find_if(snake_array_.begin(), snake_array_.end(),
-					[](auto snake) {
-				return snake.id == -1; });
-			if (it == snake_array_.end()) {
+			int16_t id = -1;
+			for (int index = 0; index < MAX_SNAKE; ++index) {
+				if (snake_array_[index].id == -1) {
+					id = index;
+					break;
+				}
+			}
+			if (id == -1) {
 				start_accept();
 				return;
 			}
-			int index = std::distance(snake_array_.begin(), it);
-			snake_array_[index].id = index;
-			log_success("New id on server %d", it->id);
+			log_success("New id on server %d", id);
+			snake_array_[id] = Snake::randomSnake(id);
+
 			TCPConnection::pointer new_connection =
-					TCPConnection::create(*it,
+					TCPConnection::create(snake_array_[id],
 										  acceptor_.get_io_service(), *this);
 			new_connection->socket() = std::move(socket);
 			number_clients_++;
-			*it = Snake::randomSnake(it->id);
+			std::cout << snake_array_[id]<< std::endl;
 			new_connection->read_socket_header();
 			pointers.push_back(new_connection);
-			refresh_data_snake_array(new_connection, it->id);
+			refresh_data_snake_array(new_connection, id);
 			refresh_data_map_size(new_connection);
 			start_accept();
 		} else {
@@ -61,7 +64,10 @@ void ServerTCP::erase_snake(Snake const &snake) {
 void ServerTCP::sendSnakeArray() {
 	std::for_each(snake_array_.begin(), snake_array_.end(),
 				  [this](auto snake){
-		if (snake.id != -1) async_write(ClientTCP::add_prefix(eHeader::SNAKE, &snake));
+						if (snake.id != -1) {
+//							log_warn("SendSnake > id : %d alive : %d", snake.id, snake.isAlive);
+							async_write(ClientTCP::add_prefix(eHeader::SNAKE, &snake));
+						}
 				  });
 }
 
@@ -86,6 +92,9 @@ void ServerTCP::start_game() {
 				  [this](auto snake){ snake.isAlive = true; });
 	startInfo.nu = ServerTCP::number_clients_;
 	startInfo.time_duration = boost::posix_time::microsec_clock::universal_time();
+	for (auto &snakeArray : snake_array_) {
+		log_error("SnakeArrayInSERVERTCP [%d][%d]", snakeArray.id, snakeArray.isAlive);
+	}
 	async_write(ClientTCP::add_prefix(eHeader::START_GAME, &startInfo));
 }
 
@@ -149,7 +158,7 @@ void ServerTCP::parse_input(eHeader header, void const *input, size_t len) {
 			pause_ = !pause_;
 			if (!pause_)
 				updateInput();
-			log_warn("Pause is %s", pause_ ? "true" : "false");
+//			log_warn("Pause is %s", pause_ ? "true" : "false");
 			break;
 		}
 		case eHeader::kForcePause : {
@@ -162,7 +171,7 @@ void ServerTCP::parse_input(eHeader header, void const *input, size_t len) {
 				return snake.isSwitchingLibrary;
 			});
 			async_write(ClientTCP::add_prefix(eHeader::SNAKE, &(snake_array_.__elems_[id])));
-			log_warn("kPause is %s", pause_ ? "true" : "false");
+//			log_warn("kPause is %s", pause_ ? "true" : "false");
 			if (!pause_) {
 				eAction pause = eAction::kPause;
 				async_write(ClientTCP::add_prefix(eHeader::kPause, &pause));
@@ -181,7 +190,7 @@ void ServerTCP::parse_input(eHeader header, void const *input, size_t len) {
 }
 
 void ServerTCP::updateInput() {
-	log_warn("Pause is %s", pause_ ? "true" : "false");
+//	log_warn("Pause is %s", pause_ ? "true" : "false");
 	if (pause_ || std::any_of(snake_array_.begin(), snake_array_.end(),
 			[](auto snake){ return snake.isAlive && !snake.isUpdate;} )) return;
 	sendSnakeArray();

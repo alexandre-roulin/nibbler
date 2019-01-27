@@ -20,7 +20,6 @@ void Factory::create_all_snake(std::array<Snake, 8> snake_array, int16_t nu) {
 	log_info("Create %d snake(s)", nu);
 
 	univers_.getWorld_().grid.fill(eSprite::NONE);
-	univers_.getWorld_().grid.print();
 	std::for_each(snake_array.begin(), snake_array.end(), [this, nu](Snake snake){
 		if (snake.id != -1) create_snake(snake,nu);
 	});
