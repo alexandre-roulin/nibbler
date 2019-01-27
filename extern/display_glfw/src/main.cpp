@@ -15,18 +15,15 @@
 #include "Mesh.hpp"
 #include "Camera.hpp"
 #include <fstream>
-#include "Grid.tpp"
-
-
+#include <MutantGrid.tpp>
 int main(int argc, char **argv) {
 	try {
 		DisplayGlfw lol(35, 35, "Issou");
 
-		Grid< eSprite > background(35);
-		Grid< eSprite > al(35);
+		MutantGrid< eSprite > background(35);
+		MutantGrid< eSprite > al(35);
 
 		background.fill(eSprite::GROUND);
-		background.setBorder(eSprite::WALL);
 
 		al.fill(eSprite::NONE);
 

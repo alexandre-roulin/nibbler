@@ -152,6 +152,7 @@ DisplayGlfw::~DisplayGlfw() {
 }
 
 void DisplayGlfw::registerCallbackAction(std::function<void(eAction)>) {
+
 }
 
 void DisplayGlfw::error_(std::string const &s) {
@@ -163,7 +164,7 @@ void DisplayGlfw::clean_() {
     //_win.close();
 }
 
-void		DisplayGlfw::setBackground(Grid< eSprite > const &grid) {
+void		DisplayGlfw::setBackground(MutantGrid< eSprite > const &grid) {
     tileBackground_ = grid;
 	for (int y = 0; winTileSize_.getY() > y; ++y) {
         for (int x = 0; x < winTileSize_.getX(); ++x) {
@@ -217,7 +218,7 @@ void		DisplayGlfw::drawGridCase_(eSprite sprite, int x, int y) {
 	grid_(x, y).render(shader_);
 }
 
-void		DisplayGlfw::drawGrid(Grid< eSprite > const &grid) {
+void		DisplayGlfw::drawGrid(MutantGrid< eSprite > const &grid) {
 	tileGrid_ = grid;
 	shader_.activate();
 	light_.putLightToShader(shader_);

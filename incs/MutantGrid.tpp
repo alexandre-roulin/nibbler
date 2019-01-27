@@ -10,6 +10,7 @@ public:
 	MutantGrid();
 
 	MutantGrid(size_t size);
+	MutantGrid(size_t , size_t);
 
 	void fill(T const &fill);
 
@@ -31,7 +32,7 @@ private:
 template<typename T>
 typename std::vector<T>::reference MutantGrid<T>::operator()(size_t x, size_t y) {
 	if (y * size_ + x >= std::vector<T>::size())
-		log_error("Test : %d , x : %d  y : %d s : %d", y * size_ + x, x, y, size_);
+//		log_error("Test : %d , x : %d  y : %d s : %d", y * size_ + x, x, y, size_);
 	assert(y * size_ + x < std::vector<T>::size());
 	return this->at(y * size_ + x );
 }
@@ -49,7 +50,12 @@ MutantGrid<T>::MutantGrid(size_t size):
 	size_(size) {
 
 }
+template<typename T>
+MutantGrid<T>::MutantGrid(size_t size1, size_t size2):
+		std::vector<T>(size1 * size2),
+		size_(size1) {
 
+}
 template<typename T>
 void MutantGrid<T>::fill(const T &fill) {
 	for (int idx = 0; idx < this->size(); ++idx) {
@@ -107,6 +113,8 @@ void MutantGrid<T>::resize(size_t size) {
 	size_ = size;
 	std::vector<T>::resize(size * size);
 }
+
+
 
 
 #endif //NIBBLER_MUTANTGRID_HPP

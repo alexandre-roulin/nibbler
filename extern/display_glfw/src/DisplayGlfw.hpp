@@ -19,7 +19,7 @@
 #include "Mesh.hpp"
 #include "Camera.hpp"
 #include "ActModel.hpp"
-#include "Grid.tpp"
+#include "MutantGrid.tpp"
 #include "Skybox.hpp"
 #include "Particle.hpp"
 #include "Material.hpp"
@@ -67,8 +67,8 @@ public:
     void update(float deltaTime) override;
 	bool        exit() const override;
 	eDirection getDirection() const override;
-	void		drawGrid(Grid< eSprite > const &grid) override;
-	void		setBackground(Grid< eSprite > const &grid) override;
+	void		drawGrid(MutantGrid< eSprite > const &grid) override;
+	void		setBackground(MutantGrid< eSprite > const &grid) override;
 	void		registerCallbackAction(std::function<void(eAction)>) override;
 
 	DisplayGlfw &operator=(DisplayGlfw const &rhs) = delete;
@@ -84,10 +84,10 @@ private:
     Vector2D<int> const 			winTileSize_;
     Vector2D<int> const 			winPixelSize_;
 
-	Grid< eSprite >					tileBackground_;
-    Grid< ActModel >				background_;
-	Grid< eSprite >					tileGrid_;
-	Grid< ActModel >				grid_;
+	MutantGrid< eSprite >					tileBackground_;
+    MutantGrid< ActModel >				background_;
+	MutantGrid< eSprite >					tileGrid_;
+	MutantGrid< ActModel >				grid_;
 
 	float							deltaTime_;
 
