@@ -3,6 +3,7 @@
 
 #include <logger.h>
 #include <vector>
+#include <assert.h>
 
 template<typename T>
 class MutantGrid : public std::vector<T> {
