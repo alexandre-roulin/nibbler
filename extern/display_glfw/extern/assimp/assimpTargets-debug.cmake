@@ -25,8 +25,8 @@ if(MSVC)
   endif()
   set(ASSIMP_LIBRARY_SUFFIX "-${MSVC_PREFIX}-mt" CACHE STRING "the suffix for the assimp windows library" )
 
-  set(sharedLibraryName "assimp${ASSIMP_LIBRARY_SUFFIX}.dylib")
-  set(importLibraryName "assimp${ASSIMP_LIBRARY_SUFFIX}")
+  set(sharedLibraryName "assimp${ASSIMP_LIBRARY_SUFFIX}d.dylib")
+  set(importLibraryName "assimp${ASSIMP_LIBRARY_SUFFIX}d")
 
   # Import target "assimp::assimp" for configuration "Debug"
   set_property(TARGET assimp::assimp APPEND PROPERTY IMPORTED_CONFIGURATIONS DEBUG)
@@ -40,7 +40,7 @@ if(MSVC)
 
 else()
   set(ASSIMP_LIBRARY_SUFFIX "" CACHE STRING "the suffix for the openrave libraries" )
-  set(sharedLibraryName "libassimp${ASSIMP_LIBRARY_SUFFIX}.dylib.4")
+  set(sharedLibraryName "libassimp${ASSIMP_LIBRARY_SUFFIX}d.dylib.4")
   set_target_properties(assimp::assimp PROPERTIES
     IMPORTED_SONAME_DEBUG "${sharedLibraryName}"
     IMPORTED_LOCATION_DEBUG "${_IMPORT_PREFIX}/lib/${sharedLibraryName}"
