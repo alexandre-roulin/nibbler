@@ -91,6 +91,7 @@ struct Snake {
 		strncpy(snake.name, Snake::basicName[rand() % MAX_SNAKE].c_str(),NAME_BUFFER);
 		snake.id = id;
 		snake.isAlive = true;
+		snake.isSwitchingLibrary = false;
 		return (snake);
 	}
 

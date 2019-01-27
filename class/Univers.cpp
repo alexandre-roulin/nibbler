@@ -338,6 +338,7 @@ void Univers::loop_world() {
 }
 
 void Univers::manageSwitchLibrary() {
+	log_success("sw %d", !getGameNetwork()->isSwitchingLibrary());
 	if (!getGameNetwork()->isSwitchingLibrary()) {
 		int16_t id = getGameNetwork()->getId();
 		getGameNetwork()->write_socket(ClientTCP::add_prefix(eHeader::kForcePause, &id));
