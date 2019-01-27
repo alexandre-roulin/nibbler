@@ -1,19 +1,19 @@
 cmake_minimum_required(VERSION 3.0)
-project(Glitter)
+project(display_glfw)
 
 set(CMAKE_CXX_STANDARD 17)
 
 
-add_subdirectory(Glitter/Vendor/glm)
+add_subdirectory(extern/glm)
 option(GLFW_BUILD_DOCS OFF)
 option(GLFW_BUILD_EXAMPLES OFF)
 option(GLFW_BUILD_TESTS OFF)
-add_subdirectory(Glitter/Vendor/glfw)
+add_subdirectory(extern/glfw)
 
 option(ASSIMP_BUILD_ASSIMP_TOOLS OFF)
 option(ASSIMP_BUILD_SAMPLES OFF)
 option(ASSIMP_BUILD_TESTS OFF)
-add_subdirectory(Glitter/Vendor/assimp)
+add_subdirectory(extern/assimp)
 
 if(MSVC)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4")
@@ -24,22 +24,19 @@ else()
     endif()
 endif()
 
-include_directories(Glitter/Headers/
+include_directories(
         include/
         ../../incs/
-        Glitter/Vendor/assimp/include/
-        Glitter/Vendor/glad/include/
-        Glitter/Vendor/glfw/include/
-        Glitter/Vendor/glm/
-        Glitter/Vendor/stb/)
+        extern/assimp/include/
+        extern/glad/include/
+        extern/glfw/include/
+        extern/glm/
+        extern/stb/)
 
-file(GLOB VENDORS_SOURCES Glitter/Vendor/glad/src/glad.c)
+file(GLOB EXTERN_SOURCES extern/glad/src/glad.c)
 file(GLOB PROJECT_HEADERS src/*.hpp include/*.hpp)
 file(GLOB PROJECT_SOURCES src/*.cpp)
-#file(GLOB PROJECT_SHADERS Glitter/Shaders/*.comp
-##        Glitter/Shaders/*.frag
- #       Glitter/Shaders/*.geom
- #       Glitter/Shaders/*.vert)
+
 file(GLOB PROJECT_CONFIGS CMakeLists.txt
         Readme.md
         .gitattributes
@@ -49,7 +46,7 @@ file(GLOB PROJECT_CONFIGS CMakeLists.txt
 source_group("Headers" FILES ${PROJECT_HEADERS})
 #source_group("Shaders" FILES ${PROJECT_SHADERS})
 source_group("Sources" FILES ${PROJECT_SOURCES})
-source_group("Vendors" FILES ${VENDORS_SOURCES})
+source_group("Vendors" FILES ${EXTERN_SOURCES})
 
 add_definitions(-DGLFW_INCLUDE_NONE
         -DPROJECT_SOURCE_DIR=\"${PROJECT_SOURCE_DIR}\")
@@ -57,13 +54,13 @@ add_definitions(-DGLFW_INCLUDE_NONE
 #${PROJECT_SOURCES} ${PROJECT_HEADERS}
 ##${PROJECT_SHADERS}
 #${PROJECT_CONFIGS}
-#${VENDORS_SOURCES})
+#${EXTERN_SOURCES})
 
 add_library(${PROJECT_NAME} MODULE
 ${PROJECT_SOURCES} ${PROJECT_HEADERS}
 #${PROJECT_SHADERS}
 ${PROJECT_CONFIGS}
-${VENDORS_SOURCES})
+${EXTERN_SOURCES})
 
 target_link_libraries(${PROJECT_NAME} assimp glfw
         ${GLFW_LIBRARIES} ${GLAD_LIBRARIES})
