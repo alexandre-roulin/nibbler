@@ -168,7 +168,7 @@ void Univers::new_game() {
 			bobby->buildIA();
 			bobby->sendDirection();
 		}
-		serverTCP_->start_game();
+		serverTCP_->startGame();
 	}
 
 	loop();
