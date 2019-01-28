@@ -254,9 +254,9 @@ void Univers::loop() {
 			current = std::chrono::milliseconds(gameSpeed);
 
 		//std::cout << "It took me " << current.count() << "," << gameSpeed << " seconds." << std::endl;
-		display->update(0.17f);
+		display->update(0.017f);
 		display->drawGrid(world_->grid);
-		display->render(1.f, 1.f);
+		display->render(0.017f, 1.f);
 //			display->update(0.2f);
 //			display->drawGrid(world_->grid);
 			//display->render(current.count(), gameSpeed);

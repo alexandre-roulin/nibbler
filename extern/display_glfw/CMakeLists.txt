@@ -3,7 +3,7 @@ project(display_glfw)
 
 set(CMAKE_CXX_STANDARD 17)
 
-
+add_subdirectory(extern/boost-cmake)
 add_subdirectory(extern/glm)
 option(GLFW_BUILD_DOCS OFF)
 option(GLFW_BUILD_EXAMPLES OFF)
@@ -50,19 +50,19 @@ source_group("Vendors" FILES ${EXTERN_SOURCES})
 
 add_definitions(-DGLFW_INCLUDE_NONE
         -DPROJECT_SOURCE_DIR=\"${PROJECT_SOURCE_DIR}\")
-#add_executable(${PROJECT_NAME}
-#${PROJECT_SOURCES} ${PROJECT_HEADERS}
-##${PROJECT_SHADERS}
-#${PROJECT_CONFIGS}
-#${EXTERN_SOURCES})
-
-add_library(${PROJECT_NAME} MODULE
+add_executable(${PROJECT_NAME}
 ${PROJECT_SOURCES} ${PROJECT_HEADERS}
 #${PROJECT_SHADERS}
 ${PROJECT_CONFIGS}
 ${EXTERN_SOURCES})
 
-target_link_libraries(${PROJECT_NAME} assimp glfw
+#add_library(${PROJECT_NAME} MODULE
+#${PROJECT_SOURCES} ${PROJECT_HEADERS}
+##${PROJECT_SHADERS}
+#${PROJECT_CONFIGS}
+#${EXTERN_SOURCES})
+
+target_link_libraries(${PROJECT_NAME} assimp glfw Boost::filesystem
         ${GLFW_LIBRARIES} ${GLAD_LIBRARIES})
 set_target_properties(${PROJECT_NAME} PROPERTIES
         RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${PROJECT_NAME})

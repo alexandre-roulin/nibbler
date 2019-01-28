@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <memory>
 #include <stb_image.h>
+#include <boost/filesystem.hpp>
 #include "DisplayGlfw.hpp"
 #include "nibbler.hpp"
 #include "Skybox.hpp"
@@ -11,6 +12,7 @@
 #define PARTICULE_SIZE 1
 #define NEAR_PLANE 0.1f
 #define MAX_PLANE 1000.f
+
 
 IDisplay *newDisplay(int width,
                      int height,
@@ -35,7 +37,7 @@ background_(winTileSize_.getX(), winTileSize_.getY()),
 tileGrid_(winTileSize_.getX(), winTileSize_.getY()),
 grid_(winTileSize_.getX(), winTileSize_.getY()),
 deltaTime_(0.016f),
-testParticle_(nullptr),
+particuleBackground_(nullptr),
 particuleBackgroundOutline_(nullptr),
 skybox_(nullptr),
 projection_(1.f),
@@ -80,7 +82,7 @@ light_(glm::vec3(0.f, 0.f, 30.f)) {
 	else
 		camera_.processPosition(Camera::Movement::BACKWARD, winTileSize_.getY() / 2);
 
-	testParticle_ = new Particle(pathGrass_, winTileSize_.getY() * winTileSize_.getX());
+	particuleBackground_ = new Particle(pathGrass_, winTileSize_.getY() * winTileSize_.getX());
 	particuleBackgroundOutline_ = new Particle(pathGrass_, winTileSize_.getY() * winTileSize_.getX());
 
 }
@@ -158,8 +160,8 @@ void DisplayGlfw::error_(std::string const &s) {
 
 void DisplayGlfw::clean_() {
     //_win.close();
-    if (testParticle_)
-    	delete testParticle_;
+    if (particuleBackground_)
+    	delete particuleBackground_;
 	if (particuleBackgroundOutline_)
 		delete particuleBackgroundOutline_;
 }
@@ -170,10 +172,10 @@ void		DisplayGlfw::setBackground(MutantGrid< eSprite > const &grid) {
 	for (int y = 0; winTileSize_.getY() > y; ++y) {
 		for (int x = 0; x < winTileSize_.getX(); ++x) {
 
-			testParticle_->transforms[y * winTileSize_.getX() + x].resetTransform();
-			testParticle_->transforms[y * winTileSize_.getX() + x].translate(glm::vec3(x - winTileSize_.getX() / 2, y - winTileSize_.getY() / 2, 0.f));
-			testParticle_->transforms[y * winTileSize_.getX() + x].scale(glm::vec3(-0.10f));
-			testParticle_->transforms[y * winTileSize_.getX() + x].updateTransform();
+			particuleBackground_->transforms[y * winTileSize_.getX() + x].resetTransform();
+			particuleBackground_->transforms[y * winTileSize_.getX() + x].translate(glm::vec3(x - winTileSize_.getX() / 2, y - winTileSize_.getY() / 2, 0.f));
+			particuleBackground_->transforms[y * winTileSize_.getX() + x].scale(glm::vec3(-0.10f));
+			particuleBackground_->transforms[y * winTileSize_.getX() + x].updateTransform();
 
 			particuleBackgroundOutline_->transforms[y * winTileSize_.getX() + x].resetTransform();
 			particuleBackgroundOutline_->transforms[y * winTileSize_.getX() + x].translate(glm::vec3(x - winTileSize_.getX() / 2, y - winTileSize_.getY() / 2, 0.f));
@@ -182,7 +184,7 @@ void		DisplayGlfw::setBackground(MutantGrid< eSprite > const &grid) {
 		}
 	}
 
-	testParticle_->update();
+	particuleBackground_->update();
 	particuleBackgroundOutline_->update();
 
 }
@@ -195,17 +197,32 @@ void		DisplayGlfw::drawGridCaseBody_(int x, int y) {
 	else if ((sprite & eSprite::MASK_BODY) == eSprite::HEAD) {
 		eSprite to = (sprite & eSprite::MASK_TO) >> eSprite::BITWISE_TO;
 
-		if (to == eSprite::EAST)
-			grid_(x, y).rotate(glm::vec3(0.f, 1.f, 0.f), glm::radians(-90.f));
-		else if (to == eSprite::WEST)
-			grid_(x, y).rotate(glm::vec3(0.f, 1.f, 0.f), glm::radians(90.f));
-		else if (to == eSprite::SOUTH)
-			grid_(x, y).rotate(glm::vec3(1.f, 0.f, 0.f), glm::radians(90.f));
-		else if (to == eSprite::NORTH) {
-			grid_(x, y).rotate(glm::vec3(1.f, 0.f, 0.f), glm::radians(-90.f));
-			grid_(x, y).rotate(glm::vec3(0.f, 0.f, 1.f), glm::radians(180.f));
-		}
+		ActModel eyeLeft = grid_(x, y);
+		ActModel eyeRight = grid_(x, y);
 
+		if (to == eSprite::EAST) {
+			eyeLeft.translate(glm::vec3(0.30f, 0.15f, 0.05f));
+			eyeRight.translate(glm::vec3(0.30f, -0.15f, 0.05f));
+		}
+		else if (to == eSprite::WEST) {
+			eyeLeft.translate(glm::vec3(-0.30f, 0.15f, 0.05f));
+			eyeRight.translate(glm::vec3(-0.30f, -0.15f, 0.05f));
+		}
+		else if (to == eSprite::SOUTH) {
+			eyeLeft.translate(glm::vec3(0.15f, 0.3f, 0.05f));
+			eyeRight.translate(glm::vec3(-0.15f, 0.3f, 0.05f));
+		}
+		else if (to == eSprite::NORTH) {
+			eyeLeft.translate(glm::vec3(0.15f, -0.3f, 0.05f));
+			eyeRight.translate(glm::vec3(-0.15f, -0.3f, 0.05f));
+		}
+		eyeLeft.scale(glm::vec3(-0.8f));
+		eyeRight.scale(glm::vec3(-0.8f));
+
+		Material::unsetMaterial(shader_);
+		eyeLeft.render(shader_);
+		eyeRight.render(shader_);
+		materialMap_.at(sprite & eSprite::MASK_COLOR).putMaterialToShader(shader_);
 	}
 }
 
@@ -237,9 +254,9 @@ void		DisplayGlfw::drawGrid(MutantGrid< eSprite > const &grid) {
 				grid_(x, y).assign(&appleModel_);
 			}
 			else if (static_cast<int>(grid(x, y) & eSprite::MASK_BODY) != 0) {
-				if ((grid(x, y) & eSprite::MASK_BODY) == eSprite::HEAD)
-					grid_(x, y).assign(&modelHead_);
-				else
+				//if ((grid(x, y) & eSprite::MASK_BODY) == eSprite::HEAD)
+				//	grid_(x, y).assign(&modelHead_);
+				//else
 					grid_(x, y).assign(&modelSphere_);
 				materialMap_.at(grid(x, y) & eSprite::MASK_COLOR).putMaterialToShader(shader_);
 			}
@@ -350,8 +367,8 @@ void DisplayGlfw::render(float currentDelayFrame, float maxDelayFrame) {
 
 
 	materialMap_.at(eSprite::GROUND).putMaterialToShader(shaderMultiple_);
-	testParticle_->update();
-	testParticle_->render(shaderMultiple_);
+	particuleBackground_->update();
+	particuleBackground_->render(shaderMultiple_);
 
 	Material::unsetMaterial(shaderMultiple_);
 	particuleBackgroundOutline_->update();

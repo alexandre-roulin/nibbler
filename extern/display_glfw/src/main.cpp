@@ -29,10 +29,10 @@ int main(int argc, char **argv) {
 
 		al(0, 0) = eSprite::FOOD;
 		al(1, 1) = eSprite::WALL;
-		al(3, 3) = (eSprite::BODY | eSprite::BLUE);
-		al(4, 3) = (eSprite::HEAD | eSprite::GREEN);
-		al(5, 3) = (eSprite::HEAD | eSprite::PURPLE);
-		al(6, 3) = (eSprite::HEAD | eSprite::PINK);
+		al(3, 3) = (eSprite::BODY | eSprite::BLUE | eSprite::EAST);
+		al(4, 3) = (eSprite::HEAD | eSprite::GREEN | eSprite::WEST);
+		al(5, 3) = (eSprite::HEAD | eSprite::PURPLE | eSprite::SOUTH);
+		al(6, 3) = (eSprite::HEAD | eSprite::PINK | eSprite::NORTH);
 		al(7, 3) = (eSprite::HEAD | eSprite::GREY);
 		al(8, 3) = (eSprite::HEAD | eSprite::YELLOW);
 		al(9, 3) = (eSprite::HEAD | eSprite::ORANGE);
