@@ -3,7 +3,9 @@ project(display_glfw)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_subdirectory(extern/boost-cmake)
+option(GLM_BUILD_DOCS OFF)
+option(GLM_BUILD_EXAMPLES OFF)
+option(GLM_TEST_ENABLE OFF)
 add_subdirectory(extern/glm)
 option(GLFW_BUILD_DOCS OFF)
 option(GLFW_BUILD_EXAMPLES OFF)

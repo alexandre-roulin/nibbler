@@ -28,7 +28,6 @@ private:
 	ServerTCP &serverTCP_;
 
 public:
-	virtual ~TCPConnection();
 
 private:
 	TCPConnection(Snake const &, boost::asio::io_service &io_service, ServerTCP &serverTCP);
@@ -36,18 +35,21 @@ private:
 	void checkError_(boost::system::error_code const &error_code);
 
 public:
+
+	virtual ~TCPConnection();
+
 	int16_t getId() const;
+
 	typedef boost::shared_ptr<TCPConnection> pointer;
 
 	static pointer
 	create(Snake const &snake, boost::asio::io_service &io_service, ServerTCP &serverTCP);
-	void read_socket_header();
 
-	void read_socket_data(eHeader);
+	void readSocketHeader();
 
-	void write_socket(std::string message);
+	void readSocketData(eHeader header);
 
-	void write_socket(void const *data, size_t len);
+	void writeSocket(std::string message);
 
 	void handle_read_data(eHeader header, const boost::system::error_code &, size_t);
 
@@ -62,27 +64,22 @@ public:
 
 class ServerTCP {
 public:
+
+	ServerTCP() = delete;
+
 	ServerTCP(Univers &univers, unsigned int port);
 
-	virtual ~ServerTCP();
+	~ServerTCP();
 
-	void async_write(std::string message);
+	void writeToClientTCP(std::string message);
 
-	void async_write(void const *input, size_t len);
+	void parseInput(eHeader header, void const *input, size_t len);
 
-	void parse_input(eHeader, void const *, size_t);
-
-	void erase_snake(Snake const &);
-
-	void refresh_data_snake_array(TCPConnection::pointer &, int16_t);
+	void eraseSnake(Snake const &snake);
 
 	void sendSnakeArray();
 
-	void refresh_data_map_size(TCPConnection::pointer &connection);
-
-	void start_game();
-
-	void close_acceptor();
+	void startGame();
 
 	void remove(TCPConnection::pointer);
 
@@ -95,24 +92,35 @@ public:
 	unsigned int getPort_() const;
 
 private:
+
+	friend class TCPConnection;
+
 	unsigned int port_;
+
 	uint16_t number_clients_;
 
 	Univers &univers_;
 
-	std::array<Snake, 8> snake_array_;
+	std::array<Snake, MAX_SNAKE> snake_array_;
 
-	unsigned int	mapSize;
+	unsigned int mapSize;
+
 	bool pause_;
+
 	bool forcePause_;
-private:
+
 	std::vector<ClientTCP::FoodInfo> foodInfoArray;
+
 	std::mutex mutex;
+
 	void start_accept();
-	friend class TCPConnection;
+
 	std::vector<TCPConnection::pointer> pointers;
+
 	boost::asio::io_service io_service_;
+
 	tcp::acceptor acceptor_;
+
 	boost::thread thread;
 };
 

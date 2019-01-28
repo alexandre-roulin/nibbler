@@ -7,19 +7,3 @@
 [submodule "cmake/boost-cmake"]
 	path = cmake/boost-cmake
 	url = https://github.com/Orphis/boost-cmake
-[submodule "extern/display_glfw/extern/assimp"]
-	path = extern/display_glfw/extern/assimp
-	url = https://github.com/assimp/assimp.git
-[submodule "extern/display_glfw/extern/glad"]
-	path = extern/display_glfw/extern/glad
-	url = https://github.com/Dav1dde/glad.git
-	branch = c
-[submodule "extern/display_glfw/extern/glm"]
-	path = extern/display_glfw/extern/glm
-	url = https://github.com/g-truc/glm.git
-[submodule "extern/display_glfw/extern/glfw"]
-	path = extern/display_glfw/extern/glfw
-	url = https://github.com/glfw/glfw.git
-[submodule "extern/display_glfw/extern/stb"]
-	path = extern/display_glfw/extern/stb
-	url = https://github.com/nothings/stb
