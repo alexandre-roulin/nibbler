@@ -80,8 +80,8 @@ light_(glm::vec3(0.f, 0.f, 30.f)) {
 	else
 		camera_.processPosition(Camera::Movement::BACKWARD, winTileSize_.getY() / 2);
 
-	testParticle_ = new Particle(modelGrass_, winTileSize_.getY() * winTileSize_.getX());
-	particuleBackgroundOutline_ = new Particle(modelWall_, winTileSize_.getY() * winTileSize_.getX());
+	testParticle_ = new Particle(pathGrass_, winTileSize_.getY() * winTileSize_.getX());
+	particuleBackgroundOutline_ = new Particle(pathGrass_, winTileSize_.getY() * winTileSize_.getX());
 
 }
 void				DisplayGlfw::constructMaterialMap_() {

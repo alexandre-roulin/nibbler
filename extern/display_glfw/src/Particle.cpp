@@ -3,16 +3,17 @@
 #include "Shader.hpp"
 #include <iostream>
 
-Particle::Particle(Model &model, unsigned int size) :
+Particle::Particle(std::string const &path, unsigned int size) :
+path_(path),
 bPhysicsMovement_(false),
 size_(size),
-model_(model),
+model_(path),
 transforms(size),
 physicsMovement_(size)
 {
 	bufferTransform.resize(size);
 	for (auto &transform : transforms) {
-		transform.assign(&model);
+		transform.assign(&model_);
 	}
 	updateTransforms_();
 

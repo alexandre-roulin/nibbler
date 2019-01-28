@@ -21,7 +21,7 @@ struct PhysicsMovement {
 class Particle {
 public:
 
-	Particle(Model &model, unsigned int size);
+	Particle(std::string const &, unsigned int size);
 
 	~Particle();
 
@@ -34,9 +34,10 @@ public:
 	std::vector<ActModel>			transforms;
 
 private:
+	std::string		path_;
 	bool			bPhysicsMovement_;
 	unsigned int	size_;
-	Model			&model_;
+	Model			model_;
 
 	unsigned int					BOParticle_; //Commun a chaque Mesh VAO
 	std::vector<glm::mat4>			bufferTransform;

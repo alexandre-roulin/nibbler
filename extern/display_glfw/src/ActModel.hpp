@@ -28,7 +28,7 @@ public:
 	void	scale(float, float deltaTime = 1.f);
 
 	void	render(Shader &shader, GLenum typeOfDraw = GL_TRIANGLES);
-	void				updateTransform();
+	void	updateTransform();
 
 		private:
 	Model const			*model_;
