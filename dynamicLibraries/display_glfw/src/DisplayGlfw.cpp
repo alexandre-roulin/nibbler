@@ -2,7 +2,6 @@
 #include <algorithm>
 #include <memory>
 #include <stb_image.h>
-#include <boost/filesystem.hpp>
 #include "DisplayGlfw.hpp"
 #include "nibbler.hpp"
 #include "Skybox.hpp"

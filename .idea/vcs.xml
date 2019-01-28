@@ -3,9 +3,21 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/cmake/boost-cmake" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/dynamicLibraries/display_glfw/extern/assimp" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/dynamicLibraries/display_glfw/extern/glad" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/dynamicLibraries/display_glfw/extern/glfw" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/dynamicLibraries/display_glfw/extern/glm" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/dynamicLibraries/display_glfw/extern/stb" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/extern/SFML" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/extern/assimp" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/extern/display_glfw/extern/filesystem" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/extern/filesystem" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/extern/glad" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/extern/glfw" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/extern/glm" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/extern/imgui/imgui" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/extern/imgui/imgui-sfml" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/extern/stb" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/extern/test_glfw/Glitter/Vendor/assimp" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/extern/test_glfw/Glitter/Vendor/glad" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/extern/test_glfw/Glitter/Vendor/glfw" vcs="Git" />

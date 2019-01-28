@@ -1,4 +1,4 @@
-
+extern/imgui/imconfig-sfml.h
 SFML
 
 extern/display_sdl/Makefile

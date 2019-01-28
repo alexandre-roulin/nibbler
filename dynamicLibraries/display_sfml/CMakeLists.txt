@@ -4,7 +4,6 @@ set(NAME display_sfml)
 project(${NAME})
 
 add_library(${NAME} MODULE
-
         src/DisplaySfml.cpp
         include/DisplaySfml.hpp)
 
