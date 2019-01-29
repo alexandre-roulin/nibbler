@@ -4,6 +4,10 @@
 #include <ostream>
 #include "IDisplay.hpp"
 
+#ifndef NIBBLER_ROOT_PROJECT_PATH
+	#define NIBBLER_ROOT_PROJECT_PATH 0
+#endif
+
 #define MAX_SNAKE 8
 #define MAX_COLOR 8
 #define CHAT_BUFFER 128

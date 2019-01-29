@@ -3,6 +3,7 @@
 #include <SFML/System/Clock.hpp>
 #include <SFML/Window/Event.hpp>
 #include <SFML/Graphics.hpp>
+#include <boost/filesystem.hpp>
 #include "widget/WidgetChat.hpp"
 #include "nibbler.hpp"
 
@@ -48,6 +49,7 @@ class Core {
 
 private:
 	//				GUI				//
+	boost::filesystem::path		pathRessources_;
 	bool						startGame_;
 	sf::Vector2<unsigned int>	_winSize;
 	sf::RenderWindow			_win;

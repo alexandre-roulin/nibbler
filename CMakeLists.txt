@@ -2,10 +2,10 @@ cmake_minimum_required(VERSION 3.12)
 
 set(CMAKE_MACOSX_RPATH 1)
 set(CMAKE_CXX_STANDARD 17)
-
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DNIBBLER_ROOT_PROJECT_PATH=\\\"${CMAKE_SOURCE_DIR}\\\"")
 
 if (WIN32)
     if(MSVC)
@@ -25,7 +25,6 @@ elseif (APPLE)
         execute_process(COMMAND $ENV{HOME}/.brew/bin/brew install sdl2_image)
         execute_process(COMMAND $ENV{HOME}/.brew/bin/brew install sdl2_mixer)
         execute_process(COMMAND $ENV{HOME}/.brew/bin/brew install sfml)
-        #execute_process(COMMAND $ENV{HOME}/.brew/bin/brew install boost)
     endif(INSTALL)
 
     link_directories(/usr/lib/)
@@ -66,7 +65,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DIMGUI_USER_CONFIG=\"<../imconfig-sfml.
 set(EXTERN_SOURCES_DISPLAY_GLFW "${CMAKE_SOURCE_DIR}/extern/glad/src/glad.c")
 
 include_directories(
-        ${CMAKE_SOURCE_DIR}/nibbler/incs/
+        ${CMAKE_SOURCE_DIR}/nibblerSources/incs/
         ${CMAKE_SOURCE_DIR}/extern/imgui/
         ${CMAKE_SOURCE_DIR}/extern/imgui/imgui/
         ${CMAKE_SOURCE_DIR}/extern/imgui/imgui-sfml/
@@ -76,7 +75,6 @@ include_directories(
         ${CMAKE_SOURCE_DIR}/extern/sfml/include/
         ${CMAKE_SOURCE_DIR}/extern/glm/
         ${CMAKE_SOURCE_DIR}/extern/stb/)
-#link_directories(${CMAKE_BINARY_DIR}/extern/imgui/)
 
 
 find_package(SDL2 REQUIRED)

@@ -195,6 +195,12 @@ void testKstar() {
 int main(int argc, char **argv) {
 //	testKstar();
 //	return 1;
+
+	if (!NIBBLER_ROOT_PROJECT_PATH) {
+		std::cerr << "NIBBLER_ROOT_PROJECT_PATH is not defined" << std::endl;
+		return (0);
+	}
+
 	char hostname[64];
 	gethostname(hostname, 64);
 	std::cout << hostname << std::endl;

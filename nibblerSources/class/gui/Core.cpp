@@ -12,6 +12,7 @@
 
 
 Core::Core(Univers &univers) :
+pathRessources_(boost::filesystem::path(NIBBLER_ROOT_PROJECT_PATH) / "ressources/"),
 startGame_(false),
 univers(univers),
 _winSize(sf::Vector2<unsigned int>(1000, 900)),
@@ -20,7 +21,8 @@ _io(_createContext()),
 _chat(*this),
 _mapSize(sf::Vector2<int>(20, 20))
 {
-	if (!_imageTitleScreen.loadFromFile("ressource/ecran_titre.png"))
+	std::cout << "Regular : " << pathRessources_.generic_string() << std::endl;
+	if (!_imageTitleScreen.loadFromFile((pathRessources_ / "ecran_titre.png").generic_string()))
 		(throw(Core::CoreConstructorException("Cannot load background")));
 	_io.IniFilename = NULL;
 }
