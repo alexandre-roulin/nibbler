@@ -1,6 +1,11 @@
 cmake_minimum_required(VERSION 3.12)
 
+set(CMAKE_MACOSX_RPATH 1)
 set(CMAKE_CXX_STANDARD 17)
+
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 if (WIN32)
     if(MSVC)
@@ -68,6 +73,7 @@ include_directories(
         ${CMAKE_SOURCE_DIR}/extern/assimp/include/
         ${CMAKE_SOURCE_DIR}/extern/glad/include/
         ${CMAKE_SOURCE_DIR}/extern/glfw/include/
+        ${CMAKE_SOURCE_DIR}/extern/sfml/include/
         ${CMAKE_SOURCE_DIR}/extern/glm/
         ${CMAKE_SOURCE_DIR}/extern/stb/)
 #link_directories(${CMAKE_BINARY_DIR}/extern/imgui/)
@@ -77,10 +83,10 @@ find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
 find_package(SDL2_mixer REQUIRED)
 
-add_subdirectory(cmake/boost-cmake)
-
 find_package(SFML REQUIRED COMPONENTS audio graphics window system)
 include_directories(${SFML_INCLUDE_DIR})
+
+add_subdirectory(cmake/boost-cmake)
 
 add_subdirectory(extern/imgui)
 option(GLM_BUILD_DOCS OFF)
@@ -96,9 +102,9 @@ option(ASSIMP_BUILD_SAMPLES OFF)
 option(ASSIMP_BUILD_TESTS OFF)
 add_subdirectory(extern/assimp)
 
-add_subdirectory(nibbler)
-add_subdirectory(dynamicLibraries/display_glfw)
-add_subdirectory(dynamicLibraries/display_sdl)
-add_subdirectory(dynamicLibraries/display_sfml)
-add_subdirectory(dynamicLibraries/sound_sdl)
-add_subdirectory(dynamicLibraries/sound_sfml)
+add_subdirectory(nibblerSources)
+add_subdirectory(dynamicLibrariesSources/display_glfw)
+add_subdirectory(dynamicLibrariesSources/display_sdl)
+add_subdirectory(dynamicLibrariesSources/display_sfml)
+add_subdirectory(dynamicLibrariesSources/sound_sdl)
+add_subdirectory(dynamicLibrariesSources/sound_sfml)
