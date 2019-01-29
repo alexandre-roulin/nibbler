@@ -16,6 +16,7 @@
 IDisplay *newDisplay(int width,
                      int height,
                      char const *windowName) {
+	std::cout << "newDisplay Glfw" << std::endl;
     return (new DisplayGlfw(width, height, windowName));
 }
 
@@ -43,7 +44,6 @@ projection_(1.f),
 view_(1.f),
 model_(1.f),
 light_(glm::vec3(0.f, 0.f, 30.f)) {
-
 	constructMaterialMap_();
     glfwSetCursorPosCallback(getWindow(),  DisplayGlfw::mouseCallback_);
 

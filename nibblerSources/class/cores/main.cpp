@@ -119,7 +119,7 @@ void nibbler(Univers &univers) {
 			if (core)
 				delete core;
 			if (start) {
-				univers.load_extern_lib_display(Univers::kExternSfmlLibrary);
+				univers.load_extern_lib_display(Univers::kExternGlfwLibrary);
 				univers.new_game();
 			}
 		}

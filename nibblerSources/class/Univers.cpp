@@ -75,17 +75,14 @@ bool Univers::load_external_display_library(std::string const &title,
 
 	if (!(dlHandleDisplay = dlopen(libPath.c_str(), RTLD_LAZY | RTLD_LOCAL)))
 		return (dlError("dlopen"));
-
 	if (!(newDisplay = reinterpret_cast<IDisplay *(*)(
 			int, int, const char *
 	)>(dlsym(dlHandleDisplay, "newDisplay"))))
 		return (dlError("dlsym"));
-
 	if (!(deleteDisplay = reinterpret_cast<void (*)(
 			IDisplay *
 	)>(dlsym(dlHandleDisplay, "deleteDisplay"))))
 		return (dlError("dlsym"));
-
 	if (!(display = newDisplay(mapSize, mapSize, title.c_str())))
 		return (false);
 

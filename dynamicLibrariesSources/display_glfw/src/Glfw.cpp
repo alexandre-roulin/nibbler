@@ -2,7 +2,9 @@
 #include <iostream>
 Glfw::Glfw(std::string const &name, uint16_t width, uint16_t height) :
     cursor_(true) {
+    std::cout << "Glfw" << std::endl;
     glfwInit();
+    std::cout << "glfwInit" << std::endl;
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
@@ -10,12 +12,17 @@ Glfw::Glfw(std::string const &name, uint16_t width, uint16_t height) :
         glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
     #endif
     glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
-
+    std::cout << "glfwWindowHint" << std::endl;
     if (!(window_ = glfwCreateWindow(width, height, name.c_str(), nullptr, nullptr))) {
+		std::cout << "ERR" << std::endl;
         clean_();
-        throw (Glfw::ConstructorException("GlfwConstructorException: window was not created"));
+		std::cout << "ERR" << std::endl;
+		throw (Glfw::ConstructorException("GlfwConstructorException: window was not created"));
     }
+    std::cout << "glfwCreateWindow" << std::endl;
+
     glfwMakeContextCurrent(window_);
+    std::cout << "glfwMakeContextCurrent" << std::endl;
     gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
     std::cout << "OpenGL " << glGetString(GL_VERSION) << std::endl;
     glfwSwapInterval(0);
