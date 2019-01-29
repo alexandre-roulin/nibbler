@@ -29,7 +29,7 @@ void SoundSfml::_error(std::string s = std::string("Error"))
 void		SoundSfml::setMusic(char const *path)
 {
 	if (!this->_music.openFromFile(path))
-		throw(SoundSfml::SfmlSoundException("Background music, cannot be loaded"));
+		throw(SoundSfml::SfmlSoundException("Background music, cant be loaded"));
 }
 void		SoundSfml::playMusic(void)
 {

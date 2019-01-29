@@ -4,12 +4,20 @@
 #include <memory>
 #include <boost/shared_ptr.hpp>
 #include <boost/asio/io_service.hpp>
+#include <boost/filesystem.hpp>
 #include <bitset>
 #include "nibbler.hpp"
 #include "ISound.hpp"
 #include <boost/asio/deadline_timer.hpp>
 #include <events/NextFrame.hpp>
 #include <boost/thread.hpp>
+
+#define PATH_DISPLAY_LIBRARY_SFML "dynamicLibraries/libdisplay_glfw.so"
+#define PATH_DISPLAY_LIBRARY_GLFW "dynamicLibraries/libdisplay_glfw.so"
+#define PATH_DISPLAY_LIBRARY_SDL "dynamicLibraries/libdisplay_sdl.so"
+
+#define PATH_SOUND_LIBRARY_SFML "dynamicLibraries/libsound_sfml.so"
+#define PATH_SOUND_LIBRARY_SDL "dynamicLibraries/libsound_sdl.so"
 
 class ServerTCP;
 
@@ -132,12 +140,14 @@ private: // Function
 private:
 
 	//const
-
 	static const std::string WarningServerCreateIA;
 	static const std::string WarningServerFull;
 	static const std::string WarningServerIsUp;
 	static const std::string SuccessServerIsCreate;
 	static const std::string WarningClientExist;
+
+	boost::filesystem::path		pathRoot_;
+
 	bool switchLib;
 	// Variable
 	std::mutex mutexLoop;

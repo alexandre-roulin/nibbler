@@ -25,7 +25,8 @@ const std::string Univers::SuccessServerIsCreate = "Server is up.";
 const std::string Univers::WarningClientExist = "Client is already in place.";
 
 Univers::Univers()
-		: timer_start(boost::asio::deadline_timer(io_start)),
+		: pathRoot_(NIBBLER_ROOT_PROJECT_PATH),
+		  timer_start(boost::asio::deadline_timer(io_start)),
 		  timer_loop(boost::asio::deadline_timer(io_loop)),
 		  mapSize(MAP_DEFAULT),
 		  gameSpeed(1000),
@@ -234,7 +235,7 @@ void Univers::loop() {
 	thread.detach();
 
 	world_->grid.fill(eSprite::NONE);
-	playMusic("./ressource/sound/zelda.ogg");
+	playMusic(MUSIC_ZELDA);
 
 
 

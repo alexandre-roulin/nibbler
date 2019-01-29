@@ -1,6 +1,8 @@
-#include <nibbler.hpp>
+#include "nibbler.hpp"
+#include <boost/filesystem.hpp>
 #include "DisplaySfml.hpp"
 #include "Display2D.hpp"
+
 IDisplay *newDisplay(int width,
 					 int height,
 					 char const *windowName) {
@@ -22,17 +24,13 @@ DisplaySfml::DisplaySfml(int width,
 		_win(sf::VideoMode(this->_winPixelSize.getX(),
 						   this->_winPixelSize.getY()),
 			 windowName) {
-	std::cout << "DisplaySfml" << std::endl;
 
+
+	boost::filesystem::path pathRoot(NIBBLER_ROOT_PROJECT_PATH);
+	if (!_tileset.loadFromFile((pathRoot / "ressources" / "snake_tileset.png").generic_string()))
+		this->_error("Tileset cannot be loaded");
 
 	this->_win.setFramerateLimit(60);
-
-	std::string pathFile = __FILE__;
-	std::string pathRoot = pathFile.substr(0, pathFile.rfind(DISPLAY_SLASH));
-	pathRoot = pathFile.substr(0, pathRoot.rfind(DISPLAY_SLASH));
-
-	if (!this->_tileset.loadFromFile(pathRoot + DISPLAY_SLASH + DISPLAY_DEFAULT_TILESET_PATH))
-		this->_error("Tileset cannot be load");
 	if (!this->_textureBackground.create(this->_winPixelSize.getX(),
 										 this->_winPixelSize.getY()))
 		this->_error("Error during creation of Texture background");

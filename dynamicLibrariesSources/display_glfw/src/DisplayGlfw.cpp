@@ -4,9 +4,9 @@
 #include <stb_image.h>
 #include "DisplayGlfw.hpp"
 #include "nibbler.hpp"
-#include "Skybox.hpp"
 #include "Particle.hpp"
 #include <algorithm>
+#include <Carbon.framework/Headers/Carbon.h>
 
 #define PARTICULE_SIZE 1
 #define NEAR_PLANE 0.1f
@@ -26,6 +26,7 @@ void deleteDisplay(IDisplay *display) {
 DisplayGlfw::DisplayGlfw(int width,
                          int height,
                          char const *windowName) :
+pathRoot_(NIBBLER_ROOT_PROJECT_PATH),
 Glfw(windowName, DISPLAY_GLFW_WIN_WIDTH, DISPLAY_GLFW_WIN_HEIGHT),
 direction_(kNorth),
 currentTimer_(0.f),
@@ -38,13 +39,11 @@ grid_(winTileSize_.getX(), winTileSize_.getY()),
 deltaTime_(0.016f),
 particuleBackground_(nullptr),
 particuleBackgroundOutline_(nullptr),
-skybox_(nullptr),
 projection_(1.f),
 view_(1.f),
 model_(1.f),
 light_(glm::vec3(0.f, 0.f, 30.f)) {
 
-	getPath_();
 	constructMaterialMap_();
     glfwSetCursorPosCallback(getWindow(),  DisplayGlfw::mouseCallback_);
 
@@ -59,30 +58,28 @@ light_(glm::vec3(0.f, 0.f, 30.f)) {
             (float)DISPLAY_GLFW_WIN_WIDTH / (float)DISPLAY_GLFW_WIN_HEIGHT,
             NEAR_PLANE, MAX_PLANE);
 
-	shaderMultiple_.attach(pathShaderBasic_ + "Multiple.vert");
-	shaderMultiple_.attach(pathShaderBasic_ + ".frag");
+	shaderMultiple_.attach((pathRoot_ / "dynamicLibrariesSources" / "display_glfw" / "shader" / "basicMultiple.vert").generic_string());
+	shaderMultiple_.attach((pathRoot_ / "dynamicLibrariesSources" / "display_glfw" / "shader" / "basic.frag").generic_string());
 	shaderMultiple_.link();
 
-
-	shader_.attach(pathShaderBasic_ + ".vert");
-    shader_.attach(pathShaderBasic_ + ".frag");
+	shader_.attach((pathRoot_ / "dynamicLibrariesSources" / "display_glfw" / "shader" / "basic.vert").generic_string());
+    shader_.attach((pathRoot_ / "dynamicLibrariesSources" / "display_glfw" / "shader" / "basic.frag").generic_string());
     shader_.link();
 
-    //snake_.setModel(pathModel_);
-    block_.setModel(pathBlock_);
-    modelGrass_.setModel(pathGrass_);
-	modelSphere_.setModel(std::string(pathRoot_ + DISPLAY_GLFW_SLASH + "resources" + DISPLAY_GLFW_SLASH + "objects" + DISPLAY_GLFW_SLASH + "sphere.obj"));
-	modelHead_.setModel(std::string(pathRoot_ + DISPLAY_GLFW_SLASH + "resources" + DISPLAY_GLFW_SLASH + "objects" + DISPLAY_GLFW_SLASH + "head.obj"));
-    modelWall_.setModel(pathWall_);
-	appleModel_.setModel(pathAppleModel_);
+    block_.setModel((pathRoot_ / "ressources" / "objects" / "nanosuit" / "nanosuit.obj").generic_string());
+    modelGrass_.setModel((pathRoot_ / "ressources" / "objects" / "grass" / "grass.obj").generic_string());
+	modelSphere_.setModel((pathRoot_ / "ressources" / "objects" / "sphere.obj").generic_string());
+	modelHead_.setModel((pathRoot_ / "ressources" / "objects" / "head.obj").generic_string());
+    modelWall_.setModel((pathRoot_ / "ressources" / "wall.obj").generic_string());
+	appleModel_.setModel((pathRoot_ / "ressources" / "Apple_obj" / "apple.obj").generic_string());
 
 	if (winTileSize_.getY() < winTileSize_.getX())
     	camera_.processPosition(Camera::Movement::BACKWARD, winTileSize_.getX() / 2);
 	else
 		camera_.processPosition(Camera::Movement::BACKWARD, winTileSize_.getY() / 2);
 
-	particuleBackground_ = new Particle(pathGrass_, winTileSize_.getY() * winTileSize_.getX());
-	particuleBackgroundOutline_ = new Particle(pathGrass_, winTileSize_.getY() * winTileSize_.getX());
+	particuleBackground_ = new Particle((pathRoot_ / "ressources" / "objects" / "grass" / "grass.obj").generic_string(), winTileSize_.getY() * winTileSize_.getX());
+	particuleBackgroundOutline_ = new Particle((pathRoot_ / "ressources" / "objects" / "grass" / "grass.obj").generic_string(), winTileSize_.getY() * winTileSize_.getX());
 
 }
 void				DisplayGlfw::constructMaterialMap_() {
@@ -128,21 +125,6 @@ void				DisplayGlfw::constructMaterialMap_() {
 							 glm::vec3(0.0f),
 							 glm::vec3(0.0f));
 }
-void                DisplayGlfw::getPath_() {
-
-    std::string pathFile = __FILE__;
-
-    std::string pathRoot = pathFile.substr(0, pathFile.rfind(DISPLAY_GLFW_SLASH));
-    pathRoot_ = pathRoot.substr(0, pathRoot.rfind(DISPLAY_GLFW_SLASH));
-    std::cout << pathRoot_ << std::endl;
-	pathModel_ = std::string(pathRoot_ + DISPLAY_GLFW_SLASH + "resources" + DISPLAY_GLFW_SLASH + "snakest2" + DISPLAY_GLFW_SLASH + "Snake_by_Swp.obj");
-    pathBlock_ = std::string(pathRoot_ + DISPLAY_GLFW_SLASH + "resources" + DISPLAY_GLFW_SLASH + "objects" + DISPLAY_GLFW_SLASH + "nanosuit" + DISPLAY_GLFW_SLASH + "nanosuit.obj");
-    pathGrass_ = std::string(pathRoot_ + DISPLAY_GLFW_SLASH + "resources" + DISPLAY_GLFW_SLASH + "objects" + DISPLAY_GLFW_SLASH + "grass" + DISPLAY_GLFW_SLASH + "grass.obj");
-    pathWall_ = std::string(pathRoot_ + DISPLAY_GLFW_SLASH + "resources" + DISPLAY_GLFW_SLASH + "wall.obj");
-	pathShaderBasic_ = std::string(pathRoot_ + DISPLAY_GLFW_SLASH + "shader" + DISPLAY_GLFW_SLASH + "basic");
-	pathAppleModel_ = std::string(pathRoot_ + DISPLAY_GLFW_SLASH + "resources" + DISPLAY_GLFW_SLASH + "Apple_obj" + DISPLAY_GLFW_SLASH + "apple.obj");
-}
-
 
 DisplayGlfw::~DisplayGlfw() {
     clean_();

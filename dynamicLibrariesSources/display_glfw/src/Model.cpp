@@ -63,12 +63,12 @@ void	Model::render(Shader &shader, GLenum typeOfDraw) const {
 
 void 					Model::loadModel_() {
     Assimp::Importer import;
-    const aiScene *scene = import.ReadFile(path_, aiProcess_Triangulate | aiProcess_GenUVCoords | aiProcess_GenNormals | aiProcess_FlipUVs);
+    const aiScene *scene = import.ReadFile(path_.generic_string(), aiProcess_Triangulate | aiProcess_GenUVCoords | aiProcess_GenNormals | aiProcess_FlipUVs);
     if(!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)  {
         throw(Model::ModelException(std::string("ERROR::ASSIMP::") + import.GetErrorString()));
     }
 	std::cout << "[path_] : " << path_ << std::endl;
-    directory_ = path_.substr(0, path_.find_last_of(DISPLAY_GLFW_SLASH));
+    directory_ = path_.parent_path();
 	std::cout << "[directory_] : " << directory_ << std::endl;
     processNode_(scene->mRootNode, scene);
 }
@@ -169,21 +169,18 @@ std::vector<Texture>    Model::loadMaterialTextures_(aiMaterial *mat, aiTextureT
     return (textures);
 }
 
-unsigned int Texture::TextureFromFile(const char *path, const std::string &directory)
+unsigned int Texture::TextureFromFile(const char *path, boost::filesystem::path const &directory)
 {
-    std::string         filename;
-    unsigned char       *data;
-    unsigned int        textureID;
-    GLenum              format;
-    int                 width, height, nrComponents;
+	boost::filesystem::path		filename(directory / path);
+    unsigned char      			 *data;
+    unsigned int        		textureID;
+    GLenum              		format;
+    int                 		width, height, nrComponents;
 
-    filename = std::string(path);
-
-    filename = directory + DISPLAY_GLFW_SLASH + filename;
 
     glGenTextures(1, &textureID);
 
-    data = stbi_load(filename.c_str(), &width, &height, &nrComponents, 0);
+    data = stbi_load(filename.generic_string().c_str(), &width, &height, &nrComponents, 0);
     if (data && nrComponents == 2)
 		throw(Model::ModelException(std::string("Texture cannot be GREY_ALPHA at path: ") + path));
     else if (data) {
@@ -205,12 +202,12 @@ unsigned int Texture::TextureFromFile(const char *path, const std::string &direc
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        std::cout << "Texture : " << filename << std::endl;
+        std::cout << "Texture : " << filename.generic_string() << std::endl;
     }
     else
 	{
 		stbi_image_free(data);
-		throw(Model::ModelException(std::string("Texture failed to load at path: ") + filename));
+		throw(Model::ModelException(std::string("Texture failed to load at path: ") + filename.generic_string()));
 
 	}
 	stbi_image_free(data);

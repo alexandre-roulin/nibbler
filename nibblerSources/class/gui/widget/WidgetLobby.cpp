@@ -6,14 +6,15 @@ WidgetLobby::WidgetLobby(Core &core) :
 AWidget(core)
 {
 	_reload();
-	addColor("Green", "ressource/snake_presentation/snake_green.png");
-	addColor("Blue", "ressource/snake_presentation/snake_blue.png");
-	addColor("Purple", "ressource/snake_presentation/snake_purple.png");
-	addColor("Pink", "ressource/snake_presentation/snake_pink.png");
-	addColor("Grey", "ressource/snake_presentation/snake_grey.png");
-	addColor("Yellow", "ressource/snake_presentation/snake_yellow.png");
-	addColor("Orange", "ressource/snake_presentation/snake_orange.png");
-	addColor("Red", "ressource/snake_presentation/snake_red.png");
+
+	addColor("Green", (_core.getPathRessources() / "snake_presentation/snake_green.png").generic_string());
+	addColor("Blue", (_core.getPathRessources() / "snake_presentation/snake_blue.png").generic_string());
+	addColor("Purple", (_core.getPathRessources() / "snake_presentation/snake_purple.png").generic_string());
+	addColor("Pink", (_core.getPathRessources() / "snake_presentation/snake_pink.png").generic_string());
+	addColor("Grey", (_core.getPathRessources() / "snake_presentation/snake_grey.png").generic_string());
+	addColor("Yellow", (_core.getPathRessources() / "snake_presentation/snake_yellow.png").generic_string());
+	addColor("Orange", (_core.getPathRessources() / "snake_presentation/snake_orange.png").generic_string());
+	addColor("Red", (_core.getPathRessources() / "snake_presentation/snake_red.png").generic_string());
 }
 
 WidgetLobby::~WidgetLobby(void)
@@ -42,11 +43,8 @@ void			WidgetLobby::_reload()
 		_snake.clear();
 		Snake const *snakes = _core.univers.getGameNetwork()->getSnakes();
 		if (snakes)
-		for (unsigned i = 0; i < MAX_SNAKE; i++) {
-			//std::cout << snakes[i].id << "  |  isYour ? i[" << i <<  "] id[" << _core.univers.getGameNetwork()->getId() << "] = [" << (i ==
-			//_core.univers.getGameNetwork()->getId()) << "]" << std::endl;
+		for (unsigned i = 0; i < MAX_SNAKE; i++)
 			addSnake(snakes[i], (i == _core.univers.getGameNetwork()->getId()));
-		}
 	}
 }
 

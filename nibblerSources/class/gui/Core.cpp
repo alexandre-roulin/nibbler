@@ -21,7 +21,6 @@ _io(_createContext()),
 _chat(*this),
 _mapSize(sf::Vector2<int>(20, 20))
 {
-	std::cout << "Regular : " << pathRessources_.generic_string() << std::endl;
 	if (!_imageTitleScreen.loadFromFile((pathRessources_ / "ecran_titre.png").generic_string()))
 		(throw(Core::CoreConstructorException("Cannot load background")));
 	_io.IniFilename = NULL;
@@ -38,6 +37,10 @@ ImGuiIO			&Core::_createContext(void)
 Core::~Core(void)
 {
 	ImGui::SFML::Shutdown();
+}
+
+boost::filesystem::path const	&Core::getPathRessources() const {
+	return (pathRessources_);
 }
 
 void			Core::_updateGenCoreEvent() {

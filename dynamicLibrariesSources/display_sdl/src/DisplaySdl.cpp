@@ -1,8 +1,7 @@
 
-#include <DisplaySdl.hpp>
-
+#include <boost/filesystem.hpp>
+#include "nibbler.hpp"
 #include "DisplaySdl.hpp"
-#include "../include/DisplaySdl.hpp"
 #include "Display2D.hpp"
 
 IDisplay			*newDisplay(int width,
@@ -33,11 +32,10 @@ DisplaySdl::DisplaySdl(int width,
     if (SDL_Init(SDL_INIT_VIDEO) < 0 || IMG_Init(IMG_INIT_PNG) < 0)
         this->_error();
 
-	std::string pathFile = __FILE__;
-	std::string pathRoot = pathFile.substr(0, pathFile.rfind(DISPLAY_SLASH));
-	pathRoot = pathFile.substr(0, pathRoot.rfind(DISPLAY_SLASH));
 
-	if (!(this->_tileset = IMG_Load((pathRoot + DISPLAY_SLASH + "snake_tileset.png").c_str())))
+	boost::filesystem::path pathRoot(NIBBLER_ROOT_PROJECT_PATH);
+
+	if (!(this->_tileset = IMG_Load((pathRoot / "ressources" / "snake_tileset.png").generic_string().c_str())))
 		this->_error();
 	this->_tilesetWidth = (this->_tileset->w / this->_tileSize);
     if (!(this->_win = SDL_CreateWindow(windowName, SDL_WINDOWPOS_CENTERED,

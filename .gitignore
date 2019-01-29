@@ -2,7 +2,7 @@ extern/imgui/imconfig-sfml.h
 build
 cmake-build-release/
 cmake-build-debug/
-
+tmp/
 ./Makefile
 ./nibbler/Makefile
 ./dynamicLibraries/display_glfw/Makefile

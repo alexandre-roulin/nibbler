@@ -15,9 +15,9 @@ SoundSdl::SoundSdl(void) :
 _music(nullptr)
 {
 	if(SDL_Init(SDL_INIT_AUDIO) < 0)
-		throw(SoundSdl::SdlSoundException("Connaot init Audio"));
+		throw(SoundSdl::SdlSoundException("Audio cant be loaded"));
 	if(Mix_OpenAudio( 22050, MIX_DEFAULT_FORMAT, 2, 4096 ) == -1)
-		throw(SoundSdl::SdlSoundException("Connaot init Audio"));
+		throw(SoundSdl::SdlSoundException("Audio cant be loaded"));
 }
 
 SoundSdl::~SoundSdl(void)

@@ -2,6 +2,7 @@
 
 #include <exception>
 #include <glm/glm.hpp>
+#include <boost/filesystem.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -20,19 +21,12 @@
 #include "Camera.hpp"
 #include "ActModel.hpp"
 #include "MutantGrid.tpp"
-#include "Skybox.hpp"
 #include "Particle.hpp"
 #include "Material.hpp"
 #include "Light.hpp"
 
 #define DISPLAY_GLFW_WIN_WIDTH 1024
 #define DISPLAY_GLFW_WIN_HEIGHT 720
-
-#ifdef _WIN32
-    #define DISPLAY_GLFW_SLASH "\\"
-#else
-    #define DISPLAY_GLFW_SLASH "/"
-#endif
 
 class DisplayGlfw : public Glfw, public IDisplay {
 public:
@@ -76,6 +70,7 @@ public:
 	DisplayGlfw() = delete;
 
 private:
+	boost::filesystem::path			pathRoot_;
     eDirection          			direction_;
 	float							currentTimer_;
 	float							maxTimer_;
@@ -84,28 +79,15 @@ private:
     Vector2D<int> const 			winTileSize_;
     Vector2D<int> const 			winPixelSize_;
 
-	MutantGrid< eSprite >					tileBackground_;
-    MutantGrid< ActModel >				background_;
-	MutantGrid< eSprite >					tileGrid_;
-	MutantGrid< ActModel >				grid_;
+	MutantGrid< eSprite >			tileBackground_;
+    MutantGrid< ActModel >			background_;
+	MutantGrid< eSprite >			tileGrid_;
+	MutantGrid< ActModel >			grid_;
 
 	float							deltaTime_;
 
-    std::string 			        pathRoot_;
-    std::string     			    pathModel_;
-	std::string     			    pathBlock_;
-	std::string     			    pathGrass_;
-	std::string     			    pathWall_;
-	std::string						pathDirectorySkyBox_;
-	std::string						pathShaderBasic_;
-	std::string						pathShaderSkyBox_;
-	std::string						pathAppleModel_;
-    std::list< std::string >		pathSkyBox_;
-
 	Shader							shader_;
 	Shader							shaderMultiple_;
-	std::unique_ptr< Skybox >		skybox_;
-	Model							snake_;
 	Model							block_;
 	Model							modelGrass_;
 	Model							modelWall_;
@@ -125,7 +107,6 @@ private:
 
     void                error_(std::string const &s = std::string("Error"));
     void                clean_();
-    void                getPath_();
 	void				drawGridCase_(eSprite sprite, int x, int y);
 	void				drawGridCaseBody_(int x, int y);
 	void				interpolateGridCase_(int x, int y);

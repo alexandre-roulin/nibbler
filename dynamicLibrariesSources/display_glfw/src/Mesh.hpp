@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <glm/glm.hpp>
+#include <boost/filesystem.hpp>
 #include "Shader.hpp"
 
 class Shader;
@@ -31,7 +32,7 @@ struct Texture {
 	eType			type;
 	std::string		path;
 
-	static unsigned int TextureFromFile(const char *path, const std::string &directory);
+	static unsigned int TextureFromFile(const char *path, boost::filesystem::path const &directory);
 };
 
 class Mesh {

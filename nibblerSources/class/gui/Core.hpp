@@ -37,12 +37,13 @@ class Core {
 
 	Univers						&univers;
 
-	bool						getStartGane() const;
-	void 						setStartGame(bool gameStart);
+	bool							getStartGane() const;
+	void 							setStartGame(bool gameStart);
 
+	boost::filesystem::path const	&getPathRessources() const;
 
-	static void					beginColor(float const color);
-	static void					endColor();
+	static void						beginColor(float const color);
+	static void						endColor();
 
 	static float const 				HUE_RED;
 	static float const 				HUE_GREEN;

@@ -4,13 +4,13 @@
 #include <assimp/Importer.hpp>
 #include <assimp/postprocess.h>
 #include <assimp/scene.h>
-#include "Mesh.hpp"
+#include <boost/filesystem.hpp>
 #include <deque>
 #include <bitset>
 #include <glm/gtc/matrix_transform.hpp>
+#include "Mesh.hpp"
 
 class Shader;
-
 
 class Model {
 public:
@@ -49,8 +49,8 @@ public:
 
 private:
 	std::deque<Mesh>		mesh_;
-	std::string				path_;
-	std::string				directory_;
+	boost::filesystem::path	path_;
+	boost::filesystem::path	directory_;
 
 	glm::vec3				positionMax_;
 	glm::vec3				positionMin_;
