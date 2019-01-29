@@ -12,7 +12,7 @@
 #include <events/NextFrame.hpp>
 #include <boost/thread.hpp>
 
-#define PATH_DISPLAY_LIBRARY_SFML "dynamicLibraries/libdisplay_glfw.so"
+#define PATH_DISPLAY_LIBRARY_SFML "dynamicLibraries/libdisplay_sfml.so"
 #define PATH_DISPLAY_LIBRARY_GLFW "dynamicLibraries/libdisplay_glfw.so"
 #define PATH_DISPLAY_LIBRARY_SDL "dynamicLibraries/libdisplay_sdl.so"
 
