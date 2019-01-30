@@ -77,8 +77,7 @@ include_directories(
         ${CMAKE_SOURCE_DIR}/extern/stb/)
 
 
-
-set(SDL2_PATH "$ENV{HOME}/.brew")
+set(SDL2_PATH "$ENV{HOME}/.brew;D:\\lib\\SDL2-2.0.9\\")
 find_package(SDL2 REQUIRED)
 set(SDL2_IMAGE_PATH ${SDL2_SEARCH_PATHS})
 set(SDL2_MIXER_PATH ${SDL2_SEARCH_PATHS})
