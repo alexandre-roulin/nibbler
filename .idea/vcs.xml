@@ -3,6 +3,7 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/cmake/boost-cmake" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/cmake/sdl2-cmake-scripts" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/extern/assimp" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/extern/glad" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/extern/glfw" vcs="Git" />

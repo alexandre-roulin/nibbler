@@ -60,7 +60,7 @@ if (GIT_FOUND AND EXISTS "${CMAKE_SOURCE_DIR}/.git")
     endif ()
 endif ()
 
-set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
+set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake;${CMAKE_SOURCE_DIR}/cmake/sdl2-cmake-scripts/;${CMAKE_MODULE_PATH}")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DIMGUI_USER_CONFIG=\"<../imconfig-sfml.h>\" -fsanitize=address -g3")
 set(EXTERN_SOURCES_DISPLAY_GLFW "${CMAKE_SOURCE_DIR}/extern/glad/src/glad.c")
 
@@ -77,7 +77,12 @@ include_directories(
         ${CMAKE_SOURCE_DIR}/extern/stb/)
 
 
+
+set(SDL2_PATH "$ENV{HOME}/.brew")
 find_package(SDL2 REQUIRED)
+set(SDL2_IMAGE_PATH ${SDL2_SEARCH_PATHS})
+set(SDL2_MIXER_PATH ${SDL2_SEARCH_PATHS})
+
 find_package(SDL2_image REQUIRED)
 find_package(SDL2_mixer REQUIRED)
 
