@@ -83,13 +83,13 @@ void	ActModel::resetTransform() {
 }
 
 void	ActModel::render(Shader &shader, GLenum typeOfDraw) {
-	updateTransform_();
+	updateTransform();
 	glm::mat4 modelMatrix = transform_;
 	shader.setMat4("model", modelMatrix);
 	model_->render(shader, typeOfDraw);
 }
 
-void	ActModel::updateTransform_() {
+void	ActModel::updateTransform() {
 	glm::mat4 scale(1.f);
 	glm::mat4 toOrigin(1.f);
 

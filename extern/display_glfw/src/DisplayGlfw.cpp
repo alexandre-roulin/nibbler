@@ -5,6 +5,7 @@
 #include "DisplayGlfw.hpp"
 #include "nibbler.hpp"
 #include "Skybox.hpp"
+#include "Particle.hpp"
 #include <algorithm>
 
 #define PARTICULE_SIZE 1
@@ -35,6 +36,7 @@ tileGrid_(winTileSize_.getX(), winTileSize_.getY()),
 grid_(winTileSize_.getX(), winTileSize_.getY()),
 deltaTime_(0.016f),
 testParticle_(nullptr),
+particuleBackgroundOutline_(nullptr),
 skybox_(nullptr),
 projection_(1.f),
 view_(1.f),
@@ -55,12 +57,13 @@ light_(glm::vec3(0.f, 0.f, 30.f)) {
 	projection_ = glm::perspective(glm::radians(45.0f),
             (float)DISPLAY_GLFW_WIN_WIDTH / (float)DISPLAY_GLFW_WIN_HEIGHT,
             NEAR_PLANE, MAX_PLANE);
-/*
+
 	shaderMultiple_.attach(pathShaderBasic_ + "Multiple.vert");
-	shaderMultiple_.attach(pathShaderBasic_ + "Multiple.frag");
+	shaderMultiple_.attach(pathShaderBasic_ + ".frag");
 	shaderMultiple_.link();
-*/
-    shader_.attach(pathShaderBasic_ + ".vert");
+
+
+	shader_.attach(pathShaderBasic_ + ".vert");
     shader_.attach(pathShaderBasic_ + ".frag");
     shader_.link();
 
@@ -72,21 +75,14 @@ light_(glm::vec3(0.f, 0.f, 30.f)) {
     modelWall_.setModel(pathWall_);
 	appleModel_.setModel(pathAppleModel_);
 
-	/*
-	testParticle_ = new Particle(modelGrass_, PARTICULE_SIZE*PARTICULE_SIZE*PARTICULE_SIZE);
-	for (int y = 0; y < PARTICULE_SIZE; ++y) {
-		for (int x = 0; x < PARTICULE_SIZE; ++x) {
-			for (int z = 0; z < PARTICULE_SIZE; ++z) {
-				testParticle_->transforms[x + PARTICULE_SIZE * (y + PARTICULE_SIZE * z)].translate(glm::vec3(x, y, z));
-				testParticle_->transforms[x + PARTICULE_SIZE * (y + PARTICULE_SIZE * z)].scale(glm::vec3(-0.10f));
-			}
-		}
-	}*/
-
 	if (winTileSize_.getY() < winTileSize_.getX())
     	camera_.processPosition(Camera::Movement::BACKWARD, winTileSize_.getX() / 2);
 	else
 		camera_.processPosition(Camera::Movement::BACKWARD, winTileSize_.getY() / 2);
+
+	testParticle_ = new Particle(modelGrass_, winTileSize_.getY() * winTileSize_.getX());
+	particuleBackgroundOutline_ = new Particle(modelWall_, winTileSize_.getY() * winTileSize_.getX());
+
 }
 void				DisplayGlfw::constructMaterialMap_() {
 	materialMap_.try_emplace(eSprite::GREEN, "GREEN");
@@ -162,27 +158,33 @@ void DisplayGlfw::error_(std::string const &s) {
 
 void DisplayGlfw::clean_() {
     //_win.close();
+    if (testParticle_)
+    	delete testParticle_;
+	if (particuleBackgroundOutline_)
+		delete particuleBackgroundOutline_;
 }
 
 void		DisplayGlfw::setBackground(MutantGrid< eSprite > const &grid) {
-    tileBackground_ = grid;
-	for (int y = 0; winTileSize_.getY() > y; ++y) {
-        for (int x = 0; x < winTileSize_.getX(); ++x) {
+	tileBackground_ = grid;
 
-            if ((tileBackground_(x, y) & eSprite::WALL) == eSprite::WALL) {
-                background_(x, y).assign(&modelWall_);
-				background_(x, y).resetTransform();
-				background_(x, y).translate(glm::vec3(x - winTileSize_.getX() / 2, y - winTileSize_.getY() / 2, 0.f));
-				background_(x, y).scale(glm::vec3(-0.10f));
-            }
-            else if ((tileBackground_(x, y) & eSprite::GROUND) == eSprite::GROUND) {
-                background_(x, y).assign(&modelGrass_);
-				background_(x, y).resetTransform();
-				background_(x, y).translate(glm::vec3(x - winTileSize_.getX() / 2, y - winTileSize_.getY() / 2, 0.f));
-				background_(x, y).scale(glm::vec3(-0.10f));
-            }
-        }
-    }
+	for (int y = 0; winTileSize_.getY() > y; ++y) {
+		for (int x = 0; x < winTileSize_.getX(); ++x) {
+
+			testParticle_->transforms[y * winTileSize_.getX() + x].resetTransform();
+			testParticle_->transforms[y * winTileSize_.getX() + x].translate(glm::vec3(x - winTileSize_.getX() / 2, y - winTileSize_.getY() / 2, 0.f));
+			testParticle_->transforms[y * winTileSize_.getX() + x].scale(glm::vec3(-0.10f));
+			testParticle_->transforms[y * winTileSize_.getX() + x].updateTransform();
+
+			particuleBackgroundOutline_->transforms[y * winTileSize_.getX() + x].resetTransform();
+			particuleBackgroundOutline_->transforms[y * winTileSize_.getX() + x].translate(glm::vec3(x - winTileSize_.getX() / 2, y - winTileSize_.getY() / 2, 0.f));
+			particuleBackgroundOutline_->transforms[y * winTileSize_.getX() + x].scale(glm::vec3(-0.05f));
+			particuleBackgroundOutline_->transforms[y * winTileSize_.getX() + x].updateTransform();
+		}
+	}
+
+	testParticle_->update();
+	particuleBackgroundOutline_->update();
+
 }
 
 void		DisplayGlfw::drawGridCaseBody_(int x, int y) {
@@ -226,6 +228,7 @@ void		DisplayGlfw::drawGrid(MutantGrid< eSprite > const &grid) {
 	shader_.setMat4("projection", projection_);
 	shader_.setMat4("view", view_);
 	shader_.setVec3("uCameraPosition", camera_.getPosition());
+
 
 	for (int y = 0; y < winTileSize_.getY(); ++y) {
 		for (int x = 0; x < winTileSize_.getX(); ++x) {
@@ -310,13 +313,14 @@ void DisplayGlfw::render(float currentDelayFrame, float maxDelayFrame) {
     }
 
 	shader_.activate();
+	shader_.setInt("uBackground", 0);
 	light_.putLightToShader(shader_);
 	view_ = camera_.getViewMatrix();
 	shader_.setMat4("projection", projection_);
 	shader_.setMat4("view", view_);
-	shader_.setInt("uBackground", 1);
-	shader_.setVec3("uCameraPosition", camera_.getPosition());
 
+	shader_.setVec3("uCameraPosition", camera_.getPosition());
+/*
     for (int y = 0; y < winTileSize_.getY(); y++) {
         for (int x = 0; x < winTileSize_.getX(); x++) {
         	if (background_(x, y).getModel()) {
@@ -335,18 +339,24 @@ void DisplayGlfw::render(float currentDelayFrame, float maxDelayFrame) {
         	}
         }
     }
-
-	shader_.setInt("uBackground", 0);
-/*
+*/
 
 	shaderMultiple_.activate();
+	light_.putLightToShader(shaderMultiple_);
+	shaderMultiple_.setInt("uBackground", 1);
+	shaderMultiple_.setVec3("uCameraPosition", camera_.getPosition());
 	shaderMultiple_.setMat4("projection", projection_);
 	shaderMultiple_.setMat4("view", view_);
 
-	testParticle_->updatePhysicsMovement(attractor, deltaTime_);
+
+	materialMap_.at(eSprite::GROUND).putMaterialToShader(shaderMultiple_);
 	testParticle_->update();
 	testParticle_->render(shaderMultiple_);
-*/
+
+	Material::unsetMaterial(shaderMultiple_);
+	particuleBackgroundOutline_->update();
+	particuleBackgroundOutline_->render(shaderMultiple_, GL_LINE_STRIP);
+
 
     Glfw::render();
 	glClearColor(0.29f * 0.35f, 0.0f, 0.51f * 0.35f, 0.40f);

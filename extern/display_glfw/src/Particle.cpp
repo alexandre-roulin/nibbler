@@ -4,13 +4,13 @@
 #include <iostream>
 
 Particle::Particle(Model &model, unsigned int size) :
-bPhysicsMovement_(true),
+bPhysicsMovement_(false),
 size_(size),
 model_(model),
 transforms(size),
 physicsMovement_(size)
 {
-	bufferTransform = new glm::mat4[size];
+	bufferTransform.resize(size);
 	for (auto &transform : transforms) {
 		transform.assign(&model);
 	}
@@ -18,7 +18,7 @@ physicsMovement_(size)
 
 	glGenBuffers(1, &BOParticle_);
 	glBindBuffer(GL_ARRAY_BUFFER, BOParticle_);
-	glBufferData(GL_ARRAY_BUFFER, size * sizeof(glm::mat4), bufferTransform, GL_STREAM_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, size * sizeof(glm::mat4), bufferTransform.data(), GL_STREAM_DRAW);
 
 
 	for (const auto &mesh : model_.getMeshes()) {
@@ -49,7 +49,6 @@ physicsMovement_(size)
 }
 
 Particle::~Particle() {
-	delete [] bufferTransform;
 }
 
 void Particle::setPhysicsMovement(bool b) {
@@ -89,15 +88,15 @@ void Particle::update() {
 	updateTransforms_();
 
 	glBindBuffer(GL_ARRAY_BUFFER, BOParticle_);
-	glBufferData(GL_ARRAY_BUFFER, size_ * sizeof(glm::mat4), bufferTransform, GL_STREAM_DRAW);
-	glBufferSubData(GL_ARRAY_BUFFER, 0, size_ * sizeof(glm::mat4), bufferTransform);
+	glBufferData(GL_ARRAY_BUFFER, size_ * sizeof(glm::mat4), bufferTransform.data(), GL_STREAM_DRAW);
+	glBufferSubData(GL_ARRAY_BUFFER, 0, size_ * sizeof(glm::mat4), bufferTransform.data());
 }
 
-void Particle::render(Shader &shader) {
+void Particle::render(Shader &shader, GLenum typeOfDraw) {
 	shader.activate();
 	for (const auto &mesh : model_.getMeshes()) {
 		mesh.activeTexture(shader);
 		glBindVertexArray(mesh.getVAO());
-		glDrawElementsInstanced(GL_TRIANGLES, static_cast<GLsizei>(mesh.getIndice().size()), GL_UNSIGNED_INT, 0, size_);
+		glDrawElementsInstanced(typeOfDraw, static_cast<GLsizei>(mesh.getIndice().size()), GL_UNSIGNED_INT, 0, size_);
 	}
 }

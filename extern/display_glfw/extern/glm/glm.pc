@@ -1,4 +1,4 @@
-prefix=/usr/local
+prefix=/Users/aroulin/.brew
 includedir=${prefix}/include
 
 Name: GLM
