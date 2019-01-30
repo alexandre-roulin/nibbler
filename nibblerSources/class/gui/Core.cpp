@@ -30,7 +30,6 @@ ImGuiIO			&Core::_createContext(void)
 {
 	_win.setFramerateLimit(60);
 	ImGui::SFML::Init(_win);
-	ImGui::CreateContext();
 	return (ImGui::GetIO());
 }
 

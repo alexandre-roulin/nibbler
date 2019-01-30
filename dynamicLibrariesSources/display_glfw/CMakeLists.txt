@@ -2,24 +2,58 @@ cmake_minimum_required(VERSION 3.0)
 set(NAME display_glfw)
 project(${NAME})
 
-include_directories(include/)
-
-file(GLOB PROJECT_HEADERS src/*.hpp include/*.hpp)
-file(GLOB PROJECT_SOURCES src/*.cpp)
-
-source_group("Headers" FILES ${PROJECT_HEADERS})
-#source_group("Shaders" FILES ${PROJECT_SHADERS})
-source_group("Sources" FILES ${PROJECT_SOURCES})
-source_group("Vendors" FILES ${EXTERN_SOURCES})
-
-add_definitions(-DGLFW_INCLUDE_NONE -DPROJECT_SOURCE_DIR=\"${PROJECT_SOURCE_DIR}\")
+#add_definitions(-DGLFW_INCLUDE_NONE -DPROJECT_SOURCE_DIR=\"${PROJECT_SOURCE_DIR}\")
 #add_executable(${NAME}
-#${PROJECT_SOURCES} ${PROJECT_HEADERS}
-#${EXTERN_SOURCES_DISPLAY_GLFW})
+#        src/ActModel.cpp
+#        src/ActModel.hpp
+#        src/Camera.cpp
+#        src/Camera.hpp
+#        src/DisplayGlfw.cpp
+#        src/DisplayGlfw.hpp
+#        src/Glfw.cpp
+#        src/Glfw.hpp
+#        src/Light.cpp
+#        src/Light.hpp
+#        src/Material.cpp
+#        src/Material.hpp
+#        src/Mesh.cpp
+#        src/Mesh.hpp
+#        src/Model.cpp
+#        src/Model.hpp
+#        src/Particle.cpp
+#        src/Particle.hpp
+#        src/Shader.cpp
+#        src/Shader.hpp
+#        src/Skybox.cpp
+#        src/Skybox.hpp
+#        src/main.cpp
+#        )
 
 add_library(${NAME} MODULE
-${PROJECT_SOURCES} ${PROJECT_HEADERS}
-${EXTERN_SOURCES_DISPLAY_GLFW})
+        ../../extern/glad/src/glad.c
+       src/ActModel.cpp
+       src/ActModel.hpp
+       src/Camera.cpp
+       src/Camera.hpp
+       src/DisplayGlfw.cpp
+       src/DisplayGlfw.hpp
+       src/Glfw.cpp
+       src/Glfw.hpp
+       src/Light.cpp
+       src/Light.hpp
+       src/Material.cpp
+       src/Material.hpp
+       src/Mesh.cpp
+       src/Mesh.hpp
+       src/Model.cpp
+       src/Model.hpp
+       src/Particle.cpp
+       src/Particle.hpp
+       src/Shader.cpp
+       src/Shader.hpp
+       src/Skybox.cpp
+       src/Skybox.hpp
+)
 
 set_target_properties(${NAME}
         PROPERTIES
