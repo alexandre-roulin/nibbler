@@ -25,6 +25,9 @@ elseif (APPLE)
         execute_process(COMMAND $ENV{HOME}/.brew/bin/brew install sdl2_image)
         execute_process(COMMAND $ENV{HOME}/.brew/bin/brew install sdl2_mixer)
         execute_process(COMMAND $ENV{HOME}/.brew/bin/brew install sfml)
+        execute_process(COMMAND $ENV{HOME}/.brew/bin/brew install boost)
+        execute_process(COMMAND $ENV{HOME}/.brew/bin/brew install assimp)
+        execute_process(COMMAND $ENV{HOME}/.brew/bin/brew install glm)
     endif(INSTALL)
 
     link_directories(/usr/lib/)
@@ -64,45 +67,49 @@ set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake;${CMAKE_SOURCE_DIR}/cmake/sdl2-
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DIMGUI_USER_CONFIG=\"<../imconfig-sfml.h>\" -fsanitize=address -g3")
 set(EXTERN_SOURCES_DISPLAY_GLFW "${CMAKE_SOURCE_DIR}/extern/glad/src/glad.c")
 
-include_directories(
-        ${CMAKE_SOURCE_DIR}/nibblerSources/incs/
-        ${CMAKE_SOURCE_DIR}/extern/imgui/
-        ${CMAKE_SOURCE_DIR}/extern/imgui/imgui/
-        ${CMAKE_SOURCE_DIR}/extern/imgui/imgui-sfml/
-        ${CMAKE_SOURCE_DIR}/extern/assimp/include/
-        ${CMAKE_SOURCE_DIR}/extern/glad/include/
-        ${CMAKE_SOURCE_DIR}/extern/glfw/include/
-        ${CMAKE_SOURCE_DIR}/extern/sfml/include/
-        ${CMAKE_SOURCE_DIR}/extern/glm/
-        ${CMAKE_SOURCE_DIR}/extern/stb/)
-
 
 set(SDL2_PATH "$ENV{HOME}/.brew;D:\\lib\\SDL2-2.0.9\\")
 find_package(SDL2 REQUIRED)
 set(SDL2_IMAGE_PATH ${SDL2_SEARCH_PATHS})
 set(SDL2_MIXER_PATH ${SDL2_SEARCH_PATHS})
-
 find_package(SDL2_image REQUIRED)
 find_package(SDL2_mixer REQUIRED)
 
 find_package(SFML REQUIRED COMPONENTS audio graphics window system)
 include_directories(${SFML_INCLUDE_DIR})
 
-add_subdirectory(cmake/boost-cmake)
+set(BOOST_ROOT $ENV{HOME}/.brew/)
+find_package(Boost REQUIRED COMPONENTS program_options thread filesystem)
+include_directories( ${Boost_INCLUDE_DIRS} )
+
+
+#list(APPEND CMAKE_MODULE_PATH "~/.brew/lib/cmake/glm")
+find_package(glm REQUIRED)
+link_directories(${GLM_LIBRARY_DIRS})
+include_directories(${GLM_INCLUDE_DIRS})
+
+list(APPEND CMAKE_MODULE_PATH "~/.brew/lib/cmake/glfw3")
+find_package(glfw3 REQUIRED)
+link_directories(${GLFW3_LIBRARY_DIRS})
+include_directories(${GLFW3_INCLUDE_DIRS})
+
+#set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} ~/.brew/lib/cmake/assimp/)
+find_package(assimp REQUIRED)
+link_directories(${ASSIMP_LIBRARY_DIRS})
+include_directories(${ASSIMP_INCLUDE_DIRS})
+
+include_directories(
+        ${CMAKE_SOURCE_DIR}/nibblerSources/incs/
+        ${CMAKE_SOURCE_DIR}/extern/imgui/
+        ${CMAKE_SOURCE_DIR}/extern/imgui/imgui/
+        ${CMAKE_SOURCE_DIR}/extern/imgui/imgui-sfml/
+        ${CMAKE_SOURCE_DIR}/extern/glad/include/
+        ${CMAKE_SOURCE_DIR}/extern/glfw/include/
+        ${CMAKE_SOURCE_DIR}/extern/sfml/include/
+        ${CMAKE_SOURCE_DIR}/extern/glm/
+        ${CMAKE_SOURCE_DIR}/extern/stb/)
 
 add_subdirectory(extern/imgui)
-option(GLM_BUILD_DOCS OFF)
-option(GLM_BUILD_EXAMPLES OFF)
-option(GLM_TEST_ENABLE OFF)
-add_subdirectory(extern/glm)
-option(GLFW_BUILD_DOCS OFF)
-option(GLFW_BUILD_EXAMPLES OFF)
-option(GLFW_BUILD_TESTS OFF)
-add_subdirectory(extern/glfw)
-option(ASSIMP_BUILD_ASSIMP_TOOLS OFF)
-option(ASSIMP_BUILD_SAMPLES OFF)
-option(ASSIMP_BUILD_TESTS OFF)
-add_subdirectory(extern/assimp)
 
 add_subdirectory(nibblerSources)
 add_subdirectory(dynamicLibrariesSources/display_glfw)
