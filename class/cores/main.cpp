@@ -27,6 +27,19 @@ std::ostream &operator<<(std::ostream &os, const Snake &snake) {
 	return os;
 }
 
+
+/*
+univers.getSound().addNoise(
+		std::string("./ressource/sound/appear-online.ogg"));
+univers.getSound().addNoise(std::string("./ressource/sound/yes-2.wav"));
+univers.getSound().addNoise(std::string("./ressource/sound/click.wav"));
+univers.getSound().addNoise(
+		std::string("./ressource/sound/slime10.wav"));
+univers.getSound().addNoise(std::string("./ressource/sound/hit17.ogg"));
+univers.getSound().setMusic("./ressource/sound/zelda.ogg");
+univers.getSound().playMusic();
+*/
+
 bool demoGui(int ac, char **av, Univers &univers) {
 
 	if (ac > 1 && !strcmp(av[1], "demo")) {
@@ -38,101 +51,15 @@ bool demoGui(int ac, char **av, Univers &univers) {
 }
 
 void nibbler(Univers &univers) {
-	std::string buffer;
-	if (univers.testFlag(Univers::SOUND)) {
-		univers.load_external_sound_library(std::string("Game pro"),
-											std::string(
-													PATH_SOUND_LIBRARY_SFML));
-
-		univers.getSound().addNoise(
-				std::string("./ressource/sound/appear-online.ogg"));
-		univers.getSound().addNoise(std::string("./ressource/sound/yes-2.wav"));
-		univers.getSound().addNoise(std::string("./ressource/sound/click.wav"));
-		univers.getSound().addNoise(
-				std::string("./ressource/sound/slime10.wav"));
-		univers.getSound().addNoise(std::string("./ressource/sound/hit17.ogg"));
-		/*
-		univers.getSound().setMusic("./ressource/sound/zelda.ogg");
-		univers.getSound().playMusic();
-		*/
-	}
-
-	for (;;) {
-		std::cout << "$> ";
-		std::getline(std::cin, buffer);
-		if (buffer == "closea") {
-			univers.close_acceptor();
-		}
-		if (buffer == "border") {
-			univers.setBorderless(true);
-		}
-		if (buffer == "ia") {
-			univers.create_ia();
-		}
-		if (buffer == "dlia") {
-			univers.delete_ia();
-		}
-		if (buffer == "dls") {
-			univers.delete_server();
-		}
-		if (buffer == "sfml") {
-			univers.load_extern_lib_display(Univers::kExternSfmlLibrary);
-		}
-		if (buffer == "autos") {
-			univers.create_server();
-			univers.getGameNetwork()->connect("localhost", "4242");
-			sleep(1);
-			univers.getGameNetwork()->change_state_ready();
-			univers.load_extern_lib_display(Univers::kExternSfmlLibrary);
-
-		}
-		if (buffer == "autoc") {
-			univers.getGameNetwork()->connect("localhost", "4242");
-			sleep(1);
-			univers.getGameNetwork()->change_state_ready();
-			univers.load_extern_lib_display(Univers::kExternSfmlLibrary);
-			univers.new_game();
-		}
-		if (buffer == "autocs") {
-			std::cout << "connect > ";
-			std::getline(std::cin, buffer);
-			univers.getGameNetwork()->connect(buffer.c_str(), "4242");
-			sleep(1);
-			univers.getGameNetwork()->change_state_ready();
-			univers.load_extern_lib_display(Univers::kExternSfmlLibrary);
-			univers.loop();
-		}
-		if (buffer == "loop") {
-			univers.new_game();
-		}
-		if (buffer == "server") {
-			univers.create_server();
-		}
-		if (buffer == "connect") {
-			std::string dns, port;
-			std::cout << "dns > ";
-			std::getline(std::cin, dns);
-			std::cout << "port > ";
-			std::getline(std::cin, port);
-			univers.getGameNetwork()->connect(dns, port);
-		}
-		if (buffer == "ready") {
-			univers.getGameNetwork()->change_state_ready();
-		}
-
-		if (buffer == "ui") {
-			univers.create_ui();
-			univers.getCore_().aState();
-
-			bool start = univers.getCore_().getStartGane();
-			Core *core = univers.releaseCore_();
-			if (core)
-				delete core;
-			if (start) {
-				univers.load_extern_lib_display(Univers::kExternSfmlLibrary);
-				univers.new_game();
-			}
-		}
+	univers.create_ui();
+	univers.getCore_().aState();
+	bool start = univers.getCore_().getStartGane();
+	Core *core = univers.releaseCore_();
+	if (core)
+		delete core;
+	if (start) {
+		univers.load_extern_lib_display(Univers::kExternSfmlLibrary);
+		univers.new_game();
 	}
 }
 
@@ -141,28 +68,32 @@ void testKstar() {
 	int size = 10;
 
 	KStar kStar;
-	KStar::Vec2 source(0, 0);
+	KStar::Vec2 source(1, 1);
 	KStar::Vec2 target(9, 9);
 	kStar.setWorldSize(size);
 	kStar.setHeuristic(KStar::Heuristic::euclidean);
 	kStar.setDiagonalMovement(false);
 
+	int collision[10][10] = {
+			{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+			{1, 0, 0, 0, 0, 1, 0, 0, 0, 1},
+			{1, 0, 0, 0, 0, 1, 0, 0, 0, 1},
+			{1, 0, 0, 0, 0, 1, 0, 0, 0, 1},
+			{1, 0, 0, 0, 0, 1, 0, 0, 0, 1},
+			{1, 0, 0, 0, 0, 1, 0, 0, 0, 1},
+			{1, 1, 1, 1, 1, 1, 0, 0, 0, 1},
+			{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+			{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+			{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+	};
 
-	for (int i = 0; i < size - 1; ++i) {
-		kStar.addCollision({2, i});
-	}
-	for (int i = 1; i < size; ++i) {
-		kStar.addCollision({4, i});
-	}
+	for (int y = 0; y < 10; ++y) {
+		for (int x = 0; x < 10; ++x) {
+			if (collision[y][x] == 1)
+				kStar.addCollision(KStar::Vec2(x, y));
+		}
 
-	for (int i = 0; i < size - 1; ++i) {
-		kStar.addCollision({6, i});
 	}
-
-	for (int i = 1; i < size; ++i) {
-		kStar.addCollision({8, i});
-	}
-
 
 	for (int iy = 0; iy < size; ++iy) {
 		for (int ix = 0; ix < size; ++ix) {
@@ -177,10 +108,11 @@ void testKstar() {
 		}
 		std::cout << std::endl;
 	}
+	KStar::Path path = kStar.searchPath(source, target);
 	std::cout << std::endl;
+	std::cout << path.size() << std::endl;
 	std::cout << std::endl;
 
-	KStar::Path path = kStar.searchPath(source, target);
 	for (int iy = 0; iy < size; ++iy) {
 		for (int ix = 0; ix < size; ++ix) {
 			if (iy == source.y && ix == source.x)
@@ -248,6 +180,6 @@ int main(int argc, char **argv) {
 		std::cerr << "Unhandled Exception reached the top of main: "
 				  << e.what() << ", application will now exit" << std::endl;
 	}
-
+	log_success("main.return()");
 	return (0);
 }

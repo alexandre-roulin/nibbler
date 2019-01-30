@@ -79,10 +79,6 @@ public:
 
 	void delete_client();
 
-	void close_acceptor();
-
-
-
 	/** Setter && Getter**/
 
 	//Network
@@ -140,7 +136,6 @@ private:
 	static const std::string WarningClientExist;
 	bool switchLib;
 	// Variable
-	std::mutex mutexLoop;
 	std::vector<NextFrame> nextFrame;
 	std::bitset<32> flag;
 	boost::asio::io_service io_loop;
@@ -162,6 +157,10 @@ private:
 	boost::thread thread;
 	eDisplay kDisplay;
 	unsigned int mapSize;
+public:
+	virtual ~Univers();
+
+private:
 	unsigned int gameSpeed;
 
 	bool load_external_display_library(std::string const &title,

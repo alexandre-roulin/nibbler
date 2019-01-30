@@ -31,6 +31,8 @@ void			WidgetMassiveButton::render(void)
 	}
 	if (ImGui::Button("create_client()")) {
 		_core.univers.create_client();
+	}
+	if (ImGui::Button("connect()")) {
 		_core.univers.getGameNetwork()->connect("localhost", "4242");
 	}
 	if (ImGui::Button("delete_client()")) {

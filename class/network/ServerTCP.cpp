@@ -12,6 +12,21 @@ ServerTCP::ServerTCP(Univers &univers, unsigned int port)
 	thread.detach();
 }
 
+
+ServerTCP::~ServerTCP() {
+	log_warn("~ServerTCP::pointers.clear()");
+	pointers.clear();
+	log_warn("~ServerTCP::io_service_.stop()");
+	io_service_.stop();
+	log_warn("~ServerTCP::acceptor_.cancel()");
+	acceptor_.cancel();
+	log_warn("~ServerTCP::acceptor_.close()");
+	acceptor_.close();
+	log_warn("~ServerTCP::thread.interrupt()");
+	thread.interrupt();
+	log_warn("~ServerTCP::end()");
+}
+
 void ServerTCP::start_accept() {
 	acceptor_.async_accept([this](std::error_code ec, tcp::socket socket) {
 
@@ -192,15 +207,6 @@ void ServerTCP::remove(TCPConnection::pointer remove) {
 								  }));
 }
 
-ServerTCP::~ServerTCP() {
-	io_service_.stop();
-	acceptor_.cancel();
-	acceptor_.close();
-	thread.interrupt();
-	std::cout << "ServerTCP::close" << std::endl;
-
-}
-
 bool ServerTCP::isFull() const {
 	return std::none_of(snake_array_.begin(), snake_array_.end(), [](auto snake){ return snake.id == -1; });
 }
@@ -291,15 +297,6 @@ void TCPConnection::readSocketData(eHeader header) {
 										boost::asio::placeholders::bytes_transferred));
 }
 
-void TCPConnection::write_socket(void const *data, size_t len) {
-
-	boost::asio::async_write(socket_, boost::asio::buffer(data, len),
-							 boost::bind(&TCPConnection::handle_write,
-										 shared_from_this(),
-										 boost::asio::placeholders::error,
-										 boost::asio::placeholders::bytes_transferred));
-}
-
 void TCPConnection::writeSocket(std::string message) {
 	boost::asio::async_write(socket_, boost::asio::buffer(message),
 							 boost::bind(&TCPConnection::handle_write,
@@ -325,6 +322,12 @@ int16_t TCPConnection::getId() const {
 }
 
 TCPConnection::~TCPConnection() {
-	if (socket_.is_open())
-	socket_.close();
+	try {
+		if (socket_.is_open()) {
+			socket_.shutdown(boost::asio::ip::tcp::socket::shutdown_both);
+			socket_.close();
+		}
+	} catch (std::exception const &e) {
+		std::cout << e.what() << std::endl;
+	}
 }

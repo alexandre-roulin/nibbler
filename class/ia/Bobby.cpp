@@ -138,7 +138,7 @@ void Bobby::calculateDirection() {
 
 			auto vecFood = getVecFood(vecSnake);
 
-
+			kStar.removeCollision(vecFood);
 
 			KStar::Path path = kStar.searchPath(vecSnake, vecFood);
 
@@ -146,12 +146,13 @@ void Bobby::calculateDirection() {
 				try {
 					findDirection(vecSnake, path[1]);
 					sendDirection();
-					log_warn("FOOD::Pathfinding[%d]", getId());
+					log_warn("FOOD::Pathfinding[%d] path.size()[%d]", getId(), path.size());
 					return;
 				} catch (std::exception const &e) {
 					log_error("WARN::NO_FOOD");
 				}
 			}
+			kStar.addCollision(vecFood);
 		}
 		if (univers_.getWorld_().getEntitiesManager().hasEntityByTagId(
 				clientTCP_->getId() + eTag::TAIL_TAG)) {
@@ -165,7 +166,7 @@ void Bobby::calculateDirection() {
 					try {
 						findDirection(vecSnake, path[1]);
 						sendDirection();
-						log_warn("TAIL::Pathfinding[%d]", getId());
+						log_warn("TAIL::Pathfinding[%d] path.size()[%d]", getId(), path.size());
 						return;
 					} catch (std::exception const &e) {
 						log_error("WARN::NO_TAIL");
@@ -232,13 +233,12 @@ KStar::Vec2 Bobby::getVecFood(KStar::Vec2 head) {
 		if (food.hasComponent<PositionComponent>()) {
 
 			auto positionFood = food.getComponent<PositionComponent>();
-			kStar.removeCollision(KStar::Vec2(positionFood.x, positionFood.y));
 //			log_warn("Food : %d - Position : %d",eSprite::FOOD, grid_(positionComponent.x, positionComponent.y));
 //			if (grid_(positionComponent.x, positionComponent.y) == eSprite::FOOD)
 			for (int base_y = 0; base_y < baseIndex; ++base_y) {
 				for (int base_x = 0; base_x < baseIndex; ++base_x) {
-					int sqrt_x = (positionFood.x + base_x * mapSize) - head.x;
-					int sqrt_y = (positionFood.y + base_y * mapSize) - head.y;
+					int scale_x = positionFood.x + base_x * mapSize;
+					int scale_y = positionFood.y + base_y * mapSize;
 //				log_trace("(%d + %d * %d) - (%d + (%d ? %d: 0))",
 //						  positionFood.x, base_x, mapSize, head.x,
 //						  univers_.isBorderless(), mapSize);
@@ -246,8 +246,8 @@ KStar::Vec2 Bobby::getVecFood(KStar::Vec2 head) {
 //						  positionFood.y, base_y, mapSize, head.y,
 //						  univers_.isBorderless(), mapSize);
 					compare = std::sqrt(
-							std::pow(sqrt_x, 2) +
-							std::pow(sqrt_y, 2)
+							std::pow(scale_x - head.x, 2) +
+							std::pow(scale_y - head.y, 2)
 					);
 //				log_warn("%d = %d - %d", sqrt_x,
 //						 (positionFood.x + base_x * mapSize), (head.x +
@@ -266,14 +266,14 @@ KStar::Vec2 Bobby::getVecFood(KStar::Vec2 head) {
 					//						return p.x == x && p.y == y;
 					//					}) == 1)
 
-					if (base_sqrt == -1 || (compare < base_sqrt && univers_.getWorld_().grid(x, y) == eSprite::FOOD	)) {
+					if (base_sqrt == -1 || (compare < base_sqrt && (univers_.getWorld_().grid(x, y) & eSprite::FOOD) == eSprite::FOOD)) {
 						base_sqrt = compare;
 //					log_success("{mapSize : %d} Position saved { %d , %d }",
 //								mapSize, positionFood.x + base_x * mapSize,
 //								positionFood.y + base_y * mapSize);
 						positionComponent = PositionComponent(
-								positionFood.x + base_x * mapSize,
-								positionFood.y + base_y * mapSize
+								scale_x,
+								scale_y
 						);
 					}
 				}
@@ -285,7 +285,17 @@ KStar::Vec2 Bobby::getVecFood(KStar::Vec2 head) {
 }
 
 void Bobby::addCollision() {
-//TODO
+	auto entities = univers_.getWorld_().getEntitiesManager().getEntities();
+	for (auto &entity : entities) {
+		if (entity.hasComponent<PositionComponent>()) {
+			auto positionComponent = entity.getComponent<PositionComponent>();
+			kStar.addCollision(KStar::Vec2(
+					positionComponent.x,
+					positionComponent.y
+					));
+		}
+
+	}
 }
 
 uint16_t Bobby::getId() const {

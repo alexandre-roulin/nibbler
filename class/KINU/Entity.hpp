@@ -123,6 +123,8 @@ namespace KINU {
 
 		Entity getEntityById(Entity::ID);
 
+		std::vector<Entity> getEntities();
+
 		/** Tag Management **/
 
 		// Getter entity by tag id
@@ -303,4 +305,5 @@ namespace KINU {
 		return std::static_pointer_cast<Pool<T>>(
 				componentPools[componentId]);
 	}
+
 }

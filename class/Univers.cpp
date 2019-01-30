@@ -28,7 +28,7 @@ Univers::Univers()
 		: timer_start(boost::asio::deadline_timer(io_start)),
 		  timer_loop(boost::asio::deadline_timer(io_loop)),
 		  mapSize(MAP_DEFAULT),
-		  gameSpeed(1000),
+		  gameSpeed(20),
 		  dlHandleDisplay(nullptr),
 		  dlHandleSound(nullptr),
 		  display(nullptr),
@@ -297,7 +297,16 @@ void Univers::loop_world() {
 	world_->getSystemsManager().getSystem<MotionSystem>().update();
 	//log_info("Univers::CollisionSystem");
 	world_->getSystemsManager().getSystem<CollisionSystem>().update();
+	//log_info("Univers::FoodCreationSystem");
+	world_->getSystemsManager().getSystem<FoodCreationSystem>().update();
+	world_->getEventsManager().destroy<FoodCreation>();
+	//log_info("Univers::SpriteSystem");
+	world_->getSystemsManager().getSystem<SpriteSystem>().update();
+	//log_info("Univers::RenderSystem");
+	world_->getSystemsManager().getSystem<RenderSystem>().update();
+	//log_info("Univers::FoodEatSystem");
 
+	//log_info("Univers::vecBobby");
 	Bobby::clearPriority();
 	if (isServer()) {
 		for (auto &bobby : vecBobby) {
@@ -311,17 +320,6 @@ void Univers::loop_world() {
 
 		}
 	}
-
-	//log_info("Univers::FoodCreationSystem");
-	world_->getSystemsManager().getSystem<FoodCreationSystem>().update();
-	world_->getEventsManager().destroy<FoodCreation>();
-	//log_info("Univers::SpriteSystem");
-	world_->getSystemsManager().getSystem<SpriteSystem>().update();
-	//log_info("Univers::RenderSystem");
-	world_->getSystemsManager().getSystem<RenderSystem>().update();
-	//log_info("Univers::FoodEatSystem");
-
-	//log_info("Univers::vecBobby");
 
 
 	world_->getSystemsManager().getSystem<FoodEatSystem>().update();
@@ -415,15 +413,13 @@ void Univers::delete_ia() {
 
 void Univers::delete_server() {
 	if (serverTCP_) {
-		if (clientTCP_->isConnect())
-			clientTCP_ = nullptr;
+		clientTCP_ = nullptr;
 		serverTCP_ = nullptr;
-		delete_client();
 	}
 }
 
 void Univers::delete_client() {
-	clientTCP_.reset();
+	clientTCP_ = nullptr;
 }
 
 void Univers::finish_game() {
@@ -432,10 +428,6 @@ void Univers::finish_game() {
 	world_ = nullptr;
 }
 
-
-void Univers::close_acceptor() {
-	serverTCP_->close_acceptor();
-}
 
 /** Getter && Setter **/
 
@@ -545,6 +537,22 @@ bool Univers::isIASnake(uint16_t client_id) const {
 			return true;
 	}
 	return false;
+}
+
+Univers::~Univers() {
+	log_warn("~Univers");
+
+	log_warn("~Univers::clientTCP_::destroy");
+	clientTCP_ = nullptr;
+	log_warn("~Univers::serverTCP_ ::destroy");
+	serverTCP_ = nullptr;
+	unload_external_library();
+//	log_warn("~Univers::clear::vector");
+//	vecBobby.clear();
+	log_warn("~Univers.end()");
+
+//	core_->exit();
+//	core_ = nullptr;
 }
 
 

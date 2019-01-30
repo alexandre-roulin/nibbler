@@ -42,9 +42,18 @@ ClientTCP::ClientTCP(Univers &univers, bool fromIA)
 }
 
 ClientTCP::~ClientTCP() {
-	log_error("Close clientTCP");
+	try {
+		if (socket.is_open()) {
+			socket.shutdown(boost::asio::ip::tcp::socket::shutdown_both);
+			socket.close();
+		}
+	} catch (std::exception const &e) {
+		std::cout << e.what() << std::endl;
+	}
+
+	thread.interrupt();
 	io.stop();
-	socket.close();
+	log_error("Close clientTCP");
 }
 
 /** Network Management **/
@@ -72,6 +81,7 @@ void ClientTCP::checkError_(boost::system::error_code const &error_code) {
 	{
 		thread.interrupt();
 		socket.close();
+		io.stop();
 //		throw std::runtime_error("Lost signal from server");
 	}
 }

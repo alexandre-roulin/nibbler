@@ -195,6 +195,14 @@ namespace KINU {
 		return entity;
 	}
 
+	std::vector<Entity> EntitiesManager::getEntities() {
+		std::vector<Entity> entities;
+		for (auto &id : validId) {
+			entities.push_back(getEntityById(id));
+		}
+		return entities;
+	}
+
 	/** TAG FUNCTION **/
 
 	bool EntitiesManager::hasTagIdByEntity(Entity entity) {
@@ -242,17 +250,13 @@ namespace KINU {
 	bool
 	EntitiesManager::hasEntitiesGroupId(TagId tagId) {
 		mutex_.lock();
-		std::cout << "EntitiesManager::hasEntitiesGroupId1" << std::endl;
 		auto it = groupedEntities.find(tagId);
-		std::cout << "EntitiesManager::hasEntitiesGroupId2" << std::endl;
 		bool grp = it != groupedEntities.end();
-		std::cout << "EntitiesManager::hasEntitiesGroupId3" << std::endl;
 		bool anyHas = grp && std::any_of(it->second.begin(), it->second.end(), [this](Entity entity){
 			bool hasId = hasEntityById(entity.getId());
 			return hasId;
 		});
 		mutex_.unlock();
-		std::cout << "EntitiesManager::hasEntitiesGroupId4" << std::endl;
 		return grp && anyHas;
 	}
 

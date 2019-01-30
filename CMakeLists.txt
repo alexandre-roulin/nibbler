@@ -146,8 +146,6 @@ add_executable(${NAME}
         class/network/ClientTCP.hpp
         class/network/ServerTCP.cpp
         class/network/ServerTCP.hpp
-        class/network/UtilsTCP.cpp
-        class/network/UtilsTCP.hpp
         class/network/IGameNetwork.hpp
         class/systems/FoodEatSystem.cpp
         class/systems/FoodEatSystem.hpp
