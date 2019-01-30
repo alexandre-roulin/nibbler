@@ -69,12 +69,18 @@ public:
 	};
 	void print(Vec2 s, Vec2 t, Path p);
 private:
+public:
+	int getDirection() const;
+
+	static const std::array<Vec2, 8> &getDirections();
+
+private:
+	int direction;
 	static std::array<Vec2, 8> const directions;
 	HeuristicFunction heuristic_;
 	MutantGrid<Node> closeMap_;
 	MutantGrid<Node> openMap_;
 	MutantGrid<bool> collision_;
-	int direction;
 	int searchLevel_;
 	int worldSize_;
 };

@@ -75,7 +75,6 @@ bool Bobby::define_priority(int x, int y) {
 	mapPriority[getId()] = NO_PRIORITY;
 	int ran = rand() % entitiesFiltered.size();
 	mapPriority[entitiesFiltered[ran].getGroupIdByEntity()] = PRIORITY;
-//	log_success("%d mapPriority[%d] == %d", getId(), entitiesFiltered[ran].getGroupIdByEntity(), mapPriority[entitiesFiltered[ran].getGroupIdByEntity()]);
 	return mapPriority[getId()] == NO_PRIORITY;
 }
 
@@ -172,6 +171,20 @@ void Bobby::calculateDirection() {
 						log_error("WARN::NO_TAIL");
 					}
 				}
+		}
+		for (int idxDir = 0; idxDir < kStar.getDirection(); ++idxDir) {
+			auto checkVec2 = vecSnake + kStar.getDirections()[idxDir];
+			if (!kStar.isCollision(checkVec2)) {
+				try {
+
+					findDirection(vecSnake, checkVec2);
+					sendDirection();
+					log_warn("LAST::Pathfinding[%d]", getId());
+				} catch (std::exception const &e) {
+					log_error("WARN::NO_LAST");
+				}
+
+			}
 		}
 
 	}

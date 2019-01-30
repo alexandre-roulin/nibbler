@@ -245,6 +245,14 @@ void KStar::print(KStar::Vec2 s, KStar::Vec2 t, KStar::Path p) {
 	}
 }
 
+int KStar::getDirection() const {
+	return direction;
+}
+
+const std::array<KStar::Vec2, 8> &KStar::getDirections() {
+	return directions;
+}
+
 /**  HEURISTIC **/
 
 KStar::Vec2 KStar::Heuristic::getDelta(KStar::Vec2 s, KStar::Vec2 target) {
