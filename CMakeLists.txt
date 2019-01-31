@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.12)
+cmake_minimum_required(VERSION 3.10)
 
 set(CMAKE_MACOSX_RPATH 1)
 set(CMAKE_CXX_STANDARD 17)
@@ -19,7 +19,6 @@ if (WIN32)
     find_package(OpenGL 3.3 REQUIRED)
 elseif (UNIX AND NOT APPLE)
 elseif (APPLE)
-    set(CMAKE_CXX_COMPILER "/usr/bin/g++")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wpedantic")
     if(INSTALL)
         execute_process(COMMAND $ENV{HOME}/.brew/bin/brew install sdl2)
