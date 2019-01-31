@@ -183,10 +183,8 @@ void Bobby::calculateDirection() {
 				} catch (std::exception const &e) {
 					log_error("WARN::NO_LAST");
 				}
-
 			}
 		}
-
 	}
 	sendDirection();
 }

@@ -276,6 +276,7 @@ void Univers::loop_world() {
 		getMainClientTCP()->lock();
 		// std::cout << "Stuck nextFrame" << std::endl;
 		nextFrame = world_->getEventsManager().getEvents<NextFrame>();
+
 		getMainClientTCP()->unlock();
 	}
 	nextFrame.clear();
@@ -284,6 +285,8 @@ void Univers::loop_world() {
 	getMainClientTCP()->deliverEvents();
 
 	world_->update();
+
+
 
 	//log_info("Univers::FollowSystem");
 	world_->getSystemsManager().getSystem<FollowSystem>().update();

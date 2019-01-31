@@ -6,7 +6,8 @@ ServerTCP::ServerTCP(Univers &univers, unsigned int port)
 		  port_(port),
 		  univers_(univers),
 		  acceptor_(io_service_, tcp::endpoint(tcp::v4(), port)),
-		  mapSize(MAP_DEFAULT) {
+		  mapSize(MAP_DEFAULT),
+		  pause_(false) {
 	start_accept();
 	thread = boost::thread(boost::bind(&boost::asio::io_service::run, &io_service_));
 	thread.detach();
@@ -186,6 +187,8 @@ void ServerTCP::parseInput(eHeader header, void const *input, size_t len) {
 
 void ServerTCP::updateInput() {
 //	log_warn("Pause is %s", pause_ ? "true" : "false");
+	log_warn("Condition [%d][%d]",pause_, std::any_of(snake_array_.begin(), snake_array_.end(),
+														[](auto snake){ return snake.isAlive && !snake.isUpdate;} ));
 	if (pause_ || std::any_of(snake_array_.begin(), snake_array_.end(),
 			[](auto snake){ return snake.isAlive && !snake.isUpdate;} )) return;
 	sendSnakeArray();
