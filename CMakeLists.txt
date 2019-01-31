@@ -51,15 +51,11 @@ endif()
 
 find_package(Git QUIET)
 if (GIT_FOUND AND EXISTS "${CMAKE_SOURCE_DIR}/.git")
-    option(GIT_SUBMODULE "Check submodules during build" ON)
-    if (GIT_SUBMODULE)
-        message(STATUS "Submodule update")
-        execute_process(COMMAND ${GIT_EXECUTABLE} submodule update --init --recursive
-                WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-                RESULT_VARIABLE GIT_SUBMOD_RESULT)
-        if (NOT GIT_SUBMOD_RESULT EQUAL "0")
-            message(FATAL_ERROR "git submodule update --init failed with ${GIT_SUBMOD_RESULT}, please checkout submodules")
-        endif ()
+    execute_process(COMMAND ${GIT_EXECUTABLE} submodule update --init extern/imgui extern/stb extern/glad cmake/sdl2-cmake-scripts
+            WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+            RESULT_VARIABLE GIT_SUBMOD_RESULT)
+    if (NOT GIT_SUBMOD_RESULT EQUAL "0")
+        message(FATAL_ERROR "git submodule update --init failed with ${GIT_SUBMOD_RESULT}, please checkout submodules")
     endif ()
 endif ()
 
@@ -79,24 +75,83 @@ find_package(SFML REQUIRED COMPONENTS audio graphics window system)
 include_directories(${SFML_INCLUDE_DIR})
 
 set(BOOST_ROOT $ENV{HOME}/.brew/)
-find_package(Boost REQUIRED COMPONENTS program_options thread filesystem)
-include_directories( ${Boost_INCLUDE_DIRS} )
+find_package(Boost QUIET COMPONENTS program_options thread filesystem)
+if (Boost_FOUND)
+    message("EXTERN : Boost finded")
+elseif (NOT TARGET Boost::boost)
+    message("EXTERN : Unable to find Boost, cloning...")
+    if (GIT_FOUND AND EXISTS "${CMAKE_SOURCE_DIR}/.git")
+        execute_process(COMMAND ${GIT_EXECUTABLE} submodule update --init cmake/boost-cmake
+                WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+                RESULT_VARIABLE GIT_SUBMOD_RESULT)
+        if (NOT GIT_SUBMOD_RESULT EQUAL "0")
+            message(FATAL_ERROR "git submodule update --init failed with ${GIT_SUBMOD_RESULT}, please checkout submodules")
+        endif ()
+    endif ()
+    add_subdirectory(cmake/boost-cmake)
+endif()
 
 
-#list(APPEND CMAKE_MODULE_PATH "~/.brew/lib/cmake/glm")
-find_package(glm REQUIRED)
-link_directories(${GLM_LIBRARY_DIRS})
-include_directories(${GLM_INCLUDE_DIRS})
+list(APPEND CMAKE_MODULE_PATH "~/.brew/lib/cmake/glm")
+find_package(glm QUIET)
+if (glm_FOUND)
+    message("EXTERN : glm finded")
+elseif (NOT TARGET glm)
+    message("EXTERN : Unable to find glm, cloning...")
+    if (GIT_FOUND AND EXISTS "${CMAKE_SOURCE_DIR}/.git")
+        execute_process(COMMAND ${GIT_EXECUTABLE} submodule update --init extern/glm
+                WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+                RESULT_VARIABLE GIT_SUBMOD_RESULT)
+        if (NOT GIT_SUBMOD_RESULT EQUAL "0")
+            message(FATAL_ERROR "git submodule update --init failed with ${GIT_SUBMOD_RESULT}, please checkout submodules")
+        endif ()
+    endif ()
+    option(GLM_BUILD_DOCS OFF)
+    option(GLM_BUILD_EXAMPLES OFF)
+    option(GLM_TEST_ENABLE OFF)
+    add_subdirectory(extern/glm)
+endif()
 
 list(APPEND CMAKE_MODULE_PATH "~/.brew/lib/cmake/glfw3")
-find_package(glfw3 REQUIRED)
-link_directories(${GLFW3_LIBRARY_DIRS})
-include_directories(${GLFW3_INCLUDE_DIRS})
+find_package(glfw3 QUIET)
+if (glfw3_FOUND)
+    message("EXTERN : glfw finded")
+elseif (NOT TARGET glfw)
+    message("EXTERN : Unable to find glfw, cloning...")
+    if (GIT_FOUND AND EXISTS "${CMAKE_SOURCE_DIR}/.git")
+        execute_process(COMMAND ${GIT_EXECUTABLE} submodule update --init extern/glfw
+                WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+                RESULT_VARIABLE GIT_SUBMOD_RESULT)
+        if (NOT GIT_SUBMOD_RESULT EQUAL "0")
+            message(FATAL_ERROR "git submodule update --init failed with ${GIT_SUBMOD_RESULT}, please checkout submodules")
+        endif ()
+    endif ()
+    option(GLFW_BUILD_DOCS OFF)
+    option(GLFW_BUILD_EXAMPLES OFF)
+    option(GLFW_BUILD_TESTS OFF)
+    add_subdirectory(extern/glfw)
+endif()
 
-#set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} ~/.brew/lib/cmake/assimp/)
-find_package(assimp REQUIRED)
-link_directories(${ASSIMP_LIBRARY_DIRS})
-include_directories(${ASSIMP_INCLUDE_DIRS})
+
+list(APPEND CMAKE_MODULE_PATH "~/.brew/lib/cmake/assimp")
+find_package(assimp QUIET)
+if (assimp_FOUND)
+    message("EXTERN : assimp finded")
+elseif (NOT TARGET assimp)
+    message("EXTERN : Unable to find assimp, cloning...")
+    if (GIT_FOUND AND EXISTS "${CMAKE_SOURCE_DIR}/.git")
+        execute_process(COMMAND ${GIT_EXECUTABLE} submodule update --init extern/assimp
+                WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+                RESULT_VARIABLE GIT_SUBMOD_RESULT)
+        if (NOT GIT_SUBMOD_RESULT EQUAL "0")
+            message(FATAL_ERROR "git submodule update --init failed with ${GIT_SUBMOD_RESULT}, please checkout submodules")
+        endif ()
+    endif ()
+    option(ASSIMP_BUILD_ASSIMP_TOOLS OFF)
+    option(ASSIMP_BUILD_SAMPLES OFF)
+    option(ASSIMP_BUILD_TESTS OFF)
+    add_subdirectory(extern/assimp)
+endif()
 
 include_directories(
         ${CMAKE_SOURCE_DIR}/nibblerSources/incs/
