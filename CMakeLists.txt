@@ -113,25 +113,7 @@ elseif (NOT TARGET glm)
 endif()
 
 list(APPEND CMAKE_MODULE_PATH "~/.brew/lib/cmake/glfw3")
-find_package(glfw3 QUIET)
-if (glfw3_FOUND)
-    message("EXTERN : glfw finded")
-elseif (NOT TARGET glfw)
-    message("EXTERN : Unable to find glfw, cloning...")
-    if (GIT_FOUND AND EXISTS "${CMAKE_SOURCE_DIR}/.git")
-        execute_process(COMMAND ${GIT_EXECUTABLE} submodule update --init extern/glfw
-                WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-                RESULT_VARIABLE GIT_SUBMOD_RESULT)
-        if (NOT GIT_SUBMOD_RESULT EQUAL "0")
-            message(FATAL_ERROR "git submodule update --init failed with ${GIT_SUBMOD_RESULT}, please checkout submodules")
-        endif ()
-    endif ()
-    option(GLFW_BUILD_DOCS OFF)
-    option(GLFW_BUILD_EXAMPLES OFF)
-    option(GLFW_BUILD_TESTS OFF)
-    add_subdirectory(extern/glfw)
-endif()
-
+find_package(glfw3 REQUIRED)
 
 list(APPEND CMAKE_MODULE_PATH "~/.brew/lib/cmake/assimp")
 find_package(assimp QUIET)
