@@ -1,25 +1,24 @@
-[submodule "imgui/imgui-sfml"]
-	path = imgui/imgui-sfml
-	url = https://github.com/eliasdaler/imgui-sfml
-[submodule "imgui/imgui"]
-	path = imgui/imgui
-	url = https://github.com/ocornut/imgui
 [submodule "cmake/boost-cmake"]
 	path = cmake/boost-cmake
 	url = https://github.com/Orphis/boost-cmake
-[submodule "extern/display_glfw/extern/assimp"]
-	path = extern/display_glfw/extern/assimp
+[submodule "extern/imgui/imgui-sfml"]
+	path = extern/imgui/imgui-sfml
+	url = https://github.com/eliasdaler/imgui-sfml
+[submodule "extern/imgui/imgui"]
+	path = extern/imgui/imgui
+	url = https://github.com/ocornut/imgui
+[submodule "cmake/sdl2-cmake-scripts"]
+	path = cmake/sdl2-cmake-scripts
+	url = https://github.com/tcbrindle/sdl2-cmake-scripts
+[submodule "extern/assimp"]
+	path = extern/assimp
 	url = https://github.com/assimp/assimp.git
-[submodule "extern/display_glfw/extern/glad"]
-	path = extern/display_glfw/extern/glad
+[submodule "extern/glad"]
+	path = extern/glad
 	url = https://github.com/Dav1dde/glad.git
-	branch = c
-[submodule "extern/display_glfw/extern/glm"]
-	path = extern/display_glfw/extern/glm
+[submodule "extern/glm"]
+	path = extern/glm
 	url = https://github.com/g-truc/glm.git
-[submodule "extern/display_glfw/extern/glfw"]
-	path = extern/display_glfw/extern/glfw
-	url = https://github.com/glfw/glfw.git
-[submodule "extern/display_glfw/extern/stb"]
-	path = extern/display_glfw/extern/stb
-	url = https://github.com/nothings/stb
+[submodule "extern/stb"]
+	path = extern/stb
+	url = https://github.com/nothings/stb.git
