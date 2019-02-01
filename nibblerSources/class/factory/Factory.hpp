@@ -6,7 +6,7 @@ class Univers;
 
 class Factory {
 public:
-	void create_all_snake(std::array<Snake, 8> snake_array, int16_t nu);
+	void create_all_snake(std::array<Snake, SNAKE_MAX> snake_array, int16_t nu);
 
 	void create_snake(Snake, int);
 

@@ -1,6 +1,8 @@
 #include "WidgetLobby.hpp"
 #include <Univers.hpp>
 #include <gui/Core.hpp>
+#include "Vector2D.tpp"
+#include <math.h>
 
 WidgetLobby::WidgetLobby(Core &core) :
 AWidget(core)
@@ -33,7 +35,7 @@ void			WidgetLobby::addColor(std::string const &name, std::string const &pathCol
 
 void			WidgetLobby::addSnake(Snake const &snake, bool isYourSnake)
 {
-	if (_snake.size() < MAX_SNAKE)
+	if (_snake.size() < SNAKE_MAX)
 		_snake.emplace_back(new WidgetSnake(_core, snake, _texture, _color, isYourSnake));
 }
 
@@ -43,20 +45,38 @@ void			WidgetLobby::_reload()
 		_snake.clear();
 		Snake const *snakes = _core.univers.getGameNetwork()->getSnakes();
 		if (snakes)
-		for (unsigned i = 0; i < MAX_SNAKE; i++)
-			addSnake(snakes[i], (i == _core.univers.getGameNetwork()->getId()));
+			for (unsigned i = 0; i < SNAKE_MAX; i++)
+				addSnake(snakes[i], (i == _core.univers.getGameNetwork()->getId()));
 	}
 }
 
+
 void			WidgetLobby::render(void)
 {
+	sf::Vector2<unsigned int> placesForSnakes;
+	sf::Vector2<unsigned int> percentPlaceOfSnake;
+
+
+
 	if (_core.univers.getGameNetwork()) {
+
+		Snake const *snakes = _core.univers.getGameNetwork()->getSnakes();
+
+		int i = 0;
+		for (; i < SNAKE_MAX; ++i) {
+			if (snakes[i].id == -1)
+				break ;
+		}
+		placesForSnakes.x = 4;
+		placesForSnakes.y = floor(i / 4) + 1;
 		_reload();
-		for (unsigned int i = 0; i < _snake.size(); i++)
+		i = 0;
+		for (i = 0; i < _snake.size() && snakes[i].id != -1 ; i++)
 		{
-			sf::Vector2<unsigned int> ab = sf::Vector2<unsigned int>((100 / (MAX_SNAKE / 2)) * (i % 4), 25 * ((i && i <= 4)));
-			ImGui::SetNextWindowPos(_core.positionByPercent(ab));
-			ImGui::SetNextWindowSize(_core.positionByPercent(sf::Vector2<unsigned int>(100 / (MAX_SNAKE / 2), 50 / 2)));
+			percentPlaceOfSnake.x = ((100 / placesForSnakes.x) * (i % placesForSnakes.x));
+			percentPlaceOfSnake.y = ((50 / placesForSnakes.y) * (i / placesForSnakes.x));
+			ImGui::SetNextWindowPos(_core.positionByPercent(percentPlaceOfSnake));
+			ImGui::SetNextWindowSize(_core.positionByPercent(sf::Vector2<unsigned int>(100 / placesForSnakes.x, 50 / placesForSnakes.y)));
 			_snake[i]->render();
 		}
 	}

@@ -146,7 +146,7 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 		case eHeader::SNAKE: {
 			Snake snake_temp;
 			std::memcpy(&snake_temp, input, len);
-//			log_info("eHeader::SNAKE f.%d w.%d %d", getId(),  snake_temp.id, snake_temp.isAlive);
+			log_info("eHeader::SNAKE f.%d w.%d %d", getId(),  snake_temp.id, snake_temp.isAlive);
 			snake_array_[snake_temp.id] = snake_temp;
 			if (accept_data()) {
 				univers.playNoise(eSound::READY);
@@ -221,7 +221,7 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 		}
 		case eHeader::RESIZE_MAP: {
 			if (accept_data()) {
-				log_info("eHeader::RESIZE_MAP");
+				log_info("eHeader::ConditionRESIZE_MAP");
 				unsigned int buffer;
 				std::memcpy(&buffer, input,
 							ClientTCP::size_header[static_cast<int>(eHeader::RESIZE_MAP)]);
@@ -240,6 +240,7 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 			break;
 		}
 		case eHeader::POCK: {
+			log_warn("eHeader::POCK");
 			if (accept_data()) {
 				univers.getWorld_().getEventsManager().emitEvent<NextFrame>();
 			}
@@ -334,12 +335,12 @@ void ClientTCP::deliverEvents() {
 	mutex.unlock();
 }
 
-Snake const *ClientTCP::getSnakes() const {
-	return snake_array_.data();
-}
-
 Snake	const &ClientTCP::getSnake(void) const {
 	return snake_array_[id_];
+}
+
+const Snake *ClientTCP::getSnakes() const {
+	return snake_array_.data();
 }
 
 void ClientTCP::killSnake(uint16_t id) {

@@ -22,7 +22,7 @@ private:
 
 	void		_reload();
 
-	std::vector< WidgetSnake * >				_snake;
+	std::vector<WidgetSnake * >					_snake;
 	std::vector<sf::Texture>					_texture;
 	std::vector<std::string>					_color;
 

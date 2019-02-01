@@ -8,8 +8,9 @@
 	#define NIBBLER_ROOT_PROJECT_PATH 0
 #endif
 
-#define MAX_SNAKE 8
-#define MAX_COLOR 8
+#define SNAKE_MAX 500
+#define SNAKE_MAX_NAME 8
+#define SNAKE_MAX_COLOR 8
 #define CHAT_BUFFER 128
 #define NAME_BUFFER 22
 #define OFFSET 8
@@ -91,23 +92,23 @@ struct Snake {
 	static Snake randomSnake(int16_t id) {
 		Snake snake;
 
-		snake.sprite = static_cast<eSprite>(static_cast<int>(eSprite::GREEN) + rand() % MAX_COLOR);
-		strncpy(snake.name, Snake::basicName[rand() % MAX_SNAKE].c_str(),NAME_BUFFER);
+		snake.sprite = static_cast<eSprite>(static_cast<int>(eSprite::GREEN) + rand() % SNAKE_MAX_COLOR);
+		strncpy(snake.name, Snake::basicName[rand() % SNAKE_MAX_NAME].c_str(), NAME_BUFFER);
 		snake.id = id;
 		snake.isAlive = true;
 		snake.isSwitchingLibrary = false;
 		return (snake);
 	}
 
-	static int allSnakesReady(Snake const *snakes, unsigned int range) {
-		for (unsigned int i = 0; i < range; i++) {
+	static int allSnakesReady(Snake const *snakes) {
+		for (unsigned int i = 0; i < SNAKE_MAX; i++) {
 			if (snakes[i].id != -1 && !snakes[i].isReady)
 				return (false);
 		}
 		return (true);
 	}
 
-	static std::string const basicName[MAX_SNAKE];
+	static std::string const basicName[SNAKE_MAX_NAME];
 };
 
 //ADD SIZE IN ClientTCP::size_header

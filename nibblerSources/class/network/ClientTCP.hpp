@@ -106,9 +106,9 @@ public:
 
 	virtual bool all_snake_is_dead();
 
-	virtual const Snake *getSnakes() const;
-
 	virtual const Snake &getSnake(void) const;
+
+	virtual const Snake *getSnakes() const;
 
 	virtual int16_t getId(void) const;
 
@@ -134,7 +134,7 @@ private:
 	bool openGame_;
 	bool fromIA_;
 	std::vector<FoodCreation> foodCreations;
-	std::array<Snake, 8> snake_array_;
+	std::array<Snake, SNAKE_MAX> snake_array_;
 	tcp::socket socket;
 	boost::array<char, 512> buffer_data;
 	int16_t id_;

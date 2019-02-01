@@ -29,7 +29,7 @@ Univers::Univers()
 		  timer_start(boost::asio::deadline_timer(io_start)),
 		  timer_loop(boost::asio::deadline_timer(io_loop)),
 		  mapSize(MAP_DEFAULT),
-		  gameSpeed(20),
+		  gameSpeed(150),
 		  dlHandleDisplay(nullptr),
 		  dlHandleSound(nullptr),
 		  display(nullptr),
@@ -155,18 +155,20 @@ void Univers::new_game() {
 	sleep(1);
 	assert(isServer());
 	assert(serverTCP_->isReady());
+
 	if (!isServer() || !serverTCP_->isReady()) return;
 	world_ = std::make_unique<KINU::World>(*this);
 	world_->grid.resize(mapSize);
 	if (!display) load_extern_lib_display(kDisplay);
 	defaultAssignmentLibrary();
 	if (isServer()) {
+		serverTCP_->startGame();
 		for (auto &bobby : vecBobby) {
 //			bobby->getClientTCP_()->change_state_ready();
 			bobby->buildIA();
 			bobby->sendDirection();
 		}
-		serverTCP_->startGame();
+
 	}
 
 	loop();
@@ -264,17 +266,17 @@ void Univers::loop() {
 		}
 	}
 	unload_external_library();
-	exit(0);
 	finish_game();
 }
 
 void Univers::loop_world() {
+	log_warn("loop_world");
 
 	manage_input();
 
 	for (; nextFrame.empty();) {
 		getMainClientTCP()->lock();
-		// std::cout << "Stuck nextFrame" << std::endl;
+		 std::cout << "Stuck nextFrame" << std::endl;
 		nextFrame = world_->getEventsManager().getEvents<NextFrame>();
 
 		getMainClientTCP()->unlock();
@@ -426,6 +428,7 @@ void Univers::delete_client() {
 void Univers::finish_game() {
 	thread.interrupt();
 	io_loop.stop();
+	io_loop.reset();
 	world_ = nullptr;
 }
 

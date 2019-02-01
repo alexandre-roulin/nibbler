@@ -16,7 +16,7 @@ Factory::Factory(Univers &univers)
 
 }
 
-void Factory::create_all_snake(std::array<Snake, 8> snake_array, int16_t nu) {
+void Factory::create_all_snake(std::array<Snake, SNAKE_MAX> snake_array, int16_t nu) {
 	log_info("Create %d snake(s)", nu);
 
 	univers_.getWorld_().grid.fill(eSprite::NONE);

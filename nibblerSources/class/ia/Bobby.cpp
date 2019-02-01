@@ -51,7 +51,7 @@ void Bobby::sendDirection() {
 
 bool Bobby::define_priority(int x, int y) {
 	std::vector<KINU::Entity> entitiesHead;
-	for (int id = 0; id < MAX_SNAKE; ++id) {
+	for (int id = 0; id < SNAKE_MAX; ++id) {
 		if (univers_.getWorld_().getEntitiesManager().hasEntityByTagId(id + eTag::HEAD_TAG))
 			entitiesHead.push_back(univers_.getWorld_().getEntitiesManager().getEntityByTagId(id + eTag::HEAD_TAG));
 	}
@@ -318,7 +318,7 @@ ClientTCP *Bobby::getClientTCP_() {
 }
 
 void Bobby::clearPriority() {
-	for (int id = 0; id < MAX_SNAKE; ++id) {
+	for (int id = 0; id < SNAKE_MAX; ++id) {
 		mapPriority[id] = UNDEFINED;
 	}
 }

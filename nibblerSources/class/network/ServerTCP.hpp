@@ -101,7 +101,7 @@ private:
 
 	Univers &univers_;
 
-	std::array<Snake, MAX_SNAKE> snake_array_;
+	std::array<Snake, SNAKE_MAX> snake_array_;
 
 	unsigned int mapSize;
 

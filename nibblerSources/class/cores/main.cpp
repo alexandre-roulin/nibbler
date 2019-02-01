@@ -16,7 +16,7 @@
 #include <logger.h>
 #include <ia/KStar.hpp>
 
-std::string const Snake::basicName[MAX_SNAKE] = {"Jack O'Lantern", "Eden",
+std::string const Snake::basicName[SNAKE_MAX_NAME] = {"Jack O'Lantern", "Eden",
 												 "Jacky", "Emerald",
 												 "Broutille", "Veggie-vie",
 												 "jinou42", "Dautta c bo"};
@@ -40,15 +40,18 @@ std::ostream &operator<<(std::ostream &os, const Snake &snake) {
 */
 
 void nibbler(Univers &univers) {
-	univers.create_ui();
-	univers.getCore_().aState();
-	bool start = univers.getCore_().getStartGane();
-	Core *core = univers.releaseCore_();
-	if (core)
-		delete core;
-	if (start) {
-		univers.load_extern_lib_display(Univers::kExternSfmlLibrary);
-		univers.new_game();
+	while (1) {
+
+		univers.create_ui();
+		univers.getCore_().aState();
+		bool start = univers.getCore_().getStartGane();
+		Core *core = univers.releaseCore_();
+		if (core)
+			delete core;
+		if (start) {
+			univers.load_extern_lib_display(Univers::kExternSfmlLibrary);
+			univers.new_game();
+		}
 	}
 }
 

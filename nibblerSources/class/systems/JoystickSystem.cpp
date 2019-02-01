@@ -13,7 +13,7 @@ JoystickSystem::JoystickSystem() {
 void JoystickSystem::update() {
 	Snake const *snake_array = getWorld().getUnivers().getGameNetwork()->getSnakes();
 
-	for (int index = 0; index < MAX_SNAKE; ++index) {
+	for (int index = 0; index < SNAKE_MAX; ++index) {
 		if (snake_array[index].id != -1) {
 			if (getWorld().getEntitiesManager().hasEntityByTagId(
 					snake_array[index].id + eTag::HEAD_TAG)) {

@@ -35,7 +35,7 @@ void ServerTCP::start_accept() {
 
 			int16_t id = -1;
 
-			for (int index = 0; index < MAX_SNAKE; ++index) {
+			for (int index = 0; index < SNAKE_MAX; ++index) {
 				if (snake_array_[index].id == -1) {
 					id = index;
 					break;
@@ -67,7 +67,7 @@ void ServerTCP::start_accept() {
 
 void ServerTCP::eraseSnake(Snake const &snake) {
 	int16_t id = snake.id;
-	assert(id >= 0 && id < MAX_SNAKE);
+	assert(id >= 0 && id < SNAKE_MAX);
 	snake_array_[id].reset();
 	auto it = std::find_if(pointers.begin(), pointers.end(),
 			[id](TCPConnection::pointer p) { return p->getId() == id; });
@@ -88,16 +88,19 @@ void ServerTCP::sendSnakeArray() {
 }
 
 void ServerTCP::startGame() {
+	foodInfoArray.clear();
 	assert(isReady());
 	ClientTCP::StartInfo startInfo;
 	std::for_each(snake_array_.begin(), snake_array_.end(),
-				  [this](auto snake){ snake.isAlive = true; });
+				  [](auto &snake){ snake.isAlive = true; snake.isUpdate = false;});
 	startInfo.nu = ServerTCP::number_clients_;
 	startInfo.time_duration = boost::posix_time::microsec_clock::universal_time();
 	for (auto &snakeArray : snake_array_) {
 		log_error("SnakeArrayInSERVERTCP [%d][%d]", snakeArray.id, snakeArray.isAlive);
 	}
+	sendSnakeArray();
 	writeToClientTCP(ClientTCP::add_prefix(eHeader::START_GAME, &startInfo));
+
 }
 
 void ServerTCP::writeToClientTCP(std::string message) {
@@ -113,7 +116,7 @@ void ServerTCP::parseInput(eHeader header, void const *input, size_t len) {
 		case eHeader::SNAKE: {
 			Snake snake_temp;
 			std::memcpy(&snake_temp, input, sizeof(Snake));
-			assert(snake_temp.id >= 0 && snake_temp.id < MAX_SNAKE);
+			assert(snake_temp.id >= 0 && snake_temp.id < SNAKE_MAX);
 			snake_array_[snake_temp.id] = snake_temp;
 			break;
 		}
@@ -188,9 +191,9 @@ void ServerTCP::parseInput(eHeader header, void const *input, size_t len) {
 void ServerTCP::updateInput() {
 //	log_warn("Pause is %s", pause_ ? "true" : "false");
 	log_warn("Condition [%d][%d]",pause_, std::any_of(snake_array_.begin(), snake_array_.end(),
-														[](auto snake){ return snake.isAlive && !snake.isUpdate;} ));
+														[](auto snake){ return snake.id != -1 && snake.isAlive && !snake.isUpdate;} ));
 	if (pause_ || std::any_of(snake_array_.begin(), snake_array_.end(),
-			[](auto snake){ return snake.isAlive && !snake.isUpdate;} )) return;
+			[](auto snake){ return snake.id != -1 && snake.isAlive && !snake.isUpdate;} )) return;
 	sendSnakeArray();
 	for (auto infoArray : foodInfoArray) {
 		writeToClientTCP(ClientTCP::add_prefix(eHeader::FOOD, &infoArray));
