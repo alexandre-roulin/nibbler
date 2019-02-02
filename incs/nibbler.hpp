@@ -43,9 +43,15 @@ enum ePriority {
 };
 
 struct Snake {
-	Snake() : sprite(eSprite::BLUE), isReady(false), id(-1), isUpdate(false),
-			  direction(kNorth), isAlive(false) {
-		memset(name, NAME_BUFFER, 0);
+	Snake() :
+		sprite(eSprite::BLUE),
+		isReady(false),
+		id(-1),
+		isUpdate(false),
+		direction(kNorth),
+		isAlive(false),
+		isSwitchingLibrary(false) {
+		bzero(name, NAME_BUFFER);
 	};
 
 	char name[NAME_BUFFER];

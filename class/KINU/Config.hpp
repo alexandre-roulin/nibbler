@@ -4,7 +4,6 @@
 enum eConfig {
 	MAX_COMPONENT = 10,
 	DEFAULT_POOL_SIZE_COMPONENT = 100
-
 };
 
 #endif //NIBBLER_CONFIG_HPP

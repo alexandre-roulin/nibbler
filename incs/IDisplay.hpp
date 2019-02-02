@@ -7,7 +7,7 @@
 #define SIZE_LINE_TILESET 15
 
 #define PATH_DISPLAY_LIBRARY_SFML "./extern/display_sfml/libdisplay_sfml.so"
-#define PATH_DISPLAY_LIBRARY_GLFW "./extern/display_glfw/libdisplay_glfd.so"
+#define PATH_DISPLAY_LIBRARY_GLFW "./extern/display_glfw/libdisplay_glfw.so"
 #define PATH_DISPLAY_LIBRARY_SDL "./extern/display_sdl/libdisplay_sdl.so"
 
 #define PATH_SOUND_LIBRARY_SFML "./extern/sound_sfml/libsound_sfml.so"

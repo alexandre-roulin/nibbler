@@ -13,6 +13,9 @@
 
 class ServerTCP;
 
+class SnakeServer;
+class SnakeClient;
+
 class ClientTCP;
 
 class Core;
@@ -83,7 +86,7 @@ public:
 
 	//Network
 
-	IGameNetwork *getGameNetwork() const;
+	SnakeClient *getSnakeClient() const;
 
 	//Game
 
@@ -117,7 +120,6 @@ public:
 	void callbackAction(eAction);
 	void manageSwitchLibrary();
 private: // Function
-	ClientTCP *getMainClientTCP() const;
 
 	void manage_input();
 
@@ -143,9 +145,9 @@ private:
 	boost::asio::deadline_timer timer_loop;
 	boost::asio::deadline_timer timer_start;
 	std::unique_ptr<KINU::World> world_;
-	std::unique_ptr<ServerTCP> serverTCP_;
+	std::unique_ptr<SnakeServer> serverTCP_;
 	std::unique_ptr<Core> core_;
-	std::unique_ptr<ClientTCP> clientTCP_;
+	std::shared_ptr<SnakeClient> clientTCP_;
 
 	std::vector<std::unique_ptr<Bobby>> vecBobby;
 

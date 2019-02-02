@@ -33,7 +33,6 @@ namespace KINU {
 		}
 
 		void resize(int n) {
-			log_warn("resize(%d)",data.size());
 			data.resize(n);
 		}
 

@@ -7,6 +7,9 @@
 #include <component/CollisionComponent.hpp>
 #include <KINU/Entity.hpp>
 #include <KINU/World.hpp>
+#include <network/Data.hpp>
+#include <network/SnakeClient.hpp>
+
 
 CollisionSystem::CollisionSystem() {
 	requireComponent<CollisionComponent>();
@@ -33,45 +36,31 @@ void CollisionSystem::checkCollision(
 			entityCheck.kill();
 			getWorld().getEventsManager().emitEvent<FoodEat>(entityHead.getGroupIdByEntity());
 
-			if (getWorld().getUnivers().getGameNetwork()->getId() == entityHead.getGroupIdByEntity() ||
+			if (getWorld().getUnivers().getSnakeClient()->getId_() == entityHead.getGroupIdByEntity() ||
 				getWorld().getUnivers().isIASnake(entityHead.getGroupIdByEntity())) {
 
-				ClientTCP::FoodInfo foodInfo(PositionComponent(
-						getWorld().grid.getRandomSlot(eSprite::NONE)), false);
-				getWorld().getUnivers().getGameNetwork()->write_socket(
-						ClientTCP::add_prefix(eHeader::FOOD, &foodInfo));
+				getWorld().getUnivers().getSnakeClient()->sendDataToServer(
+						FoodInfo(PositionComponent(
+								getWorld().grid.getRandomSlot(eSprite::NONE)),
+										false),
+										eHeaderK::kFood);
 			}
 		} else if (tagId == eTag::FOOD_TAG_FROM_SNAKE) {
-			log_info("FOOD_TAG_FROM_SNAKE::FoodCollision");
 			getWorld().getUnivers().playNoise(eSound::FOOD);
 			entityCheck.kill();
 			if (entityHead.hasGroupId())
 				getWorld().getEventsManager().emitEvent<FoodEat>(entityHead.getGroupIdByEntity());
 		} else if (tagId == WALL_TAG) {
-			log_info("WALL_TAG::WallCollision");
 			createAppleBySnake(entityHead);
-			if (entityHead.getGroupIdByEntity() ==
-						getWorld().getUnivers().getGameNetwork()->getId() ||
-					getWorld().getUnivers().isIASnake(entityHead.getGroupIdByEntity()))
-				getWorld().getUnivers().getGameNetwork()->killSnake(entityHead.getGroupIdByEntity());
+			getWorld().getUnivers().getSnakeClient()->killSnake(entityHead.getGroupIdByEntity());
 			entityHead.killGroup();
 		} else if (entityCheck.getGroupIdByEntity() == entityHead.getGroupIdByEntity()) {
 			createAppleBySnake(entityHead);
-			log_info("HIMSELF::CollisionOnHimself");
-			if (entityHead.getGroupIdByEntity() ==
-						getWorld().getUnivers().getGameNetwork()->getId() ||
-					getWorld().getUnivers().isIASnake(entityHead.getGroupIdByEntity()))
-				getWorld().getUnivers().getGameNetwork()->killSnake(entityHead.getGroupIdByEntity());
+			getWorld().getUnivers().getSnakeClient()->killSnake(entityHead.getGroupIdByEntity());
 			entityHead.killGroup();
 		} else {
-			log_info("SNAKE::CollisionSnake");
-
 			createAppleBySnake(entityHead);
-			if (entityHead.getGroupIdByEntity() ==
-						getWorld().getUnivers().getGameNetwork()->getId() ||
-					getWorld().getUnivers().isIASnake(entityHead.getGroupIdByEntity()))
-				getWorld().getUnivers().getGameNetwork()->killSnake(entityHead.getGroupIdByEntity());
-
+			getWorld().getUnivers().getSnakeClient()->killSnake(entityHead.getGroupIdByEntity());
 			entityHead.killGroup();
 		}
 
@@ -95,13 +84,12 @@ void CollisionSystem::createAppleBySnake(KINU::Entity snake) {
 
 	auto appleSnake = getWorld().getEntitiesManager().getEntitiesByGroupId(snake.getGroupIdByEntity());
 	auto positionHead = snake.getComponent<PositionComponent>();
-	for (auto snake : appleSnake) {
-		if (snake.hasComponent<PositionComponent>()) {
-			auto positionComponent = snake.getComponent<PositionComponent>();
+	for (auto snakeCheck : appleSnake) {
+		if (snakeCheck.hasComponent<PositionComponent>()) {
+			auto positionComponent = snakeCheck.getComponent<PositionComponent>();
 			if (positionComponent != positionHead) {
-				ClientTCP::FoodInfo foodInfo(positionComponent, true);
-				getWorld().getUnivers().getGameNetwork()->write_socket(
-						ClientTCP::add_prefix(eHeader::FOOD, &foodInfo));
+				getWorld().getUnivers().getSnakeClient()->sendDataToServer(
+						FoodInfo(positionComponent, true), eHeaderK::kFood);
 			}
 		}
 	}

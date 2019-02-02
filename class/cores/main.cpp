@@ -21,9 +21,11 @@ std::string const Snake::basicName[MAX_SNAKE] = {"Jack O'Lantern", "Eden",
 												 "Broutille", "Veggie-vie",
 												 "jinou42", "Dautta c bo"};
 
-
 std::ostream &operator<<(std::ostream &os, const Snake &snake) {
-	os << " id: " << snake.id << " isAlive: " << snake.isAlive;
+	os << " id: " << snake.id << " isReady: "
+	   << snake.isReady  << " isUpdate: "
+	   << snake.isUpdate << " direction: " << snake.direction << " isAlive: "
+	   << snake.isAlive << " isSwitchingLibrary: " << snake.isSwitchingLibrary;
 	return os;
 }
 
@@ -76,7 +78,7 @@ void testKstar() {
 
 	int collision[10][10] = {
 			{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-			{1, 0, 0, 0, 0, 1, 0, 0, 0, 1},
+			{1, 0, 0, 0, 0, 1, 1, 0, 0, 1},
 			{1, 0, 0, 0, 0, 1, 0, 0, 0, 1},
 			{1, 0, 0, 0, 0, 1, 0, 0, 0, 1},
 			{1, 0, 0, 0, 0, 1, 0, 0, 0, 1},
@@ -138,7 +140,40 @@ void testKstar() {
 //
 //
 
+void printints(std::array<int, 6> const &ints) {
+	for (const auto &item : ints) {
+		std::cout << item << " ";
+	}
+	std::cout << std::endl;
+}
+void trya() {
+
+	std::array<int, 6> ints = {0, 1, 2, 3, 4, 5};
+	void *pVoid = static_cast<void *>(ints.data());
+	std::array<int, 6> intsCopy;
+	std::cout << "Print ints initialized" << std::endl;
+	printints(ints);
+	std::cout << "Print ints copy empty" << std::endl;
+	printints(intsCopy);
+	std::memcpy(&intsCopy, pVoid, sizeof(ints));
+	std::cout << "Print ints copy full" << std::endl;
+	printints(intsCopy);
+
+}
+
+void tryi() {
+	std::array<int, 6> connectionsId({ -1, -1, -1, -1, -1, -1 });
+
+
+	printints(connectionsId);
+
+	std::cout << std::distance(connectionsId.begin(), std::find(connectionsId.begin(), connectionsId.end(), -1)) << std::endl;
+	connectionsId[0] = 2;
+	std::cout << std::distance(connectionsId.begin(), std::find(connectionsId.begin(), connectionsId.end(), -1)) << std::endl;
+}
+
 int main(int argc, char **argv) {
+	tryi();
 //	testKstar();
 //	return 1;
 	char hostname[64];

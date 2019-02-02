@@ -25,6 +25,7 @@ private:
 	std::vector< WidgetSnake * >				_snake;
 	std::vector<sf::Texture>					_texture;
 	std::vector<std::string>					_color;
+	std::array<Snake, MAX_SNAKE>		const  *snakes_;
 
 	WidgetLobby &operator=(const WidgetLobby&);
 	WidgetLobby(const WidgetLobby&);

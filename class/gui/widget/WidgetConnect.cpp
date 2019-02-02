@@ -2,7 +2,7 @@
 #include "WidgetConnect.hpp"
 #include "Univers.hpp"
 #include "imgui.h"
-
+#include <network/SnakeClient.hpp>
 WidgetConnect::WidgetConnect(Core &core) :
 		AWidget(core),
 		_client(false)
@@ -20,7 +20,7 @@ WidgetConnect::~WidgetConnect(void)
 void			WidgetConnect::render(void)
 {
 
-	if (_core.univers.getGameNetwork() && _core.univers.getGameNetwork()->isConnect())
+	if (_core.univers.getSnakeClient() && _core.univers.getSnakeClient()->isConnect())
 		ImGui::Begin("Connect", NULL, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse);
 	else
 		ImGui::Begin("Connect", NULL, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse);
@@ -60,15 +60,15 @@ void			WidgetConnect::render(void)
 
 	Core::beginColor(Core::HUE_GREEN);
 	if (_client) {
-		if (ImGui::Button("Join", sf::Vector2f(ImGui::GetWindowSize().x, 20)) && _core.univers.getGameNetwork()) {
-			_core.univers.getGameNetwork()->connect(_dnsBuffer, _portBuffer);
+		if (ImGui::Button("Join", sf::Vector2f(ImGui::GetWindowSize().x, 20)) && _core.univers.getSnakeClient()) {
+			_core.univers.getSnakeClient()->connect(_dnsBuffer, _portBuffer);
 		}
 
 	}
 	else {
-		if (ImGui::Button("Create", sf::Vector2f(ImGui::GetWindowSize().x, 20)) && _core.univers.getGameNetwork()) {
+		if (ImGui::Button("Create", sf::Vector2f(ImGui::GetWindowSize().x, 20)) && _core.univers.getSnakeClient()) {
 			_core.univers.create_server();
-			_core.univers.getGameNetwork()->connect(_dnsBuffer, _portBuffer);
+			_core.univers.getSnakeClient()->connect(_dnsBuffer, _portBuffer);
 		}
 	}
 	Core::endColor();

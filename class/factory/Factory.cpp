@@ -42,6 +42,7 @@ void Factory::create_snake(Snake snake, int max_snakes) {
 
 		if (index == 0) {
 			new_snake.tagByTagId(eTag::HEAD_TAG + snake.id);
+//			univers_.getWorld_().getEntitiesManager().addComponent<JoystickComponent>(new_snake, kNorth);
 			new_snake.addComponent<JoystickComponent>(kNorth);
 			new_snake.addComponent<MotionComponent>(kNorth);
 			new_snake.addComponent<CollisionComponent>();

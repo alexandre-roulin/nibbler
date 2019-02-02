@@ -1,9 +1,11 @@
 #include "WidgetLobby.hpp"
 #include <Univers.hpp>
 #include <gui/Core.hpp>
+#include <network/SnakeClient.hpp>
 
 WidgetLobby::WidgetLobby(Core &core) :
-AWidget(core)
+AWidget(core),
+snakes_(nullptr)
 {
 	_reload();
 	addColor("Green", "ressource/snake_presentation/snake_green.png");
@@ -38,21 +40,19 @@ void			WidgetLobby::addSnake(Snake const &snake, bool isYourSnake)
 
 void			WidgetLobby::_reload()
 {
-	if (_core.univers.getGameNetwork()) {
-		_snake.clear();
-		Snake const *snakes = _core.univers.getGameNetwork()->getSnakes();
-		if (snakes)
+	if (_core.univers.getSnakeClient()) {
+		snakes_ = &_core.univers.getSnakeClient()->getSnakeArray_();
 		for (unsigned i = 0; i < MAX_SNAKE; i++) {
-			//std::cout << snakes[i].id << "  |  isYour ? i[" << i <<  "] id[" << _core.univers.getGameNetwork()->getId() << "] = [" << (i ==
-			//_core.univers.getGameNetwork()->getId()) << "]" << std::endl;
-			addSnake(snakes[i], (i == _core.univers.getGameNetwork()->getId()));
+//			std::cout << snakes[i].id << "  |  isYour ? i[" << i <<  "] id[" << _core.univers.getSnakeClient()->getId_() << "] = [" << (i ==
+//			_core.univers.getSnakeClient()->getId_()) << "]" << std::endl;
+			addSnake((*snakes_)[i], (i == _core.univers.getSnakeClient()->getId_()));
 		}
 	}
 }
 
 void			WidgetLobby::render(void)
 {
-	if (_core.univers.getGameNetwork()) {
+	if (_core.univers.getSnakeClient()) {
 		_reload();
 		for (unsigned int i = 0; i < _snake.size(); i++)
 		{

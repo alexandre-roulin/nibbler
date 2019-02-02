@@ -7,7 +7,6 @@
 #include <systems/CollisionSystem.hpp>
 #include <systems/SpriteSystem.hpp>
 #include <systems/RenderSystem.hpp>
-#include <network/ServerTCP.hpp>
 #include <systems/FoodEatSystem.hpp>
 #include <events/FoodEat.hpp>
 #include <KINU/World.hpp>
@@ -15,7 +14,8 @@
 #include <events/FoodCreation.hpp>
 #include <events/JoystickEvent.hpp>
 #include <dlfcn.h>
-
+#include <network/SnakeServer.hpp>
+#include <network/SnakeClient.hpp>
 /** Const Variable **/
 
 const std::string Univers::WarningServerCreateIA = "Only the server owner can create IA";
@@ -28,7 +28,7 @@ Univers::Univers()
 		: timer_start(boost::asio::deadline_timer(io_start)),
 		  timer_loop(boost::asio::deadline_timer(io_loop)),
 		  mapSize(MAP_DEFAULT),
-		  gameSpeed(20),
+		  gameSpeed(150),
 		  dlHandleDisplay(nullptr),
 		  dlHandleSound(nullptr),
 		  display(nullptr),
@@ -151,12 +151,14 @@ void Univers::new_game() {
 
 	if (isServer()) {
 		for (auto &bobby : vecBobby) {
-			bobby->getClientTCP_()->change_state_ready();
+			bobby->getClientTCP_()->changeStateReady();
 		}
 	}
 	sleep(1);
 	assert(isServer());
+
 	assert(serverTCP_->isReady());
+
 	if (!isServer() || !serverTCP_->isReady()) return;
 	world_ = std::make_unique<KINU::World>(*this);
 	world_->grid.resize(mapSize);
@@ -177,30 +179,25 @@ void Univers::new_game() {
 void Univers::manage_input() {
 
 	if (clientTCP_) {
-		ClientTCP::InputInfo inputInfo;
-		inputInfo.id = clientTCP_->getId();
-		if (display) {
-			inputInfo.dir = display->getDirection();
-		}
-		else
-			inputInfo.dir = eDirection::kNorth;
 		if (world_->getEntitiesManager().hasEntityByTagId(
-				eTag::HEAD_TAG + inputInfo.id)) {
-			clientTCP_->write_socket(
-					ClientTCP::add_prefix(eHeader::INPUT, &inputInfo));
+				eTag::HEAD_TAG + clientTCP_->getId_())) {
+			clientTCP_->sendDataToServer(InputInfo(
+					clientTCP_->getId_(),
+					(display ? display->getDirection() : eDirection::kNorth)
+					), eHeaderK::kInput);
 		}
 	}
 
 }
 
 void Univers::manage_start() {
-	ClientTCP::StartInfo startInfo;
+	StartInfo startInfo;
 	std::vector<StartEvent> startEvent;
 	for (; startEvent.empty();) {
 
-		getMainClientTCP()->lock();
+		getSnakeClient()->lock();
 		startEvent = world_->getEventsManager().getEvents<StartEvent>();
-		getMainClientTCP()->unlock();
+		getSnakeClient()->unlock();
 	}
 	auto ptime = startEvent.front().start_time;
 	timer_start.expires_at(ptime);
@@ -240,9 +237,9 @@ void Univers::loop() {
 
 	std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
 	std::chrono::milliseconds current(0);
-
+	std::cout << "AllSnakeIsDead : " << getSnakeClient()->allSnakeIsDead() << std::endl;
 	while ((display == nullptr || !display->exit()) &&
-		   !getMainClientTCP()->all_snake_is_dead()) {
+		   !getSnakeClient()->allSnakeIsDead()) {
 		if (switchLib)
 			manageSwitchLibrary();
 		std::chrono::high_resolution_clock::time_point t2 = std::chrono::high_resolution_clock::now();
@@ -275,15 +272,15 @@ void Univers::loop_world() {
 	manage_input();
 
 	for (; nextFrame.empty();) {
-		getMainClientTCP()->lock();
+		getSnakeClient()->lock();
 		// std::cout << "Stuck nextFrame" << std::endl;
 		nextFrame = world_->getEventsManager().getEvents<NextFrame>();
-		getMainClientTCP()->unlock();
+		getSnakeClient()->unlock();
 	}
 	nextFrame.clear();
 	world_->getEventsManager().destroy<NextFrame>();
 
-	getMainClientTCP()->deliverEvents();
+	getSnakeClient()->deliverEvents();
 
 	world_->update();
 
@@ -325,7 +322,7 @@ void Univers::loop_world() {
 	world_->getSystemsManager().getSystem<FoodEatSystem>().update();
 	world_->getEventsManager().destroy<FoodEat>();
 
-	if (!getMainClientTCP()->all_snake_is_dead()) {
+	if (!getSnakeClient()->allSnakeIsDead()) {
 
 		timer_loop.expires_at(
 				timer_loop.expires_at() +
@@ -336,16 +333,15 @@ void Univers::loop_world() {
 }
 
 void Univers::manageSwitchLibrary() {
-	log_success("sw %d", !getGameNetwork()->isSwitchingLibrary());
-	if (!getGameNetwork()->isSwitchingLibrary()) {
-		int16_t id = getGameNetwork()->getId();
-		getGameNetwork()->write_socket(ClientTCP::add_prefix(eHeader::kForcePause, &id));
-//		kDisplay = (kDisplay == kExternSdlLibrary) ? kExternSfmlLibrary : kExternSdlLibrary;
+	log_success("sw %d", !getSnakeClient()->isSwitchingLibrary());
+	if (!getSnakeClient()->isSwitchingLibrary()) {
+		int16_t id = getSnakeClient()->getId_();
+		getSnakeClient()->sendDataToServer(id, eHeaderK::kForcePause);
 		kDisplay = (kDisplay == kExternGlfwLibrary) ? kExternSfmlLibrary : static_cast<eDisplay>(kDisplay + 1);
 		unload_external_library();
-		load_extern_lib_display(kDisplay);
+		std::cout << load_extern_lib_display(kDisplay) << std::endl;
 		defaultAssignmentLibrary();
-		getGameNetwork()->write_socket(ClientTCP::add_prefix(eHeader::kForcePause, &id));
+		getSnakeClient()->sendDataToServer(id, eHeaderK::kForcePause);
 	}
 	switchLib = false;
 }
@@ -354,13 +350,12 @@ void Univers::refreshTimerLoopWorld() {
 	timer_loop.expires_at(boost::posix_time::microsec_clock::universal_time());
 }
 
-
 void Univers::callbackAction(eAction action) {
-	if (getGameNetwork() == nullptr) return;
+	if (getSnakeClient() == nullptr) return;
 	switch (action) {
 		case eAction::kPause :
 			log_success(" eAction::kPause");
-			getGameNetwork()->write_socket(ClientTCP::add_prefix<eAction>(eHeader::kPause, &action));
+			getSnakeClient()->sendDataToServer(action, eHeaderK::kPause);
 			break;
 		case eAction::kSwitchDisplayLibrary:
 			log_success("eAction::kSwitchDisplayLibrary");
@@ -375,7 +370,7 @@ void Univers::callbackAction(eAction action) {
 void Univers::create_client() {
 	log_error("%d", clientTCP_.get() == nullptr);
 	if (!clientTCP_)
-		clientTCP_ = std::make_unique<ClientTCP>(*this, false);
+		clientTCP_ = std::make_unique<SnakeClient>(*this, false);
 	else
 		core_->addMessageChat(WarningClientExist);
 }
@@ -388,7 +383,7 @@ void Univers::create_server(unsigned int port) {
 	if (serverTCP_)
 		core_->addMessageChat(WarningServerIsUp);
 	else {
-		serverTCP_ = std::make_unique<ServerTCP>(*this, port);
+		serverTCP_ = std::make_unique<SnakeServer>(*this, port);
 		core_->addMessageChat(SuccessServerIsCreate);
 	}
 }
@@ -431,26 +426,15 @@ void Univers::finish_game() {
 
 /** Getter && Setter **/
 
-ClientTCP *Univers::getMainClientTCP() const {
-//	std::cout << "Univers::getMainClientTCP[C:" <<  (clientTCP_ != nullptr) << "-B:" << (vecBobby.size() != 0 ) << "]" << std::endl;
-	if (clientTCP_)
-		return clientTCP_.get();
-	else if (vecBobby.size() != 0)
-		return vecBobby.front()->getClientTCP_();
-	return nullptr;
-
-}
-
 KINU::World &Univers::getWorld_() const {
 	return *world_;
 }
 
-IGameNetwork *Univers::getGameNetwork() const {
+SnakeClient *Univers::getSnakeClient() const {
 	if (clientTCP_)
 		return clientTCP_.get();
-	else if (vecBobby.size() != 0) {
+	else if (vecBobby.size() != 0)
 		return vecBobby.front()->getClientTCP_();
-	}
 	return nullptr;
 }
 

@@ -1,7 +1,7 @@
 #include "WidgetMassiveButton.hpp"
 #include <Univers.hpp>
 #include <gui/Core.hpp>
-
+#include <network/SnakeClient.hpp>
 WidgetMassiveButton::WidgetMassiveButton(Core &core) :
 		AWidget(core)
 {
@@ -33,7 +33,7 @@ void			WidgetMassiveButton::render(void)
 		_core.univers.create_client();
 	}
 	if (ImGui::Button("connect()")) {
-		_core.univers.getGameNetwork()->connect("localhost", "4242");
+		_core.univers.getSnakeClient()->connect("localhost", "4242");
 	}
 	if (ImGui::Button("delete_client()")) {
 		_core.univers.delete_client();
