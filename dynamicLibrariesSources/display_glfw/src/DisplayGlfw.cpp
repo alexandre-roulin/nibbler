@@ -204,6 +204,9 @@ void		DisplayGlfw::drawGridCaseBody_(int x, int y) {
 		eyeLeft.render(shader_);
 		eyeRight.render(shader_);
 		materialMap_.at(sprite & eSprite::MASK_COLOR).putMaterialToShader(shader_);
+		if ((sprite & eSprite::YOUR_SNAKE) == eSprite::YOUR_SNAKE) {
+			Material::unsetMaterial(shader_);
+		}
 	}
 }
 

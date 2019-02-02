@@ -170,7 +170,7 @@ void ServerTCP::parseInput(eHeader header, void const *input, size_t len) {
 				return snake.isSwitchingLibrary;
 			});
 			writeToClientTCP(ClientTCP::add_prefix(eHeader::SNAKE, &(snake_array_.__elems_[id])));
-//			log_warn("kPause is %s", pause_ ? "true" : "false");
+			// log_warn("kPause is %s", pause_ ? "true" : "false");
 			if (!pause_) {
 				eAction pause = eAction::kPause;
 				writeToClientTCP(ClientTCP::add_prefix(eHeader::kPause, &pause));

@@ -8,7 +8,7 @@
 	#define NIBBLER_ROOT_PROJECT_PATH 0
 #endif
 
-#define SNAKE_MAX 500
+#define SNAKE_MAX 8
 #define SNAKE_MAX_NAME 8
 #define SNAKE_MAX_COLOR 8
 #define CHAT_BUFFER 128
@@ -49,7 +49,7 @@ enum ePriority {
 
 struct Snake {
 	Snake() : sprite(eSprite::BLUE), isReady(false), id(-1), isUpdate(false),
-			  direction(kNorth), isAlive(false) {
+			  direction(kNorth), isAlive(false), isSwitchingLibrary(false) {
 		memset(name, NAME_BUFFER, 0);
 	};
 

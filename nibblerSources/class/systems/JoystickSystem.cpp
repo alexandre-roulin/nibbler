@@ -3,7 +3,6 @@
 #include "JoystickSystem.hpp"
 #include <component/JoystickComponent.hpp>
 #include <component/MotionComponent.hpp>
-#include <network/ClientTCP.hpp>
 
 JoystickSystem::JoystickSystem() {
 	requireComponent<JoystickComponent>();

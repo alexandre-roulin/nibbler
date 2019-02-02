@@ -66,6 +66,10 @@ void SpriteSystem::update() {
 			else if (entity.getComponent<MotionComponent>().direction ==
 					 kWest)
 				spriteComponent.sprite |= eSprite::TO_WEST;
+			if (getWorld().getUnivers().getGameNetwork()->getId() == entity.getGroupIdByEntity()) {
+				log_fatal("Is my head : ");
+				spriteComponent.sprite |= eSprite::YOUR_SNAKE;
+			}
 		} else {
 			spriteComponent.sprite |=
 					(SpriteSystem::spriteDirection(positionComponent,

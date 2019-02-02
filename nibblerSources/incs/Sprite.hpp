@@ -50,7 +50,9 @@ enum class eSprite {
 
 	WALL = (1 << 23),
 	FOOD = (1 << 24),
-	GROUND = (1 << 25)
+	GROUND = (1 << 25),
+
+	YOUR_SNAKE = (1 << 30)
 };
 
 inline bool operator==(eSprite const lhs, eSprite const rhs) {
