@@ -13,6 +13,25 @@ Camera::Camera() :
 	updateCameraVectors_();
 }
 
+Camera::Camera(Camera const &camera) {
+	*this = camera;
+}
+Camera &Camera::operator=(Camera const &camera) {
+	if (this != &camera) {
+		position_ = camera.position_;
+		front_ = camera.front_;
+		up_ = camera.up_;
+		right_ = camera.right_;
+		worldUp_ = camera.worldUp_;
+		yaw_ = camera.yaw_;
+		pitch_ = camera.pitch_;
+		speed_ = camera.speed_;
+		sensitivity_ = camera.sensitivity_;
+		zoom_ = camera.zoom_;
+	}
+	return (*this);
+}
+
 void 		Camera::update() {
 }
 
@@ -27,6 +46,11 @@ void		Camera::processPosition(Camera::Movement direction, float deltaTime) {
 		position_ -= right_ * velocity;
 	else if (direction == Camera::Movement::RIGHT)
 		position_ += right_ * velocity;
+	updateCameraVectors_();
+}
+
+void		Camera::setPosition(glm::vec3 const &pos) {
+	position_ = pos;
 	updateCameraVectors_();
 }
 

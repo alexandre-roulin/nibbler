@@ -12,6 +12,10 @@
 #define NEAR_PLANE 0.1f
 #define MAX_PLANE 1000.f
 
+#define CAMERA_GLOBAL 0
+#define CAMERA_SNAKE 1
+
+#define CAMERA_SIZE 2
 
 IDisplay *newDisplay(int width,
                      int height,
@@ -41,9 +45,11 @@ deltaTime_(0.016f),
 particuleBackground_(nullptr),
 particuleBackgroundOutline_(nullptr),
 projection_(1.f),
+indexActiveCamera_(0),
 view_(1.f),
 model_(1.f),
-light_(glm::vec3(0.f, 0.f, 30.f)) {
+light_(glm::vec3(0.f, 0.f, 30.f)),
+_callback(nullptr) {
 	constructMaterialMap_();
     glfwSetCursorPosCallback(getWindow(),  DisplayGlfw::mouseCallback_);
 
@@ -73,10 +79,15 @@ light_(glm::vec3(0.f, 0.f, 30.f)) {
     modelWall_.setModel((pathRoot_ / "ressources" / "wall.obj").generic_string());
 	appleModel_.setModel((pathRoot_ / "ressources" / "Apple_obj" / "apple.obj").generic_string());
 
+
+	camera_.reserve(CAMERA_SIZE);
+	camera_.emplace_back();
+	camera_.emplace_back();
+
 	if (winTileSize_.getY() < winTileSize_.getX())
-    	camera_.processPosition(Camera::Movement::BACKWARD, winTileSize_.getX() / 2);
+    	camera_[CAMERA_GLOBAL].processPosition(Camera::Movement::BACKWARD, winTileSize_.getX() / 2);
 	else
-		camera_.processPosition(Camera::Movement::BACKWARD, winTileSize_.getY() / 2);
+		camera_[CAMERA_GLOBAL].processPosition(Camera::Movement::BACKWARD, winTileSize_.getY() / 2);
 
 	particuleBackground_ = new Particle((pathRoot_ / "ressources" / "objects" / "grass" / "grass.obj").generic_string(), winTileSize_.getY() * winTileSize_.getX());
 	particuleBackgroundOutline_ = new Particle((pathRoot_ / "ressources" / "objects" / "grass" / "grass.obj").generic_string(), winTileSize_.getY() * winTileSize_.getX());
@@ -128,10 +139,6 @@ void				DisplayGlfw::constructMaterialMap_() {
 
 DisplayGlfw::~DisplayGlfw() {
     clean_();
-}
-
-void DisplayGlfw::registerCallbackAction(std::function<void(eAction)>) {
-
 }
 
 void DisplayGlfw::error_(std::string const &s) {
@@ -205,7 +212,7 @@ void		DisplayGlfw::drawGridCaseBody_(int x, int y) {
 		eyeRight.render(shader_);
 		materialMap_.at(sprite & eSprite::MASK_COLOR).putMaterialToShader(shader_);
 		if ((sprite & eSprite::YOUR_SNAKE) == eSprite::YOUR_SNAKE) {
-			Material::unsetMaterial(shader_);
+			camera_[CAMERA_SNAKE].setPosition(grid_(x, y).getPosition());
 		}
 	}
 }
@@ -221,6 +228,15 @@ void		DisplayGlfw::drawGridCase_(eSprite sprite, int x, int y) {
 	grid_(x, y).render(shader_);
 }
 
+void DisplayGlfw::activeNextCamera_() {
+	++indexActiveCamera_;
+	indexActiveCamera_ = indexActiveCamera_ % camera_.size();
+}
+
+Camera &DisplayGlfw::getActiveCamera_() {
+	return (camera_[indexActiveCamera_]);
+}
+
 void		DisplayGlfw::drawGrid(MutantGrid< eSprite > const &grid) {
 	tileGrid_ = grid;
 	shader_.activate();
@@ -228,7 +244,7 @@ void		DisplayGlfw::drawGrid(MutantGrid< eSprite > const &grid) {
 
 	shader_.setMat4("projection", projection_);
 	shader_.setMat4("view", view_);
-	shader_.setVec3("uCameraPosition", camera_.getPosition());
+	shader_.setVec3("uCameraPosition", getActiveCamera_().getPosition());
 
 
 	for (int y = 0; y < winTileSize_.getY(); ++y) {
@@ -302,25 +318,28 @@ void DisplayGlfw::render(float currentDelayFrame, float maxDelayFrame) {
     if (glfwGetKey(getWindow(), GLFW_KEY_RIGHT) == GLFW_PRESS)
     	direction_ = kEast;
 	if (glfwGetKey(getWindow(), GLFW_KEY_D) == GLFW_PRESS)
-		camera_.processPosition(Camera::Movement::RIGHT, deltaTime_ * 5);
+		camera_[CAMERA_GLOBAL].processPosition(Camera::Movement::RIGHT, deltaTime_ * 5);
 	if (glfwGetKey(getWindow(), GLFW_KEY_A) == GLFW_PRESS)
-		camera_.processPosition(Camera::Movement::LEFT, deltaTime_ * 5);
+		camera_[CAMERA_GLOBAL].processPosition(Camera::Movement::LEFT, deltaTime_ * 5);
 	if (glfwGetKey(getWindow(), GLFW_KEY_S) == GLFW_PRESS)
-		camera_.processPosition(Camera::Movement::BACKWARD, deltaTime_ * 5);
+		camera_[CAMERA_GLOBAL].processPosition(Camera::Movement::BACKWARD, deltaTime_ * 5);
 	if (glfwGetKey(getWindow(), GLFW_KEY_W) == GLFW_PRESS)
-		camera_.processPosition(Camera::Movement::FORWARD, deltaTime_ * 5);
+		camera_[CAMERA_GLOBAL].processPosition(Camera::Movement::FORWARD, deltaTime_ * 5);
 
 	if (glfwGetKey(getWindow(), GLFW_KEY_F) == GLFW_PRESS) {
     }
 
-	shader_.activate();
+	if (glfwGetKey(getWindow(), GLFW_KEY_N) == GLFW_PRESS)
+		activeNextCamera_();
+
+		shader_.activate();
 	shader_.setInt("uBackground", 0);
 	light_.putLightToShader(shader_);
-	view_ = camera_.getViewMatrix();
+	view_ = getActiveCamera_().getViewMatrix();
 	shader_.setMat4("projection", projection_);
 	shader_.setMat4("view", view_);
 
-	shader_.setVec3("uCameraPosition", camera_.getPosition());
+	shader_.setVec3("uCameraPosition", getActiveCamera_().getPosition());
 /*
     for (int y = 0; y < winTileSize_.getY(); y++) {
         for (int x = 0; x < winTileSize_.getX(); x++) {
@@ -345,7 +364,7 @@ void DisplayGlfw::render(float currentDelayFrame, float maxDelayFrame) {
 	shaderMultiple_.activate();
 	light_.putLightToShader(shaderMultiple_);
 	shaderMultiple_.setInt("uBackground", 1);
-	shaderMultiple_.setVec3("uCameraPosition", camera_.getPosition());
+	shaderMultiple_.setVec3("uCameraPosition", getActiveCamera_().getPosition());
 	shaderMultiple_.setMat4("projection", projection_);
 	shaderMultiple_.setMat4("view", view_);
 
@@ -365,6 +384,10 @@ void DisplayGlfw::render(float currentDelayFrame, float maxDelayFrame) {
 	shader_.activate();
 }
 
+void DisplayGlfw::registerCallbackAction(std::function<void(eAction)> function) {
+	_callback = function;
+}
+
 bool        DisplayGlfw::exit() const {
 	return Glfw::exit();
 }
@@ -373,7 +396,7 @@ void DisplayGlfw::update(float deltaTime) {
     deltaTime_ = deltaTime;
 	Glfw::update();
 	if (!cursor_ && DisplayGlfw::mouseCallbackCalled_) {
-		camera_.processMouseMovement(DisplayGlfw::offsetX_, DisplayGlfw::offsetY_);
+		camera_[CAMERA_GLOBAL].processMouseMovement(DisplayGlfw::offsetX_, DisplayGlfw::offsetY_);
 		DisplayGlfw::mouseCallbackCalled_ = false;
 	}
 }

@@ -30,8 +30,6 @@
 
 class DisplayGlfw : public Glfw, public IDisplay {
 public:
-	//void registerCallbackAction(std::function<void(eAction)> function) override; // TODO
-
     class GlfwConstructorException : public std::exception {
     public:
         GlfwConstructorException() noexcept;
@@ -97,20 +95,26 @@ private:
 	Particle						*particuleBackground_;
 	Particle						*particuleBackgroundOutline_;
 	Light							light_;
-    Camera							camera_;
+	std::vector<Camera>				camera_;
+	int								indexActiveCamera_;
     ActModel						lol_;
 
 	glm::mat4						projection_;
 	glm::mat4						view_;
 	glm::mat4						model_;
 
+	std::function<void(eAction)>	_callback;
 
-    void                error_(std::string const &s = std::string("Error"));
-    void                clean_();
-	void				drawGridCase_(eSprite sprite, int x, int y);
-	void				drawGridCaseBody_(int x, int y);
-	void				interpolateGridCase_(int x, int y);
-		void				renderLine_(ActModel const &model);
+
+	void            	    error_(std::string const &s = std::string("Error"));
+    void            	    clean_();
+	void					activeNextCamera_();
+	Camera					&getActiveCamera_();
+
+	void					drawGridCase_(eSprite sprite, int x, int y);
+	void					drawGridCaseBody_(int x, int y);
+	void					interpolateGridCase_(int x, int y);
+	void					renderLine_(ActModel const &model);
 
 
 	std::map< eSprite, Material >		materialMap_;

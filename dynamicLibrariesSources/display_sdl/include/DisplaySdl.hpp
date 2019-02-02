@@ -9,7 +9,6 @@
 
 class DisplaySdl : public IDisplay {
 public:
-	void registerCallbackAction(std::function<void(eAction)> function) override;
 
 	class SdlConstructorException : public std::exception {
 	public:
@@ -42,6 +41,7 @@ public:
 	void drawGrid(MutantGrid< eSprite > const &grid) override;
 	void setBackground(MutantGrid< eSprite > const &grid) override;
 	eDirection getDirection(void) const override;
+	void registerCallbackAction(std::function<void(eAction)> function) override;
 
 private:
 	bool _exit;

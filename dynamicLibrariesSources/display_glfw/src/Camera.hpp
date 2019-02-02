@@ -17,8 +17,11 @@ public:
 	Camera();
 	~Camera() {};
 
+	Camera(Camera const &camera);
+	Camera &operator=(Camera const &camera);
 
 	void update();
+	void setPosition(glm::vec3 const &pos);
 	void processPosition(Camera::Movement direction, float deltaTime = 1.f);
 	void processPosition(glm::vec3 const &, float deltaTime = 1.f);
 	void processMouseMovement(float xoffset, float yoffset, GLboolean constrainPitch = true);
@@ -38,9 +41,6 @@ private:
 	float speed_;
 	float sensitivity_;
 	float zoom_;
-
-	Camera(Camera const &) = delete;
-	Camera &operator=(Camera const &) = delete;
 
 	void updateCameraVectors_();
 };
