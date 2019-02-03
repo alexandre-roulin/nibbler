@@ -23,7 +23,7 @@ public:
 private:
 
 
-	void callbackSnakeArray(std::array<Snake, MAX_SNAKE>);
+	void callbackSnakeArray(std::array<Snake, SNAKE_MAX>);
 	void callbackPock(char);
 
 	void callbackBorderless(bool);
@@ -53,9 +53,9 @@ private:
 	bool pause_;
 	unsigned short port_;
 	unsigned int mapSize_;
-	std::array<int, MAX_SNAKE> connectionsId;
+	std::array<int, SNAKE_MAX> connectionsId;
 	KNW::ServerTCP serverTCP_;
-	std::array<Snake, MAX_SNAKE> snake_array_;
+	std::array<Snake, SNAKE_MAX> snake_array_;
 
 };
 

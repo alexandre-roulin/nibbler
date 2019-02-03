@@ -2,6 +2,7 @@
 #include "AWidget.hpp"
 #include <string>
 #include <vector>
+#include <array>
 #include <SFML/Graphics.hpp>
 #include "WidgetSnake.hpp"
 #include "nibbler.hpp"
@@ -22,10 +23,10 @@ private:
 
 	void		_reload();
 
-	std::vector<WidgetSnake * >					_snake;
 	std::vector<sf::Texture>					_texture;
 	std::vector<std::string>					_color;
-	std::array<Snake, MAX_SNAKE>		const  *snakes_;
+	std::vector<std::unique_ptr<WidgetSnake> >	snakeWidget_;
+	std::array<Snake, SNAKE_MAX>				snakes_;
 
 	WidgetLobby &operator=(const WidgetLobby&);
 	WidgetLobby(const WidgetLobby&);

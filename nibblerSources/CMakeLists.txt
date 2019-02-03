@@ -90,6 +90,23 @@ add_executable(${NAME}
         incs/logger_utils.h
         incs/nibbler.hpp
         incs/stb_image.h
+
+        class/KNW/BaseDataType.cpp
+        class/KNW/BaseDataType.hpp
+        class/KNW/ClientTCP.cpp
+        class/KNW/ClientTCP.hpp
+        class/KNW/Config.hpp
+        class/KNW/DataTCP.cpp
+        class/KNW/DataTCP.hpp
+        class/KNW/IOTCP.cpp
+        class/KNW/IOTCP.hpp
+        class/KNW/ServerTCP.cpp
+        class/KNW/ServerTCP.hpp
+        class/network/Data.hpp
+        class/network/SnakeClient.cpp
+        class/network/SnakeClient.hpp
+        class/network/SnakeServer.cpp
+        class/network/SnakeServer.hpp
         class/systems/SpriteSystem.cpp class/systems/SpriteSystem.hpp class/gui/widget/WidgetConnect.cpp class/gui/widget/WidgetConnect.hpp class/KINU/Component.cpp class/KINU/Component.hpp class/KINU/Entity.cpp class/KINU/Entity.hpp class/KINU/EventsManager.cpp class/KINU/EventsManager.hpp class/KINU/Pool.hpp class/KINU/SystemsManager.cpp class/KINU/SystemsManager.hpp class/KINU/World.cpp class/KINU/World.hpp class/KINU/Config.hpp class/ia/Bobby.cpp class/ia/Bobby.hpp class/network/IGameNetwork.hpp class/gui/widget/WidgetMassiveButton.cpp class/gui/widget/WidgetMassiveButton.hpp incs/Sprite.hpp class/ia/KStar.cpp class/ia/KStar.hpp incs/MutantGrid.tpp)
 
 target_include_directories(

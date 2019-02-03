@@ -17,7 +17,7 @@ SnakeServer::SnakeServer(
 					  std::placeholders::_1)
 			,eHeaderK::kInput);
 
-	serverTCP_.addDataType<std::array<Snake, MAX_SNAKE>>(
+	serverTCP_.addDataType<std::array<Snake, SNAKE_MAX>>(
 			std::bind(&SnakeServer::callbackSnakeArray,
 					  this,
 					  std::placeholders::_1)
@@ -126,7 +126,7 @@ void SnakeServer::callbackPause(eAction pause) {
 
 void SnakeServer::callbackSnake(Snake snake) {
 	log_success("%s", __PRETTY_FUNCTION__ );
-	assert(snake.id >= 0 && snake.id < MAX_SNAKE);
+	assert(snake.id >= 0 && snake.id < SNAKE_MAX);
 	snake_array_[snake.id] = snake;
 	serverTCP_.writeDataToOpenConnections(snake, eHeaderK::kSnake);
 }
@@ -134,7 +134,7 @@ void SnakeServer::callbackSnake(Snake snake) {
 void SnakeServer::callbackForcePause(int16_t id) {
 	log_success("%s", __PRETTY_FUNCTION__ );
 	mutex_.lock();
-	assert(id < MAX_SNAKE);
+	assert(id < SNAKE_MAX);
 	snake_array_[id].isSwitchingLibrary = !snake_array_[id].isSwitchingLibrary;
 	pause_ = std::any_of(snake_array_.begin(), snake_array_.end(), [](auto snake){
 		return snake.id != -1 && snake.isSwitchingLibrary;
@@ -196,7 +196,7 @@ void SnakeServer::callbackChatInfo(ChatInfo chatInfo) {
 	serverTCP_.writeDataToOpenConnections(chatInfo, eHeaderK::kChat);
 }
 
-void SnakeServer::callbackSnakeArray(std::array<Snake, MAX_SNAKE>) {
+void SnakeServer::callbackSnakeArray(std::array<Snake, SNAKE_MAX>) {
 	log_success("%s", __PRETTY_FUNCTION__ );
 }
 
@@ -241,7 +241,7 @@ bool SnakeServer::isReady() const {
 }
 
 bool SnakeServer::isFull() const {
-	return serverTCP_.getSizeOfConnections() == MAX_SNAKE;
+	return serverTCP_.getSizeOfConnections() == SNAKE_MAX;
 }
 
 unsigned short SnakeServer::getPort_() const {

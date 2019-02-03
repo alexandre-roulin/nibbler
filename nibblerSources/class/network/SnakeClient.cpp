@@ -21,7 +21,7 @@ SnakeClient::SnakeClient(
 					  std::placeholders::_1)
 			, eHeaderK::kInput);
 
-	clientTCP_.addDataType<std::array<Snake, MAX_SNAKE>>(
+	clientTCP_.addDataType<std::array<Snake, SNAKE_MAX>>(
 			std::bind(&SnakeClient::callbackSnakeArray,
 					  this,
 					  std::placeholders::_1)
@@ -142,7 +142,7 @@ bool SnakeClient::isSwitchingLibrary() const {
 	return snake_array_[id_].isSwitchingLibrary;
 }
 
-const std::array<Snake, MAX_SNAKE> &SnakeClient::getSnakeArray_() const {
+const std::array<Snake, SNAKE_MAX> &SnakeClient::getSnakeArray_() const {
 	return snake_array_;
 }
 
@@ -313,7 +313,7 @@ void SnakeClient::callbackChatInfo(ChatInfo chatInfo) {
 	mutex_.unlock();
 }
 
-void SnakeClient::callbackSnakeArray(std::array<Snake, MAX_SNAKE> new_snake_array) {
+void SnakeClient::callbackSnakeArray(std::array<Snake, SNAKE_MAX> new_snake_array) {
 	log_success("%s", __PRETTY_FUNCTION__ );
 	mutex_.lock();
 	snake_array_ = new_snake_array;

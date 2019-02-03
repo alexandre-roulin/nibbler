@@ -32,7 +32,7 @@ public:
 
 	bool isSwitchingLibrary() const;
 
-	const std::array<Snake, MAX_SNAKE> &getSnakeArray_() const;
+	const std::array<Snake, SNAKE_MAX> &getSnakeArray_() const;
 
 	const Snake &getSnake() const;
 
@@ -69,7 +69,7 @@ public:
 
 private:
 
-	void callbackSnakeArray(std::array<Snake, MAX_SNAKE>);
+	void callbackSnakeArray(std::array<Snake, SNAKE_MAX>);
 
 	void callbackBorderless(bool);
 
@@ -90,7 +90,7 @@ private:
 	uint16_t id_;
 	std::mutex mutex_;
 	Factory factory_;
-	std::array<Snake, MAX_SNAKE> snake_array_;
+	std::array<Snake, SNAKE_MAX> snake_array_;
 	std::vector<FoodCreation> foodCreations;
 };
 

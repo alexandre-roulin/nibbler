@@ -55,14 +55,9 @@ enum class eSprite {
 	YOUR_SNAKE = (1 << 30)
 };
 
-inline bool operator==(eSprite const lhs, eSprite const rhs) {
-	return static_cast<int>(lhs) == static_cast<int>(rhs);
-}
-
 inline eSprite operator|(eSprite const lhs, eSprite const rhs) {
 	return static_cast<eSprite> (static_cast<int>(lhs) | static_cast<int>(rhs));
 }
-
 inline eSprite const &operator|=(eSprite &lhs, eSprite const &rhs) {
 	lhs = static_cast<eSprite> (static_cast<int>(lhs) | static_cast<int>(rhs));
 	return (lhs);

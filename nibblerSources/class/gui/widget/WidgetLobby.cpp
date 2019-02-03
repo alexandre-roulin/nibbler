@@ -6,8 +6,7 @@
 #include <network/SnakeClient.hpp>
 
 WidgetLobby::WidgetLobby(Core &core) :
-AWidget(core),
-snakes_(nullptr)
+AWidget(core)
 {
 	_reload();
 
@@ -21,11 +20,7 @@ snakes_(nullptr)
 	addColor("Red", (_core.getPathRessources() / "snake_presentation/snake_red.png").generic_string());
 }
 
-WidgetLobby::~WidgetLobby(void)
-{
-	for (auto &snake : _snake)
-		delete snake;
-}
+WidgetLobby::~WidgetLobby(void) = default;
 
 void			WidgetLobby::addColor(std::string const &name, std::string const &pathColor) {
 	_color.emplace_back(name);
@@ -35,53 +30,48 @@ void			WidgetLobby::addColor(std::string const &name, std::string const &pathCol
 }
 
 
-void			WidgetLobby::addSnake(Snake const &snake, bool isYourSnake)
-{
-	if (_snake.size() < SNAKE_MAX)
-		_snake.emplace_back(new WidgetSnake(_core, snake, _texture, _color, isYourSnake));
+void			WidgetLobby::addSnake(Snake const &snake, bool isYourSnake) {
+	if (snakeWidget_.size() < SNAKE_MAX)
+		snakeWidget_.emplace_back(std::make_unique<WidgetSnake>(_core, snake, _texture, _color, isYourSnake));
 }
 
-void			WidgetLobby::_reload()
-{
+void			WidgetLobby::_reload() {
 	if (_core.univers.getSnakeClient()) {
-		snakes_ = &_core.univers.getSnakeClient()->getSnakeArray_();
-		_snake.clear();
-		_snake.reserve(8);
+		snakeWidget_.clear();
+		snakeWidget_.reserve(8);
 		for (unsigned i = 0; i < SNAKE_MAX; i++) {
-			addSnake((*snakes_)[i], (i == _core.univers.getSnakeClient()->getId_()));
+			addSnake(snakes_[i], (i == _core.univers.getSnakeClient()->getId_()));
 		}
 	}
 }
 
 
-void			WidgetLobby::render(void)
-{
+void			WidgetLobby::render(void) {
 	if (_core.univers.getSnakeClient()) {
-	sf::Vector2<unsigned int> placesForSnakes;
-	sf::Vector2<unsigned int> percentPlaceOfSnake;
+		sf::Vector2<unsigned int> placesForSnakes;
+		sf::Vector2<unsigned int> percentPlaceOfSnake;
 
 
+		if (_core.univers.getSnakeClient()) {
 
-	if (_core.univers.getSnakeClient()) {
+			snakes_ = _core.univers.getSnakeClient()->getSnakeArray_();
 
-		Snake const *snakes = _core.univers.getSnakeClient()->getSnakes();
-
-		int i = 0;
-		for (; i < SNAKE_MAX; ++i) {
-			if (snakes[i].id == -1)
-				break ;
-		}
-		placesForSnakes.x = 4;
-		placesForSnakes.y = floor(i / 4) + 1;
-		_reload();
-		i = 0;
-		for (i = 0; i < _snake.size() && snakes[i].id != -1 ; i++)
-		{
-			percentPlaceOfSnake.x = ((100 / placesForSnakes.x) * (i % placesForSnakes.x));
-			percentPlaceOfSnake.y = ((50 / placesForSnakes.y) * (i / placesForSnakes.x));
-			ImGui::SetNextWindowPos(_core.positionByPercent(percentPlaceOfSnake));
-			ImGui::SetNextWindowSize(_core.positionByPercent(sf::Vector2<unsigned int>(100 / placesForSnakes.x, 50 / placesForSnakes.y)));
-			_snake[i]->render();
+			int i = 0;
+			for (; i < SNAKE_MAX; ++i) {
+				if (snakes_[i].id == -1)
+					break;
+			}
+			placesForSnakes.x = 4;
+			placesForSnakes.y = floor(i / 4) + 1;
+			_reload();
+			for (i = 0; i < snakeWidget_.size() && snakes_[i].id != -1; i++) {
+				percentPlaceOfSnake.x = ((100 / placesForSnakes.x) * (i % placesForSnakes.x));
+				percentPlaceOfSnake.y = ((50 / placesForSnakes.y) * (i / placesForSnakes.x));
+				ImGui::SetNextWindowPos(_core.positionByPercent(percentPlaceOfSnake));
+				ImGui::SetNextWindowSize(_core.positionByPercent(
+						sf::Vector2<unsigned int>(100 / placesForSnakes.x, 50 / placesForSnakes.y)));
+				snakeWidget_[i]->render();
+			}
 		}
 	}
 }
