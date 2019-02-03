@@ -2,7 +2,7 @@
 
 #include <nibbler.hpp>
 #include <map>
-#include <network/ClientTCP.hpp>
+#include <network/SnakeClient.hpp>
 #include <KINU/Entity.hpp>
 #include "KStar.hpp"
 
@@ -28,7 +28,7 @@ private:
 	KStar kStar;
 private:
 
-	std::unique_ptr<ClientTCP> clientTCP_;
+	std::unique_ptr<SnakeClient> clientTCP_;
 	void findDirection(KStar::Vec2 vecSource, KStar::Vec2 vecTarget);
 	bool define_priority(int x, int y);
 	KStar::Vec2 getVecSnakeTail();
@@ -45,7 +45,7 @@ public:
 	void buildIA();
 	void sendDirection() ;
 	void calculateDirection();
-	ClientTCP *getClientTCP_();
+	SnakeClient *getClientTCP_();
 	uint16_t getId() const;
 
 };

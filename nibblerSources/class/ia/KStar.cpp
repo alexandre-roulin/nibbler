@@ -193,7 +193,7 @@ KStar::Path KStar::searchPath(KStar::Vec2 source, KStar::Vec2 target) {
 		path.push_back(traceNode.vec);
 	}
 	std::reverse(path.begin(), path.end());
-	print(source, target, path);
+//	print(source, target, path);
 	openMap_.fill(Node());
 	closeMap_.fill(Node());
 	return path;

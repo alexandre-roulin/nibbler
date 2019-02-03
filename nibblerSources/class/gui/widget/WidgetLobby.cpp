@@ -3,9 +3,11 @@
 #include <gui/Core.hpp>
 #include "Vector2D.tpp"
 #include <math.h>
+#include <network/SnakeClient.hpp>
 
 WidgetLobby::WidgetLobby(Core &core) :
-AWidget(core)
+AWidget(core),
+snakes_(nullptr)
 {
 	_reload();
 
@@ -41,26 +43,28 @@ void			WidgetLobby::addSnake(Snake const &snake, bool isYourSnake)
 
 void			WidgetLobby::_reload()
 {
-	if (_core.univers.getGameNetwork()) {
+	if (_core.univers.getSnakeClient()) {
+		snakes_ = &_core.univers.getSnakeClient()->getSnakeArray_();
 		_snake.clear();
-		Snake const *snakes = _core.univers.getGameNetwork()->getSnakes();
-		if (snakes)
-			for (unsigned i = 0; i < SNAKE_MAX; i++)
-				addSnake(snakes[i], (i == _core.univers.getGameNetwork()->getId()));
+		_snake.reserve(8);
+		for (unsigned i = 0; i < SNAKE_MAX; i++) {
+			addSnake((*snakes_)[i], (i == _core.univers.getSnakeClient()->getId_()));
+		}
 	}
 }
 
 
 void			WidgetLobby::render(void)
 {
+	if (_core.univers.getSnakeClient()) {
 	sf::Vector2<unsigned int> placesForSnakes;
 	sf::Vector2<unsigned int> percentPlaceOfSnake;
 
 
 
-	if (_core.univers.getGameNetwork()) {
+	if (_core.univers.getSnakeClient()) {
 
-		Snake const *snakes = _core.univers.getGameNetwork()->getSnakes();
+		Snake const *snakes = _core.univers.getSnakeClient()->getSnakes();
 
 		int i = 0;
 		for (; i < SNAKE_MAX; ++i) {

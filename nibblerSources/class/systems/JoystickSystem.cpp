@@ -3,6 +3,7 @@
 #include "JoystickSystem.hpp"
 #include <component/JoystickComponent.hpp>
 #include <component/MotionComponent.hpp>
+#include <network/SnakeClient.hpp>
 
 JoystickSystem::JoystickSystem() {
 	requireComponent<JoystickComponent>();
@@ -10,48 +11,29 @@ JoystickSystem::JoystickSystem() {
 }
 
 void JoystickSystem::update() {
-	Snake const *snake_array = getWorld().getUnivers().getGameNetwork()->getSnakes();
+	std::array<Snake, SNAKE_MAX> snake_array = getWorld().getUnivers().getSnakeClient()->getSnakeArray_();
 
-	for (int index = 0; index < SNAKE_MAX; ++index) {
-		if (snake_array[index].id != -1) {
-			if (getWorld().getEntitiesManager().hasEntityByTagId(
-					snake_array[index].id + eTag::HEAD_TAG)) {
-				auto entity = getWorld().getEntitiesManager().
-						getEntityByTagId(snake_array[index].id + eTag::HEAD_TAG);
-				if (entity.hasComponent<JoystickComponent>()) {
-					auto &joystickComponent = entity.getComponent<JoystickComponent>();
-					joystickComponent.direction = snake_array[index].direction;
-				}
+	for (auto &snake : snake_array) {
+		if (snake.id != -1 && getWorld().getEntitiesManager().hasEntityByTagId(snake.id + eTag::HEAD_TAG)) {
+			auto entity = getWorld().getEntitiesManager().getEntityByTagId(snake.id + eTag::HEAD_TAG);
+			if (entity.hasComponent<JoystickComponent>()) {
+				entity.getComponent<JoystickComponent>().direction = snake.direction;
 			}
 		}
 	}
+
 	for (auto &entity : getEntities()) {
 		auto &motionComponent = entity.getComponent<MotionComponent>();
 		auto &joystickComponent = entity.getComponent<JoystickComponent>();
-
-//		log_error(
-//				"Match Mot[%d] Joy[%d] MotHor[%d] JoyHor[%d] MotVer[%d] JoyVer[%d]",
-//				motionComponent.direction,
-//				joystickComponent.direction,
-//				motionComponent.direction & DIRECTION_HORIZONTAL,
-//				joystickComponent.direction & DIRECTION_HORIZONTAL,
-//				motionComponent.direction & DIRECTION_VERTICAL,
-//				joystickComponent.direction & DIRECTION_VERTICAL
-//		);
 
 		if ((motionComponent.direction & DIRECTION_HORIZONTAL &&
 			 !(joystickComponent.direction & DIRECTION_HORIZONTAL)) ||
 			(motionComponent.direction & DIRECTION_VERTICAL &&
 			 !(joystickComponent.direction & DIRECTION_VERTICAL))) {
-//			log_error("MatchDirection!");
-//			log_info("Entity 0 size %d", getWorld().getEntitiesManager().getEntitiesByGroupId(0).size());
-//			log_info("Entity 1 size %d", getWorld().getEntitiesManager().getEntitiesByGroupId(1).size());
 			motionComponent.direction = joystickComponent.direction;
 		}
 	}
 
 }
 
-JoystickSystem::~JoystickSystem() {
-
-}
+JoystickSystem::~JoystickSystem() = default;

@@ -1,6 +1,7 @@
 #include <Univers.hpp>
 #include "WidgetSnake.hpp"
 #include <gui/Core.hpp>
+#include <network/SnakeClient.hpp>
 
 WidgetSnake::WidgetSnake(Core &core,
 						 Snake const &snake,
@@ -19,6 +20,7 @@ WidgetSnake::~WidgetSnake(void) {}
 
 void			WidgetSnake::render(void)
 {
+
 	if (_snake.id == -1)
 		return ;
 	if (_isYourSnake)
@@ -60,8 +62,8 @@ void WidgetSnake::_renderSelectionColor(unsigned int sizeTexture) const {
 		unsigned int i = static_cast<int>(eSprite::GREEN);
 		for (auto const &e : _color)
 		{
-			if (ImGui::Selectable(e.c_str(), i == static_cast<int>(_snake.sprite)) && _core.univers.getGameNetwork())
-				_core.univers.getGameNetwork()->change_sprite( static_cast<eSprite>(i));
+			if (ImGui::Selectable(e.c_str(), i == static_cast<int>(_snake.sprite)) && _core.univers.getSnakeClient())
+				_core.univers.getSnakeClient()->changeSprite(static_cast<eSprite>(i));
 			i++;
 		}
 		ImGui::EndCombo();
@@ -82,14 +84,14 @@ void WidgetSnake::_renderOtherSnake(void) {
 	if (!_snake.isReady)
 	{
 		Core::beginColor(Core::HUE_RED);
-		if (ImGui::Button("Ready ?", sf::Vector2f(sizeTexture, ImGui::GetFrameHeight())) && _core.univers.getGameNetwork())
-			_core.univers.getGameNetwork()->change_state_ready();;
+		if (ImGui::Button("Ready ?", sf::Vector2f(sizeTexture, ImGui::GetFrameHeight())) && _core.univers.getSnakeClient())
+			_core.univers.getSnakeClient()->changeStateReady();;
 	}
 	else
 	{
 		Core::beginColor(Core::HUE_GREEN);
-		if (ImGui::Button("Ready !", sf::Vector2f(sizeTexture, ImGui::GetFrameHeight())) && _core.univers.getGameNetwork())
-			_core.univers.getGameNetwork()->change_state_ready();
+		if (ImGui::Button("Ready !", sf::Vector2f(sizeTexture, ImGui::GetFrameHeight())) && _core.univers.getSnakeClient())
+			_core.univers.getSnakeClient()->changeStateReady();
 	}
 	Core::endColor();
 
@@ -113,16 +115,16 @@ void WidgetSnake::_renderYourSnake(void) {
 		ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor::HSV(0.0f, 0.7f, 0.7f));
 		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4)ImColor::HSV(0.0f, 0.8f, 0.8f));
 		ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)ImColor::HSV(0.0f, 0.9f, 0.9f));
-		if (ImGui::Button("Ready ?", sf::Vector2f(sizeTexture, ImGui::GetFrameHeight())) && _core.univers.getGameNetwork())
-			_core.univers.getGameNetwork()->change_state_ready();
+		if (ImGui::Button("Ready ?", sf::Vector2f(sizeTexture, ImGui::GetFrameHeight())) && _core.univers.getSnakeClient())
+			_core.univers.getSnakeClient()->changeStateReady();
 	}
 	else
 	{
 		ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor::HSV(0.33f, 0.7f, 0.7f));
 		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4)ImColor::HSV(0.33f, 0.8f, 0.8f));
 		ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)ImColor::HSV(0.33f, 0.9f, 0.9f));
-		if (ImGui::Button("Ready !", sf::Vector2f(sizeTexture, ImGui::GetFrameHeight())) && _core.univers.getGameNetwork())
-			_core.univers.getGameNetwork()->change_state_ready();
+		if (ImGui::Button("Ready !", sf::Vector2f(sizeTexture, ImGui::GetFrameHeight())) && _core.univers.getSnakeClient())
+			_core.univers.getSnakeClient()->changeStateReady();
 	}
 	ImGui::PopStyleColor(3);
 	ImGui::PopID();

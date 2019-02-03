@@ -15,17 +15,11 @@ ServerTCP::ServerTCP(Univers &univers, unsigned int port)
 
 
 ServerTCP::~ServerTCP() {
-	log_warn("~ServerTCP::pointers.clear()");
 	pointers.clear();
-	log_warn("~ServerTCP::io_service_.stop()");
 	io_service_.stop();
-	log_warn("~ServerTCP::acceptor_.cancel()");
 	acceptor_.cancel();
-	log_warn("~ServerTCP::acceptor_.close()");
 	acceptor_.close();
-	log_warn("~ServerTCP::thread.interrupt()");
 	thread.interrupt();
-	log_warn("~ServerTCP::end()");
 }
 
 void ServerTCP::start_accept() {
@@ -90,7 +84,7 @@ void ServerTCP::sendSnakeArray() {
 void ServerTCP::startGame() {
 	foodInfoArray.clear();
 	assert(isReady());
-	ClientTCP::StartInfo startInfo;
+	StartInfo startInfo;
 	std::for_each(snake_array_.begin(), snake_array_.end(),
 				  [](auto &snake){ snake.isAlive = true; snake.isUpdate = false;});
 	startInfo.nu = ServerTCP::number_clients_;
@@ -126,7 +120,7 @@ void ServerTCP::parseInput(eHeader header, void const *input, size_t len) {
 		}
 		case eHeader::FOOD: {
 			log_info("ServerTCP::FOOD");
-			ClientTCP::FoodInfo foodInfo;
+			FoodInfo foodInfo;
 			std::memcpy(&foodInfo, input, len);
 			foodInfoArray.push_back(foodInfo);
 			mutex.unlock();
@@ -134,14 +128,14 @@ void ServerTCP::parseInput(eHeader header, void const *input, size_t len) {
 		}
 		case eHeader::RESIZE_MAP: {
 			log_info("ServerTCP::RESIZE_MAP");
-			std::memcpy(&mapSize, input, len);
+//			std::memcpy(&mapSize, input, len);
 			break;
 		}
 		case eHeader::INPUT: {
-			ClientTCP::InputInfo inputInfo;
+			InputInfo inputInfo(0, eDirection::kNorth);
 			std::memcpy(&inputInfo, input, len);
-			snake_array_[inputInfo.id].direction = inputInfo.dir;
-			snake_array_[inputInfo.id].isUpdate = true;
+			snake_array_[inputInfo.id_].direction = inputInfo.dir_;
+			snake_array_[inputInfo.id_].isUpdate = true;
 			updateInput();
 			mutex.unlock();
 //			std::cout << "ServerTCP::unlock()" << std::endl;

@@ -109,7 +109,7 @@ private:
 
 	bool forcePause_;
 
-	std::vector<ClientTCP::FoodInfo> foodInfoArray;
+	std::vector<FoodInfo> foodInfoArray;
 
 	std::mutex mutex;
 

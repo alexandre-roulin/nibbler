@@ -16,10 +16,8 @@
 #include <component/PositionComponent.hpp>
 #include <factory/Factory.hpp>
 #include "IGameNetwork.hpp"
-
+#include "Data.hpp"
 class JoystickEvent;
-
-class StartEvent;
 
 class FoodCreation;
 
@@ -30,24 +28,24 @@ class Univers;
 class ClientTCP : public IGameNetwork {
 public:
 
-	struct StartInfo {
-		unsigned int nu;
-		boost::posix_time::ptime time_duration;
-	};
+//	struct StartInfo {
+//		unsigned int nu;
+//		boost::posix_time::ptime time_duration;
+//	};
+//
+//	struct InputInfo {
+//		int16_t id;
+//		eDirection dir;
+//	};
 
-	struct InputInfo {
-		int16_t id;
-		eDirection dir;
-	};
-
-	struct FoodInfo {
-		FoodInfo();
-		FoodInfo(PositionComponent component, bool b);
-
-		PositionComponent positionComponent;
-		bool fromSnake;
-
-	};
+//	struct FoodInfo {
+//		FoodInfo();
+//		FoodInfo(PositionComponent component, bool b);
+//
+//		PositionComponent positionComponent;
+//		bool fromSnake;
+//
+//	};
 
 	virtual ~ClientTCP();
 

@@ -9,7 +9,7 @@
 #include <vector>
 #include <iostream>
 #include <logger.h>
-
+#include <network/SnakeClient.hpp>
 
 Core::Core(Univers &univers) :
 pathRessources_(boost::filesystem::path(NIBBLER_ROOT_PROJECT_PATH) / "ressources/"),
@@ -114,7 +114,7 @@ void			Core::aState(void)
 		ImGui::SetNextWindowPos(positionByPercent(sf::Vector2<unsigned int>(95, 0)), 0, sf::Vector2f(0.5f, 0.5f));
 		wexit.render();
 
-		if (univers.getGameNetwork() && univers.getGameNetwork()->isConnect()) {
+		if (univers.getSnakeClient() && univers.getSnakeClient()->isConnect()) {
 			if (!optionSnake)
 				optionSnake = new WidgetOption(*this);
 			ImGui::SetNextWindowPos(positionByPercent(sf::Vector2<unsigned int>(70, 50)));

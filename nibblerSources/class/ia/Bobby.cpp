@@ -22,8 +22,7 @@ Bobby::Bobby(Univers &univers)
 		: univers_(univers),
 		  direction(kNorth),
 		  mapSize(0),
-		  clientTCP_(std::make_unique<ClientTCP>(univers, true)) {
-
+		  clientTCP_(std::make_unique<SnakeClient>(univers, true)) {
 }
 
 void Bobby::buildIA() {
@@ -38,13 +37,9 @@ void Bobby::buildIA() {
 
 
 void Bobby::sendDirection() {
-	ClientTCP::InputInfo inputInfo;
 
-	inputInfo.id = clientTCP_->getId();
-	inputInfo.dir = direction;
-
-	if (univers_.getWorld_().getEntitiesManager().hasEntityByTagId(eTag::HEAD_TAG + inputInfo.id))
-		clientTCP_->write_socket(ClientTCP::add_prefix(eHeader::INPUT, &inputInfo));
+	if (univers_.getWorld_().getEntitiesManager().hasEntityByTagId(eTag::HEAD_TAG + clientTCP_->getId_()))
+		clientTCP_->sendDataToServer(InputInfo(clientTCP_->getId_(), direction), eHeaderK::kInput);
 
 }
 
@@ -121,7 +116,7 @@ void Bobby::calculateDirection() {
 
 
 	if (univers_.getWorld_().getEntitiesManager().hasEntityByTagId(
-			clientTCP_->getId() + eTag::HEAD_TAG)) {
+			clientTCP_->getId_() + eTag::HEAD_TAG)) {
 
 		kStar.clearCollisions();
 		addCollision();
@@ -154,7 +149,7 @@ void Bobby::calculateDirection() {
 			kStar.addCollision(vecFood);
 		}
 		if (univers_.getWorld_().getEntitiesManager().hasEntityByTagId(
-				clientTCP_->getId() + eTag::TAIL_TAG)) {
+				clientTCP_->getId_() + eTag::TAIL_TAG)) {
 
 			auto vecTail = getVecSnakeTail();
 
@@ -176,10 +171,10 @@ void Bobby::calculateDirection() {
 			auto checkVec2 = vecSnake + kStar.getDirections()[idxDir];
 			if (!kStar.isCollision(checkVec2)) {
 				try {
-
 					findDirection(vecSnake, checkVec2);
 					sendDirection();
 					log_warn("LAST::Pathfinding[%d]", getId());
+					return;
 				} catch (std::exception const &e) {
 					log_error("WARN::NO_LAST");
 				}
@@ -191,7 +186,7 @@ void Bobby::calculateDirection() {
 
 KStar::Vec2 Bobby::getVecSnakeHead() {
 	auto snakeHead = univers_.getWorld_().getEntitiesManager().getEntityByTagId(
-			clientTCP_->getId() + eTag::HEAD_TAG);
+			clientTCP_->getId_() + eTag::HEAD_TAG);
 
 	KStar::Vec2 vecSnake;
 
@@ -209,7 +204,7 @@ KStar::Vec2 Bobby::getVecSnakeTail() {
 	KStar::Vec2 vecTail;
 
 	auto snakeTail = univers_.getWorld_().getEntitiesManager().getEntityByTagId(
-			clientTCP_->getId() + eTag::TAIL_TAG);
+			clientTCP_->getId_() + eTag::TAIL_TAG);
 
 	if (snakeTail.hasComponent<PositionComponent>()) {
 		auto position = snakeTail.getComponent<PositionComponent>();
@@ -270,14 +265,12 @@ KStar::Vec2 Bobby::getVecFood(KStar::Vec2 head) {
 //															   (univers_.isBorderless()
 //																? mapSize
 //																: 0)));
-					int x = positionFood.x + base_x * mapSize;
-					int y = positionFood.y + base_y * mapSize;
 					//&&
 					//					std::count_if(vecPosition.begin(), vecPosition.end(), [x, y](PositionComponent const &p){
 					//						return p.x == x && p.y == y;
 					//					}) == 1)
 
-					if (base_sqrt == -1 || (compare < base_sqrt && (univers_.getWorld_().grid(x, y) & eSprite::FOOD) == eSprite::FOOD)) {
+					if (base_sqrt == -1 || (compare < base_sqrt && (univers_.getWorld_().grid(positionFood.x, positionFood.y) & eSprite::FOOD) == eSprite::FOOD)) {
 						base_sqrt = compare;
 //					log_success("{mapSize : %d} Position saved { %d , %d }",
 //								mapSize, positionFood.x + base_x * mapSize,
@@ -310,10 +303,10 @@ void Bobby::addCollision() {
 }
 
 uint16_t Bobby::getId() const {
-	return clientTCP_->getId();
+	return clientTCP_->getId_();
 }
 
-ClientTCP *Bobby::getClientTCP_() {
+SnakeClient *Bobby::getClientTCP_() {
 	return clientTCP_.get();
 }
 

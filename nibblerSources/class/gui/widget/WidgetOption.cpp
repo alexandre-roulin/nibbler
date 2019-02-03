@@ -1,13 +1,14 @@
 #include <Univers.hpp>
 #include <gui/Core.hpp>
 #include "WidgetOption.hpp"
+#include <network/SnakeClient.hpp>
 
 WidgetOption::WidgetOption(Core &core) :
 		AWidget(core),
 		_mapSize(_core.univers.getMapSize()) {
 
 	memcpy(_nameBuffer,
-		   _core.univers.getGameNetwork()->getSnake().name, NAME_BUFFER);
+		   _core.univers.getSnakeClient()->getSnake().name, NAME_BUFFER);
 }
 
 WidgetOption::~WidgetOption(void) {}
@@ -21,9 +22,9 @@ void WidgetOption::render(void) {
 						 IM_ARRAYSIZE(_nameBuffer),
 						 ImGuiInputTextFlags_EnterReturnsTrue)) {
 
-		_core.univers.getGameNetwork()->change_name(_nameBuffer);
+		_core.univers.getSnakeClient()->changeName(_nameBuffer);
 		memcpy(_nameBuffer,
-			   _core.univers.getGameNetwork()->getSnake().name,
+			   _core.univers.getSnakeClient()->getSnake().name,
 			   NAME_BUFFER);
 	}
 
@@ -35,16 +36,14 @@ void WidgetOption::render(void) {
 			_mapSize = MAP_MIN;
 		else if (_mapSize > MAP_MAX)
 			_mapSize = MAP_MAX;
-		_core.univers.getGameNetwork()->change_map_size(_mapSize);
+		_core.univers.getSnakeClient()->changeMapSize(_mapSize);
 	}
 
-
 	if (_core.univers.isServer()
-		&&
-		Snake::allSnakesReady(_core.univers.getGameNetwork()->getSnakes())) {
+		&& _core.univers.getSnakeClient()->allSnakeIsReady()) {
 		Core::beginColor(Core::HUE_GREEN);
 		if (ImGui::Button("Run the game")) {
-			_core.univers.getGameNetwork()->send_host_open_game();
+			_core.univers.getSnakeClient()->sendHostOpenGame();
 		}
 		Core::endColor();
 	}

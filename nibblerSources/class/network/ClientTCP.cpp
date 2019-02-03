@@ -13,7 +13,7 @@
 #include <events/FoodCreation.hpp>
 #include <events/StartEvent.hpp>
 #include <systems/RenderSystem.hpp>
-
+#include <network/Data.hpp>
 int const ClientTCP::size_header[] = {
 		[static_cast<int>(eHeader::CHAT)] = SIZEOF_CHAT_PCKT,
 		[static_cast<int>(eHeader::FOOD)] = sizeof(FoodInfo),
@@ -119,16 +119,6 @@ void ClientTCP::handle_read_header(const boost::system::error_code &error_code,
 	}
 }
 
-void ClientTCP::write_socket(std::string message) {
-	boost::asio::async_write(socket, boost::asio::buffer(message),
-							 boost::bind(&ClientTCP::handle_write,
-										 this,
-										 boost::asio::placeholders::error,
-										 boost::asio::placeholders::bytes_transferred));
-}
-
-
-
 void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 	mutex.lock();
 	switch (header) {
@@ -179,7 +169,7 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 		case eHeader::OPEN_GAME: {
 			log_info("eHeader::OPEN_GAME");
 			if (accept_data()) {
-				ClientTCP::StartInfo startInfo;
+				StartInfo startInfo;
 				bool data;
 				std::memcpy(&data, input,
 							ClientTCP::size_header[static_cast<int>(eHeader::OPEN_GAME)]);
@@ -202,9 +192,9 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 					log_warn("Number of food %d", max_food);
 
 					for (int index = 0; index < max_food; ++index) {
-						ClientTCP::FoodInfo foodInfo(
+						FoodInfo foodInfo(
 								PositionComponent(univers.getWorld_()
-								.grid.getRandomSlot(eSprite::NONE))
+														  .grid.getRandomSlot(eSprite::NONE))
 								, false);
 						write_socket(ClientTCP::add_prefix(eHeader::FOOD, &foodInfo));
 					}
@@ -253,6 +243,16 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 			break;
 	}
 	mutex.unlock();
+}
+
+
+
+void ClientTCP::write_socket(std::string message) {
+	boost::asio::async_write(socket, boost::asio::buffer(message),
+							 boost::bind(&ClientTCP::handle_write,
+										 this,
+										 boost::asio::placeholders::error,
+										 boost::asio::placeholders::bytes_transferred));
 }
 void ClientTCP::handle_read_data(eHeader header, boost::system::error_code const &error_code,
 								 size_t len) {
@@ -378,13 +378,4 @@ bool ClientTCP::accept_data() {
 
 bool ClientTCP::isSwitchingLibrary() const {
 	return snake_array_[id_].isSwitchingLibrary;
-}
-
-ClientTCP::FoodInfo::FoodInfo() {
-
-}
-
-ClientTCP::FoodInfo::FoodInfo(PositionComponent component, bool from) {
-	positionComponent = component;
-	fromSnake = from;
 }

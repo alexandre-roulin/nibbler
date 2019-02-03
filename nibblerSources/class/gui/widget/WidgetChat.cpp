@@ -2,6 +2,7 @@
 #include <gui/Core.hpp>
 #include "imgui.h"
 #include <Univers.hpp>
+#include <network/SnakeClient.hpp>
 
 WidgetChat::WidgetChat(Core &core) :
 		AWidget(core) {
@@ -46,13 +47,10 @@ void WidgetChat::render(void) {
 						 ImGuiInputTextFlags_EnterReturnsTrue)) {
 
 		if (!_chatCommand()) {
-			_core.univers.getGameNetwork()
-					->write_socket(ClientTCP::add_prefix(
-							eHeader::CHAT,
-							Factory::factory_chat_message(
-									_core.univers.getGameNetwork()->getSnake().name,
-									_bufferMessage))
-					);
+			_core.univers.getSnakeClient()->sendDataToServer(ChatInfo(
+					_core.univers.getSnakeClient()->getSnake().name,
+					_bufferMessage
+					), eHeaderK::kChat);
 		}
 		bzero(_bufferMessage, IM_ARRAYSIZE(_bufferMessage));
 	}
@@ -66,7 +64,7 @@ bool WidgetChat::_chatCommand(void) {
 	if (strstr(_bufferMessage, "/help"))
 		addLog("/help\n/name Aname\n", _bufferMessage);
 	else if (strstr(_bufferMessage, "/name "))
-		_core.univers.getGameNetwork()->change_name(
+		_core.univers.getSnakeClient()->changeName(
 				_bufferMessage + sizeof("/name ") - 1);
 	else
 		addLog("{%s} n'est pas une commande valide\n",

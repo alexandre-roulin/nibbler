@@ -29,8 +29,8 @@ namespace KINU {
 
 
 	void SystemsManager::addToSystems(Entity e) {
-		const auto &entityComponentMask = world.getEntitiesManager().getComponentMask(
-				e);
+		const auto &entityComponentMask = world.getEntitiesManager()
+				.getComponentMask(e);
 
 		for (auto &it : systems) {
 			auto &system = it.second;
