@@ -32,8 +32,7 @@ struct InputInfo {
 
 struct FoodInfo {
 	FoodInfo()
-	: positionComponent(PositionComponent()),
-	fromSnake(false) {
+	: positionComponent(PositionComponent()),fromSnake(false) {
 
 	}
 

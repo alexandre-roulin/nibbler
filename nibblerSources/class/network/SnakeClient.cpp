@@ -198,7 +198,6 @@ void SnakeClient::killSnake(uint16_t id) {
 
 }
 
-
 /***** Callback *****/
 
 void SnakeClient::callbackPock(char) {
