@@ -309,7 +309,7 @@ void DisplayGlfw::render(float currentDelayFrame, float maxDelayFrame) {
 	currentTimer_ = currentDelayFrame;
 	maxTimer_ = maxDelayFrame;
 
-    if (glfwGetKey(getWindow(), GLFW_KEY_UP) == GLFW_PRESS)
+	if (glfwGetKey(getWindow(), GLFW_KEY_UP) == GLFW_PRESS)
     	direction_ = kSouth;
     if (glfwGetKey(getWindow(), GLFW_KEY_DOWN) == GLFW_PRESS)
     	direction_ = kNorth;

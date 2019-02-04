@@ -1,12 +1,9 @@
 #include "Glfw.hpp"
-#include <iostream>
 
 Glfw::Glfw(std::string const &name, uint16_t width, uint16_t height) :
     cursor_(true) {
-    std::cout << "Glfw" << std::endl;
     glfwSetErrorCallback(Glfw::callbackError_);
     glfwInit();
-    std::cout << "glfwInit" << std::endl;
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
@@ -14,19 +11,12 @@ Glfw::Glfw(std::string const &name, uint16_t width, uint16_t height) :
         glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
     #endif
     glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
-    std::cout << "glfwWindowHint" << std::endl;
     if (!(window_ = glfwCreateWindow(width, height, name.c_str(), nullptr, nullptr))) {
-		std::cout << "ERR" << std::endl;
         clean_();
-		std::cout << "ERR" << std::endl;
 		throw (Glfw::ConstructorException("GlfwConstructorException: window was not created"));
     }
-    std::cout << "glfwCreateWindow" << std::endl;
-
     glfwMakeContextCurrent(window_);
-    std::cout << "glfwMakeContextCurrent" << std::endl;
     gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-    std::cout << "OpenGL " << glGetString(GL_VERSION) << std::endl;
     glfwSwapInterval(0);
 
 	glfwSetKeyCallback(window_, Glfw::callbackKey_);
@@ -35,10 +25,7 @@ Glfw::Glfw(std::string const &name, uint16_t width, uint16_t height) :
 }
 
 Glfw::~Glfw() {
-    for (auto it = Glfw::glfwByWindow_.begin(); it != Glfw::glfwByWindow_.end(); it++) {
-        if (&it->second == this)
-            Glfw::glfwByWindow_.erase(it);
-    }
+    Glfw::glfwByWindow_.erase(Glfw::glfwByWindow_.find(window_));
     clean_();
 }
 
@@ -47,33 +34,19 @@ void    Glfw::clean_() {
     glfwTerminate();
 }
 
-eKeyState       Glfw::getKeyStateOf_(int key, std::map<int, eKeyState> const &keyState_) {
-    for (auto keyState : keyState_) {
-        if (keyState.first == key)
-            return (keyState.second);
-    }
-    return (eKeyState::kNone);
-}
-eKeyState       Glfw::getKeyState(int key) const {
-    for (auto keyState : keyCurrent_) {
-        if (keyState.first == key)
-            return (keyState.second);
-    }
-    return (eKeyState::kNone);
-}
-
 void			Glfw::callbackKey_(GLFWwindow* window, int key, int scancode, int action, int mods) {
     for (auto &glfw : Glfw::glfwByWindow_) {
         if (glfw.first == window) {
-            eKeyState pastKeyState = Glfw::getKeyStateOf_(key, glfw.second.keyPast_);
-            if (scancode == GLFW_REPEAT)
-                glfw.second.keyCurrent_.insert(std::pair<int, eKeyState >(key, eKeyState::kPress));
-            else if (scancode == GLFW_RELEASE)
-                glfw.second.keyCurrent_.insert(std::pair<int, eKeyState >(key, eKeyState::kRelease));
-            else if (pastKeyState == eKeyState::kDown && scancode == GLFW_PRESS)
-                glfw.second.keyCurrent_.insert(std::pair<int, eKeyState >(key, eKeyState::kPress));
-            else if (pastKeyState == eKeyState::kNone && scancode == GLFW_PRESS)
-                glfw.second.keyCurrent_.insert(std::pair<int, eKeyState >(key, eKeyState::kDown));
+            if (action == GLFW_REPEAT) {
+				glfw.second.callbackKey(key, KeyState::kPress);
+            }
+            else if (action == GLFW_RELEASE) {
+				glfw.second.callbackKey(key, KeyState::kUp);
+            }
+            else if (action == GLFW_PRESS) {
+				glfw.second.callbackKey(key, KeyState::kDown);
+
+            }
         }
     }
 }
@@ -82,17 +55,18 @@ void Glfw::callbackError_(int error, const char* errorMessage) {
 }
 
 void            Glfw::update() {
-    if (glfwGetKey(window_, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+
+	KeyStateManager::update();
+
+	if (getKeyState(GLFW_KEY_ESCAPE) == KeyState::kDown)
         glfwSetWindowShouldClose(window_, true);
-    if (glfwGetKey(window_, GLFW_KEY_SPACE) == GLFW_PRESS) {
+    if (getKeyState(GLFW_KEY_SPACE) == KeyState::kDown) {
         if (cursor_)
             glfwSetInputMode(window_, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
         else
             glfwSetInputMode(window_, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
         cursor_ = !cursor_;
     }
-    keyPast_ = keyCurrent_;
-    keyCurrent_.clear();
 }
 
 void            Glfw::render() {

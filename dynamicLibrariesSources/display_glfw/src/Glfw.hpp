@@ -3,17 +3,13 @@
 #include <memory>
 #include <string>
 #include <map>
+#include <list>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <cstdint>
+#include "KeyStateManager.hpp"
 
-enum class eKeyState { kNone, kDown, kPress, kRelease };
-
-inline bool operator!(eKeyState keyState) {
-    return (keyState == eKeyState::kNone);
-}
-
-class Glfw {
+class Glfw : public KeyStateManager {
 public:
     class ConstructorException : public std::exception {
     public:
@@ -30,7 +26,7 @@ public:
     Glfw(std::string const &name, uint16_t width, uint16_t height);
     ~Glfw();
 
-    void            update();
+    void            update() override;
     void            render();
     bool            exit() const;
 
@@ -42,13 +38,8 @@ protected:
 private:
     GLFWwindow                  *window_;
 
-    std::map<int, eKeyState> keyCurrent_;
-    std::map<int, eKeyState> keyPast_;
-
     void            clean_();
-    eKeyState       getKeyState(int key) const;
 
-    static eKeyState       getKeyStateOf_(int key, std::map<int, eKeyState> const &keyState_);
     static void            callbackKey_(GLFWwindow* window, int key, int scancode, int action, int mods);
     static void            callbackError_(int error, const char* errorMessage);
     static std::map<GLFWwindow*, Glfw&>     glfwByWindow_;

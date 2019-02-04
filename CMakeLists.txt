@@ -19,7 +19,6 @@ if (WIN32)
     find_package(OpenGL 3.3 REQUIRED)
 elseif (UNIX AND NOT APPLE)
 elseif (APPLE)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wpedantic")
     if(INSTALL)
         execute_process(COMMAND $ENV{HOME}/.brew/bin/brew install sdl2)
         execute_process(COMMAND $ENV{HOME}/.brew/bin/brew install sdl2_image)
@@ -45,6 +44,7 @@ elseif (APPLE)
 else ()
     find_package(OpenGL 3.3 REQUIRED)
 endif ()
+
 if(NOT WIN32)
     set(GLAD_LIBRARIES dl)
 endif()
@@ -136,6 +136,7 @@ elseif (NOT TARGET assimp)
 endif()
 
 include_directories(
+        ${CMAKE_SOURCE_DIR}/commun/
         ${CMAKE_SOURCE_DIR}/nibblerSources/incs/
         ${CMAKE_SOURCE_DIR}/extern/imgui/
         ${CMAKE_SOURCE_DIR}/extern/imgui/imgui/
@@ -154,3 +155,7 @@ add_subdirectory(dynamicLibrariesSources/display_sdl)
 add_subdirectory(dynamicLibrariesSources/display_sfml)
 add_subdirectory(dynamicLibrariesSources/sound_sdl)
 add_subdirectory(dynamicLibrariesSources/sound_sfml)
+
+if (APPLE)
+    set_target_properties(nibbler display_glfw display_sfml display_sdl sound_sdl sound_sfml PROPERTIES COMPILE_FLAGS "-Wall -Wextra -Wpedantic")
+endif()
