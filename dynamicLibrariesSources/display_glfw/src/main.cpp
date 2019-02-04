@@ -32,7 +32,7 @@ int main(int argc, char **argv) {
 		al(3, 3) = (eSprite::BODY | eSprite::BLUE | eSprite::EAST);
 		al(4, 3) = (eSprite::HEAD | eSprite::GREEN | eSprite::WEST);
 		al(5, 3) = (eSprite::HEAD | eSprite::PURPLE | eSprite::SOUTH);
-		al(6, 3) = (eSprite::HEAD | eSprite::PINK | eSprite::NORTH);
+		al(6, 3) = (eSprite::HEAD | eSprite::PINK | eSprite::NORTH | eSprite::YOUR_SNAKE);
 		al(7, 3) = (eSprite::HEAD | eSprite::GREY);
 		al(8, 3) = (eSprite::HEAD | eSprite::YELLOW);
 		al(9, 3) = (eSprite::HEAD | eSprite::ORANGE);

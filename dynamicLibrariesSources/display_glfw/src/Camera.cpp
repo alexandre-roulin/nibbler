@@ -46,19 +46,16 @@ void		Camera::processPosition(Camera::Movement direction, float deltaTime) {
 		position_ -= right_ * velocity;
 	else if (direction == Camera::Movement::RIGHT)
 		position_ += right_ * velocity;
-	updateCameraVectors_();
 }
 
 void		Camera::setPosition(glm::vec3 const &pos) {
 	position_ = pos;
-	updateCameraVectors_();
 }
 
 void		Camera::processPosition(glm::vec3 const &move, float deltaTime) {
 	float velocity = speed_ * deltaTime;
 
 	position_ += front_ * (move * velocity);
-	updateCameraVectors_();
 }
 
 

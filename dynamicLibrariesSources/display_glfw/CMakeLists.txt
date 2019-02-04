@@ -28,7 +28,7 @@ add_executable(${NAME} src/main.cpp
        src/Shader.hpp
        src/Skybox.cpp
        src/Skybox.hpp
-        ../../commun/KeyState.cpp ../../commun/KeyState.hpp ../../commun/KeyStateManager.cpp ../../commun/KeyStateManager.hpp)
+        ../../commun/KeyState.cpp ../../commun/KeyState.hpp ../../commun/KeyStateManager.cpp ../../commun/KeyStateManager.hpp src/Transform.cpp src/Transform.hpp)
 
 set_target_properties(${NAME}
         PROPERTIES

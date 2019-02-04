@@ -7,14 +7,11 @@ Particle::Particle(std::string const &path, unsigned int size) :
 path_(path),
 bPhysicsMovement_(false),
 size_(size),
-model_(path),
 transforms(size),
+model_(path),
 physicsMovement_(size)
 {
 	bufferTransform.resize(size);
-	for (auto &transform : transforms) {
-		transform.assign(&model_);
-	}
 	updateTransforms_();
 
 	glGenBuffers(1, &BOParticle_);

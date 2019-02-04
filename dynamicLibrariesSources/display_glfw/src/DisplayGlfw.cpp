@@ -212,7 +212,16 @@ void		DisplayGlfw::drawGridCaseBody_(int x, int y) {
 		eyeRight.render(shader_);
 		materialMap_.at(sprite & eSprite::MASK_COLOR).putMaterialToShader(shader_);
 		if ((sprite & eSprite::YOUR_SNAKE) == eSprite::YOUR_SNAKE) {
-			camera_[CAMERA_SNAKE].setPosition(grid_(x, y).getPosition());
+			camera_[CAMERA_SNAKE].setPosition(grid_(x, y).getPosition() + glm::vec3(0.f, 0.f, 3.f));
+			if (to == eSprite::EAST) {
+				//camera_[CAMERA_SNAKE].
+			}
+			else if (to == eSprite::WEST) {
+			}
+			else if (to == eSprite::SOUTH) {
+			}
+			else if (to == eSprite::NORTH) {
+			}
 		}
 	}
 }
@@ -309,30 +318,34 @@ void DisplayGlfw::render(float currentDelayFrame, float maxDelayFrame) {
 	currentTimer_ = currentDelayFrame;
 	maxTimer_ = maxDelayFrame;
 
-	if (glfwGetKey(getWindow(), GLFW_KEY_UP) == GLFW_PRESS)
+	if (getKey(GLFW_KEY_SPACE));
+
+	if (getKey(GLFW_KEY_UP))
     	direction_ = kSouth;
-    if (glfwGetKey(getWindow(), GLFW_KEY_DOWN) == GLFW_PRESS)
+    if (getKey(GLFW_KEY_DOWN))
     	direction_ = kNorth;
-    if (glfwGetKey(getWindow(), GLFW_KEY_LEFT) == GLFW_PRESS)
+    if (getKey(GLFW_KEY_LEFT))
     	direction_ = kWest;
-    if (glfwGetKey(getWindow(), GLFW_KEY_RIGHT) == GLFW_PRESS)
+    if (getKey(GLFW_KEY_RIGHT))
     	direction_ = kEast;
-	if (glfwGetKey(getWindow(), GLFW_KEY_D) == GLFW_PRESS)
+	if (getKey(GLFW_KEY_D)) {
+		std::cout << getKey(GLFW_KEY_D) << std::endl;
 		camera_[CAMERA_GLOBAL].processPosition(Camera::Movement::RIGHT, deltaTime_ * 5);
-	if (glfwGetKey(getWindow(), GLFW_KEY_A) == GLFW_PRESS)
+	}
+	if (getKey(GLFW_KEY_A))
 		camera_[CAMERA_GLOBAL].processPosition(Camera::Movement::LEFT, deltaTime_ * 5);
-	if (glfwGetKey(getWindow(), GLFW_KEY_S) == GLFW_PRESS)
+	if (getKey(GLFW_KEY_S))
 		camera_[CAMERA_GLOBAL].processPosition(Camera::Movement::BACKWARD, deltaTime_ * 5);
-	if (glfwGetKey(getWindow(), GLFW_KEY_W) == GLFW_PRESS)
+	if (getKey(GLFW_KEY_W))
 		camera_[CAMERA_GLOBAL].processPosition(Camera::Movement::FORWARD, deltaTime_ * 5);
 
-	if (glfwGetKey(getWindow(), GLFW_KEY_F) == GLFW_PRESS) {
-    }
-
-	if (glfwGetKey(getWindow(), GLFW_KEY_N) == GLFW_PRESS)
+	if (getKey(GLFW_KEY_N) == KeyState::kDown)
 		activeNextCamera_();
+	if (getKey(GLFW_KEY_B) == KeyState::kDown) {
+		camera_[CAMERA_GLOBAL].setPosition(camera_[CAMERA_SNAKE].getPosition());
+	}
 
-		shader_.activate();
+	shader_.activate();
 	shader_.setInt("uBackground", 0);
 	light_.putLightToShader(shader_);
 	view_ = getActiveCamera_().getViewMatrix();
