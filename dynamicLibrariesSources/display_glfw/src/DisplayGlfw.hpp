@@ -84,6 +84,9 @@ private:
 
 	float							deltaTime_;
 
+	eSprite 						yourSnakeTo;
+	int 							yourSnakeX;
+	int 							yourSnakeY;
 	Shader							shader_;
 	Shader							shaderMultiple_;
 	Model							block_;

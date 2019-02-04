@@ -86,3 +86,7 @@ glm::vec3	Transform::getPosition() const {
 	return position_;
 }
 
+void Transform::setPosition(glm::vec3 const &pos) {
+	position_ = pos;
+}
+

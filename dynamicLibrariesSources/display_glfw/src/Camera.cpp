@@ -58,7 +58,6 @@ void		Camera::processPosition(glm::vec3 const &move, float deltaTime) {
 	position_ += front_ * (move * velocity);
 }
 
-
 void		Camera::processMouseMovement(float xoffset, float yoffset, GLboolean constrainPitch) {
 	xoffset *= sensitivity_;
 	yoffset *= sensitivity_;
@@ -73,6 +72,13 @@ void		Camera::processMouseMovement(float xoffset, float yoffset, GLboolean const
 			pitch_ = -89.0f;
 	}
 	updateCameraVectors_();
+}
+
+void Camera::setFront(glm::vec3 const &front) {
+	front_ = front;
+}
+void Camera::setUp(glm::vec3 const &up) {
+	up_ = up;
 }
 
 glm::mat4	Camera::getViewMatrix() const {

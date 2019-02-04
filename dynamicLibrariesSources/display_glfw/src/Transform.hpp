@@ -18,6 +18,8 @@ public:
 
 	void	setInterScaling(float interScaling);
 	void	setCenter(glm::vec3 const &center);
+	void 	setPosition(glm::vec3 const &pos);
+
 
 	void	translate(glm::vec3 const &axis, float deltaTime = 1.f);
 	void	rotate(glm::vec3 const &axis, float angle, float deltaTime = 1.f);

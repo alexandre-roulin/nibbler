@@ -44,6 +44,9 @@ grid_(winTileSize_.getX(), winTileSize_.getY()),
 deltaTime_(0.016f),
 particuleBackground_(nullptr),
 particuleBackgroundOutline_(nullptr),
+yourSnakeTo(eSprite::NONE),
+yourSnakeX(-10),
+yourSnakeY(-10),
 projection_(1.f),
 indexActiveCamera_(0),
 view_(1.f),
@@ -212,16 +215,24 @@ void		DisplayGlfw::drawGridCaseBody_(int x, int y) {
 		eyeRight.render(shader_);
 		materialMap_.at(sprite & eSprite::MASK_COLOR).putMaterialToShader(shader_);
 		if ((sprite & eSprite::YOUR_SNAKE) == eSprite::YOUR_SNAKE) {
-			camera_[CAMERA_SNAKE].setPosition(grid_(x, y).getPosition() + glm::vec3(0.f, 0.f, 3.f));
+			yourSnakeTo = to;
+			yourSnakeX = x;
+			yourSnakeY = y;
+			camera_[CAMERA_SNAKE].setPosition(grid_(x, y).getPosition() + glm::vec3(0.f, 0.f, 10.f));
 			if (to == eSprite::EAST) {
-				//camera_[CAMERA_SNAKE].
+				camera_[CAMERA_SNAKE].setPosition(camera_[CAMERA_SNAKE].getPosition() + glm::vec3(-20.f, 0.f, 0.f));
 			}
 			else if (to == eSprite::WEST) {
+				camera_[CAMERA_SNAKE].setPosition(camera_[CAMERA_SNAKE].getPosition() + glm::vec3(20.f, 0.f, 0.f));
 			}
 			else if (to == eSprite::SOUTH) {
+				camera_[CAMERA_SNAKE].setPosition(camera_[CAMERA_SNAKE].getPosition() + glm::vec3(0.f, -20.f, 0.f));
 			}
 			else if (to == eSprite::NORTH) {
+				camera_[CAMERA_SNAKE].setPosition(camera_[CAMERA_SNAKE].getPosition() + glm::vec3(0.f, 20.f, 0.f));
 			}
+			camera_[CAMERA_SNAKE].setFront(grid_(x, y).getPosition() - camera_[CAMERA_SNAKE].getPosition());
+			camera_[CAMERA_SNAKE].setUp(glm::vec3(0.f, 0.f, 1.f));
 		}
 	}
 }
@@ -320,14 +331,43 @@ void DisplayGlfw::render(float currentDelayFrame, float maxDelayFrame) {
 
 	if (getKey(GLFW_KEY_SPACE));
 
-	if (getKey(GLFW_KEY_UP))
-    	direction_ = kSouth;
-    if (getKey(GLFW_KEY_DOWN))
-    	direction_ = kNorth;
-    if (getKey(GLFW_KEY_LEFT))
-    	direction_ = kWest;
-    if (getKey(GLFW_KEY_RIGHT))
-    	direction_ = kEast;
+	if (indexActiveCamera_ == CAMERA_SNAKE) {
+		std::cout << "CAMERA_SNAKE : ";
+		if (getKeyState(GLFW_KEY_RIGHT) == KeyState::kDown) {
+			std::cout << "R ";
+			if (yourSnakeTo == eSprite::EAST)
+				direction_ = kNorth;
+			else if (yourSnakeTo == eSprite::NORTH)
+				direction_ = kWest;
+			else if (yourSnakeTo == eSprite::WEST)
+				direction_ = kSouth;
+			else if (yourSnakeTo == eSprite::SOUTH)
+				direction_ = kEast;
+		}
+		else if (getKeyState(GLFW_KEY_LEFT) == KeyState::kDown) {
+			std::cout << " L ";
+			if (yourSnakeTo == eSprite::EAST)
+				direction_ = kSouth;
+			else if (yourSnakeTo == eSprite::NORTH)
+				direction_ = kEast;
+			else if (yourSnakeTo == eSprite::WEST)
+				direction_ = kNorth;
+			else if (yourSnakeTo == eSprite::SOUTH)
+				direction_ = kWest;
+		}
+		std::cout << direction_ << std::endl;
+	}
+	else {
+		if (getKey(GLFW_KEY_UP))
+			direction_ = kSouth;
+		if (getKey(GLFW_KEY_DOWN))
+			direction_ = kNorth;
+		if (getKey(GLFW_KEY_LEFT))
+			direction_ = kWest;
+		if (getKey(GLFW_KEY_RIGHT))
+			direction_ = kEast;
+	}
+
 	if (getKey(GLFW_KEY_D)) {
 		std::cout << getKey(GLFW_KEY_D) << std::endl;
 		camera_[CAMERA_GLOBAL].processPosition(Camera::Movement::RIGHT, deltaTime_ * 5);
@@ -382,6 +422,7 @@ void DisplayGlfw::render(float currentDelayFrame, float maxDelayFrame) {
 	shaderMultiple_.setMat4("view", view_);
 
 
+
 	materialMap_.at(eSprite::GROUND).putMaterialToShader(shaderMultiple_);
 	particuleBackground_->update();
 	particuleBackground_->render(shaderMultiple_);
@@ -389,6 +430,7 @@ void DisplayGlfw::render(float currentDelayFrame, float maxDelayFrame) {
 	Material::unsetMaterial(shaderMultiple_);
 	particuleBackgroundOutline_->update();
 	particuleBackgroundOutline_->render(shaderMultiple_, GL_LINE_STRIP);
+
 
 
     Glfw::render();
