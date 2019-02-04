@@ -37,10 +37,11 @@ namespace KNW {
 		ConnectionTCP(ServerTCP &serverTCP, tcp::socket socket);
 		void sendData(std::string data);
 		~ConnectionTCP();
+		const tcp::socket &getSocket_() const;
+
 	private:
 		friend class ServerTCP;
 		std::unique_ptr<IOTCP> iotcp;
-		ServerTCP &serverTCP_;
 	};
 
 	/*************************** ServerTCP ************************************/
@@ -85,7 +86,7 @@ namespace KNW {
 		boost::thread thread;
 
 		//connection
-		std::vector<std::shared_ptr<ConnectionTCP>> connections;
+		std::array<std::shared_ptr<ConnectionTCP>, kMaxConnectionOpen> connections;
 		std::function<void(size_t)> callbackAccept_;
 		//Data management
 		DataTCP dataTCP_;
@@ -117,7 +118,8 @@ namespace KNW {
 		buffer.append(reinterpret_cast<char *>(&data), dataTCP_.getSizeOfHeader(header));
 
 		for (auto &connection : connections) {
-			connection->sendData(buffer);
+			if (connection)
+				connection->sendData(buffer);
 		}
 	}
 
@@ -129,14 +131,15 @@ namespace KNW {
 		buffer.append(reinterpret_cast<char *>(&data), dataTCP_.getSizeOfHeader(header_));
 
 		for (auto &connection : connections) {
-			connection->sendData(buffer);
+			if (connection)
+				connection->sendData(buffer);
 		}
 	}
 
 
 	template<typename T>
 	void ServerTCP::writeDataToOpenConnection(T data, int index) {
-		assert(index < connections.size());
+		assert(index < static_cast<int>(connections.size()));
 
 		auto header = DataType<T>::getHeader();
 		std::string buffer;
@@ -150,7 +153,7 @@ namespace KNW {
 	void
 	ServerTCP::writeDataToOpenConnection(T data, int index, H header) {
 		uint16_t header_ = static_cast<uint16_t >(header);
-		assert(index < connections.size());
+		assert(index < static_cast<int>(connections.size()));
 //		log_success("%s(%d)", __PRETTY_FUNCTION__, index);
 		std::string buffer;
 		buffer.append(reinterpret_cast<char *>(&header_), sizeof(BaseDataType::Header));

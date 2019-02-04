@@ -54,11 +54,11 @@ add_executable(${NAME}
         class/logger/logger/logger_init.cpp
         class/logger/utils/logger_get_time.cpp
         class/logger/utils/logger_init_open_file.cpp
-        class/network/ClientTCP.cpp
-        class/network/ClientTCP.hpp
-        class/network/ServerTCP.cpp
-        class/network/ServerTCP.hpp
-        class/network/IGameNetwork.hpp
+#        class/network/ClientTCP.cpp
+#        class/network/ClientTCP.hpp
+#        class/network/ServerTCP.cpp
+#        class/network/ServerTCP.hpp
+#        class/network/IGameNetwork.hpp
         class/systems/FoodEatSystem.cpp
         class/systems/FoodEatSystem.hpp
         class/systems/CollisionSystem.cpp
@@ -107,7 +107,33 @@ add_executable(${NAME}
         class/network/SnakeClient.hpp
         class/network/SnakeServer.cpp
         class/network/SnakeServer.hpp
-        class/systems/SpriteSystem.cpp class/systems/SpriteSystem.hpp class/gui/widget/WidgetConnect.cpp class/gui/widget/WidgetConnect.hpp class/KINU/Component.cpp class/KINU/Component.hpp class/KINU/Entity.cpp class/KINU/Entity.hpp class/KINU/EventsManager.cpp class/KINU/EventsManager.hpp class/KINU/Pool.hpp class/KINU/SystemsManager.cpp class/KINU/SystemsManager.hpp class/KINU/World.cpp class/KINU/World.hpp class/KINU/Config.hpp class/ia/Bobby.cpp class/ia/Bobby.hpp class/network/IGameNetwork.hpp class/gui/widget/WidgetMassiveButton.cpp class/gui/widget/WidgetMassiveButton.hpp incs/Sprite.hpp class/ia/KStar.cpp class/ia/KStar.hpp incs/MutantGrid.tpp)
+        class/systems/SpriteSystem.cpp
+        class/systems/SpriteSystem.hpp
+        class/gui/widget/WidgetConnect.cpp
+        class/gui/widget/WidgetConnect.hpp
+        class/KINU/Component.cpp
+        class/KINU/Component.hpp
+        class/KINU/Entity.cpp
+        class/KINU/Entity.hpp
+        class/KINU/EventsManager.cpp
+        class/KINU/EventsManager.hpp
+        class/KINU/Pool.hpp
+        class/KINU/SystemsManager.cpp
+        class/KINU/SystemsManager.hpp
+        class/KINU/World.cpp
+        class/KINU/World.hpp
+        class/KINU/Config.hpp
+        class/ia/Bobby.cpp
+        class/ia/Bobby.hpp
+        class/network/IGameNetwork.hpp
+        class/gui/widget/WidgetMassiveButton.cpp
+        class/gui/widget/WidgetMassiveButton.hpp
+        incs/Sprite.hpp
+        class/ia/KStar.cpp
+        class/ia/KStar.hpp
+        incs/MutantGrid.tpp
+        )
+
 
 target_include_directories(
         ${NAME} PUBLIC

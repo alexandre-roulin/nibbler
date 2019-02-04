@@ -3,8 +3,7 @@
 
 namespace KINU {
 
-	World::World(Univers &univers) : grid(univers.getMapSize()), univers_(univers) {
-		grid.fill(eSprite::NONE);
+	World::World() {
 		entitiesManager = std::make_unique<EntitiesManager>(*this);
 		systemsManager = std::make_unique<SystemsManager>(*this);
 		eventsManager = std::make_unique<EventsManager>(*this);
@@ -47,10 +46,5 @@ namespace KINU {
 	void World::destroyEntity(Entity e) {
 		destroyedEntities.push_back(e);
 	}
-
-	Univers &World::getUnivers() const {
-		return univers_;
-	}
-
 
 }

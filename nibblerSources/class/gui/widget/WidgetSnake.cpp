@@ -9,9 +9,9 @@ WidgetSnake::WidgetSnake(Core &core,
 						 std::vector<std::string> &color,
 						 bool isYourSnake = false) :
 		AWidget(core),
+		_snake(snake),
 		_texture(texture),
 		_color(color),
-		_snake(snake),
 		_isYourSnake(isYourSnake) {
 }
 
@@ -59,7 +59,7 @@ void WidgetSnake::_renderSelectionColor(unsigned int sizeTexture) const {
 	ImGui::SetCursorPosX((ImGui::GetWindowSize().x - sizeTexture) / 2);
 	if (ImGui::BeginCombo("", _color[static_cast<int>(_snake.sprite) - static_cast<unsigned int>(eSprite::GREEN)].c_str(), flagImGuiCombo))
 	{
-		unsigned int i = static_cast<int>(eSprite::GREEN);
+		int i = static_cast<int>(eSprite::GREEN);
 		for (auto const &e : _color)
 		{
 			if (ImGui::Selectable(e.c_str(), i == static_cast<int>(_snake.sprite)) && _core.univers.getSnakeClient())

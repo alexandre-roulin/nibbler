@@ -7,9 +7,12 @@
 
 class RenderSystem : public KINU::System {
 public:
-	RenderSystem();
+	RenderSystem(Univers &univers_);
 	virtual void update();
 	static int getSprite_(eSprite sprite);
+
+private:
+	Univers &univers_;
 };
 
 

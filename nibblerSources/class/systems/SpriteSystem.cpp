@@ -4,7 +4,7 @@
 #include <component/FollowComponent.hpp>
 #include <component/MotionComponent.hpp>
 
-SpriteSystem::SpriteSystem() {
+SpriteSystem::SpriteSystem(Univers &univers) : univers_(univers) {
 	requireComponent<PositionComponent>();
 	requireComponent<SpriteComponent>();
 }
@@ -31,7 +31,6 @@ void SpriteSystem::update() {
 	PositionComponent positionComponentFollowed;
 
 	for (auto &entity : getEntities()) {
-		auto &positionComponent = entity.getComponent<PositionComponent>();
 		auto &spriteComponent = entity.getComponent<SpriteComponent>();
 
 		spriteComponent.sprite = spriteComponent.sprite & (0xFFFFFFFF ^
@@ -66,7 +65,7 @@ void SpriteSystem::update() {
 			else if (entity.getComponent<MotionComponent>().direction ==
 					 kWest)
 				spriteComponent.sprite |= eSprite::TO_WEST;
-			if (getWorld().getUnivers().getSnakeClient()->getId_() == entity.getGroupIdByEntity()) {
+			if (entity.hasGroupId() && univers_.getSnakeClient()->getId_() == entity.getGroupIdByEntity()) {
 				spriteComponent.sprite |= eSprite::YOUR_SNAKE;
 			}
 		} else {

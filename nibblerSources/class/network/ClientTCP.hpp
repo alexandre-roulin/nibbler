@@ -17,7 +17,8 @@
 #include <factory/Factory.hpp>
 #include "IGameNetwork.hpp"
 #include "Data.hpp"
-class JoystickEvent;
+
+struct JoystickEvent;
 
 class FoodCreation;
 

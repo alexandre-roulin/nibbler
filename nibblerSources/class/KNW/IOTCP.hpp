@@ -27,6 +27,10 @@ namespace KNW {
 		void readSocketHeader();
 
 	private:
+	public:
+		const tcp::socket &getSocket_() const;
+
+	private:
 
 		void checkError(boost::system::error_code const &error_code);
 
@@ -37,7 +41,7 @@ namespace KNW {
 
 		void handleReadData(DataTCP::Header header,const boost::system::error_code &);
 
-		void handleWrite(const boost::system::error_code &, size_t);
+		void handleWrite(const boost::system::error_code &);
 
 		DataTCP &dataTCP_;
 		boost::array<char, eConfigTCP::kMaxBufferSize> buffer_data_;

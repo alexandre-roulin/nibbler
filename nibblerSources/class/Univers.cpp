@@ -26,28 +26,30 @@ const std::string Univers::WarningClientExist = "Client is already in place.";
 
 Univers::Univers()
 		: pathRoot_(NIBBLER_ROOT_PROJECT_PATH),
-		  timer_start(boost::asio::deadline_timer(io_start)),
+			switchLib(false),
 		  timer_loop(boost::asio::deadline_timer(io_loop)),
+		  timer_start(boost::asio::deadline_timer(io_start)),
+		  world_(nullptr),
+		  serverTCP_(nullptr),
+		  clientTCP_(nullptr),
+		  core_(nullptr), //std::make_unique<Core>(*this)
+		  grid_(nullptr),
 		  mapSize(MAP_DEFAULT),
-		  gameSpeed(50),
+		  gameSpeed(150),
 		  dlHandleDisplay(nullptr),
 		  dlHandleSound(nullptr),
 		  display(nullptr),
 		  sound(nullptr),
 		  borderless(false),
+		  openGame_(false),
 		  kDisplay(eDisplay::kExternSfmlLibrary) {
-	switchLib = false;
-	clientTCP_ = nullptr;
-	serverTCP_ = nullptr;
-	world_ = nullptr;
-	core_ = nullptr; //std::make_unique<Core>(*this)
-}
+
+		  }
 
 /** External Library Management **/
 
 
-bool Univers::load_external_sound_library(std::string const &title,
-										  std::string const &library_path) {
+bool Univers::load_external_sound_library(std::string const &library_path) {
 	if (sound != nullptr && dlHandleSound != nullptr) {
 		if (deleteSound) {
 			deleteSound(sound);
@@ -147,41 +149,30 @@ void Univers::defaultAssignmentLibrary() {
 
 void Univers::new_game() {
 
-	if (isServer()) {
-		for (auto &bobby : vecBobby) {
-			bobby->getClientTCP_()->changeStateReady();
-		}
-	}
-	sleep(1);
-	assert(isServer());
-	assert(serverTCP_->isReady());
-
-	if (!isServer() || !serverTCP_->isReady()) return;
-	world_ = std::make_unique<KINU::World>(*this);
-	world_->grid.resize(mapSize);
+	log_info("Hello i'am a %s", isServer() ? "Server" : "Client");
+	world_ = std::make_unique<KINU::World>();
+	grid_ = std::make_shared<MutantGrid<eSprite>>(mapSize);
 	if (!display) load_extern_lib_display(kDisplay);
 	defaultAssignmentLibrary();
 	if (isServer()) {
 		serverTCP_->startGame();
-		for (auto &bobby : vecBobby) {
-//			bobby->getClientTCP_()->change_state_ready();
+		for (std::unique_ptr<Bobby> &bobby : vecBobby) {
 			bobby->buildIA();
 			bobby->sendDirection();
 		}
 
 	}
-
 	loop();
 }
 
 void Univers::manage_input() {
 
 	if (clientTCP_) {
-		if (world_->getEntitiesManager().hasEntityByTagId(
-				eTag::HEAD_TAG + clientTCP_->getId_())) {
-			clientTCP_->sendDataToServer(InputInfo(
-					clientTCP_->getId_(),
+		if (world_->getEntitiesManager().hasEntityByTagId(eTag::HEAD_TAG + clientTCP_->getId_())) {
+			clientTCP_->sendDataToServer(InputInfo(clientTCP_->getId_(),
+
 					(display ? display->getDirection() : eDirection::kNorth)
+
 					), eHeaderK::kInput);
 		}
 	}
@@ -212,12 +203,12 @@ void Univers::manage_start() {
 
 void Univers::loop() {
 
-	world_->getSystemsManager().addSystem<CollisionSystem>();
+	world_->getSystemsManager().addSystem<CollisionSystem>(*this);
 	world_->getSystemsManager().addSystem<FollowSystem>();
-	world_->getSystemsManager().addSystem<JoystickSystem>();
-	world_->getSystemsManager().addSystem<MotionSystem>();
-	world_->getSystemsManager().addSystem<SpriteSystem>();
-	world_->getSystemsManager().addSystem<RenderSystem>();
+	world_->getSystemsManager().addSystem<JoystickSystem>(*this);
+	world_->getSystemsManager().addSystem<MotionSystem>(*this);
+	world_->getSystemsManager().addSystem<SpriteSystem>(*this);
+	world_->getSystemsManager().addSystem<RenderSystem>(*this);
 	world_->getSystemsManager().addSystem<FoodCreationSystem>();
 	world_->getSystemsManager().addSystem<FoodEatSystem>();
 
@@ -228,7 +219,7 @@ void Univers::loop() {
 			boost::bind(&boost::asio::io_service::run, &io_loop));
 	thread.detach();
 
-	world_->grid.fill(eSprite::NONE);
+	grid_->fill(eSprite::NONE);
 	playMusic(MUSIC_ZELDA);
 
 
@@ -250,7 +241,7 @@ void Univers::loop() {
 
 		//std::cout << "It took me " << current.count() << "," << gameSpeed << " seconds." << std::endl;
 		display->update(0.017f);
-		display->drawGrid(world_->grid);
+		display->drawGrid(*grid_);
 		display->render(0.017f, 1.f);
 //			display->update(0.2f);
 //			display->drawGrid(world_->grid);
@@ -261,12 +252,11 @@ void Univers::loop() {
 		}
 	}
 	unload_external_library();
-	exit(0);
 	finish_game();
 }
 
 void Univers::loop_world() {
-
+	assert(world_);
 	manage_input();
 
 	for (; nextFrame.empty();) {
@@ -282,26 +272,26 @@ void Univers::loop_world() {
 
 	world_->update();
 
-	//log_info("Univers::FollowSystem");
+	log_info("Univers::FollowSystem");
 	world_->getSystemsManager().getSystem<FollowSystem>().update();
-	//log_info("Univers::JoystickSystem");
+	log_info("Univers::JoystickSystem");
 	world_->getSystemsManager().getSystem<JoystickSystem>().update();
-	//log_info("Univers::JoystickEvent");
+	log_info("Univers::JoystickEvent");
 	world_->getEventsManager().destroy<JoystickEvent>();
-	//log_info("Univers::MotionSystem");
+	log_info("Univers::MotionSystem");
 	world_->getSystemsManager().getSystem<MotionSystem>().update();
-	//log_info("Univers::CollisionSystem");
+	log_info("Univers::CollisionSystem");
 	world_->getSystemsManager().getSystem<CollisionSystem>().update();
-	//log_info("Univers::FoodCreationSystem");
+	log_info("Univers::FoodCreationSystem");
 	world_->getSystemsManager().getSystem<FoodCreationSystem>().update();
 	world_->getEventsManager().destroy<FoodCreation>();
-	//log_info("Univers::SpriteSystem");
+	log_info("Univers::SpriteSystem");
 	world_->getSystemsManager().getSystem<SpriteSystem>().update();
-	//log_info("Univers::RenderSystem");
+	log_info("Univers::RenderSystem");
 	world_->getSystemsManager().getSystem<RenderSystem>().update();
-	//log_info("Univers::FoodEatSystem");
+	log_info("Univers::FoodEatSystem");
 
-	//log_info("Univers::vecBobby");
+	log_info("Univers::vecBobby");
 	Bobby::clearPriority();
 	if (isServer()) {
 		for (auto &bobby : vecBobby) {
@@ -381,8 +371,13 @@ void Univers::create_server(unsigned int port) {
 	if (serverTCP_)
 		core_->addMessageChat(WarningServerIsUp);
 	else {
-		serverTCP_ = std::make_unique<SnakeServer>(*this, port);
-		core_->addMessageChat(SuccessServerIsCreate);
+		try {
+			serverTCP_ = std::make_unique<SnakeServer>(*this, port);
+			core_->addMessageChat(SuccessServerIsCreate);
+		} catch (std::exception const &e) {
+			core_->addMessageChat(e.what());
+		}
+
 	}
 }
 
@@ -420,10 +415,25 @@ void Univers::finish_game() {
 	io_loop.stop();
 	io_loop.reset();
 	world_ = nullptr;
+	grid_ = nullptr;
+	setOpenGame_(false);
 }
 
 
 /** Getter && Setter **/
+
+MutantGrid<eSprite> &Univers::getGrid_() {
+	return *grid_;
+}
+
+const std::array<Snake, SNAKE_MAX> Univers::getSnakeArray_() const {
+	if (isServer())
+		return serverTCP_->getSnakeArray_();
+	if (getSnakeClient())
+		return getSnakeClient()->getSnakeArray_();
+	return std::array<Snake, SNAKE_MAX>();
+}
+
 
 KINU::World &Univers::getWorld_() const {
 	return *world_;
@@ -524,19 +534,20 @@ bool Univers::isIASnake(uint16_t client_id) const {
 
 Univers::~Univers() {
 	log_warn("~Univers");
-
-	log_warn("~Univers::clientTCP_::destroy");
 	clientTCP_ = nullptr;
-	log_warn("~Univers::serverTCP_ ::destroy");
 	serverTCP_ = nullptr;
 	unload_external_library();
-//	log_warn("~Univers::clear::vector");
-//	vecBobby.clear();
 	log_warn("~Univers.end()");
-
-//	core_->exit();
-//	core_ = nullptr;
 }
 
+const std::unique_ptr<SnakeServer> &Univers::getServerTCP_() const {
+	return serverTCP_;
+}
 
+bool Univers::isOpenGame_() const {
+	return openGame_;
+}
 
+void Univers::setOpenGame_(bool openGame_) {
+	Univers::openGame_ = openGame_;
+}

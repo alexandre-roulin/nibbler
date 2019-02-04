@@ -19,9 +19,10 @@ public:
 	bool isFull() const;
 
 	unsigned short getPort_() const;
+	const std::array<Snake, SNAKE_MAX> &getSnakeArray_() const;
 
+	bool sendOpenGameToClient();
 private:
-
 
 	void callbackSnakeArray(std::array<Snake, SNAKE_MAX>);
 	void callbackPock(char);
@@ -47,13 +48,12 @@ private:
 
 	void updateInput();
 
-
+	Univers &univers_;
 	std::vector<FoodInfo> foodInfoArray;
 	std::mutex mutex_;
 	bool pause_;
 	unsigned short port_;
 	unsigned int mapSize_;
-	std::array<int, SNAKE_MAX> connectionsId;
 	KNW::ServerTCP serverTCP_;
 	std::array<Snake, SNAKE_MAX> snake_array_;
 

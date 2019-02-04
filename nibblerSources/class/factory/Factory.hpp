@@ -8,9 +8,7 @@ class Factory {
 public:
 	void create_all_snake(std::array<Snake, SNAKE_MAX> snake_array, int16_t nu);
 
-	void create_snake(Snake, int);
-
-	static char *factory_chat_message(char const *name, char const *message);
+	void create_snake(Snake const &, int);
 
 	Factory(Univers &univers);
 

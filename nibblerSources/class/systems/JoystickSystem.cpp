@@ -5,13 +5,13 @@
 #include <component/MotionComponent.hpp>
 #include <network/SnakeClient.hpp>
 
-JoystickSystem::JoystickSystem() {
+JoystickSystem::JoystickSystem(Univers &univers): univers_(univers) {
 	requireComponent<JoystickComponent>();
 	requireComponent<MotionComponent>();
 }
 
 void JoystickSystem::update() {
-	std::array<Snake, SNAKE_MAX> snake_array = getWorld().getUnivers().getSnakeClient()->getSnakeArray_();
+	std::array<Snake, SNAKE_MAX> snake_array = univers_.getSnakeClient()->getSnakeArray_();
 
 	for (auto &snake : snake_array) {
 		if (snake.id != -1 && getWorld().getEntitiesManager().hasEntityByTagId(snake.id + eTag::HEAD_TAG)) {

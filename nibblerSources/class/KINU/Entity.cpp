@@ -27,10 +27,6 @@ namespace KINU {
 		getEntitiesManager_().killGroupEntity(*this);
 	}
 
-	void Entity::destroy() {
-		getEntitiesManager_().destroyEntity(*this);
-	}
-
 	void Entity::tagByTagId(TagId tagId) {
 		getEntitiesManager_().tagEntityByTagId(*this, tagId);
 	}
@@ -128,14 +124,12 @@ namespace KINU {
 		if (groupedEntityId.find(entity.id_) != groupedEntityId.end()) {
 			TagId groupId = groupedEntityId[entity.id_];
 			mutex_.lock();
-			int before = groupedEntityId.size();
 			groupedEntities[groupId].erase(std::remove_if(
 					groupedEntities[groupId].begin(),
 						   groupedEntities[groupId].end(),
 						   [entity](KINU::Entity entity1) {
 							   return entity == entity1;
 						   }));
-			int after = groupedEntityId.size();
 			groupedEntityId.erase(entity.id_);
 			mutex_.unlock();
 		}
@@ -144,12 +138,8 @@ namespace KINU {
 		if (taggedEntityId.find(entity.id_) != taggedEntityId.end()) {
 			TagId tagId = taggedEntityId[entity.id_];
 			mutex_.lock();
-			int id  = taggedEntityId.size();
-			int tag = taggedEntities.size();
 			taggedEntityId.erase(entity.id_);
 			taggedEntities.erase(tagId);
-			int tagb = taggedEntities.size();
-			int idb  = taggedEntityId.size();
 			mutex_.unlock();
 		}
 		assert(!hasTagIdByEntity(entity));

@@ -4,13 +4,14 @@
 #include <KINU/SystemsManager.hpp>
 #include "nibbler.hpp"
 
-class PositionComponent;
-
 class SpriteSystem : public KINU::System {
 public:
-	SpriteSystem();
+	SpriteSystem(Univers &univers);
 	virtual void update();
 	static eSprite spriteDirection(PositionComponent &actual, PositionComponent &follow);
+
+private:
+	Univers &univers_;
 };
 
 

@@ -2,6 +2,6 @@
 
 FollowComponent::FollowComponent(KINU::Entity::ID id, bool skip)
 		: idFollowed(id),
-		  skip(skip),
-		  positionComponent(PositionComponent()){
+		  positionComponent(PositionComponent()),
+		  skip(skip) {
 }
