@@ -30,7 +30,7 @@ namespace KNW {
 	class ClientTCP {
 	public:
 
-		ClientTCP();
+		ClientTCP(std::function<void()>);
 
 		void connect(std::string dns, std::string port);
 
@@ -47,6 +47,8 @@ namespace KNW {
 		~ClientTCP();
 
 		bool isConnect() const;
+
+		void disconnect();
 	private:
 
 		boost::asio::io_service io;
@@ -55,6 +57,7 @@ namespace KNW {
 		boost::thread thread;
 		DataTCP dataTCP_;
 		std::unique_ptr<IOTCP> iotcp;
+		std::function<void()> callbackDeadConnection_;
 	};
 
 	template<typename T>

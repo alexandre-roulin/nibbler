@@ -9,10 +9,23 @@ SnakeClient::SnakeClient(
 		Univers &univers,
 		bool fromIA_
 		) :
+		clientTCP_(std::bind(&SnakeClient::callbackDeadConnection, this)),
 		univers_(univers),
 		fromIA_(fromIA_),
 		id_(0),
 		factory_(univers) {
+
+	clientTCP_.addDataType<int16_t >(
+			std::bind(&SnakeClient::callbackRemoveSnake,
+					  this,
+					  std::placeholders::_1)
+			, eHeaderK::kRemoveSnake);
+
+	clientTCP_.addDataType<InputInfo>(
+			std::bind(&SnakeClient::callbackInput,
+					  this,
+					  std::placeholders::_1)
+			, eHeaderK::kInput);
 
 	clientTCP_.addDataType<InputInfo>(
 			std::bind(&SnakeClient::callbackInput,
@@ -94,6 +107,7 @@ SnakeClient::SnakeClient(
 }
 
 SnakeClient::~SnakeClient() = default;
+
 /***** Network Management *****/
 
 
@@ -146,6 +160,8 @@ const std::array<Snake, SNAKE_MAX> &SnakeClient::getSnakeArray_() const {
 }
 
 const Snake &SnakeClient::getSnake() const {
+	log_fatal("%s %d", __PRETTY_FUNCTION__, id_);
+	assert(id_ >= 0 && id_ < SNAKE_MAX);
 	return snake_array_[id_];
 }
 
@@ -179,11 +195,16 @@ void SnakeClient::changeSprite(eSprite snakeSprite) {
 	sendDataToServer(snake_array_.data()[id_], eHeaderK::kSnake);
 }
 
-void SnakeClient::changeStateReady() {
-	snake_array_[id_].isReady = !snake_array_[id_].isReady;
-	sendDataToServer(snake_array_[id_], eHeaderK::kSnake);
 
+void SnakeClient::changeStateReady(bool change) {
+	snake_array_[id_].isReady = change;
+	sendDataToServer(snake_array_[id_], eHeaderK::kSnake);
 }
+
+void SnakeClient::changeIsBorderless(bool borderless) {
+	sendDataToServer(borderless, eHeaderK::kBorderless);
+}
+
 
 bool SnakeClient::isConnect() const {
 	return clientTCP_.isConnect();
@@ -197,13 +218,25 @@ void SnakeClient::killSnake(uint16_t id) {
 	}
 
 }
+void SnakeClient::removeSnakeFromGame() {
+	sendDataToServer(id_, eHeaderK::kRemoveSnake);
+}
 
 /***** Callback *****/
 
-void SnakeClient::callbackPock(char) {
+void SnakeClient::callbackRemoveSnake(int16_t) {
+
+}
+
+void SnakeClient::callbackDeadConnection() {
 	log_success("%s", __PRETTY_FUNCTION__ );
+	univers_.setOpenGame_(false);
+}
+
+void SnakeClient::callbackPock(char) {
+	log_success("%s %d", __PRETTY_FUNCTION__, acceptDataFromServer());
 	mutex_.lock();
-	if (acceptDataFromServer()) {
+	if (acceptDataFromServer() && univers_.isOpenGame_()) {
 		univers_.getWorld_().getEventsManager().emitEvent<NextFrame>();
 	}
 	mutex_.unlock();
@@ -241,10 +274,13 @@ void SnakeClient::callbackId(int16_t id) {
 	log_success("%s id : %d", __PRETTY_FUNCTION__ , id);
 	mutex_.lock();
 	id_ = id;
-	snake_array_[id_].id = id;
+	if (fromIA_) {
+		snake_array_[id] = Snake::randomSnake(id);
+		changeStateReady(true);
+	} else {
+		snake_array_[id].id = id_;
+	};
 	mutex_.unlock();
-	if (fromIA_)
-		changeStateReady();
 }
 
 void SnakeClient::callbackInput(InputInfo) {
@@ -287,6 +323,7 @@ void SnakeClient::callbackFood(FoodInfo foodInfo) {
 void SnakeClient::callbackStartInfo(StartInfo startInfo) {
 	log_success("%s", __PRETTY_FUNCTION__ );
 	mutex_.lock();
+	foodCreations.clear();
 	if (acceptDataFromServer()) {
 		factory_.create_all_snake(snake_array_, startInfo.nu);
 		if (univers_.isServer()) {
@@ -299,8 +336,8 @@ void SnakeClient::callbackStartInfo(StartInfo startInfo) {
 										static_cast<uint16_t>(eHeaderK::kFood)
 										);
 			}
-			univers_.getWorld_().getEventsManager().emitEvent<StartEvent>(startInfo.time_duration);
 		}
+		univers_.getWorld_().getEventsManager().emitEvent<StartEvent>(startInfo.time_duration);
 	}
 	mutex_.unlock();
 }
@@ -319,4 +356,12 @@ void SnakeClient::callbackSnakeArray(std::array<Snake, SNAKE_MAX> new_snake_arra
 	mutex_.lock();
 	snake_array_ = new_snake_array;
 	mutex_.unlock();
+}
+
+void SnakeClient::disconnect() {
+	clientTCP_.disconnect();
+}
+
+bool SnakeClient::isReady() const {
+	return snake_array_[id_].isReady;
 }

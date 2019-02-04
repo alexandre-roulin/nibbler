@@ -151,7 +151,8 @@ void DisplaySfml::update(float deltaTime) {
 					_direction = kWest;
 					break;
 				case sf::Keyboard::B:break;
-				case sf::Keyboard::C:break;
+				case sf::Keyboard::C:
+					break;
 				case sf::Keyboard::D:
 					_direction = kEast;
 					break;

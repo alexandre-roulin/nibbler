@@ -2,9 +2,13 @@
 
 namespace KNW {
 
-	ClientTCP::ClientTCP()
-			: socket_(io),  resolver(io)
-			  {
+	ClientTCP::ClientTCP(std::function<void()> callback)
+			:
+			socket_(io),
+			resolver(io),
+			callbackDeadConnection_(callback)
+
+			{
 		std::cout << "ClientTCP" << std::endl;
 	}
 
@@ -18,7 +22,9 @@ namespace KNW {
 					dataTCP_,
 					std::move(socket_),
 					std::bind(&DataTCP::sendDataToCallback, std::ref(dataTCP_),
-							  std::placeholders::_1, std::placeholders::_2));
+							  std::placeholders::_1, std::placeholders::_2),
+					callbackDeadConnection_
+					);
 			iotcp->readSocketHeader();
 			thread = boost::thread(
 					boost::bind(&boost::asio::io_service::run, &io));
@@ -46,6 +52,15 @@ namespace KNW {
 
 		thread.interrupt();
 		io.stop();
+	}
+
+	void ClientTCP::disconnect() {
+		try {
+				socket_.shutdown(boost::asio::ip::tcp::socket::shutdown_both);
+				socket_.close();
+		} catch (std::exception const &e) {
+			std::cout << e.what() << std::endl;
+		}
 	}
 
 }

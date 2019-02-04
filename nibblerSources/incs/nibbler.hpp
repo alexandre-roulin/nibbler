@@ -67,11 +67,11 @@ struct Snake {
 	eDirection direction;
 	bool isAlive;
 	bool isSwitchingLibrary;
-
+	size_t indexConnection;
 	friend std::ostream &operator<<(std::ostream &os, const Snake &snake);
 
 	void reset() {
-		memset(name, NAME_BUFFER, 0);
+		bzero(name, NAME_BUFFER);
 		sprite = eSprite::GREEN;
 		isReady = false;
 		id = -1;
@@ -79,6 +79,7 @@ struct Snake {
 		direction = kNorth;
 		isAlive = false;
 		isSwitchingLibrary = false;
+		indexConnection = -1;
 	}
 
 	Snake &operator=(Snake const &snake) {
@@ -91,6 +92,7 @@ struct Snake {
 			direction = snake.direction;
 			isAlive = snake.isAlive;
 			isSwitchingLibrary = snake.isSwitchingLibrary;
+			indexConnection = snake.indexConnection;
 		}
 		return *this;
 	}

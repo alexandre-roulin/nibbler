@@ -8,11 +8,13 @@
 KNW::IOTCP::IOTCP(
 		KNW::DataTCP &dataTCP,
 		tcp::socket socket,
-		std::function<void(BaseDataType::Header, char *)> f)
+		std::function<void(BaseDataType::Header, char *)> f,
+		std::function<void()> callbackDeadSocket)
 		:
 		dataTCP_(dataTCP) ,
 		socket_(std::move(socket)),
-		callback_(std::move(f)){
+		callback_(std::move(f)),
+		callbackDeadSocket_(callbackDeadSocket) {
 
 
 }
@@ -34,12 +36,12 @@ void KNW::IOTCP::readSocketHeader() {
 void KNW::IOTCP::handleReadHeader(const boost::system::error_code &ec,
 									 size_t len) {
 //	log_fatal("%s", __PRETTY_FUNCTION__);
-	checkError(ec);
 	if (ec.value() == 0) {
 		BaseDataType::Header header;
 		std::memcpy(&header, buffer_data_.data(), len);
 		readSocketData(header);
 	} else {
+		checkError(ec);
 		std::cout << "handleReadHeader::error" << ec.message() << std::endl;
 	}
 }
@@ -62,11 +64,11 @@ void KNW::IOTCP::readSocketData(BaseDataType::Header header) {
 void KNW::IOTCP::handleReadData(BaseDataType::Header header,
 								   const boost::system::error_code &ec) {
 //	log_fatal("%s", __PRETTY_FUNCTION__);
-	checkError(ec);
 	if (ec.value() == 0) {
 		callback_(header, buffer_data_.data());
 		readSocketHeader();
 	} else {
+		checkError(ec);
 		std::cout << "handleReadData::error" << std::endl;
 	}
 }
@@ -74,9 +76,10 @@ void KNW::IOTCP::handleReadData(BaseDataType::Header header,
 void
 KNW::IOTCP::handleWrite(const boost::system::error_code &ec) {
 //	log_fatal("%s", __PRETTY_FUNCTION__);
-	checkError(ec);
-	if (ec.value() != 0)
-		std::cout << "error" << std::endl;
+	if (ec.value() != 0) {
+		checkError(ec);
+		std::cout << __PRETTY_FUNCTION__ << ec.message() << std::endl;
+	}
 }
 
 void KNW::IOTCP::writeSocket(std::string data) {
@@ -93,8 +96,12 @@ void KNW::IOTCP::checkError(boost::system::error_code const &error_code) {
 			(boost::asio::error::connection_reset == error_code)) {
 			socket_.shutdown(boost::asio::ip::tcp::socket::shutdown_both);
 			socket_.close();
+			if (callbackDeadSocket_)
+				callbackDeadSocket_();
 		}
 	} catch (std::exception const &e) {
+		if (callbackDeadSocket_)
+			callbackDeadSocket_();
 		std::cout << e.what() << std::endl;
 	}
 }

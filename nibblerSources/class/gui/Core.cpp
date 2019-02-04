@@ -94,6 +94,41 @@ void			Core::aState(void)
 		sf::Event event;
 		while (_win.pollEvent(event))
 		{
+//			std::cout << "KeyPressed[" << (event.type == sf::Event::KeyPressed) << "] >> "  << event.key.code << std::endl;
+			if (event.type == sf::Event::KeyPressed) {
+
+				switch (event.key.code) {
+					case sf::Keyboard::A:
+						univers.callbackAction(kCreateIA);
+						break;
+					case sf::Keyboard::B:
+						univers.callbackAction(kBorderless);
+						break;
+					case sf::Keyboard::C:
+						univers.callbackAction(kCreateClient);
+						break;
+					case sf::Keyboard::D:
+						univers.callbackAction(kDeleteClient);
+						break;
+					case sf::Keyboard::E:
+						univers.callbackAction(kConnect);
+						break;
+					case sf::Keyboard::R:
+						univers.callbackAction(kReady);
+						break;
+					case sf::Keyboard::S:
+						univers.callbackAction(kCreateServer);
+						break;
+					case sf::Keyboard::W:
+						univers.callbackAction(kDeleteServer);
+						break;
+					case sf::Keyboard::X:
+						univers.callbackAction(kStartGame);
+						break;
+					default:
+						break;
+				}
+			}
 			_processEvent(event);
 			ImGui::SFML::ProcessEvent(event);
 		}
@@ -130,6 +165,7 @@ void			Core::aState(void)
 		massiveButton.render();
 
 		_render();
+
 	}
 	if (optionSnake)
 		delete optionSnake;

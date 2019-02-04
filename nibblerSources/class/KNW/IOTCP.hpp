@@ -19,7 +19,8 @@ namespace KNW {
 		IOTCP(
 				DataTCP &dataTCP_,
 				tcp::socket socket_,
-				std::function<void(BaseDataType::Header, char *)> f
+				std::function<void(BaseDataType::Header, char *)> f,
+				std::function<void()> callbackDeadSocket
 		);
 
 		void writeSocket(std::string data);
@@ -47,6 +48,7 @@ namespace KNW {
 		boost::array<char, eConfigTCP::kMaxBufferSize> buffer_data_;
 		tcp::socket socket_;
 		std::function<void(BaseDataType::Header, char *)> callback_;
+		std::function<void()> callbackDeadSocket_;
 	};
 }
 
