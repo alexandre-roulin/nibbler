@@ -8,7 +8,8 @@ namespace KNW {
 
 	ServerTCP::ServerTCP(unsigned short port) :
 			port_(port),
-			acceptor_(io_service_, tcp::endpoint(tcp::v4(), port)) {
+			acceptor_(io_service_, tcp::endpoint(tcp::v4(), port)),
+			connections( { nullptr } ){
 	}
 
 	void ServerTCP::accept() {
@@ -30,20 +31,25 @@ namespace KNW {
 
 	void ServerTCP::asyncAccept() {
 		acceptor_.async_accept([this](std::error_code ec, tcp::socket socket) {
-			std::shared_ptr<ConnectionTCP> connection
-				= std::make_shared<ConnectionTCP>(*this, std::move(socket));
-			connections.push_back(connection);
-			std::cout << "New connection" << std::endl;
-			if (callbackAccept_) {
-				std::cout << "Callback" << std::endl;
-				callbackAccept_(std::distance(connections.begin(), std::find(connections.begin(), connections.end(), connection)));
+			if (ec.value() == 0) {
+				auto it = std::find_if(connections.begin(), connections.end(),
+						[](std::shared_ptr<ConnectionTCP> connection){
+							return connection == nullptr || !connection->getSocket_().is_open();
+				});
+				*it = std::make_shared<ConnectionTCP>(*this, std::move(socket));
+				std::cout << "New connection" << std::endl;
+				if (callbackAccept_) {
+					std::cout << "Callback" << std::endl;
+					callbackAccept_(std::distance(connections.begin(), std::find(connections.begin(), connections.end(), *it)));
+				}
+			} else {
+				std::cout << ec.message() << std::endl;
 			}
 			asyncAccept();
 		});
 	}
 
 	ServerTCP::~ServerTCP() {
-		connections.clear();
 		io_service_.stop();
 		acceptor_.cancel();
 		acceptor_.close();
@@ -51,22 +57,23 @@ namespace KNW {
 	}
 
 	size_t ServerTCP::getSizeOfConnections() const {
-		return connections.size();
+		return std::count_if(connections.begin(), connections.end(),
+						  [](std::shared_ptr<ConnectionTCP> const &connection){
+							  return connection != nullptr && connection->getSocket_().is_open();
+						  });
 	}
 
 	/** ConnectionTCP **/
 
 	ConnectionTCP::ConnectionTCP(ServerTCP &serverTCP, tcp::socket socket) :
-			serverTCP_(serverTCP) {
-
-		iotcp = std::make_unique<IOTCP>(
-				serverTCP.dataTCP_,
-				std::move(socket),
-				std::bind(&DataTCP::sendDataToCallback,
-						  std::ref(serverTCP.dataTCP_),
-						  std::placeholders::_1,
-						  std::placeholders::_2
-				));
+			iotcp(std::make_unique<IOTCP>(
+					serverTCP.dataTCP_,
+					std::move(socket),
+					std::bind(&DataTCP::sendDataToCallback,
+							  std::ref(serverTCP.dataTCP_),
+							  std::placeholders::_1,
+							  std::placeholders::_2
+					))) {
 
 		iotcp->readSocketHeader();
 	}
@@ -77,6 +84,10 @@ namespace KNW {
 
 	ConnectionTCP::~ConnectionTCP() {
 		std::cout << "~ConnectionTCP" << std::endl;
+	}
+
+	const tcp::socket &ConnectionTCP::getSocket_() const {
+		return iotcp->getSocket_();
 	}
 
 }

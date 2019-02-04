@@ -5,15 +5,14 @@
 #include <list>
 #include <iostream>
 
-RenderSystem::RenderSystem() {
+RenderSystem::RenderSystem(Univers &univers) : univers_(univers) {
 	requireComponent<PositionComponent>();
 	requireComponent<SpriteComponent>();
 }
 
 void RenderSystem::update() {
 	std::list<std::pair<PositionComponent &, SpriteComponent &>> renderComponents;
-	MutantGrid< eSprite > &grid = getWorld().grid;
-	MutantGrid< eSprite > grid_cache(getWorld().getUnivers().getMapSize());
+	MutantGrid< eSprite > grid_cache(univers_.getMapSize());
 	grid_cache.fill(eSprite::NONE);
 
 	for (auto &entity : getEntities()) {
@@ -31,7 +30,7 @@ void RenderSystem::update() {
 	for (auto &renderComponent : renderComponents) {
 		grid_cache(renderComponent.first.x, renderComponent.first.y) = renderComponent.second.sprite;
 	}
-	getWorld().grid = grid_cache;
+	univers_.getGrid_() = grid_cache;
 }
 
 

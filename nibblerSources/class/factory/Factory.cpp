@@ -19,15 +19,15 @@ Factory::Factory(Univers &univers)
 void Factory::create_all_snake(std::array<Snake, SNAKE_MAX> snake_array, int16_t nu) {
 	log_info("Create %d snake(s)", nu);
 
-	univers_.getWorld_().grid.fill(eSprite::NONE);
-	std::for_each(snake_array.begin(), snake_array.end(), [this, nu](Snake snake){
+	std::for_each(snake_array.begin(), snake_array.end(),
+			[this, nu](Snake const &snake){
 		if (snake.id != -1) create_snake(snake,nu);
 	});
 	if (!univers_.isBorderless())
 		create_walls();
 }
 
-void Factory::create_snake(Snake snake, int max_snakes) {
+void Factory::create_snake(Snake const &snake, int max_snakes) {
 	KINU::Entity	snake_follow;
 	KINU::Entity	new_snake;
 
@@ -48,25 +48,23 @@ void Factory::create_snake(Snake snake, int max_snakes) {
 			new_snake.addComponent<CollisionComponent>();
 			new_snake.addComponent<SpriteComponent>(eSprite::HEAD | snake.sprite, SPECIFIC_LAST);
 			new_snake.addComponent<PositionComponent>(base_x, base_y);
-			univers_.getWorld_().grid(base_x, base_y) = eSprite::HEAD | snake.sprite;
+			univers_.getGrid_()(base_x, base_y) = eSprite::HEAD | snake.sprite;
 			log_warn("Factory::creationHead x[%d] y[%d] id[%d] tag[%d]",base_x, base_y,snake.id,  eTag::HEAD_TAG + snake.id);
 		}
 		else if (index == 3) {
-			std::cout << "tagByTagId" << "eTag::TAIL" << eTag::TAIL_TAG + snake.id << std::endl;
-
 			new_snake.tagByTagId(eTag::TAIL_TAG + snake.id);
 			new_snake.addComponent<FollowComponent>(snake_follow.getId(), false);
 			new_snake.addComponent<CollisionComponent>();
 			new_snake.addComponent<SpriteComponent>(eSprite::TAIL | snake.sprite, SPECIFIC_LAST);
 			new_snake.addComponent<PositionComponent>(base_x + 1, base_y);
-			univers_.getWorld_().grid(base_x + 1, base_y) = eSprite::TAIL | snake.sprite;
+			univers_.getGrid_()(base_x + 1, base_y) = eSprite::TAIL | snake.sprite;
 			log_warn("Factory::creationTail x[%d] y[%d] id[%d] tag[%d]",base_x + 1, base_y,snake.id, eTag::TAIL_TAG + snake.id);
 		}
 		else {
 			new_snake.addComponent<FollowComponent>(snake_follow.getId(), false);
 			new_snake.addComponent<CollisionComponent>();
 			new_snake.addComponent<PositionComponent>(base_x + (index - 1), base_y + 1);
-			univers_.getWorld_().grid(base_x + (index - 1), base_y + 1) = eSprite::BODY | snake.sprite;
+			univers_.getGrid_()(base_x + (index - 1), base_y + 1) = eSprite::BODY | snake.sprite;
 			new_snake.addComponent<SpriteComponent>(eSprite::BODY | snake.sprite, MINOR_PRIORITY);
 			log_warn("Factory::creationBody x[%d] y[%d]",base_x + (index - 1), base_y + 1);
 		}
@@ -95,7 +93,7 @@ void Factory::create_walls() {
 void Factory::create_wall(int x, int y) {
 //	std::cout << x << " " << y << std::endl;
 	KINU::Entity entity = univers_.getWorld_().createEntity();
-	univers_.getWorld_().grid(x, y) = eSprite::WALL;
+	univers_.getGrid_()(x, y) = eSprite::WALL;
 	entity.addComponent<PositionComponent>(x, y);
 	entity.addComponent<CollisionComponent>();
 	entity.addComponent<SpriteComponent>(eSprite::WALL, NO_PRIORITY);
@@ -103,18 +101,3 @@ void Factory::create_wall(int x, int y) {
 	entity.groupEntityByGroupId(eTag::WALL_TAG);
 }
 
-char *Factory::factory_chat_message(char const *name, char const *message) {
-	static char final_[SIZEOF_CHAT_PCKT] = {0};
-	bzero(final_, SIZEOF_CHAT_PCKT);
-	size_t lenName = std::strlen(name);
-	if (lenName > NAME_BUFFER)
-		lenName = NAME_BUFFER;
-	final_[0] = '[';
-	std::memcpy(final_ + 1, name, lenName);
-	std::strncpy(final_ + lenName + 1, "]: ", 3);
-	size_t lenMessage = strlen(message);
-	if (lenMessage > CHAT_BUFFER)
-		lenMessage = CHAT_BUFFER;
-	std::memcpy(final_ + lenName + 4, message, lenMessage);
-	return final_;
-}

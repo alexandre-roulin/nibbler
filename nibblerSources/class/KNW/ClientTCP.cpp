@@ -3,8 +3,8 @@
 namespace KNW {
 
 	ClientTCP::ClientTCP()
-			: resolver(io),
-			  socket_(io) {
+			: socket_(io),  resolver(io)
+			  {
 		std::cout << "ClientTCP" << std::endl;
 	}
 

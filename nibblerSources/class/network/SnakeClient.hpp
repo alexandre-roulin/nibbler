@@ -86,7 +86,6 @@ private:
 	KNW::ClientTCP clientTCP_;
 	Univers &univers_;
 	bool fromIA_;
-	bool openGame_;
 	uint16_t id_;
 	std::mutex mutex_;
 	Factory factory_;

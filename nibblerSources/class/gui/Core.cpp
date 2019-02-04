@@ -6,15 +6,10 @@
 #include "gui/widget/WidgetOption.hpp"
 #include "gui/widget/WidgetConnect.hpp"
 #include "gui/widget/WidgetMassiveButton.hpp"
-#include <vector>
-#include <iostream>
-#include <logger.h>
-#include <network/SnakeClient.hpp>
 
 Core::Core(Univers &univers) :
-pathRessources_(boost::filesystem::path(NIBBLER_ROOT_PROJECT_PATH) / "ressources/"),
-startGame_(false),
 univers(univers),
+pathRessources_(boost::filesystem::path(NIBBLER_ROOT_PROJECT_PATH) / "ressources/"),
 _winSize(sf::Vector2<unsigned int>(1000, 900)),
 _win(sf::VideoMode(_winSize.x, _winSize.y), "Project Sanke"),
 _io(_createContext()),
@@ -94,7 +89,7 @@ void			Core::aState(void)
 	WidgetMassiveButton massiveButton(*this);
 
 
-	while (_win.isOpen() && !startGame_)
+	while (_win.isOpen() && !univers.isOpenGame_())
 	{
 		sf::Event event;
 		while (_win.pollEvent(event))
@@ -140,14 +135,6 @@ void			Core::aState(void)
 		delete optionSnake;
 }
 
-void 				Core::setStartGame(bool gameStart) {
-	startGame_ = gameStart;
-}
-
-
-bool				Core::getStartGane() const {
-	return (startGame_);
-}
 
 void				Core::addMessageChat(std::string const &msg)
 {

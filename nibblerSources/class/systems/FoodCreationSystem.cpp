@@ -12,7 +12,6 @@ FoodCreationSystem::FoodCreationSystem() {
 
 void FoodCreationSystem::update() {
 	mutex.lock();
-
 	auto foodCreationEvents = getWorld().getEventsManager().getEvents<FoodCreation>();
 	mutex.unlock();
 

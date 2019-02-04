@@ -23,6 +23,84 @@ enum class eHeaderK : uint16_t {
 	kSnakeArray			//13
 };
 
+inline std::ostream &operator<<(std::ostream  &os, eHeaderK const & header) {
+	switch (header) {
+
+
+		case eHeaderK::kChat: {
+			os << "kChat";
+			break;
+		}
+
+		case eHeaderK::kOpenGame: {
+			os << "kOpenGame";
+			break;
+		}
+
+		case eHeaderK::kStartGame: {
+			os << "kStartGame";
+			break;
+		}
+
+		case eHeaderK::kResizeMap: {
+			os << "kResizeMap";
+			break;
+		}
+
+		case eHeaderK::kBorderless: {
+			os << "kBorderless";
+			break;
+		}
+
+		case eHeaderK::kId: {
+			os << "kId";
+			break;
+		}
+
+		case eHeaderK::kPause: {
+			os << "kPause";
+			break;
+		}
+
+		case eHeaderK::kInput: {
+			os << "kInput";
+			break;
+		}
+
+		case eHeaderK::kFood: {
+			os << "kFood";
+			break;
+		}
+
+		case eHeaderK::kForcePause: {
+			os << "kForcePause";
+			break;
+		}
+
+		case eHeaderK::kPock: {
+			os << "kPock";
+			break;
+		}
+
+		case eHeaderK::kRemoveSnake: {
+			os << "kRemoveSnake";
+			break;
+		}
+
+		case eHeaderK::kSnake: {
+			os << "kSnake";
+			break;
+		}
+
+		case eHeaderK::kSnakeArray: {
+			os << "kSnakeArray			";
+			break;
+		}
+
+	}
+	return os;
+}
+
 struct InputInfo {
 	InputInfo() = default;
 	InputInfo(int16_t id, eDirection dir) : id_(id), dir_(dir) {};

@@ -37,9 +37,6 @@ class Core {
 
 	Univers						&univers;
 
-	bool							getStartGane() const;
-	void 							setStartGame(bool gameStart);
-
 	boost::filesystem::path const	&getPathRessources() const;
 
 	static void						beginColor(float const color);
@@ -51,7 +48,7 @@ class Core {
 private:
 	//				GUI				//
 	boost::filesystem::path		pathRessources_;
-	bool						startGame_;
+
 	sf::Vector2<unsigned int>	_winSize;
 	sf::RenderWindow			_win;
 	ImGuiIO						&_io;

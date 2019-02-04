@@ -15,9 +15,7 @@ namespace KINU {
 // The World manages the creation and destruction of entities so that entities.
 	class World {
 	public:
-		World(Univers &univers);
-
-		Univers &getUnivers() const;
+		World();
 
 		EntitiesManager &getEntitiesManager() const;
 
@@ -32,7 +30,6 @@ namespace KINU {
 
 		void destroyEntity(Entity e);
 
-		MutantGrid< eSprite > grid;
 	private:
 		// vector of entities that are awaiting creation
 		std::vector<Entity> createdEntities;
@@ -44,7 +41,6 @@ namespace KINU {
 		std::unique_ptr<SystemsManager> systemsManager;
 		std::unique_ptr<EventsManager> eventsManager;
 
-		Univers &univers_;
 	};
 
 }

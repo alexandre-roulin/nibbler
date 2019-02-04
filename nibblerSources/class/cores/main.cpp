@@ -46,12 +46,12 @@ void nibbler(Univers &univers) {
 
 		univers.create_ui();
 		univers.getCore_().aState();
-		bool start = univers.getCore_().getStartGane();
+
 		Core *core = univers.releaseCore_();
 		if (core)
 			delete core;
-		if (start) {
-			univers.load_extern_lib_display(Univers::kExternSfmlLibrary);
+		if (univers.isOpenGame_()) {
+//			univers.load_extern_lib_display(Univers::kExternSfmlLibrary);
 			univers.new_game();
 		}
 	}
@@ -165,7 +165,7 @@ void tryi() {
 }
 
 int main(int argc, char **argv) {
-	tryi();
+//	tryi();
 //	testKstar();
 //	return 1;
 
@@ -179,7 +179,11 @@ int main(int argc, char **argv) {
 	std::cout << hostname << std::endl;
 	srand(time(NULL));
 	char path[] = "/tmp/log.out";
-	logger_init(path);
+	if (argc > 1) {
+		logger_init(argv[1]);
+	} else {
+		logger_init(path);
+	}
 	try {
 		Univers univers;
 

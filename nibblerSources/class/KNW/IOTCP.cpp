@@ -10,15 +10,15 @@ KNW::IOTCP::IOTCP(
 		tcp::socket socket,
 		std::function<void(BaseDataType::Header, char *)> f)
 		:
-		callback_(std::move(f)),
+		dataTCP_(dataTCP) ,
 		socket_(std::move(socket)),
-		dataTCP_(dataTCP) {
+		callback_(std::move(f)){
 
 
 }
 
 void KNW::IOTCP::readSocketHeader() {
-	log_fatal("%s", __PRETTY_FUNCTION__);
+//	log_fatal("%s", __PRETTY_FUNCTION__);
 	boost::asio::async_read(
 			socket_,
 			boost::asio::buffer(buffer_data_, sizeof(BaseDataType::Header)),
@@ -33,8 +33,7 @@ void KNW::IOTCP::readSocketHeader() {
 
 void KNW::IOTCP::handleReadHeader(const boost::system::error_code &ec,
 									 size_t len) {
-
-	log_fatal("%s", __PRETTY_FUNCTION__);
+//	log_fatal("%s", __PRETTY_FUNCTION__);
 	checkError(ec);
 	if (ec.value() == 0) {
 		BaseDataType::Header header;
@@ -47,7 +46,7 @@ void KNW::IOTCP::handleReadHeader(const boost::system::error_code &ec,
 
 
 void KNW::IOTCP::readSocketData(BaseDataType::Header header) {
-	log_fatal("%s", __PRETTY_FUNCTION__);
+//	log_fatal("%s", __PRETTY_FUNCTION__);
 	boost::asio::async_read(
 			socket_,
 			boost::asio::buffer(buffer_data_, dataTCP_.getSizeOfHeader(header)),
@@ -62,7 +61,7 @@ void KNW::IOTCP::readSocketData(BaseDataType::Header header) {
 
 void KNW::IOTCP::handleReadData(BaseDataType::Header header,
 								   const boost::system::error_code &ec) {
-	log_fatal("%s", __PRETTY_FUNCTION__);
+//	log_fatal("%s", __PRETTY_FUNCTION__);
 	checkError(ec);
 	if (ec.value() == 0) {
 		callback_(header, buffer_data_.data());
@@ -73,8 +72,8 @@ void KNW::IOTCP::handleReadData(BaseDataType::Header header,
 }
 
 void
-KNW::IOTCP::handleWrite(const boost::system::error_code &ec, size_t len) {
-	log_fatal("%s", __PRETTY_FUNCTION__);
+KNW::IOTCP::handleWrite(const boost::system::error_code &ec) {
+//	log_fatal("%s", __PRETTY_FUNCTION__);
 	checkError(ec);
 	if (ec.value() != 0)
 		std::cout << "error" << std::endl;
@@ -84,12 +83,11 @@ void KNW::IOTCP::writeSocket(std::string data) {
 	boost::asio::async_write(socket_, boost::asio::buffer(data),
 							 boost::bind(&KNW::IOTCP::handleWrite,
 										 this,
-										 boost::asio::placeholders::error,
-										 boost::asio::placeholders::bytes_transferred));
+										 boost::asio::placeholders::error));
 }
 
 void KNW::IOTCP::checkError(boost::system::error_code const &error_code) {
-	log_fatal("%s %d", __PRETTY_FUNCTION__, error_code.value());
+//	log_fatal("%s %d", __PRETTY_FUNCTION__, error_code.value());
 	try {
 		if ((boost::asio::error::eof == error_code) ||
 			(boost::asio::error::connection_reset == error_code)) {
@@ -99,4 +97,8 @@ void KNW::IOTCP::checkError(boost::system::error_code const &error_code) {
 	} catch (std::exception const &e) {
 		std::cout << e.what() << std::endl;
 	}
+}
+
+const tcp::socket &KNW::IOTCP::getSocket_() const {
+	return socket_;
 }

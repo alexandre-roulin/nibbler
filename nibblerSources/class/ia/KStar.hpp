@@ -48,8 +48,8 @@ public:
 	using HeuristicFunction = std::function<double (Vec2,Vec2)>;
 
 	KStar();
-	void setSearchLevel(int);
-	void setWorldSize(int);
+
+	void setWorldSize(Vec2);
 	void addCollision(Vec2);
 	void removeCollision(Vec2);
 	void clearCollisions();
@@ -81,8 +81,7 @@ private:
 	MutantGrid<Node> closeMap_;
 	MutantGrid<Node> openMap_;
 	MutantGrid<bool> collision_;
-	int searchLevel_;
-	int worldSize_;
+	Vec2 worldSize_;
 };
 
 

@@ -5,11 +5,12 @@ SnakeServer::SnakeServer(
 		Univers &univers,
 		unsigned int port
 		) :
-		connectionsId({-1}),
-		serverTCP_(port),
-		port_(port),
+		univers_(univers),
 		pause_(false),
-		mapSize_(MAP_DEFAULT) {
+		port_(port),
+		mapSize_(MAP_DEFAULT),
+		serverTCP_(port)
+		{
 
 	serverTCP_.addDataType<InputInfo>(
 			std::bind(&SnakeServer::callbackInput,
@@ -151,13 +152,13 @@ void SnakeServer::callbackForcePause(int16_t id) {
 void SnakeServer::callbackAccept(size_t index) {
 	log_success("%s", __PRETTY_FUNCTION__ );
 	int16_t new_id = std::distance(snake_array_.begin(), std::find_if(snake_array_.begin(), snake_array_.end(), [](Snake const &s){ return s.id == -1 ;}));
-	snake_array_[new_id] = Snake::randomSnake(new_id);
+	snake_array_[new_id] = Snake::randomSnake(new_id); //TODO CHECK RACE CONDITION
 	serverTCP_.writeDataToOpenConnection(new_id, index, eHeaderK::kId);
-	serverTCP_.writeDataToOpenConnection(snake_array_[new_id], index, eHeaderK::kSnake);
+	serverTCP_.writeDataToOpenConnections(snake_array_, eHeaderK::kSnakeArray);
 }
 
 void SnakeServer::callbackInput(InputInfo inputInfo) {
-	log_success("%s", __PRETTY_FUNCTION__ );
+	log_success("%s ID : %d", __PRETTY_FUNCTION__, inputInfo.id_);
 	mutex_.lock();
 	snake_array_[inputInfo.id_].direction = inputInfo.dir_;
 	snake_array_[inputInfo.id_].isUpdate = true;
@@ -166,7 +167,7 @@ void SnakeServer::callbackInput(InputInfo inputInfo) {
 }
 
 void SnakeServer::callbackPock(char) {
-	log_success("%s", __PRETTY_FUNCTION__ );
+	log_success("%s", __PRETTY_FUNCTION__);
 
 }
 
@@ -196,8 +197,9 @@ void SnakeServer::callbackChatInfo(ChatInfo chatInfo) {
 	serverTCP_.writeDataToOpenConnections(chatInfo, eHeaderK::kChat);
 }
 
-void SnakeServer::callbackSnakeArray(std::array<Snake, SNAKE_MAX>) {
-	log_success("%s", __PRETTY_FUNCTION__ );
+void SnakeServer::callbackSnakeArray(std::array<Snake, SNAKE_MAX> array) {
+	log_error("%s ARRAY !?!?!?!?!?", __PRETTY_FUNCTION__ );
+	snake_array_ = array;
 }
 
 
@@ -206,19 +208,19 @@ void SnakeServer::startGame() {
 	mutex_.lock();
 	StartInfo startInfo;
 	std::for_each(snake_array_.begin(), snake_array_.end(),
-				  [this](auto &snake){ snake.isAlive = true; snake.isUpdate = false; });
-
+				  [](auto &snake){ snake.isAlive = true; snake.isUpdate = false; });
+	serverTCP_.writeDataToOpenConnections(snake_array_, eHeaderK::kSnakeArray);
 	startInfo.nu = serverTCP_.getSizeOfConnections();
 	startInfo.time_duration = boost::posix_time::microsec_clock::universal_time();
 	serverTCP_.writeDataToOpenConnections(startInfo, eHeaderK::kStartGame);
 	mutex_.unlock();
 }
 void SnakeServer::updateInput() {
-	for (auto &item : snake_array_) {
-		if (item.id != -1)
-			std::cout << item << std::endl;
-	}
-	std::cout << std::endl;
+//	for (auto &item : snake_array_) {
+//		if (item.id != -1)
+//			std::cout << item << std::endl;
+//	}
+//	std::cout << std::endl;
 
 	log_warn("Condition [%d][%d]",pause_ ,std::any_of(snake_array_.begin(), snake_array_.end(),
 													  [](auto snake){ return snake.id != -1 && snake.isAlive && !snake.isUpdate;} ));
@@ -246,6 +248,19 @@ bool SnakeServer::isFull() const {
 
 unsigned short SnakeServer::getPort_() const {
 	return port_;
+}
+
+const std::array<Snake, SNAKE_MAX> &SnakeServer::getSnakeArray_() const {
+	return snake_array_;
+}
+
+bool SnakeServer::sendOpenGameToClient() {
+	log_success("%s %d", __PRETTY_FUNCTION__, isReady());
+	if (!isReady())
+		return false;
+	serverTCP_.writeDataToOpenConnections(true, eHeaderK::kOpenGame);
+	univers_.setOpenGame_(true);
+	return true;
 }
 
 

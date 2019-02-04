@@ -40,8 +40,6 @@ namespace KINU {
 
 		void killGroup();
 
-		void destroy();
-
 		/** Tag Management **/
 
 		// Tag entity with tag id
@@ -181,6 +179,8 @@ namespace KINU {
 		std::shared_ptr<Pool<T>> accommodateComponent();
 
 	private:
+		World &world_;
+
 		//Group variable
 		std::unordered_map<Entity::ID, TagId> groupedEntityId; // Entity::ID = PlayerID
 		std::unordered_map<TagId, std::vector<Entity>> groupedEntities; // [PlayerID] = std::vector<Entity::ID>{0, 1, 2, ...}
@@ -201,8 +201,6 @@ namespace KINU {
 
 		// Entity pool
 		std::vector<Entity::ID> validId;
-
-		World &world_;
 
 		std::mutex mutex_;
 	};

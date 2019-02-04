@@ -50,8 +50,7 @@ public:
 
 	bool load_extern_lib_display(eDisplay);
 
-	bool load_external_sound_library(std::string const &title,
-									 std::string const &library_path); // TODO GO PRIVATE
+	bool load_external_sound_library(std::string const &library_path); // TODO GO PRIVATE
 	void unload_external_library();
 
 	void loop();
@@ -92,7 +91,11 @@ public:
 
 	/** Setter && Getter**/
 
+	const std::unique_ptr<SnakeServer> &getServerTCP_() const;
+	MutantGrid<eSprite> &getGrid_();
+
 	//Network
+	const std::array<Snake, SNAKE_MAX> getSnakeArray_() const;
 
 	SnakeClient *getSnakeClient() const;
 
@@ -156,24 +159,35 @@ private:
 	boost::asio::deadline_timer timer_start;
 	std::unique_ptr<KINU::World> world_;
 	std::unique_ptr<SnakeServer> serverTCP_;
-	std::unique_ptr<Core> core_;
 	std::shared_ptr<SnakeClient> clientTCP_;
+	std::unique_ptr<Core> core_;
+	std::shared_ptr<MutantGrid<eSprite>> grid_;
+public:
+
+private:
 
 	std::vector<std::unique_ptr<Bobby>> vecBobby;
 
+	unsigned int mapSize;
+	unsigned int gameSpeed;
 	void *dlHandleDisplay;
 	void *dlHandleSound;
 	IDisplay *display;
 	ISound *sound;
 	bool borderless;
+	bool openGame_;
+public:
+	bool isOpenGame_() const;
+
+	void setOpenGame_(bool openGame_);
+
+private:
 	boost::thread thread;
 	eDisplay kDisplay;
-	unsigned int mapSize;
 public:
 	virtual ~Univers();
 
 private:
-	unsigned int gameSpeed;
 
 	bool load_external_display_library(std::string const &title,
 									   std::string const &libPath);

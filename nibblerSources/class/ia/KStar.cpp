@@ -107,14 +107,11 @@ KStar::Vec2 &KStar::Vec2::operator=(const KStar::Vec2 &rhs) {
 /** KStar **/
 
 KStar::KStar() :
-	collision_(0),
-	searchLevel_(0),
-	direction(8) {
+		direction(8),
+		openMap_(0),
+		collision_(0),
+		closeMap_(0){
 
-}
-
-void KStar::setSearchLevel(int searchLevel) {
-	searchLevel_ = searchLevel;
 }
 
 void KStar::addCollision(KStar::Vec2 pos) {
@@ -142,10 +139,15 @@ void KStar::setDiagonalMovement(bool enable_) {
 KStar::Path KStar::searchPath(KStar::Vec2 source, KStar::Vec2 target) {
 
 	Path path;
+
+	openMap_.fill(Node());
+	closeMap_.fill(Node());
 //	std::cout << source << target << std::endl;
 //	KStar::Node::Node(const KStar::Vec2 vec, double H, double G, double F, Node *parent)
-	if (isCollision(target))
+	if (isCollision(target)) {
+		log_fatal("isCollision(target)");
 		return path;
+	}
 	openMap_(source.x, source.y) = Node(source,
 			heuristic_(source, target),
 			heuristic_(source, source),
@@ -194,22 +196,21 @@ KStar::Path KStar::searchPath(KStar::Vec2 source, KStar::Vec2 target) {
 	}
 	std::reverse(path.begin(), path.end());
 //	print(source, target, path);
-	openMap_.fill(Node());
-	closeMap_.fill(Node());
 	return path;
 }
 
 bool KStar::isOverflow(KStar::Vec2 v) {
-	return !(v.x >= 0 && v.x < worldSize_ && v.y >= 0 && v.y < worldSize_);
+	return !(v.x >= 0 && v.x < worldSize_.x && v.y >= 0 && v.y < worldSize_.y);
 }
 
-void KStar::setWorldSize(int worldSize) {
+void KStar::setWorldSize(KStar::Vec2 worldSize) {
 	worldSize_ = worldSize;
 
-	openMap_.resize(worldSize_);
-	collision_.resize(worldSize_);
-	closeMap_.resize(worldSize_);
+	openMap_.resize(worldSize.x * worldSize.y);
+	collision_.resize(worldSize.x * worldSize.y);
+	closeMap_.resize(worldSize.x * worldSize.y);
 }
+
 
 KStar::Node KStar::getLowestNode() {
 	return *std::min_element(openMap_.begin(), openMap_.end(),
@@ -228,8 +229,8 @@ bool KStar::isCollision(KStar::Vec2 vec) {
 }
 
 void KStar::print(KStar::Vec2 s, KStar::Vec2 t, KStar::Path p) {
-	for (int iy = 0; iy < worldSize_; ++iy) {
-		for (int ix = 0; ix < worldSize_; ++ix) {
+	for (int iy = 0; iy < worldSize_.y; ++iy) {
+		for (int ix = 0; ix < worldSize_.x; ++ix) {
 			if (iy == s.y && ix == s.x)
 				std::cout << std::setw(4) << "_^_";
 			else if (iy == t.y && ix == t.x)
@@ -243,6 +244,7 @@ void KStar::print(KStar::Vec2 s, KStar::Vec2 t, KStar::Path p) {
 		}
 		std::cout << std::endl;
 	}
+	std::cout << std::endl;
 }
 
 int KStar::getDirection() const {
@@ -253,9 +255,10 @@ const std::array<KStar::Vec2, 8> &KStar::getDirections() {
 	return directions;
 }
 
+
 /**  HEURISTIC **/
 
-KStar::Vec2 KStar::Heuristic::getDelta(KStar::Vec2 s, KStar::Vec2 target) {
+KStar::Vec2 KStar::Heuristic::getDelta(KStar::Vec2, KStar::Vec2) {
 	return Vec2();
 }
 

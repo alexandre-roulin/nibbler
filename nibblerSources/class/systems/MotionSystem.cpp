@@ -11,13 +11,13 @@
 
 //S 0000 0011
 
-MotionSystem::MotionSystem() {
+MotionSystem::MotionSystem(Univers &univers) : univers_(univers) {
 	requireComponent<PositionComponent>();
 	requireComponent<MotionComponent>();
 }
 
 void MotionSystem::update() {
-	unsigned int mapSize = getWorld().getUnivers().getMapSize();
+	unsigned int mapSize = univers_.getMapSize();
 	for (auto &entity : getEntities()) {
 		auto &positionComponent = entity.getComponent<PositionComponent>();
 		auto &motionComponent = entity.getComponent<MotionComponent>();
@@ -26,10 +26,10 @@ void MotionSystem::update() {
 				(positionComponent.y == 0 ? positionComponent.y = mapSize - 1 : positionComponent.y--);
 				break;
 			case kSouth:
-				(positionComponent.y == mapSize - 1 ? positionComponent.y = 0 : ++positionComponent.y);
+				(positionComponent.y == static_cast<int>(mapSize - 1) ? positionComponent.y = 0 : ++positionComponent.y);
 				break;
 			case kEast:
-				(positionComponent.x == mapSize - 1 ? positionComponent.x = 0 : ++positionComponent.x);
+				(positionComponent.x == static_cast<int>(mapSize - 1) ? positionComponent.x = 0 : ++positionComponent.x);
 				break;
 			case kWest:
 				(positionComponent.x == 0 ? positionComponent.x = mapSize - 1 : positionComponent.x--);
@@ -38,7 +38,5 @@ void MotionSystem::update() {
 	}
 }
 
-MotionSystem::~MotionSystem() {
-
-}
+MotionSystem::~MotionSystem() = default;
 

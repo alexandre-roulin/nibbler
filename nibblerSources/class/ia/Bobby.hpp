@@ -10,34 +10,6 @@
 class Univers;
 
 class Bobby {
-private:
-
-	enum ePriority {
-		UNDEFINED,		//0
-		NO_PRIORITY,	//1
-		PRIORITY		//2
-	};
-
-	static std::unordered_map<KINU::Entity::ID, ePriority> mapPriority;
-
-	eDirection direction;
-	Univers &univers_;
-	unsigned int mapSize;
-	unsigned int baseIndex;
-	static std::mutex mutex;
-	KStar kStar;
-private:
-
-	std::unique_ptr<SnakeClient> clientTCP_;
-	void findDirection(KStar::Vec2 vecSource, KStar::Vec2 vecTarget);
-	bool define_priority(int x, int y);
-	KStar::Vec2 getVecSnakeTail();
-	KStar::Vec2 getVecFood(KStar::Vec2 head);
-	KStar::Vec2 getVecSnakeHead();
-
-	void addCollision();
-
-
 public:
 
 	Bobby(Univers &);
@@ -47,5 +19,30 @@ public:
 	void calculateDirection();
 	SnakeClient *getClientTCP_();
 	uint16_t getId() const;
+
+private:
+
+	enum ePriority {
+		kUndefined,		//0
+		kNoPriority,	//1
+		kPriority		//2
+	};
+
+	static std::unordered_map<KINU::Entity::ID, ePriority> mapPriority;
+
+	Univers &univers_;
+	eDirection direction;
+	unsigned int mapSize;
+	unsigned int baseIndex;
+	static std::mutex mutex;
+	KStar kStar;
+	std::unique_ptr<SnakeClient> clientTCP_;
+	void findDirection(KStar::Vec2 vecSource, KStar::Vec2 vecTarget);
+	bool define_priority(int x, int y);
+	KStar::Vec2 getVecSnakeTail();
+	KStar::Vec2 getVecFood(KStar::Vec2 head);
+	KStar::Vec2 getVecSnakeHead();
+	void addCollision();
+
 
 };

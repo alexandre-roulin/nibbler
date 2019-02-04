@@ -2,6 +2,8 @@
 #include <Univers.hpp>
 #include <gui/Core.hpp>
 #include <network/SnakeClient.hpp>
+#include <network/SnakeServer.hpp>
+
 WidgetMassiveButton::WidgetMassiveButton(Core &core) :
 		AWidget(core)
 {
@@ -39,7 +41,13 @@ void			WidgetMassiveButton::render(void)
 		_core.univers.delete_client();
 	}
 	if (ImGui::Button("start_game()")) {
-		_core.setStartGame(true);
+		if (_core.univers.isServer() && _core.univers.getSnakeClient()) {
+			_core.univers.getServerTCP_()->sendOpenGameToClient();
+		} else {
+			_core.addMessageChat("FAIS PAS LA MERDE GROS ! T'es pas un server OU TA PAS DE JOUEUR");
+		}
+
+//		_core.setStartGame(true);
 		//_core.univers.load_extern_lib_display(Univers::EXTERN_LIB_SFML);
 		//_core.univers.new_game();
 		//_core.univers.new_game();
