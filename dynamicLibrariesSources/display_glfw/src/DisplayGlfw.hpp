@@ -27,6 +27,7 @@
 
 #define DISPLAY_GLFW_WIN_WIDTH 1024
 #define DISPLAY_GLFW_WIN_HEIGHT 720
+#define FLAG_LINE 2
 
 class DisplayGlfw : public Glfw, public IDisplay {
 public:
@@ -68,6 +69,7 @@ public:
 	DisplayGlfw() = delete;
 
 private:
+	std::bitset<16>					flag_;
 	boost::filesystem::path			pathRoot_;
     eDirection          			direction_;
 	float							currentTimer_;
@@ -84,7 +86,7 @@ private:
 
 	float							deltaTime_;
 
-	eSprite 						yourSnakeTo;
+	eSprite 						yourSnakeSprite;
 	int 							yourSnakeX;
 	int 							yourSnakeY;
 	Shader							shader_;
@@ -100,7 +102,7 @@ private:
 	Light							light_;
 	std::vector<Camera>				camera_;
 	int								indexActiveCamera_;
-    ActModel						lol_;
+    ActModel						actBlock_;
 
 	glm::mat4						projection_;
 	glm::mat4						view_;
@@ -118,6 +120,9 @@ private:
 	void					drawGridCaseBody_(int x, int y);
 	void					interpolateGridCase_(int x, int y);
 	void					renderLine_(ActModel const &model);
+	void					renderAtDirectionFrom(ActModel const &from, eSprite at);
+	std::unique_ptr<ActModel>	cloneActModelSideOf(ActModel const &from, eSprite at);
+	void					drawHelpLineSnake_();
 
 
 	std::map< eSprite, Material >		materialMap_;

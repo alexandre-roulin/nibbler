@@ -44,7 +44,7 @@ grid_(winTileSize_.getX(), winTileSize_.getY()),
 deltaTime_(0.016f),
 particuleBackground_(nullptr),
 particuleBackgroundOutline_(nullptr),
-yourSnakeTo(eSprite::NONE),
+yourSnakeSprite(eSprite::NONE),
 yourSnakeX(-10),
 yourSnakeY(-10),
 projection_(1.f),
@@ -81,6 +81,7 @@ _callback(nullptr) {
 	modelHead_.setModel((pathRoot_ / "ressources" / "objects" / "head.obj").generic_string());
     modelWall_.setModel((pathRoot_ / "ressources" / "wall.obj").generic_string());
 	appleModel_.setModel((pathRoot_ / "ressources" / "Apple_obj" / "apple.obj").generic_string());
+	actBlock_.assign(&modelGrass_);
 
 
 	camera_.reserve(CAMERA_SIZE);
@@ -215,7 +216,7 @@ void		DisplayGlfw::drawGridCaseBody_(int x, int y) {
 		eyeRight.render(shader_);
 		materialMap_.at(sprite & eSprite::MASK_COLOR).putMaterialToShader(shader_);
 		if ((sprite & eSprite::YOUR_SNAKE) == eSprite::YOUR_SNAKE) {
-			yourSnakeTo = to;
+			yourSnakeSprite = sprite;
 			yourSnakeX = x;
 			yourSnakeY = y;
 			camera_[CAMERA_SNAKE].setPosition(grid_(x, y).getPosition() + glm::vec3(0.f, 0.f, 10.f));
@@ -325,34 +326,86 @@ void DisplayGlfw::renderLine_(ActModel const &model) {
 	copy.render(shader_, GL_LINE_STRIP);
 }
 
+std::unique_ptr<ActModel>	DisplayGlfw::cloneActModelSideOf(ActModel const &from, eSprite at) {
+	std::unique_ptr<ActModel> act = std::make_unique<ActModel>(from);
+
+	if (at == eSprite::SOUTH)
+		act->translate(glm::vec3(0.f, -1.f, 0.f));
+	else if (at == eSprite::NORTH)
+		act->translate(glm::vec3(0.f, 1.f, 0.f));
+	else if (at == eSprite::EAST)
+		act->translate(glm::vec3(-1.f, 0.f, 0.f));
+	else if (at == eSprite::WEST)
+		act->translate(glm::vec3(1.f, 0.f, 0.f));
+	return (act);
+
+}
+
+void DisplayGlfw::drawHelpLineSnake_() {
+	actBlock_.resetTransform();
+	actBlock_.translate(glm::vec3(yourSnakeX - winTileSize_.getX() / 2, yourSnakeY - winTileSize_.getY() / 2, 0.f));
+	actBlock_.scale(glm::vec3(-0.10f));
+	materialMap_.at(yourSnakeSprite & eSprite::MASK_COLOR).putMaterialToShader(shader_);
+
+	ActModel line(actBlock_);
+	eSprite to = (yourSnakeSprite & eSprite::MASK_TO) >> eSprite::BITWISE_TO;
+	if (to != eSprite::NORTH) {
+		for (int y = yourSnakeY; y < winTileSize_.getY(); ++y) {
+			line.translate(glm::vec3(0.f, 1.f, 0.f));
+			line.render(shader_);
+		}
+	}
+	line.setPosition(actBlock_.getPosition());
+	if (to != eSprite::SOUTH) {
+		for (int y = yourSnakeY; y != -1; --y) {
+			line.translate(glm::vec3(0.f, -1.f, 0.f));
+			line.render(shader_);
+		}
+	}
+	line.setPosition(actBlock_.getPosition());
+	if (to != eSprite::EAST) {
+		for (int x = yourSnakeX; x; --x) {
+			line.translate(glm::vec3(-1.f, 0.f, 0.f));
+			line.render(shader_);
+		}
+	}
+	line.setPosition(actBlock_.getPosition());
+	if (to != eSprite::WEST) {
+		for (int x = yourSnakeX; x < winTileSize_.getX(); ++x) {
+			line.translate(glm::vec3(1.f, 0.f, 0.f));
+			line.render(shader_);
+		}
+	}
+
+}
+
 void DisplayGlfw::render(float currentDelayFrame, float maxDelayFrame) {
 	currentTimer_ = currentDelayFrame;
 	maxTimer_ = maxDelayFrame;
 
-	if (getKey(GLFW_KEY_SPACE));
+	if (getKeyState(GLFW_KEY_H) == KeyState::kDown)
+		flag_.flip(FLAG_LINE);
+
 
 	if (indexActiveCamera_ == CAMERA_SNAKE) {
-		std::cout << "CAMERA_SNAKE : ";
 		if (getKeyState(GLFW_KEY_RIGHT) == KeyState::kDown) {
-			std::cout << "R ";
-			if (yourSnakeTo == eSprite::EAST)
+			if (((yourSnakeSprite & eSprite::MASK_TO) >> eSprite::BITWISE_TO) == eSprite::EAST)
 				direction_ = kNorth;
-			else if (yourSnakeTo == eSprite::NORTH)
+			else if (((yourSnakeSprite & eSprite::MASK_TO) >> eSprite::BITWISE_TO) == eSprite::NORTH)
 				direction_ = kWest;
-			else if (yourSnakeTo == eSprite::WEST)
+			else if (((yourSnakeSprite & eSprite::MASK_TO) >> eSprite::BITWISE_TO) == eSprite::WEST)
 				direction_ = kSouth;
-			else if (yourSnakeTo == eSprite::SOUTH)
+			else if (((yourSnakeSprite & eSprite::MASK_TO) >> eSprite::BITWISE_TO) == eSprite::SOUTH)
 				direction_ = kEast;
 		}
 		else if (getKeyState(GLFW_KEY_LEFT) == KeyState::kDown) {
-			std::cout << " L ";
-			if (yourSnakeTo == eSprite::EAST)
+			if (((yourSnakeSprite & eSprite::MASK_TO) >> eSprite::BITWISE_TO) == eSprite::EAST)
 				direction_ = kSouth;
-			else if (yourSnakeTo == eSprite::NORTH)
+			else if (((yourSnakeSprite & eSprite::MASK_TO) >> eSprite::BITWISE_TO) == eSprite::NORTH)
 				direction_ = kEast;
-			else if (yourSnakeTo == eSprite::WEST)
+			else if (((yourSnakeSprite & eSprite::MASK_TO) >> eSprite::BITWISE_TO) == eSprite::WEST)
 				direction_ = kNorth;
-			else if (yourSnakeTo == eSprite::SOUTH)
+			else if (((yourSnakeSprite & eSprite::MASK_TO) >> eSprite::BITWISE_TO) == eSprite::SOUTH)
 				direction_ = kWest;
 		}
 		std::cout << direction_ << std::endl;
@@ -386,13 +439,18 @@ void DisplayGlfw::render(float currentDelayFrame, float maxDelayFrame) {
 	}
 
 	shader_.activate();
-	shader_.setInt("uBackground", 0);
+	shader_.setInt("uBackground", 1);
 	light_.putLightToShader(shader_);
 	view_ = getActiveCamera_().getViewMatrix();
 	shader_.setMat4("projection", projection_);
 	shader_.setMat4("view", view_);
-
 	shader_.setVec3("uCameraPosition", getActiveCamera_().getPosition());
+
+	if (flag_.test(FLAG_LINE) && yourSnakeSprite != eSprite::NONE) {
+		drawHelpLineSnake_();
+	}
+
+	shader_.setInt("uBackground", 0);
 /*
     for (int y = 0; y < winTileSize_.getY(); y++) {
         for (int x = 0; x < winTileSize_.getX(); x++) {
