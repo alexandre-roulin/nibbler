@@ -9,26 +9,26 @@ SnakeServer::SnakeServer(
 		pause_(false),
 		port_(port),
 		mapSize_(MAP_DEFAULT),
-		serverTCP_(port)
+		serverTCP_(port,
+				std::bind(&SnakeServer::callbackDeadConnection, this, std::placeholders::_1)
+				)
 		{
 
+	serverTCP_.addDataType<int16_t >(
+			std::bind(&SnakeServer::callbackRemoveSnake, this, std::placeholders::_1),
+			eHeaderK::kRemoveSnake);
+
 	serverTCP_.addDataType<InputInfo>(
-			std::bind(&SnakeServer::callbackInput,
-					  this,
-					  std::placeholders::_1)
-			,eHeaderK::kInput);
+			std::bind(&SnakeServer::callbackInput, this, std::placeholders::_1),
+			eHeaderK::kInput);
 
 	serverTCP_.addDataType<std::array<Snake, SNAKE_MAX>>(
 			std::bind(&SnakeServer::callbackSnakeArray,
-					  this,
-					  std::placeholders::_1)
-			,eHeaderK::kSnakeArray);
+					  this, std::placeholders::_1) ,eHeaderK::kSnakeArray);
 
 	serverTCP_.addDataType<char>(
 			std::bind(&SnakeServer::callbackPock,
-					  this,
-					  std::placeholders::_1)
-			,eHeaderK::kPock);
+					  this, std::placeholders::_1) ,eHeaderK::kPock);
 
 	serverTCP_.addDataType<bool>(
 			std::bind(&SnakeServer::callbackBorderless,
@@ -96,8 +96,29 @@ SnakeServer::SnakeServer(
 					std::placeholders::_1));
 
 }
-/***** Calback *****/
 
+/***** Callback *****/
+
+
+void SnakeServer::callbackRemoveSnake(int16_t id) {
+	snake_array_[id].isAlive = false;
+	serverTCP_.writeDataToOpenConnections(snake_array_[id], eHeaderK::kSnake);
+	updateInput();
+}
+
+void SnakeServer::callbackDeadConnection(size_t index) {
+	auto *it = std::find_if(snake_array_.begin(), snake_array_.end(),
+			[index](Snake const &snake){
+				return snake.indexConnection == index;
+	});
+
+	if (it != snake_array_.end()) {
+		log_success("%s index : %d", __PRETTY_FUNCTION__, index);
+		(*it).isAlive = false;
+		serverTCP_.writeDataToOpenConnections(*it, eHeaderK::kSnake);
+		updateInput();
+	}
+}
 
 void SnakeServer::callbackStartInfo(StartInfo) {
 	log_success("%s", __PRETTY_FUNCTION__ );
@@ -153,6 +174,7 @@ void SnakeServer::callbackAccept(size_t index) {
 	log_success("%s", __PRETTY_FUNCTION__ );
 	int16_t new_id = std::distance(snake_array_.begin(), std::find_if(snake_array_.begin(), snake_array_.end(), [](Snake const &s){ return s.id == -1 ;}));
 	snake_array_[new_id] = Snake::randomSnake(new_id); //TODO CHECK RACE CONDITION
+	snake_array_[new_id].indexConnection = index;
 	serverTCP_.writeDataToOpenConnection(new_id, index, eHeaderK::kId);
 	serverTCP_.writeDataToOpenConnections(snake_array_, eHeaderK::kSnakeArray);
 }
@@ -206,6 +228,7 @@ void SnakeServer::callbackSnakeArray(std::array<Snake, SNAKE_MAX> array) {
 void SnakeServer::startGame() {
 	assert(isReady());
 	mutex_.lock();
+	foodInfoArray.clear();
 	StartInfo startInfo;
 	std::for_each(snake_array_.begin(), snake_array_.end(),
 				  [](auto &snake){ snake.isAlive = true; snake.isUpdate = false; });
@@ -227,15 +250,17 @@ void SnakeServer::updateInput() {
 	if (pause_ || std::any_of(snake_array_.begin(), snake_array_.end(),
 							  [](auto snake){ return snake.id != -1 && snake.isAlive && !snake.isUpdate;} )) return;
 	mutex_.lock();
-	log_warn("Pause is %s", pause_ ? "true" : "false");
-	serverTCP_.writeDataToOpenConnections(snake_array_, static_cast<int16_t >(eHeaderK::kSnakeArray));
+	serverTCP_.writeDataToOpenConnections(snake_array_, eHeaderK::kSnakeArray);
 	for (auto infoArray : foodInfoArray) {
-		serverTCP_.writeDataToOpenConnections(infoArray, static_cast<int16_t >(eHeaderK::kFood));
+		serverTCP_.writeDataToOpenConnections(infoArray, eHeaderK::kFood);
 	}
 	foodInfoArray.clear();
-	serverTCP_.writeDataToOpenConnections('c', static_cast<int16_t >(eHeaderK::kPock));
+	serverTCP_.writeDataToOpenConnections('c', eHeaderK::kPock);
 	std::for_each(snake_array_.begin(), snake_array_.end(), [](auto &snake){ snake.isUpdate = false;});
 	mutex_.unlock();
+
+	log_info("How many null %d",std::count_if(serverTCP_.connections.begin(), serverTCP_.connections.end(),[](auto ptr){
+			return ptr != nullptr; }));
 }
 
 bool SnakeServer::isReady() const {
@@ -262,5 +287,3 @@ bool SnakeServer::sendOpenGameToClient() {
 	univers_.setOpenGame_(true);
 	return true;
 }
-
-

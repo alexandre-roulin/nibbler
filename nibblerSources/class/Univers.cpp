@@ -35,7 +35,7 @@ Univers::Univers()
 		  core_(nullptr), //std::make_unique<Core>(*this)
 		  grid_(nullptr),
 		  mapSize(MAP_DEFAULT),
-		  gameSpeed(150),
+		  gameSpeed(80),
 		  dlHandleDisplay(nullptr),
 		  dlHandleSound(nullptr),
 		  display(nullptr),
@@ -129,7 +129,6 @@ void Univers::unload_external_library() {
 		dlclose(dlHandleDisplay);
 		dlHandleDisplay = nullptr;
 	}
-	display = nullptr;
 	log_error("Univers::unload_external_library.unlock()");
 }
 
@@ -148,10 +147,14 @@ void Univers::defaultAssignmentLibrary() {
 }
 
 void Univers::new_game() {
-
+	log_info("%s", __PRETTY_FUNCTION__);
+	io_loop.restart();
+	io_start.restart();
 	log_info("Hello i'am a %s", isServer() ? "Server" : "Client");
 	world_ = std::make_unique<KINU::World>();
+	world_->getEventsManager().destroy<FoodCreation>();
 	grid_ = std::make_shared<MutantGrid<eSprite>>(mapSize);
+	grid_->fill(eSprite::NONE);
 	if (!display) load_extern_lib_display(kDisplay);
 	defaultAssignmentLibrary();
 	if (isServer()) {
@@ -162,24 +165,39 @@ void Univers::new_game() {
 		}
 
 	}
+
+	world_->getSystemsManager().addSystem<CollisionSystem>(*this);
+	world_->getSystemsManager().addSystem<FollowSystem>();
+	world_->getSystemsManager().addSystem<JoystickSystem>(*this);
+	world_->getSystemsManager().addSystem<MotionSystem>(*this);
+	world_->getSystemsManager().addSystem<SpriteSystem>(*this);
+	world_->getSystemsManager().addSystem<RenderSystem>(*this);
+	world_->getSystemsManager().addSystem<FoodCreationSystem>();
+	world_->getSystemsManager().addSystem<FoodEatSystem>();
+
+	manage_start();
+
+	timer_loop.async_wait(boost::bind(&Univers::loop_world, this));
+	thread = boost::thread(
+			boost::bind(&boost::asio::io_service::run, &io_loop));
+	thread.detach();
+
 	loop();
 }
 
 void Univers::manage_input() {
-
+	log_info("%s %d",__PRETTY_FUNCTION__,  clientTCP_ != nullptr);
 	if (clientTCP_) {
-		if (world_->getEntitiesManager().hasEntityByTagId(eTag::HEAD_TAG + clientTCP_->getId_())) {
+		if (clientTCP_->getSnake().isAlive)
 			clientTCP_->sendDataToServer(InputInfo(clientTCP_->getId_(),
-
-					(display ? display->getDirection() : eDirection::kNorth)
-
-					), eHeaderK::kInput);
-		}
+					(display ? display->getDirection() : eDirection::kNorth)),
+							eHeaderK::kInput);
 	}
 
 }
 
 void Univers::manage_start() {
+	log_info("%s", __PRETTY_FUNCTION__);
 	StartInfo startInfo;
 	std::vector<StartEvent> startEvent;
 	for (; startEvent.empty();) {
@@ -202,32 +220,14 @@ void Univers::manage_start() {
 
 
 void Univers::loop() {
+	log_info("%s", __PRETTY_FUNCTION__);
 
-	world_->getSystemsManager().addSystem<CollisionSystem>(*this);
-	world_->getSystemsManager().addSystem<FollowSystem>();
-	world_->getSystemsManager().addSystem<JoystickSystem>(*this);
-	world_->getSystemsManager().addSystem<MotionSystem>(*this);
-	world_->getSystemsManager().addSystem<SpriteSystem>(*this);
-	world_->getSystemsManager().addSystem<RenderSystem>(*this);
-	world_->getSystemsManager().addSystem<FoodCreationSystem>();
-	world_->getSystemsManager().addSystem<FoodEatSystem>();
-
-	manage_start();
-
-	timer_loop.async_wait(boost::bind(&Univers::loop_world, this));
-	thread = boost::thread(
-			boost::bind(&boost::asio::io_service::run, &io_loop));
-	thread.detach();
-
-	grid_->fill(eSprite::NONE);
 	playMusic(MUSIC_ZELDA);
-
-
 
 	std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
 	std::chrono::milliseconds current(0);
 	std::cout << "AllSnakeIsDead : " << getSnakeClient()->allSnakeIsDead() << std::endl;
-	while ((display == nullptr || !display->exit()) &&
+	while (openGame_ && (display == nullptr || !display->exit()) &&
 		   !getSnakeClient()->allSnakeIsDead()) {
 		if (switchLib)
 			manageSwitchLibrary();
@@ -256,12 +256,14 @@ void Univers::loop() {
 }
 
 void Univers::loop_world() {
-	assert(world_);
+	log_warn("World is not %s !!!", world_ ? "UP" : "DOWN");
+	if (!openGame_)
+		return;
 	manage_input();
 
 	for (; nextFrame.empty();) {
 		getSnakeClient()->lock();
-		// std::cout << "Stuck nextFrame" << std::endl;
+//		 std::cout << "Stuck nextFrame" << std::endl;
 		nextFrame = world_->getEventsManager().getEvents<NextFrame>();
 		getSnakeClient()->unlock();
 	}
@@ -272,26 +274,26 @@ void Univers::loop_world() {
 
 	world_->update();
 
-	log_info("Univers::FollowSystem");
+//	log_info("Univers::FollowSystem");
 	world_->getSystemsManager().getSystem<FollowSystem>().update();
-	log_info("Univers::JoystickSystem");
+//	log_info("Univers::JoystickSystem");
 	world_->getSystemsManager().getSystem<JoystickSystem>().update();
-	log_info("Univers::JoystickEvent");
+//	log_info("Univers::JoystickEvent");
 	world_->getEventsManager().destroy<JoystickEvent>();
-	log_info("Univers::MotionSystem");
+//	log_info("Univers::MotionSystem");
 	world_->getSystemsManager().getSystem<MotionSystem>().update();
-	log_info("Univers::CollisionSystem");
+//	log_info("Univers::CollisionSystem");
 	world_->getSystemsManager().getSystem<CollisionSystem>().update();
-	log_info("Univers::FoodCreationSystem");
+//	log_info("Univers::FoodCreationSystem");
 	world_->getSystemsManager().getSystem<FoodCreationSystem>().update();
 	world_->getEventsManager().destroy<FoodCreation>();
-	log_info("Univers::SpriteSystem");
+//	log_info("Univers::SpriteSystem");
 	world_->getSystemsManager().getSystem<SpriteSystem>().update();
-	log_info("Univers::RenderSystem");
+//	log_info("Univers::RenderSystem");
 	world_->getSystemsManager().getSystem<RenderSystem>().update();
-	log_info("Univers::FoodEatSystem");
+//	log_info("Univers::FoodEatSystem");
 
-	log_info("Univers::vecBobby");
+//	log_info("Univers::vecBobby");
 	Bobby::clearPriority();
 	if (isServer()) {
 		for (auto &bobby : vecBobby) {
@@ -339,7 +341,7 @@ void Univers::refreshTimerLoopWorld() {
 }
 
 void Univers::callbackAction(eAction action) {
-	if (getSnakeClient() == nullptr) return;
+//	if (getSnakeClient() == nullptr) return;
 	switch (action) {
 		case eAction::kPause :
 			log_success(" eAction::kPause");
@@ -348,6 +350,47 @@ void Univers::callbackAction(eAction action) {
 		case eAction::kSwitchDisplayLibrary:
 			log_success("eAction::kSwitchDisplayLibrary");
 			switchLib = true;
+			break;
+		case eAction::kCreateClient :
+			create_client();
+			break;
+		case eAction::kDeleteClient :
+			delete_client();
+			break;
+		case eAction::kCreateServer :
+			create_server();
+			break;
+		case eAction::kDeleteServer :
+			delete_client();
+			break;
+		case eAction::kCreateIA :
+			create_ia();
+			break;
+		case eAction::kDeleteIA :
+			break;
+		case eAction::kConnect :
+			if (getSnakeClient() && !isOnlyIA() && !getSnakeClient()->isConnect()) {
+				try {
+					getSnakeClient()->connect("localhost", "4242");
+				} catch (std::exception const &e) {
+					core_->addMessageChat(e.what());
+				}
+			}
+			break;
+		case eAction::kBorderless :
+			if (getSnakeClient())
+				getSnakeClient()->changeIsBorderless(!isBorderless());
+			break;
+		case eAction::kReady :
+			if (getSnakeClient())
+				getSnakeClient()->changeStateReady(!getSnakeClient()->isReady());
+			break;
+		case eAction::kStartGame :
+			if (isServer() && getSnakeClient()) {
+				getServerTCP_()->sendOpenGameToClient();
+			} else {
+				core_->addMessageChat("FAIS PAS LA MERDE GROS ! T'es pas un server OU TA PAS DE JOUEUR");
+			}
 			break;
 	}
 }
@@ -411,12 +454,9 @@ void Univers::delete_client() {
 }
 
 void Univers::finish_game() {
-	thread.interrupt();
-	io_loop.stop();
-	io_loop.reset();
-	world_ = nullptr;
-	grid_ = nullptr;
-	setOpenGame_(false);
+	if (clientTCP_)
+		clientTCP_->removeSnakeFromGame();
+	cleanAll();
 }
 
 
@@ -459,9 +499,9 @@ unsigned int Univers::getMapSize() const {
 	return mapSize;
 }
 
-void Univers::setMapSize(unsigned int mapSize) {
-	log_success("New map size [%d]", mapSize);
-	Univers::mapSize = mapSize;
+void Univers::setMapSize(unsigned int mapSize_) {
+	log_success("New map size [%d]", mapSize_);
+	mapSize_ = mapSize;
 }
 
 void Univers::setBorderless(bool borderless) {
@@ -550,4 +590,24 @@ bool Univers::isOpenGame_() const {
 
 void Univers::setOpenGame_(bool openGame_) {
 	Univers::openGame_ = openGame_;
+}
+
+void Univers::cleanAll() {
+	openGame_ = false;
+	io_loop.reset();
+	io_start.reset();
+	timer_loop.wait();
+	timer_loop.cancel();
+	timer_start.wait();
+	timer_start.cancel();
+	thread.join();
+	switchLib = false;
+	nextFrame.clear();
+	world_ = nullptr;
+	if (getSnakeClient() && !getSnakeClient()->isConnect()) {
+		delete_server();
+		delete_client();
+	}
+	core_ = nullptr;
+	grid_ = nullptr;
 }

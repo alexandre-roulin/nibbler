@@ -35,7 +35,8 @@ void			WidgetMassiveButton::render(void)
 		_core.univers.create_client();
 	}
 	if (ImGui::Button("connect()")) {
-		_core.univers.getSnakeClient()->connect("localhost", "4242");
+		if (_core.univers.getSnakeClient() && !_core.univers.isOnlyIA())
+			_core.univers.getSnakeClient()->connect("localhost", "4242");
 	}
 	if (ImGui::Button("delete_client()")) {
 		_core.univers.delete_client();

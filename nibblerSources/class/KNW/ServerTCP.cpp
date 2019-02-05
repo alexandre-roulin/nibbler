@@ -6,10 +6,14 @@ namespace KNW {
 
 	/** ServerTCP **/
 
-	ServerTCP::ServerTCP(unsigned short port) :
+	ServerTCP::ServerTCP(unsigned short port,
+						 std::function<void(size_t)> callbackDeadSocket
+) :
+			connections( { nullptr } ),
 			port_(port),
 			acceptor_(io_service_, tcp::endpoint(tcp::v4(), port)),
-			connections( { nullptr } ){
+			callbackDeadSocket_(callbackDeadSocket) {
+
 	}
 
 	void ServerTCP::accept() {
@@ -63,9 +67,15 @@ namespace KNW {
 						  });
 	}
 
+	void ServerTCP::callbackDeadConnection(size_t index) {
+		connections[index] = nullptr;
+		callbackDeadSocket_(index);
+	}
+
 	/** ConnectionTCP **/
 
 	ConnectionTCP::ConnectionTCP(ServerTCP &serverTCP, tcp::socket socket) :
+			serverTCP_(serverTCP),
 			iotcp(std::make_unique<IOTCP>(
 					serverTCP.dataTCP_,
 					std::move(socket),
@@ -73,7 +83,9 @@ namespace KNW {
 							  std::ref(serverTCP.dataTCP_),
 							  std::placeholders::_1,
 							  std::placeholders::_2
-					))) {
+					),
+					std::bind(&ConnectionTCP::callbackDeadIOTCP,
+							this))){
 
 		iotcp->readSocketHeader();
 	}
@@ -90,4 +102,40 @@ namespace KNW {
 		return iotcp->getSocket_();
 	}
 
+	void ConnectionTCP::callbackDeadIOTCP() {
+		auto it = std::find_if(serverTCP_.connections.begin(), serverTCP_.connections.end(),
+				[this](std::shared_ptr<ConnectionTCP> p){
+					return (p.get()) == this;
+		});
+
+		if (it != serverTCP_.connections.end()) {
+			serverTCP_.callbackDeadConnection(std::distance(serverTCP_.connections.begin(), it));
+		}
+	}
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

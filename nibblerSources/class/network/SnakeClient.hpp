@@ -45,11 +45,26 @@ public:
 	void sendHostOpenGame();
 
 	void killSnake(uint16_t id);
-	void changeStateReady();
+
+	void changeStateReady(bool change);
+
+	void changeIsBorderless(bool borderless);
+
+	bool isReady() const;
 
 	void connect(std::string dns, std::string port);
 
+	void disconnect();
+
+	void removeSnakeFromGame();
+
+	virtual ~SnakeClient();
+
 private:
+	void callbackRemoveSnake(int16_t);
+
+	void callbackDeadConnection();
+
 	void callbackInput(InputInfo);
 
 	void callbackPock(char);
@@ -63,11 +78,6 @@ private:
 	void callbackSnake(Snake);
 
 	void callbackResizeMap(unsigned int);
-
-public:
-	virtual ~SnakeClient();
-
-private:
 
 	void callbackSnakeArray(std::array<Snake, SNAKE_MAX>);
 
@@ -99,4 +109,3 @@ void SnakeClient::sendDataToServer(T data, eHeaderK header) {
 	clientTCP_.writeDataToServer(std::move(data),
 								 static_cast<uint16_t>(header));
 }
-

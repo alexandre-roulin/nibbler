@@ -22,6 +22,7 @@
 class ServerTCP;
 
 class SnakeServer;
+
 class SnakeClient;
 
 class ClientTCP;
@@ -50,7 +51,8 @@ public:
 
 	bool load_extern_lib_display(eDisplay);
 
-	bool load_external_sound_library(std::string const &library_path); // TODO GO PRIVATE
+	bool load_external_sound_library(
+			std::string const &library_path); // TODO GO PRIVATE
 	void unload_external_library();
 
 	void loop();
@@ -92,6 +94,7 @@ public:
 	/** Setter && Getter**/
 
 	const std::unique_ptr<SnakeServer> &getServerTCP_() const;
+
 	MutantGrid<eSprite> &getGrid_();
 
 	//Network
@@ -103,7 +106,7 @@ public:
 
 	KINU::World &getWorld_() const;
 
-	void setMapSize(unsigned int mapSize);
+	void setMapSize(unsigned int mapSize_);
 
 	bool isBorderless() const;
 
@@ -128,9 +131,18 @@ public:
 	bool isOnlyIA() const;
 
 	bool isServer() const;
+
 	void callbackAction(eAction);
+
 	void manageSwitchLibrary();
+
+	virtual ~Univers();
+	bool isOpenGame_() const;
+
+	void setOpenGame_(bool openGame_);
 private: // Function
+
+	void cleanAll();
 
 	void manage_input();
 
@@ -147,7 +159,7 @@ private:
 	static const std::string SuccessServerIsCreate;
 	static const std::string WarningClientExist;
 
-	boost::filesystem::path		pathRoot_;
+	boost::filesystem::path pathRoot_;
 
 	bool switchLib;
 	// Variable
@@ -157,7 +169,8 @@ private:
 	boost::asio::io_service io_start;
 	boost::asio::deadline_timer timer_loop;
 	boost::asio::deadline_timer timer_start;
-	std::unique_ptr<KINU::World> world_;
+	std::shared_ptr<KINU::World> world_;
+
 	std::unique_ptr<SnakeServer> serverTCP_;
 	std::shared_ptr<SnakeClient> clientTCP_;
 	std::unique_ptr<Core> core_;
@@ -176,16 +189,10 @@ private:
 	ISound *sound;
 	bool borderless;
 	bool openGame_;
-public:
-	bool isOpenGame_() const;
 
-	void setOpenGame_(bool openGame_);
 
-private:
 	boost::thread thread;
 	eDisplay kDisplay;
-public:
-	virtual ~Univers();
 
 private:
 
@@ -193,6 +200,7 @@ private:
 									   std::string const &libPath);
 
 	void finish_game();
+
 	IDisplay *(*newDisplay)(int, int, char const *);
 
 	ISound *(*newSound)(char const *);

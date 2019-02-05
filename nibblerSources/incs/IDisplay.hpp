@@ -24,7 +24,18 @@ enum eDirection {
 
 enum eAction {
 	kPause,
-	kSwitchDisplayLibrary
+	kSwitchDisplayLibrary,
+	kCreateClient,
+	kDeleteClient,
+	kCreateServer,
+	kDeleteServer,
+	kCreateIA,
+	kDeleteIA,
+	kConnect,
+	kBorderless,
+	kStartGame,
+	kReady
+
 };
 
 class IDisplay {

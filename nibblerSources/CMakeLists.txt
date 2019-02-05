@@ -77,8 +77,8 @@ add_executable(${NAME}
         class/Univers.hpp
         class/ia/Bobby.cpp
         class/ia/Bobby.hpp
-        class/ia/AStar.cpp
-        class/ia/AStar.hpp
+#        class/ia/AStar.cpp
+#        class/ia/AStar.hpp
         class/ia/KStar.cpp
         class/ia/KStar.hpp
 

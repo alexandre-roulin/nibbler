@@ -85,13 +85,13 @@ void WidgetSnake::_renderOtherSnake(void) {
 	{
 		Core::beginColor(Core::HUE_RED);
 		if (ImGui::Button("Ready ?", sf::Vector2f(sizeTexture, ImGui::GetFrameHeight())) && _core.univers.getSnakeClient())
-			_core.univers.getSnakeClient()->changeStateReady();;
+			_core.univers.getSnakeClient()->changeStateReady(true);
 	}
 	else
 	{
 		Core::beginColor(Core::HUE_GREEN);
 		if (ImGui::Button("Ready !", sf::Vector2f(sizeTexture, ImGui::GetFrameHeight())) && _core.univers.getSnakeClient())
-			_core.univers.getSnakeClient()->changeStateReady();
+			_core.univers.getSnakeClient()->changeStateReady(false);
 	}
 	Core::endColor();
 
@@ -116,7 +116,7 @@ void WidgetSnake::_renderYourSnake(void) {
 		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4)ImColor::HSV(0.0f, 0.8f, 0.8f));
 		ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)ImColor::HSV(0.0f, 0.9f, 0.9f));
 		if (ImGui::Button("Ready ?", sf::Vector2f(sizeTexture, ImGui::GetFrameHeight())) && _core.univers.getSnakeClient())
-			_core.univers.getSnakeClient()->changeStateReady();
+			_core.univers.getSnakeClient()->changeStateReady(true);
 	}
 	else
 	{
@@ -124,7 +124,7 @@ void WidgetSnake::_renderYourSnake(void) {
 		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4)ImColor::HSV(0.33f, 0.8f, 0.8f));
 		ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)ImColor::HSV(0.33f, 0.9f, 0.9f));
 		if (ImGui::Button("Ready !", sf::Vector2f(sizeTexture, ImGui::GetFrameHeight())) && _core.univers.getSnakeClient())
-			_core.univers.getSnakeClient()->changeStateReady();
+			_core.univers.getSnakeClient()->changeStateReady(false);
 	}
 	ImGui::PopStyleColor(3);
 	ImGui::PopID();

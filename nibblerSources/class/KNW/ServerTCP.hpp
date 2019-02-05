@@ -34,13 +34,16 @@ namespace KNW {
 
 	class ConnectionTCP {
 	public:
+		ConnectionTCP() = delete;
+		ConnectionTCP(ConnectionTCP const &) = delete;
 		ConnectionTCP(ServerTCP &serverTCP, tcp::socket socket);
 		void sendData(std::string data);
 		~ConnectionTCP();
 		const tcp::socket &getSocket_() const;
-
+		void callbackDeadIOTCP();
 	private:
 		friend class ServerTCP;
+		ServerTCP &serverTCP_;
 		std::unique_ptr<IOTCP> iotcp;
 	};
 
@@ -48,7 +51,10 @@ namespace KNW {
 
 	class ServerTCP {
 	public:
-		explicit ServerTCP(unsigned short port);
+		ServerTCP(
+				unsigned short port,
+				std::function<void(size_t)> callbackDeadSocket
+		);
 
 		size_t getSizeOfConnections() const;
 
@@ -75,7 +81,10 @@ namespace KNW {
 		void writeDataToOpenConnections(T data, H header);
 
 		virtual ~ServerTCP();
+		std::array<std::shared_ptr<ConnectionTCP>, kMaxConnectionOpen> connections;
 	private:
+
+		void callbackDeadConnection(size_t index);
 
 		void asyncAccept();
 
@@ -86,10 +95,10 @@ namespace KNW {
 		boost::thread thread;
 
 		//connection
-		std::array<std::shared_ptr<ConnectionTCP>, kMaxConnectionOpen> connections;
 		std::function<void(size_t)> callbackAccept_;
 		//Data management
 		DataTCP dataTCP_;
+		std::function<void(size_t)> callbackDeadSocket_;
 		friend class ConnectionTCP;
 		friend class IOTCP;
 
@@ -129,7 +138,7 @@ namespace KNW {
 		std::string buffer;
 		buffer.append(reinterpret_cast<char *>(&header_), sizeof(BaseDataType::Header));
 		buffer.append(reinterpret_cast<char *>(&data), dataTCP_.getSizeOfHeader(header_));
-
+//		std::cout << __PRETTY_FUNCTION__ << std::endl;
 		for (auto &connection : connections) {
 			if (connection)
 				connection->sendData(buffer);

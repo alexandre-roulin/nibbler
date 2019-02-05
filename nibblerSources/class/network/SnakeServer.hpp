@@ -19,19 +19,29 @@ public:
 	bool isFull() const;
 
 	unsigned short getPort_() const;
+
 	const std::array<Snake, SNAKE_MAX> &getSnakeArray_() const;
 
 	bool sendOpenGameToClient();
-private:
 
+private:
+	void callbackRemoveSnake(int16_t);
+
+	void callbackDeadConnection(size_t index);
 	void callbackSnakeArray(std::array<Snake, SNAKE_MAX>);
+
 	void callbackPock(char);
 
 	void callbackBorderless(bool);
+
 	void callbackResizeMap(unsigned int);
+
 	void callbackOpenGame(bool);
+
 	void callbackId(int16_t);
+
 	void callbackChatInfo(ChatInfo);
+
 	void callbackInput(InputInfo);
 
 	void callbackForcePause(int16_t);
