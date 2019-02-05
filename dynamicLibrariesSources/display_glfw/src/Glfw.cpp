@@ -30,7 +30,10 @@ Glfw::~Glfw() {
 }
 
 void    Glfw::clean_() {
-    glfwSetInputMode(window_, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+    if (window_) {
+        glfwSetInputMode(window_, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+        glfwDestroyWindow(window_);
+    }
     glfwTerminate();
 }
 

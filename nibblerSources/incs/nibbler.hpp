@@ -56,7 +56,7 @@ struct Snake {
 	direction(kNorth),
 	isAlive(false),
 	isSwitchingLibrary(false) {
-		memset(name, NAME_BUFFER, 0);
+		memset(name, 0, NAME_BUFFER);
 	};
 
 	char name[NAME_BUFFER];
@@ -71,7 +71,7 @@ struct Snake {
 	friend std::ostream &operator<<(std::ostream &os, const Snake &snake);
 
 	void reset() {
-		memset(name, NAME_BUFFER, 0);
+		memset(name, 0, NAME_BUFFER);
 		sprite = eSprite::GREEN;
 		isReady = false;
 		id = -1;

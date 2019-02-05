@@ -121,7 +121,7 @@ private:
 	void					interpolateGridCase_(int x, int y);
 	void					renderLine_(ActModel const &model);
 	void					renderAtDirectionFrom(ActModel const &from, eSprite at);
-	std::unique_ptr<ActModel>	cloneActModelSideOf(ActModel const &from, eSprite at);
+
 	void					drawHelpLineSnake_();
 
 

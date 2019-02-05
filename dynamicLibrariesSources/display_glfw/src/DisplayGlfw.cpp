@@ -8,7 +8,6 @@
 #include <algorithm>
 #include <Carbon.framework/Headers/Carbon.h>
 
-#define PARTICULE_SIZE 1
 #define NEAR_PLANE 0.1f
 #define MAX_PLANE 1000.f
 
@@ -135,10 +134,7 @@ void				DisplayGlfw::constructMaterialMap_() {
 							 glm::vec3(0.05f, 0.05f, 0.05f),
 							 glm::vec3(0.2f, 0.2f, 0.2f),
 							 glm::vec3(0.2f, 0.2f, 0.2f));
-	materialMap_.try_emplace(eSprite::NONE, "NONE", 0.f,
-							 glm::vec3(0.0f),
-							 glm::vec3(0.0f),
-							 glm::vec3(0.0f));
+	materialMap_.try_emplace(eSprite::NONE, "NONE", 0.f, glm::vec3(0.0f), glm::vec3(0.0f), glm::vec3(0.0f));
 }
 
 DisplayGlfw::~DisplayGlfw() {
@@ -151,7 +147,6 @@ void DisplayGlfw::error_(std::string const &s) {
 }
 
 void DisplayGlfw::clean_() {
-    //_win.close();
     if (particuleBackground_)
     	delete particuleBackground_;
 	if (particuleBackgroundOutline_)
@@ -163,7 +158,6 @@ void		DisplayGlfw::setBackground(MutantGrid< eSprite > const &grid) {
 
 	for (int y = 0; winTileSize_.getY() > y; ++y) {
 		for (int x = 0; x < winTileSize_.getX(); ++x) {
-
 			particuleBackground_->transforms[y * winTileSize_.getX() + x].resetTransform();
 			particuleBackground_->transforms[y * winTileSize_.getX() + x].translate(glm::vec3(x - winTileSize_.getX() / 2, y - winTileSize_.getY() / 2, 0.f));
 			particuleBackground_->transforms[y * winTileSize_.getX() + x].scale(glm::vec3(-0.10f));
@@ -175,10 +169,8 @@ void		DisplayGlfw::setBackground(MutantGrid< eSprite > const &grid) {
 			particuleBackgroundOutline_->transforms[y * winTileSize_.getX() + x].updateTransform();
 		}
 	}
-
 	particuleBackground_->update();
 	particuleBackgroundOutline_->update();
-
 }
 
 void		DisplayGlfw::drawGridCaseBody_(int x, int y) {
@@ -275,9 +267,6 @@ void		DisplayGlfw::drawGrid(MutantGrid< eSprite > const &grid) {
 				grid_(x, y).assign(&appleModel_);
 			}
 			else if (static_cast<int>(grid(x, y) & eSprite::MASK_BODY) != 0) {
-				//if ((grid(x, y) & eSprite::MASK_BODY) == eSprite::HEAD)
-				//	grid_(x, y).assign(&modelHead_);
-				//else
 					grid_(x, y).assign(&modelSphere_);
 				materialMap_.at(grid(x, y) & eSprite::MASK_COLOR).putMaterialToShader(shader_);
 			}
@@ -324,21 +313,6 @@ void DisplayGlfw::renderLine_(ActModel const &model) {
 	Material::unsetMaterial(shader_);
 	copy.scale(glm::vec3(0.05f));
 	copy.render(shader_, GL_LINE_STRIP);
-}
-
-std::unique_ptr<ActModel>	DisplayGlfw::cloneActModelSideOf(ActModel const &from, eSprite at) {
-	std::unique_ptr<ActModel> act = std::make_unique<ActModel>(from);
-
-	if (at == eSprite::SOUTH)
-		act->translate(glm::vec3(0.f, -1.f, 0.f));
-	else if (at == eSprite::NORTH)
-		act->translate(glm::vec3(0.f, 1.f, 0.f));
-	else if (at == eSprite::EAST)
-		act->translate(glm::vec3(-1.f, 0.f, 0.f));
-	else if (at == eSprite::WEST)
-		act->translate(glm::vec3(1.f, 0.f, 0.f));
-	return (act);
-
 }
 
 void DisplayGlfw::drawHelpLineSnake_() {
@@ -449,28 +423,7 @@ void DisplayGlfw::render(float currentDelayFrame, float maxDelayFrame) {
 	if (flag_.test(FLAG_LINE) && yourSnakeSprite != eSprite::NONE) {
 		drawHelpLineSnake_();
 	}
-
 	shader_.setInt("uBackground", 0);
-/*
-    for (int y = 0; y < winTileSize_.getY(); y++) {
-        for (int x = 0; x < winTileSize_.getX(); x++) {
-        	if (background_(x, y).getModel()) {
-				if ((tileBackground_(x, y) & eSprite::WALL) == eSprite::WALL) {
-					materialMap_.at(eSprite::WALL).putMaterialToShader(shader_);
-					background_(x, y).translate(glm::vec3(0.f, 0.f, 1.f));
-					background_(x, y).render(shader_);
-					renderLine_(background_(x, y));
-					background_(x, y).translate(glm::vec3(0.f, 0.f, -1.f));
-					materialMap_.at(eSprite::WALL).putMaterialToShader(shader_);
-				}
-				else if (tileBackground_(x, y) == eSprite::GROUND)
-				 	materialMap_.at(eSprite::GROUND).putMaterialToShader(shader_);
-				background_(x, y).render(shader_);
-				renderLine_(background_(x, y));
-        	}
-        }
-    }
-*/
 
 	shaderMultiple_.activate();
 	light_.putLightToShader(shaderMultiple_);

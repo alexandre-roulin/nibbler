@@ -50,8 +50,7 @@ void			Core::_updateGenCoreEvent() {
 	ImGui::SFML::Update(_win, _deltaClock.restart());
 }
 
-void			Core::titleScreen()
-{
+void			Core::titleScreen() {
 	sf::Event	event;
 	bool		titleScreen = true;
 
@@ -136,31 +135,26 @@ void			Core::aState(void)
 }
 
 
-void				Core::addMessageChat(std::string const &msg)
-{
+void				Core::addMessageChat(std::string const &msg) {
 	_chat.addLog(msg.c_str());
 }
 
-void				Core::_render(void)
-{
+void				Core::_render(void) {
 	_win.clear();
 	ImGui::SFML::Render(_win);
 	_win.display();
 }
 
-void 				Core::exit(void)
-{
+void 				Core::exit(void) {
 	_win.close();
 }
 
-sf::Vector2<unsigned int>	Core::positionByPercent(sf::Vector2<unsigned int> const &percent) const
-{
+sf::Vector2<unsigned int>	Core::positionByPercent(sf::Vector2<unsigned int> const &percent) const {
 	return (sf::Vector2<unsigned int>(_winSize.x * percent.x / 100,
 										_winSize.y * percent.y / 100));
 }
 
-void					Core::_processEvent(sf::Event const &event)
-{
+void					Core::_processEvent(sf::Event const &event) {
 	if (event.type == sf::Event::Resized)
 		_winSize = sf::Vector2<unsigned int>(event.size.width, event.size.height);
 	else if (event.type == sf::Event::Closed)
