@@ -89,7 +89,6 @@ add_executable(${NAME}
         incs/logger.h
         incs/logger_utils.h
         incs/nibbler.hpp
-        ../commun/stb_image.h
 
         class/KNW/BaseDataType.cpp
         class/KNW/BaseDataType.hpp

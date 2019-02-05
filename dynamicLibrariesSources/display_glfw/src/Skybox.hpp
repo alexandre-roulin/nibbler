@@ -14,7 +14,7 @@ public:
 		ConstructorException(void) noexcept;
 		ConstructorException(std::string) noexcept;
 		virtual const char* what() const noexcept;
-		~ConstructorException(void) throw();
+		~ConstructorException(void) noexcept;
 		ConstructorException(ConstructorException const &src) noexcept;
 	private:
 		ConstructorException &operator=(ConstructorException const &rhs) noexcept;

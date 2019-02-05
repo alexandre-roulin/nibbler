@@ -1,86 +1,71 @@
 #include <iostream>
 #include "SoundSdl.hpp"
 
-ISound			*newSound(void)
-{
+ISound *newSound(void) {
 	return (new SoundSdl());
 }
 
-void				deleteSound(ISound *sound)
-{
+void deleteSound(ISound *sound) {
 	delete sound;
 }
 
 SoundSdl::SoundSdl(void) :
-_music(nullptr)
-{
-	if(SDL_Init(SDL_INIT_AUDIO) < 0)
-		throw(SoundSdl::SdlSoundException("Audio cant be loaded"));
-	if(Mix_OpenAudio( 22050, MIX_DEFAULT_FORMAT, 2, 4096 ) == -1)
-		throw(SoundSdl::SdlSoundException("Audio cant be loaded"));
+		music_(nullptr) {
+	if (SDL_Init(SDL_INIT_AUDIO) < 0)
+		throw (SoundSdl::SdlSoundException("Audio cant be loaded"));
+	if (Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096) == -1)
+		throw (SoundSdl::SdlSoundException("Audio cant be loaded"));
 }
 
-SoundSdl::~SoundSdl(void)
-{
-    this->_clean();
+SoundSdl::~SoundSdl(void) {
+	clean_();
 }
 
-void SoundSdl::_error(std::string s = std::string("Error"))
-{
-    this->_clean();
-    throw(SoundSdl::SdlSoundException(s));
-}
-
-void		SoundSdl::setMusic(char const *path)
-{
-	if (this->_music)
-	{
-		Mix_FreeMusic(this->_music);
-		this->_music = nullptr;
+void SoundSdl::setMusic(char const *path) {
+	if (music_) {
+		Mix_FreeMusic(music_);
+		music_ = nullptr;
 	}
-	if (!(this->_music = Mix_LoadMUS(path)))
-		throw(SoundSdl::SdlSoundException("Background music, cannot be loaded"));
-}
-void		SoundSdl::playMusic(void)
-{
-	if (Mix_PlayMusic(this->_music, -1) < 0)
-		throw(SoundSdl::SdlSoundException("Cannot playing Background music"));
+	if (!(music_ = Mix_LoadMUS(path)))
+		throw (SoundSdl::SdlSoundException("Background music, cannot be loaded"));
 }
 
-void		SoundSdl::addNoise(std::string const &path)
-{
+void SoundSdl::playMusic(void) {
+	if (Mix_PlayMusic(music_, -1) < 0)
+		throw (SoundSdl::SdlSoundException("Cannot playing Background music"));
+}
+
+void SoundSdl::addNoise(std::string const &path) {
 	Mix_Chunk *sound;
 
 	sound = Mix_LoadWAV_RW(SDL_RWFromFile(path.c_str(), "rb"), 1);
 	if (sound == NULL)
-		throw(SoundSdl::SdlSoundException("Cant load [" + path + "] noise"));
-	this->_sound.push_back(sound);
-}
-void		SoundSdl::playNoise(unsigned int index)
-{
-	if (index >= this->_sound.size())
-		throw(SoundSdl::SdlSoundException("Cant play the noise at [" + std::to_string(index) + "] index"));
-	Mix_PlayChannel(-1, this->_sound[index], 0);
+		throw (SoundSdl::SdlSoundException("Cant load [" + path + "] noise"));
+	sound_.push_back(sound);
 }
 
-void SoundSdl::_clean(void)
-{
-	if (this->_music)
-	{
-		Mix_FreeMusic(this->_music);
-		this->_music = nullptr;
+void SoundSdl::playNoise(unsigned int index) {
+	if (index >= sound_.size())
+		throw (SoundSdl::SdlSoundException("Cant play the noise at [" + std::to_string(index) + "] index"));
+	Mix_PlayChannel(-1, sound_[index], 0);
+}
+
+void SoundSdl::clean_(void) {
+	if (music_) {
+		Mix_FreeMusic(music_);
+		music_ = nullptr;
 	}
-	for (auto &it : this->_sound)
+	for (auto &it : sound_)
 		delete it;
 }
 
-SoundSdl::SdlSoundException::~SdlSoundException(void) throw(){}
-SoundSdl::SdlSoundException::SdlSoundException(void) throw() :
-	_error("Error on SoundSdl constructor") {}
-SoundSdl::SdlSoundException::SdlSoundException(std::string s) throw() :
-	_error(s) { }
-SoundSdl::SdlSoundException::SdlSoundException(SoundSdl::SdlSoundException const &src) throw() :
-	_error(src._error)
-	{ this->_error = src._error; }
-const char	*SoundSdl::SdlSoundException::what() const throw()
-	{ return (this->_error.c_str()); }
+SoundSdl::SdlSoundException::SdlSoundException(void) noexcept :
+		error_("Error on SoundSdl constructor") {}
+
+SoundSdl::SdlSoundException::SdlSoundException(std::string const &s) noexcept :
+		error_(s) {}
+
+SoundSdl::SdlSoundException::SdlSoundException(SoundSdl::SdlSoundException const &src) noexcept :
+		error_(src.error_) { error_ = src.error_; }
+
+const char *SoundSdl::SdlSoundException::what() const noexcept { return (error_.c_str()); }

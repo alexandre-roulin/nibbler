@@ -15,13 +15,13 @@ class Core {
 
 	class CoreConstructorException : public std::exception {
 	public:
-		CoreConstructorException(void) throw();
-		CoreConstructorException(std::string) throw();
-		virtual const char* what() const throw();
-		~CoreConstructorException(void) throw();
-		CoreConstructorException(CoreConstructorException const &src) throw();
+		CoreConstructorException(void) noexcept;
+		CoreConstructorException(std::string) noexcept;
+		virtual const char* what() const noexcept;
+		~CoreConstructorException(void) noexcept;
+		CoreConstructorException(CoreConstructorException const &src) noexcept;
 	private:
-		CoreConstructorException &operator=(CoreConstructorException const &rhs) throw();
+		CoreConstructorException &operator=(CoreConstructorException const &rhs) noexcept;
 		std::string			_error;
 	};
 

@@ -13,13 +13,13 @@ class Glfw : public KeyStateManager {
 public:
     class ConstructorException : public std::exception {
     public:
-        ConstructorException(void) throw();
-        ConstructorException(std::string) throw();
-        virtual const char* what() const throw();
-        ~ConstructorException(void) throw();
-        ConstructorException(ConstructorException const &src) throw();
+        ConstructorException(void) noexcept;
+        ConstructorException(std::string) noexcept;
+        virtual const char* what() const noexcept;
+        ~ConstructorException(void) noexcept;
+        ConstructorException(ConstructorException const &src) noexcept;
     private:
-        ConstructorException &operator=(ConstructorException const &rhs) throw();
+        ConstructorException &operator=(ConstructorException const &rhs) noexcept;
         std::string			_error;
     };
 

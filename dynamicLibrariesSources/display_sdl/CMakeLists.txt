@@ -5,7 +5,7 @@ project(${NAME})
 
 add_library(${NAME} MODULE
         src/DisplaySdl.cpp
-        include/DisplaySdl.hpp)
+        src/DisplaySdl.hpp)
 
 target_link_libraries(${NAME} PRIVATE Boost::filesystem)
 target_link_libraries(${NAME} PRIVATE ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARIES})

@@ -114,16 +114,16 @@ float	Skybox::skyboxVertices_[6 * 6 * 3] = {
 		1.0f, -1.0f,  1.0f
 };
 
-Skybox::ConstructorException::~ConstructorException(void) throw(){}
-Skybox::ConstructorException::ConstructorException(void) throw() :
+Skybox::ConstructorException::~ConstructorException(void) noexcept{}
+Skybox::ConstructorException::ConstructorException(void) noexcept :
 		invalid_argument(this->_error),
 		_error("You make a ConstructorException") {}
-Skybox::ConstructorException::ConstructorException(std::string s) throw() :
+Skybox::ConstructorException::ConstructorException(std::string s) noexcept :
 		invalid_argument(s),
 		_error(s) { }
-Skybox::ConstructorException::ConstructorException(Skybox::ConstructorException const &src) throw() :
+Skybox::ConstructorException::ConstructorException(Skybox::ConstructorException const &src) noexcept :
 		invalid_argument(this->_error),
 		_error(src._error)
 { this->_error = src._error; }
-const char	*Skybox::ConstructorException::what() const throw()
+const char	*Skybox::ConstructorException::what() const noexcept
 { return (this->_error.c_str()); }

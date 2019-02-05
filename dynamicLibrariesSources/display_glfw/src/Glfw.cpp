@@ -87,13 +87,13 @@ GLFWwindow     *Glfw::getWindow() const {
 
 std::map<GLFWwindow*, Glfw&>     Glfw::glfwByWindow_;
 
-Glfw::ConstructorException::~ConstructorException(void) throw(){}
-Glfw::ConstructorException::ConstructorException(void) throw() :
+Glfw::ConstructorException::~ConstructorException(void) noexcept{}
+Glfw::ConstructorException::ConstructorException(void) noexcept :
         _error("Error on Glfw constructor") {}
-Glfw::ConstructorException::ConstructorException(std::string s) throw() :
+Glfw::ConstructorException::ConstructorException(std::string s) noexcept :
         _error(s) { }
-Glfw::ConstructorException::ConstructorException(Glfw::ConstructorException const &src) throw() :
+Glfw::ConstructorException::ConstructorException(Glfw::ConstructorException const &src) noexcept :
         _error(src._error)
 { this->_error = src._error; }
-const char	*Glfw::ConstructorException::what() const throw()
+const char	*Glfw::ConstructorException::what() const noexcept
 { return (this->_error.c_str()); }

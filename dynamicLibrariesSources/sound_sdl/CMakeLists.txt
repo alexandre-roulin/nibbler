@@ -5,7 +5,7 @@ project(${NAME})
 
 add_library(${NAME} MODULE
         src/SoundSdl.cpp
-        include/SoundSdl.hpp)
+        src/SoundSdl.hpp)
 
 target_link_libraries(${NAME} PRIVATE
         ${SDL2_LIBRARY} ${SDL2_MIXER_LIBRARIES})

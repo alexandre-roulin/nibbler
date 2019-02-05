@@ -18,7 +18,7 @@ public:
 
 		Constructor(std::string const &s) noexcept;
 
-		virtual const char *what() const noexcept;
+		const char *what() const noexcept override;
 
 		~Constructor(void) noexcept = default;
 

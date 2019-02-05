@@ -5,7 +5,7 @@ project(${NAME})
 
 add_library(${NAME} MODULE
         src/SoundSfml.cpp
-        include/SoundSfml.hpp)
+        src/SoundSfml.hpp)
 
 target_link_libraries(${NAME} PRIVATE
         sfml-system sfml-audio)

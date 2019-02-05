@@ -216,14 +216,14 @@ float const 				Core::HUE_RED = 0.f;
 
 bool 						Core::_useColor = false;
 
-Core::CoreConstructorException::~CoreConstructorException(void) throw(){}
-Core::CoreConstructorException::CoreConstructorException(void) throw() :
+Core::CoreConstructorException::~CoreConstructorException(void) noexcept{}
+Core::CoreConstructorException::CoreConstructorException(void) noexcept :
 	_error("Error on Core constructor") {}
-Core::CoreConstructorException::CoreConstructorException(std::string s) throw() :
+Core::CoreConstructorException::CoreConstructorException(std::string s) noexcept :
 	_error(s) { }
-Core::CoreConstructorException::CoreConstructorException(Core::CoreConstructorException const &src) throw() :
+Core::CoreConstructorException::CoreConstructorException(Core::CoreConstructorException const &src) noexcept :
 	_error(src._error)
 	{ _error = src._error; }
-const char	*Core::CoreConstructorException::what() const throw()
+const char	*Core::CoreConstructorException::what() const noexcept
 	{ return (_error.c_str()); }
 

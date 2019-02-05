@@ -136,7 +136,7 @@ elseif (NOT TARGET assimp)
 endif()
 
 include_directories(
-        ${CMAKE_SOURCE_DIR}/commun/
+        ${CMAKE_SOURCE_DIR}/incs/
         ${CMAKE_SOURCE_DIR}/nibblerSources/incs/
         ${CMAKE_SOURCE_DIR}/extern/imgui/
         ${CMAKE_SOURCE_DIR}/extern/imgui/imgui/

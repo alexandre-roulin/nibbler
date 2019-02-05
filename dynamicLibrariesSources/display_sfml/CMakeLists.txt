@@ -5,7 +5,7 @@ project(${NAME})
 
 add_library(${NAME} MODULE
         src/DisplaySfml.cpp
-        include/DisplaySfml.hpp)
+        src/DisplaySfml.hpp)
 
 target_link_libraries(${NAME} PRIVATE Boost::filesystem)
 target_link_libraries(${NAME} PRIVATE sfml-graphics sfml-window sfml-system)
