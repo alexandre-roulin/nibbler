@@ -2,26 +2,21 @@
 #include <gui/Core.hpp>
 
 AWidget::AWidget(Core &core) :
-		_core(core),
-		_active(true) {
+		core_(core),
+		active_(true) {
 }
 
-AWidget::~AWidget(void) {
-}
+AWidget::Constructor::Constructor(void) noexcept :
+		invalid_argument(error_),
+		error_("Error during construction") {}
 
-AWidget::Constructor::~Constructor(void) throw() {}
-
-AWidget::Constructor::Constructor(void) throw() :
-		invalid_argument(_error),
-		_error("Error during construction") {}
-
-AWidget::Constructor::Constructor(std::string s) throw() :
+AWidget::Constructor::Constructor(std::string const &s) noexcept :
 		invalid_argument(s),
-		_error(s) {}
+		error_(s) {}
 
-AWidget::Constructor::Constructor(AWidget::Constructor const &src) throw() :
-		invalid_argument(_error),
-		_error(src._error) { _error = src._error; }
+AWidget::Constructor::Constructor(AWidget::Constructor const &src) noexcept :
+		invalid_argument(error_),
+		error_(src.error_) { error_ = src.error_; }
 
 const char *
-AWidget::Constructor::what() const throw() { return (_error.c_str()); }
+AWidget::Constructor::what() const noexcept { return (error_.c_str()); }

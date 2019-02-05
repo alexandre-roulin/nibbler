@@ -89,7 +89,7 @@ add_executable(${NAME}
         incs/logger.h
         incs/logger_utils.h
         incs/nibbler.hpp
-        incs/stb_image.h
+        ../commun/stb_image.h
 
         class/KNW/BaseDataType.cpp
         class/KNW/BaseDataType.hpp
@@ -132,7 +132,7 @@ add_executable(${NAME}
         class/ia/KStar.cpp
         class/ia/KStar.hpp
         incs/MutantGrid.tpp
-        )
+        class/gui/widget/SpriteColorProperties.hpp)
 
 
 target_include_directories(

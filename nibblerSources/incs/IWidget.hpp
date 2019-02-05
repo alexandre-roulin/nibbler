@@ -5,5 +5,5 @@
 
 class IWidget {
 public:
-	virtual 			~IWidget() {}
+	virtual 			~IWidget() = default;
 };

@@ -1,4 +1,5 @@
 #pragma once
+
 #include "AWidget.hpp"
 #include <string>
 #include <SFML/Graphics.hpp>
@@ -10,12 +11,14 @@ class Core;
 class WidgetMassiveButton : public AWidget {
 public:
 	WidgetMassiveButton(Core &core);
-	~WidgetMassiveButton(void);
 
-	void	render(void);
+	~WidgetMassiveButton(void) override = default;
+
+	void render(void) override;
 
 private:
 
-	WidgetMassiveButton &operator=(const WidgetMassiveButton&);
-	WidgetMassiveButton(const WidgetMassiveButton&);
+	WidgetMassiveButton &operator=(const WidgetMassiveButton &) = default;
+
+	WidgetMassiveButton(const WidgetMassiveButton &) = default;
 };

@@ -1,4 +1,5 @@
 #pragma once
+
 #include "AWidget.hpp"
 #include "nibbler.hpp"
 
@@ -7,16 +8,18 @@ class Core;
 class WidgetConnect : public AWidget {
 public:
 	WidgetConnect(Core &);
-	~WidgetConnect(void);
+
+	~WidgetConnect(void) override = default;
 
 
-	void	render(void);
+	void render(void) override;
 
 private:
-	bool			_client;
-	char			_dnsBuffer[NAME_BUFFER];
-	char			_portBuffer[NAME_BUFFER];
+	bool client_;
+	char dnsBuffer_[NAME_BUFFER];
+	char portBuffer_[NAME_BUFFER];
 
-	WidgetConnect &operator=(const WidgetConnect&);
-	WidgetConnect(const WidgetConnect&);
+	WidgetConnect &operator=(const WidgetConnect &) = delete;
+
+	WidgetConnect(const WidgetConnect &) = delete;
 };

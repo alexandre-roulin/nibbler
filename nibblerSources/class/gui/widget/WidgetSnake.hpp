@@ -1,34 +1,41 @@
 #pragma once
+
 #include "AWidget.hpp"
-#include <string>
+#include "SpriteColorProperties.hpp"
 #include <vector>
-#include <SFML/Graphics.hpp>
 #include "nibbler.hpp"
 
 class Core;
 
 class WidgetSnake : public AWidget {
 public:
-	WidgetSnake(Core &, Snake const &, std::vector<sf::Texture> &, std::vector<std::string> &, bool);
-	~WidgetSnake(void);
+	WidgetSnake(Core &core, Snake const &snake, std::map<eSprite, SpriteColorProperties> const &mapSprite,
+				bool isYourSnake = false);
 
+	~WidgetSnake(void) override = default;
 
-	void	render(void);
+	void render(void) override ;
 
 private:
-	Snake const									&_snake;
-	std::vector<sf::Texture>					&_texture;
-	std::vector<std::string>					&_color;
-	bool										_isYourSnake;
+	Snake const &snake_;
+	std::map<eSprite, SpriteColorProperties> const &mapSprite_;
+	bool isYourSnake_;
 
-	void		_renderYourSnake(void);
-	void		_renderOtherSnake(void);
-	void			_renderName(unsigned int sizeTexture) const;
-	void			_renderImage(unsigned int sizeTexture) const;
-	unsigned int 	_sizeTexture(void) const;
-	void 			_renderSelectionColor(unsigned int sizeTexture) const;
+	void renderYourSnake_(void);
 
-	WidgetSnake &operator=(const WidgetSnake&);
-	WidgetSnake(const WidgetSnake&);
-	WidgetSnake(void);
+	void renderOtherSnake_(void);
+
+	void renderName_(unsigned int sizeTexture) const;
+
+	void renderImage_(unsigned int sizeTexture) const;
+
+	unsigned int sizeTexture_(void) const;
+
+	void renderSelectionColor_(unsigned int sizeTexture) const;
+
+	WidgetSnake &operator=(const WidgetSnake &) = delete;
+
+	WidgetSnake(const WidgetSnake &) = delete;
+
+	WidgetSnake(void) = delete;
 };

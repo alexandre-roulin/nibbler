@@ -1,56 +1,52 @@
 #include <gui/Core.hpp>
 #include "WidgetConnect.hpp"
 #include "Univers.hpp"
-#include "imgui.h"
-#include <network/SnakeClient.hpp>
+
 WidgetConnect::WidgetConnect(Core &core) :
 		AWidget(core),
-		_client(false)
-{
-	bzero(_dnsBuffer, IM_ARRAYSIZE(_dnsBuffer));
-	bzero(_portBuffer, IM_ARRAYSIZE(_portBuffer));
-	memcpy(_dnsBuffer, "localhost", sizeof("localhost"));
-	memcpy(_portBuffer, "4242", sizeof("4242"));
+		client_(false) {
+	bzero(dnsBuffer_, IM_ARRAYSIZE(dnsBuffer_));
+	bzero(portBuffer_, IM_ARRAYSIZE(portBuffer_));
+	memcpy(dnsBuffer_, "localhost", sizeof("localhost"));
+	memcpy(portBuffer_, "4242", sizeof("4242"));
 
 }
 
-WidgetConnect::~WidgetConnect(void)
-{}
+void WidgetConnect::render(void) {
 
-void			WidgetConnect::render(void)
-{
-
-	if (_core.univers.getSnakeClient() && _core.univers.getSnakeClient()->isConnect())
-		ImGui::Begin("Connect", NULL, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse);
+	if (core_.univers.getSnakeClient() && core_.univers.getSnakeClient()->isConnect())
+		ImGui::Begin("Connect", NULL,
+					 ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse);
 	else
-		ImGui::Begin("Connect", NULL, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse);
+		ImGui::Begin("Connect", NULL,
+					 ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse);
 
-	if (_client)
+	if (client_)
 		Core::beginColor(Core::HUE_RED);
 	else
 		Core::beginColor(Core::HUE_GREEN);
 	if (ImGui::Button("Host", sf::Vector2f(ImGui::GetWindowSize().x / 2, 20)))
-		_client = false;
+		client_ = false;
 	ImGui::SameLine();
 	Core::endColor();
 
-	if (_client)
+	if (client_)
 		Core::beginColor(Core::HUE_GREEN);
 	else
 		Core::beginColor(Core::HUE_RED);
 	if (ImGui::Button("Client", sf::Vector2f(ImGui::GetWindowSize().x / 2 - 1, 20)))
-		_client = true;
+		client_ = true;
 
 	Core::endColor();
 
 
-	if (ImGui::InputText("DNS", _dnsBuffer,
-						 IM_ARRAYSIZE(_dnsBuffer),
+	if (ImGui::InputText("DNS", dnsBuffer_,
+						 IM_ARRAYSIZE(dnsBuffer_),
 						 ImGuiInputTextFlags_EnterReturnsTrue)) {
 
 	}
-	if (ImGui::InputText("PORT", _portBuffer,
-						 IM_ARRAYSIZE(_portBuffer),
+	if (ImGui::InputText("PORT", portBuffer_,
+						 IM_ARRAYSIZE(portBuffer_),
 						 ImGuiInputTextFlags_EnterReturnsTrue)) {
 
 	}
@@ -59,20 +55,18 @@ void			WidgetConnect::render(void)
 	ImGui::Spacing();
 
 	Core::beginColor(Core::HUE_GREEN);
-	if (_client) {
-		if (ImGui::Button("Join", sf::Vector2f(ImGui::GetWindowSize().x, 20)) && _core.univers.getSnakeClient()) {
-			_core.univers.getSnakeClient()->connect(_dnsBuffer, _portBuffer);
+	if (client_) {
+		if (ImGui::Button("Join", sf::Vector2f(ImGui::GetWindowSize().x, 20)) && core_.univers.getSnakeClient()) {
+			core_.univers.getSnakeClient()->connect(dnsBuffer_, portBuffer_);
 		}
 
-	}
-	else {
-		if (ImGui::Button("Create", sf::Vector2f(ImGui::GetWindowSize().x, 20)) && _core.univers.getSnakeClient()) {
-			_core.univers.create_server();
-			_core.univers.getSnakeClient()->connect(_dnsBuffer, _portBuffer);
+	} else {
+		if (ImGui::Button("Create", sf::Vector2f(ImGui::GetWindowSize().x, 20)) && core_.univers.getSnakeClient()) {
+			core_.univers.create_server();
+			core_.univers.getSnakeClient()->connect(dnsBuffer_, portBuffer_);
 		}
 	}
 	Core::endColor();
-
 
 
 	ImGui::End();

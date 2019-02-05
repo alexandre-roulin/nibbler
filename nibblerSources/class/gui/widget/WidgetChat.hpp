@@ -1,4 +1,5 @@
 #pragma once
+
 #include "AWidget.hpp"
 #include "nibbler.hpp"
 #include <network/ClientTCP.hpp>
@@ -6,22 +7,26 @@
 class WidgetChat : public AWidget {
 public:
 	WidgetChat(Core &);
-	~WidgetChat(void);
+
+	~WidgetChat(void) override = default;
 
 
-	void	addLog(const char* fmt, ...);
+	void addLog(const char *fmt, ...);
 
-	void	render(void);
-	void	clear(void);
+	void render(void) override;
+
+	void clear(void);
 
 private:
-	ImGuiTextBuffer			_bufferChat;
-	bool					_scrollChat;
-	char					_bufferMessage[CHAT_BUFFER];
+	ImGuiTextBuffer bufferChat_;
+	bool scrollChat_;
+	char bufferMessage_[CHAT_BUFFER];
 
-	bool					_chatCommand(void);
+	bool chatCommand_(void);
 
-	WidgetChat &operator=(const WidgetChat&);
-	WidgetChat(const WidgetChat&);
-	WidgetChat(void);
+	WidgetChat &operator=(const WidgetChat &) = delete;
+
+	WidgetChat(const WidgetChat &) = delete;
+
+	WidgetChat(void) = delete;
 };

@@ -32,7 +32,6 @@ DisplaySdl::DisplaySdl(int width,
     if (SDL_Init(SDL_INIT_VIDEO) < 0 || IMG_Init(IMG_INIT_PNG) < 0)
         this->_error();
 
-
 	boost::filesystem::path pathRoot(NIBBLER_ROOT_PROJECT_PATH);
 
 	if (!(this->_tileset = IMG_Load((pathRoot / "ressources" / "snake_tileset.png").generic_string().c_str())))
@@ -99,7 +98,7 @@ void DisplaySdl::_clean(void)
     SDL_Quit();
 }
 
-void DisplaySdl::render(float currentDelayFrame, float maxDelayFrame) {
+void DisplaySdl::render(float, float) {
     if (this->_rendererTexture)
         SDL_DestroyTexture(this->_rendererTexture);
     this->_rendererTexture = SDL_CreateTextureFromSurface(this->_renderer, this->_rendererSurface);

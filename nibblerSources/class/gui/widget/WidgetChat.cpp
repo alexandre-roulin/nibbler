@@ -1,28 +1,24 @@
 #include "WidgetChat.hpp"
 #include <gui/Core.hpp>
-#include "imgui.h"
 #include <Univers.hpp>
-#include <network/SnakeClient.hpp>
 
 WidgetChat::WidgetChat(Core &core) :
 		AWidget(core) {
-	bzero(_bufferMessage, IM_ARRAYSIZE(_bufferMessage));
+	bzero(bufferMessage_, IM_ARRAYSIZE(bufferMessage_));
 }
-
-WidgetChat::~WidgetChat(void) {}
 
 void WidgetChat::addLog(const char *str, ...) {
 	va_list args;
 
 	va_start(args, str);
-	_bufferChat.appendfv(str, args);
-	_bufferChat.appendfv("\n", args);
+	bufferChat_.appendfv(str, args);
+	bufferChat_.appendfv("\n", args);
 	va_end(args);
-	_scrollChat = true;
+	scrollChat_ = true;
 }
 
 void WidgetChat::clear(void) {
-	_bufferChat.clear();
+	bufferChat_.clear();
 }
 
 void WidgetChat::render(void) {
@@ -34,40 +30,40 @@ void WidgetChat::render(void) {
 	ImGui::BeginChild("scrolling", ImVec2(0, ImGui::GetWindowHeight() - 4 *
 																		ImGui::GetFrameHeightWithSpacing()),
 					  false, ImGuiWindowFlags_HorizontalScrollbar);
-	ImGui::TextUnformatted(_bufferChat.begin());
-	if (_scrollChat)
+	ImGui::TextUnformatted(bufferChat_.begin());
+	if (scrollChat_)
 		ImGui::SetScrollHereY(1.0f);
-	_scrollChat = false;
+	scrollChat_ = false;
 	ImGui::EndChild();
 	ImGui::PushItemWidth(ImGui::GetWindowWidth() * 0.8);
 	if (ImGui::IsRootWindowOrAnyChildFocused() && !ImGui::IsAnyItemActive() && !ImGui::IsMouseClicked(0))
 		ImGui::SetKeyboardFocusHere(0);
-	if (ImGui::InputText("Tap", _bufferMessage,
-						 IM_ARRAYSIZE(_bufferMessage),
+	if (ImGui::InputText("Tap", bufferMessage_,
+						 IM_ARRAYSIZE(bufferMessage_),
 						 ImGuiInputTextFlags_EnterReturnsTrue)) {
 
-		if (!_chatCommand()) {
-			_core.univers.getSnakeClient()->sendDataToServer(ChatInfo(
-					_core.univers.getSnakeClient()->getSnake().name,
-					_bufferMessage
-					), eHeaderK::kChat);
+		if (!chatCommand_()) {
+			core_.univers.getSnakeClient()->sendDataToServer(ChatInfo(
+					core_.univers.getSnakeClient()->getSnake().name,
+					bufferMessage_
+			), eHeaderK::kChat);
 		}
-		bzero(_bufferMessage, IM_ARRAYSIZE(_bufferMessage));
+		bzero(bufferMessage_, IM_ARRAYSIZE(bufferMessage_));
 	}
 	ImGui::End();
 
 }
 
-bool WidgetChat::_chatCommand(void) {
-	if (_bufferMessage[0] != '/')
+bool WidgetChat::chatCommand_(void) {
+	if (bufferMessage_[0] != '/')
 		return (false);
-	if (strstr(_bufferMessage, "/help"))
-		addLog("/help\n/name Aname\n", _bufferMessage);
-	else if (strstr(_bufferMessage, "/name "))
-		_core.univers.getSnakeClient()->changeName(
-				_bufferMessage + sizeof("/name ") - 1);
+	if (strstr(bufferMessage_, "/help"))
+		addLog("/help\n/name Aname\n", bufferMessage_);
+	else if (strstr(bufferMessage_, "/name "))
+		core_.univers.getSnakeClient()->changeName(
+				bufferMessage_ + sizeof("/name ") - 1);
 	else
 		addLog("{%s} n'est pas une commande valide\n",
-					 _bufferMessage);
+			   bufferMessage_);
 	return (true);
 }

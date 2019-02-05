@@ -1,49 +1,46 @@
 #include <Univers.hpp>
 #include <gui/Core.hpp>
 #include "WidgetOption.hpp"
-#include <network/SnakeClient.hpp>
 
 WidgetOption::WidgetOption(Core &core) :
 		AWidget(core),
-		_mapSize(_core.univers.getMapSize()) {
+		mapSize_(core_.univers.getMapSize()) {
 
-	memcpy(_nameBuffer,
-		   _core.univers.getSnakeClient()->getSnake().name, NAME_BUFFER);
+	memcpy(nameBuffer_,
+		   core_.univers.getSnakeClient()->getSnake().name, NAME_BUFFER);
 }
-
-WidgetOption::~WidgetOption(void) {}
 
 void WidgetOption::render(void) {
 	ImGui::Begin("Options", NULL,
 				 ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize |
 				 ImGuiWindowFlags_NoCollapse);
 
-	if (ImGui::InputText("Name", _nameBuffer,
-						 IM_ARRAYSIZE(_nameBuffer),
+	if (ImGui::InputText("Name", nameBuffer_,
+						 IM_ARRAYSIZE(nameBuffer_),
 						 ImGuiInputTextFlags_EnterReturnsTrue)) {
 
-		_core.univers.getSnakeClient()->changeName(_nameBuffer);
-		memcpy(_nameBuffer,
-			   _core.univers.getSnakeClient()->getSnake().name,
+		core_.univers.getSnakeClient()->changeName(nameBuffer_);
+		memcpy(nameBuffer_,
+			   core_.univers.getSnakeClient()->getSnake().name,
 			   NAME_BUFFER);
 	}
 
-	if (ImGui::InputInt("Size map", reinterpret_cast<int *>(&_mapSize), 1,
+	if (ImGui::InputInt("Size map", reinterpret_cast<int *>(&mapSize_), 1,
 						4, ImGuiInputTextFlags_CharsDecimal |
 						   ImGuiInputTextFlags_CharsNoBlank |
 						   ImGuiInputTextFlags_EnterReturnsTrue)) {
-		if (_mapSize < MAP_MIN)
-			_mapSize = MAP_MIN;
-		else if (_mapSize > MAP_MAX)
-			_mapSize = MAP_MAX;
-		_core.univers.getSnakeClient()->changeMapSize(_mapSize);
+		if (mapSize_ < MAP_MIN)
+			mapSize_ = MAP_MIN;
+		else if (mapSize_ > MAP_MAX)
+			mapSize_ = MAP_MAX;
+		core_.univers.getSnakeClient()->changeMapSize(mapSize_);
 	}
 
-	if (_core.univers.isServer()
-		&& _core.univers.getSnakeClient()->allSnakeIsReady()) {
+	if (core_.univers.isServer()
+		&& core_.univers.getSnakeClient()->allSnakeIsReady()) {
 		Core::beginColor(Core::HUE_GREEN);
 		if (ImGui::Button("Run the game")) {
-			_core.univers.getSnakeClient()->sendHostOpenGame();
+			core_.univers.getSnakeClient()->sendHostOpenGame();
 		}
 		Core::endColor();
 	}

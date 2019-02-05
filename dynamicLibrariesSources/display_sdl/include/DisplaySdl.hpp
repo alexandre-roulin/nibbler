@@ -36,7 +36,7 @@ public:
 	virtual ~DisplaySdl(void);
 
 	bool exit(void) const override;
-	void render(float currentDelayFrame, float maxDelayFram) override;
+	void render(float, float) override;
 	void update(float delaTime) override;
 	void drawGrid(MutantGrid< eSprite > const &grid) override;
 	void setBackground(MutantGrid< eSprite > const &grid) override;
