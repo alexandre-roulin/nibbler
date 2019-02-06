@@ -9,9 +9,8 @@ SnakeServer::SnakeServer(
 		pause_(false),
 		port_(port),
 		mapSize_(MAP_DEFAULT),
-		serverTCP_(port,
-				std::bind(&SnakeServer::callbackDeadConnection, this, std::placeholders::_1)
-				)
+		serverTCP_(port,std::bind(&SnakeServer::callbackDeadConnection, this, std::placeholders::_1)),
+		borderless_(false)
 		{
 
 	serverTCP_.addDataType<int16_t >(
@@ -177,6 +176,8 @@ void SnakeServer::callbackAccept(size_t index) {
 	snake_array_[new_id] = Snake::randomSnake(new_id); //TODO CHECK RACE CONDITION
 	snake_array_[new_id].indexConnection = index;
 	serverTCP_.writeDataToOpenConnection(new_id, index, eHeaderK::kId);
+	serverTCP_.writeDataToOpenConnection(borderless_, index, eHeaderK::kBorderless);
+	serverTCP_.writeDataToOpenConnection(mapSize_, index,  eHeaderK::kResizeMap);
 	serverTCP_.writeDataToOpenConnections(snake_array_, eHeaderK::kSnakeArray);
 }
 
@@ -196,13 +197,14 @@ void SnakeServer::callbackPock(char) {
 
 void SnakeServer::callbackBorderless(bool borderless) {
 	log_success("%s", __PRETTY_FUNCTION__ );
-	serverTCP_.writeDataToOpenConnections(borderless, eHeaderK::kBorderless);
+	borderless_ = borderless;
+	serverTCP_.writeDataToOpenConnections(borderless_, eHeaderK::kBorderless);
 }
 
 void SnakeServer::callbackResizeMap(unsigned int mapSize) {
 	log_success("%s", __PRETTY_FUNCTION__ );
 	mapSize_ = mapSize;
-	serverTCP_.writeDataToOpenConnections(mapSize, eHeaderK::kResizeMap);
+	serverTCP_.writeDataToOpenConnections(mapSize_, eHeaderK::kResizeMap);
 }
 
 void SnakeServer::callbackOpenGame(bool openGame) {

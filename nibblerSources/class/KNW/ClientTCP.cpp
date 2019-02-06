@@ -41,6 +41,8 @@ namespace KNW {
 
 	ClientTCP::~ClientTCP() {
 		log_fatal("%s", __PRETTY_FUNCTION__);
+		thread.join();
+		io.reset();
 		try {
 			if (socket_.is_open()) {
 				socket_.shutdown(boost::asio::ip::tcp::socket::shutdown_both);
@@ -55,12 +57,7 @@ namespace KNW {
 	}
 
 	void ClientTCP::disconnect() {
-		try {
-				socket_.shutdown(boost::asio::ip::tcp::socket::shutdown_both);
-				socket_.close();
-		} catch (std::exception const &e) {
-			std::cout << e.what() << std::endl;
-		}
+		iotcp = nullptr;
 	}
 
 }

@@ -57,7 +57,7 @@ struct Snake {
 	direction(kNorth),
 	isAlive(false),
 	isSwitchingLibrary(false),
-	isValid(false){
+	isValid(false) {
 		memset(name, 0, NAME_BUFFER);
 	};
 

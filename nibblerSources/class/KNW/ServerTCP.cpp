@@ -36,9 +36,9 @@ namespace KNW {
 	void ServerTCP::asyncAccept() {
 		acceptor_.async_accept([this](std::error_code ec, tcp::socket socket) {
 			if (ec.value() == 0) {
-					auto it = std::find_if(connections.begin(), connections.end(),
+				auto it = std::find_if(connections.begin(), connections.end(),
 						[](std::shared_ptr<ConnectionTCP> connection){
-							return connection == nullptr || !connection->getSocket_().is_open();
+					return connection == nullptr || !connection->getSocket_().is_open();
 				});
 				*it = std::make_shared<ConnectionTCP>(*this, std::move(socket));
 				std::cout << "New connection" << std::endl;

@@ -98,7 +98,7 @@ public:
 	MutantGrid<eSprite> &getGrid_();
 
 	//Network
-	const std::array<Snake, SNAKE_MAX> getSnakeArray_() const;
+	std::array<Snake, SNAKE_MAX> getSnakeArray_() const;
 
 	SnakeClient *getSnakeClient() const;
 

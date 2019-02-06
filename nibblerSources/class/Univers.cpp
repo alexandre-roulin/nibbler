@@ -257,16 +257,18 @@ void Univers::loop() {
 
 void Univers::loop_world() {
 	log_warn("World is not %s !!!", world_ ? "UP" : "DOWN");
-	if (!openGame_)
+	if (!openGame_ || !getSnakeClient())
 		return;
 	manage_input();
 
-	for (; nextFrame.empty();) {
+	for (; nextFrame.empty() && openGame_ && world_ && getSnakeClient();) {
 		getSnakeClient()->lock();
 //		 std::cout << "Stuck nextFrame" << std::endl;
 		nextFrame = world_->getEventsManager().getEvents<NextFrame>();
 		getSnakeClient()->unlock();
 	}
+	if (!openGame_ || !getSnakeClient())
+		return;
 	nextFrame.clear();
 	world_->getEventsManager().destroy<NextFrame>();
 
@@ -454,8 +456,6 @@ void Univers::delete_client() {
 }
 
 void Univers::finish_game() {
-	if (clientTCP_)
-		clientTCP_->removeSnakeFromGame();
 	cleanAll();
 }
 
@@ -466,7 +466,7 @@ MutantGrid<eSprite> &Univers::getGrid_() {
 	return *grid_;
 }
 
-const std::array<Snake, SNAKE_MAX> Univers::getSnakeArray_() const {
+std::array<Snake, SNAKE_MAX> Univers::getSnakeArray_() const {
 	if (isServer())
 		return serverTCP_->getSnakeArray_();
 	if (getSnakeClient())
@@ -574,6 +574,7 @@ bool Univers::isIASnake(uint16_t client_id) const {
 
 Univers::~Univers() {
 	log_warn("~Univers");
+	cleanAll();
 	clientTCP_ = nullptr;
 	serverTCP_ = nullptr;
 	unload_external_library();
@@ -588,27 +589,32 @@ bool Univers::isOpenGame_() const {
 	return openGame_;
 }
 
-void Univers::setOpenGame_(bool openGame_) {
-	Univers::openGame_ = openGame_;
+void Univers::setOpenGame_(bool openGame) {
+	Univers::openGame_ = openGame;
 }
 
 void Univers::cleanAll() {
 	openGame_ = false;
+	timer_loop.wait();
+	timer_start.wait();
+	thread.join();
 	io_loop.reset();
 	io_start.reset();
-	timer_loop.wait();
 	timer_loop.cancel();
-	timer_start.wait();
 	timer_start.cancel();
-	thread.join();
 	switchLib = false;
 	nextFrame.clear();
 	world_ = nullptr;
 	log_info("getSnakeClient(%d) && !getSnakeClient()->isConnect(%d)",
-			getSnakeClient() != nullptr , !getSnakeClient()->isConnect());
+			getSnakeClient() != nullptr , getSnakeClient() ? !getSnakeClient()->isConnect() : -42);
 	if (getSnakeClient() && !getSnakeClient()->isConnect()) {
 		delete_server();
 		delete_client();
+		for (Snake &snake: getSnakeArray_()) {
+			log_fatal("Snake [%d]isValid?[%d]", snake.id, snake.isValid);
+		}
+		borderless = false;
+		mapSize = MAP_DEFAULT;
 	}
 	core_ = nullptr;
 	grid_ = nullptr;

@@ -66,7 +66,7 @@ private:
 	unsigned int mapSize_;
 	KNW::ServerTCP serverTCP_;
 	std::array<Snake, SNAKE_MAX> snake_array_;
-
+	bool borderless_;
 };
 
 

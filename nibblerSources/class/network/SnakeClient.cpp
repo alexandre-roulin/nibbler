@@ -232,6 +232,7 @@ void SnakeClient::callbackRemoveSnake(int16_t) {
 void SnakeClient::callbackDeadConnection() {
 	log_success("%s", __PRETTY_FUNCTION__ );
 	univers_.setOpenGame_(false);
+	clientTCP_.disconnect();
 }
 
 void SnakeClient::callbackPock(char) {
