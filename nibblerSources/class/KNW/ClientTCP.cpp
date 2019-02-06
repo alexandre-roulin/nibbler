@@ -36,7 +36,7 @@ namespace KNW {
 	}
 
 	bool ClientTCP::isConnect() const {
-		return socket_.is_open();
+		return iotcp != nullptr && iotcp->isConnect();
 	}
 
 	ClientTCP::~ClientTCP() {

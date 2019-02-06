@@ -54,8 +54,6 @@ public:
 
 	void connect(std::string dns, std::string port);
 
-	void disconnect();
-
 	void removeSnakeFromGame();
 
 	virtual ~SnakeClient();

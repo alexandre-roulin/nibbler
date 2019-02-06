@@ -604,6 +604,8 @@ void Univers::cleanAll() {
 	switchLib = false;
 	nextFrame.clear();
 	world_ = nullptr;
+	log_info("getSnakeClient(%d) && !getSnakeClient()->isConnect(%d)",
+			getSnakeClient() != nullptr , !getSnakeClient()->isConnect());
 	if (getSnakeClient() && !getSnakeClient()->isConnect()) {
 		delete_server();
 		delete_client();

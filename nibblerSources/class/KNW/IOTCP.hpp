@@ -27,12 +27,12 @@ namespace KNW {
 
 		void readSocketHeader();
 
-	private:
-	public:
 		const tcp::socket &getSocket_() const;
 
-	private:
+		virtual ~IOTCP();
 
+		bool isConnect() const;
+	private:
 		void checkError(boost::system::error_code const &error_code);
 
 		void readSocketData(DataTCP::Header header);

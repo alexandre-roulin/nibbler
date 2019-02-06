@@ -54,6 +54,8 @@ namespace KNW {
 	}
 
 	ServerTCP::~ServerTCP() {
+		connections.fill(nullptr);
+		thread.join();
 		io_service_.stop();
 		acceptor_.cancel();
 		acceptor_.close();

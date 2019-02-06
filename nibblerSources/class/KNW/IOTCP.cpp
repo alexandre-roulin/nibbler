@@ -92,8 +92,7 @@ void KNW::IOTCP::writeSocket(std::string data) {
 void KNW::IOTCP::checkError(boost::system::error_code const &error_code) {
 //	log_fatal("%s %d", __PRETTY_FUNCTION__, error_code.value());
 	try {
-		if ((boost::asio::error::eof == error_code) ||
-			(boost::asio::error::connection_reset == error_code)) {
+		if (error_code.value() != 0) {
 			socket_.shutdown(boost::asio::ip::tcp::socket::shutdown_both);
 			socket_.close();
 			if (callbackDeadSocket_)
@@ -108,4 +107,24 @@ void KNW::IOTCP::checkError(boost::system::error_code const &error_code) {
 
 const tcp::socket &KNW::IOTCP::getSocket_() const {
 	return socket_;
+}
+
+KNW::IOTCP::~IOTCP() {
+	log_warn("%s %d", __PRETTY_FUNCTION__, socket_.is_open());
+	try {
+		if (socket_.is_open()) {
+			socket_.shutdown(boost::asio::ip::tcp::socket::shutdown_both);
+			socket_.close();
+		}
+		if (callbackDeadSocket_)
+			callbackDeadSocket_();
+	} catch (std::exception const &e) {
+		if (callbackDeadSocket_)
+			callbackDeadSocket_();
+		std::cout << e.what() << std::endl;
+	}
+}
+
+bool KNW::IOTCP::isConnect() const {
+	return socket_.is_open();
 }

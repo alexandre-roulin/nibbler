@@ -207,6 +207,7 @@ void SnakeClient::changeIsBorderless(bool borderless) {
 
 
 bool SnakeClient::isConnect() const {
+//	log_warn("%s %d", __PRETTY_FUNCTION__, clientTCP_.isConnect());
 	return clientTCP_.isConnect();
 }
 
@@ -356,10 +357,6 @@ void SnakeClient::callbackSnakeArray(std::array<Snake, SNAKE_MAX> new_snake_arra
 	mutex_.lock();
 	snake_array_ = new_snake_array;
 	mutex_.unlock();
-}
-
-void SnakeClient::disconnect() {
-	clientTCP_.disconnect();
 }
 
 bool SnakeClient::isReady() const {
