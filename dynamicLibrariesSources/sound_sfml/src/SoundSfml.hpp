@@ -30,8 +30,8 @@ public:
 	SoundSfml(void) = default;
 
 	~SoundSfml(void) override = default;
-
-	void setMusic(char const *path) override;
+	
+	void setMusic(std::string const &path) override;
 
 	void playMusic(void) override;
 

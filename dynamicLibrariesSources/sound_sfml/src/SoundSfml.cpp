@@ -9,7 +9,7 @@ void deleteSound(ISound *sound) {
 	delete sound;
 }
 
-void SoundSfml::setMusic(char const *path) {
+void SoundSfml::setMusic(std::string const &path) {
 	if (!music_.openFromFile(path))
 		throw (SoundSfml::SfmlSoundException("Background music, cant be loaded"));
 }

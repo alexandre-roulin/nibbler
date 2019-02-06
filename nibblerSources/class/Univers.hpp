@@ -69,6 +69,8 @@ public:
 
 	void refreshTimerLoopWorld();
 
+	void addNoise(std::string const &path);
+
 	void playNoise(eSound e) const;
 
 	void playMusic(std::string const &path) const;

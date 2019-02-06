@@ -21,12 +21,12 @@ SoundSdl::~SoundSdl(void) {
 	clean_();
 }
 
-void SoundSdl::setMusic(char const *path) {
+void SoundSdl::setMusic(std::string const &path) {
 	if (music_) {
 		Mix_FreeMusic(music_);
 		music_ = nullptr;
 	}
-	if (!(music_ = Mix_LoadMUS(path)))
+	if (!(music_ = Mix_LoadMUS(path.c_str())))
 		throw (SoundSdl::SdlSoundException("Background music, cannot be loaded"));
 }
 

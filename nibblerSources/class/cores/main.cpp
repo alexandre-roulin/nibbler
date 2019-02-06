@@ -29,19 +29,18 @@ std::ostream &operator<<(std::ostream &os, const Snake &snake) {
 	return os;
 }
 
-/*
-	univers.getSound().addNoise(
-			std::string("./ressource/sound/appear-online.ogg"));
-	univers.getSound().addNoise(std::string("./ressource/sound/yes-2.wav"));
-	univers.getSound().addNoise(std::string("./ressource/sound/click.wav"));
-	univers.getSound().addNoise(
-			std::string("./ressource/sound/slime10.wav"));
-	univers.getSound().addNoise(std::string("./ressource/sound/hit17.ogg"));
-	univers.getSound().setMusic("./ressource/sound/zelda.ogg");
-	univers.getSound().playMusic();
-*/
-
 void nibbler(Univers &univers) {
+
+
+	boost::filesystem::path pathSound(NIBBLER_ROOT_PROJECT_PATH);
+	pathSound = pathSound / "ressouces" / "sound";
+	
+	univers.addNoise((pathSound / "appear-online.ogg").generic_string());
+	univers.addNoise((pathSound / "yes-2.wav").generic_string());
+	univers.addNoise((pathSound / "click.wav").generic_string());
+	univers.addNoise((pathSound / "slime10.wav").generic_string());
+	univers.addNoise((pathSound / "hit17.ogg").generic_string());
+	univers.playMusic((pathSound / "zelda.ogg").generic_string());
 	while (1) {
 
 		univers.create_ui();

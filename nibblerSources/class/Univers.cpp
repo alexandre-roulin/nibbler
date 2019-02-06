@@ -32,7 +32,7 @@ Univers::Univers()
 		  world_(nullptr),
 		  serverTCP_(nullptr),
 		  clientTCP_(nullptr),
-		  core_(nullptr), //std::make_unique<Core>(*this)
+		  core_(nullptr),
 		  grid_(nullptr),
 		  mapSize(MAP_DEFAULT),
 		  gameSpeed(100),
@@ -43,7 +43,6 @@ Univers::Univers()
 		  borderless(false),
 		  openGame_(false),
 		  kDisplay(eDisplay::kExternSfmlLibrary) {
-
 		  }
 
 /** External Library Management **/
@@ -249,7 +248,7 @@ void Univers::loop() {
 		display->render(0.017f, 1.f);
 //			display->update(0.2f);
 //			display->drawGrid(world_->grid);
-			//display->render(current.count(), gameSpeed);
+//			display->render(current.count(), gameSpeed);
 //			display->render(gameSpeed, gameSpeed);
 		if (current >= std::chrono::milliseconds(gameSpeed)) {
 			current = std::chrono::milliseconds(0);
@@ -528,12 +527,17 @@ bool Univers::isOnlyIA() const {
 
 /** Sound **/
 
+void Univers::addNoise(std::string const &path) {
+	std::cout << "Y\n";
+	if (sound && flag.test(eFlag::SOUND)) {
+		std::cout << "I\n";
+		sound->addNoise(path);
+	}
+}
 void Univers::playNoise(eSound e) const {
 	if (sound && flag.test(eFlag::SOUND))
 		sound->playNoise(static_cast<int>(e));
 }
-
-
 void Univers::playMusic(std::string const &path) const {
 	if (sound && flag.test(eFlag::SOUND)) {
 		sound->setMusic(path.c_str());
@@ -547,16 +551,16 @@ Core *Univers::releaseCore_() {
 }
 
 void Univers::setFlag(eFlag flag) {
-	this->flag.set(flag);
+	flag.set(flag);
 }
 
 void Univers::unsetFlag(eFlag flag) {
-	this->flag.reset(flag);
+	flag.reset(flag);
 }
 
 
 bool Univers::testFlag(eFlag flag) {
-	return (this->flag.test(flag));
+	return (flag.test(flag));
 }
 
 /** Error **/

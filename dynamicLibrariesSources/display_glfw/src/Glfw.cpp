@@ -20,6 +20,7 @@ Glfw::Glfw(std::string const &name, uint16_t width, uint16_t height) :
     glfwSwapInterval(0);
 
 	glfwSetKeyCallback(window_, Glfw::callbackKey_);
+    glfwSetCursorPosCallback(window_, Glfw::mouseCallback_);
 
     Glfw::glfwByWindow_.insert(std::pair<GLFWwindow*, Glfw&>(window_, *this));
 }
@@ -97,3 +98,25 @@ Glfw::ConstructorException::ConstructorException(Glfw::ConstructorException cons
 { this->_error = src._error; }
 const char	*Glfw::ConstructorException::what() const noexcept
 { return (this->_error.c_str()); }
+
+bool        Glfw::firstMouse_ = true;
+bool        Glfw::mouseCallbackCalled_ = false;
+float       Glfw::lastX_ = DISPLAY_GLFW_WIN_WIDTH / 2.0f;
+float       Glfw::lastY_ = DISPLAY_GLFW_WIN_HEIGHT / 2.0f;
+float       Glfw::offsetX_ = 0.f;
+float       Glfw::offsetY_ = 0.f;
+
+void Glfw::mouseCallback_(GLFWwindow *window, double xpos, double ypos) {
+    if (Glfw::firstMouse_) {
+        Glfw::lastX_ = static_cast<float>(xpos);
+        Glfw::lastY_ = static_cast<float>(ypos);
+        Glfw::firstMouse_ = false;
+    }
+
+    Glfw::offsetX_ = static_cast<float>(xpos - Glfw::lastX_);
+    Glfw::offsetY_ = static_cast<float>(Glfw::lastY_ - ypos);
+
+    Glfw::lastX_ = static_cast<float>(xpos);
+    Glfw::lastY_ = static_cast<float>(ypos);
+    mouseCallbackCalled_ = true;
+}

@@ -25,8 +25,6 @@
 #include "Material.hpp"
 #include "Light.hpp"
 
-#define DISPLAY_GLFW_WIN_WIDTH 1024
-#define DISPLAY_GLFW_WIN_HEIGHT 720
 #define FLAG_LINE 2
 
 class DisplayGlfw : public Glfw, public IDisplay {
@@ -127,14 +125,6 @@ private:
 
 	std::map< eSprite, Material >		materialMap_;
 	void constructMaterialMap_();
-
-	static float				lastX_;
-	static float				lastY_;
-	static float				offsetX_;
-	static float				offsetY_;
-	static bool					firstMouse_;
-	static bool					mouseCallbackCalled_;
-	static void					mouseCallback_(GLFWwindow* window, double xpos, double ypos);
 };
 
 extern "C" {
