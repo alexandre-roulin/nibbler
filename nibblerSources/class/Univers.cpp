@@ -361,7 +361,7 @@ void Univers::callbackAction(eAction action) {
 			create_server();
 			break;
 		case eAction::kDeleteServer :
-			delete_client();
+			delete_server();
 			break;
 		case eAction::kCreateIA :
 			create_ia();

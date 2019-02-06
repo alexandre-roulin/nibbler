@@ -187,7 +187,7 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 
 				if (univers.isServer()) {
 
-					uint16_t  nu_ = std::count_if(snake_array_.begin(), snake_array_.end(), [](auto snake){ return snake.id != -1;});
+					uint16_t  nu_ = std::count_if(snake_array_.begin(), snake_array_.end(), [](auto snake){ return snake.isValid;});
 					int max_food = (nu_ > 1 ? nu_ - 1 : nu_);
 					log_warn("Number of food %d", max_food);
 

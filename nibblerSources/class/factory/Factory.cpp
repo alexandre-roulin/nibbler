@@ -21,7 +21,7 @@ void Factory::create_all_snake(std::array<Snake, SNAKE_MAX> snake_array, int16_t
 
 	std::for_each(snake_array.begin(), snake_array.end(),
 			[this, nu](Snake const &snake){
-		if (snake.id != -1) create_snake(snake,nu);
+		if (snake.isValid) create_snake(snake,nu);
 	});
 	if (!univers_.isBorderless())
 		create_walls();

@@ -49,13 +49,15 @@ enum ePriority {
 
 struct Snake {
 	Snake() :
+
 	sprite(eSprite::BLUE),
 	isReady(false),
 	id(-1),
 	isUpdate(false),
 	direction(kNorth),
 	isAlive(false),
-	isSwitchingLibrary(false) {
+	isSwitchingLibrary(false),
+	isValid(false){
 		memset(name, 0, NAME_BUFFER);
 	};
 
@@ -68,19 +70,8 @@ struct Snake {
 	bool isAlive;
 	bool isSwitchingLibrary;
 	size_t indexConnection;
+	bool isValid;
 	friend std::ostream &operator<<(std::ostream &os, const Snake &snake);
-
-	void reset() {
-		memset(name, 0, NAME_BUFFER);
-		sprite = eSprite::GREEN;
-		isReady = false;
-		id = -1;
-		isUpdate = false;
-		direction = kNorth;
-		isAlive = false;
-		isSwitchingLibrary = false;
-		indexConnection = -1;
-	}
 
 	Snake &operator=(Snake const &snake) {
 		if (this != &snake) {
@@ -93,6 +84,7 @@ struct Snake {
 			isAlive = snake.isAlive;
 			isSwitchingLibrary = snake.isSwitchingLibrary;
 			indexConnection = snake.indexConnection;
+			isValid = snake.isValid;
 		}
 		return *this;
 	}
@@ -105,15 +97,8 @@ struct Snake {
 		snake.id = id;
 		snake.isAlive = true;
 		snake.isSwitchingLibrary = false;
+		snake.isValid = true;
 		return (snake);
-	}
-
-	static int allSnakesReady(Snake const *snakes) {
-		for (unsigned int i = 0; i < SNAKE_MAX; i++) {
-			if (snakes[i].id != -1 && !snakes[i].isReady)
-				return (false);
-		}
-		return (true);
 	}
 
 	static std::string const basicName[SNAKE_MAX_NAME];

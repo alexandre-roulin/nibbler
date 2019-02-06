@@ -138,7 +138,7 @@ uint16_t SnakeClient::getId_() const {
 bool SnakeClient::allSnakeIsDead() const {
 	return std::none_of(snake_array_.begin(), snake_array_.end(),
 			[](Snake const &snake){
-				return snake.id != -1 && snake.isAlive;
+				return snake.isValid && snake.isAlive;
 	});
 }
 
@@ -181,7 +181,7 @@ void SnakeClient::changeMapSize(unsigned int size) {
 bool SnakeClient::allSnakeIsReady() const {
 	return std::none_of(snake_array_.begin(), snake_array_.end(),
 								  [](Snake const &snake){
-									  return snake.id != -1 && snake.isReady;
+									  return snake.isValid && snake.isReady;
 								  });;
 }
 

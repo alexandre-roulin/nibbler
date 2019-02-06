@@ -108,9 +108,9 @@ KStar::Vec2 &KStar::Vec2::operator=(const KStar::Vec2 &rhs) {
 
 KStar::KStar() :
 		direction(8),
+		closeMap_(0),
 		openMap_(0),
-		collision_(0),
-		closeMap_(0){
+		collision_(0) {
 
 }
 
@@ -206,9 +206,9 @@ bool KStar::isOverflow(KStar::Vec2 v) {
 void KStar::setWorldSize(KStar::Vec2 worldSize) {
 	worldSize_ = worldSize;
 
-	openMap_.resize(worldSize.x * worldSize.y);
-	collision_.resize(worldSize.x * worldSize.y);
-	closeMap_.resize(worldSize.x * worldSize.y);
+	openMap_ = MutantGrid<KStar::Node>(worldSize.x, worldSize.y);
+	closeMap_ = MutantGrid<KStar::Node>(worldSize.x, worldSize.y);
+	collision_ = MutantGrid<bool>(worldSize.x, worldSize.y);
 }
 
 

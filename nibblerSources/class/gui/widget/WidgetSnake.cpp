@@ -13,7 +13,7 @@ WidgetSnake::WidgetSnake(Core &core,
 }
 
 void WidgetSnake::render(void) {
-	if (snake_.id == -1)
+	if (!snake_.isValid)
 		return;
 	if (isYourSnake_)
 		renderYourSnake_();

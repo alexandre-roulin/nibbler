@@ -52,7 +52,7 @@ void WidgetLobby::render(void) {
 	sf::Vector2<unsigned int> percentPlaceOfSnake;
 
 	_reload();
-	for (size_t i = 0; i < snakeWidget_.size() && snakes_[i].id != -1; i++) {
+	for (size_t i = 0; i < snakeWidget_.size() && snakes_[i].isValid; i++) {
 		percentPlaceOfSnake.x = ((100 / placesForSnakes.x) * (i % placesForSnakes.x));
 		percentPlaceOfSnake.y = ((50 / placesForSnakes.y) * (i / placesForSnakes.x));
 		ImGui::SetNextWindowPos(core_.positionByPercent(percentPlaceOfSnake));

@@ -28,10 +28,9 @@ Bobby::Bobby(Univers &univers)
 void Bobby::buildIA() {
 	mapSize = univers_.getMapSize();
 	kStar.setDiagonalMovement(false);
-	kStar.setHeuristic(KStar::Heuristic::manhattan);
+	kStar.setHeuristic(KStar::Heuristic::euclidean);
 	baseIndex = (univers_.isBorderless() ? 3 : 1);
-	unsigned int size = (univers_.isBorderless() ?
-						 univers_.getMapSize() * 3 : univers_.getMapSize());
+	unsigned int size = (univers_.isBorderless() ? mapSize * 3 : mapSize);
 	kStar.setWorldSize(KStar::Vec2(size,size));
 }
 
