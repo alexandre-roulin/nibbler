@@ -324,14 +324,14 @@ void DisplayGlfw::drawHelpLineSnake_() {
 	ActModel line(actBlock_);
 	eSprite to = (yourSnakeSprite & eSprite::MASK_TO) >> eSprite::BITWISE_TO;
 	if (to != eSprite::NORTH) {
-		for (int y = yourSnakeY; y < winTileSize_.getY(); ++y) {
+		for (int y = yourSnakeY + 1; y < winTileSize_.getY(); ++y) {
 			line.translate(glm::vec3(0.f, 1.f, 0.f));
 			line.render(shader_);
 		}
 	}
 	line.setPosition(actBlock_.getPosition());
 	if (to != eSprite::SOUTH) {
-		for (int y = yourSnakeY; y != -1; --y) {
+		for (int y = yourSnakeY; y; --y) {
 			line.translate(glm::vec3(0.f, -1.f, 0.f));
 			line.render(shader_);
 		}
@@ -345,7 +345,7 @@ void DisplayGlfw::drawHelpLineSnake_() {
 	}
 	line.setPosition(actBlock_.getPosition());
 	if (to != eSprite::WEST) {
-		for (int x = yourSnakeX; x < winTileSize_.getX(); ++x) {
+		for (int x = yourSnakeX + 1; x < winTileSize_.getX(); ++x) {
 			line.translate(glm::vec3(1.f, 0.f, 0.f));
 			line.render(shader_);
 		}

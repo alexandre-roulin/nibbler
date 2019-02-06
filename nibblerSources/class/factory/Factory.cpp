@@ -48,7 +48,7 @@ void Factory::create_snake(Snake const &snake, int max_snakes) {
 			new_snake.addComponent<CollisionComponent>();
 			new_snake.addComponent<SpriteComponent>(eSprite::HEAD | snake.sprite, SPECIFIC_LAST);
 			new_snake.addComponent<PositionComponent>(base_x, base_y);
-			univers_.getGrid_()(base_x, base_y) = eSprite::HEAD | snake.sprite;
+			//univers_.getGrid_()(base_x, base_y) = eSprite::HEAD | snake.sprite;
 			log_warn("Factory::creationHead x[%d] y[%d] id[%d] tag[%d]",base_x, base_y,snake.id,  eTag::HEAD_TAG + snake.id);
 		}
 		else if (index == 3) {
@@ -57,14 +57,14 @@ void Factory::create_snake(Snake const &snake, int max_snakes) {
 			new_snake.addComponent<CollisionComponent>();
 			new_snake.addComponent<SpriteComponent>(eSprite::TAIL | snake.sprite, SPECIFIC_LAST);
 			new_snake.addComponent<PositionComponent>(base_x + 1, base_y);
-			univers_.getGrid_()(base_x + 1, base_y) = eSprite::TAIL | snake.sprite;
+			//univers_.getGrid_()(base_x + 1, base_y) = eSprite::TAIL | snake.sprite;
 			log_warn("Factory::creationTail x[%d] y[%d] id[%d] tag[%d]",base_x + 1, base_y,snake.id, eTag::TAIL_TAG + snake.id);
 		}
 		else {
 			new_snake.addComponent<FollowComponent>(snake_follow.getId(), false);
 			new_snake.addComponent<CollisionComponent>();
 			new_snake.addComponent<PositionComponent>(base_x + (index - 1), base_y + 1);
-			univers_.getGrid_()(base_x + (index - 1), base_y + 1) = eSprite::BODY | snake.sprite;
+			//univers_.getGrid_()(base_x + (index - 1), base_y + 1) = eSprite::BODY | snake.sprite;
 			new_snake.addComponent<SpriteComponent>(eSprite::BODY | snake.sprite, MINOR_PRIORITY);
 			log_warn("Factory::creationBody x[%d] y[%d]",base_x + (index - 1), base_y + 1);
 		}

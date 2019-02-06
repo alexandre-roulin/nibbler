@@ -35,7 +35,7 @@ Univers::Univers()
 		  core_(nullptr), //std::make_unique<Core>(*this)
 		  grid_(nullptr),
 		  mapSize(MAP_DEFAULT),
-		  gameSpeed(80),
+		  gameSpeed(100),
 		  dlHandleDisplay(nullptr),
 		  dlHandleSound(nullptr),
 		  display(nullptr),
@@ -176,6 +176,10 @@ void Univers::new_game() {
 	world_->getSystemsManager().addSystem<FoodEatSystem>();
 
 	manage_start();
+
+	world_->update();
+	world_->getSystemsManager().getSystem<SpriteSystem>().update();
+	world_->getSystemsManager().getSystem<RenderSystem>().update();
 
 	timer_loop.async_wait(boost::bind(&Univers::loop_world, this));
 	thread = boost::thread(

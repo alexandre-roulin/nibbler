@@ -6,6 +6,7 @@
 class Display2D {
 public:
 	Display2D() {};
+
 	virtual ~Display2D() {};
 
 	static void debugSpriteSnake(eSprite sprite) {
@@ -44,6 +45,10 @@ public:
 		std::cout << "::  : [" << c << "]" << std::endl;
 	}
 
+	static int getSpriteSnakeByColor(eSprite color, int part) {
+		return (SIZE_LINE_TILESET *
+				(static_cast<int>(color & eSprite::MASK_COLOR) - 1) + part);
+	}
 
 	static int getSpriteSnake(eSprite sprite) {
 
@@ -58,46 +63,29 @@ public:
 			return (SPRITE_FOOD);
 		}
 		if ((sprite & eSprite::MASK_BODY) == eSprite::HEAD)
-			return (SIZE_LINE_TILESET *
-					(static_cast<int>(sprite & eSprite::MASK_COLOR) - 1) + 5 +
-					direction_(to));
+			return getSpriteSnakeByColor(sprite, 5 + direction_(to));
 		if ((sprite & eSprite::MASK_BODY) == eSprite::BODY) {
 
 			if (from == to && (from == eSprite::NORTH || from == eSprite::SOUTH))
-				return (SIZE_LINE_TILESET *
-						(static_cast<int>(sprite & eSprite::MASK_COLOR) - 1) + 14);
+				return getSpriteSnakeByColor(sprite, 14);
 			else if (from == to && (from == eSprite::EAST || from == eSprite::WEST))
-				return (SIZE_LINE_TILESET *
-						(static_cast<int>(sprite & eSprite::MASK_COLOR) - 1) + 13);
-
+				return getSpriteSnakeByColor(sprite, 13);
 			else if (from == eSprite::NORTH && to == eSprite::EAST)
-				return (SIZE_LINE_TILESET *
-						(static_cast<int>(sprite & eSprite::MASK_COLOR) - 1) + 1);
+				return getSpriteSnakeByColor(sprite, 1);
 			else if (from == eSprite::NORTH && to == eSprite::WEST)
-				return (SIZE_LINE_TILESET *
-						(static_cast<int>(sprite & eSprite::MASK_COLOR) - 1) + 2);
-
+				return getSpriteSnakeByColor(sprite, 2);
 			else if (from == eSprite::SOUTH && to == eSprite::EAST)
-				return (SIZE_LINE_TILESET *
-						(static_cast<int>(sprite & eSprite::MASK_COLOR) - 1) + 3);
+				return getSpriteSnakeByColor(sprite, 3);
 			else if (from == eSprite::SOUTH && to == eSprite::WEST)
-				return (SIZE_LINE_TILESET *
-						(static_cast<int>(sprite & eSprite::MASK_COLOR) - 1) + 4);
-
+				return getSpriteSnakeByColor(sprite, 4);
 			else if (from == eSprite::WEST && to == eSprite::SOUTH)
-				return (SIZE_LINE_TILESET *
-						(static_cast<int>(sprite & eSprite::MASK_COLOR) - 1) + 1);
+				return getSpriteSnakeByColor(sprite, 1);
 			else if (from == eSprite::EAST && to == eSprite::SOUTH)
-				return (SIZE_LINE_TILESET *
-						(static_cast<int>(sprite & eSprite::MASK_COLOR) - 1) + 2);
-
+				return getSpriteSnakeByColor(sprite, 2);
 			else if (from == eSprite::WEST && to == eSprite::NORTH)
-				return (SIZE_LINE_TILESET *
-						(static_cast<int>(sprite & eSprite::MASK_COLOR) - 1) + 3);
+				return getSpriteSnakeByColor(sprite, 3);
 			else if (from == eSprite::EAST && to == eSprite::NORTH)
-				return (SIZE_LINE_TILESET *
-						(static_cast<int>(sprite & eSprite::MASK_COLOR) - 1) + 4);
-
+				return getSpriteSnakeByColor(sprite, 4);
 			else
 				return (SIZE_LINE_TILESET);
 		}
@@ -122,5 +110,6 @@ private:
 	}
 
 	Display2D(Display2D const &src) = delete;
+
 	Display2D &operator=(Display2D const &src) = delete;
 };

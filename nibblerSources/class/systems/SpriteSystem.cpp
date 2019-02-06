@@ -15,6 +15,13 @@ eSprite SpriteSystem::spriteDirection(PositionComponent &actual,
 
 	res.x = actual.x - follow.x;
 	res.y = actual.y - follow.y;
+
+	//Borderless : Position of Follow can be opposite of Actual
+	if ((res.y && std::abs(res.y) != 1) || (res.x && std::abs(res.x) != 1)) {
+		res.x = res.x * -1;
+		res.y = res.y * -1;
+	}
+
 	if (res.y < 0)
 		return (eSprite::SOUTH);
 	else if (res.x > 0)
