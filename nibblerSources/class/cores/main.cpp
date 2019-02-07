@@ -31,7 +31,7 @@ void nibbler(Univers &univers) {
 
 
 	boost::filesystem::path pathSound(NIBBLER_ROOT_PROJECT_PATH);
-	pathSound = pathSound / "ressouces" / "sound";
+	pathSound = pathSound / "ressources" / "sound";
 	
 	univers.addNoise((pathSound / "appear-online.ogg").generic_string());
 	univers.addNoise((pathSound / "yes-2.wav").generic_string());
@@ -48,7 +48,7 @@ void nibbler(Univers &univers) {
 		if (core)
 			delete core;
 		if (univers.isOpenGame_()) {
-//			univers.load_extern_lib_display(Univers::kExternSfmlLibrary);
+//			univers.load_extern_lib_display(Univers::kDisplaySfmlLibrary);
 			univers.new_game();
 		}
 	}
@@ -185,7 +185,7 @@ int main(int argc, char **argv) {
 		Univers univers;
 
 		boost::program_options::options_description desc("Options");
-		desc.add_options() // <- Retourne une reference ! OP
+		desc.add_options()
 				("help", "Print help messages")
 				("sound", "enable the sound");
 
@@ -200,9 +200,8 @@ int main(int argc, char **argv) {
 						  << desc << std::endl;
 				return (0);
 			}
-			if (vm.count("sound")) {
-				univers.setFlag(Univers::SOUND);
-			}
+			if (vm.count("sound"))
+				univers.load_extern_lib_sound(Univers::eSound::kSoundSfmlLibrary);
 			boost::program_options::notify(vm);
 		}
 		catch (const boost::program_options::error &e) {

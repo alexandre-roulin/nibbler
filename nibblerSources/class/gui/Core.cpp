@@ -25,7 +25,12 @@ ImGuiIO			&Core::_createContext(void)
 {
 	_win.setFramerateLimit(60);
 	ImGui::SFML::Init(_win);
-	//ImGui::CreateContext();
+
+	// Give Focus on Widow
+	sf::Event event;
+	event.type = sf::Event::GainedFocus;
+	ImGui::SFML::ProcessEvent(event);
+
 	return (ImGui::GetIO());
 }
 
@@ -93,7 +98,6 @@ void			Core::aState(void)
 		sf::Event event;
 		while (_win.pollEvent(event))
 		{
-//			std::cout << "KeyPressed[" << (event.type == sf::Event::KeyPressed) << "] >> "  << event.key.code << std::endl;
 			if (event.type == sf::Event::KeyPressed) {
 
 				switch (event.key.code) {

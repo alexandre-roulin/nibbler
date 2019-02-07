@@ -9,8 +9,6 @@
 #define PATH_TILESET "snake_tileset.png"
 #define SIZE_LINE_TILESET 15
 
-#define MUSIC_ZELDA "sound/zelda.ogg"
-
 #define DISPLAY_DEFAULT_TILESET_PATH "snake_tileset.png"
 #define DISPLAY_DEFAULT_TILE_SIZE 32
 

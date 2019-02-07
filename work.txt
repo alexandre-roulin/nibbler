@@ -14,6 +14,6 @@
 [ 19:50:13 ] (l.545) Univers.cpp          -> ~Univers::clientTCP_::destroy
 [ 19:50:14 ] (l.548) Univers.cpp          -> ~Univers::serverTCP_ ::destroy
 [ 19:50:14 ] (l.121) Univers.cpp          -> Univers::unload_external_library
-[ 19:50:14 ] (l.133) Univers.cpp          -> Univers::unload_external_library.unlock()
+[ 19:50:14 ] (l.133) Univers.cpp          -> Univers::unload_external_display_library.unlock()
 [ 19:50:14 ] (l.553) Univers.cpp          -> ~Univers.end()
 [ 19:50:14 ] (l.183) main.cpp             -> main.return()

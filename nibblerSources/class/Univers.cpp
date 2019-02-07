@@ -38,7 +38,8 @@ const std::string Univers::WarningRequiredAtLeastOneClient = "You need to have a
 
 Univers::Univers()
 		: pathRoot_(NIBBLER_ROOT_PROJECT_PATH),
-			switchLib(false),
+		  flag_(0),
+		  switchLib(false),
 		  timer_loop(boost::asio::deadline_timer(io_loop)),
 		  timer_start(boost::asio::deadline_timer(io_start)),
 		  world_(nullptr),
@@ -54,7 +55,7 @@ Univers::Univers()
 		  sound(nullptr),
 		  borderless(false),
 		  openGame_(false),
-		  kDisplay(eDisplay::kExternSfmlLibrary) {
+		  kDisplay(eDisplay::kDisplaySfmlLibrary) {
 		  }
 
 /** External Library Management **/
@@ -83,6 +84,37 @@ bool Univers::load_external_sound_library(std::string const &library_path) {
 	return (sound = newSound(library_path.c_str())) != nullptr;
 }
 
+bool Univers::load_extern_lib_sound(Univers::eSound eLib) {
+	flag_.set(eFlag::SOUND);
+	switch (eLib) {
+		case kSoundSdlLibrary : {
+			log_success("Univers::load_extern_lib_sound.kSoundSdlLibrary");
+		}
+		case kSoundSfmlLibrary : {
+			log_success("Univers::load_extern_lib_sound.kSoundSfmlLibrary");
+			return load_external_sound_library(boost::filesystem::path(PATH_SOUND_LIBRARY_SFML).generic_string());
+		}
+	}
+	flag_.reset(eFlag::SOUND);
+	return false;
+}
+
+void Univers::unload_external_sound_library() {
+	log_error("Univers::unload_external_sound_library");
+	if (sound != nullptr && dlHandleSound != nullptr) {
+		if (deleteSound) {
+			deleteSound(sound);
+			deleteSound = nullptr;
+			newSound = nullptr;
+			sound = nullptr;
+		}
+		dlclose(dlHandleSound);
+		dlHandleSound = nullptr;
+		flag_.reset(eFlag::SOUND);
+	}
+	log_error("Univers::unload_external_sound_library.unlock()");
+}
+
 bool Univers::load_external_display_library(std::string const &title,
 											std::string const &libPath) {
 
@@ -105,31 +137,31 @@ bool Univers::load_external_display_library(std::string const &title,
 
 bool Univers::load_extern_lib_display(Univers::eDisplay eLib) {
 	switch (eLib) {
-		case kExternSfmlLibrary : {
-			log_success("Univers::load_extern_lib_display.kExternSfmlLibrary");
+		case kDisplaySfmlLibrary : {
+			log_success("Univers::load_extern_lib_display.kDisplaySfmlLibrary");
 			return load_external_display_library(
-					std::string("Nibbler - SFML"),
-					std::string(PATH_DISPLAY_LIBRARY_SFML)
+					"Nibbler - SFML",
+					boost::filesystem::path(PATH_DISPLAY_LIBRARY_SFML).generic_string()
 					);
 		}
-		case kExternSdlLibrary : {
-			log_success("Univers::load_extern_lib_display.kExternSdlLibrary");
+		case kDisplaySdlLibrary : {
+			log_success("Univers::load_extern_lib_display.kDisplaySdlLibrary");
 			return load_external_display_library(
-					std::string("Nibbler - SDL"),
-					std::string(PATH_DISPLAY_LIBRARY_SDL)
+					"Nibbler - SDL",
+					boost::filesystem::path(PATH_DISPLAY_LIBRARY_SDL).generic_string()
 			);		}
-		case kExternGlfwLibrary : {
-			log_success("Univers::load_extern_lib_display.kExternGlfwLibrary");
+		case kDisplayGlfwLibrary : {
+			log_success("Univers::load_extern_lib_display.kDisplayGlfwLibrary");
 			return load_external_display_library(
-					std::string("Nibbler - GLFW"),
-					std::string(PATH_DISPLAY_LIBRARY_GLFW)
+					"Nibbler - GLFW",
+					boost::filesystem::path(PATH_DISPLAY_LIBRARY_GLFW).generic_string()
 			);		}
 	}
 	return false;
 }
 
-void Univers::unload_external_library() {
-	log_error("Univers::unload_external_library");
+void Univers::unload_external_display_library() {
+	log_error("Univers::unload_external_display_library");
 	if (display != nullptr && dlHandleDisplay != nullptr) {
 		if (deleteDisplay) {
 			deleteDisplay(display);
@@ -140,7 +172,7 @@ void Univers::unload_external_library() {
 		dlclose(dlHandleDisplay);
 		dlHandleDisplay = nullptr;
 	}
-	log_error("Univers::unload_external_library.unlock()");
+	log_error("Univers::unload_external_display_library.unlock()");
 }
 
 /** Game Management **/
@@ -237,8 +269,6 @@ void Univers::manage_start() {
 void Univers::loop() {
 	log_info("%s", __PRETTY_FUNCTION__);
 
-	playMusic(MUSIC_ZELDA);
-
 	std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
 	std::chrono::milliseconds current(0);
 	std::cout << "AllSnakeIsDead : " << getSnakeClient()->allSnakeIsDead() << std::endl;
@@ -266,7 +296,7 @@ void Univers::loop() {
 			current = std::chrono::milliseconds(0);
 		}
 	}
-	unload_external_library();
+	unload_external_display_library();
 	finish_game();
 }
 
@@ -344,8 +374,8 @@ void Univers::manageSwitchLibrary() {
 	if (!getSnakeClient()->isSwitchingLibrary()) {
 		int16_t id = getSnakeClient()->getId_();
 		getSnakeClient()->sendDataToServer(id, eHeaderK::kForcePause);
-		kDisplay = (kDisplay == kExternGlfwLibrary) ? kExternSfmlLibrary : static_cast<eDisplay>(kDisplay + 1);
-		unload_external_library();
+		kDisplay = (kDisplay == kDisplayGlfwLibrary) ? kDisplaySfmlLibrary : static_cast<eDisplay>(kDisplay + 1);
+		unload_external_display_library();
 		std::cout << load_extern_lib_display(kDisplay) << std::endl;
 		defaultAssignmentLibrary();
 		getSnakeClient()->sendDataToServer(id, eHeaderK::kForcePause);
@@ -523,10 +553,12 @@ MutantGrid<eSprite> &Univers::getGrid_() {
 }
 
 std::array<Snake, SNAKE_MAX> Univers::getSnakeArray_() const {
+
 	if (isServer())
 		return serverTCP_->getSnakeArray_();
 	if (getSnakeClient())
 		return getSnakeClient()->getSnakeArray_();
+
 	return std::array<Snake, SNAKE_MAX>();
 }
 
@@ -580,18 +612,15 @@ bool Univers::isOnlyIA() const {
 /** Sound **/
 
 void Univers::addNoise(std::string const &path) {
-	std::cout << "Y\n";
-	if (sound && flag.test(eFlag::SOUND)) {
-		std::cout << "I\n";
+	if (sound && flag_.test(eFlag::SOUND))
 		sound->addNoise(path);
-	}
 }
-void Univers::playNoise(eSound e) const {
-	if (sound && flag.test(eFlag::SOUND))
+void Univers::playNoise(eNoise e) const {
+	if (sound && flag_.test(eFlag::SOUND))
 		sound->playNoise(static_cast<int>(e));
 }
 void Univers::playMusic(std::string const &path) const {
-	if (sound && flag.test(eFlag::SOUND)) {
+	if (sound && flag_.test(eFlag::SOUND)) {
 		sound->setMusic(path.c_str());
 		sound->playMusic();
 	}
@@ -600,19 +629,6 @@ void Univers::playMusic(std::string const &path) const {
 
 Core *Univers::releaseCore_() {
 	return (core_.release());
-}
-
-void Univers::setFlag(eFlag flag_) {
-	flag.set(flag_);
-}
-
-void Univers::unsetFlag(eFlag flag_) {
-	flag.reset(flag_);
-}
-
-
-bool Univers::testFlag(eFlag flag_) {
-	return (flag.test(flag_));
 }
 
 /** Error **/
@@ -637,7 +653,8 @@ Univers::~Univers() {
 	cleanAll();
 	clientTCP_ = nullptr;
 	serverTCP_ = nullptr;
-	unload_external_library();
+	unload_external_display_library();
+	unload_external_sound_library();
 	log_warn("~Univers.end()");
 }
 

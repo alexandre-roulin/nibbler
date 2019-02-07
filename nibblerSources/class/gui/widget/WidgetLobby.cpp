@@ -38,10 +38,12 @@ void WidgetLobby::addSnake(Snake const &snake, bool isYourSnake) {
 void WidgetLobby::_reload() {
 	snakeWidget_.clear();
 	for (unsigned int i = 0; i < SNAKE_MAX; i++) {
-		if (core_.univers.getSnakeClient())
+		if (core_.univers.getSnakeClient()) {
 			addSnake(snakes_[i], (i == core_.univers.getSnakeClient()->getId_()));
-		else
+		}
+		else {
 			addSnake(snakes_[i], false);
+		}
 	}
 }
 
@@ -52,12 +54,15 @@ void WidgetLobby::render(void) {
 	sf::Vector2<unsigned int> percentPlaceOfSnake;
 
 	_reload();
-	for (size_t i = 0; i < snakeWidget_.size() && snakes_[i].isValid; i++) {
-		percentPlaceOfSnake.x = ((100 / placesForSnakes.x) * (i % placesForSnakes.x));
-		percentPlaceOfSnake.y = ((50 / placesForSnakes.y) * (i / placesForSnakes.x));
-		ImGui::SetNextWindowPos(core_.positionByPercent(percentPlaceOfSnake));
-		ImGui::SetNextWindowSize(core_.positionByPercent(
-				sf::Vector2<unsigned int>(100 / placesForSnakes.x, 50 / placesForSnakes.y)));
-		snakeWidget_[i].render();
+
+	for (size_t i = 0; i < snakeWidget_.size(); i++) {
+		if (snakes_[i].isValid) {
+			percentPlaceOfSnake.x = ((100 / placesForSnakes.x) * (i % placesForSnakes.x));
+			percentPlaceOfSnake.y = ((50 / placesForSnakes.y) * (i / placesForSnakes.x));
+			ImGui::SetNextWindowPos(core_.positionByPercent(percentPlaceOfSnake));
+			ImGui::SetNextWindowSize(core_.positionByPercent(
+					sf::Vector2<unsigned int>(100 / placesForSnakes.x, 50 / placesForSnakes.y)));
+			snakeWidget_[i].render();
+		}
 	}
 }
