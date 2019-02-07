@@ -18,11 +18,23 @@
 #include <network/SnakeClient.hpp>
 
 /** Const Variable **/
-const std::string Univers::WarningServerCreateIA = "Only the server owner can create IA";
-const std::string Univers::WarningServerFull = "Server have reach the maximum player";
-const std::string Univers::WarningServerIsUp = "Server is already in place";
-const std::string Univers::SuccessServerIsCreate = "Server is up.";
+const std::string Univers::SuccessServerIsCreate = "Server is online.";
+const std::string Univers::SuccessIAIsCreate = "IA is online.";
+const std::string Univers::SuccessClientIsConnected = "Client is connected.";
+const std::string Univers::SuccessClientIsCreate = "Client is online";
+const std::string Univers::SuccessClientIsDelete = "Client is delete.";
+const std::string Univers::SuccessServerIsDelete = "Server is delete.";
+
 const std::string Univers::WarningClientExist = "Client is already in place.";
+const std::string Univers::WarningServerCreateIA = "Only the server owner can create IA.";
+const std::string Univers::WarningServerFull = "Server have reach the maximum player.";
+const std::string Univers::WarningServerExist = "Server is left online.";
+const std::string Univers::WarningClientNotExist = "There is no client online.";
+const std::string Univers::WarningServerNotExist = "There is no server online.";
+const std::string Univers::WarningClientIsAlreadyConnected = "Client is already connected.";
+const std::string Univers::WarningClientIsNotConnected = "Client is not connected.";
+const std::string Univers::WarningUserIsNotTheServer = "User is not the server.";
+const std::string Univers::WarningRequiredAtLeastOneClient = "You need to have at least one client to start game.";
 
 Univers::Univers()
 		: pathRoot_(NIBBLER_ROOT_PROJECT_PATH),
@@ -34,7 +46,7 @@ Univers::Univers()
 		  clientTCP_(nullptr),
 		  core_(nullptr),
 		  grid_(nullptr),
-		  mapSize(MAP_DEFAULT),
+		  mapSize_(MAP_DEFAULT),
 		  gameSpeed(100),
 		  dlHandleDisplay(nullptr),
 		  dlHandleSound(nullptr),
@@ -84,7 +96,7 @@ bool Univers::load_external_display_library(std::string const &title,
 			IDisplay *
 	)>(dlsym(dlHandleDisplay, "deleteDisplay"))))
 		return (dlError("dlsym"));
-	if (!(display = newDisplay(mapSize, mapSize, title.c_str())))
+	if (!(display = newDisplay(mapSize_, mapSize_, title.c_str())))
 		return (false);
 
 	log_success("load_external_display_library up !");
@@ -137,7 +149,7 @@ void Univers::unload_external_library() {
 void Univers::defaultAssignmentLibrary() {
 	if (!display) return;
 
-	MutantGrid<eSprite> grid(mapSize);
+	MutantGrid<eSprite> grid(mapSize_);
 	grid.fill(eSprite::GROUND);
 	display->setBackground(grid);
 	display->registerCallbackAction(std::bind(&Univers::callbackAction, this, std::placeholders::_1));
@@ -152,7 +164,7 @@ void Univers::new_game() {
 	log_info("Hello i'am a %s", isServer() ? "Server" : "Client");
 	world_ = std::make_unique<KINU::World>();
 	world_->getEventsManager().destroy<FoodCreation>();
-	grid_ = std::make_shared<MutantGrid<eSprite>>(mapSize);
+	grid_ = std::make_shared<MutantGrid<eSprite>>(mapSize_);
 	grid_->fill(eSprite::NONE);
 	if (!display) load_extern_lib_display(kDisplay);
 	defaultAssignmentLibrary();
@@ -374,28 +386,35 @@ void Univers::callbackAction(eAction action) {
 		case eAction::kDeleteIA :
 			break;
 		case eAction::kConnect :
-			if (getSnakeClient() && !isOnlyIA() && !getSnakeClient()->isConnect()) {
-				try {
-					getSnakeClient()->connect("localhost", "4242");
-				} catch (std::exception const &e) {
-					core_->addMessageChat(e.what());
-				}
-			}
+			connect();
 			break;
 		case eAction::kBorderless :
 			if (getSnakeClient())
 				getSnakeClient()->changeIsBorderless(!isBorderless());
+			else
+				core_->addMessageChat(WarningClientNotExist);
 			break;
 		case eAction::kReady :
-			if (getSnakeClient())
-				getSnakeClient()->changeStateReady(!getSnakeClient()->isReady());
+			if (!getSnakeClient()) {
+				core_->addMessageChat(WarningClientNotExist);
+				break;
+			}
+			if (!getSnakeClient()->isConnect()) {
+				core_->addMessageChat(WarningClientIsNotConnected);
+				break;
+			}
+			getSnakeClient()->changeStateReady(!getSnakeClient()->isReady());
 			break;
 		case eAction::kStartGame :
-			if (isServer() && getSnakeClient()) {
-				getServerTCP_()->sendOpenGameToClient();
-			} else {
-				core_->addMessageChat("FAIS PAS LA MERDE GROS ! T'es pas un server OU TA PAS DE JOUEUR");
+			if (!isServer()) {
+				core_->addMessageChat(WarningUserIsNotTheServer);
+				break;
 			}
+			if (!getSnakeClient()) {
+				core_->addMessageChat(WarningRequiredAtLeastOneClient);
+				break;
+			}
+			getServerTCP_()->sendOpenGameToClient();
 			break;
 	}
 }
@@ -404,9 +423,10 @@ void Univers::callbackAction(eAction action) {
 
 
 void Univers::create_client() {
-	log_error("%d", clientTCP_.get() == nullptr);
-	if (!clientTCP_)
+	if (!clientTCP_) {
 		clientTCP_ = std::make_unique<SnakeClient>(*this, false);
+		core_->addMessageChat(SuccessClientIsCreate);
+	}
 	else
 		core_->addMessageChat(WarningClientExist);
 }
@@ -417,7 +437,7 @@ void Univers::create_ui() {
 
 void Univers::create_server(unsigned int port) {
 	if (serverTCP_)
-		core_->addMessageChat(WarningServerIsUp);
+		core_->addMessageChat(WarningServerExist);
 	else {
 		try {
 			serverTCP_ = std::make_unique<SnakeServer>(*this, port);
@@ -425,7 +445,26 @@ void Univers::create_server(unsigned int port) {
 		} catch (std::exception const &e) {
 			core_->addMessageChat(e.what());
 		}
+	}
 
+
+}
+
+void Univers::connect(const std::string &dns, const std::string &port) {
+	if (isOnlyIA() || !getSnakeClient()) {
+		core_->addMessageChat(WarningClientNotExist);
+		return;
+	}
+	log_fatal("connect %d", getSnakeClient()->isConnect());
+	if (getSnakeClient()->isConnect()) {
+		core_->addMessageChat(WarningClientIsAlreadyConnected);
+		return;
+	}
+	try {
+		getSnakeClient()->connect(dns, port);
+		core_->addMessageChat(SuccessClientIsConnected);
+	} catch (std::exception const &e) {
+		core_->addMessageChat(e.what());
 	}
 }
 
@@ -441,21 +480,34 @@ void Univers::create_ia() {
 	std::unique_ptr<Bobby> bobby = std::make_unique<Bobby>(*this);
 	bobby->getClientTCP_()->connect("localhost", std::to_string(serverTCP_->getPort_()));
 	vecBobby.push_back(std::move(bobby));
+	core_->addMessageChat(SuccessIAIsCreate);
 }
 
 void Univers::delete_ia() {
-//	bobby = nullptr;
+	for (auto &bobby : vecBobby) {
+		getSnakeArray_()[bobby->getId()].isValid = false;
+	}
+	vecBobby.clear();
 }
 
 void Univers::delete_server() {
 	if (serverTCP_) {
-		clientTCP_ = nullptr;
 		serverTCP_ = nullptr;
+		core_->addMessageChat(SuccessServerIsDelete);
+		if (clientTCP_ && clientTCP_->isConnect())
+			delete_client();
+	} else {
+		core_->addMessageChat(WarningServerNotExist);
 	}
 }
 
 void Univers::delete_client() {
-	clientTCP_ = nullptr;
+	if (clientTCP_) {
+		clientTCP_ = nullptr;
+		core_->addMessageChat(SuccessClientIsDelete);
+	}
+	else
+		core_->addMessageChat(WarningClientNotExist);
 }
 
 void Univers::finish_game() {
@@ -499,12 +551,12 @@ Core &Univers::getCore_() const {
 }
 
 unsigned int Univers::getMapSize() const {
-	return mapSize;
+	return mapSize_;
 }
 
-void Univers::setMapSize(unsigned int mapSize_) {
-	log_success("New map size [%d]", mapSize_);
+void Univers::setMapSize(unsigned int mapSize) {
 	mapSize_ = mapSize;
+	log_success("New map size [%d]", mapSize_);
 }
 
 void Univers::setBorderless(bool borderless) {
@@ -622,7 +674,7 @@ void Univers::cleanAll() {
 			log_fatal("Snake [%d]isValid?[%d]", snake.id, snake.isValid);
 		}
 		borderless = false;
-		mapSize = MAP_DEFAULT;
+		mapSize_ = MAP_DEFAULT;
 	}
 	core_ = nullptr;
 	grid_ = nullptr;

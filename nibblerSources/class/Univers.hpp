@@ -77,6 +77,9 @@ public:
 
 	bool isIASnake(uint16_t client_id) const;
 
+	void connect(std::string const &dns = "localhost",
+				 std::string const &port = "4242");
+
 	/** Create && Delete function**/
 
 	void create_ia();
@@ -139,9 +142,11 @@ public:
 	void manageSwitchLibrary();
 
 	virtual ~Univers();
+
 	bool isOpenGame_() const;
 
 	void setOpenGame_(bool openGame_);
+
 private: // Function
 
 	void cleanAll();
@@ -155,12 +160,28 @@ private: // Function
 private:
 
 	//const
+
+	static const std::string SuccessServerIsCreate;
+	static const std::string SuccessClientIsCreate;
+	static const std::string SuccessClientIsDelete;
+	static const std::string SuccessServerIsDelete;
+	static const std::string SuccessIAIsCreate;
+	static const std::string SuccessClientIsConnected;
+
 	static const std::string WarningServerCreateIA;
 	static const std::string WarningServerFull;
-	static const std::string WarningServerIsUp;
-	static const std::string SuccessServerIsCreate;
+
+	static const std::string WarningServerExist;
 	static const std::string WarningClientExist;
 
+	static const std::string WarningClientNotExist;
+	static const std::string WarningServerNotExist;
+
+	static const std::string WarningClientIsAlreadyConnected;
+	static const std::string WarningClientIsNotConnected;
+
+	static const std::string WarningUserIsNotTheServer;
+	static const std::string WarningRequiredAtLeastOneClient;
 	boost::filesystem::path pathRoot_;
 
 	bool switchLib;
@@ -177,13 +198,12 @@ private:
 	std::shared_ptr<SnakeClient> clientTCP_;
 	std::unique_ptr<Core> core_;
 	std::shared_ptr<MutantGrid<eSprite>> grid_;
-public:
 
 private:
 
 	std::vector<std::unique_ptr<Bobby>> vecBobby;
 
-	unsigned int mapSize;
+	unsigned int mapSize_;
 	unsigned int gameSpeed;
 	void *dlHandleDisplay;
 	void *dlHandleSound;
@@ -195,8 +215,6 @@ private:
 
 	boost::thread thread;
 	eDisplay kDisplay;
-
-private:
 
 	bool load_external_display_library(std::string const &title,
 									   std::string const &libPath);

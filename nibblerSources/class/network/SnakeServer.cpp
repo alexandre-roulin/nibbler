@@ -175,10 +175,10 @@ void SnakeServer::callbackAccept(size_t index) {
 	log_success("%s isValid : %d new_id %d index %d", __PRETTY_FUNCTION__, std::count_if(snake_array_.begin(), snake_array_.end(), [](Snake const &s){ return s.isValid;}), new_id, index);
 	snake_array_[new_id] = Snake::randomSnake(new_id); //TODO CHECK RACE CONDITION
 	snake_array_[new_id].indexConnection = index;
-	serverTCP_.writeDataToOpenConnection(new_id, index, eHeaderK::kId);
+	serverTCP_.writeDataToOpenConnections(snake_array_, eHeaderK::kSnakeArray);
 	serverTCP_.writeDataToOpenConnection(borderless_, index, eHeaderK::kBorderless);
 	serverTCP_.writeDataToOpenConnection(mapSize_, index,  eHeaderK::kResizeMap);
-	serverTCP_.writeDataToOpenConnections(snake_array_, eHeaderK::kSnakeArray);
+	serverTCP_.writeDataToOpenConnection(new_id, index, eHeaderK::kId);
 }
 
 void SnakeServer::callbackInput(InputInfo inputInfo) {
@@ -242,6 +242,9 @@ void SnakeServer::startGame() {
 	mutex_.unlock();
 }
 void SnakeServer::updateInput() {
+	for (auto &snake : snake_array_) {
+		log_warn("Snake ID : [%d] isValid [%d] isAlive [%d] isUpdate [%d]", snake.id, snake.isValid, snake.isAlive, snake.isUpdate);
+	}
 	log_warn("Condition [%d][%d]",pause_ ,std::any_of(snake_array_.begin(), snake_array_.end(),
 													  [](auto snake){ return snake.isValid && snake.isAlive && !snake.isUpdate;} ));
 	if (pause_ || std::any_of(snake_array_.begin(), snake_array_.end(),

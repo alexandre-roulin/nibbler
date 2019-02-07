@@ -213,7 +213,7 @@ bool SnakeClient::isConnect() const {
 
 void SnakeClient::killSnake(uint16_t id) {
 	log_success("%s ID : %d C{%d, %d}", __PRETTY_FUNCTION__, id, id_ == id, fromIA_);
-	if (id_ == id || fromIA_) {
+	if (id_ == id || (univers_.isIASnake(id) && univers_.isServer())) {
 		snake_array_[id].isAlive = false;
 		sendDataToServer(snake_array_[id], eHeaderK::kSnake);
 	}
@@ -277,11 +277,8 @@ void SnakeClient::callbackId(int16_t id) {
 	mutex_.lock();
 	id_ = id;
 	if (fromIA_) {
-		snake_array_[id] = Snake::randomSnake(id);
 		changeStateReady(true);
-	} else {
-		snake_array_[id].id = id_;
-	};
+	}
 	mutex_.unlock();
 }
 
