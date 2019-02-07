@@ -552,10 +552,12 @@ MutantGrid<eSprite> &Univers::getGrid_() {
 }
 
 std::array<Snake, SNAKE_MAX> Univers::getSnakeArray_() const {
+
 	if (isServer())
 		return serverTCP_->getSnakeArray_();
 	if (getSnakeClient())
 		return getSnakeClient()->getSnakeArray_();
+
 	return std::array<Snake, SNAKE_MAX>();
 }
 

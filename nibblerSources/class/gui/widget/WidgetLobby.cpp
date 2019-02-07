@@ -39,7 +39,6 @@ void WidgetLobby::_reload() {
 	snakeWidget_.clear();
 	for (unsigned int i = 0; i < SNAKE_MAX; i++) {
 		if (core_.univers.getSnakeClient()) {
-
 			addSnake(snakes_[i], (i == core_.univers.getSnakeClient()->getId_()));
 		}
 		else {
