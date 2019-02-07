@@ -550,17 +550,17 @@ Core *Univers::releaseCore_() {
 	return (core_.release());
 }
 
-void Univers::setFlag(eFlag flag) {
-	flag.set(flag);
+void Univers::setFlag(eFlag flag_) {
+	flag.set(flag_);
 }
 
-void Univers::unsetFlag(eFlag flag) {
-	flag.reset(flag);
+void Univers::unsetFlag(eFlag flag_) {
+	flag.reset(flag_);
 }
 
 
-bool Univers::testFlag(eFlag flag) {
-	return (flag.test(flag));
+bool Univers::testFlag(eFlag flag_) {
+	return (flag.test(flag_));
 }
 
 /** Error **/

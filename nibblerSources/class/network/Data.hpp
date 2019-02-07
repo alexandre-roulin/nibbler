@@ -135,13 +135,15 @@ struct StartInfo {
 
 struct ChatInfo {
 	ChatInfo() {
-		bzero(chat_, CHAT_BUFFER);
-		bzero(name_, NAME_BUFFER);
+		std::memset(chat_, 0, CHAT_BUFFER);
+		std::memset(offset_, 0, OFFSET);
+		std::memset(name_, 0, NAME_BUFFER);
 	}
 	ChatInfo(std::string const &name, std::string const &chat) {
 		std::strncpy(chat_, chat.c_str(), CHAT_BUFFER);
 		std::strncpy(name_, name.c_str(), NAME_BUFFER);
 	}
+	char offset_[OFFSET];
 	char chat_[CHAT_BUFFER];
 	char name_[NAME_BUFFER];
 
