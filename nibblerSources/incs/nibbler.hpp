@@ -32,7 +32,7 @@ enum eTag {
 	WALL_TAG = 64,
 };
 
-enum class eSound {
+enum class eNoise {
 	WELCOME = 0,
 	READY = 2,
 	RESIZE_MAP = 0,

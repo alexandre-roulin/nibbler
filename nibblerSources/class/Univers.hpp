@@ -36,9 +36,14 @@ class Univers {
 public:
 
 	enum eDisplay {
-		kExternSfmlLibrary,
-		kExternSdlLibrary,
-		kExternGlfwLibrary
+		kDisplaySfmlLibrary,
+		kDisplaySdlLibrary,
+		kDisplayGlfwLibrary
+	};
+
+	enum eSound {
+		kSoundSfmlLibrary,
+		kSoundSdlLibrary
 	};
 
 	enum eFlag {
@@ -49,9 +54,11 @@ public:
 
 	bool load_extern_lib_display(eDisplay);
 
-	bool load_external_sound_library(
-			std::string const &library_path); // TODO GO PRIVATE
-	void unload_external_library();
+	bool load_extern_lib_sound(eSound eLib);
+
+	void unload_external_sound_library();
+
+	void unload_external_display_library();
 
 	void loop();
 
@@ -69,7 +76,7 @@ public:
 
 	void addNoise(std::string const &path);
 
-	void playNoise(eSound e) const;
+	void playNoise(eNoise e) const;
 
 	void playMusic(std::string const &path) const;
 
@@ -115,13 +122,6 @@ public:
 
 	unsigned int getMapSize() const;
 
-	//Flag
-
-	void setFlag(eFlag);
-
-	void unsetFlag(eFlag);
-
-	bool testFlag(eFlag);
 
 	//Sound
 
@@ -178,12 +178,12 @@ private:
 
 	static const std::string WarningUserIsNotTheServer;
 	static const std::string WarningRequiredAtLeastOneClient;
-	boost::filesystem::path pathRoot_;
 
-	bool switchLib;
 	// Variable
+	boost::filesystem::path pathRoot_;
+	std::bitset<32> flag_;
+	bool switchLib;
 	std::vector<NextFrame> nextFrame;
-	std::bitset<32> flag;
 	boost::asio::io_service io_loop;
 	boost::asio::io_service io_start;
 	boost::asio::deadline_timer timer_loop;
@@ -214,6 +214,7 @@ private:
 
 	bool load_external_display_library(std::string const &title,
 									   std::string const &libPath);
+	bool load_external_sound_library(std::string const &library_path);
 
 	void finish_game();
 

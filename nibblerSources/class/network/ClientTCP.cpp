@@ -139,14 +139,14 @@ void ClientTCP::parse_input(eHeader header, void const *input, size_t len) {
 			log_info("eHeader::SNAKE f.%d w.%d %d", getId(),  snake_temp.id, snake_temp.isAlive);
 			snake_array_[snake_temp.id] = snake_temp;
 			if (accept_data()) {
-				univers.playNoise(eSound::READY);
+				univers.playNoise(eNoise::READY);
 			}
 			break;
 		}
 		case eHeader::REMOVE_SNAKE: {
 			log_info("eHeader::REMOVE_SNAKE");
 			snake_array_[*(reinterpret_cast< const int16_t *>(input))].reset();
-			univers.playNoise(eSound::DEATH);
+			univers.playNoise(eNoise::DEATH);
 			break;
 		}
 		case eHeader::FOOD: {

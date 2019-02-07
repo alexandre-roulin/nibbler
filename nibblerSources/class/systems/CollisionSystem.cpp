@@ -30,7 +30,7 @@ void CollisionSystem::checkCollision(
 
 		if (tagId == eTag::FOOD_TAG) {
 			log_info("FOOD_TAG::FoodCollision");
-			univers_.playNoise(eSound::FOOD);
+			univers_.playNoise(eNoise::FOOD);
 			entityCheck.kill();
 			getWorld().getEventsManager().emitEvent<FoodEat>(entityHead.getGroupIdByEntity());
 
@@ -44,7 +44,7 @@ void CollisionSystem::checkCollision(
 										eHeaderK::kFood);
 			}
 		} else if (tagId == eTag::FOOD_TAG_FROM_SNAKE) {
-			univers_.playNoise(eSound::FOOD);
+			univers_.playNoise(eNoise::FOOD);
 			entityCheck.kill();
 			if (entityHead.hasGroupId())
 				getWorld().getEventsManager().emitEvent<FoodEat>(entityHead.getGroupIdByEntity());

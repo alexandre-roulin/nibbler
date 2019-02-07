@@ -161,7 +161,7 @@ void SnakeClient::callbackResizeMap(unsigned int size) {
 	mutex_.lock();
 	if (acceptDataFromServer()) {
 		univers_.setMapSize(size);
-		univers_.playNoise(eSound::RESIZE_MAP);
+		univers_.playNoise(eNoise::RESIZE_MAP);
 	}
 	mutex_.unlock();
 }
@@ -216,7 +216,7 @@ void SnakeClient::callbackSnake(Snake snake) {
 	mutex_.lock();
 	snake_array_[snake.id] = snake;
 	if (acceptDataFromServer()) {
-		univers_.playNoise(eSound::READY);
+		univers_.playNoise(eNoise::READY);
 	}
 	mutex_.unlock();
 }
