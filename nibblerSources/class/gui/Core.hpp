@@ -11,8 +11,6 @@
 class Core {
 	public:
 
-	enum eColor { RED, GREEN };
-
 	class CoreConstructorException : public std::exception {
 	public:
 		CoreConstructorException(void) noexcept;
@@ -31,7 +29,15 @@ class Core {
 	//				GUI				//
 	void						titleScreen(void);
 	void						aState(void);
-	void						addMessageChat(std::string const &);
+	template < typename ... Args >
+	void addMessageChat(eColorLog color, std::string const &log, Args ... args) {
+		_chat.addLog(color, log, args...);
+	}
+	template < typename ... Args >
+	void addMessageChat(std::string const &log, Args ... args) {
+		_chat.addLog(eColorLog::kNone, log, args...);
+	}
+
 	void 						exit(void);
 	sf::Vector2<unsigned int>	positionByPercent(sf::Vector2<unsigned int> const &percent) const;
 

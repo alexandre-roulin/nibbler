@@ -7,16 +7,6 @@ WidgetChat::WidgetChat(Core &core) :
 	bzero(bufferMessage_, IM_ARRAYSIZE(bufferMessage_));
 }
 
-void WidgetChat::addLog(const char *str, ...) {
-	va_list args;
-
-	va_start(args, str);
-	bufferChat_.appendfv(str, args);
-	bufferChat_.appendfv("\n", args);
-	va_end(args);
-	scrollChat_ = true;
-}
-
 void WidgetChat::clear(void) {
 	bufferChat_.clear();
 }
@@ -27,10 +17,19 @@ void WidgetChat::render(void) {
 				 ImGuiWindowFlags_NoCollapse);
 	if (ImGui::Button("Clear"))
 		clear();
-	ImGui::BeginChild("scrolling", ImVec2(0, ImGui::GetWindowHeight() - 4 *
-																		ImGui::GetFrameHeightWithSpacing()),
-					  false, ImGuiWindowFlags_HorizontalScrollbar);
-	ImGui::TextUnformatted(bufferChat_.begin());
+	ImGui::BeginChild("scrolling", ImVec2(0, ImGui::GetWindowHeight() - 4 * ImGui::GetFrameHeightWithSpacing()), false,
+					  ImGuiWindowFlags_HorizontalScrollbar);
+	for (auto const &log : log_) {
+		switch(log.color) {
+			case eColorLog::kNone: ImGui::Text("%s", log.log.c_str()); break;
+			case eColorLog::kRed: ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, .9f), "%s", log.log.c_str()); break;
+			case eColorLog::kGreen: ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, .9f),"%s",  log.log.c_str()); break;
+			case eColorLog::kBlue: ImGui::TextColored(ImVec4(0.0f, 0.0f, 1.0f, .9f), "%s", log.log.c_str()); break;
+			case eColorLog::kPink: ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, .9f), "%s", log.log.c_str()); break;
+			case eColorLog::kOrange: ImGui::TextColored(ImVec4(1.0f, .6f, 0.0f, .9f), "%s", log.log.c_str()); break;
+			case eColorLog::kYellow: ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, .9f), "%s", log.log.c_str()); break;
+		}
+	}
 	if (scrollChat_)
 		ImGui::SetScrollHereY(1.0f);
 	scrollChat_ = false;
@@ -38,32 +37,37 @@ void WidgetChat::render(void) {
 	ImGui::PushItemWidth(ImGui::GetWindowWidth() * 0.8);
 	if (ImGui::IsRootWindowOrAnyChildFocused() && !ImGui::IsAnyItemActive() && !ImGui::IsMouseClicked(0))
 		ImGui::SetKeyboardFocusHere(0);
-	if (ImGui::InputText("Tap", bufferMessage_,
-						 IM_ARRAYSIZE(bufferMessage_),
-						 ImGuiInputTextFlags_EnterReturnsTrue)) {
-
-		if (!chatCommand_()) {
-			core_.univers.getSnakeClient()->sendDataToServer(ChatInfo(
-					core_.univers.getSnakeClient()->getSnake().name,
-					bufferMessage_
-			), eHeaderK::kChat);
-		}
-		bzero(bufferMessage_, IM_ARRAYSIZE(bufferMessage_));
+	if (ImGui::InputText("Tap", bufferMessage_, IM_ARRAYSIZE(bufferMessage_), ImGuiInputTextFlags_EnterReturnsTrue)) {
+		sendMessage_();
 	}
 	ImGui::End();
 
+}
+
+void WidgetChat::sendMessage_() {
+	if (core_.univers.getSnakeClient() && core_.univers.getSnakeClient()->getSnake().isValid) {
+		if (!chatCommand_())
+			chatText_();
+		memset(bufferMessage_, 0, IM_ARRAYSIZE(bufferMessage_));
+	}
+}
+
+void WidgetChat::chatText_(void) {
+	core_.univers.getSnakeClient()->sendDataToServer(ChatInfo(
+			core_.univers.getSnakeClient()->getSnake().name,
+			bufferMessage_), eHeaderK::kChat);
 }
 
 bool WidgetChat::chatCommand_(void) {
 	if (bufferMessage_[0] != '/')
 		return (false);
 	if (strstr(bufferMessage_, "/help"))
-		addLog("/help\n/name Aname\n", bufferMessage_);
+		addLog(eColorLog::kYellow, "/help\n/name Aname\n", bufferMessage_);
 	else if (strstr(bufferMessage_, "/name "))
 		core_.univers.getSnakeClient()->changeName(
 				bufferMessage_ + sizeof("/name ") - 1);
 	else
-		addLog("{%s} n'est pas une commande valide\n",
+		addLog(eColorLog::kOrange, "{%s} n'est pas une commande valide\n",
 			   bufferMessage_);
 	return (true);
 }

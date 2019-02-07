@@ -174,11 +174,6 @@ void			Core::aState(void)
 		delete optionSnake;
 }
 
-
-void				Core::addMessageChat(std::string const &msg) {
-	_chat.addLog(msg.c_str());
-}
-
 void				Core::_render(void) {
 	_win.clear();
 	ImGui::SFML::Render(_win);

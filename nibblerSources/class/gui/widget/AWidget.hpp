@@ -4,6 +4,16 @@
 
 class Core;
 
+enum class eColorLog {
+	kNone,
+	kRed,
+	kGreen,
+	kBlue,
+	kPink,
+	kOrange,
+	kYellow
+};
+
 class AWidget : public IWidget {
 public:
 	AWidget(Core &);
