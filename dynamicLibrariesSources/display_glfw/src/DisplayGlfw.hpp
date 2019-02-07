@@ -106,7 +106,7 @@ private:
 	glm::mat4						view_;
 	glm::mat4						model_;
 
-	std::function<void(eAction)>	_callback;
+	std::function<void(eAction)>	callback_;
 
 
 	void            	    error_(std::string const &s = std::string("Error"));

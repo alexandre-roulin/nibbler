@@ -44,7 +44,7 @@ DisplayGlfw::DisplayGlfw(int width,
 		view_(1.f),
 		model_(1.f),
 		light_(glm::vec3(0.f, 0.f, 30.f)),
-		_callback(nullptr) {
+		callback_(nullptr) {
 	constructMaterialMap_();
 
 	glEnable(GL_DEPTH_TEST);
@@ -98,7 +98,7 @@ void DisplayGlfw::constructMaterialMap_() {
 	materialMap_.try_emplace(eSprite::GREEN, "GREEN");
 	materialMap_.try_emplace(eSprite::GROUND, "GROUND", 0.f,
 							 glm::vec3(0.0756f * 0.f, 0.4423f * 0.1f, 0.07568f * 0.1f),
-							 glm::vec3(0.0756f, 0.4423f, 0.07568f),
+							 glm::vec3(0.0756f, 0.5523f, 0.07568f),
 							 glm::vec3(0.f, 0.f, 0.f));
 	materialMap_.try_emplace(eSprite::BLUE, "BLUE", 31.f,
 							 glm::vec3(0.0f, 0.1f, 0.06f),
@@ -113,14 +113,14 @@ void DisplayGlfw::constructMaterialMap_() {
 							 glm::vec3(0.2775f, 0.2775f, 0.2775f),
 							 glm::vec3(0.773911f, 0.773911f, 0.773911f));
 	materialMap_.try_emplace(eSprite::YELLOW, "YELLOW", 50.6f,
-							 glm::vec3(0.24725f, 0.1995f, 0.0745f),
-							 glm::vec3(0.75164f, 0.60648f, 0.22648f),
-							 glm::vec3(0.628281f, 0.555802f, 0.366065f));
+							 glm::vec3(0.19f, 0.19f, 0.0545f),
+							 glm::vec3(0.85f, 0.85f, 0.1f),
+							 glm::vec3(0.628281f, 0.628281f, 0.628281f));
 	glm::vec3 orange((244.f / 255.f), (81.f / 255.f), (30.f / 255));
 	materialMap_.try_emplace(eSprite::ORANGE, "ORANGE", 50.f, orange * 0.1f, orange, orange);
 	materialMap_.try_emplace(eSprite::RED, "RED", 31.f,
-							 glm::vec3(0.0f, 0.0f, 0.0f),
-							 glm::vec3(0.5f, 0.0f, 0.0f),
+							 glm::vec3(0.2f, 0.07f, 0.07f),
+							 glm::vec3(0.7f, 0.07f, 0.07f),
 							 glm::vec3(0.7f, 0.6f, 0.6f));
 	materialMap_.try_emplace(eSprite::FOOD, "FOOD", 76.8f,
 							 glm::vec3(0.1745f, 0.01175f, 0.01175f),
@@ -156,13 +156,13 @@ void DisplayGlfw::setBackground(MutantGrid<eSprite> const &grid) {
 		for (int x = 0; x < winTileSize_.getX(); ++x) {
 			particuleBackground_->transforms[y * winTileSize_.getX() + x].resetTransform();
 			particuleBackground_->transforms[y * winTileSize_.getX() + x].translate(
-					glm::vec3(x - winTileSize_.getX() / 2, y - winTileSize_.getY() / 2, 0.f));
+					glm::vec3(x - winTileSize_.getX() / 2, y * -1 + winTileSize_.getY() / 2, 0.f));
 			particuleBackground_->transforms[y * winTileSize_.getX() + x].scale(glm::vec3(-0.10f));
 			particuleBackground_->transforms[y * winTileSize_.getX() + x].updateTransform();
 
 			particuleBackgroundOutline_->transforms[y * winTileSize_.getX() + x].resetTransform();
 			particuleBackgroundOutline_->transforms[y * winTileSize_.getX() + x].translate(
-					glm::vec3(x - winTileSize_.getX() / 2, y - winTileSize_.getY() / 2, 0.f));
+					glm::vec3(x - winTileSize_.getX() / 2, y * -1 + winTileSize_.getY() / 2, 0.f));
 			particuleBackgroundOutline_->transforms[y * winTileSize_.getX() + x].scale(glm::vec3(-0.05f));
 			particuleBackgroundOutline_->transforms[y * winTileSize_.getX() + x].updateTransform();
 		}
@@ -188,10 +188,10 @@ void DisplayGlfw::drawGridCaseBody_(int x, int y) {
 		} else if (to == eSprite::WEST) {
 			eyeLeft.translate(glm::vec3(-0.30f, 0.15f, 0.05f));
 			eyeRight.translate(glm::vec3(-0.30f, -0.15f, 0.05f));
-		} else if (to == eSprite::SOUTH) {
+		} else if (to == eSprite::NORTH) {
 			eyeLeft.translate(glm::vec3(0.15f, 0.3f, 0.05f));
 			eyeRight.translate(glm::vec3(-0.15f, 0.3f, 0.05f));
-		} else if (to == eSprite::NORTH) {
+		} else if (to == eSprite::SOUTH) {
 			eyeLeft.translate(glm::vec3(0.15f, -0.3f, 0.05f));
 			eyeRight.translate(glm::vec3(-0.15f, -0.3f, 0.05f));
 		}
@@ -207,15 +207,14 @@ void DisplayGlfw::drawGridCaseBody_(int x, int y) {
 			yourSnakeX = x;
 			yourSnakeY = y;
 			camera_[CAMERA_SNAKE].setPosition(grid_(x, y).getPosition() + glm::vec3(0.f, 0.f, 10.f));
-			if (to == eSprite::EAST) {
+			if (to == eSprite::EAST)
 				camera_[CAMERA_SNAKE].setPosition(camera_[CAMERA_SNAKE].getPosition() + glm::vec3(-20.f, 0.f, 0.f));
-			} else if (to == eSprite::WEST) {
+			else if (to == eSprite::WEST)
 				camera_[CAMERA_SNAKE].setPosition(camera_[CAMERA_SNAKE].getPosition() + glm::vec3(20.f, 0.f, 0.f));
-			} else if (to == eSprite::SOUTH) {
+			else if (to == eSprite::NORTH)
 				camera_[CAMERA_SNAKE].setPosition(camera_[CAMERA_SNAKE].getPosition() + glm::vec3(0.f, -20.f, 0.f));
-			} else if (to == eSprite::NORTH) {
+			else if (to == eSprite::SOUTH)
 				camera_[CAMERA_SNAKE].setPosition(camera_[CAMERA_SNAKE].getPosition() + glm::vec3(0.f, 20.f, 0.f));
-			}
 			camera_[CAMERA_SNAKE].setFront(grid_(x, y).getPosition() - camera_[CAMERA_SNAKE].getPosition());
 			camera_[CAMERA_SNAKE].setUp(glm::vec3(0.f, 0.f, 1.f));
 		}
@@ -224,7 +223,7 @@ void DisplayGlfw::drawGridCaseBody_(int x, int y) {
 
 void DisplayGlfw::drawGridCase_(eSprite sprite, int x, int y) {
 	grid_(x, y).resetTransform();
-	grid_(x, y).translate(glm::vec3(x - winTileSize_.getX() / 2, y - winTileSize_.getY() / 2, 1.f));
+	grid_(x, y).translate(glm::vec3(x - winTileSize_.getX() / 2, y * -1 + winTileSize_.getY() / 2, 1.f));
 	drawGridCaseBody_(x, y);
 	//interpolateGridCase_(x, y);
 	if (static_cast<int>(sprite & eSprite::MASK_BODY) != 0) {
@@ -306,7 +305,7 @@ void DisplayGlfw::renderLine_(ActModel const &model) {
 
 void DisplayGlfw::drawHelpLineSnake_() {
 	actBlock_.resetTransform();
-	actBlock_.translate(glm::vec3(yourSnakeX - winTileSize_.getX() / 2, yourSnakeY - winTileSize_.getY() / 2, 0.f));
+	actBlock_.translate(glm::vec3(yourSnakeX - winTileSize_.getX() / 2, yourSnakeY * -1 + winTileSize_.getY() / 2, 0.f));
 	actBlock_.scale(glm::vec3(-0.10f));
 	materialMap_.at(yourSnakeSprite & eSprite::MASK_COLOR).putMaterialToShader(shader_);
 
@@ -314,14 +313,14 @@ void DisplayGlfw::drawHelpLineSnake_() {
 	eSprite to = (yourSnakeSprite & eSprite::MASK_TO) >> eSprite::BITWISE_TO;
 	if (to != eSprite::NORTH) {
 		for (int y = yourSnakeY + 1; y < winTileSize_.getY(); ++y) {
-			line.translate(glm::vec3(0.f, 1.f, 0.f));
+			line.translate(glm::vec3(0.f, -1.f, 0.f));
 			line.render(shader_);
 		}
 	}
 	line.setPosition(actBlock_.getPosition());
 	if (to != eSprite::SOUTH) {
 		for (int y = yourSnakeY; y; --y) {
-			line.translate(glm::vec3(0.f, -1.f, 0.f));
+			line.translate(glm::vec3(0.f, 1.f, 0.f));
 			line.render(shader_);
 		}
 	}
@@ -353,43 +352,49 @@ void DisplayGlfw::render(float currentDelayFrame, float maxDelayFrame) {
 	if (indexActiveCamera_ == CAMERA_SNAKE) {
 		if (getKeyState(GLFW_KEY_RIGHT) == KeyState::kDown) {
 			if (((yourSnakeSprite & eSprite::MASK_TO) >> eSprite::BITWISE_TO) == eSprite::EAST)
-				direction_ = kNorth;
-			else if (((yourSnakeSprite & eSprite::MASK_TO) >> eSprite::BITWISE_TO) == eSprite::NORTH)
-				direction_ = kWest;
-			else if (((yourSnakeSprite & eSprite::MASK_TO) >> eSprite::BITWISE_TO) == eSprite::WEST)
 				direction_ = kSouth;
 			else if (((yourSnakeSprite & eSprite::MASK_TO) >> eSprite::BITWISE_TO) == eSprite::SOUTH)
+				direction_ = kWest;
+			else if (((yourSnakeSprite & eSprite::MASK_TO) >> eSprite::BITWISE_TO) == eSprite::WEST)
+				direction_ = kNorth;
+			else if (((yourSnakeSprite & eSprite::MASK_TO) >> eSprite::BITWISE_TO) == eSprite::NORTH)
 				direction_ = kEast;
 		} else if (getKeyState(GLFW_KEY_LEFT) == KeyState::kDown) {
 			if (((yourSnakeSprite & eSprite::MASK_TO) >> eSprite::BITWISE_TO) == eSprite::EAST)
-				direction_ = kSouth;
-			else if (((yourSnakeSprite & eSprite::MASK_TO) >> eSprite::BITWISE_TO) == eSprite::NORTH)
-				direction_ = kEast;
-			else if (((yourSnakeSprite & eSprite::MASK_TO) >> eSprite::BITWISE_TO) == eSprite::WEST)
 				direction_ = kNorth;
 			else if (((yourSnakeSprite & eSprite::MASK_TO) >> eSprite::BITWISE_TO) == eSprite::SOUTH)
+				direction_ = kEast;
+			else if (((yourSnakeSprite & eSprite::MASK_TO) >> eSprite::BITWISE_TO) == eSprite::WEST)
+				direction_ = kSouth;
+			else if (((yourSnakeSprite & eSprite::MASK_TO) >> eSprite::BITWISE_TO) == eSprite::NORTH)
 				direction_ = kWest;
 		}
 	} else {
 		if (getKey(GLFW_KEY_UP))
-			direction_ = kSouth;
-		if (getKey(GLFW_KEY_DOWN))
 			direction_ = kNorth;
+		if (getKey(GLFW_KEY_DOWN))
+			direction_ = kSouth;
 		if (getKey(GLFW_KEY_LEFT))
 			direction_ = kWest;
 		if (getKey(GLFW_KEY_RIGHT))
 			direction_ = kEast;
 	}
 
-	if (getKey(GLFW_KEY_D)) {
+	if (getKey(GLFW_KEY_D))
 		camera_[CAMERA_GLOBAL].processPosition(Camera::Movement::RIGHT, deltaTime_ * 5);
-	}
 	if (getKey(GLFW_KEY_A))
 		camera_[CAMERA_GLOBAL].processPosition(Camera::Movement::LEFT, deltaTime_ * 5);
 	if (getKey(GLFW_KEY_S))
 		camera_[CAMERA_GLOBAL].processPosition(Camera::Movement::BACKWARD, deltaTime_ * 5);
 	if (getKey(GLFW_KEY_W))
 		camera_[CAMERA_GLOBAL].processPosition(Camera::Movement::FORWARD, deltaTime_ * 5);
+
+	if (getKeyState(GLFW_KEY_P) == KeyState::kDown) {
+		callback_(eAction::kPause);
+	}
+	if (getKeyState(GLFW_KEY_O) == KeyState::kDown) {
+		callback_(eAction::kSwitchDisplayLibrary);
+	}
 
 	if (getKey(GLFW_KEY_N) == KeyState::kDown)
 		activeNextCamera_();
@@ -434,7 +439,7 @@ void DisplayGlfw::render(float currentDelayFrame, float maxDelayFrame) {
 }
 
 void DisplayGlfw::registerCallbackAction(std::function<void(eAction)> function) {
-	_callback = function;
+	callback_ = function;
 }
 
 bool DisplayGlfw::exit() const {
