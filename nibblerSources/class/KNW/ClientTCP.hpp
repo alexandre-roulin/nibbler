@@ -27,10 +27,14 @@
 namespace KNW {
 	/*********************** ClientTCP ************************************/
 
-	class ClientTCP {
+	class ClientTCP : public boost::enable_shared_from_this<ClientTCP> {
 	public:
 
-		ClientTCP(std::function<void()>);
+		using boost_shared_ptr = boost::shared_ptr<ClientTCP>;
+		using boost_weak_ptr = boost::weak_ptr<ClientTCP>;
+
+		static boost_shared_ptr create(std::function<void()>);
+		ClientTCP() = delete;
 
 		void connect(std::string dns, std::string port);
 
@@ -50,30 +54,32 @@ namespace KNW {
 
 		void disconnect();
 	private:
+		ClientTCP(std::function<void()>);
 
 		boost::asio::io_service io;
 		tcp::socket socket_;
 		tcp::resolver resolver;
 		boost::thread thread;
-		DataTCP dataTCP_;
+		DataTCP::boost_shared_ptr dataTCP_;
 		boost::shared_ptr<IOTCP> iotcp;
 		std::function<void()> callbackDeadConnection_;
 	};
 
+
 	template<typename T>
 	void ClientTCP::addDataType(std::function<void(T)> callback) {
-		assert(!dataTCP_.hasType<T>());
-		dataTCP_.addDataType<T>(callback);
+		assert(!dataTCP_->hasType<T>());
+		dataTCP_->addDataType<T>(callback);
 	}
 
 	template<typename T>
 	void ClientTCP::writeDataToServer(T data) {
-		assert(dataTCP_.hasType<T>());
+		assert(dataTCP_->hasType<T>());
 		auto header = DataType<T>::getHeader();
-//		std::cout << "writeDataToServer:" << dataTCP_.getSizeOfType<T>() << std::endl;
+//		std::cout << "writeDataToServer:" << dataTCP_->getSizeOfType<T>() << std::endl;
 		std::string buffer;
 		buffer.append(reinterpret_cast<char *>(&header), sizeof(BaseDataType::Header));
-		buffer.append(reinterpret_cast<char *>(&data), dataTCP_.getSizeOfHeader(header));
+		buffer.append(reinterpret_cast<char *>(&data), dataTCP_->getSizeOfHeader(header));
 		iotcp->writeSocket(buffer);
 	}
 
@@ -81,13 +87,13 @@ namespace KNW {
 	void ClientTCP::writeDataToServer(T data, uint16_t header) {
 		std::string buffer;
 		buffer.append(reinterpret_cast<char *>(&header), sizeof(uint16_t));
-		buffer.append(reinterpret_cast<char *>(&data), dataTCP_.getSizeOfHeader(header));
+		buffer.append(reinterpret_cast<char *>(&data), dataTCP_->getSizeOfHeader(header));
 		iotcp->writeSocket(buffer);
 	}
 
 	template<typename T, typename H>
 	void ClientTCP::addDataType(std::function<void(T)> callback, H index) {
-		dataTCP_.addDataType<T, H>(callback, index);
+		dataTCP_->addDataType<T, H>(callback, index);
 	}
 
 

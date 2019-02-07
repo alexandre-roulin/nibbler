@@ -5,15 +5,16 @@
 #include <functional>
 #include <vector>
 #include <network/Data.hpp>
-
+#include <boost/enable_shared_from_this.hpp>
 namespace KNW {
 
-	class DataTCP {
+	class DataTCP : public boost::enable_shared_from_this<KNW::DataTCP> {
 
 	public:
 		using Header = BaseDataType::Header;
-
-		DataTCP();
+		using boost_shared_ptr = boost::shared_ptr<DataTCP>;
+		using boost_weak_ptr = boost::weak_ptr<DataTCP>;
+		static boost_shared_ptr create();
 		DataTCP(DataTCP const &) = delete;
 
 		template<typename T>
@@ -26,10 +27,13 @@ namespace KNW {
 		bool hasType() const;
 
 		void sendDataToCallback(Header header, void *data);
+
 		size_t getSizeOfHeader(Header header);
+
 		~DataTCP();
 
 	private:
+		DataTCP();
 
 
 		class AbstractCallback {
@@ -55,8 +59,11 @@ namespace KNW {
 		};
 
 		friend class ServerTCP;
+
 		friend class ConnectionTCP;
+
 		friend class ClientTCP;
+
 		bool setHeader_;
 		std::vector<size_t> sizeType;
 		std::vector<std::shared_ptr<AbstractCallback>> callbackType;

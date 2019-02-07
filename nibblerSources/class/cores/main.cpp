@@ -9,8 +9,6 @@
 
 #include <random>
 #include <fstream>
-#include <network/ServerTCP.hpp>
-#include <network/ClientTCP.hpp>
 #include <gui/Core.hpp>
 #include <boost/program_options.hpp>
 #include <logger.h>

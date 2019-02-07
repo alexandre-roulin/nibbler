@@ -2,41 +2,42 @@
 
 #include "IOTCP.hpp"
 #include "ServerTCP.hpp"
-#include "DataTCP.hpp"
 
 
 KNW::IOTCP::IOTCP(
-		KNW::DataTCP &dataTCP,
+		DataTCP::boost_weak_ptr dataTCP,
 		tcp::socket socket,
-		std::function<void(BaseDataType::Header, char *)> f,
 		std::function<void()> callbackDeadSocket)
 		:
-		openObject_(true),
-		dataTCP_(dataTCP) ,
+		dataTCP_(dataTCP),
 		socket_(std::move(socket)),
-		callback_(std::move(f)),
 		callbackDeadSocket_(callbackDeadSocket) {
 
 }
 
 void KNW::IOTCP::readSocketHeader() {
-//	log_fatal("%s", __PRETTY_FUNCTION__);
+	log_fatal("%s isOpen %d ptr %d", __PRETTY_FUNCTION__, socket_.is_open());
+	boost::weak_ptr<KNW::IOTCP> w(weakPtr);
+
+	log_fatal("%s isOpen %d ptr %d", __PRETTY_FUNCTION__, socket_.is_open(), weakPtr.lock() !=
+			nullptr);
+
 	boost::asio::async_read(
 			socket_,
 			boost::asio::buffer(buffer_data_, sizeof(BaseDataType::Header)),
-			boost::bind(
-					&KNW::IOTCP::handleReadHeader,
-					shared_from_this(),
-					boost::asio::placeholders::error,
-					boost::asio::placeholders::bytes_transferred
-			));
+			[&, w](boost::system::error_code ec, size_t len) {
+				auto ptr = w.lock();
+				log_info("hptr %d", ptr != nullptr);
+				if (ptr)
+					ptr->handleReadHeader(ec, len);
+			});
 
 }
 
-void KNW::IOTCP::handleReadHeader(const boost::system::error_code &ec,
-									 size_t len) {
-//	log_fatal("%s", __PRETTY_FUNCTION__);
-	if (ec.value() == 0) {
+void
+KNW::IOTCP::handleReadHeader(const boost::system::error_code &ec, size_t len) {
+	log_fatal("%s", __PRETTY_FUNCTION__);
+	if (ec.value() == 0 && len != 0) {
 		BaseDataType::Header header;
 		std::memcpy(&header, buffer_data_.data(), len);
 		readSocketData(header);
@@ -48,24 +49,32 @@ void KNW::IOTCP::handleReadHeader(const boost::system::error_code &ec,
 
 
 void KNW::IOTCP::readSocketData(BaseDataType::Header header) {
-//	log_fatal("%s", __PRETTY_FUNCTION__);
-	boost::asio::async_read(
-			socket_,
-			boost::asio::buffer(buffer_data_, dataTCP_.getSizeOfHeader(header)),
-			boost::bind(
-					&KNW::IOTCP::handleReadData,
-					shared_from_this(),
-					header,
-					boost::asio::placeholders::error
-			));
+	log_fatal("%s", __PRETTY_FUNCTION__);
+
+	DataTCP::boost_shared_ptr sharedPtr = dataTCP_.lock();
+	boost_weak_ptr w = weakPtr;
+	if (sharedPtr)
+		boost::asio::async_read(
+				socket_,
+				boost::asio::buffer(buffer_data_, sharedPtr->getSizeOfHeader(header)),
+				[&, w, header](boost::system::error_code ec, size_t len) {
+					auto ptr = w.lock();
+					log_info("dptr %d", ptr != nullptr);
+					if (ptr) ptr->handleReadData(header, ec, len);
+				});
 }
 
 
-void KNW::IOTCP::handleReadData(BaseDataType::Header header,
-								   const boost::system::error_code &ec) {
-//	log_fatal("%s", __PRETTY_FUNCTION__);
+void KNW::IOTCP::handleReadData(
+		BaseDataType::Header header,
+		const boost::system::error_code &ec,
+		size_t) {
+	log_fatal("%s", __PRETTY_FUNCTION__);
+
 	if (ec.value() == 0) {
-		callback_(header, buffer_data_.data());
+		auto ptr = dataTCP_.lock();
+		if (ptr)
+			ptr->sendDataToCallback(header, buffer_data_.data());
 		readSocketHeader();
 	} else {
 		checkError(ec);
@@ -74,35 +83,43 @@ void KNW::IOTCP::handleReadData(BaseDataType::Header header,
 }
 
 void
-KNW::IOTCP::handleWrite(const boost::system::error_code &ec) {
-//	log_fatal("%s", __PRETTY_FUNCTION__);
-	if (ec.value() != 0) {
+KNW::IOTCP::handleWrite(const boost::system::error_code &ec, size_t len) {
+	log_fatal("%s ec %d len %d", __PRETTY_FUNCTION__, ec.value(), len);
+	if (ec.value() != 0 || len == 0) {
 		checkError(ec);
-		std::cout << __PRETTY_FUNCTION__ << ec.message() << std::endl;
 	}
 }
 
 void KNW::IOTCP::writeSocket(std::string data) {
-	boost::asio::async_write(socket_, boost::asio::buffer(data),
-							 boost::bind(&KNW::IOTCP::handleWrite,
-										 shared_from_this(),
-										 boost::asio::placeholders::error));
+	log_fatal("%s", __PRETTY_FUNCTION__);
+
+	boost_weak_ptr w = weakPtr;
+	boost::asio::async_write(
+			socket_,
+			boost::asio::buffer(data),
+			[&, w](boost::system::error_code ec, size_t len) {
+				auto ptr = w.lock();
+				log_info("wptr %d", ptr != nullptr);
+				if (ptr) ptr->handleWrite(ec, len);
+			});
 }
 
 void KNW::IOTCP::checkError(boost::system::error_code const &error_code) {
-//	if (!openObject_)
-//		return;
-	log_fatal("%s addr %s %d", __PRETTY_FUNCTION__, error_code.message().c_str(), socket_.is_open());
-	try {
-		if (error_code.value() != 0) {
+
+	log_fatal("%s %s %d cb %d", __PRETTY_FUNCTION__,
+			  error_code.message().c_str(), socket_.is_open(),
+			  callbackDeadSocket_ != nullptr);
+	if (error_code.value() != 0) {
+		try {
 			if (socket_.is_open())
 				socket_.close();
-			if (callbackDeadSocket_) {
-				callbackDeadSocket_();
-			}
+		} catch (std::exception const &e) {
+			std::cout << e.what() << std::endl;
 		}
-	} catch (std::exception const &e) {
-		std::cout << e.what() << std::endl;
+		if (callbackDeadSocket_) {
+			callbackDeadSocket_();
+			callbackDeadSocket_ = nullptr;
+		}
 	}
 }
 
@@ -111,8 +128,7 @@ const tcp::socket &KNW::IOTCP::getSocket_() const {
 }
 
 KNW::IOTCP::~IOTCP() {
-	openObject_ = false;
-	log_warn("%s %d", __PRETTY_FUNCTION__, socket_.is_open());
+	log_warn("%s", __PRETTY_FUNCTION__);
 	try {
 		if (socket_.is_open()) {
 			socket_.close();
@@ -120,8 +136,11 @@ KNW::IOTCP::~IOTCP() {
 	} catch (std::exception const &e) {
 		std::cout << e.what() << std::endl;
 	}
+	log_success("callbackDeadSocket_ %d", callbackDeadSocket_ != nullptr);
 	if (callbackDeadSocket_)
 		callbackDeadSocket_();
+	log_success("callbackDeadSocket_");
+
 }
 
 bool KNW::IOTCP::isConnect() const {
@@ -129,9 +148,9 @@ bool KNW::IOTCP::isConnect() const {
 }
 
 boost::shared_ptr<KNW::IOTCP>
-KNW::IOTCP::create(KNW::DataTCP &dataTCP_, tcp::socket socket_,
-				   std::function<void(BaseDataType::Header, char *)> f,
+KNW::IOTCP::create(KNW::DataTCP::boost_weak_ptr dataTCP_, tcp::socket socket_,
 				   std::function<void()> callbackDeadSocket) {
-
-	return boost::shared_ptr<KNW::IOTCP>(new IOTCP(dataTCP_, std::move(socket_), f, callbackDeadSocket));
+	auto ptr = boost::shared_ptr<KNW::IOTCP>(new IOTCP(dataTCP_, std::move(socket_), std::move(callbackDeadSocket)));
+	ptr->weakPtr = ptr;
+	return ptr;
 }

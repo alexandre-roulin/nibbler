@@ -1,7 +1,6 @@
 #include "CollisionSystem.hpp"
 #include <factory/Factory.hpp>
 #include <events/FoodEat.hpp>
-#include <network/ClientTCP.hpp>
 #include <logger.h>
 #include <MutantGrid.tpp>
 #include <component/CollisionComponent.hpp>

@@ -11,7 +11,11 @@ class Univers;
 
 class SnakeClient : public boost::enable_shared_from_this<SnakeClient> {
 public:
-	static boost::shared_ptr<SnakeClient> create(Univers &univers, bool fromIA);
+
+	using boost_shared_ptr = boost::shared_ptr<SnakeClient>;
+	using boost_weak_ptr = boost::weak_ptr<SnakeClient>;
+
+	static boost_shared_ptr create(Univers &univers, bool fromIA);
 
 	template<typename T>
 	void sendDataToServer(T data, eHeaderK header);

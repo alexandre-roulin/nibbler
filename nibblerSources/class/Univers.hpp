@@ -86,7 +86,7 @@ public:
 
 	void create_client();
 
-	void create_ui(); // TODO PRIVATE
+	void create_ui();
 
 	void delete_ia();
 
@@ -135,7 +135,6 @@ public:
 
 	void callbackAction(eAction);
 
-	void manageSwitchLibrary();
 
 	virtual ~Univers();
 
@@ -144,6 +143,7 @@ public:
 	void setOpenGame_(bool openGame_);
 
 private: // Function
+	void manageSwitchLibrary();
 
 	void cleanAll();
 

@@ -503,6 +503,7 @@ void Univers::delete_server() {
 
 void Univers::delete_client() {
 	if (clientTCP_) {
+		log_fatal("use count %d", clientTCP_.use_count());
 		clientTCP_ = nullptr;
 		core_->addMessageChat(SuccessClientIsDelete);
 	}
@@ -556,7 +557,6 @@ unsigned int Univers::getMapSize() const {
 
 void Univers::setMapSize(unsigned int mapSize) {
 	mapSize_ = mapSize;
-	log_success("New map size [%d]", mapSize_);
 }
 
 void Univers::setBorderless(bool borderless) {

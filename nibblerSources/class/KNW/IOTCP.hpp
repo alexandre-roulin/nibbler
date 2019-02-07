@@ -18,10 +18,12 @@ namespace KNW {
 	public:
 		IOTCP() = delete;
 
+		using boost_shared_ptr = boost::shared_ptr<IOTCP>;
+		using boost_weak_ptr = boost::weak_ptr<IOTCP>;
+
 		static boost::shared_ptr<KNW::IOTCP> create(
-				DataTCP &dataTCP_,
+				DataTCP::boost_weak_ptr dataTCP_,
 				tcp::socket socket_,
-				std::function<void(BaseDataType::Header, char *)> f,
 				std::function<void()> callbackDeadSocket
 				);
 
@@ -31,14 +33,13 @@ namespace KNW {
 
 		const tcp::socket &getSocket_() const;
 
-		~IOTCP();
+		virtual ~IOTCP();
 
 		bool isConnect() const;
 	private:
 		IOTCP(
-				DataTCP &dataTCP_,
+				DataTCP::boost_weak_ptr dataTCP_,
 				tcp::socket socket_,
-				std::function<void(BaseDataType::Header, char *)> f,
 				std::function<void()> callbackDeadSocket
 		);
 
@@ -46,18 +47,17 @@ namespace KNW {
 
 		void readSocketData(DataTCP::Header header);
 
-		void handleReadHeader(const boost::system::error_code &, size_t);
+		void handleReadHeader(const boost::system::error_code &ec, size_t len);
 
 
-		void handleReadData(DataTCP::Header header,const boost::system::error_code &);
+		void handleReadData(DataTCP::Header header,const boost::system::error_code &, size_t len);
 
-		void handleWrite(const boost::system::error_code &);
+		void handleWrite(const boost::system::error_code &, size_t len);
 
-		bool openObject_;
-		DataTCP &dataTCP_;
+		IOTCP::boost_weak_ptr weakPtr;
+		DataTCP::boost_weak_ptr dataTCP_;
 		boost::array<char, eConfigTCP::kMaxBufferSize> buffer_data_;
 		tcp::socket socket_;
-		std::function<void(BaseDataType::Header, char *)> callback_;
 		std::function<void()> callbackDeadSocket_;
 	};
 }

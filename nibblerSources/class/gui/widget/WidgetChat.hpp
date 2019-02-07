@@ -2,7 +2,6 @@
 
 #include "AWidget.hpp"
 #include "nibbler.hpp"
-#include <network/ClientTCP.hpp>
 
 class WidgetChat : public AWidget {
 public:

@@ -118,8 +118,10 @@ void SnakeClient::changeIsBorderless(bool borderless) {
 
 
 bool SnakeClient::isConnect() const {
-//	log_warn("%s %d", __PRETTY_FUNCTION__, clientTCP_->isConnect());
-	return clientTCP_->isConnect();
+	if (clientTCP_)
+		return clientTCP_->isConnect();
+	else
+		return false;
 }
 
 void SnakeClient::killSnake(uint16_t id) {
@@ -142,9 +144,15 @@ void SnakeClient::callbackRemoveSnake(int16_t) {
 
 void SnakeClient::callbackDeadConnection() {
 	log_success("%s", __PRETTY_FUNCTION__ );
+	snake_array_[id_].isReady = false;
 	univers_.setOpenGame_(false);
-	clientTCP_->disconnect();
-	univers_.delete_client();
+	if (clientTCP_ != nullptr) {
+//		std::cout << "disconnect" <<std::endl;
+//		clientTCP_->disconnect();
+		log_info("Rest client %d", clientTCP_.use_count());
+		clientTCP_.reset();
+		build();
+	}
 }
 
 void SnakeClient::callbackPock(char) {
@@ -185,9 +193,10 @@ void SnakeClient::callbackBorderless(bool borderless) {
 }
 
 void SnakeClient::callbackId(int16_t id) {
-	log_success("%s id : %d", __PRETTY_FUNCTION__ , id);
+	log_success("%s id : %d id_ : %d", __PRETTY_FUNCTION__ , id, id_);
 	mutex_.lock();
 	id_ = id;
+
 	if (fromIA_) {
 		changeStateReady(true);
 	}
@@ -263,7 +272,7 @@ void SnakeClient::callbackChatInfo(ChatInfo chatInfo) {
 }
 
 void SnakeClient::callbackSnakeArray(std::array<Snake, SNAKE_MAX> new_snake_array) {
-	log_success("%s", __PRETTY_FUNCTION__ );
+	log_success("%s %d", __PRETTY_FUNCTION__, snake_array_[id_].isReady);
 	mutex_.lock();
 	snake_array_ = new_snake_array;
 	mutex_.unlock();
@@ -273,8 +282,7 @@ bool SnakeClient::isReady() const {
 	return snake_array_[id_].isReady;
 }
 
-boost::shared_ptr<SnakeClient>
-SnakeClient::create(Univers &univers, bool fromIA) {
+SnakeClient::boost_shared_ptr SnakeClient::create(Univers &univers, bool fromIA) {
 	auto ptr = boost::shared_ptr<SnakeClient>(new SnakeClient(univers, fromIA));
 	ptr->build();
 	return ptr;
@@ -282,95 +290,79 @@ SnakeClient::create(Univers &univers, bool fromIA) {
 
 void SnakeClient::build() {
 
-	clientTCP_ = boost::shared_ptr<KNW::ClientTCP>(new KNW::ClientTCP(std::bind(&SnakeClient::callbackDeadConnection, shared_from_this())));
+	boost::weak_ptr<SnakeClient> thisWeakPtr(shared_from_this());
+
+	clientTCP_ = KNW::ClientTCP::create(
+			[thisWeakPtr]()
+			{ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackDeadConnection(); });
 
 	clientTCP_->addDataType<int16_t >(
-			std::bind(&SnakeClient::callbackRemoveSnake,
-					  shared_from_this(),
-					  std::placeholders::_1)
-			, eHeaderK::kRemoveSnake);
+			([thisWeakPtr](int16_t id)
+			{ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackRemoveSnake(id); }),
+			eHeaderK::kRemoveSnake);
 
 	clientTCP_->addDataType<InputInfo>(
-			std::bind(&SnakeClient::callbackInput,
-					  shared_from_this(),
-					  std::placeholders::_1)
-			, eHeaderK::kInput);
-
-	clientTCP_->addDataType<InputInfo>(
-			std::bind(&SnakeClient::callbackInput,
-					  shared_from_this(),
-					  std::placeholders::_1)
-			, eHeaderK::kInput);
+			([thisWeakPtr](InputInfo ii)
+			{ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackInput(ii); }),
+			eHeaderK::kInput);
 
 	clientTCP_->addDataType<std::array<Snake, SNAKE_MAX>>(
-			std::bind(&SnakeClient::callbackSnakeArray,
-					  shared_from_this(),
-					  std::placeholders::_1)
-			,eHeaderK::kSnakeArray);
+			([thisWeakPtr](std::array<Snake, SNAKE_MAX> snake_array)
+			{ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackSnakeArray(snake_array); }),
+			eHeaderK::kSnakeArray);
 
 	clientTCP_->addDataType<char>(
-			std::bind(&SnakeClient::callbackPock,
-					  shared_from_this(),
-					  std::placeholders::_1)
-			,eHeaderK::kPock);
+			([thisWeakPtr](char c)
+			{ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackPock(c); }),
+			eHeaderK::kPock);
 
 	clientTCP_->addDataType<bool>(
-			std::bind(&SnakeClient::callbackBorderless,
-					  shared_from_this(),
-					  std::placeholders::_1)
-			,eHeaderK::kBorderless);
+			([thisWeakPtr](bool borderless)
+			{ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackBorderless(borderless); }),
+			eHeaderK::kBorderless);
 
 	clientTCP_->addDataType<unsigned int>(
-			std::bind(&SnakeClient::callbackResizeMap,
-					  shared_from_this(),
-					  std::placeholders::_1)
-			,eHeaderK::kResizeMap);
+			([thisWeakPtr](unsigned int mapSize)
+			{ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackResizeMap(mapSize); }),
+			eHeaderK::kResizeMap);
 
 	clientTCP_->addDataType<bool>(
-			std::bind(&SnakeClient::callbackOpenGame,
-					  shared_from_this(),
-					  std::placeholders::_1)
-			,eHeaderK::kOpenGame);
+			([thisWeakPtr](bool openGame)
+			{ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackOpenGame(openGame); }),
+			eHeaderK::kOpenGame);
 
 	clientTCP_->addDataType<int16_t>(
-			std::bind(&SnakeClient::callbackId,
-					  shared_from_this(),
-					  std::placeholders::_1)
-			,eHeaderK::kId);
+			([thisWeakPtr](int16_t id)
+			{ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackId(id); }),
+			eHeaderK::kId);
 
 	clientTCP_->addDataType<ChatInfo>(
-			std::bind(&SnakeClient::callbackChatInfo,
-					  shared_from_this(),
-					  std::placeholders::_1)
-			,eHeaderK::kChat);
+			([thisWeakPtr](ChatInfo chatInfo)
+			{ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackChatInfo(chatInfo); }),
+			eHeaderK::kChat);
 
 	clientTCP_->addDataType<StartInfo>(
-			std::bind(&SnakeClient::callbackStartInfo,
-					  shared_from_this(),
-					  std::placeholders::_1)
-			,eHeaderK::kStartGame);
+			([thisWeakPtr](StartInfo startInfo)
+			{ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackStartInfo(startInfo); }),
+			eHeaderK::kStartGame);
 
 	clientTCP_->addDataType<FoodInfo>(
-			std::bind(&SnakeClient::callbackFood,
-					  shared_from_this(),
-					  std::placeholders::_1)
-			,eHeaderK::kFood);
+			([thisWeakPtr](FoodInfo foodInfo)
+			{ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackFood(foodInfo); }),
+			eHeaderK::kFood);
 
 	clientTCP_->addDataType<Snake>(
-			std::bind(&SnakeClient::callbackSnake,
-					  shared_from_this(),
-					  std::placeholders::_1)
-			,eHeaderK::kSnake);
+			([thisWeakPtr](Snake snake)
+			{ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackSnake(snake); }),
+			eHeaderK::kSnake);
 
 	clientTCP_->addDataType<int16_t>(
-			std::bind(&SnakeClient::callbackForcePause,
-					  shared_from_this(),
-					  std::placeholders::_1),
+			([thisWeakPtr](int16_t id)
+			{ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackForcePause(id); }),
 			eHeaderK::kForcePause);
 
 	clientTCP_->addDataType<eAction >(
-			std::bind(&SnakeClient::callbackPause,
-					  shared_from_this(),
-					  std::placeholders::_1),
+			([thisWeakPtr](eAction e)
+			{ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackPause(e); }),
 			eHeaderK::kPause);
 }

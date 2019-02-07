@@ -6,7 +6,7 @@
 #include <boost/filesystem.hpp>
 #include "widget/WidgetChat.hpp"
 #include "nibbler.hpp"
-
+#include <Univers.hpp>
 
 class Core {
 	public:
