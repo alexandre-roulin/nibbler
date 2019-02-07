@@ -44,7 +44,7 @@ namespace KNW {
 		template<typename T>
 		void writeDataToServer(T data, uint16_t);
 
-		~ClientTCP();
+		virtual ~ClientTCP();
 
 		bool isConnect() const;
 
@@ -56,7 +56,7 @@ namespace KNW {
 		tcp::resolver resolver;
 		boost::thread thread;
 		DataTCP dataTCP_;
-		std::unique_ptr<IOTCP> iotcp;
+		boost::shared_ptr<IOTCP> iotcp;
 		std::function<void()> callbackDeadConnection_;
 	};
 

@@ -19,8 +19,6 @@
 #define PATH_SOUND_LIBRARY_SFML "dynamicLibraries/libsound_sfml.so"
 #define PATH_SOUND_LIBRARY_SDL "dynamicLibraries/libsound_sdl.so"
 
-class ServerTCP;
-
 class SnakeServer;
 
 class SnakeClient;
@@ -98,14 +96,12 @@ public:
 
 	/** Setter && Getter**/
 
-	const std::unique_ptr<SnakeServer> &getServerTCP_() const;
-
 	MutantGrid<eSprite> &getGrid_();
 
 	//Network
 	std::array<Snake, SNAKE_MAX> getSnakeArray_() const;
 
-	SnakeClient *getSnakeClient() const;
+	boost::shared_ptr<SnakeClient> getSnakeClient() const;
 
 	//Game
 
@@ -194,8 +190,8 @@ private:
 	boost::asio::deadline_timer timer_start;
 	std::shared_ptr<KINU::World> world_;
 
-	std::unique_ptr<SnakeServer> serverTCP_;
-	std::shared_ptr<SnakeClient> clientTCP_;
+	boost::shared_ptr<SnakeServer> serverTCP_;
+	boost::shared_ptr<SnakeClient> clientTCP_;
 	std::unique_ptr<Core> core_;
 	std::shared_ptr<MutantGrid<eSprite>> grid_;
 

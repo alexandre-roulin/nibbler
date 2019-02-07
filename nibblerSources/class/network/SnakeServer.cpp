@@ -1,3 +1,4 @@
+#include <KNW/ServerTCP.hpp>
 #include "SnakeServer.hpp"
 #include <Univers.hpp>
 
@@ -9,90 +10,96 @@ SnakeServer::SnakeServer(
 		pause_(false),
 		port_(port),
 		mapSize_(MAP_DEFAULT),
-		serverTCP_(port,std::bind(&SnakeServer::callbackDeadConnection, this, std::placeholders::_1)),
+		serverTCP_(nullptr),
 		borderless_(false)
 		{
 
-	serverTCP_.addDataType<int16_t >(
-			std::bind(&SnakeServer::callbackRemoveSnake, this, std::placeholders::_1),
+
+}
+
+void SnakeServer::build() {
+	serverTCP_ = boost::shared_ptr<KNW::ServerTCP>(new KNW::ServerTCP(port_, std::bind(&SnakeServer::callbackDeadConnection, shared_from_this(), std::placeholders::_1)));
+
+	serverTCP_->addDataType<int16_t >(
+			std::bind(&SnakeServer::callbackRemoveSnake, shared_from_this(), std::placeholders::_1),
 			eHeaderK::kRemoveSnake);
 
-	serverTCP_.addDataType<InputInfo>(
-			std::bind(&SnakeServer::callbackInput, this, std::placeholders::_1),
+	serverTCP_->addDataType<InputInfo>(
+			std::bind(&SnakeServer::callbackInput, shared_from_this(), std::placeholders::_1),
 			eHeaderK::kInput);
 
-	serverTCP_.addDataType<std::array<Snake, SNAKE_MAX>>(
+	serverTCP_->addDataType<std::array<Snake, SNAKE_MAX>>(
 			std::bind(&SnakeServer::callbackSnakeArray,
-					  this, std::placeholders::_1) ,eHeaderK::kSnakeArray);
+					  shared_from_this(), std::placeholders::_1) ,eHeaderK::kSnakeArray);
 
-	serverTCP_.addDataType<char>(
+	serverTCP_->addDataType<char>(
 			std::bind(&SnakeServer::callbackPock,
-					  this, std::placeholders::_1) ,eHeaderK::kPock);
+					  shared_from_this(), std::placeholders::_1) ,eHeaderK::kPock);
 
-	serverTCP_.addDataType<bool>(
+	serverTCP_->addDataType<bool>(
 			std::bind(&SnakeServer::callbackBorderless,
-					  this,
+					  shared_from_this(),
 					  std::placeholders::_1)
 			,eHeaderK::kBorderless);
 
-	serverTCP_.addDataType<unsigned int>(
+	serverTCP_->addDataType<unsigned int>(
 			std::bind(&SnakeServer::callbackResizeMap,
-					  this,
+					  shared_from_this(),
 					  std::placeholders::_1)
 			,eHeaderK::kResizeMap);
 
-	serverTCP_.addDataType<bool>(
+	serverTCP_->addDataType<bool>(
 			std::bind(&SnakeServer::callbackOpenGame,
-					  this,
+					  shared_from_this(),
 					  std::placeholders::_1)
 			,eHeaderK::kOpenGame);
 
-	serverTCP_.addDataType<int16_t>(
+	serverTCP_->addDataType<int16_t>(
 			std::bind(&SnakeServer::callbackId,
-					  this,
+					  shared_from_this(),
 					  std::placeholders::_1)
 			,eHeaderK::kId);
 
-	serverTCP_.addDataType<ChatInfo>(
+	serverTCP_->addDataType<ChatInfo>(
 			std::bind(&SnakeServer::callbackChatInfo,
-					  this,
+					  shared_from_this(),
 					  std::placeholders::_1)
 			,eHeaderK::kChat);
 
-	serverTCP_.addDataType<StartInfo>(
+	serverTCP_->addDataType<StartInfo>(
 			std::bind(&SnakeServer::callbackStartInfo,
-					  this,
+					  shared_from_this(),
 					  std::placeholders::_1)
 			,eHeaderK::kStartGame);
 
-	serverTCP_.addDataType<FoodInfo>(
+	serverTCP_->addDataType<FoodInfo>(
 			std::bind(&SnakeServer::callbackFood,
-					  this,
+					  shared_from_this(),
 					  std::placeholders::_1)
 			,eHeaderK::kFood);
 
-	serverTCP_.addDataType<Snake>(
+	serverTCP_->addDataType<Snake>(
 			std::bind(&SnakeServer::callbackSnake,
-					  this,
+					  shared_from_this(),
 					  std::placeholders::_1)
 			,eHeaderK::kSnake);
 
-	serverTCP_.addDataType<int16_t>(
+	serverTCP_->addDataType<int16_t>(
 			std::bind(&SnakeServer::callbackForcePause,
-					  this,
+					  shared_from_this(),
 					  std::placeholders::_1),
 			eHeaderK::kForcePause);
 
-	serverTCP_.addDataType<eAction >(
+	serverTCP_->addDataType<eAction >(
 			std::bind(&SnakeServer::callbackPause,
-					  this,
+					  shared_from_this(),
 					  std::placeholders::_1),
 			eHeaderK::kPause);
 
-	serverTCP_.accept(
+	serverTCP_->accept(
 			std::bind(&SnakeServer::callbackAccept,
-					this,
-					std::placeholders::_1));
+					  shared_from_this(),
+					  std::placeholders::_1));
 
 }
 
@@ -101,7 +108,7 @@ SnakeServer::SnakeServer(
 
 void SnakeServer::callbackRemoveSnake(int16_t id) {
 	snake_array_[id].isAlive = false;
-	serverTCP_.writeDataToOpenConnections(snake_array_[id], eHeaderK::kSnake);
+	serverTCP_->writeDataToOpenConnections(snake_array_[id], eHeaderK::kSnake);
 	updateInput();
 }
 
@@ -114,7 +121,7 @@ void SnakeServer::callbackDeadConnection(size_t index) {
 	if (it != snake_array_.end()) {
 		log_success("%s index : %d", __PRETTY_FUNCTION__, index);
 		(*it).isValid = false;
-		serverTCP_.writeDataToOpenConnections(*it, eHeaderK::kSnake);
+		serverTCP_->writeDataToOpenConnections(*it, eHeaderK::kSnake);
 		updateInput();
 	}
 }
@@ -142,14 +149,14 @@ void SnakeServer::callbackPause(eAction pause) {
 	mutex_.unlock();
 	if (!pause_)
 		updateInput();
-	serverTCP_.writeDataToOpenConnections(pause, eHeaderK::kPause);
+	serverTCP_->writeDataToOpenConnections(pause, eHeaderK::kPause);
 }
 
 void SnakeServer::callbackSnake(Snake snake) {
 	log_success("%s", __PRETTY_FUNCTION__ );
 	assert(snake.id >= 0 && snake.id < SNAKE_MAX);
 	snake_array_[snake.id] = snake;
-	serverTCP_.writeDataToOpenConnections(snake, eHeaderK::kSnake);
+	serverTCP_->writeDataToOpenConnections(snake, eHeaderK::kSnake);
 }
 
 void SnakeServer::callbackForcePause(int16_t id) {
@@ -160,11 +167,11 @@ void SnakeServer::callbackForcePause(int16_t id) {
 	pause_ = std::any_of(snake_array_.begin(), snake_array_.end(), [](auto snake){
 		return snake.isValid && snake.isSwitchingLibrary;
 	});
-	serverTCP_.writeDataToOpenConnections(snake_array_[id], eHeaderK::kSnake);
+	serverTCP_->writeDataToOpenConnections(snake_array_[id], eHeaderK::kSnake);
 
 	mutex_.unlock();
 	if (!pause_) {
-		serverTCP_.writeDataToOpenConnections(eAction::kPause, eHeaderK::kPause);
+		serverTCP_->writeDataToOpenConnections(eAction::kPause, eHeaderK::kPause);
 		updateInput();
 	}
 }
@@ -175,10 +182,10 @@ void SnakeServer::callbackAccept(size_t index) {
 	log_success("%s isValid : %d new_id %d index %d", __PRETTY_FUNCTION__, std::count_if(snake_array_.begin(), snake_array_.end(), [](Snake const &s){ return s.isValid;}), new_id, index);
 	snake_array_[new_id] = Snake::randomSnake(new_id); //TODO CHECK RACE CONDITION
 	snake_array_[new_id].indexConnection = index;
-	serverTCP_.writeDataToOpenConnections(snake_array_, eHeaderK::kSnakeArray);
-	serverTCP_.writeDataToOpenConnection(borderless_, index, eHeaderK::kBorderless);
-	serverTCP_.writeDataToOpenConnection(mapSize_, index,  eHeaderK::kResizeMap);
-	serverTCP_.writeDataToOpenConnection(new_id, index, eHeaderK::kId);
+	serverTCP_->writeDataToOpenConnections(snake_array_, eHeaderK::kSnakeArray);
+	serverTCP_->writeDataToOpenConnection(borderless_, index, eHeaderK::kBorderless);
+	serverTCP_->writeDataToOpenConnection(mapSize_, index,  eHeaderK::kResizeMap);
+	serverTCP_->writeDataToOpenConnection(new_id, index, eHeaderK::kId);
 }
 
 void SnakeServer::callbackInput(InputInfo inputInfo) {
@@ -198,18 +205,18 @@ void SnakeServer::callbackPock(char) {
 void SnakeServer::callbackBorderless(bool borderless) {
 	log_success("%s", __PRETTY_FUNCTION__ );
 	borderless_ = borderless;
-	serverTCP_.writeDataToOpenConnections(borderless_, eHeaderK::kBorderless);
+	serverTCP_->writeDataToOpenConnections(borderless_, eHeaderK::kBorderless);
 }
 
 void SnakeServer::callbackResizeMap(unsigned int mapSize) {
 	log_success("%s", __PRETTY_FUNCTION__ );
 	mapSize_ = mapSize;
-	serverTCP_.writeDataToOpenConnections(mapSize_, eHeaderK::kResizeMap);
+	serverTCP_->writeDataToOpenConnections(mapSize_, eHeaderK::kResizeMap);
 }
 
 void SnakeServer::callbackOpenGame(bool openGame) {
 	log_success("%s", __PRETTY_FUNCTION__ );
-	serverTCP_.writeDataToOpenConnections(openGame, eHeaderK::kOpenGame);
+	serverTCP_->writeDataToOpenConnections(openGame, eHeaderK::kOpenGame);
 
 }
 
@@ -219,7 +226,7 @@ void SnakeServer::callbackId(int16_t) {
 
 void SnakeServer::callbackChatInfo(ChatInfo chatInfo) {
 	log_success("%s", __PRETTY_FUNCTION__ );
-	serverTCP_.writeDataToOpenConnections(chatInfo, eHeaderK::kChat);
+	serverTCP_->writeDataToOpenConnections(chatInfo, eHeaderK::kChat);
 }
 
 void SnakeServer::callbackSnakeArray(std::array<Snake, SNAKE_MAX> array) {
@@ -235,10 +242,10 @@ void SnakeServer::startGame() {
 	StartInfo startInfo;
 	std::for_each(snake_array_.begin(), snake_array_.end(),
 				  [](auto &snake){ snake.isAlive = true; snake.isUpdate = false; });
-	serverTCP_.writeDataToOpenConnections(snake_array_, eHeaderK::kSnakeArray);
-	startInfo.nu = serverTCP_.getSizeOfConnections();
+	serverTCP_->writeDataToOpenConnections(snake_array_, eHeaderK::kSnakeArray);
+	startInfo.nu = serverTCP_->getSizeOfConnections();
 	startInfo.time_duration = boost::posix_time::microsec_clock::universal_time();
-	serverTCP_.writeDataToOpenConnections(startInfo, eHeaderK::kStartGame);
+	serverTCP_->writeDataToOpenConnections(startInfo, eHeaderK::kStartGame);
 	mutex_.unlock();
 }
 void SnakeServer::updateInput() {
@@ -250,16 +257,16 @@ void SnakeServer::updateInput() {
 	if (pause_ || std::any_of(snake_array_.begin(), snake_array_.end(),
 							  [](auto snake){ return snake.isValid && snake.isAlive && !snake.isUpdate;} )) return;
 	mutex_.lock();
-	serverTCP_.writeDataToOpenConnections(snake_array_, eHeaderK::kSnakeArray);
+	serverTCP_->writeDataToOpenConnections(snake_array_, eHeaderK::kSnakeArray);
 	for (auto infoArray : foodInfoArray) {
-		serverTCP_.writeDataToOpenConnections(infoArray, eHeaderK::kFood);
+		serverTCP_->writeDataToOpenConnections(infoArray, eHeaderK::kFood);
 	}
 	foodInfoArray.clear();
-	serverTCP_.writeDataToOpenConnections('c', eHeaderK::kPock);
+	serverTCP_->writeDataToOpenConnections('c', eHeaderK::kPock);
 	std::for_each(snake_array_.begin(), snake_array_.end(), [](auto &snake){ snake.isUpdate = false;});
 	mutex_.unlock();
 
-	log_info("How many null %d",std::count_if(serverTCP_.connections.begin(), serverTCP_.connections.end(),[](auto ptr){
+	log_info("How many null %d",std::count_if(serverTCP_->connections.begin(), serverTCP_->connections.end(),[](auto ptr){
 			return ptr != nullptr; }));
 }
 
@@ -268,7 +275,7 @@ bool SnakeServer::isReady() const {
 }
 
 bool SnakeServer::isFull() const {
-	return serverTCP_.getSizeOfConnections() == SNAKE_MAX;
+	return serverTCP_->getSizeOfConnections() == SNAKE_MAX;
 }
 
 unsigned short SnakeServer::getPort_() const {
@@ -283,7 +290,16 @@ bool SnakeServer::sendOpenGameToClient() {
 	log_success("%s %d", __PRETTY_FUNCTION__, isReady());
 	if (!isReady())
 		return false;
-	serverTCP_.writeDataToOpenConnections(true, eHeaderK::kOpenGame);
+	serverTCP_->writeDataToOpenConnections(true, eHeaderK::kOpenGame);
 	univers_.setOpenGame_(true);
 	return true;
 }
+
+boost::shared_ptr<SnakeServer>
+SnakeServer::create(Univers &univers, unsigned int port) {
+	auto ptr = boost::shared_ptr<SnakeServer>(new SnakeServer(univers, port));
+	ptr->build();
+	return ptr;
+}
+
+

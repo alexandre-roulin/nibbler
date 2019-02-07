@@ -54,12 +54,13 @@ namespace KNW {
 	}
 
 	ServerTCP::~ServerTCP() {
+		log_fatal("%s", __PRETTY_FUNCTION__);
 		connections.fill(nullptr);
-		thread.join();
 		io_service_.stop();
+		thread.join();
+		thread.interrupt();
 		acceptor_.cancel();
 		acceptor_.close();
-		thread.interrupt();
 	}
 
 	size_t ServerTCP::getSizeOfConnections() const {
@@ -78,7 +79,7 @@ namespace KNW {
 
 	ConnectionTCP::ConnectionTCP(ServerTCP &serverTCP, tcp::socket socket) :
 			serverTCP_(serverTCP),
-			iotcp(std::make_unique<IOTCP>(
+			iotcp(IOTCP::create(
 					serverTCP.dataTCP_,
 					std::move(socket),
 					std::bind(&DataTCP::sendDataToCallback,
@@ -93,11 +94,14 @@ namespace KNW {
 	}
 
 	void ConnectionTCP::sendData(std::string data) {
+		log_warn("%s %d",__PRETTY_FUNCTION__,  mutex.try_lock());
 		iotcp->writeSocket(std::move(data));
+		mutex.unlock();
 	}
 
 	ConnectionTCP::~ConnectionTCP() {
-		std::cout << "~ConnectionTCP" << std::endl;
+		log_fatal("%s",__PRETTY_FUNCTION__);
+		iotcp = nullptr;
 	}
 
 	const tcp::socket &ConnectionTCP::getSocket_() const {
@@ -105,6 +109,8 @@ namespace KNW {
 	}
 
 	void ConnectionTCP::callbackDeadIOTCP() {
+		bool lock = mutex.try_lock();
+		log_warn("%s %d", __PRETTY_FUNCTION__ , lock);
 		auto it = std::find_if(serverTCP_.connections.begin(), serverTCP_.connections.end(),
 				[this](std::shared_ptr<ConnectionTCP> p){
 					return (p.get()) == this;
@@ -113,6 +119,7 @@ namespace KNW {
 		if (it != serverTCP_.connections.end()) {
 			serverTCP_.callbackDeadConnection(std::distance(serverTCP_.connections.begin(), it));
 		}
+		if (lock) mutex.unlock();
 	}
 
 }

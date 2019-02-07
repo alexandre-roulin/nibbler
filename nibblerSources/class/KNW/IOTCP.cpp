@@ -11,11 +11,11 @@ KNW::IOTCP::IOTCP(
 		std::function<void(BaseDataType::Header, char *)> f,
 		std::function<void()> callbackDeadSocket)
 		:
+		openObject_(true),
 		dataTCP_(dataTCP) ,
 		socket_(std::move(socket)),
 		callback_(std::move(f)),
 		callbackDeadSocket_(callbackDeadSocket) {
-
 
 }
 
@@ -26,7 +26,7 @@ void KNW::IOTCP::readSocketHeader() {
 			boost::asio::buffer(buffer_data_, sizeof(BaseDataType::Header)),
 			boost::bind(
 					&KNW::IOTCP::handleReadHeader,
-					this,
+					shared_from_this(),
 					boost::asio::placeholders::error,
 					boost::asio::placeholders::bytes_transferred
 			));
@@ -54,7 +54,7 @@ void KNW::IOTCP::readSocketData(BaseDataType::Header header) {
 			boost::asio::buffer(buffer_data_, dataTCP_.getSizeOfHeader(header)),
 			boost::bind(
 					&KNW::IOTCP::handleReadData,
-					this,
+					shared_from_this(),
 					header,
 					boost::asio::placeholders::error
 			));
@@ -85,22 +85,23 @@ KNW::IOTCP::handleWrite(const boost::system::error_code &ec) {
 void KNW::IOTCP::writeSocket(std::string data) {
 	boost::asio::async_write(socket_, boost::asio::buffer(data),
 							 boost::bind(&KNW::IOTCP::handleWrite,
-										 this,
+										 shared_from_this(),
 										 boost::asio::placeholders::error));
 }
 
 void KNW::IOTCP::checkError(boost::system::error_code const &error_code) {
-//	log_fatal("%s %d", __PRETTY_FUNCTION__, error_code.value());
+//	if (!openObject_)
+//		return;
+	log_fatal("%s addr %s %d", __PRETTY_FUNCTION__, error_code.message().c_str(), socket_.is_open());
 	try {
 		if (error_code.value() != 0) {
-			socket_.shutdown(boost::asio::ip::tcp::socket::shutdown_both);
-			socket_.close();
-			if (callbackDeadSocket_)
+			if (socket_.is_open())
+				socket_.close();
+			if (callbackDeadSocket_) {
 				callbackDeadSocket_();
+			}
 		}
 	} catch (std::exception const &e) {
-		if (callbackDeadSocket_)
-			callbackDeadSocket_();
 		std::cout << e.what() << std::endl;
 	}
 }
@@ -110,21 +111,27 @@ const tcp::socket &KNW::IOTCP::getSocket_() const {
 }
 
 KNW::IOTCP::~IOTCP() {
+	openObject_ = false;
 	log_warn("%s %d", __PRETTY_FUNCTION__, socket_.is_open());
 	try {
 		if (socket_.is_open()) {
-			socket_.shutdown(boost::asio::ip::tcp::socket::shutdown_both);
 			socket_.close();
 		}
-		if (callbackDeadSocket_)
-			callbackDeadSocket_();
 	} catch (std::exception const &e) {
-		if (callbackDeadSocket_)
-			callbackDeadSocket_();
 		std::cout << e.what() << std::endl;
 	}
+	if (callbackDeadSocket_)
+		callbackDeadSocket_();
 }
 
 bool KNW::IOTCP::isConnect() const {
 	return socket_.is_open();
+}
+
+boost::shared_ptr<KNW::IOTCP>
+KNW::IOTCP::create(KNW::DataTCP &dataTCP_, tcp::socket socket_,
+				   std::function<void(BaseDataType::Header, char *)> f,
+				   std::function<void()> callbackDeadSocket) {
+
+	return boost::shared_ptr<KNW::IOTCP>(new IOTCP(dataTCP_, std::move(socket_), f, callbackDeadSocket));
 }

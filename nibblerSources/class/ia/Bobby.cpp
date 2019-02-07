@@ -22,7 +22,7 @@ Bobby::Bobby(Univers &univers)
 		: univers_(univers),
 		  direction(kNorth),
 		  mapSize(0),
-		  clientTCP_(std::make_unique<SnakeClient>(univers, true)) {
+		  clientTCP_(SnakeClient::create(univers, true)) {
 }
 
 void Bobby::buildIA() {

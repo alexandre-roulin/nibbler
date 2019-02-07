@@ -36,7 +36,6 @@ void WidgetMassiveButton::render(void) {
 	}
 	if (ImGui::Button("start_game()")) {
 		if (core_.univers.isServer() && core_.univers.getSnakeClient()) {
-			core_.univers.getServerTCP_()->sendOpenGameToClient();
 		} else {
 			core_.addMessageChat("FAIS PAS LA MERDE GROS ! T'es pas un server OU TA PAS DE JOUEUR");
 		}

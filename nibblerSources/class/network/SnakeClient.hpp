@@ -9,9 +9,9 @@
 
 class Univers;
 
-class SnakeClient {
+class SnakeClient : public boost::enable_shared_from_this<SnakeClient> {
 public:
-	SnakeClient(Univers &univers, bool fromIA);
+	static boost::shared_ptr<SnakeClient> create(Univers &univers, bool fromIA);
 
 	template<typename T>
 	void sendDataToServer(T data, eHeaderK header);
@@ -59,6 +59,10 @@ public:
 	virtual ~SnakeClient();
 
 private:
+	SnakeClient(Univers &univers, bool fromIA);
+
+	void build();
+
 	void callbackRemoveSnake(int16_t);
 
 	void callbackDeadConnection();
@@ -91,7 +95,7 @@ private:
 
 	bool acceptDataFromServer() const;
 
-	KNW::ClientTCP clientTCP_;
+	boost::shared_ptr<KNW::ClientTCP> clientTCP_;
 	Univers &univers_;
 	bool fromIA_;
 	uint16_t id_;
@@ -104,6 +108,6 @@ private:
 
 template<typename T>
 void SnakeClient::sendDataToServer(T data, eHeaderK header) {
-	clientTCP_.writeDataToServer(std::move(data),
+	clientTCP_->writeDataToServer(std::move(data),
 								 static_cast<uint16_t>(header));
 }

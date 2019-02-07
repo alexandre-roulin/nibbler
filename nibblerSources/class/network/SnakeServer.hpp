@@ -7,10 +7,11 @@
 
 class Univers;
 
-class SnakeServer {
+class SnakeServer : public boost::enable_shared_from_this<SnakeServer> {
 
 public:
-	SnakeServer(Univers &univers, unsigned int port);
+	SnakeServer() = delete;
+	static boost::shared_ptr<SnakeServer> create(Univers &univers, unsigned int port);
 
 	void startGame();
 
@@ -25,6 +26,8 @@ public:
 	bool sendOpenGameToClient();
 
 private:
+	SnakeServer(Univers &univers, unsigned int port);
+	void build();
 	void callbackRemoveSnake(int16_t);
 
 	void callbackDeadConnection(size_t index);
@@ -64,7 +67,7 @@ private:
 	bool pause_;
 	unsigned short port_;
 	unsigned int mapSize_;
-	KNW::ServerTCP serverTCP_;
+	boost::shared_ptr<KNW::ServerTCP> serverTCP_;
 	std::array<Snake, SNAKE_MAX> snake_array_;
 	bool borderless_;
 };

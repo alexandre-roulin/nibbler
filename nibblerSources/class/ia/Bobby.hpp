@@ -36,7 +36,7 @@ private:
 	unsigned int baseIndex;
 	static std::mutex mutex;
 	KStar kStar;
-	std::unique_ptr<SnakeClient> clientTCP_;
+	boost::shared_ptr<SnakeClient> clientTCP_;
 	void findDirection(KStar::Vec2 vecSource, KStar::Vec2 vecTarget);
 	bool define_priority(int x, int y);
 	KStar::Vec2 getVecSnakeTail();

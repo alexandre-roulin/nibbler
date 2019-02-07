@@ -35,16 +35,25 @@ namespace KNW {
 	class ConnectionTCP {
 	public:
 		ConnectionTCP() = delete;
+
 		ConnectionTCP(ConnectionTCP const &) = delete;
+
 		ConnectionTCP(ServerTCP &serverTCP, tcp::socket socket);
+
 		void sendData(std::string data);
+
 		~ConnectionTCP();
+
 		const tcp::socket &getSocket_() const;
+
 		void callbackDeadIOTCP();
+
 	private:
 		friend class ServerTCP;
+
 		ServerTCP &serverTCP_;
-		std::unique_ptr<IOTCP> iotcp;
+		boost::shared_ptr<IOTCP> iotcp;
+		std::mutex mutex;
 	};
 
 	/*************************** ServerTCP ************************************/
@@ -81,6 +90,7 @@ namespace KNW {
 		void writeDataToOpenConnections(T data, H header);
 
 		virtual ~ServerTCP();
+
 		std::array<std::shared_ptr<ConnectionTCP>, kMaxConnectionOpen> connections;
 	private:
 
@@ -99,7 +109,9 @@ namespace KNW {
 		//Data management
 		DataTCP dataTCP_;
 		std::function<void(size_t)> callbackDeadSocket_;
+
 		friend class ConnectionTCP;
+
 		friend class IOTCP;
 
 	};
@@ -123,8 +135,10 @@ namespace KNW {
 		auto header = DataType<T>::getHeader();
 
 		std::string buffer;
-		buffer.append(reinterpret_cast<char *>(&header), sizeof(BaseDataType::Header));
-		buffer.append(reinterpret_cast<char *>(&data), dataTCP_.getSizeOfHeader(header));
+		buffer.append(reinterpret_cast<char *>(&header),
+					  sizeof(BaseDataType::Header));
+		buffer.append(reinterpret_cast<char *>(&data),
+					  dataTCP_.getSizeOfHeader(header));
 
 		for (auto &connection : connections) {
 			if (connection)
@@ -136,8 +150,10 @@ namespace KNW {
 	void ServerTCP::writeDataToOpenConnections(T data, H header) {
 		uint16_t header_ = static_cast<uint16_t >(header);
 		std::string buffer;
-		buffer.append(reinterpret_cast<char *>(&header_), sizeof(BaseDataType::Header));
-		buffer.append(reinterpret_cast<char *>(&data), dataTCP_.getSizeOfHeader(header_));
+		buffer.append(reinterpret_cast<char *>(&header_),
+					  sizeof(BaseDataType::Header));
+		buffer.append(reinterpret_cast<char *>(&data),
+					  dataTCP_.getSizeOfHeader(header_));
 //		std::cout << __PRETTY_FUNCTION__ << std::endl;
 		for (auto &connection : connections) {
 			if (connection)
@@ -152,8 +168,10 @@ namespace KNW {
 
 		auto header = DataType<T>::getHeader();
 		std::string buffer;
-		buffer.append(reinterpret_cast<char *>(&header), sizeof(BaseDataType::Header));
-		buffer.append(reinterpret_cast<char *>(&data), dataTCP_.getSizeOfHeader(header));
+		buffer.append(reinterpret_cast<char *>(&header),
+					  sizeof(BaseDataType::Header));
+		buffer.append(reinterpret_cast<char *>(&data),
+					  dataTCP_.getSizeOfHeader(header));
 
 		connections[index]->sendData(buffer);
 	}
@@ -165,8 +183,10 @@ namespace KNW {
 		assert(index < static_cast<int>(connections.size()));
 //		log_success("%s(%d)", __PRETTY_FUNCTION__, index);
 		std::string buffer;
-		buffer.append(reinterpret_cast<char *>(&header_), sizeof(BaseDataType::Header));
-		buffer.append(reinterpret_cast<char *>(&data), dataTCP_.getSizeOfHeader(header_));
+		buffer.append(reinterpret_cast<char *>(&header_),
+					  sizeof(BaseDataType::Header));
+		buffer.append(reinterpret_cast<char *>(&data),
+					  dataTCP_.getSizeOfHeader(header_));
 		connections[index]->sendData(buffer);
 	}
 

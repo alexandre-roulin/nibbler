@@ -9,101 +9,12 @@ SnakeClient::SnakeClient(
 		Univers &univers,
 		bool fromIA_
 		) :
-		clientTCP_(std::bind(&SnakeClient::callbackDeadConnection, this)),
+		clientTCP_(nullptr),
 		univers_(univers),
 		fromIA_(fromIA_),
 		id_(0),
 		factory_(univers) {
 
-	clientTCP_.addDataType<int16_t >(
-			std::bind(&SnakeClient::callbackRemoveSnake,
-					  this,
-					  std::placeholders::_1)
-			, eHeaderK::kRemoveSnake);
-
-	clientTCP_.addDataType<InputInfo>(
-			std::bind(&SnakeClient::callbackInput,
-					  this,
-					  std::placeholders::_1)
-			, eHeaderK::kInput);
-
-	clientTCP_.addDataType<InputInfo>(
-			std::bind(&SnakeClient::callbackInput,
-					  this,
-					  std::placeholders::_1)
-			, eHeaderK::kInput);
-
-	clientTCP_.addDataType<std::array<Snake, SNAKE_MAX>>(
-			std::bind(&SnakeClient::callbackSnakeArray,
-					  this,
-					  std::placeholders::_1)
-			,eHeaderK::kSnakeArray);
-
-	clientTCP_.addDataType<char>(
-			std::bind(&SnakeClient::callbackPock,
-					  this,
-					  std::placeholders::_1)
-			,eHeaderK::kPock);
-
-	clientTCP_.addDataType<bool>(
-			std::bind(&SnakeClient::callbackBorderless,
-					  this,
-					  std::placeholders::_1)
-			,eHeaderK::kBorderless);
-
-	clientTCP_.addDataType<unsigned int>(
-			std::bind(&SnakeClient::callbackResizeMap,
-					  this,
-					  std::placeholders::_1)
-			,eHeaderK::kResizeMap);
-
-	clientTCP_.addDataType<bool>(
-			std::bind(&SnakeClient::callbackOpenGame,
-					  this,
-					  std::placeholders::_1)
-			,eHeaderK::kOpenGame);
-
-	clientTCP_.addDataType<int16_t>(
-			std::bind(&SnakeClient::callbackId,
-					  this,
-					  std::placeholders::_1)
-			,eHeaderK::kId);
-
-	clientTCP_.addDataType<ChatInfo>(
-			std::bind(&SnakeClient::callbackChatInfo,
-					  this,
-					  std::placeholders::_1)
-			,eHeaderK::kChat);
-
-	clientTCP_.addDataType<StartInfo>(
-			std::bind(&SnakeClient::callbackStartInfo,
-					  this,
-					  std::placeholders::_1)
-			,eHeaderK::kStartGame);
-
-	clientTCP_.addDataType<FoodInfo>(
-			std::bind(&SnakeClient::callbackFood,
-					  this,
-					  std::placeholders::_1)
-			,eHeaderK::kFood);
-
-	clientTCP_.addDataType<Snake>(
-			std::bind(&SnakeClient::callbackSnake,
-					  this,
-					  std::placeholders::_1)
-			,eHeaderK::kSnake);
-
-	clientTCP_.addDataType<int16_t>(
-			std::bind(&SnakeClient::callbackForcePause,
-					  this,
-					  std::placeholders::_1),
-			eHeaderK::kForcePause);
-
-	clientTCP_.addDataType<eAction >(
-			std::bind(&SnakeClient::callbackPause,
-					  this,
-					  std::placeholders::_1),
-			eHeaderK::kPause);
 }
 
 SnakeClient::~SnakeClient() = default;
@@ -112,7 +23,7 @@ SnakeClient::~SnakeClient() = default;
 
 
 void SnakeClient::connect(std::string dns, std::string port) {
-	clientTCP_.connect(dns, port);
+	clientTCP_->connect(dns, port);
 }
 
 
@@ -207,8 +118,8 @@ void SnakeClient::changeIsBorderless(bool borderless) {
 
 
 bool SnakeClient::isConnect() const {
-//	log_warn("%s %d", __PRETTY_FUNCTION__, clientTCP_.isConnect());
-	return clientTCP_.isConnect();
+//	log_warn("%s %d", __PRETTY_FUNCTION__, clientTCP_->isConnect());
+	return clientTCP_->isConnect();
 }
 
 void SnakeClient::killSnake(uint16_t id) {
@@ -232,7 +143,8 @@ void SnakeClient::callbackRemoveSnake(int16_t) {
 void SnakeClient::callbackDeadConnection() {
 	log_success("%s", __PRETTY_FUNCTION__ );
 	univers_.setOpenGame_(false);
-	clientTCP_.disconnect();
+	clientTCP_->disconnect();
+	univers_.delete_client();
 }
 
 void SnakeClient::callbackPock(char) {
@@ -328,7 +240,7 @@ void SnakeClient::callbackStartInfo(StartInfo startInfo) {
 		if (univers_.isServer()) {
 			int max_food = (startInfo.nu > 1 ? startInfo.nu - 1 : startInfo.nu);
 			for (int index = 0; index < max_food; ++index) {
-				clientTCP_.writeDataToServer(
+				clientTCP_->writeDataToServer(
 						FoodInfo(
 								PositionComponent(
 										univers_.getGrid_().getRandomSlot(eSprite::NONE)),false),
@@ -359,4 +271,106 @@ void SnakeClient::callbackSnakeArray(std::array<Snake, SNAKE_MAX> new_snake_arra
 
 bool SnakeClient::isReady() const {
 	return snake_array_[id_].isReady;
+}
+
+boost::shared_ptr<SnakeClient>
+SnakeClient::create(Univers &univers, bool fromIA) {
+	auto ptr = boost::shared_ptr<SnakeClient>(new SnakeClient(univers, fromIA));
+	ptr->build();
+	return ptr;
+}
+
+void SnakeClient::build() {
+
+	clientTCP_ = boost::shared_ptr<KNW::ClientTCP>(new KNW::ClientTCP(std::bind(&SnakeClient::callbackDeadConnection, shared_from_this())));
+
+	clientTCP_->addDataType<int16_t >(
+			std::bind(&SnakeClient::callbackRemoveSnake,
+					  shared_from_this(),
+					  std::placeholders::_1)
+			, eHeaderK::kRemoveSnake);
+
+	clientTCP_->addDataType<InputInfo>(
+			std::bind(&SnakeClient::callbackInput,
+					  shared_from_this(),
+					  std::placeholders::_1)
+			, eHeaderK::kInput);
+
+	clientTCP_->addDataType<InputInfo>(
+			std::bind(&SnakeClient::callbackInput,
+					  shared_from_this(),
+					  std::placeholders::_1)
+			, eHeaderK::kInput);
+
+	clientTCP_->addDataType<std::array<Snake, SNAKE_MAX>>(
+			std::bind(&SnakeClient::callbackSnakeArray,
+					  shared_from_this(),
+					  std::placeholders::_1)
+			,eHeaderK::kSnakeArray);
+
+	clientTCP_->addDataType<char>(
+			std::bind(&SnakeClient::callbackPock,
+					  shared_from_this(),
+					  std::placeholders::_1)
+			,eHeaderK::kPock);
+
+	clientTCP_->addDataType<bool>(
+			std::bind(&SnakeClient::callbackBorderless,
+					  shared_from_this(),
+					  std::placeholders::_1)
+			,eHeaderK::kBorderless);
+
+	clientTCP_->addDataType<unsigned int>(
+			std::bind(&SnakeClient::callbackResizeMap,
+					  shared_from_this(),
+					  std::placeholders::_1)
+			,eHeaderK::kResizeMap);
+
+	clientTCP_->addDataType<bool>(
+			std::bind(&SnakeClient::callbackOpenGame,
+					  shared_from_this(),
+					  std::placeholders::_1)
+			,eHeaderK::kOpenGame);
+
+	clientTCP_->addDataType<int16_t>(
+			std::bind(&SnakeClient::callbackId,
+					  shared_from_this(),
+					  std::placeholders::_1)
+			,eHeaderK::kId);
+
+	clientTCP_->addDataType<ChatInfo>(
+			std::bind(&SnakeClient::callbackChatInfo,
+					  shared_from_this(),
+					  std::placeholders::_1)
+			,eHeaderK::kChat);
+
+	clientTCP_->addDataType<StartInfo>(
+			std::bind(&SnakeClient::callbackStartInfo,
+					  shared_from_this(),
+					  std::placeholders::_1)
+			,eHeaderK::kStartGame);
+
+	clientTCP_->addDataType<FoodInfo>(
+			std::bind(&SnakeClient::callbackFood,
+					  shared_from_this(),
+					  std::placeholders::_1)
+			,eHeaderK::kFood);
+
+	clientTCP_->addDataType<Snake>(
+			std::bind(&SnakeClient::callbackSnake,
+					  shared_from_this(),
+					  std::placeholders::_1)
+			,eHeaderK::kSnake);
+
+	clientTCP_->addDataType<int16_t>(
+			std::bind(&SnakeClient::callbackForcePause,
+					  shared_from_this(),
+					  std::placeholders::_1),
+			eHeaderK::kForcePause);
+
+	clientTCP_->addDataType<eAction >(
+			std::bind(&SnakeClient::callbackPause,
+					  shared_from_this(),
+					  std::placeholders::_1),
+			eHeaderK::kPause);
 }

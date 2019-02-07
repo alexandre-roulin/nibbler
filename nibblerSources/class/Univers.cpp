@@ -414,7 +414,7 @@ void Univers::callbackAction(eAction action) {
 				core_->addMessageChat(WarningRequiredAtLeastOneClient);
 				break;
 			}
-			getServerTCP_()->sendOpenGameToClient();
+			serverTCP_->sendOpenGameToClient();
 			break;
 	}
 }
@@ -424,7 +424,7 @@ void Univers::callbackAction(eAction action) {
 
 void Univers::create_client() {
 	if (!clientTCP_) {
-		clientTCP_ = std::make_unique<SnakeClient>(*this, false);
+		clientTCP_ = SnakeClient::create(*this, false);
 		core_->addMessageChat(SuccessClientIsCreate);
 	}
 	else
@@ -440,7 +440,7 @@ void Univers::create_server(unsigned int port) {
 		core_->addMessageChat(WarningServerExist);
 	else {
 		try {
-			serverTCP_ = std::make_unique<SnakeServer>(*this, port);
+			serverTCP_ = SnakeServer::create(*this, port);
 			core_->addMessageChat(SuccessServerIsCreate);
 		} catch (std::exception const &e) {
 			core_->addMessageChat(e.what());
@@ -451,17 +451,17 @@ void Univers::create_server(unsigned int port) {
 }
 
 void Univers::connect(const std::string &dns, const std::string &port) {
-	if (isOnlyIA() || !getSnakeClient()) {
+	if (!clientTCP_) {
 		core_->addMessageChat(WarningClientNotExist);
 		return;
 	}
 	log_fatal("connect %d", getSnakeClient()->isConnect());
-	if (getSnakeClient()->isConnect()) {
+	if (clientTCP_->isConnect()) {
 		core_->addMessageChat(WarningClientIsAlreadyConnected);
 		return;
 	}
 	try {
-		getSnakeClient()->connect(dns, port);
+		clientTCP_->connect(dns, port);
 		core_->addMessageChat(SuccessClientIsConnected);
 	} catch (std::exception const &e) {
 		core_->addMessageChat(e.what());
@@ -534,11 +534,11 @@ KINU::World &Univers::getWorld_() const {
 	return *world_;
 }
 
-SnakeClient *Univers::getSnakeClient() const {
+boost::shared_ptr<SnakeClient> Univers::getSnakeClient() const {
 	if (clientTCP_)
-		return clientTCP_.get();
+		return clientTCP_->shared_from_this();
 	else if (vecBobby.size() != 0)
-		return vecBobby.front()->getClientTCP_();
+		return vecBobby.front()->getClientTCP_()->shared_from_this();
 	return nullptr;
 }
 
@@ -639,10 +639,6 @@ Univers::~Univers() {
 	serverTCP_ = nullptr;
 	unload_external_library();
 	log_warn("~Univers.end()");
-}
-
-const std::unique_ptr<SnakeServer> &Univers::getServerTCP_() const {
-	return serverTCP_;
 }
 
 bool Univers::isOpenGame_() const {
