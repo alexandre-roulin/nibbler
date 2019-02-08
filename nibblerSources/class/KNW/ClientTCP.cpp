@@ -53,13 +53,12 @@ namespace KNW {
 	}
 
 	void ClientTCP::disconnect() {
-		iotcp.reset();
-		if (socket_.is_open())
-			socket_.close();
-		thread.join();
-		io.reset();
-		thread.interrupt();
-
+		if (iotcp != nullptr)
+			iotcp.reset();
+		if (thread.joinable()) {
+			thread.join();
+			thread.interrupt();
+		}
 	}
 
 	ClientTCP::boost_shared_ptr ClientTCP::create(std::function<void()> f) {

@@ -27,9 +27,9 @@ void CollisionSystem::checkCollision(
 		KINU::TagId tagId = entityCheck.getGroupIdByEntity();
 		log_info("CollisionSystem");
 
-		if (tagId == eTag::FOOD_TAG) {
+		if (tagId == eTag::kFoodTag) {
 			log_info("FOOD_TAG::FoodCollision");
-			univers_.playNoise(eNoise::FOOD);
+			univers_.playNoise(eNoise::kFoodSound);
 			entityCheck.kill();
 			getWorld().getEventsManager().emitEvent<FoodEat>(entityHead.getGroupIdByEntity());
 
@@ -38,16 +38,16 @@ void CollisionSystem::checkCollision(
 
 				univers_.getSnakeClient()->sendDataToServer(
 						FoodInfo(PositionComponent(
-								univers_.getGrid_().getRandomSlot(eSprite::NONE)),
+								univers_.getGrid_().getRandomSlot(eSprite::kNone)),
 										false),
-										eHeaderK::kFood);
+										eHeader::kFood);
 			}
-		} else if (tagId == eTag::FOOD_TAG_FROM_SNAKE) {
-			univers_.playNoise(eNoise::FOOD);
+		} else if (tagId == eTag::kFoodFromSnake) {
+			univers_.playNoise(eNoise::kFoodSound);
 			entityCheck.kill();
 			if (entityHead.hasGroupId())
 				getWorld().getEventsManager().emitEvent<FoodEat>(entityHead.getGroupIdByEntity());
-		} else if (tagId == WALL_TAG) {
+		} else if (tagId == kWallTag) {
 			createAppleBySnake(entityHead);
 			univers_.getSnakeClient()->killSnake(entityHead.getGroupIdByEntity());
 			entityHead.killGroup();
@@ -68,7 +68,7 @@ void CollisionSystem::update() {
 	std::vector<KINU::Entity> entities_ = getEntities();
 	for (auto entity : getEntities()) {
 		if (entity.hasTagId() &&
-			entity.getTagId() - entity.getGroupIdByEntity() == eTag::HEAD_TAG) {
+			entity.getTagId() - entity.getGroupIdByEntity() == eTag::kHeadTag) {
 			for (auto entityCheck : entities_) {
 				checkCollision(entity, entityCheck);
 			}
@@ -85,7 +85,7 @@ void CollisionSystem::createAppleBySnake(KINU::Entity snake) {
 			auto positionComponent = snakeCheck.getComponent<PositionComponent>();
 			if (positionComponent != positionHead) {
 				univers_.getSnakeClient()->sendDataToServer(
-						FoodInfo(positionComponent, true), eHeaderK::kFood);
+						FoodInfo(positionComponent, true), eHeader::kFood);
 			}
 		}
 	}

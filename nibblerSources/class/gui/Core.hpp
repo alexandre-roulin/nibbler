@@ -11,7 +11,7 @@
 class Core {
 	public:
 
-	enum eColor { RED, GREEN };
+	enum eColor { kRed, kGreen };
 
 	class CoreConstructorException : public std::exception {
 	public:

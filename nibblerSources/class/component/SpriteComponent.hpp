@@ -8,8 +8,8 @@
 struct SpriteComponent {
 
 	explicit SpriteComponent(
-			eSprite sprite = eSprite::GREEN,
-			ePriority priority = ePriority ::NO_PRIORITY
+			eSprite sprite = eSprite::kGreen,
+			ePriority priority = ePriority ::kNoPriority
 					);
 
 	SpriteComponent(SpriteComponent const &);

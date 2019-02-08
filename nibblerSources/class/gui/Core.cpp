@@ -117,7 +117,7 @@ void			Core::aState(void)
 						univers.callbackAction(kConnect);
 						break;
 					case sf::Keyboard::R:
-						univers.callbackAction(kReady);
+						univers.callbackAction(kSwitchReady);
 						break;
 					case sf::Keyboard::S:
 						univers.callbackAction(kCreateServer);

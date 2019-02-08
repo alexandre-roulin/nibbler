@@ -6,7 +6,7 @@
 #include <nibbler.hpp>
 #include <boost/date_time/posix_time/ptime.hpp>
 
-enum class eHeaderK : uint16_t {
+enum class eHeader : uint16_t {
 	kChat,				//0
 	kOpenGame,			//1
 	kStartGame,			//2
@@ -20,78 +20,82 @@ enum class eHeaderK : uint16_t {
 	kPock,				//10
 	kSnake,				//11
 	kSnakeArray,		//12
-	kRemoveSnake		//13
+	kRemoveSnake,		//13
+	kAddScore			//14
 };
 
-inline std::ostream &operator<<(std::ostream  &os, eHeaderK const & header) {
+inline std::ostream &operator<<(std::ostream  &os, eHeader const & header) {
 	switch (header) {
 
-
-		case eHeaderK::kRemoveSnake: {
+		case eHeader::kAddScore: {
+			os << "kAddScore";
+			break;
+		}
+		case eHeader::kRemoveSnake: {
 			os << "kRemoveSnake";
 			break;
 		}
-		case eHeaderK::kChat: {
+		case eHeader::kChat: {
 			os << "kChat";
 			break;
 		}
 
-		case eHeaderK::kOpenGame: {
+		case eHeader::kOpenGame: {
 			os << "kOpenGame";
 			break;
 		}
 
-		case eHeaderK::kStartGame: {
+		case eHeader::kStartGame: {
 			os << "kStartGame";
 			break;
 		}
 
-		case eHeaderK::kResizeMap: {
+		case eHeader::kResizeMap: {
 			os << "kResizeMap";
 			break;
 		}
 
-		case eHeaderK::kBorderless: {
+		case eHeader::kBorderless: {
 			os << "kBorderless";
 			break;
 		}
 
-		case eHeaderK::kId: {
+		case eHeader::kId: {
 			os << "kId";
 			break;
 		}
 
-		case eHeaderK::kPause: {
+		case eHeader::kPause: {
 			os << "kPause";
 			break;
 		}
 
-		case eHeaderK::kInput: {
+		case eHeader::kInput: {
 			os << "kInput";
 			break;
 		}
 
-		case eHeaderK::kFood: {
+		case eHeader::kFood: {
 			os << "kFood";
 			break;
 		}
 
-		case eHeaderK::kForcePause: {
+		case eHeader::kForcePause: {
 			os << "kForcePause";
 			break;
 		}
 
-		case eHeaderK::kPock: {
+		case eHeader::kPock: {
 			os << "kPock";
 			break;
 		}
 
-		case eHeaderK::kSnake: {
+		case eHeader::kSnake: {
 			os << "kSnake";
 			break;
 		}
 
-		case eHeaderK::kSnakeArray: {
+		case eHeader::kSnakeArray: {
 			os << "kSnakeArray";
 			break;
 		}

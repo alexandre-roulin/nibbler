@@ -130,7 +130,9 @@ add_executable(${NAME}
         class/ia/KStar.cpp
         class/ia/KStar.hpp
         incs/MutantGrid.tpp
-        class/gui/widget/SpriteColorProperties.hpp)
+        class/gui/widget/SpriteColorProperties.hpp
+        class/cores/Snake.hpp
+        class/cores/Snake.cpp)
 
 
 target_include_directories(

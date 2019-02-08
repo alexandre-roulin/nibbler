@@ -36,7 +36,7 @@ DisplayGlfw::DisplayGlfw(int width,
 		deltaTime_(0.016f),
 		particuleBackground_(nullptr),
 		particuleBackgroundOutline_(nullptr),
-		yourSnakeSprite(eSprite::NONE),
+		yourSnakeSprite(eSprite::kNone),
 		yourSnakeX(-10),
 		yourSnakeY(-10),
 		projection_(1.f),
@@ -95,42 +95,42 @@ DisplayGlfw::DisplayGlfw(int width,
 }
 
 void DisplayGlfw::constructMaterialMap_() {
-	materialMap_.try_emplace(eSprite::GREEN, "GREEN");
-	materialMap_.try_emplace(eSprite::GROUND, "GROUND", 0.f,
+	materialMap_.try_emplace(eSprite::kGreen, "GREEN");
+	materialMap_.try_emplace(eSprite::kGround, "GROUND", 0.f,
 							 glm::vec3(0.0756f * 0.f, 0.4423f * 0.1f, 0.07568f * 0.1f),
 							 glm::vec3(0.0756f, 0.5523f, 0.07568f),
 							 glm::vec3(0.f, 0.f, 0.f));
-	materialMap_.try_emplace(eSprite::BLUE, "BLUE", 31.f,
+	materialMap_.try_emplace(eSprite::kBlue, "BLUE", 31.f,
 							 glm::vec3(0.0f, 0.1f, 0.06f),
 							 glm::vec3(0.0f, 0.50980392f, 0.50980392f),
 							 glm::vec3(0.50196078f, 0.50196078f, 0.50196078f));
 	glm::vec3 purple((213.f / 255.f), 0.f, (249.f / 255));
-	materialMap_.try_emplace(eSprite::PURPLE, "PURPLE", 50.f, purple * 0.1f, purple, purple);
+	materialMap_.try_emplace(eSprite::kPurple, "PURPLE", 50.f, purple * 0.1f, purple, purple);
 	glm::vec3 pink((255.f / 255.f), (64.f / 255.f), (129.f / 255));
-	materialMap_.try_emplace(eSprite::PINK, "PINK", 50.f, pink * 0.1f, pink, pink);
-	materialMap_.try_emplace(eSprite::GREY, "GREY", 89.6,
+	materialMap_.try_emplace(eSprite::kPink, "PINK", 50.f, pink * 0.1f, pink, pink);
+	materialMap_.try_emplace(eSprite::kGrey, "GREY", 89.6,
 							 glm::vec3(0.23125f, 0.23125f, 0.23125f),
 							 glm::vec3(0.2775f, 0.2775f, 0.2775f),
 							 glm::vec3(0.773911f, 0.773911f, 0.773911f));
-	materialMap_.try_emplace(eSprite::YELLOW, "YELLOW", 50.6f,
+	materialMap_.try_emplace(eSprite::kYellow, "YELLOW", 50.6f,
 							 glm::vec3(0.19f, 0.19f, 0.0545f),
 							 glm::vec3(0.85f, 0.85f, 0.1f),
 							 glm::vec3(0.628281f, 0.628281f, 0.628281f));
 	glm::vec3 orange((244.f / 255.f), (81.f / 255.f), (30.f / 255));
-	materialMap_.try_emplace(eSprite::ORANGE, "ORANGE", 50.f, orange * 0.1f, orange, orange);
-	materialMap_.try_emplace(eSprite::RED, "RED", 31.f,
+	materialMap_.try_emplace(eSprite::kOrange, "ORANGE", 50.f, orange * 0.1f, orange, orange);
+	materialMap_.try_emplace(eSprite::kRed, "RED", 31.f,
 							 glm::vec3(0.2f, 0.07f, 0.07f),
 							 glm::vec3(0.7f, 0.07f, 0.07f),
 							 glm::vec3(0.7f, 0.6f, 0.6f));
-	materialMap_.try_emplace(eSprite::FOOD, "FOOD", 76.8f,
+	materialMap_.try_emplace(eSprite::kFood, "FOOD", 76.8f,
 							 glm::vec3(0.1745f, 0.01175f, 0.01175f),
 							 glm::vec3(0.61424f, 0.04136f, 0.04136f),
 							 glm::vec3(0.727811f, 0.626959f, 0.626959f));
-	materialMap_.try_emplace(eSprite::WALL, "WALL", 0.f,
+	materialMap_.try_emplace(eSprite::kWall, "WALL", 0.f,
 							 glm::vec3(0.05f, 0.05f, 0.05f),
 							 glm::vec3(0.2f, 0.2f, 0.2f),
 							 glm::vec3(0.2f, 0.2f, 0.2f));
-	materialMap_.try_emplace(eSprite::NONE, "NONE", 0.f, glm::vec3(0.0f), glm::vec3(0.0f), glm::vec3(0.0f));
+	materialMap_.try_emplace(eSprite::kNone, "NONE", 0.f, glm::vec3(0.0f), glm::vec3(0.0f), glm::vec3(0.0f));
 }
 
 DisplayGlfw::~DisplayGlfw() {
@@ -174,24 +174,24 @@ void DisplayGlfw::setBackground(MutantGrid<eSprite> const &grid) {
 void DisplayGlfw::drawGridCaseBody_(int x, int y) {
 	eSprite sprite = tileGrid_(x, y);
 
-	if ((sprite & eSprite::MASK_BODY) == eSprite::TAIL)
+	if ((sprite & eSprite::kMaskBody) == eSprite::kTail)
 		grid_(x, y).scale(glm::vec3(-0.1f));
-	else if ((sprite & eSprite::MASK_BODY) == eSprite::HEAD) {
-		eSprite to = (sprite & eSprite::MASK_TO) >> eSprite::BITWISE_TO;
+	else if ((sprite & eSprite::kMaskBody) == eSprite::kHead) {
+		eSprite to = (sprite & eSprite::kMaskTo) >> eSprite::kBitwiseTo;
 
 		ActModel eyeLeft = grid_(x, y);
 		ActModel eyeRight = grid_(x, y);
 
-		if (to == eSprite::EAST) {
+		if (to == eSprite::kEast) {
 			eyeLeft.translate(glm::vec3(0.30f, 0.15f, 0.05f));
 			eyeRight.translate(glm::vec3(0.30f, -0.15f, 0.05f));
-		} else if (to == eSprite::WEST) {
+		} else if (to == eSprite::kWest) {
 			eyeLeft.translate(glm::vec3(-0.30f, 0.15f, 0.05f));
 			eyeRight.translate(glm::vec3(-0.30f, -0.15f, 0.05f));
-		} else if (to == eSprite::NORTH) {
+		} else if (to == eSprite::kNorth) {
 			eyeLeft.translate(glm::vec3(0.15f, 0.3f, 0.05f));
 			eyeRight.translate(glm::vec3(-0.15f, 0.3f, 0.05f));
-		} else if (to == eSprite::SOUTH) {
+		} else if (to == eSprite::kSouth) {
 			eyeLeft.translate(glm::vec3(0.15f, -0.3f, 0.05f));
 			eyeRight.translate(glm::vec3(-0.15f, -0.3f, 0.05f));
 		}
@@ -201,19 +201,19 @@ void DisplayGlfw::drawGridCaseBody_(int x, int y) {
 		Material::unsetMaterial(shader_);
 		eyeLeft.render(shader_);
 		eyeRight.render(shader_);
-		materialMap_.at(sprite & eSprite::MASK_COLOR).putMaterialToShader(shader_);
-		if ((sprite & eSprite::YOUR_SNAKE) == eSprite::YOUR_SNAKE) {
+		materialMap_.at(sprite & eSprite::kMaskColor).putMaterialToShader(shader_);
+		if ((sprite & eSprite::kYourSnake) == eSprite::kYourSnake) {
 			yourSnakeSprite = sprite;
 			yourSnakeX = x;
 			yourSnakeY = y;
 			camera_[CAMERA_SNAKE].setPosition(grid_(x, y).getPosition() + glm::vec3(0.f, 0.f, 10.f));
-			if (to == eSprite::EAST)
+			if (to == eSprite::kEast)
 				camera_[CAMERA_SNAKE].setPosition(camera_[CAMERA_SNAKE].getPosition() + glm::vec3(-20.f, 0.f, 0.f));
-			else if (to == eSprite::WEST)
+			else if (to == eSprite::kWest)
 				camera_[CAMERA_SNAKE].setPosition(camera_[CAMERA_SNAKE].getPosition() + glm::vec3(20.f, 0.f, 0.f));
-			else if (to == eSprite::NORTH)
+			else if (to == eSprite::kNorth)
 				camera_[CAMERA_SNAKE].setPosition(camera_[CAMERA_SNAKE].getPosition() + glm::vec3(0.f, -20.f, 0.f));
-			else if (to == eSprite::SOUTH)
+			else if (to == eSprite::kSouth)
 				camera_[CAMERA_SNAKE].setPosition(camera_[CAMERA_SNAKE].getPosition() + glm::vec3(0.f, 20.f, 0.f));
 			camera_[CAMERA_SNAKE].setFront(grid_(x, y).getPosition() - camera_[CAMERA_SNAKE].getPosition());
 			camera_[CAMERA_SNAKE].setUp(glm::vec3(0.f, 0.f, 1.f));
@@ -226,7 +226,7 @@ void DisplayGlfw::drawGridCase_(eSprite sprite, int x, int y) {
 	grid_(x, y).translate(glm::vec3(x - winTileSize_.getX() / 2, y * -1 + winTileSize_.getY() / 2, 1.f));
 	drawGridCaseBody_(x, y);
 	//interpolateGridCase_(x, y);
-	if (static_cast<int>(sprite & eSprite::MASK_BODY) != 0) {
+	if (static_cast<int>(sprite & eSprite::kMaskBody) != 0) {
 		grid_(x, y).scale(glm::vec3(-0.25f));
 	}
 	grid_(x, y).render(shader_);
@@ -253,22 +253,22 @@ void DisplayGlfw::drawGrid(MutantGrid<eSprite> const &grid) {
 
 	for (int y = 0; y < winTileSize_.getY(); ++y) {
 		for (int x = 0; x < winTileSize_.getX(); ++x) {
-			if ((grid(x, y) & eSprite::FOOD) == eSprite::FOOD) {
-				materialMap_.at(eSprite::FOOD).putMaterialToShader(shader_);
+			if ((grid(x, y) & eSprite::kFood) == eSprite::kFood) {
+				materialMap_.at(eSprite::kFood).putMaterialToShader(shader_);
 				grid_(x, y).assign(&appleModel_);
-			} else if (static_cast<int>(grid(x, y) & eSprite::MASK_BODY) != 0) {
+			} else if (static_cast<int>(grid(x, y) & eSprite::kMaskBody) != 0) {
 				grid_(x, y).assign(&modelSphere_);
-				materialMap_.at(grid(x, y) & eSprite::MASK_COLOR).putMaterialToShader(shader_);
-			} else if ((grid(x, y) & eSprite::WALL) == eSprite::WALL) {
+				materialMap_.at(grid(x, y) & eSprite::kMaskColor).putMaterialToShader(shader_);
+			} else if ((grid(x, y) & eSprite::kWall) == eSprite::kWall) {
 				grid_(x, y).assign(&modelWall_);
-				materialMap_.at(eSprite::WALL).putMaterialToShader(shader_);
-			} else if (grid(x, y) != eSprite::NONE)
+				materialMap_.at(eSprite::kWall).putMaterialToShader(shader_);
+			} else if (grid(x, y) != eSprite::kNone)
 				grid_(x, y).assign(&block_);
 
-			if (grid(x, y) != eSprite::NONE)
+			if (grid(x, y) != eSprite::kNone)
 				drawGridCase_(grid(x, y), x, y);
 
-			if ((grid(x, y) & eSprite::WALL) == eSprite::WALL)
+			if ((grid(x, y) & eSprite::kWall) == eSprite::kWall)
 				renderLine_(grid_(x, y));
 		}
 	}
@@ -277,19 +277,19 @@ void DisplayGlfw::drawGrid(MutantGrid<eSprite> const &grid) {
 void DisplayGlfw::interpolateGridCase_(int x, int y) {
 	eSprite sprite = tileGrid_(x, y);
 
-	if ((sprite & eSprite::MASK_BODY) == eSprite::HEAD
-		|| (sprite & eSprite::MASK_BODY) == eSprite::BODY
-		|| (sprite & eSprite::MASK_BODY) == eSprite::TAIL) {
-		eSprite to = (sprite & eSprite::MASK_TO) >> eSprite::BITWISE_TO;
+	if ((sprite & eSprite::kMaskBody) == eSprite::kHead
+		|| (sprite & eSprite::kMaskBody) == eSprite::kBody
+		|| (sprite & eSprite::kMaskBody) == eSprite::kTail) {
+		eSprite to = (sprite & eSprite::kMaskTo) >> eSprite::kBitwiseTo;
 
 		float distInterpelated = 1.f * (currentTimer_ / maxTimer_);
-		if (to == eSprite::EAST)
+		if (to == eSprite::kEast)
 			grid_(x, y).translate(glm::vec3(distInterpelated, 0.0f, 0.0f));
-		else if (to == eSprite::WEST)
+		else if (to == eSprite::kWest)
 			grid_(x, y).translate(glm::vec3(-distInterpelated, 0.0f, 0.0f));
-		else if (to == eSprite::SOUTH)
+		else if (to == eSprite::kSouth)
 			grid_(x, y).translate(glm::vec3(0.0f, distInterpelated, 0.0f));
-		else if (to == eSprite::NORTH)
+		else if (to == eSprite::kNorth)
 			grid_(x, y).translate(glm::vec3(0.0f, -distInterpelated, 0.0f));
 	}
 }
@@ -307,32 +307,32 @@ void DisplayGlfw::drawHelpLineSnake_() {
 	actBlock_.resetTransform();
 	actBlock_.translate(glm::vec3(yourSnakeX - winTileSize_.getX() / 2, yourSnakeY * -1 + winTileSize_.getY() / 2, 0.f));
 	actBlock_.scale(glm::vec3(-0.10f));
-	materialMap_.at(yourSnakeSprite & eSprite::MASK_COLOR).putMaterialToShader(shader_);
+	materialMap_.at(yourSnakeSprite & eSprite::kMaskColor).putMaterialToShader(shader_);
 
 	ActModel line(actBlock_);
-	eSprite to = (yourSnakeSprite & eSprite::MASK_TO) >> eSprite::BITWISE_TO;
-	if (to != eSprite::NORTH) {
+	eSprite to = (yourSnakeSprite & eSprite::kMaskTo) >> eSprite::kBitwiseTo;
+	if (to != eSprite::kNorth) {
 		for (int y = yourSnakeY + 1; y < winTileSize_.getY(); ++y) {
 			line.translate(glm::vec3(0.f, -1.f, 0.f));
 			line.render(shader_);
 		}
 	}
 	line.setPosition(actBlock_.getPosition());
-	if (to != eSprite::SOUTH) {
+	if (to != eSprite::kSouth) {
 		for (int y = yourSnakeY; y; --y) {
 			line.translate(glm::vec3(0.f, 1.f, 0.f));
 			line.render(shader_);
 		}
 	}
 	line.setPosition(actBlock_.getPosition());
-	if (to != eSprite::EAST) {
+	if (to != eSprite::kEast) {
 		for (int x = yourSnakeX; x; --x) {
 			line.translate(glm::vec3(-1.f, 0.f, 0.f));
 			line.render(shader_);
 		}
 	}
 	line.setPosition(actBlock_.getPosition());
-	if (to != eSprite::WEST) {
+	if (to != eSprite::kWest) {
 		for (int x = yourSnakeX + 1; x < winTileSize_.getX(); ++x) {
 			line.translate(glm::vec3(1.f, 0.f, 0.f));
 			line.render(shader_);
@@ -351,22 +351,22 @@ void DisplayGlfw::render(float currentDelayFrame, float maxDelayFrame) {
 
 	if (indexActiveCamera_ == CAMERA_SNAKE) {
 		if (getKeyState(GLFW_KEY_RIGHT) == KeyState::kDown) {
-			if (((yourSnakeSprite & eSprite::MASK_TO) >> eSprite::BITWISE_TO) == eSprite::EAST)
+			if (((yourSnakeSprite & eSprite::kMaskTo) >> eSprite::kBitwiseTo) == eSprite::kEast)
 				direction_ = kSouth;
-			else if (((yourSnakeSprite & eSprite::MASK_TO) >> eSprite::BITWISE_TO) == eSprite::SOUTH)
+			else if (((yourSnakeSprite & eSprite::kMaskTo) >> eSprite::kBitwiseTo) == eSprite::kSouth)
 				direction_ = kWest;
-			else if (((yourSnakeSprite & eSprite::MASK_TO) >> eSprite::BITWISE_TO) == eSprite::WEST)
+			else if (((yourSnakeSprite & eSprite::kMaskTo) >> eSprite::kBitwiseTo) == eSprite::kWest)
 				direction_ = kNorth;
-			else if (((yourSnakeSprite & eSprite::MASK_TO) >> eSprite::BITWISE_TO) == eSprite::NORTH)
+			else if (((yourSnakeSprite & eSprite::kMaskTo) >> eSprite::kBitwiseTo) == eSprite::kNorth)
 				direction_ = kEast;
 		} else if (getKeyState(GLFW_KEY_LEFT) == KeyState::kDown) {
-			if (((yourSnakeSprite & eSprite::MASK_TO) >> eSprite::BITWISE_TO) == eSprite::EAST)
+			if (((yourSnakeSprite & eSprite::kMaskTo) >> eSprite::kBitwiseTo) == eSprite::kEast)
 				direction_ = kNorth;
-			else if (((yourSnakeSprite & eSprite::MASK_TO) >> eSprite::BITWISE_TO) == eSprite::SOUTH)
+			else if (((yourSnakeSprite & eSprite::kMaskTo) >> eSprite::kBitwiseTo) == eSprite::kSouth)
 				direction_ = kEast;
-			else if (((yourSnakeSprite & eSprite::MASK_TO) >> eSprite::BITWISE_TO) == eSprite::WEST)
+			else if (((yourSnakeSprite & eSprite::kMaskTo) >> eSprite::kBitwiseTo) == eSprite::kWest)
 				direction_ = kSouth;
-			else if (((yourSnakeSprite & eSprite::MASK_TO) >> eSprite::BITWISE_TO) == eSprite::NORTH)
+			else if (((yourSnakeSprite & eSprite::kMaskTo) >> eSprite::kBitwiseTo) == eSprite::kNorth)
 				direction_ = kWest;
 		}
 	} else {
@@ -410,7 +410,7 @@ void DisplayGlfw::render(float currentDelayFrame, float maxDelayFrame) {
 	shader_.setMat4("view", view_);
 	shader_.setVec3("uCameraPosition", getActiveCamera_().getPosition());
 
-	if (flag_.test(FLAG_LINE) && yourSnakeSprite != eSprite::NONE) {
+	if (flag_.test(FLAG_LINE) && yourSnakeSprite != eSprite::kNone) {
 		drawHelpLineSnake_();
 	}
 	shader_.setInt("uBackground", 0);
@@ -423,7 +423,7 @@ void DisplayGlfw::render(float currentDelayFrame, float maxDelayFrame) {
 	shaderMultiple_.setMat4("view", view_);
 
 
-	materialMap_.at(eSprite::GROUND).putMaterialToShader(shaderMultiple_);
+	materialMap_.at(eSprite::kGround).putMaterialToShader(shaderMultiple_);
 	particuleBackground_->update();
 	particuleBackground_->render(shaderMultiple_);
 

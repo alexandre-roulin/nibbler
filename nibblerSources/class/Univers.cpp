@@ -48,7 +48,7 @@ Univers::Univers()
 		  core_(nullptr),
 		  grid_(nullptr),
 		  mapSize_(MAP_DEFAULT),
-		  gameSpeed(100),
+		  gameSpeed(80),
 		  dlHandleDisplay(nullptr),
 		  dlHandleSound(nullptr),
 		  display(nullptr),
@@ -85,7 +85,7 @@ bool Univers::load_external_sound_library(std::string const &library_path) {
 }
 
 bool Univers::load_extern_lib_sound(Univers::eSound eLib) {
-	flag_.set(eFlag::SOUND);
+	flag_.set(eFlag::kSound);
 	switch (eLib) {
 		case kSoundSdlLibrary : {
 			log_success("Univers::load_extern_lib_sound.kSoundSdlLibrary");
@@ -95,7 +95,7 @@ bool Univers::load_extern_lib_sound(Univers::eSound eLib) {
 			return load_external_sound_library(boost::filesystem::path(PATH_SOUND_LIBRARY_SFML).generic_string());
 		}
 	}
-	flag_.reset(eFlag::SOUND);
+	flag_.reset(eFlag::kSound);
 	return false;
 }
 
@@ -110,7 +110,7 @@ void Univers::unload_external_sound_library() {
 		}
 		dlclose(dlHandleSound);
 		dlHandleSound = nullptr;
-		flag_.reset(eFlag::SOUND);
+		flag_.reset(eFlag::kSound);
 	}
 	log_error("Univers::unload_external_sound_library.unlock()");
 }
@@ -182,7 +182,7 @@ void Univers::defaultAssignmentLibrary() {
 	if (!display) return;
 
 	MutantGrid<eSprite> grid(mapSize_);
-	grid.fill(eSprite::GROUND);
+	grid.fill(eSprite::kGround);
 	display->setBackground(grid);
 	display->registerCallbackAction(std::bind(&Univers::callbackAction, this, std::placeholders::_1));
 	display->update(0.17f);
@@ -197,7 +197,7 @@ void Univers::new_game() {
 	world_ = std::make_unique<KINU::World>();
 	world_->getEventsManager().destroy<FoodCreation>();
 	grid_ = std::make_shared<MutantGrid<eSprite>>(mapSize_);
-	grid_->fill(eSprite::NONE);
+	grid_->fill(eSprite::kNone);
 	if (!display) load_extern_lib_display(kDisplay);
 	defaultAssignmentLibrary();
 	if (isServer()) {
@@ -238,7 +238,7 @@ void Univers::manage_input() {
 		if (clientTCP_->getSnake().isAlive)
 			clientTCP_->sendDataToServer(InputInfo(clientTCP_->getId_(),
 					(display ? display->getDirection() : eDirection::kNorth)),
-							eHeaderK::kInput);
+							eHeader::kInput);
 	}
 
 }
@@ -345,7 +345,7 @@ void Univers::loop_world() {
 	if (isServer()) {
 		for (auto &bobby : vecBobby) {
 			if (world_->getEntitiesManager().hasEntityByTagId(
-					bobby->getId() + eTag::HEAD_TAG)) {
+					bobby->getId() + eTag::kHeadTag)) {
 				boost::thread
 						t2(
 						boost::bind(&Bobby::calculateDirection, bobby.get()));
@@ -373,12 +373,12 @@ void Univers::manageSwitchLibrary() {
 	log_success("sw %d", !getSnakeClient()->isSwitchingLibrary());
 	if (!getSnakeClient()->isSwitchingLibrary()) {
 		int16_t id = getSnakeClient()->getId_();
-		getSnakeClient()->sendDataToServer(id, eHeaderK::kForcePause);
+		getSnakeClient()->sendDataToServer(id, eHeader::kForcePause);
 		kDisplay = (kDisplay == kDisplayGlfwLibrary) ? kDisplaySfmlLibrary : static_cast<eDisplay>(kDisplay + 1);
 		unload_external_display_library();
 		std::cout << load_extern_lib_display(kDisplay) << std::endl;
 		defaultAssignmentLibrary();
-		getSnakeClient()->sendDataToServer(id, eHeaderK::kForcePause);
+		getSnakeClient()->sendDataToServer(id, eHeader::kForcePause);
 	}
 	switchLib = false;
 }
@@ -392,7 +392,7 @@ void Univers::callbackAction(eAction action) {
 	switch (action) {
 		case eAction::kPause :
 			log_success(" eAction::kPause");
-			getSnakeClient()->sendDataToServer(action, eHeaderK::kPause);
+			getSnakeClient()->sendDataToServer(action, eHeader::kPause);
 			break;
 		case eAction::kSwitchDisplayLibrary:
 			log_success("eAction::kSwitchDisplayLibrary");
@@ -419,12 +419,17 @@ void Univers::callbackAction(eAction action) {
 			connect();
 			break;
 		case eAction::kBorderless :
-			if (getSnakeClient())
-				getSnakeClient()->changeIsBorderless(!isBorderless());
-			else
+			if (!getSnakeClient()) {
 				core_->addMessageChat(WarningClientNotExist);
+				break;
+			}
+			if (!getSnakeClient()->isConnect()) {
+				core_->addMessageChat(WarningClientIsNotConnected);
+				break;
+			}
+			getSnakeClient()->changeIsBorderless(!isBorderless());
 			break;
-		case eAction::kReady :
+		case eAction::kSwitchReady :
 			if (!getSnakeClient()) {
 				core_->addMessageChat(WarningClientNotExist);
 				break;
@@ -534,7 +539,8 @@ void Univers::delete_server() {
 void Univers::delete_client() {
 	if (clientTCP_) {
 		log_fatal("use count %d", clientTCP_.use_count());
-		clientTCP_ = nullptr;
+		clientTCP_->disconnect();
+
 		core_->addMessageChat(SuccessClientIsDelete);
 	}
 	else
@@ -612,15 +618,15 @@ bool Univers::isOnlyIA() const {
 /** Sound **/
 
 void Univers::addNoise(std::string const &path) {
-	if (sound && flag_.test(eFlag::SOUND))
+	if (sound && flag_.test(eFlag::kSound))
 		sound->addNoise(path);
 }
 void Univers::playNoise(eNoise e) const {
-	if (sound && flag_.test(eFlag::SOUND))
+	if (sound && flag_.test(eFlag::kSound))
 		sound->playNoise(static_cast<int>(e));
 }
 void Univers::playMusic(std::string const &path) const {
-	if (sound && flag_.test(eFlag::SOUND)) {
+	if (sound && flag_.test(eFlag::kSound)) {
 		sound->setMusic(path.c_str());
 		sound->playMusic();
 	}
@@ -678,14 +684,9 @@ void Univers::cleanAll() {
 	switchLib = false;
 	nextFrame.clear();
 	world_ = nullptr;
-	log_info("getSnakeClient(%d) && !getSnakeClient()->isConnect(%d)",
-			getSnakeClient() != nullptr , getSnakeClient() ? !getSnakeClient()->isConnect() : -42);
 	if (getSnakeClient() && !getSnakeClient()->isConnect()) {
 		delete_server();
 		delete_client();
-		for (Snake &snake: getSnakeArray_()) {
-			log_fatal("Snake [%d]isValid?[%d]", snake.id, snake.isValid);
-		}
 		borderless = false;
 		mapSize_ = MAP_DEFAULT;
 	}

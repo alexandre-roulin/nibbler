@@ -47,7 +47,7 @@ public:
 	};
 
 	enum eFlag {
-		SOUND
+		kSound
 	};
 
 	Univers();

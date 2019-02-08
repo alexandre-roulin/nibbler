@@ -4,21 +4,21 @@
 
 WidgetLobby::WidgetLobby(Core &core) :
 		AWidget(core) {
-	addColor(eSprite::GREEN, "Green", (core_.getPathRessources() / WIDGET_LOBBY_DIRECTORY_SNAKE_PRESENTATION /
+	addColor(eSprite::kGreen, "Green", (core_.getPathRessources() / WIDGET_LOBBY_DIRECTORY_SNAKE_PRESENTATION /
 									   "snake_green.png").generic_string());
-	addColor(eSprite::BLUE, "Blue", (core_.getPathRessources() / WIDGET_LOBBY_DIRECTORY_SNAKE_PRESENTATION /
+	addColor(eSprite::kBlue, "Blue", (core_.getPathRessources() / WIDGET_LOBBY_DIRECTORY_SNAKE_PRESENTATION /
 									 "snake_blue.png").generic_string());
-	addColor(eSprite::PURPLE, "Purple", (core_.getPathRessources() / WIDGET_LOBBY_DIRECTORY_SNAKE_PRESENTATION /
+	addColor(eSprite::kPurple, "Purple", (core_.getPathRessources() / WIDGET_LOBBY_DIRECTORY_SNAKE_PRESENTATION /
 										 "snake_purple.png").generic_string());
-	addColor(eSprite::PINK, "Pink", (core_.getPathRessources() / WIDGET_LOBBY_DIRECTORY_SNAKE_PRESENTATION /
+	addColor(eSprite::kPink, "Pink", (core_.getPathRessources() / WIDGET_LOBBY_DIRECTORY_SNAKE_PRESENTATION /
 									 "snake_pink.png").generic_string());
-	addColor(eSprite::GREY, "Grey", (core_.getPathRessources() / WIDGET_LOBBY_DIRECTORY_SNAKE_PRESENTATION /
+	addColor(eSprite::kGrey, "Grey", (core_.getPathRessources() / WIDGET_LOBBY_DIRECTORY_SNAKE_PRESENTATION /
 									 "snake_grey.png").generic_string());
-	addColor(eSprite::YELLOW, "Yellow", (core_.getPathRessources() / WIDGET_LOBBY_DIRECTORY_SNAKE_PRESENTATION /
+	addColor(eSprite::kYellow, "Yellow", (core_.getPathRessources() / WIDGET_LOBBY_DIRECTORY_SNAKE_PRESENTATION /
 										 "snake_yellow.png").generic_string());
-	addColor(eSprite::ORANGE, "Orange", (core_.getPathRessources() / WIDGET_LOBBY_DIRECTORY_SNAKE_PRESENTATION /
+	addColor(eSprite::kOrange, "Orange", (core_.getPathRessources() / WIDGET_LOBBY_DIRECTORY_SNAKE_PRESENTATION /
 										 "snake_orange.png").generic_string());
-	addColor(eSprite::RED, "Red", (core_.getPathRessources() / WIDGET_LOBBY_DIRECTORY_SNAKE_PRESENTATION /
+	addColor(eSprite::kRed, "Red", (core_.getPathRessources() / WIDGET_LOBBY_DIRECTORY_SNAKE_PRESENTATION /
 								   "snake_red.png").generic_string());
 }
 

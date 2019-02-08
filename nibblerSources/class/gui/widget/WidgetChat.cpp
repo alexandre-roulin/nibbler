@@ -46,7 +46,7 @@ void WidgetChat::render(void) {
 			core_.univers.getSnakeClient()->sendDataToServer(ChatInfo(
 					core_.univers.getSnakeClient()->getSnake().name,
 					bufferMessage_
-			), eHeaderK::kChat);
+			), eHeader::kChat);
 		}
 		bzero(bufferMessage_, IM_ARRAYSIZE(bufferMessage_));
 	}

@@ -6,7 +6,7 @@
 #include <network/Data.hpp>
 #include <events/FoodCreation.hpp>
 #include <factory/Factory.hpp>
-
+#include <cores/Snake.hpp>
 class Univers;
 
 class SnakeClient : public boost::enable_shared_from_this<SnakeClient> {
@@ -18,7 +18,7 @@ public:
 	static boost_shared_ptr create(Univers &univers, bool fromIA);
 
 	template<typename T>
-	void sendDataToServer(T data, eHeaderK header);
+	void sendDataToServer(T data, eHeader header);
 
 	void lock();
 
@@ -60,12 +60,15 @@ public:
 
 	void removeSnakeFromGame();
 
+	void disconnect();
+
 	virtual ~SnakeClient();
 
 private:
 	SnakeClient(Univers &univers, bool fromIA);
 
 	void build();
+
 
 	void callbackRemoveSnake(int16_t);
 
@@ -111,7 +114,7 @@ private:
 
 
 template<typename T>
-void SnakeClient::sendDataToServer(T data, eHeaderK header) {
+void SnakeClient::sendDataToServer(T data, eHeader header) {
 	clientTCP_->writeDataToServer(std::move(data),
 								 static_cast<uint16_t>(header));
 }

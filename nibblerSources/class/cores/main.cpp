@@ -14,10 +14,7 @@
 #include <logger.h>
 #include <ia/KStar.hpp>
 
-std::string const Snake::basicName[SNAKE_MAX_NAME] = {"Jack O'Lantern", "Eden",
-												 "Jacky", "Emerald",
-												 "Broutille", "Veggie-vie",
-												 "jinou42", "Dautta c bo"};
+
 
 std::ostream &operator<<(std::ostream &os, const Snake &snake) {
 	os << " id: " << snake.id << " isReady: "

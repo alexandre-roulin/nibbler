@@ -41,13 +41,16 @@ namespace KNW {
 						[](boost::shared_ptr<ConnectionTCP> connection){
 					return connection == nullptr || !connection->getSocket_().is_open();
 				});
-
-				*it = ConnectionTCP::create(*this, std::move(socket));
-				std::cout << "New connection" << std::endl;
-				if (callbackAccept_) {
-					std::cout << "Callback" << std::endl;
-					callbackAccept_(std::distance(connections.begin(), std::find(connections.begin(), connections.end(), *it)));
+				if (it != connections.end()) {
+					*it = ConnectionTCP::create(*this, std::move(socket));
+					if (callbackAccept_) {
+						callbackAccept_(std::distance(connections.begin(), std::find(connections.begin(), connections.end(), *it)));
+					}
+				} else {
+					auto e = boost::system::errc::make_error_code(boost::system::errc::too_many_files_open);
+					socket.close(e);
 				}
+
 			} else {
 				std::cout << ec.message() << std::endl;
 			}

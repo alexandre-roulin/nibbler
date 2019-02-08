@@ -4,55 +4,55 @@
 #include <iostream>
 
 enum class eSprite {
-	NONE = 0,
+	kNone = 0,
 
-	GREEN = 1,
-	BLUE = 2,
-	PURPLE = 3,
-	PINK = 4,
-	GREY = 5,
-	YELLOW = 6,
-	ORANGE = 7,
-	RED = 8,
+	kGreen = 1,
+	kBlue = 2,
+	kPurple = 3,
+	kPink = 4,
+	kGrey = 5,
+	kYellow = 6,
+	kOrange = 7,
+	kRed = 8,
 
-	MASK_COLOR = 0xFF,
+	kMaskColor = 0xFF,
 
-	HEAD = (1 << 8),
-	BODY = (1 << 9),
-	TAIL = (1 << 10),
+	kHead = (1 << 8),
+	kBody = (1 << 9),
+	kTail = (1 << 10),
 
-	MASK_BODY = HEAD | BODY | TAIL,
+	kMaskBody = kHead | kBody | kTail,
 
-	NORTH = (1 << 11),
-	SOUTH = (1 << 12),
-	EAST = (1 << 13),
-	WEST = (1 << 14),
+	kNorth = (1 << 11),
+	kSouth = (1 << 12),
+	kEast = (1 << 13),
+	kWest = (1 << 14),
 
-	MASK_DIRECTION = NORTH | SOUTH | EAST | WEST,
+	kMaskDirection = kNorth | kSouth | kEast | kWest,
 
-	FROM_NORTH = (1 << 15),
-	FROM_SOUTH = (1 << 16),
-	FROM_EAST = (1 << 17),
-	FROM_WEST = (1 << 18),
+	kFromNorth = (1 << 15),
+	kFromSouth = (1 << 16),
+	kFromEast = (1 << 17),
+	kFromWest = (1 << 18),
 
-	MASK_FROM = FROM_NORTH | FROM_SOUTH | FROM_EAST | FROM_WEST,
+	kMaskFrom = kFromNorth | kFromSouth | kFromEast | kFromWest,
 
-	TO_NORTH = (1 << 19),
-	TO_SOUTH = (1 << 20),
-	TO_EAST = (1 << 21),
-	TO_WEST = (1 << 22),
+	kToNorth = (1 << 19),
+	kToSouth = (1 << 20),
+	kToEast = (1 << 21),
+	kToWest = (1 << 22),
 
-	MASK_TO = TO_NORTH | TO_SOUTH | TO_EAST | TO_WEST,
+	kMaskTo = kToNorth | kToSouth | kToEast | kToWest,
 
-	BITWISE_TO = 8,
-	BITWISE_FROM = 4,
+	kBitwiseTo = 8,
+	kBitwiseFrom = 4,
 
 
-	WALL = (1 << 23),
-	FOOD = (1 << 24),
-	GROUND = (1 << 25),
+	kWall = (1 << 23),
+	kFood = (1 << 24),
+	kGround = (1 << 25),
 
-	YOUR_SNAKE = (1 << 30)
+	kYourSnake = (1 << 30)
 };
 
 inline eSprite operator|(eSprite const lhs, eSprite const rhs) {
@@ -85,45 +85,45 @@ inline eSprite operator>>(eSprite const lhs, eSprite const rhs) {
 }
 inline std::ostream &operator<<(std::ostream &os, eSprite &sprite) {
 	switch (sprite) {
-		case eSprite ::GREEN :
+		case eSprite ::kGreen :
 			os << "GREEN";
 			break;
-		case eSprite ::BLUE :
+		case eSprite ::kBlue :
 			os << "BLUE";
 			break;
-		case eSprite ::PURPLE :
+		case eSprite ::kPurple :
 			os << "PURPLE";
 			break;
-		case eSprite ::PINK :
+		case eSprite ::kPink :
 			os << "PINK";
 			break;
-		case eSprite ::GREY :
+		case eSprite ::kGrey :
 			os << "GREY";
 			break;
-		case eSprite ::YELLOW :
+		case eSprite ::kYellow :
 			os << "YELLOW";
 			break;
-		case eSprite ::ORANGE :
+		case eSprite ::kOrange :
 			os << "ORANGE";
 			break;
-		case eSprite ::RED :
+		case eSprite ::kRed :
 			os << "RED";
 			break;
 		default :
 			break;
 	}
 
-	if ((sprite & eSprite::HEAD) == eSprite::HEAD)
+	if ((sprite & eSprite::kHead) == eSprite::kHead)
 		os << "Head";
-	else if ((sprite & eSprite::TAIL) == eSprite::TAIL)
+	else if ((sprite & eSprite::kTail) == eSprite::kTail)
 		os << "Tail";
-	else if ((sprite & eSprite::BODY) == eSprite::BODY)
+	else if ((sprite & eSprite::kBody) == eSprite::kBody)
 		os << "Body";
-	else if ((sprite & eSprite::WALL) == eSprite::WALL)
+	else if ((sprite & eSprite::kWall) == eSprite::kWall)
 		os << "WALL";
-	else if ((sprite & eSprite::FOOD) == eSprite::FOOD)
+	else if ((sprite & eSprite::kFood) == eSprite::kFood)
 		os << "OOOO";
-	else if ((sprite & eSprite::NONE) == eSprite::NONE)
+	else if ((sprite & eSprite::kNone) == eSprite::kNone)
 		os << "-N-";
 	else
 		os << static_cast<int>(sprite);

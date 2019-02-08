@@ -4,6 +4,7 @@
 #include <KNW/ServerTCP.hpp>
 #include "Data.hpp"
 #include <network/Data.hpp>
+#include <cores/Snake.hpp>
 
 class Univers;
 

@@ -240,7 +240,7 @@ namespace KINU {
 		std::shared_ptr<Pool<T>> componentPool = accommodateComponent<T>();
 
 		if (entityId >= componentPool->getSize()) {
-			componentPool->resize(entityId + DEFAULT_POOL_SIZE_COMPONENT);
+			componentPool->resize(entityId + kDefaultPoolSize);
 		}
 
 		componentPool->set(entityId, component);
@@ -296,7 +296,7 @@ namespace KINU {
 		}
 
 		if (!componentPools[componentId]) {
-			std::shared_ptr<Pool<T>> pool(new Pool<T>(DEFAULT_POOL_SIZE_COMPONENT));
+			std::shared_ptr<Pool<T>> pool(new Pool<T>(kDefaultPoolSize));
 			componentPools[componentId] = pool;
 		}
 
