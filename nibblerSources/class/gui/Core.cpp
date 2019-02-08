@@ -98,7 +98,7 @@ void			Core::aState(void)
 		sf::Event event;
 		while (_win.pollEvent(event))
 		{
-			if (event.type == sf::Event::KeyPressed) {
+			if (event.type == sf::Event::KeyPressed && event.key.control) {
 
 				switch (event.key.code) {
 					case sf::Keyboard::A:
@@ -127,6 +127,9 @@ void			Core::aState(void)
 						break;
 					case sf::Keyboard::X:
 						univers.callbackAction(kStartGame);
+						break;
+					case sf::Keyboard::H:
+						univers.callbackAction(kHostname);
 						break;
 					default:
 						break;

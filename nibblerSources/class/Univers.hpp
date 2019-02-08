@@ -11,11 +11,12 @@
 #include <boost/asio/deadline_timer.hpp>
 #include <events/NextFrame.hpp>
 #include <boost/thread.hpp>
-
+#include <boost/scoped_ptr.hpp>
 #define PATH_DISPLAY_LIBRARY_SFML "dynamicLibraries/libdisplay_sfml.so"
 #define PATH_DISPLAY_LIBRARY_GLFW "dynamicLibraries/libdisplay_glfw.so"
 #define PATH_DISPLAY_LIBRARY_SDL "dynamicLibraries/libdisplay_sdl.so"
 
+#define LOCALHOST "localhost"
 #define PATH_SOUND_LIBRARY_SFML "dynamicLibraries/libsound_sfml.so"
 #define PATH_SOUND_LIBRARY_SDL "dynamicLibraries/libsound_sdl.so"
 
@@ -68,9 +69,7 @@ public:
 
 	void defaultAssignmentLibrary();
 
-	Core &getCore_() const;
-
-	Core *releaseCore_();
+	void sendHostname();
 
 	void refreshTimerLoopWorld();
 
@@ -93,13 +92,15 @@ public:
 
 	void create_client();
 
-	void create_ui();
-
 	void delete_ia();
 
-	void delete_server();
+	void deleteServer();
 
-	void delete_client();
+	void deleteClient();
+
+	void createCore();
+
+	std::unique_ptr<Core> &getCore_();
 
 	/** Setter && Getter**/
 
@@ -175,10 +176,13 @@ private:
 
 	static const std::string WarningClientIsAlreadyConnected;
 	static const std::string WarningClientIsNotConnected;
+	static const std::string WarningClientConnectError;
 
 	static const std::string WarningUserIsNotTheServer;
 	static const std::string WarningRequiredAtLeastOneClient;
 
+	static const std::string ErrorClientConnectionRefused;
+	static const std::string ErrorServerAlreadyUseOnThisPort;
 	// Variable
 	boost::filesystem::path pathRoot_;
 	std::bitset<32> flag_;
@@ -190,13 +194,10 @@ private:
 	boost::asio::deadline_timer timer_start;
 	std::shared_ptr<KINU::World> world_;
 
-	boost::shared_ptr<SnakeServer> serverTCP_;
-	boost::shared_ptr<SnakeClient> clientTCP_;
+	boost::shared_ptr<SnakeServer> snakeServer_;
+	boost::shared_ptr<SnakeClient> snakeClient_;
 	std::unique_ptr<Core> core_;
 	std::shared_ptr<MutantGrid<eSprite>> grid_;
-
-private:
-
 	std::vector<std::unique_ptr<Bobby>> vecBobby;
 
 	unsigned int mapSize_;

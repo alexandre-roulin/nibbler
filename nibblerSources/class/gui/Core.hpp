@@ -1,4 +1,5 @@
 #pragma once
+
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/System/Clock.hpp>
 #include <SFML/Window/Event.hpp>
@@ -9,61 +10,81 @@
 #include <Univers.hpp>
 
 class Core {
-	public:
+public:
 
-	enum eColor { kRed, kGreen };
+	enum eColor {
+		kRed, kGreen
+	};
 
 	class CoreConstructorException : public std::exception {
 	public:
 		CoreConstructorException(void) noexcept;
+
 		CoreConstructorException(std::string) noexcept;
-		virtual const char* what() const noexcept;
+
+		virtual const char *what() const noexcept;
+
 		~CoreConstructorException(void) noexcept;
+
 		CoreConstructorException(CoreConstructorException const &src) noexcept;
+
 	private:
-		CoreConstructorException &operator=(CoreConstructorException const &rhs) noexcept;
-		std::string			_error;
+		CoreConstructorException &
+		operator=(CoreConstructorException const &rhs) noexcept;
+
+		std::string _error;
 	};
 
 	Core(Univers &univers);
+
 	~Core(void);
 
 	//				GUI				//
-	void						titleScreen(void);
-	void						aState(void);
-	void						addMessageChat(std::string const &);
-	void 						exit(void);
-	sf::Vector2<unsigned int>	positionByPercent(sf::Vector2<unsigned int> const &percent) const;
+	void titleScreen(void);
 
-	Univers						&univers;
+	void aState(void);
 
-	boost::filesystem::path const	&getPathRessources() const;
+	void addMessageChat(std::string const &);
 
-	static void						beginColor(float const color);
-	static void						endColor();
+	void exit(void);
 
-	static float const 				HUE_RED;
-	static float const 				HUE_GREEN;
+	sf::Vector2<unsigned int>
+	positionByPercent(sf::Vector2<unsigned int> const &percent) const;
+
+	Univers &univers;
+
+	boost::filesystem::path const &getPathRessources() const;
+
+	static void beginColor(float const color);
+
+	static void endColor();
+
+	static float const HUE_RED;
+	static float const HUE_GREEN;
 
 private:
 	//				GUI				//
-	boost::filesystem::path		pathRessources_;
+	boost::filesystem::path pathRessources_;
 
-	sf::Vector2<unsigned int>	_winSize;
-	sf::RenderWindow			_win;
-	ImGuiIO						&_io;
-	sf::Texture					_imageTitleScreen;
-	sf::Clock					_deltaClock;
-	WidgetChat					_chat;
-	sf::Vector2<int>			_mapSize;
+	sf::Vector2<unsigned int> _winSize;
+	sf::RenderWindow _win;
+	ImGuiIO &_io;
+	sf::Texture _imageTitleScreen;
+	sf::Clock _deltaClock;
+	WidgetChat _chat;
+	sf::Vector2<int> _mapSize;
 
-	void						_render(void);
-	ImGuiIO						&_createContext(void);
-	void						_processEvent(sf::Event const &event);
-	void						_updateGenCoreEvent();
+	void _render(void);
 
-	Core          &operator=(Core const &rhs);
+	ImGuiIO &_createContext(void);
+
+	void _processEvent(sf::Event const &event);
+
+	void _updateGenCoreEvent();
+
+	Core &operator=(Core const &rhs);
+
 	Core(Core const &src);
 
-	static bool 				_useColor;
+	static bool _useColor;
 };

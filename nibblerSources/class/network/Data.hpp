@@ -144,8 +144,8 @@ struct ChatInfo {
 		std::memset(name_, 0, NAME_BUFFER);
 	}
 	ChatInfo(std::string const &name, std::string const &chat) {
-		std::strncpy(chat_, chat.c_str(), CHAT_BUFFER);
 		std::strncpy(name_, name.c_str(), NAME_BUFFER);
+		std::strncpy(chat_, chat.c_str(), CHAT_BUFFER);
 	}
 	char offset_[OFFSET];
 	char chat_[CHAT_BUFFER];

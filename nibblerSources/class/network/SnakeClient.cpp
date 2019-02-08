@@ -101,7 +101,6 @@ void SnakeClient::sendHostOpenGame() {
 
 void SnakeClient::changeSprite(eSprite snakeSprite) {
 	snake_array_[id_].sprite = snakeSprite;
-
 	sendDataToServer(snake_array_[id_], eHeader::kSnake);
 }
 
@@ -131,9 +130,6 @@ void SnakeClient::killSnake(uint16_t id) {
 	}
 
 }
-void SnakeClient::removeSnakeFromGame() {
-	sendDataToServer(id_, eHeader::kRemoveSnake);
-}
 
 
 void SnakeClient::disconnect() {
@@ -153,9 +149,6 @@ void SnakeClient::callbackDeadConnection() {
 	snake_array_[id_].isReady = false;
 	univers_.setOpenGame_(false);
 	if (clientTCP_ != nullptr) {
-//		std::cout << "disconnect" <<std::endl;
-//		clientTCP_->disconnect();
-		log_info("Rest client %d", clientTCP_.use_count());
 		clientTCP_.reset();
 		build();
 	}
@@ -272,7 +265,7 @@ void SnakeClient::callbackChatInfo(ChatInfo chatInfo) {
 	log_success("%s", __PRETTY_FUNCTION__ );
 	mutex_.lock();
 	if (acceptDataFromServer()) {
-		univers_.getCore_().addMessageChat(chatInfo.toString());
+		univers_.getCore_()->addMessageChat(chatInfo.toString());
 	}
 	mutex_.unlock();
 }
