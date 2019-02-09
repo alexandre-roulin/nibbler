@@ -34,11 +34,14 @@ namespace KNW {
 
 	class ConnectionTCP : public boost::enable_shared_from_this<ConnectionTCP> {
 	public:
+
+		using boost_weak_ptr = boost::weak_ptr<ConnectionTCP>;
+		using boost_shared_ptr = boost::shared_ptr<ConnectionTCP>;
 		ConnectionTCP() = delete;
 
 		ConnectionTCP(ConnectionTCP const &) = delete;
 
-		static boost::shared_ptr<ConnectionTCP> create(ServerTCP &serverTCP, tcp::socket socket);
+		static boost::shared_ptr<ConnectionTCP> create(boost::weak_ptr<ServerTCP> weakServerPtr, tcp::socket socket);
 
 		void sendData(std::string data);
 
@@ -49,23 +52,24 @@ namespace KNW {
 		void callbackDeadIOTCP();
 
 	private:
-		ConnectionTCP(ServerTCP &serverTCPsocket);
+		ConnectionTCP(boost::weak_ptr<ServerTCP> weakServerPtr);
 
 		friend class ServerTCP;
 
-		ServerTCP &serverTCP_;
+		boost::weak_ptr<ServerTCP> weakServerPtr_;
 		boost::shared_ptr<IOTCP> iotcp;
 		std::mutex mutex;
 	};
 
 	/*************************** ServerTCP ************************************/
 
-	class ServerTCP {
+	class ServerTCP : public boost::enable_shared_from_this<KNW::ServerTCP> {
 	public:
-		ServerTCP(
-				unsigned short port,
-				std::function<void(size_t)> callbackDeadSocket
-		);
+
+		using boost_shared_ptr = boost::shared_ptr<ServerTCP>;
+		using boost_weak_ptr = boost::weak_ptr<ServerTCP>;
+
+		static boost_shared_ptr create(unsigned short port, std::function<void(size_t)> callbackDeadSocket);
 
 		size_t getSizeOfConnections() const;
 
@@ -96,9 +100,15 @@ namespace KNW {
 		std::array<boost::shared_ptr<ConnectionTCP>, kMaxConnectionOpen> connections;
 	private:
 
+		void runIO();
+		ServerTCP(
+				unsigned short port,
+				std::function<void(size_t)> callbackDeadSocket
+		);
+
 		void callbackDeadConnection(size_t index);
 
-		void asyncAccept();
+		void asyncAccept(boost_weak_ptr weakPtr);
 
 		//Network
 		unsigned short port_;
@@ -107,6 +117,7 @@ namespace KNW {
 		boost::thread thread;
 
 		//connection
+
 		std::function<void(size_t)> callbackAccept_;
 		//Data management
 		DataTCP::boost_shared_ptr dataTCP_;
