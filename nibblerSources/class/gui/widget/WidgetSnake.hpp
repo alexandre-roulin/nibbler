@@ -4,6 +4,7 @@
 #include "SpriteColorProperties.hpp"
 #include <vector>
 #include "nibbler.hpp"
+#include <cores/Snake.hpp>
 
 class Core;
 

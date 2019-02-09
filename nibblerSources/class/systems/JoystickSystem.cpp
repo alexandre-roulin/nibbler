@@ -14,8 +14,8 @@ void JoystickSystem::update() {
 	std::array<Snake, SNAKE_MAX> snake_array = univers_.getSnakeClient()->getSnakeArray_();
 
 	for (auto &snake : snake_array) {
-		if (snake.isValid && getWorld().getEntitiesManager().hasEntityByTagId(snake.id + eTag::HEAD_TAG)) {
-			auto entity = getWorld().getEntitiesManager().getEntityByTagId(snake.id + eTag::HEAD_TAG);
+		if (snake.isValid && getWorld().getEntitiesManager().hasEntityByTagId(snake.id + eTag::kHeadTag)) {
+			auto entity = getWorld().getEntitiesManager().getEntityByTagId(snake.id + eTag::kHeadTag);
 			if (entity.hasComponent<JoystickComponent>()) {
 				entity.getComponent<JoystickComponent>().direction = snake.direction;
 			}

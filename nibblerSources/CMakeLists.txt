@@ -124,14 +124,15 @@ add_executable(${NAME}
         class/KINU/Config.hpp
         class/ia/Bobby.cpp
         class/ia/Bobby.hpp
-        class/network/IGameNetwork.hpp
         class/gui/widget/WidgetMassiveButton.cpp
         class/gui/widget/WidgetMassiveButton.hpp
         incs/Sprite.hpp
         class/ia/KStar.cpp
         class/ia/KStar.hpp
         incs/MutantGrid.tpp
-        class/gui/widget/SpriteColorProperties.hpp)
+        class/gui/widget/SpriteColorProperties.hpp
+        class/cores/Snake.hpp
+        class/cores/Snake.cpp)
 
 
 target_include_directories(

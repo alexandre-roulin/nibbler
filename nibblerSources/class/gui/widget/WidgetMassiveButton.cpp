@@ -22,17 +22,17 @@ void WidgetMassiveButton::render(void) {
 		core_.univers.create_server();
 	}
 	if (ImGui::Button("delete_server()")) {
-		core_.univers.delete_server();
+		core_.univers.deleteServer();
 	}
 	if (ImGui::Button("create_client()")) {
 		core_.univers.create_client();
 	}
 	if (ImGui::Button("connect()")) {
 		if (core_.univers.getSnakeClient() && !core_.univers.isOnlyIA())
-			core_.univers.getSnakeClient()->connect("localhost", "4242");
+			core_.univers.getSnakeClient()->connect("e1r5p15.42.fr", "4242");
 	}
 	if (ImGui::Button("delete_client()")) {
-		core_.univers.delete_client();
+		core_.univers.deleteClient();
 	}
 	if (ImGui::Button("start_game()")) {
 		if (core_.univers.isServer() && core_.univers.getSnakeClient()) {

@@ -7,6 +7,7 @@
 #include <deque>
 #include "WidgetSnake.hpp"
 #include "nibbler.hpp"
+#include <cores/Snake.hpp>
 
 #define WIDGET_LOBBY_DIRECTORY_SNAKE_PRESENTATION "snake_presentation"
 

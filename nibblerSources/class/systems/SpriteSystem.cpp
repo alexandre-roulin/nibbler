@@ -23,12 +23,12 @@ eSprite SpriteSystem::spriteDirection(PositionComponent &actual,
 	}
 
 	if (res.y < 0)
-		return (eSprite::SOUTH);
+		return (eSprite::kSouth);
 	else if (res.x > 0)
-		return (eSprite::WEST);
+		return (eSprite::kWest);
 	else if (res.y > 0)
-		return (eSprite::NORTH);
-	return (eSprite::EAST);
+		return (eSprite::kNorth);
+	return (eSprite::kEast);
 }
 
 void SpriteSystem::update() {
@@ -41,9 +41,9 @@ void SpriteSystem::update() {
 		auto &spriteComponent = entity.getComponent<SpriteComponent>();
 
 		spriteComponent.sprite = spriteComponent.sprite & (0xFFFFFFFF ^
-														   (eSprite::MASK_DIRECTION |
-															eSprite::MASK_FROM |
-															eSprite::MASK_TO));
+														   (eSprite::kMaskDirection |
+															eSprite::kMaskFrom |
+															eSprite::kMaskTo));
 	}
 
 	for (auto entity : getEntities()) {
@@ -60,33 +60,33 @@ void SpriteSystem::update() {
 			}
 		}
 
-		if ((spriteComponent.sprite & eSprite::HEAD) == eSprite::HEAD) {
+		if ((spriteComponent.sprite & eSprite::kHead) == eSprite::kHead) {
 			if (entity.getComponent<MotionComponent>().direction == kNorth)
-				spriteComponent.sprite |= eSprite::TO_NORTH;
+				spriteComponent.sprite |= eSprite::kToNorth;
 			else if (entity.getComponent<MotionComponent>().direction ==
 					 kSouth)
-				spriteComponent.sprite |= eSprite::TO_SOUTH;
+				spriteComponent.sprite |= eSprite::kToSouth;
 			else if (entity.getComponent<MotionComponent>().direction ==
 					 kEast)
-				spriteComponent.sprite |= eSprite::TO_EAST;
+				spriteComponent.sprite |= eSprite::kToEast;
 			else if (entity.getComponent<MotionComponent>().direction ==
 					 kWest)
-				spriteComponent.sprite |= eSprite::TO_WEST;
+				spriteComponent.sprite |= eSprite::kToWest;
 			if (entity.hasGroupId() && univers_.getSnakeClient()->getId_() == entity.getGroupIdByEntity()) {
-				spriteComponent.sprite |= eSprite::YOUR_SNAKE;
+				spriteComponent.sprite |= eSprite::kYourSnake;
 			}
 		} else {
 			spriteComponent.sprite |=
 					(SpriteSystem::spriteDirection(positionComponent,
 												   positionComponentFollowed)
-							<< eSprite::BITWISE_TO);
+							<< eSprite::kBitwiseTo);
 		}
 
 		if (followComponent && getWorld().getEntitiesManager().hasEntityById(followComponent->idFollowed)) {
 			entityFollowed.getComponent<SpriteComponent>().sprite |=
 					(SpriteSystem::spriteDirection(positionComponent,
 												   positionComponentFollowed)
-							<< eSprite::BITWISE_FROM);
+							<< eSprite::kBitwiseFrom);
 		}
 	}
 }

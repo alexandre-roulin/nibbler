@@ -22,9 +22,9 @@ namespace KINU {
 	template<typename T>
 	BaseComponent::ID Component<T>::getId() {
 		static ID id = nextId++;
-		assert(id < eConfig::MAX_COMPONENT);
+		assert(id < eConfig::kMaxComponent);
 		return id;
 	}
 
-	using ComponentMask = std::bitset<eConfig::MAX_COMPONENT>;
+	using ComponentMask = std::bitset<eConfig::kMaxComponent>;
 }

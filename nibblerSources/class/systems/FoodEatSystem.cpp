@@ -11,11 +11,11 @@
 void FoodEatSystem::update() {
 	auto events = getWorld().getEventsManager().getEvents<FoodEat>();
 	for (auto &event : events) {
-		log_debug("Find Snake %d",getWorld().getEntitiesManager().hasEntityByTagId(event.id_ + eTag::TAIL_TAG));
-		if (getWorld().getEntitiesManager().hasEntityByTagId(event.id_ + eTag::TAIL_TAG)) {
+		log_debug("Find Snake %d",getWorld().getEntitiesManager().hasEntityByTagId(event.id_ + eTag::kTailTag));
+		if (getWorld().getEntitiesManager().hasEntityByTagId(event.id_ + eTag::kTailTag)) {
 
 			auto entityTail = getWorld().getEntitiesManager()
-					.getEntityByTagId(event.id_ + eTag::TAIL_TAG);
+					.getEntityByTagId(event.id_ + eTag::kTailTag);
 			auto newEntity = getWorld().createEntity();
 
 // Position == entityTail.positionComponent

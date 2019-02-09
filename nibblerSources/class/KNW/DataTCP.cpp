@@ -6,15 +6,16 @@ namespace KNW {
 
 	DataTCP::DataTCP() = default;
 
+	DataTCP::boost_shared_ptr DataTCP::create() {
+		return DataTCP::boost_shared_ptr(new DataTCP);
+	}
+
 	size_t DataTCP::getSizeOfHeader(DataTCP::Header header) {
-		return sizeType[header];
+		return (header < sizeType.size() ? sizeType[header] : 0);
 	}
 
 	void DataTCP::sendDataToCallback(DataTCP::Header header, void *data) {
-//		log_success("%s Header: %d callback : %d",
-//				__PRETTY_FUNCTION__, header, callbackType[header].get() != nullptr);
-
-		if ((callbackType[header]))
+		if (header < callbackType.size() && callbackType[header])
 			(*callbackType[header])(data);
 	}
 

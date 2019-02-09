@@ -32,7 +32,8 @@ enum eAction {
 	kConnect,
 	kBorderless,
 	kStartGame,
-	kReady
+	kSwitchReady,
+	kHostname
 
 };
 

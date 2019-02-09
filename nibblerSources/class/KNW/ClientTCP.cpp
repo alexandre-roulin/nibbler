@@ -6,6 +6,7 @@ namespace KNW {
 			:
 			socket_(io),
 			resolver(io),
+			dataTCP_(DataTCP::create()),
 			callbackDeadConnection_(callback)
 
 			{
@@ -18,18 +19,17 @@ namespace KNW {
 		tcp::resolver::iterator it = resolver.resolve(query);
 		boost::asio::connect(socket_, it);
 		iotcp =  IOTCP::create(
-				dataTCP_,
+				dataTCP_->weak_from_this(),
 				std::move(socket_),
-				std::bind(
-						&DataTCP::sendDataToCallback,
-						std::ref(dataTCP_),
-						std::placeholders::_1,
-						std::placeholders::_2),
 				callbackDeadConnection_);
 
-
 		iotcp->readSocketHeader();
-		thread = boost::thread(boost::bind(&boost::asio::io_service::run, &io));
+
+		ClientTCP::boost_weak_ptr weakPtr(shared_from_this());
+		thread = boost::thread([weakPtr](){
+			if (auto ptr = weakPtr.lock()) ptr->io.run();
+		});
+
 		thread.detach();
 
 	}
@@ -39,23 +39,30 @@ namespace KNW {
 	}
 
 	ClientTCP::~ClientTCP() {
-		log_fatal("%s",__PRETTY_FUNCTION__);
-		int i = 0;
-		log_fatal("%d", ++i);
-		thread.join();
-		log_fatal("%d", ++i);
-		log_fatal("%d", ++i);
-		thread.interrupt();
-		iotcp = nullptr;
-		log_fatal("%d", ++i);
-		io.reset();
-		log_fatal("%d", ++i);
-		io.stop();
-		log_fatal("%d", ++i);
+		log_success("%s", __PRETTY_FUNCTION__);
+		if (iotcp != nullptr)
+			iotcp.reset();
+		if (socket_.is_open())
+			socket_.close();
+		if (thread.joinable()) {
+			thread.join();
+			thread.interrupt();
+		}
+		if (!io.stopped())
+			io.reset();
 	}
 
 	void ClientTCP::disconnect() {
-		iotcp = nullptr;
+		if (iotcp != nullptr)
+			iotcp.reset();
+		if (thread.joinable()) {
+			thread.join();
+			thread.interrupt();
+		}
+	}
+
+	ClientTCP::boost_shared_ptr ClientTCP::create(std::function<void()> f) {
+		return KNW::ClientTCP::boost_shared_ptr(new ClientTCP(f));
 	}
 
 }

@@ -20,8 +20,8 @@ void FoodCreationSystem::update() {
 		log_info("FoodCreationSystem:: x[%d] y[%d]", foodCreationEvent.positionComponent_.x, foodCreationEvent.positionComponent_.y);
 		food.addComponent(foodCreationEvent.positionComponent_);
 		food.addComponent<CollisionComponent>();
-		food.addComponent<SpriteComponent>(eSprite::FOOD, NO_PRIORITY);
-		food.groupEntityByGroupId((foodCreationEvent.fromSnake_ ? eTag::FOOD_TAG_FROM_SNAKE : eTag::FOOD_TAG));
+		food.addComponent<SpriteComponent>(eSprite::kFood, kNoPriority);
+		food.groupEntityByGroupId((foodCreationEvent.fromSnake_ ? eTag::kFoodFromSnake : eTag::kFoodTag));
 	}
 }
 

@@ -32,13 +32,13 @@ namespace KNW {
 
 	/*********************** ConnectionTCP ************************************/
 
-	class ConnectionTCP {
+	class ConnectionTCP : public boost::enable_shared_from_this<ConnectionTCP> {
 	public:
 		ConnectionTCP() = delete;
 
 		ConnectionTCP(ConnectionTCP const &) = delete;
 
-		ConnectionTCP(ServerTCP &serverTCP, tcp::socket socket);
+		static boost::shared_ptr<ConnectionTCP> create(ServerTCP &serverTCP, tcp::socket socket);
 
 		void sendData(std::string data);
 
@@ -49,6 +49,8 @@ namespace KNW {
 		void callbackDeadIOTCP();
 
 	private:
+		ConnectionTCP(ServerTCP &serverTCPsocket);
+
 		friend class ServerTCP;
 
 		ServerTCP &serverTCP_;
@@ -91,7 +93,7 @@ namespace KNW {
 
 		virtual ~ServerTCP();
 
-		std::array<std::shared_ptr<ConnectionTCP>, kMaxConnectionOpen> connections;
+		std::array<boost::shared_ptr<ConnectionTCP>, kMaxConnectionOpen> connections;
 	private:
 
 		void callbackDeadConnection(size_t index);
@@ -107,7 +109,7 @@ namespace KNW {
 		//connection
 		std::function<void(size_t)> callbackAccept_;
 		//Data management
-		DataTCP dataTCP_;
+		DataTCP::boost_shared_ptr dataTCP_;
 		std::function<void(size_t)> callbackDeadSocket_;
 
 		friend class ConnectionTCP;
@@ -118,19 +120,19 @@ namespace KNW {
 
 	template<typename T>
 	void ServerTCP::addDataType(std::function<void(T)> callback) {
-		assert(!dataTCP_.hasType<T>());
-		dataTCP_.addDataType<T>(callback);
+		assert(!dataTCP_->hasType<T>());
+		dataTCP_->addDataType<T>(callback);
 	}
 
 	template<typename T, typename H>
 	void ServerTCP::addDataType(std::function<void(T)> callback, H index) {
-		dataTCP_.addDataType<T, H>(callback, index);
+		dataTCP_->addDataType<T, H>(callback, index);
 	}
 
 
 	template<typename T>
 	void ServerTCP::writeDataToOpenConnections(T data) {
-		assert(dataTCP_.hasType<T>());
+		assert(dataTCP_->hasType<T>());
 
 		auto header = DataType<T>::getHeader();
 
@@ -138,7 +140,7 @@ namespace KNW {
 		buffer.append(reinterpret_cast<char *>(&header),
 					  sizeof(BaseDataType::Header));
 		buffer.append(reinterpret_cast<char *>(&data),
-					  dataTCP_.getSizeOfHeader(header));
+					  dataTCP_->getSizeOfHeader(header));
 
 		for (auto &connection : connections) {
 			if (connection)
@@ -148,13 +150,15 @@ namespace KNW {
 
 	template<typename T, typename H>
 	void ServerTCP::writeDataToOpenConnections(T data, H header) {
+		log_info("%s %d", __PRETTY_FUNCTION__,
+		std::count_if(connections.begin(), connections.end(),[](auto ptr){ return ptr != nullptr;}));
+
 		uint16_t header_ = static_cast<uint16_t >(header);
 		std::string buffer;
 		buffer.append(reinterpret_cast<char *>(&header_),
 					  sizeof(BaseDataType::Header));
 		buffer.append(reinterpret_cast<char *>(&data),
-					  dataTCP_.getSizeOfHeader(header_));
-//		std::cout << __PRETTY_FUNCTION__ << std::endl;
+					  dataTCP_->getSizeOfHeader(header_));
 		for (auto &connection : connections) {
 			if (connection)
 				connection->sendData(buffer);
@@ -171,7 +175,7 @@ namespace KNW {
 		buffer.append(reinterpret_cast<char *>(&header),
 					  sizeof(BaseDataType::Header));
 		buffer.append(reinterpret_cast<char *>(&data),
-					  dataTCP_.getSizeOfHeader(header));
+					  dataTCP_->getSizeOfHeader(header));
 
 		connections[index]->sendData(buffer);
 	}
@@ -186,7 +190,7 @@ namespace KNW {
 		buffer.append(reinterpret_cast<char *>(&header_),
 					  sizeof(BaseDataType::Header));
 		buffer.append(reinterpret_cast<char *>(&data),
-					  dataTCP_.getSizeOfHeader(header_));
+					  dataTCP_->getSizeOfHeader(header_));
 		connections[index]->sendData(buffer);
 	}
 

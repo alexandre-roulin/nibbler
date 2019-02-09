@@ -9,25 +9,10 @@
 
 #include <random>
 #include <fstream>
-#include <network/ServerTCP.hpp>
-#include <network/ClientTCP.hpp>
 #include <gui/Core.hpp>
 #include <boost/program_options.hpp>
 #include <logger.h>
 #include <ia/KStar.hpp>
-
-std::string const Snake::basicName[SNAKE_MAX_NAME] = {"Jack O'Lantern", "Eden",
-												 "Jacky", "Emerald",
-												 "Broutille", "Veggie-vie",
-												 "jinou42", "Dautta c bo"};
-
-std::ostream &operator<<(std::ostream &os, const Snake &snake) {
-	os << " id: " << snake.id << " isReady: "
-	   << snake.isReady  << " isUpdate: "
-	   << snake.isUpdate << " direction: " << snake.direction << " isAlive: "
-	   << snake.isAlive << " isSwitchingLibrary: " << snake.isSwitchingLibrary;
-	return os;
-}
 
 void nibbler(Univers &univers) {
 
@@ -41,16 +26,11 @@ void nibbler(Univers &univers) {
 	univers.addNoise((pathSound / "slime10.wav").generic_string());
 	univers.addNoise((pathSound / "hit17.ogg").generic_string());
 	univers.playMusic((pathSound / "zelda.ogg").generic_string());
+	std::unique_ptr<Core> coreSharedPtr;
 	while (1) {
-
-		univers.create_ui();
-		univers.getCore_().aState();
-
-		Core *core = univers.releaseCore_();
-		if (core)
-			delete core;
+		univers.createCore();
+		univers.getCore_()->aState();
 		if (univers.isOpenGame_()) {
-//			univers.load_extern_lib_display(Univers::kDisplaySfmlLibrary);
 			univers.new_game();
 		}
 	}
@@ -172,7 +152,8 @@ int main(int argc, char **argv) {
 		std::cerr << "NIBBLER_ROOT_PROJECT_PATH is not defined" << std::endl;
 		return (0);
 	}
-
+	char hostset[64] = "Kryssou";
+	sethostname(hostset, 64);
 	char hostname[64];
 	gethostname(hostname, 64);
 	std::cout << hostname << std::endl;

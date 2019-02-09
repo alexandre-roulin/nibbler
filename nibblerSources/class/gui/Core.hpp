@@ -6,10 +6,10 @@
 #include <boost/filesystem.hpp>
 #include "widget/WidgetChat.hpp"
 #include "nibbler.hpp"
-
+#include <Univers.hpp>
 
 class Core {
-	public:
+public:
 
 	class CoreConstructorException : public std::exception {
 	public:

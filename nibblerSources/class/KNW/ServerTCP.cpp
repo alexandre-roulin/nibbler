@@ -12,6 +12,7 @@ namespace KNW {
 			connections( { nullptr } ),
 			port_(port),
 			acceptor_(io_service_, tcp::endpoint(tcp::v4(), port)),
+			dataTCP_(DataTCP::create()),
 			callbackDeadSocket_(callbackDeadSocket) {
 
 	}
@@ -37,15 +38,19 @@ namespace KNW {
 		acceptor_.async_accept([this](std::error_code ec, tcp::socket socket) {
 			if (ec.value() == 0) {
 				auto it = std::find_if(connections.begin(), connections.end(),
-						[](std::shared_ptr<ConnectionTCP> connection){
+						[](boost::shared_ptr<ConnectionTCP> connection){
 					return connection == nullptr || !connection->getSocket_().is_open();
 				});
-				*it = std::make_shared<ConnectionTCP>(*this, std::move(socket));
-				std::cout << "New connection" << std::endl;
-				if (callbackAccept_) {
-					std::cout << "Callback" << std::endl;
-					callbackAccept_(std::distance(connections.begin(), std::find(connections.begin(), connections.end(), *it)));
+				if (it != connections.end()) {
+					*it = ConnectionTCP::create(*this, std::move(socket));
+					if (callbackAccept_) {
+						callbackAccept_(std::distance(connections.begin(), std::find(connections.begin(), connections.end(), *it)));
+					}
+				} else {
+					auto e = boost::system::errc::make_error_code(boost::system::errc::too_many_files_open);
+					socket.close(e);
 				}
+
 			} else {
 				std::cout << ec.message() << std::endl;
 			}
@@ -65,7 +70,7 @@ namespace KNW {
 
 	size_t ServerTCP::getSizeOfConnections() const {
 		return std::count_if(connections.begin(), connections.end(),
-						  [](std::shared_ptr<ConnectionTCP> const &connection){
+						  [](boost::shared_ptr<ConnectionTCP> const &connection){
 							  return connection != nullptr && connection->getSocket_().is_open();
 						  });
 	}
@@ -77,24 +82,30 @@ namespace KNW {
 
 	/** ConnectionTCP **/
 
-	ConnectionTCP::ConnectionTCP(ServerTCP &serverTCP, tcp::socket socket) :
+	ConnectionTCP::ConnectionTCP(ServerTCP &serverTCP) :
 			serverTCP_(serverTCP),
-			iotcp(IOTCP::create(
-					serverTCP.dataTCP_,
-					std::move(socket),
-					std::bind(&DataTCP::sendDataToCallback,
-							  std::ref(serverTCP.dataTCP_),
-							  std::placeholders::_1,
-							  std::placeholders::_2
-					),
-					std::bind(&ConnectionTCP::callbackDeadIOTCP,
-							this))){
+			iotcp(){
 
-		iotcp->readSocketHeader();
 	}
 
+	boost::shared_ptr<ConnectionTCP>
+	ConnectionTCP::create(ServerTCP &serverTCP, tcp::socket socket) {
+		auto sharedPtr = boost::shared_ptr<ConnectionTCP>(new ConnectionTCP(serverTCP));
+		boost::weak_ptr<ConnectionTCP> weakPtr(sharedPtr);
+		sharedPtr->iotcp = IOTCP::create(
+				serverTCP.dataTCP_,
+				std::move(socket),
+				[weakPtr](){
+					auto ptr = weakPtr.lock();
+					if (ptr)
+						ptr->callbackDeadIOTCP();
+				});
+		sharedPtr->iotcp->readSocketHeader();
+		return sharedPtr;
+	}
+
+
 	void ConnectionTCP::sendData(std::string data) {
-		log_warn("%s %d",__PRETTY_FUNCTION__,  mutex.try_lock());
 		iotcp->writeSocket(std::move(data));
 		mutex.unlock();
 	}
@@ -109,18 +120,17 @@ namespace KNW {
 	}
 
 	void ConnectionTCP::callbackDeadIOTCP() {
-		bool lock = mutex.try_lock();
-		log_warn("%s %d", __PRETTY_FUNCTION__ , lock);
+		log_warn("%s", __PRETTY_FUNCTION__ );
 		auto it = std::find_if(serverTCP_.connections.begin(), serverTCP_.connections.end(),
-				[this](std::shared_ptr<ConnectionTCP> p){
+				[this](boost::shared_ptr<ConnectionTCP> p){
 					return (p.get()) == this;
 		});
 
 		if (it != serverTCP_.connections.end()) {
 			serverTCP_.callbackDeadConnection(std::distance(serverTCP_.connections.begin(), it));
 		}
-		if (lock) mutex.unlock();
 	}
+
 
 }
 

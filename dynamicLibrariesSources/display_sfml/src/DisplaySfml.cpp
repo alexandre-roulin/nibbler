@@ -104,14 +104,14 @@ void DisplaySfml::drawTileGrid_(sf::RenderTarget &target, int indexTile,
 void DisplaySfml::drawGrid(MutantGrid<eSprite> const &grid) {
 	for (int y = 0; y < winTileSize_.getY(); ++y)
 		for (int x = 0; x < winTileSize_.getX(); ++x)
-			if (grid(x, y) != eSprite::NONE)
+			if (grid(x, y) != eSprite::kNone)
 				drawTileGrid_(Display2D::getSpriteSnake(grid(x, y)), x, y);
 }
 
 void DisplaySfml::drawGrid_(sf::RenderTarget &target, MutantGrid<eSprite> const &grid) {
 	for (int y = 0; y < winTileSize_.getY(); ++y)
 		for (int x = 0; x < winTileSize_.getX(); ++x)
-			if (grid(x, y) != eSprite::NONE)
+			if (grid(x, y) != eSprite::kNone)
 				drawTileGrid_(target, Display2D::getSpriteSnake(grid(x, y)), x, y);
 }
 
