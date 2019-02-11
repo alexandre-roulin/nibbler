@@ -52,6 +52,8 @@ public:
 
 	void changeStateReady(bool change);
 
+	void changeIsIA(bool isIA = true);
+
 	void changeIsBorderless(bool borderless);
 
 	bool isReady() const;

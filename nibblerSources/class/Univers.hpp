@@ -95,6 +95,8 @@ public:
 
 	void create_client();
 
+	void delete_ia(int16_t id);
+
 	void delete_ia();
 
 	void deleteServer();
@@ -170,6 +172,7 @@ private:
 	static const std::string SuccessClientIsConnected;
 
 	static const std::string WarningServerCreateIA;
+	static const std::string WarningServerRemoveIA;
 	static const std::string WarningServerFull;
 
 	static const std::string WarningServerExist;

@@ -93,6 +93,8 @@ void			Gui::aState(void)
 					case sf::Keyboard::H:
 						univers.callbackAction(kHostname);
 						break;
+					default:
+						break;
 				}
 			}
 			_processEvent(event);
@@ -172,7 +174,7 @@ void					Gui::endColor() {
 
 float const 				Gui::HUE_GREEN = 0.33f;
 float const 				Gui::HUE_RED = 0.f;
-
+float const 				Gui::HUE_PURPLE = 0.77f;
 bool 						Gui::_useColor = false;
 
 Gui::CoreConstructorException::~CoreConstructorException(void) noexcept{}

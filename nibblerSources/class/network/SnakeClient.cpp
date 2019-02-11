@@ -99,6 +99,11 @@ void SnakeClient::sendHostOpenGame() {
 //	sendDataToServer(true, eHeaderK::kOpenGame);
 }
 
+void SnakeClient::changeIsIA(bool isIA) {
+	snake_array_[id_].isIA = isIA;
+	sendDataToServer(snake_array_[id_], eHeader::kSnake);
+}
+
 void SnakeClient::changeSprite(eSprite snakeSprite) {
 	snake_array_[id_].sprite = snakeSprite;
 	sendDataToServer(snake_array_[id_], eHeader::kSnake);
@@ -125,6 +130,7 @@ bool SnakeClient::isConnect() const {
 void SnakeClient::killSnake(uint16_t id) {
 	log_success("%s ID : %d C{%d, %d}", __PRETTY_FUNCTION__, id, id_ == id, fromIA_);
 	if (id_ == id || (univers_.isIASnake(id) && univers_.isServer())) {
+		log_success("%s ID : %d C{%d, %d}", __PRETTY_FUNCTION__, id, id_ == id, fromIA_);
 		snake_array_[id].isAlive = false;
 		sendDataToServer(snake_array_[id], eHeader::kSnake);
 	}
@@ -198,6 +204,7 @@ void SnakeClient::callbackId(int16_t id) {
 
 	if (fromIA_) {
 		changeStateReady(true);
+		changeIsIA(true);
 	}
 	mutex_.unlock();
 }

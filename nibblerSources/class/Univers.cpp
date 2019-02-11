@@ -27,6 +27,7 @@ const std::string Univers::SuccessServerIsDelete = "Server is delete.";
 
 const std::string Univers::WarningClientExist = "Client is already in place.";
 const std::string Univers::WarningServerCreateIA = "Only the server owner can create IA.";
+const std::string Univers::WarningServerRemoveIA = "Only the server owner can remove IA.";
 const std::string Univers::WarningServerFull = "Server have reach the maximum player.";
 const std::string Univers::WarningServerExist = "Server is left online.";
 const std::string Univers::WarningClientNotExist = "There is no client online.";
@@ -517,9 +518,29 @@ void Univers::create_ia() {
 	gui_->addMessageChat(SuccessIAIsCreate);
 }
 
+void Univers::delete_ia(int16_t id) {
+	//if (!isServer()) {
+	//	gui_->addMessageChat(WarningServerRemoveIA);
+	//	return;
+	//}
+	vecBobby.erase(std::remove_if(vecBobby.begin(), vecBobby.end(),
+							 [this, id](const std::unique_ptr<Bobby> &bob){
+		if (bob->getId() == id) {
+			getSnakeArray_()[bob->getId()].isValid = false;
+			bob->getClientTCP_()->disconnect();
+		}
+		return bob->getId() == id;
+	}), vecBobby.end());
+}
+
 void Univers::delete_ia() {
+	//if (!isServer()) {
+	//	gui_->addMessageChat(WarningServerRemoveIA);
+	//	return;
+	//}
 	for (auto &bobby : vecBobby) {
 		getSnakeArray_()[bobby->getId()].isValid = false;
+		bobby->getClientTCP_()->disconnect();
 	}
 	vecBobby.clear();
 }
@@ -528,7 +549,7 @@ void Univers::deleteServer() {
 	if (snakeServer_) {
 		snakeServer_ = nullptr;
 		vecBobby.clear();
-		core_->addMessageChat(SuccessServerIsDelete);
+		gui_->addMessageChat(SuccessServerIsDelete);
 		if (snakeClient_ && snakeClient_->isConnect())
 			deleteClient();
 	} else {

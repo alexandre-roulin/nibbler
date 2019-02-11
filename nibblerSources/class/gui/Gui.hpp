@@ -48,6 +48,7 @@ public:
 
 	static float const 				HUE_RED;
 	static float const 				HUE_GREEN;
+	static float const 				HUE_PURPLE;
 
 private:
 	//				GUI				//

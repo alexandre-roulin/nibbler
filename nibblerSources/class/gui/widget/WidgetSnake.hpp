@@ -22,6 +22,8 @@ private:
 	std::map<eSprite, SpriteColorProperties> const &mapSprite_;
 	bool isYourSnake_;
 
+	void renderIa_(void);
+
 	void renderYourSnake_(void);
 
 	void renderOtherSnake_(void);

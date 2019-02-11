@@ -17,6 +17,8 @@ void WidgetSnake::render(void) {
 		return;
 	if (isYourSnake_)
 		renderYourSnake_();
+	else if (snake_.isIA)
+		renderIa_();
 	else
 		renderOtherSnake_();
 }
@@ -58,6 +60,35 @@ void WidgetSnake::renderSelectionColor_(unsigned int sizeTexture) const {
 	}
 }
 
+
+void WidgetSnake::renderIa_(void) {
+	unsigned int sizeTexture;
+
+	if (core_.univers.isServer()) {
+		ImGui::Begin(std::string(std::to_string(snake_.id) + std::string(snake_.name)).c_str(), NULL,
+					 ImGuiWindowFlags_NoDecoration);
+	} else {
+		ImGui::Begin(std::string(std::to_string(snake_.id) + std::string(snake_.name)).c_str(), NULL,
+					 ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoInputs);
+	}
+
+	sizeTexture = sizeTexture_();
+	renderName_(sizeTexture);
+	renderImage_(sizeTexture);
+
+	ImGui::SetCursorPosX((ImGui::GetWindowSize().x - sizeTexture) / 2);
+
+	Gui::beginColor(Gui::HUE_PURPLE);
+	if (ImGui::Button("Delete", sf::Vector2f(sizeTexture, ImGui::GetFrameHeight())) && core_.univers.getSnakeClient()) {
+		std::cout << "BOOB ??!! DO SOMETHING" << std::endl;
+		core_.univers.delete_ia(snake_.id);
+	}
+
+	Gui::endColor();
+
+	renderSelectionColor_(sizeTexture);
+	ImGui::End();
+}
 
 void WidgetSnake::renderOtherSnake_(void) {
 	unsigned int sizeTexture;
