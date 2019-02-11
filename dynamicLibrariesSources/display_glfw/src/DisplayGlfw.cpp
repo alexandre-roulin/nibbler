@@ -23,27 +23,25 @@ void deleteDisplay(IDisplay *display) {
 DisplayGlfw::DisplayGlfw(int width,
 						 int height,
 						 char const *windowName) :
-		pathRoot_(NIBBLER_ROOT_PROJECT_PATH),
 		Glfw(windowName, DISPLAY_GLFW_WIN_WIDTH, DISPLAY_GLFW_WIN_HEIGHT),
+		pathRoot_(NIBBLER_ROOT_PROJECT_PATH),
 		direction_(kNorth),
-		currentTimer_(0.f),
-		maxTimer_(0.f),
 		winTileSize_(Vector2D<int>(width, height)),
 		tileBackground_(winTileSize_.getX(), winTileSize_.getY()),
 		background_(winTileSize_.getX(), winTileSize_.getY()),
 		tileGrid_(winTileSize_.getX(), winTileSize_.getY()),
 		grid_(winTileSize_.getX(), winTileSize_.getY()),
 		deltaTime_(0.016f),
-		particuleBackground_(nullptr),
-		particuleBackgroundOutline_(nullptr),
 		yourSnakeSprite(eSprite::kNone),
 		yourSnakeX(-10),
 		yourSnakeY(-10),
-		projection_(1.f),
+		particuleBackground_(nullptr),
+		particuleBackgroundOutline_(nullptr),
+		light_(glm::vec3(0.f, 0.f, 30.f)),
 		indexActiveCamera_(0),
+		projection_(1.f),
 		view_(1.f),
 		model_(1.f),
-		light_(glm::vec3(0.f, 0.f, 30.f)),
 		callback_(nullptr) {
 	constructMaterialMap_();
 
@@ -82,9 +80,12 @@ DisplayGlfw::DisplayGlfw(int width,
 	camera_.emplace_back();
 
 	if (winTileSize_.getY() < winTileSize_.getX())
-		camera_[CAMERA_GLOBAL].processPosition(Camera::Movement::BACKWARD, winTileSize_.getX() / 2);
+		camera_[CAMERA_GLOBAL].setPosition(glm::vec3(-0.5f, winTileSize_.getY() * -0.9, winTileSize_.getX() * 0.8));
 	else
-		camera_[CAMERA_GLOBAL].processPosition(Camera::Movement::BACKWARD, winTileSize_.getY() / 2);
+		camera_[CAMERA_GLOBAL].setPosition(glm::vec3(-0.5f, winTileSize_.getY() * -0.9, winTileSize_.getY() * 0.8));
+	glm::vec3 centerOfGrid(0.f, camera_[CAMERA_GLOBAL].getPosition().y, camera_[CAMERA_GLOBAL].getPosition().z);
+	camera_[CAMERA_GLOBAL].setFront(-centerOfGrid);
+	camera_[CAMERA_GLOBAL].setUp(glm::vec3(0.f, 1.f, 0.f));
 
 	particuleBackground_ = new Particle((pathRoot_ / "ressources" / "objects" / "grass" / "grass.obj").generic_string(),
 										winTileSize_.getY() * winTileSize_.getX());
@@ -274,26 +275,6 @@ void DisplayGlfw::drawGrid(MutantGrid<eSprite> const &grid) {
 	}
 }
 
-void DisplayGlfw::interpolateGridCase_(int x, int y) {
-	eSprite sprite = tileGrid_(x, y);
-
-	if ((sprite & eSprite::kMaskBody) == eSprite::kHead
-		|| (sprite & eSprite::kMaskBody) == eSprite::kBody
-		|| (sprite & eSprite::kMaskBody) == eSprite::kTail) {
-		eSprite to = (sprite & eSprite::kMaskTo) >> eSprite::kBitwiseTo;
-
-		float distInterpelated = 1.f * (currentTimer_ / maxTimer_);
-		if (to == eSprite::kEast)
-			grid_(x, y).translate(glm::vec3(distInterpelated, 0.0f, 0.0f));
-		else if (to == eSprite::kWest)
-			grid_(x, y).translate(glm::vec3(-distInterpelated, 0.0f, 0.0f));
-		else if (to == eSprite::kSouth)
-			grid_(x, y).translate(glm::vec3(0.0f, distInterpelated, 0.0f));
-		else if (to == eSprite::kNorth)
-			grid_(x, y).translate(glm::vec3(0.0f, -distInterpelated, 0.0f));
-	}
-}
-
 void DisplayGlfw::renderLine_(ActModel const &model) {
 
 	ActModel copy = model;
@@ -305,7 +286,8 @@ void DisplayGlfw::renderLine_(ActModel const &model) {
 
 void DisplayGlfw::drawHelpLineSnake_() {
 	actBlock_.resetTransform();
-	actBlock_.translate(glm::vec3(yourSnakeX - winTileSize_.getX() / 2, yourSnakeY * -1 + winTileSize_.getY() / 2, 0.f));
+	actBlock_.translate(
+			glm::vec3(yourSnakeX - winTileSize_.getX() / 2, yourSnakeY * -1 + winTileSize_.getY() / 2, 0.f));
 	actBlock_.scale(glm::vec3(-0.10f));
 	materialMap_.at(yourSnakeSprite & eSprite::kMaskColor).putMaterialToShader(shader_);
 
@@ -341,10 +323,7 @@ void DisplayGlfw::drawHelpLineSnake_() {
 
 }
 
-void DisplayGlfw::render(float currentDelayFrame, float maxDelayFrame) {
-	currentTimer_ = currentDelayFrame;
-	maxTimer_ = maxDelayFrame;
-
+void DisplayGlfw::render() {
 	if (getKeyState(GLFW_KEY_H) == KeyState::kDown)
 		flag_.flip(FLAG_LINE);
 
@@ -446,8 +425,7 @@ bool DisplayGlfw::exit() const {
 	return Glfw::exit();
 }
 
-void DisplayGlfw::update(float deltaTime) {
-	deltaTime_ = deltaTime;
+void DisplayGlfw::update() {
 	Glfw::update();
 	if (!cursor_ && Glfw::mouseCallbackCalled_) {
 		camera_[CAMERA_GLOBAL].processMouseMovement(Glfw::offsetX_, Glfw::offsetY_);
@@ -465,12 +443,8 @@ DisplayGlfw::GlfwConstructorException::GlfwConstructorException() noexcept :
 		error_("Error on Glfw constructor") {}
 
 DisplayGlfw::GlfwConstructorException::GlfwConstructorException(
-		std::string s) noexcept :
+		std::string const &s) noexcept :
 		error_(s) {}
-
-DisplayGlfw::GlfwConstructorException::GlfwConstructorException(
-		DisplayGlfw::GlfwConstructorException const &src) noexcept :
-		error_(src.error_) { error_ = src.error_; }
 
 const char *
 DisplayGlfw::GlfwConstructorException::what() const noexcept { return (error_.c_str()); }

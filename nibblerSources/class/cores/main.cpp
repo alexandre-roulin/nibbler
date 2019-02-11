@@ -26,15 +26,15 @@ void nibbler(Univers &univers) {
 	univers.addNoise((pathSound / "slime10.wav").generic_string());
 	univers.addNoise((pathSound / "hit17.ogg").generic_string());
 	univers.playMusic((pathSound / "zelda.ogg").generic_string());
-
 	std::unique_ptr<Gui> coreSharedPtr;
-
 	while (!univers.isExit()) {
-		univers.createCore();
-		univers.getCore_()->aState();
+		univers.createGui();
+		univers.getGui_()->aState();
+		univers.deleteGui();
 		if (univers.isOpenGame_()) {
 			univers.new_game();
 		}
+
 	}
 }
 

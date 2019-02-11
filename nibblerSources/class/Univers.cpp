@@ -49,7 +49,7 @@ Univers::Univers()
 		  world_(nullptr),
 		  snakeServer_(nullptr),
 		  snakeClient_(nullptr),
-		  core_(nullptr),
+		  gui_(nullptr),
 		  grid_(nullptr),
 		  mapSize_(MAP_DEFAULT),
 		  gameSpeed(80),
@@ -189,8 +189,8 @@ void Univers::defaultAssignmentLibrary() {
 	grid.fill(eSprite::kGround);
 	display->setBackground(grid);
 	display->registerCallbackAction(std::bind(&Univers::callbackAction, this, std::placeholders::_1));
-	display->update(0.17f);
-	display->render(1.f, 1.f);
+	display->update();
+	display->render();
 }
 
 void Univers::new_game() {
@@ -273,32 +273,14 @@ void Univers::manage_start() {
 void Univers::loop() {
 	log_info("%s", __PRETTY_FUNCTION__);
 
-	std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
-	std::chrono::milliseconds current(0);
 	std::cout << "AllSnakeIsDead : " << getSnakeClient()->allSnakeIsDead() << std::endl;
 	while (openGame_ && (display == nullptr || !display->exit()) &&
 		   !getSnakeClient()->allSnakeIsDead()) {
 		if (switchLib)
 			manageSwitchLibrary();
-		std::chrono::high_resolution_clock::time_point t2 = std::chrono::high_resolution_clock::now();
-		std::chrono::milliseconds time_span = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1);
-		t1 = t2;
-		current += time_span;
-
-		if (current > std::chrono::milliseconds(gameSpeed))
-			current = std::chrono::milliseconds(gameSpeed);
-
-		//std::cout << "It took me " << current.count() << "," << gameSpeed << " seconds." << std::endl;
-		display->update(0.017f);
+		display->update();
 		display->drawGrid(*grid_);
-		display->render(0.017f, 1.f);
-//			display->update(0.2f);
-//			display->drawGrid(world_->grid);
-//			display->render(current.count(), gameSpeed);
-//			display->render(gameSpeed, gameSpeed);
-		if (current >= std::chrono::milliseconds(gameSpeed)) {
-			current = std::chrono::milliseconds(0);
-		}
+		display->render();
 	}
 	unload_external_display_library();
 	finish_game();
@@ -427,33 +409,33 @@ void Univers::callbackAction(eAction action) {
 			break;
 		case eAction::kBorderless :
 			if (!getSnakeClient()) {
-				core_->addMessageChat(WarningClientNotExist);
+				gui_->addMessageChat(WarningClientNotExist);
 				break;
 			}
 			if (!getSnakeClient()->isConnect()) {
-				core_->addMessageChat(WarningClientIsNotConnected);
+				gui_->addMessageChat(WarningClientIsNotConnected);
 				break;
 			}
 			getSnakeClient()->changeIsBorderless(!isBorderless());
 			break;
 		case eAction::kSwitchReady :
 			if (!getSnakeClient()) {
-				core_->addMessageChat(WarningClientNotExist);
+				gui_->addMessageChat(WarningClientNotExist);
 				break;
 			}
 			if (!getSnakeClient()->isConnect()) {
-				core_->addMessageChat(WarningClientIsNotConnected);
+				gui_->addMessageChat(WarningClientIsNotConnected);
 				break;
 			}
 			getSnakeClient()->changeStateReady(!getSnakeClient()->isReady());
 			break;
 		case eAction::kStartGame :
 			if (!isServer()) {
-				core_->addMessageChat(WarningUserIsNotTheServer);
+				gui_->addMessageChat(WarningUserIsNotTheServer);
 				break;
 			}
 			if (!getSnakeClient()) {
-				core_->addMessageChat(WarningRequiredAtLeastOneClient);
+				gui_->addMessageChat(WarningRequiredAtLeastOneClient);
 				break;
 			}
 			snakeServer_->sendOpenGameToClient();
@@ -467,27 +449,27 @@ void Univers::callbackAction(eAction action) {
 void Univers::create_client() {
 	if (!snakeClient_) {
 		snakeClient_ = SnakeClient::create(*this, false);
-		core_->addMessageChat(SuccessClientIsCreate);
+		gui_->addMessageChat(SuccessClientIsCreate);
 	}
 	else
-		core_->addMessageChat(WarningClientExist);
+		gui_->addMessageChat(WarningClientExist);
 }
 
 void Univers::create_server(unsigned int port) {
 	if (snakeServer_)
-		core_->addMessageChat(WarningServerExist);
+		gui_->addMessageChat(WarningServerExist);
 	else {
 		try {
 			snakeServer_ = SnakeServer::create(*this, port);
-			core_->addMessageChat(SuccessServerIsCreate);
+			gui_->addMessageChat(SuccessServerIsCreate);
 		} catch (const boost::system::system_error& ex) {
 			if (boost::system::errc::address_in_use == ex.code()) {
-				core_->addMessageChat(ErrorServerAlreadyUseOnThisPort);
+				gui_->addMessageChat(ErrorServerAlreadyUseOnThisPort);
 			} else {
-				core_->addMessageChat(ex.what());
+				gui_->addMessageChat(ex.what());
 			}
 		} catch (std::exception const &e) {
-			core_->addMessageChat(e.what());
+			gui_->addMessageChat(e.what());
 		}
 	}
 
@@ -496,43 +478,43 @@ void Univers::create_server(unsigned int port) {
 
 void Univers::connect(const std::string &dns, const std::string &port) {
 	if (!snakeClient_) {
-		core_->addMessageChat(WarningClientNotExist);
+		gui_->addMessageChat(WarningClientNotExist);
 		return;
 	}
 	if (snakeClient_->isConnect()) {
-		core_->addMessageChat(WarningClientIsAlreadyConnected);
+		gui_->addMessageChat(WarningClientIsAlreadyConnected);
 		return;
 	}
 	try {
 		snakeClient_->connect(dns, port);
 		if (snakeClient_->isConnect())
-			core_->addMessageChat(SuccessClientIsConnected);
+			gui_->addMessageChat(SuccessClientIsConnected);
 		else
-			core_->addMessageChat(SuccessClientIsConnected);
+			gui_->addMessageChat(SuccessClientIsConnected);
 	} catch (const boost::system::system_error& ex) {
 		if (ex.code() == boost::system::errc::connection_refused) {
-			core_->addMessageChat(ErrorClientConnectionRefused);
+			gui_->addMessageChat(ErrorClientConnectionRefused);
 		} else {
-			core_->addMessageChat(ex.what());
+			gui_->addMessageChat(ex.what());
 		}
 	} catch (const std::exception &e) {
-		core_->addMessageChat(e.what());
+		gui_->addMessageChat(e.what());
 	}
 }
 
 void Univers::create_ia() {
 	if (!isServer()) {
-		core_->addMessageChat(WarningServerCreateIA);
+		gui_->addMessageChat(WarningServerCreateIA);
 		return;
 	}
 	if (snakeServer_->isFull()) {
-		core_->addMessageChat(WarningServerFull);
+		gui_->addMessageChat(WarningServerFull);
 		return;
 	}
 	std::unique_ptr<Bobby> bobby = std::make_unique<Bobby>(*this);
 	bobby->getClientTCP_()->connect(LOCALHOST, std::to_string(snakeServer_->getPort_()));
 	vecBobby.push_back(std::move(bobby));
-	core_->addMessageChat(SuccessIAIsCreate);
+	gui_->addMessageChat(SuccessIAIsCreate);
 }
 
 void Univers::delete_ia() {
@@ -545,11 +527,11 @@ void Univers::delete_ia() {
 void Univers::deleteServer() {
 	if (snakeServer_) {
 		snakeServer_ = nullptr;
-		core_->addMessageChat(SuccessServerIsDelete);
+		gui_->addMessageChat(SuccessServerIsDelete);
 		if (snakeClient_ && snakeClient_->isConnect())
 			deleteClient();
 	} else {
-		core_->addMessageChat(WarningServerNotExist);
+		gui_->addMessageChat(WarningServerNotExist);
 	}
 }
 
@@ -558,18 +540,22 @@ void Univers::deleteClient() {
 		log_fatal("use count %d", snakeClient_.use_count());
 		snakeClient_->disconnect();
 
-		core_->addMessageChat(SuccessClientIsDelete);
+		gui_->addMessageChat(SuccessClientIsDelete);
 	}
 	else
-		core_->addMessageChat(WarningClientNotExist);
+		gui_->addMessageChat(WarningClientNotExist);
 }
 
 void Univers::finish_game() {
 	cleanAll();
 }
 
-void Univers::createCore() {
-	core_ = std::make_unique<Gui>(*this);
+void Univers::createGui() {
+	gui_ = std::make_unique<Gui>(*this);
+}
+
+void Univers::deleteGui() {
+	gui_.reset(nullptr);
 }
 
 /** Getter && Setter **/
@@ -582,8 +568,8 @@ void Univers::setExit(bool b) {
 	exit_ = b;
 }
 
-std::unique_ptr<Gui> &Univers::getCore_() {
-	return core_;
+std::unique_ptr<Gui> &Univers::getGui_() {
+	return gui_;
 }
 
 MutantGrid<eSprite> &Univers::getGrid_() {
@@ -713,15 +699,15 @@ void Univers::cleanAll() {
 		borderless = false;
 		mapSize_ = MAP_DEFAULT;
 	}
-	core_ = nullptr;
+	gui_ = nullptr;
 	grid_ = nullptr;
 }
 
 void Univers::sendHostname() {
-	if (core_) {
+	if (gui_) {
 		char hostname[64];
 		gethostname(hostname, 64);
-		core_->addMessageChat(std::string("[INFO] ") + hostname);
+		gui_->addMessageChat(std::string("[INFO] ") + hostname);
 	}
 
 }

@@ -265,7 +265,7 @@ void SnakeClient::callbackChatInfo(ChatInfo chatInfo) {
 	log_success("%s", __PRETTY_FUNCTION__ );
 	mutex_.lock();
 	if (acceptDataFromServer()) {
-		univers_.getCore_()->addMessageChat(chatInfo.toString());
+		univers_.getGui_()->addMessageChat(chatInfo.toString());
 	}
 	mutex_.unlock();
 }

@@ -38,9 +38,9 @@ public:
 
 	bool exit(void) const override;
 
-	void render(float, float) override;
+	void render() override;
 
-	void update(float) override;
+	void update() override;
 
 	void drawGrid(MutantGrid<eSprite> const &grid) override;
 

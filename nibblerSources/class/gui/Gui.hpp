@@ -26,8 +26,6 @@ public:
 	Gui(Univers &univers);
 	~Gui(void);
 
-	//				GUI				//
-	void						titleScreen(void);
 	void						aState(void);
 	template < typename ... Args >
 	void addMessageChat(eColorLog color, std::string const &log, Args ... args) {
@@ -58,7 +56,6 @@ private:
 	sf::Vector2<unsigned int>	_winSize;
 	sf::RenderWindow			_win;
 	ImGuiIO						&_io;
-	sf::Texture					_imageTitleScreen;
 	sf::Clock					_deltaClock;
 	WidgetChat					_chat;
 	sf::Vector2<int>			_mapSize;
@@ -66,7 +63,6 @@ private:
 	void						_render(void);
 	ImGuiIO						&_createContext(void);
 	void						_processEvent(sf::Event const &event);
-	void						_updateGenCoreEvent();
 
 	Gui          &operator=(Gui const &rhs);
 	Gui(Gui const &src);

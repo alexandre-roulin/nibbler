@@ -16,8 +16,6 @@ _io(_createContext()),
 _chat(*this),
 _mapSize(sf::Vector2<int>(20, 20))
 {
-	if (!_imageTitleScreen.loadFromFile((pathRessources_ / "ecran_titre.png").generic_string()))
-		(throw(Gui::CoreConstructorException("Cannot load background")));
 	_io.IniFilename = NULL;
 }
 
@@ -41,42 +39,6 @@ Gui::~Gui(void)
 
 boost::filesystem::path const	&Gui::getPathRessources() const {
 	return (pathRessources_);
-}
-
-void			Gui::_updateGenCoreEvent() {
-	sf::Event event;
-	while (_win.pollEvent(event))
-	{
-		ImGui::SFML::ProcessEvent(event);
-
-		if (event.type == sf::Event::Closed)
-			_win.close();
-	}
-	ImGui::SFML::Update(_win, _deltaClock.restart());
-}
-
-void			Gui::titleScreen() {
-	sf::Event	event;
-	bool		titleScreen = true;
-
-	while (_win.isOpen() && titleScreen)
-	{
-		while (_win.pollEvent(event))
-		{
-			ImGui::SFML::ProcessEvent(event);
-
-			if (event.type == sf::Event::Closed)
-				_win.close();
-			else if (event.type == sf::Event::KeyPressed)
-				titleScreen = false;
-		}
-		ImGui::SFML::Update(_win, _deltaClock.restart());
-		ImGui::SetNextWindowPosCenter();
-		ImGui::Begin("Titlescreen", NULL, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoMove);
-		ImGui::Image(_imageTitleScreen);
-		ImGui::End();
-		_render();
-	}
 }
 
 void			callbackExit(Gui &gui)

@@ -101,9 +101,10 @@ public:
 
 	void deleteClient();
 
-	void createCore();
+	void createGui();
+	void deleteGui();
 
-	std::unique_ptr<Gui> &getCore_();
+	std::unique_ptr<Gui> &getGui_();
 
 	/** Setter && Getter**/
 
@@ -200,7 +201,7 @@ private:
 
 	boost::shared_ptr<SnakeServer> snakeServer_;
 	boost::shared_ptr<SnakeClient> snakeClient_;
-	std::unique_ptr<Gui> core_;
+	std::unique_ptr<Gui> gui_;
 	std::shared_ptr<MutantGrid<eSprite>> grid_;
 	std::vector<std::unique_ptr<Bobby>> vecBobby;
 

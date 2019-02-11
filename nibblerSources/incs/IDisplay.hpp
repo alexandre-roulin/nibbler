@@ -44,9 +44,9 @@ public:
 
 	virtual bool exit(void) const = 0;
 
-	virtual void render(float currentDelayFrame, float maxDelayFrame) = 0;
+	virtual void render() = 0;
 
-	virtual void update(float deltaTime) = 0;
+	virtual void update() = 0;
 
 	virtual void drawGrid(MutantGrid<eSprite> const &grid) = 0;
 
