@@ -78,15 +78,17 @@ void WidgetSnake::renderIa_(void) {
 
 	ImGui::SetCursorPosX((ImGui::GetWindowSize().x - sizeTexture) / 2);
 
-	Gui::beginColor(Gui::HUE_PURPLE);
-	if (ImGui::Button("Delete", sf::Vector2f(sizeTexture, ImGui::GetFrameHeight())) && core_.univers.getSnakeClient()) {
-		std::cout << "BOOB ??!! DO SOMETHING" << std::endl;
-		core_.univers.delete_ia(snake_.id);
+	if (core_.univers.isServer()) {
+		Gui::beginColor(Gui::HUE_PURPLE);
+		if (ImGui::Button("Delete", sf::Vector2f(sizeTexture, ImGui::GetFrameHeight())) && core_.univers.getSnakeClient()) {
+			std::cout << "BOOB ??!! DO SOMETHING" << std::endl;
+			core_.univers.delete_ia(snake_.id);
+		}
 	}
 
 	Gui::endColor();
 
-	renderSelectionColor_(sizeTexture);
+	//renderSelectionColor_(sizeTexture);
 	ImGui::End();
 }
 

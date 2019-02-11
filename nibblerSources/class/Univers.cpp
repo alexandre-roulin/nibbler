@@ -53,7 +53,7 @@ Univers::Univers()
 		  gui_(nullptr),
 		  grid_(nullptr),
 		  mapSize_(MAP_DEFAULT),
-		  gameSpeed(80),
+		  gameSpeed(1),
 		  dlHandleDisplay(nullptr),
 		  dlHandleSound(nullptr),
 		  display(nullptr),
