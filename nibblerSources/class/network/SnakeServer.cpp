@@ -21,8 +21,14 @@ void SnakeServer::build() {
 
 	boost::weak_ptr<SnakeServer> thisWeakPtr(shared_from_this());
 
-	serverTCP_ = boost::shared_ptr<KNW::ServerTCP>(new KNW::ServerTCP(port_, ([thisWeakPtr](size_t index){ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackDeadConnection(index); })));
 
+
+	serverTCP_ = KNW::ServerTCP::create(port_, (
+			[thisWeakPtr](size_t index)
+			{ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackDeadConnection(index); }));
+
+	serverTCP_->accept(
+			([thisWeakPtr](size_t index) { auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackAccept(index); }));
 
 	serverTCP_->addDataType<int16_t >(
 			([thisWeakPtr](int16_t id)
@@ -93,8 +99,6 @@ void SnakeServer::build() {
 			([thisWeakPtr](eAction e) { auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackPause(e); }),
 			eHeader::kPause);
 
-	serverTCP_->accept(
-			([thisWeakPtr](size_t index) { auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackAccept(index); }));
 }
 
 /***** Callback *****/

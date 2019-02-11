@@ -527,7 +527,8 @@ void Univers::delete_ia() {
 void Univers::deleteServer() {
 	if (snakeServer_) {
 		snakeServer_ = nullptr;
-		gui_->addMessageChat(SuccessServerIsDelete);
+		vecBobby.clear();
+		core_->addMessageChat(SuccessServerIsDelete);
 		if (snakeClient_ && snakeClient_->isConnect())
 			deleteClient();
 	} else {

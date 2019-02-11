@@ -45,16 +45,15 @@ namespace KNW {
 
 		void checkError(boost::system::error_code const &error_code);
 
-		void readSocketData(DataTCP::Header header);
+		void readSocketData(boost::weak_ptr<IOTCP> weakPtr, DataTCP::Header header);
 
-		void handleReadHeader(const boost::system::error_code &ec, size_t len);
+		void handleReadHeader(boost::weak_ptr<IOTCP> weakPtr, const boost::system::error_code &ec, size_t len);
 
 
 		void handleReadData(DataTCP::Header header,const boost::system::error_code &, size_t len);
 
 		void handleWrite(const boost::system::error_code &, size_t len);
 
-		IOTCP::boost_weak_ptr weakPtr;
 		DataTCP::boost_weak_ptr dataTCP_;
 		boost::array<char, eConfigTCP::kMaxBufferSize> buffer_data_;
 		tcp::socket socket_;
