@@ -6,11 +6,11 @@
 #include "WidgetSnake.hpp"
 #include "nibbler.hpp"
 
-class Core;
+class Gui;
 
 class WidgetMassiveButton : public AWidget {
 public:
-	WidgetMassiveButton(Core &core);
+	WidgetMassiveButton(Gui &core);
 
 	~WidgetMassiveButton(void) override = default;
 

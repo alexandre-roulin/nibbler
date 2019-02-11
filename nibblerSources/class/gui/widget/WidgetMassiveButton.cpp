@@ -1,9 +1,9 @@
 #include "WidgetMassiveButton.hpp"
 #include <Univers.hpp>
-#include <gui/Core.hpp>
+#include <gui/Gui.hpp>
 #include <network/SnakeServer.hpp>
 
-WidgetMassiveButton::WidgetMassiveButton(Core &core) :
+WidgetMassiveButton::WidgetMassiveButton(Gui &core) :
 		AWidget(core) {
 }
 

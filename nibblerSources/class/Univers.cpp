@@ -1,5 +1,5 @@
 #include "Univers.hpp"
-#include <gui/Core.hpp>
+#include <gui/Gui.hpp>
 #include <systems/MotionSystem.hpp>
 #include <systems/JoystickSystem.hpp>
 #include <systems/FollowSystem.hpp>
@@ -42,6 +42,7 @@ const std::string Univers::ErrorServerAlreadyUseOnThisPort = "Server already in 
 Univers::Univers()
 		: pathRoot_(NIBBLER_ROOT_PROJECT_PATH),
 		  flag_(0),
+		  exit_(false),
 		  switchLib(false),
 		  timer_loop(boost::asio::deadline_timer(io_loop)),
 		  timer_start(boost::asio::deadline_timer(io_start)),
@@ -568,12 +569,20 @@ void Univers::finish_game() {
 }
 
 void Univers::createCore() {
-	core_ = std::make_unique<Core>(*this);
+	core_ = std::make_unique<Gui>(*this);
 }
 
 /** Getter && Setter **/
 
-std::unique_ptr<Core> &Univers::getCore_() {
+bool Univers::isExit() const {
+	return exit_;
+}
+
+void Univers::setExit(bool b) {
+	exit_ = b;
+}
+
+std::unique_ptr<Gui> &Univers::getCore_() {
 	return core_;
 }
 

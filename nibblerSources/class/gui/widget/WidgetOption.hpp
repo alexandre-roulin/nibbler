@@ -3,11 +3,11 @@
 #include "AWidget.hpp"
 #include "nibbler.hpp"
 
-class Core;
+class Gui;
 
 class WidgetOption : public AWidget {
 public:
-	WidgetOption(Core &);
+	WidgetOption(Gui &);
 
 	~WidgetOption(void) override = default;
 

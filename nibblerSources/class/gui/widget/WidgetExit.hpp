@@ -4,9 +4,7 @@
 
 class WidgetExit : public AWidget {
 public:
-	WidgetExit(Core &);
-
-	WidgetExit(Core &, void (*callback)(void *), void *ptr = nullptr);
+	WidgetExit(Gui &, std::function<void(Gui&)> callbackExit);
 
 	~WidgetExit(void) override = default;
 
@@ -14,9 +12,7 @@ public:
 	void render(void) override;
 
 private:
-	void (*callback_)(void *);
-
-	void *ptr_;
+	std::function<void(Gui&)> callbackExit_;
 
 	WidgetExit &operator=(const WidgetExit &) = delete;
 

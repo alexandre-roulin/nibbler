@@ -14,7 +14,7 @@ public:
 			color(acolor), log(str) {};
 	};
 
-	WidgetChat(Core &);
+	WidgetChat(Gui &);
 
 	~WidgetChat(void) override = default;
 

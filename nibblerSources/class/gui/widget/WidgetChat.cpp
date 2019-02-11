@@ -1,8 +1,8 @@
 #include "WidgetChat.hpp"
-#include <gui/Core.hpp>
+#include <gui/Gui.hpp>
 #include <Univers.hpp>
 
-WidgetChat::WidgetChat(Core &core) :
+WidgetChat::WidgetChat(Gui &core) :
 		AWidget(core) {
 	bzero(bufferMessage_, IM_ARRAYSIZE(bufferMessage_));
 }

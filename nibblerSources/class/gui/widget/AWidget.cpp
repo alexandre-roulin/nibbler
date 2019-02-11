@@ -1,7 +1,7 @@
 #include "AWidget.hpp"
-#include <gui/Core.hpp>
+#include <gui/Gui.hpp>
 
-AWidget::AWidget(Core &core) :
+AWidget::AWidget(Gui &core) :
 		core_(core),
 		active_(true) {
 }

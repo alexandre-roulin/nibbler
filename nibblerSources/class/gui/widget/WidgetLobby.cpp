@@ -1,8 +1,8 @@
 #include "WidgetLobby.hpp"
 #include <Univers.hpp>
-#include <gui/Core.hpp>
+#include <gui/Gui.hpp>
 
-WidgetLobby::WidgetLobby(Core &core) :
+WidgetLobby::WidgetLobby(Gui &core) :
 		AWidget(core) {
 	addColor(eSprite::kGreen, "Green", (core_.getPathRessources() / WIDGET_LOBBY_DIRECTORY_SNAKE_PRESENTATION /
 									   "snake_green.png").generic_string());

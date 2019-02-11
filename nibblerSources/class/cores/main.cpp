@@ -9,7 +9,7 @@
 
 #include <random>
 #include <fstream>
-#include <gui/Core.hpp>
+#include <gui/Gui.hpp>
 #include <boost/program_options.hpp>
 #include <logger.h>
 #include <ia/KStar.hpp>
@@ -26,8 +26,10 @@ void nibbler(Univers &univers) {
 	univers.addNoise((pathSound / "slime10.wav").generic_string());
 	univers.addNoise((pathSound / "hit17.ogg").generic_string());
 	univers.playMusic((pathSound / "zelda.ogg").generic_string());
-	std::unique_ptr<Core> coreSharedPtr;
-	while (1) {
+
+	std::unique_ptr<Gui> coreSharedPtr;
+
+	while (!univers.isExit()) {
 		univers.createCore();
 		univers.getCore_()->aState();
 		if (univers.isOpenGame_()) {

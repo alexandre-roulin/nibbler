@@ -2,7 +2,7 @@
 
 #include "IWidget.hpp"
 
-class Core;
+class Gui;
 
 enum class eColorLog {
 	kNone,
@@ -16,7 +16,7 @@ enum class eColorLog {
 
 class AWidget : public IWidget {
 public:
-	AWidget(Core &);
+	AWidget(Gui &);
 
 	virtual ~AWidget(void) = default;
 
@@ -41,7 +41,7 @@ public:
 	};
 
 protected:
-	Core &core_;
+	Gui &core_;
 	bool active_;
 
 private:

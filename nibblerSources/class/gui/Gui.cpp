@@ -1,5 +1,5 @@
 #include <Univers.hpp>
-#include "Core.hpp"
+#include "Gui.hpp"
 #include "widget/WidgetExit.hpp"
 #include "widget/WidgetSnake.hpp"
 #include "widget/WidgetLobby.hpp"
@@ -7,7 +7,7 @@
 #include "gui/widget/WidgetConnect.hpp"
 #include "gui/widget/WidgetMassiveButton.hpp"
 
-Core::Core(Univers &univers) :
+Gui::Gui(Univers &univers) :
 univers(univers),
 pathRessources_(boost::filesystem::path(NIBBLER_ROOT_PROJECT_PATH) / "ressources/"),
 _winSize(sf::Vector2<unsigned int>(1000, 900)),
@@ -17,11 +17,11 @@ _chat(*this),
 _mapSize(sf::Vector2<int>(20, 20))
 {
 	if (!_imageTitleScreen.loadFromFile((pathRessources_ / "ecran_titre.png").generic_string()))
-		(throw(Core::CoreConstructorException("Cannot load background")));
+		(throw(Gui::CoreConstructorException("Cannot load background")));
 	_io.IniFilename = NULL;
 }
 
-ImGuiIO			&Core::_createContext(void)
+ImGuiIO			&Gui::_createContext(void)
 {
 	_win.setFramerateLimit(60);
 	ImGui::SFML::Init(_win);
@@ -34,16 +34,16 @@ ImGuiIO			&Core::_createContext(void)
 	return (ImGui::GetIO());
 }
 
-Core::~Core(void)
+Gui::~Gui(void)
 {
 	ImGui::SFML::Shutdown();
 }
 
-boost::filesystem::path const	&Core::getPathRessources() const {
+boost::filesystem::path const	&Gui::getPathRessources() const {
 	return (pathRessources_);
 }
 
-void			Core::_updateGenCoreEvent() {
+void			Gui::_updateGenCoreEvent() {
 	sf::Event event;
 	while (_win.pollEvent(event))
 	{
@@ -55,7 +55,7 @@ void			Core::_updateGenCoreEvent() {
 	ImGui::SFML::Update(_win, _deltaClock.restart());
 }
 
-void			Core::titleScreen() {
+void			Gui::titleScreen() {
 	sf::Event	event;
 	bool		titleScreen = true;
 
@@ -79,27 +79,27 @@ void			Core::titleScreen() {
 	}
 }
 
-void			callbackExit(void *ptr)
+void			callbackExit(Gui &gui)
 {
-	static_cast<Core *>(ptr)->exit();
+	gui.exit();
 }
 
-void			Core::aState(void)
+void			Gui::aState(void)
 {
-	WidgetExit wexit(*this, &callbackExit, this);
+	WidgetExit wexit(*this, callbackExit);
 	WidgetLobby lobby(*this);
 	WidgetOption *optionSnake = nullptr;
 	WidgetConnect optionConnect(*this);
 	WidgetMassiveButton massiveButton(*this);
+	sf::Event event;
 
 
-	while (_win.isOpen() && !univers.isOpenGame_())
-	{
-		sf::Event event;
+	while (_win.isOpen() && !univers.isOpenGame_()) {
+		ImGui::SFML::Update(_win, _deltaClock.restart());
+
 		while (_win.pollEvent(event))
 		{
 			if (event.type == sf::Event::KeyPressed && event.key.control) {
-
 				switch (event.key.code) {
 					case sf::Keyboard::A:
 						univers.callbackAction(kCreateIA);
@@ -131,16 +131,11 @@ void			Core::aState(void)
 					case sf::Keyboard::H:
 						univers.callbackAction(kHostname);
 						break;
-					default:
-						break;
 				}
 			}
 			_processEvent(event);
 			ImGui::SFML::ProcessEvent(event);
 		}
-
-		ImGui::SFML::Update(_win, _deltaClock.restart());
-
 		ImGui::SetNextWindowPos(positionByPercent(sf::Vector2<unsigned int>(0, 50)));
 		ImGui::SetNextWindowSize(positionByPercent(sf::Vector2<unsigned int>(50, 50)));
 		_chat.render();
@@ -171,61 +166,61 @@ void			Core::aState(void)
 		massiveButton.render();
 
 		_render();
-
 	}
 	if (optionSnake)
 		delete optionSnake;
 }
 
-void				Core::_render(void) {
+void				Gui::_render(void) {
 	_win.clear();
 	ImGui::SFML::Render(_win);
 	_win.display();
 }
 
-void 				Core::exit(void) {
+void 				Gui::exit(void) {
 	_win.close();
+	univers.setExit(true);
 }
 
-sf::Vector2<unsigned int>	Core::positionByPercent(sf::Vector2<unsigned int> const &percent) const {
+sf::Vector2<unsigned int>	Gui::positionByPercent(sf::Vector2<unsigned int> const &percent) const {
 	return (sf::Vector2<unsigned int>(_winSize.x * percent.x / 100,
 										_winSize.y * percent.y / 100));
 }
 
-void					Core::_processEvent(sf::Event const &event) {
+void					Gui::_processEvent(sf::Event const &event) {
 	if (event.type == sf::Event::Resized)
 		_winSize = sf::Vector2<unsigned int>(event.size.width, event.size.height);
 	else if (event.type == sf::Event::Closed)
-		_win.close();
+		exit();
 }
 
 
-void					Core::beginColor(float const color) {
-	assert(!Core::_useColor);
-	Core::_useColor = true;
+void					Gui::beginColor(float const color) {
+	assert(!Gui::_useColor);
+	Gui::_useColor = true;
 	ImGui::PushStyleColor(ImGuiCol_Button, static_cast<ImVec4>(ImColor::HSV(color, 0.7f, 0.7f)));
 	ImGui::PushStyleColor(ImGuiCol_ButtonHovered, static_cast<ImVec4>(ImColor::HSV(color, 0.8f, 0.8f)));
 	ImGui::PushStyleColor(ImGuiCol_ButtonActive, static_cast<ImVec4>(ImColor::HSV(color, 0.9f, 0.9f)));
 }
-void					Core::endColor() {
+void					Gui::endColor() {
 	ImGui::PopStyleColor(3);
-	Core::_useColor = false;
+	Gui::_useColor = false;
 }
 
 
-float const 				Core::HUE_GREEN = 0.33f;
-float const 				Core::HUE_RED = 0.f;
+float const 				Gui::HUE_GREEN = 0.33f;
+float const 				Gui::HUE_RED = 0.f;
 
-bool 						Core::_useColor = false;
+bool 						Gui::_useColor = false;
 
-Core::CoreConstructorException::~CoreConstructorException(void) noexcept{}
-Core::CoreConstructorException::CoreConstructorException(void) noexcept :
-	_error("Error on Core constructor") {}
-Core::CoreConstructorException::CoreConstructorException(std::string s) noexcept :
+Gui::CoreConstructorException::~CoreConstructorException(void) noexcept{}
+Gui::CoreConstructorException::CoreConstructorException(void) noexcept :
+	_error("Error on Gui constructor") {}
+Gui::CoreConstructorException::CoreConstructorException(std::string s) noexcept :
 	_error(s) { }
-Core::CoreConstructorException::CoreConstructorException(Core::CoreConstructorException const &src) noexcept :
+Gui::CoreConstructorException::CoreConstructorException(Gui::CoreConstructorException const &src) noexcept :
 	_error(src._error)
 	{ _error = src._error; }
-const char	*Core::CoreConstructorException::what() const noexcept
+const char	*Gui::CoreConstructorException::what() const noexcept
 	{ return (_error.c_str()); }
 

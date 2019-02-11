@@ -1,5 +1,5 @@
 #include "SnakeClient.hpp"
-#include <gui/Core.hpp>
+#include <gui/Gui.hpp>
 #include <events/FoodCreation.hpp>
 #include <KINU/World.hpp>
 #include <events/StartEvent.hpp>

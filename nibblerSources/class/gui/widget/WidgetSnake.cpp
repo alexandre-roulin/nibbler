@@ -1,8 +1,8 @@
 #include <Univers.hpp>
 #include "WidgetSnake.hpp"
-#include <gui/Core.hpp>
+#include <gui/Gui.hpp>
 
-WidgetSnake::WidgetSnake(Core &core,
+WidgetSnake::WidgetSnake(Gui &core,
 						 Snake const &snake,
 						 std::map<eSprite, SpriteColorProperties> const &mapSprite,
 						 bool isYourSnake) :
@@ -71,17 +71,17 @@ void WidgetSnake::renderOtherSnake_(void) {
 
 	ImGui::SetCursorPosX((ImGui::GetWindowSize().x - sizeTexture) / 2);
 	if (!snake_.isReady) {
-		Core::beginColor(Core::HUE_RED);
+		Gui::beginColor(Gui::HUE_RED);
 		if (ImGui::Button("Ready ?", sf::Vector2f(sizeTexture, ImGui::GetFrameHeight())) &&
 			core_.univers.getSnakeClient())
 			core_.univers.getSnakeClient()->changeStateReady(true);
 	} else {
-		Core::beginColor(Core::HUE_GREEN);
+		Gui::beginColor(Gui::HUE_GREEN);
 		if (ImGui::Button("Ready !", sf::Vector2f(sizeTexture, ImGui::GetFrameHeight())) &&
 			core_.univers.getSnakeClient())
 			core_.univers.getSnakeClient()->changeStateReady(false);
 	}
-	Core::endColor();
+	Gui::endColor();
 
 	renderSelectionColor_(sizeTexture);
 	ImGui::End();

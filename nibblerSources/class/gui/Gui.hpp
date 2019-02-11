@@ -8,7 +8,7 @@
 #include "nibbler.hpp"
 #include <Univers.hpp>
 
-class Core {
+class Gui {
 public:
 
 	class CoreConstructorException : public std::exception {
@@ -23,8 +23,8 @@ public:
 		std::string			_error;
 	};
 
-	Core(Univers &univers);
-	~Core(void);
+	Gui(Univers &univers);
+	~Gui(void);
 
 	//				GUI				//
 	void						titleScreen(void);
@@ -68,8 +68,8 @@ private:
 	void						_processEvent(sf::Event const &event);
 	void						_updateGenCoreEvent();
 
-	Core          &operator=(Core const &rhs);
-	Core(Core const &src);
+	Gui          &operator=(Gui const &rhs);
+	Gui(Gui const &src);
 
 	static bool 				_useColor;
 };
