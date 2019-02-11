@@ -39,7 +39,10 @@ private:
 
 	bool chatCommand_(void);
 
-	void chatText_(void);
+	bool checkClientIsConnect_();
+	bool checkClient_();
+
+		void chatText_(void);
 
 	void sendMessage_();
 

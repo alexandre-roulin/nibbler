@@ -44,28 +44,58 @@ void WidgetChat::render(void) {
 
 }
 
-void WidgetChat::sendMessage_() {
-	if (core_.univers.getSnakeClient() && core_.univers.getSnakeClient()->getSnake().isValid) {
-		if (!chatCommand_())
-			chatText_();
-		memset(bufferMessage_, 0, IM_ARRAYSIZE(bufferMessage_));
+bool WidgetChat::checkClient_() {
+	if (!core_.univers.getSnakeClient()) {
+		addLog(eColorLog::kRed, "Your Client should be created");
+		return (false);
 	}
+	return (true);
+}
+
+bool WidgetChat::checkClientIsConnect_() {
+	if (!checkClient_())
+		return (false);
+	if (!core_.univers.getSnakeClient()->isConnect()) {
+		addLog(eColorLog::kRed, "Your Client should be connected");
+		return (false);
+	}
+	return (true);
+}
+
+void WidgetChat::sendMessage_() {
+	if (!chatCommand_())
+		chatText_();
+	memset(bufferMessage_, 0, IM_ARRAYSIZE(bufferMessage_));
 }
 
 void WidgetChat::chatText_(void) {
-	core_.univers.getSnakeClient()->sendDataToServer(ChatInfo(
-			core_.univers.getSnakeClient()->getSnake().name,
-			bufferMessage_), eHeaderK::kChat);
+	if (checkClientIsConnect_()) {
+		core_.univers.getSnakeClient()->sendDataToServer(ChatInfo(
+				core_.univers.getSnakeClient()->getSnake().name,
+				bufferMessage_), eHeader::kChat);
+	}
 }
 
 bool WidgetChat::chatCommand_(void) {
 	if (bufferMessage_[0] != '/')
 		return (false);
 	if (strstr(bufferMessage_, "/help"))
-		addLog(eColorLog::kYellow, "/help\n/name Aname\n", bufferMessage_);
-	else if (strstr(bufferMessage_, "/name "))
-		core_.univers.getSnakeClient()->changeName(
-				bufferMessage_ + sizeof("/name ") - 1);
+		addLog(eColorLog::kYellow, "/help\n/name Aname\n");
+	else if (strstr(bufferMessage_, "/name ")) {
+		if (checkClientIsConnect_()) {
+			core_.univers.getSnakeClient()->changeName(
+					bufferMessage_ + sizeof("/name ") - 1);
+		}
+	}
+	else if (strstr(bufferMessage_, "/color")) {
+		addLog(eColorLog::kNone, "eColorLog::kNone");
+		addLog(eColorLog::kRed, "eColorLog::kRed");
+		addLog(eColorLog::kGreen, "eColorLog::kGreen");
+		addLog(eColorLog::kBlue, "eColorLog::kBlue");
+		addLog(eColorLog::kPink, "eColorLog::kPink");
+		addLog(eColorLog::kOrange, "eColorLog::kOrange");
+		addLog(eColorLog::kYellow, "eColorLog::kYellow");
+	}
 	else
 		addLog(eColorLog::kOrange, "{%s} n'est pas une commande valide\n",
 			   bufferMessage_);
