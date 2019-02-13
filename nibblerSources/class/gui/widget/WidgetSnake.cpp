@@ -1,8 +1,8 @@
 #include <Univers.hpp>
 #include "WidgetSnake.hpp"
-#include <gui/Core.hpp>
+#include <gui/Gui.hpp>
 
-WidgetSnake::WidgetSnake(Core &core,
+WidgetSnake::WidgetSnake(Gui &core,
 						 Snake const &snake,
 						 std::map<eSprite, SpriteColorProperties> const &mapSprite,
 						 bool isYourSnake) :
@@ -17,6 +17,8 @@ void WidgetSnake::render(void) {
 		return;
 	if (isYourSnake_)
 		renderYourSnake_();
+	else if (snake_.isIA)
+		renderIa_();
 	else
 		renderOtherSnake_();
 }
@@ -59,6 +61,37 @@ void WidgetSnake::renderSelectionColor_(unsigned int sizeTexture) const {
 }
 
 
+void WidgetSnake::renderIa_(void) {
+	unsigned int sizeTexture;
+
+	if (core_.univers.isServer()) {
+		ImGui::Begin(std::string(std::to_string(snake_.id) + std::string(snake_.name)).c_str(), NULL,
+					 ImGuiWindowFlags_NoDecoration);
+	} else {
+		ImGui::Begin(std::string(std::to_string(snake_.id) + std::string(snake_.name)).c_str(), NULL,
+					 ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoInputs);
+	}
+
+	sizeTexture = sizeTexture_();
+	renderName_(sizeTexture);
+	renderImage_(sizeTexture);
+
+	ImGui::SetCursorPosX((ImGui::GetWindowSize().x - sizeTexture) / 2);
+
+	if (core_.univers.isServer()) {
+		Gui::beginColor(Gui::HUE_PURPLE);
+		if (ImGui::Button("Delete", sf::Vector2f(sizeTexture, ImGui::GetFrameHeight())) && core_.univers.getSnakeClient()) {
+			std::cout << "BOOB ??!! DO SOMETHING" << std::endl;
+			core_.univers.delete_ia(snake_.id);
+		}
+	}
+
+	Gui::endColor();
+
+	//renderSelectionColor_(sizeTexture);
+	ImGui::End();
+}
+
 void WidgetSnake::renderOtherSnake_(void) {
 	unsigned int sizeTexture;
 
@@ -71,17 +104,17 @@ void WidgetSnake::renderOtherSnake_(void) {
 
 	ImGui::SetCursorPosX((ImGui::GetWindowSize().x - sizeTexture) / 2);
 	if (!snake_.isReady) {
-		Core::beginColor(Core::HUE_RED);
+		Gui::beginColor(Gui::HUE_RED);
 		if (ImGui::Button("Ready ?", sf::Vector2f(sizeTexture, ImGui::GetFrameHeight())) &&
 			core_.univers.getSnakeClient())
 			core_.univers.getSnakeClient()->changeStateReady(true);
 	} else {
-		Core::beginColor(Core::HUE_GREEN);
+		Gui::beginColor(Gui::HUE_GREEN);
 		if (ImGui::Button("Ready !", sf::Vector2f(sizeTexture, ImGui::GetFrameHeight())) &&
 			core_.univers.getSnakeClient())
 			core_.univers.getSnakeClient()->changeStateReady(false);
 	}
-	Core::endColor();
+	Gui::endColor();
 
 	renderSelectionColor_(sizeTexture);
 	ImGui::End();

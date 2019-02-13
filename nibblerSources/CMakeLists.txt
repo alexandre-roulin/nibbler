@@ -40,8 +40,8 @@ add_executable(${NAME}
         class/gui/widget/WidgetSnake.hpp
         class/gui/widget/WidgetOption.cpp
         class/gui/widget/WidgetOption.hpp
-        class/gui/Core.cpp
-        class/gui/Core.hpp
+        class/gui/Gui.cpp
+        class/gui/Gui.hpp
         class/Univers.cpp
         class/Univers.hpp
         class/logger/display/logger_debug.cpp

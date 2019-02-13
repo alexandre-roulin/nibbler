@@ -82,10 +82,6 @@ bool            Glfw::exit() const {
     return static_cast<bool>(glfwWindowShouldClose(window_));
 }
 
-GLFWwindow     *Glfw::getWindow() const {
-    return (window_);
-}
-
 std::map<GLFWwindow*, Glfw&>     Glfw::glfwByWindow_;
 
 Glfw::ConstructorException::~ConstructorException(void) noexcept{}

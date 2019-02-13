@@ -26,7 +26,7 @@ class SnakeClient;
 
 class ClientTCP;
 
-class Core;
+class Gui;
 
 namespace KINU {
 
@@ -81,6 +81,9 @@ public:
 
 	bool isIASnake(uint16_t client_id) const;
 
+	bool isExit() const;
+	void setExit(bool b);
+
 	void connect(std::string const &dns = "localhost",
 				 std::string const &port = "4242");
 
@@ -92,15 +95,18 @@ public:
 
 	void create_client();
 
+	void delete_ia(int16_t id);
+
 	void delete_ia();
 
 	void deleteServer();
 
 	void deleteClient();
 
-	void createCore();
+	void createGui();
+	void deleteGui();
 
-	std::unique_ptr<Core> &getCore_();
+	std::unique_ptr<Gui> &getGui_();
 
 	/** Setter && Getter**/
 
@@ -166,6 +172,7 @@ private:
 	static const std::string SuccessClientIsConnected;
 
 	static const std::string WarningServerCreateIA;
+	static const std::string WarningServerRemoveIA;
 	static const std::string WarningServerFull;
 
 	static const std::string WarningServerExist;
@@ -186,6 +193,7 @@ private:
 	// Variable
 	boost::filesystem::path pathRoot_;
 	std::bitset<32> flag_;
+	bool exit_;
 	bool switchLib;
 	std::vector<NextFrame> nextFrame;
 	boost::asio::io_service io_loop;
@@ -196,7 +204,7 @@ private:
 
 	boost::shared_ptr<SnakeServer> snakeServer_;
 	boost::shared_ptr<SnakeClient> snakeClient_;
-	std::unique_ptr<Core> core_;
+	std::unique_ptr<Gui> gui_;
 	std::shared_ptr<MutantGrid<eSprite>> grid_;
 	std::vector<std::unique_ptr<Bobby>> vecBobby;
 

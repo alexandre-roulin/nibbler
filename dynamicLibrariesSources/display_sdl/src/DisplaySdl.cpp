@@ -86,7 +86,7 @@ void DisplaySdl::clean_(void) {
 	SDL_Quit();
 }
 
-void DisplaySdl::render(float, float) {
+void DisplaySdl::render() {
 	if (rendererTexture_)
 		SDL_DestroyTexture(rendererTexture_);
 	rendererTexture_ = SDL_CreateTextureFromSurface(renderer_, rendererSurface_);
@@ -143,7 +143,7 @@ void DisplaySdl::setBackground(MutantGrid<eSprite> const &grid) {
 	drawGrid_(background_, grid);
 }
 
-void DisplaySdl::update(float deltaTime) {
+void DisplaySdl::update() {
 
 	while (SDL_PollEvent(&ev_)) {
 		if (ev_.window.event == SDL_WINDOWEVENT_CLOSE)

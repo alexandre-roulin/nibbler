@@ -6,11 +6,11 @@
 #include "nibbler.hpp"
 #include <cores/Snake.hpp>
 
-class Core;
+class Gui;
 
 class WidgetSnake : public AWidget {
 public:
-	WidgetSnake(Core &core, Snake const &snake, std::map<eSprite, SpriteColorProperties> const &mapSprite,
+	WidgetSnake(Gui &core, Snake const &snake, std::map<eSprite, SpriteColorProperties> const &mapSprite,
 				bool isYourSnake = false);
 
 	~WidgetSnake(void) override = default;
@@ -21,6 +21,8 @@ private:
 	Snake const &snake_;
 	std::map<eSprite, SpriteColorProperties> const &mapSprite_;
 	bool isYourSnake_;
+
+	void renderIa_(void);
 
 	void renderYourSnake_(void);
 

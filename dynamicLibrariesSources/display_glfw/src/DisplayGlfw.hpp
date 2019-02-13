@@ -33,15 +33,13 @@ public:
     public:
         GlfwConstructorException() noexcept;
 
-		explicit GlfwConstructorException(std::string) noexcept;
+		explicit GlfwConstructorException(std::string const &s) noexcept;
 
 		const char *what() const noexcept override;
 
         ~GlfwConstructorException() noexcept override;
 
-        GlfwConstructorException(GlfwConstructorException const &src) noexcept;
-
-    private:
+	private:
         GlfwConstructorException &
         operator=(GlfwConstructorException const &rhs) noexcept;
 
@@ -54,8 +52,8 @@ public:
 
 	~DisplayGlfw() override;
 
-	void render(float currentDelayFrame, float maxDelayFrame) override;
-    void update(float deltaTime) override;
+	void render() override;
+    void update() override;
 	bool        exit() const override;
 	eDirection getDirection() const override;
 	void		drawGrid(MutantGrid< eSprite > const &grid) override;
@@ -70,12 +68,7 @@ private:
 	std::bitset<16>					flag_;
 	boost::filesystem::path			pathRoot_;
     eDirection          			direction_;
-	float							currentTimer_;
-	float							maxTimer_;
-	float							refreshMaxTimer_;
-    int                 			tileSize_;
-    Vector2D<int> const 			winTileSize_;
-    Vector2D<int> const 			winPixelSize_;
+	Vector2D<int> const 			winTileSize_;
 
 	MutantGrid< eSprite >			tileBackground_;
     MutantGrid< ActModel >			background_;
@@ -116,9 +109,8 @@ private:
 
 	void					drawGridCase_(eSprite sprite, int x, int y);
 	void					drawGridCaseBody_(int x, int y);
-	void					interpolateGridCase_(int x, int y);
+
 	void					renderLine_(ActModel const &model);
-	void					renderAtDirectionFrom(ActModel const &from, eSprite at);
 
 	void					drawHelpLineSnake_();
 

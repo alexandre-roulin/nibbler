@@ -16,6 +16,7 @@ public:
 	bool isUpdate;
 	eDirection direction;
 	bool isAlive;
+	bool isIA;
 	bool isSwitchingLibrary;
 	size_t indexConnection;
 	bool isValid;

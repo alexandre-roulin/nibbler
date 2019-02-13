@@ -1,9 +1,9 @@
 #include "WidgetMassiveButton.hpp"
 #include <Univers.hpp>
-#include <gui/Core.hpp>
+#include <gui/Gui.hpp>
 #include <network/SnakeServer.hpp>
 
-WidgetMassiveButton::WidgetMassiveButton(Core &core) :
+WidgetMassiveButton::WidgetMassiveButton(Gui &core) :
 		AWidget(core) {
 }
 
@@ -40,10 +40,10 @@ void WidgetMassiveButton::render(void) {
 			core_.addMessageChat("FAIS PAS LA MERDE GROS ! T'es pas un server OU TA PAS DE JOUEUR");
 		}
 
-//		core_.setStartGame(true);
-		//core_.univers.load_extern_lib_display(Univers::EXTERN_LIB_SFML);
-		//core_.univers.new_game();
-		//core_.univers.new_game();
+//		gui_.setStartGame(true);
+		//gui_.univers.load_extern_lib_display(Univers::EXTERN_LIB_SFML);
+		//gui_.univers.new_game();
+		//gui_.univers.new_game();
 	}
 	if (ImGui::Button("borderless()")) {
 		core_.univers.setBorderless(!core_.univers.isBorderless());

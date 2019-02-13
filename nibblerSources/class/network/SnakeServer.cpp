@@ -149,7 +149,7 @@ void SnakeServer::callbackPause(eAction pause) {
 }
 
 void SnakeServer::callbackSnake(Snake snake) {
-	log_success("%s snakeid %d isready %d", __PRETTY_FUNCTION__, snake.id, snake.isReady);
+	log_success("%s snakeid %d isready %d isIA %d", __PRETTY_FUNCTION__, snake.id, snake.isIA);
 	assert(snake.id >= 0 && snake.id < SNAKE_MAX);
 	snake_array_[snake.id] = snake;
 	serverTCP_->writeDataToOpenConnections(snake, eHeader::kSnake);

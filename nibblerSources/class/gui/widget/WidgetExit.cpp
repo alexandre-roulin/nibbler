@@ -1,14 +1,9 @@
 #include "WidgetExit.hpp"
 
-WidgetExit::WidgetExit(Core &core) :
+WidgetExit::WidgetExit(Gui &core, std::function<void(Gui&)> callbackExit) :
 		AWidget(core),
-		callback_(nullptr),
-		ptr_(nullptr) {}
-
-WidgetExit::WidgetExit(Core &core, void (*callback)(void *), void *ptr) :
-		AWidget(core),
-		callback_(callback),
-		ptr_(ptr) {}
+		callbackExit_(callbackExit)
+{}
 
 void WidgetExit::render(void) {
 	ImGui::Begin("Exit", NULL, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoBackground);
@@ -21,8 +16,7 @@ void WidgetExit::render(void) {
 
 		if (ImGui::Button("OK", ImVec2(120, 0))) {
 			ImGui::CloseCurrentPopup();
-			if (callback_)
-				callback_(ptr_);
+			callbackExit_(core_);
 		}
 		ImGui::SetItemDefaultFocus();
 		ImGui::SameLine();

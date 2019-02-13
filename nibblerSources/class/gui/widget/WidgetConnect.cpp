@@ -1,8 +1,8 @@
-#include <gui/Core.hpp>
+#include <gui/Gui.hpp>
 #include "WidgetConnect.hpp"
 #include "Univers.hpp"
 
-WidgetConnect::WidgetConnect(Core &core) :
+WidgetConnect::WidgetConnect(Gui &core) :
 		AWidget(core),
 		client_(false) {
 	bzero(dnsBuffer_, IM_ARRAYSIZE(dnsBuffer_));
@@ -22,22 +22,22 @@ void WidgetConnect::render(void) {
 					 ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse);
 
 	if (client_)
-		Core::beginColor(Core::HUE_RED);
+		Gui::beginColor(Gui::HUE_RED);
 	else
-		Core::beginColor(Core::HUE_GREEN);
+		Gui::beginColor(Gui::HUE_GREEN);
 	if (ImGui::Button("Host", sf::Vector2f(ImGui::GetWindowSize().x / 2, 20)))
 		client_ = false;
 	ImGui::SameLine();
-	Core::endColor();
+	Gui::endColor();
 
 	if (client_)
-		Core::beginColor(Core::HUE_GREEN);
+		Gui::beginColor(Gui::HUE_GREEN);
 	else
-		Core::beginColor(Core::HUE_RED);
+		Gui::beginColor(Gui::HUE_RED);
 	if (ImGui::Button("Client", sf::Vector2f(ImGui::GetWindowSize().x / 2 - 1, 20)))
 		client_ = true;
 
-	Core::endColor();
+	Gui::endColor();
 
 
 	if (ImGui::InputText("DNS", dnsBuffer_,
@@ -54,7 +54,7 @@ void WidgetConnect::render(void) {
 	ImGui::Spacing();
 	ImGui::Spacing();
 
-	Core::beginColor(Core::HUE_GREEN);
+	Gui::beginColor(Gui::HUE_GREEN);
 	if (client_) {
 		if (ImGui::Button("Join", sf::Vector2f(ImGui::GetWindowSize().x, 20)) && core_.univers.getSnakeClient()) {
 			core_.univers.getSnakeClient()->connect(dnsBuffer_, portBuffer_);
@@ -66,7 +66,7 @@ void WidgetConnect::render(void) {
 			core_.univers.getSnakeClient()->connect(dnsBuffer_, portBuffer_);
 		}
 	}
-	Core::endColor();
+	Gui::endColor();
 
 
 	ImGui::End();

@@ -1,8 +1,8 @@
 #include "WidgetLobby.hpp"
 #include <Univers.hpp>
-#include <gui/Core.hpp>
+#include <gui/Gui.hpp>
 
-WidgetLobby::WidgetLobby(Core &core) :
+WidgetLobby::WidgetLobby(Gui &core) :
 		AWidget(core) {
 	addColor(eSprite::kGreen, "Green", (core_.getPathRessources() / WIDGET_LOBBY_DIRECTORY_SNAKE_PRESENTATION /
 									   "snake_green.png").generic_string());
@@ -38,12 +38,10 @@ void WidgetLobby::addSnake(Snake const &snake, bool isYourSnake) {
 void WidgetLobby::_reload() {
 	snakeWidget_.clear();
 	for (unsigned int i = 0; i < SNAKE_MAX; i++) {
-		if (core_.univers.getSnakeClient()) {
-			addSnake(snakes_[i], (i == core_.univers.getSnakeClient()->getId_()));
-		}
-		else {
+		if (core_.univers.getSnakeClient())
+			addSnake(snakes_[i], (i == core_.univers.getSnakeClient()->getId_() && core_.univers.getSnakeClient()->isConnect()));
+		else
 			addSnake(snakes_[i], false);
-		}
 	}
 }
 

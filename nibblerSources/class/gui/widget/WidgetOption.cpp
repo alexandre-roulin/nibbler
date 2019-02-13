@@ -1,8 +1,8 @@
 #include <Univers.hpp>
-#include <gui/Core.hpp>
+#include <gui/Gui.hpp>
 #include "WidgetOption.hpp"
 
-WidgetOption::WidgetOption(Core &core) :
+WidgetOption::WidgetOption(Gui &core) :
 		AWidget(core),
 		mapSize_(core_.univers.getMapSize()) {
 
@@ -38,11 +38,11 @@ void WidgetOption::render(void) {
 
 	if (core_.univers.isServer()
 		&& core_.univers.getSnakeClient()->allSnakeIsReady()) {
-		Core::beginColor(Core::HUE_GREEN);
+		Gui::beginColor(Gui::HUE_GREEN);
 		if (ImGui::Button("Run the game")) {
 			core_.univers.getSnakeClient()->sendHostOpenGame();
 		}
-		Core::endColor();
+		Gui::endColor();
 	}
 
 	ImGui::End();

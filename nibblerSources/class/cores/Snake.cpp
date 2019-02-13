@@ -18,6 +18,7 @@ Snake::Snake() :
 		isUpdate(false),
 		direction(kNorth),
 		isAlive(false),
+		isIA(false),
 		isSwitchingLibrary(false),
 		isValid(false) {
 	memset(name, 0, NAME_BUFFER);
@@ -32,6 +33,7 @@ Snake &Snake::operator=(Snake const &snake) {
 		isUpdate = snake.isUpdate;
 		direction = snake.direction;
 		isAlive = snake.isAlive;
+		isIA = snake.isIA;
 		isSwitchingLibrary = snake.isSwitchingLibrary;
 		indexConnection = snake.indexConnection;
 		isValid = snake.isValid;
@@ -48,5 +50,6 @@ Snake Snake::randomSnake(int16_t id) {
 	snake.isAlive = true;
 	snake.isSwitchingLibrary = false;
 	snake.isValid = true;
+	snake.isIA = false;
 	return (snake);
 };

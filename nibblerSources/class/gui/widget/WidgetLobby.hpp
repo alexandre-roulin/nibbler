@@ -11,11 +11,11 @@
 
 #define WIDGET_LOBBY_DIRECTORY_SNAKE_PRESENTATION "snake_presentation"
 
-class Core;
+class Gui;
 
 class WidgetLobby : public AWidget {
 public:
-	WidgetLobby(Core &core);
+	WidgetLobby(Gui &core);
 
 	~WidgetLobby(void) override = default;
 
