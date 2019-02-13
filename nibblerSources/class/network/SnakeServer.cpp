@@ -21,8 +21,6 @@ void SnakeServer::build() {
 
 	boost::weak_ptr<SnakeServer> thisWeakPtr(shared_from_this());
 
-
-
 	serverTCP_ = KNW::ServerTCP::create(port_, (
 			[thisWeakPtr](size_t index)
 			{ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackDeadConnection(index); }));

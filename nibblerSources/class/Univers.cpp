@@ -422,7 +422,7 @@ void Univers::callbackAction(eAction action) {
 		case eAction::kDeleteIA :
 			break;
 		case eAction::kConnect :
-			connect();
+			();
 			break;
 		case eAction::kBorderless :
 			if (!getSnakeClient()) {
@@ -543,8 +543,8 @@ void Univers::delete_ia() {
 
 void Univers::deleteServer() {
 	if (snakeServer_) {
-		snakeServer_ = nullptr;
 		vecBobby.clear();
+		snakeServer_ = nullptr;
 		core_->addMessageChat(SuccessServerIsDelete);
 		if (snakeClient_ && snakeClient_->isConnect())
 			deleteClient();
@@ -700,8 +700,8 @@ void Univers::cleanAll() {
 	nextFrame.clear();
 	world_ = nullptr;
 	if (getSnakeClient() && !getSnakeClient()->isConnect()) {
-		deleteServer();
 		deleteClient();
+		deleteServer();
 		borderless = false;
 		mapSize_ = MAP_DEFAULT;
 	}
