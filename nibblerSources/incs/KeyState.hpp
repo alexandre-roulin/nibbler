@@ -23,7 +23,7 @@ public:
 
 	void		update();
 	bool		isUpdate() const;
-	bool		setUpdate(bool update);
+	void		setUpdate(bool update);
 
 	KeyState	getState() const;
 	std::chrono::milliseconds		getDurationPress() const ;

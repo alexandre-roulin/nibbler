@@ -60,11 +60,11 @@ private:
 	static float lastY_;
 	static bool firstMouse_;
 
-	static void mouseCallback_(GLFWwindow *window, double xpos, double ypos);
+	static void mouseCallback_(GLFWwindow *, double xpos, double ypos);
 
-	static void callbackKey_(GLFWwindow *window, int key, int scancode, int action, int mods);
+	static void callbackKey_(GLFWwindow *window, int key, int, int action, int);
 
-	static void callbackError_(int error, const char *errorMessage);
+	static void callbackError_(int, const char *errorMessage);
 
 	Glfw(Glfw const &shader) = delete;
 

@@ -3,7 +3,6 @@
 #include <iostream>
 
 Mesh::Mesh(std::vector<Vertex> vertice, std::vector<unsigned int> indice, std::vector<Texture> texture) :
-	flag_(Mesh::eFlag::TEXTURE),
 	vertice_(vertice),
 	indice_(indice),
 	texture_(texture) {
@@ -11,7 +10,6 @@ Mesh::Mesh(std::vector<Vertex> vertice, std::vector<unsigned int> indice, std::v
 }
 
 Mesh::Mesh(std::vector<Vertex> vertice, std::vector<unsigned int> indice) :
-		flag_(Mesh::eFlag::NONE),
 		vertice_(vertice),
 		indice_(indice) {
 	setupMesh_();
@@ -34,10 +32,9 @@ std::vector<unsigned int> const	&Mesh::getIndice() const {
 	return (indice_);
 }
 
-void Mesh::activeTexture(Shader &shader) const {
+void Mesh::activeTexture() const {
 	unsigned int diffuseNr = 1;
 	unsigned int specularNr = 1;
-	unsigned int normalNr = 1;
 
 	for(unsigned int i = 0; i < texture_.size(); i++) {
 
@@ -61,7 +58,7 @@ void Mesh::activeTexture(Shader &shader) const {
 }
 
 void	Mesh::render(Shader &shader, GLenum typeOfDraw) const {
-	activeTexture(shader);
+	activeTexture();
 	render(typeOfDraw);
 }
 

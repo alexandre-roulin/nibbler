@@ -4,10 +4,10 @@
 #include <iostream>
 
 Particle::Particle(std::string const &path, unsigned int size) :
+transforms(size),
 path_(path),
 bPhysicsMovement_(false),
 size_(size),
-transforms(size),
 model_(path),
 physicsMovement_(size)
 {
@@ -24,13 +24,13 @@ physicsMovement_(size)
 		glBindVertexArray(VAO);
 		GLsizei vec4Size = sizeof(glm::vec4);
 		glEnableVertexAttribArray(3);
-		glVertexAttribPointer(3, 4, GL_FLOAT, GL_FALSE, 4 * vec4Size, (void*)0);
+		glVertexAttribPointer(3, 4, GL_FLOAT, GL_FALSE, 4 * vec4Size, reinterpret_cast<const void *>(0));
 		glEnableVertexAttribArray(4);
-		glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, 4 * vec4Size, (void*)(vec4Size));
+		glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, 4 * vec4Size, reinterpret_cast<const void *>(vec4Size));
 		glEnableVertexAttribArray(5);
-		glVertexAttribPointer(5, 4, GL_FLOAT, GL_FALSE, 4 * vec4Size, (void*)(2 * vec4Size));
+		glVertexAttribPointer(5, 4, GL_FLOAT, GL_FALSE, 4 * vec4Size, reinterpret_cast<const void *>(2 * vec4Size));
 		glEnableVertexAttribArray(6);
-		glVertexAttribPointer(6, 4, GL_FLOAT, GL_FALSE, 4 * vec4Size, (void*)(3 * vec4Size));
+		glVertexAttribPointer(6, 4, GL_FLOAT, GL_FALSE, 4 * vec4Size, reinterpret_cast<const void *>(3 * vec4Size));
 
 		glVertexAttribDivisor(3, 1);
 		glVertexAttribDivisor(4, 1);
@@ -93,7 +93,7 @@ void Particle::update() {
 void Particle::render(Shader &shader, GLenum typeOfDraw) {
 	shader.activate();
 	for (const auto &mesh : model_.getMeshes()) {
-		mesh.activeTexture(shader);
+		mesh.activeTexture();
 		glBindVertexArray(mesh.getVAO());
 		glDrawElementsInstanced(typeOfDraw, static_cast<GLsizei>(mesh.getIndice().size()), GL_UNSIGNED_INT, 0, size_);
 	}

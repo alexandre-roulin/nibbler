@@ -46,14 +46,13 @@ public:
 	void				render(Shader &shader, GLenum typeOfDraw = GL_TRIANGLES) const;
 	void				render(GLenum typeOfDraw = GL_TRIANGLES) const noexcept;
 	unsigned int		getVAO() const;
-	void				activeTexture(Shader &shader) const;
+	void				activeTexture() const;
 	std::vector<unsigned int> const	&getIndice() const;
 
 	~Mesh();
 
 private:
 
-	eFlag						flag_;
 	std::vector<Vertex>			vertice_;
 	std::vector<unsigned int>	indice_;
 	std::vector<Texture>		texture_;

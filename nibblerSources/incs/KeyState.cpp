@@ -66,7 +66,7 @@ void		KeyState::update() {
 bool		KeyState::isUpdate() const {
 	return update_;
 }
-bool		KeyState::setUpdate(bool update) {
+void		KeyState::setUpdate(bool update) {
 	update_ = update;
 }
 

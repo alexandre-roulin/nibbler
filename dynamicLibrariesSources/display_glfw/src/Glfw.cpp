@@ -38,7 +38,7 @@ void    Glfw::clean_() {
     glfwTerminate();
 }
 
-void			Glfw::callbackKey_(GLFWwindow* window, int key, int scancode, int action, int mods) {
+void			Glfw::callbackKey_(GLFWwindow* window, int key, int, int action, int) {
     for (auto &glfw : Glfw::glfwByWindow_) {
         if (glfw.first == window) {
             if (action == GLFW_REPEAT) {
@@ -54,7 +54,7 @@ void			Glfw::callbackKey_(GLFWwindow* window, int key, int scancode, int action,
         }
     }
 }
-void Glfw::callbackError_(int error, const char* errorMessage) {
+void Glfw::callbackError_(int, const char* errorMessage) {
     throw (Glfw::ConstructorException(errorMessage));
 }
 
@@ -102,7 +102,7 @@ float       Glfw::lastY_ = DISPLAY_GLFW_WIN_HEIGHT / 2.0f;
 float       Glfw::offsetX_ = 0.f;
 float       Glfw::offsetY_ = 0.f;
 
-void Glfw::mouseCallback_(GLFWwindow *window, double xpos, double ypos) {
+void Glfw::mouseCallback_(GLFWwindow *, double xpos, double ypos) {
     if (Glfw::firstMouse_) {
         Glfw::lastX_ = static_cast<float>(xpos);
         Glfw::lastY_ = static_cast<float>(ypos);
