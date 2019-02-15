@@ -12,6 +12,7 @@
 #include <events/NextFrame.hpp>
 #include <boost/thread.hpp>
 #include <boost/scoped_ptr.hpp>
+
 #define PATH_DISPLAY_LIBRARY_SFML "dynamicLibraries/libdisplay_sfml.so"
 #define PATH_DISPLAY_LIBRARY_GLFW "dynamicLibraries/libdisplay_glfw.so"
 #define PATH_DISPLAY_LIBRARY_SDL "dynamicLibraries/libdisplay_sdl.so"
@@ -61,11 +62,9 @@ public:
 
 	void unload_external_display_library();
 
-	void loop();
+	void loopUI();
 
-	void manage_start();
-
-	void new_game();
+	void startNewGame();
 
 	void defaultAssignmentLibrary();
 
@@ -82,6 +81,7 @@ public:
 	bool isIASnake(uint16_t client_id) const;
 
 	bool isExit() const;
+
 	void setExit(bool b);
 
 	void connect(std::string const &dns = "localhost",
@@ -104,6 +104,7 @@ public:
 	void deleteClient();
 
 	void createGui();
+
 	void deleteGui();
 
 	std::unique_ptr<Gui> &getGui_();
@@ -115,7 +116,7 @@ public:
 	//Network
 	std::array<Snake, SNAKE_MAX> getSnakeArray_() const;
 
-	boost::shared_ptr<SnakeClient> getSnakeClient() const;
+	boost::weak_ptr<SnakeClient> getSnakeClient() const;
 
 	//Game
 
@@ -156,10 +157,16 @@ private: // Function
 
 	void manage_input();
 
-	void loop_world();
+	void loopWorld();
+	IOManager &getIoManager();
 
 	bool dlError(char const *from);
+	bool load_external_display_library(std::string const &title,
+									   std::string const &libPath);
 
+	bool load_external_sound_library(std::string const &library_path);
+
+	void finish_game();
 private:
 
 	//const
@@ -183,57 +190,61 @@ private:
 
 	static const std::string WarningClientIsAlreadyConnected;
 	static const std::string WarningClientIsNotConnected;
-	static const std::string WarningClientConnectError;
+	static const std::string WarningAllClientIsNotReady;
 
 	static const std::string WarningUserIsNotTheServer;
 	static const std::string WarningRequiredAtLeastOneClient;
 
 	static const std::string ErrorClientConnectionRefused;
 	static const std::string ErrorServerAlreadyUseOnThisPort;
+
 	// Variable
-	boost::filesystem::path pathRoot_;
+	//lib
+	void *dlHandleDisplay;
+	IDisplay *(*newDisplay)(int, int, char const *);
+	IDisplay *display;
+	void (*deleteDisplay)(IDisplay *);
+	void (*deleteSound)(ISound *);
+
+	//sound
+
+	ISound *sound;
+	ISound *(*newSound)(char const *);
+	void *dlHandleSound;
 	std::bitset<32> flag_;
-	bool exit_;
-	bool switchLib;
+	//game
 	std::vector<NextFrame> nextFrame;
-	boost::asio::io_service io_loop;
-	boost::asio::io_service io_start;
 	boost::asio::deadline_timer timer_loop;
-	boost::asio::deadline_timer timer_start;
 	std::shared_ptr<KINU::World> world_;
+	//univers
 
 	boost::shared_ptr<SnakeServer> snakeServer_;
 	boost::shared_ptr<SnakeClient> snakeClient_;
+	bool exit_;
 	std::unique_ptr<Gui> gui_;
+	IOManager ioManager;
+	bool switchLib;
 	std::shared_ptr<MutantGrid<eSprite>> grid_;
 	std::vector<std::unique_ptr<Bobby>> vecBobby;
 
 	unsigned int mapSize_;
 	unsigned int gameSpeed;
-	void *dlHandleDisplay;
-	void *dlHandleSound;
-	IDisplay *display;
-	ISound *sound;
 	bool borderless;
 	bool openGame_;
 
+	//
 
-	boost::thread thread;
+	boost::filesystem::path pathRoot_; //??
+
+
+
+
 	eDisplay kDisplay;
 
-	bool load_external_display_library(std::string const &title,
-									   std::string const &libPath);
-	bool load_external_sound_library(std::string const &library_path);
 
-	void finish_game();
 
-	IDisplay *(*newDisplay)(int, int, char const *);
 
-	ISound *(*newSound)(char const *);
 
-	void (*deleteDisplay)(IDisplay *);
-
-	void (*deleteSound)(ISound *);
 
 };
 
