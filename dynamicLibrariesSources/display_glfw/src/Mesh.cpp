@@ -57,7 +57,7 @@ void Mesh::activeTexture() const {
 	glActiveTexture(GL_TEXTURE0);
 }
 
-void	Mesh::render(Shader &shader, GLenum typeOfDraw) const {
+void	Mesh::render(Shader &, GLenum typeOfDraw) const {
 	activeTexture();
 	render(typeOfDraw);
 }

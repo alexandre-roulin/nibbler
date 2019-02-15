@@ -42,7 +42,7 @@ endif ()
 
 if(NOT WIN32)
     set(GLAD_LIBRARIES dl)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wvla -std=c99")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wvla -Werror")
 endif()
 
 find_package(Git QUIET)
@@ -133,7 +133,9 @@ endif()
 
 include_directories(
         ${CMAKE_SOURCE_DIR}/incs/
-        ${CMAKE_SOURCE_DIR}/nibblerSources/incs/
+        ${CMAKE_SOURCE_DIR}/nibblerSources/incs/)
+
+include_directories(SYSTEM
         ${CMAKE_SOURCE_DIR}/extern/imgui/
         ${CMAKE_SOURCE_DIR}/extern/imgui/imgui/
         ${CMAKE_SOURCE_DIR}/extern/imgui/imgui-sfml/

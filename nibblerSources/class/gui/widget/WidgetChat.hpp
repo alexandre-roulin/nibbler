@@ -18,11 +18,19 @@ public:
 
 	~WidgetChat(void) override = default;
 
-	template < typename ... Args >
-	void addLog(eColorLog color, std::string const &log, Args ... args) {
-		size_t size = std::snprintf(nullptr, 0, log.c_str(), args ...) + 1;
+	void addLog(eColorLog color, char const *format, ...)
+	{
+		va_list args;
+		va_start(args, format);
+		size_t size = std::vsnprintf(nullptr, 0, format, args) + 1;
+		va_end(args);
+
 		std::unique_ptr<char[]> buf = std::make_unique<char[]>(size);
-		std::snprintf(buf.get(), size, log.c_str(), args ...);
+
+		va_start(args, format);
+		std::vsnprintf(buf.get(), size, format, args);
+		va_end(args);
+
 		log_.emplace_back(color, std::string(buf.get(), buf.get() + size - 1));
 		scrollChat_ = true;
 	}
@@ -42,7 +50,7 @@ private:
 	bool checkClientIsConnect_();
 	bool checkClient_();
 
-		void chatText_(void);
+	void chatText_(void);
 
 	void sendMessage_();
 

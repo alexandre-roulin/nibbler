@@ -29,11 +29,11 @@ public:
 	void						aState(void);
 	template < typename ... Args >
 	void addMessageChat(eColorLog color, std::string const &log, Args ... args) {
-		_chat.addLog(color, log, args...);
+		_chat.addLog(color, log.c_str(), args...);
 	}
 	template < typename ... Args >
 	void addMessageChat(std::string const &log, Args ... args) {
-		_chat.addLog(eColorLog::kNone, log, args...);
+		_chat.addLog(eColorLog::kNone, log.c_str(), args...);
 	}
 
 	void 						exit(void);

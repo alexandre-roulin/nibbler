@@ -48,6 +48,7 @@ public:
 	void manageSnakeClientInput();
 
 	/** Library **/
+
 	void defaultAssignmentLibrary();
 
 	void manageSwitchLibrary();
@@ -57,6 +58,7 @@ public:
 	bool isIASnake(uint16_t client_id) const;
 
 	/** Network **/
+
 	void connect(std::string const &dns = DEFAULT_DNS,
 				 std::string const &port = DEFAULT_PORT);
 

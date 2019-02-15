@@ -8,16 +8,16 @@
 
 /** Constant **/
 
-std::array<KStar::Vec2, 8> const KStar::directions = {
-		Vec2(0,  1),
-		Vec2(1,  0),
-		Vec2(0,  -1),
-		Vec2(-1, 0),
-		Vec2(-1, -1),
-		Vec2(1,  1),
-		Vec2(-1, 1),
-		Vec2(1,  -1)
-};
+std::array<KStar::Vec2, 8> const KStar::directions = { {
+	Vec2(0,  1),
+	Vec2(1,  0),
+	Vec2(0,  -1),
+	Vec2(-1, 0),
+	Vec2(-1, -1),
+	Vec2(1,  1),
+	Vec2(-1, 1),
+	Vec2(1,  -1)
+}};
 
 /** Node **/
 
