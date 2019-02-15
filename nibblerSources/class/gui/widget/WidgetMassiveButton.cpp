@@ -1,5 +1,5 @@
 #include "WidgetMassiveButton.hpp"
-#include <Univers.hpp>
+#include <cores/Univers.hpp>
 #include <gui/Gui.hpp>
 #include <network/SnakeServer.hpp>
 
@@ -28,17 +28,17 @@ void WidgetMassiveButton::render(void) {
 		core_.univers.create_client();
 	}
 	if (ImGui::Button("connect()")) {
-		if (core_.univers.getSnakeClient() && !core_.univers.isOnlyIA())
-			core_.univers.getSnakeClient()->connect("e1r5p15.42.fr", "4242");
+//		if (core_.univers.getSnakeClient() && !core_.univers.isOnlyIA())
+//			core_.univers.getSnakeClient()->connect("e1r5p15.42.fr", "4242");
 	}
 	if (ImGui::Button("delete_client()")) {
 		core_.univers.deleteClient();
 	}
 	if (ImGui::Button("start_game()")) {
-		if (core_.univers.isServer() && core_.univers.getSnakeClient()) {
-		} else {
-			core_.addMessageChat("FAIS PAS LA MERDE GROS ! T'es pas un server OU TA PAS DE JOUEUR");
-		}
+//		if (core_.univers.isServer() && core_.univers.getSnakeClient()) {
+//		} else {
+//			core_.addMessageChat("FAIS PAS LA MERDE GROS ! T'es pas un server OU TA PAS DE JOUEUR");
+//		}
 
 //		gui_.setStartGame(true);
 		//gui_.univers.load_extern_lib_display(Univers::EXTERN_LIB_SFML);

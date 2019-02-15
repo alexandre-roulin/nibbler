@@ -144,6 +144,7 @@ void DisplaySfml::update() {
 					break;
 				case sf::Keyboard::W:
 					direction_ = kNorth;
+					break;
 				case sf::Keyboard::Left:
 					direction_ = kWest;
 					break;

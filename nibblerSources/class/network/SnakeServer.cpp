@@ -1,6 +1,6 @@
 #include <KNW/ServerTCP.hpp>
 #include "SnakeServer.hpp"
-#include <Univers.hpp>
+#include <cores/Univers.hpp>
 
 SnakeServer::SnakeServer(
 		Univers &univers,
@@ -21,79 +21,81 @@ void SnakeServer::build() {
 
 	boost::weak_ptr<SnakeServer> thisWeakPtr(shared_from_this());
 
-	serverTCP_ = KNW::ServerTCP::create(port_, (
-			[thisWeakPtr](size_t index)
-			{ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackDeadConnection(index); }));
+	serverTCP_ = KNW::ServerTCP::create(univers_.getIoManager());
+	serverTCP_->startServer(port_);
+	serverTCP_->startAsyncAccept();
 
-	serverTCP_->accept(
-			([thisWeakPtr](size_t index) { auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackAccept(index); }));
+	serverTCP_->startAsyncAccept(
+			([thisWeakPtr](size_t index) { auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackAccept(index); }),
+			([thisWeakPtr](size_t index){ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackDeadConnection(index); }));
 
-	serverTCP_->addDataType<int16_t >(
+
+	serverTCP_->getDataTCP().addDataType<int16_t >(
 			([thisWeakPtr](int16_t id)
 			{ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackRemoveSnake(id); }),
 			eHeader::kRemoveSnake);
 
-	serverTCP_->addDataType<InputInfo>(
+	serverTCP_->getDataTCP().addDataType<InputInfo>(
 			([thisWeakPtr](InputInfo ii)
 			{ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackInput(ii); }),
 			eHeader::kInput);
 
-	serverTCP_->addDataType<std::array<Snake, SNAKE_MAX>>(
+	serverTCP_->getDataTCP().addDataType<std::array<Snake, SNAKE_MAX>>(
 			([thisWeakPtr](std::array<Snake, SNAKE_MAX> snake_array)
 			{ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackSnakeArray(snake_array); }),
 			eHeader::kSnakeArray);
 
-	serverTCP_->addDataType<char>(
+	serverTCP_->getDataTCP().addDataType<char>(
 			([thisWeakPtr](char c)
 			{ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackPock(c); }),
 			eHeader::kPock);
 
-	serverTCP_->addDataType<bool>(
+	serverTCP_->getDataTCP().addDataType<bool>(
 			([thisWeakPtr](bool borderless)
 			{ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackBorderless(borderless); }),
 			eHeader::kBorderless);
 
-	serverTCP_->addDataType<unsigned int>(
+	serverTCP_->getDataTCP().addDataType<unsigned int>(
 			([thisWeakPtr](unsigned int mapSize)
 			{ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackResizeMap(mapSize); }),
 			eHeader::kResizeMap);
 
-	serverTCP_->addDataType<bool>(
+	serverTCP_->getDataTCP().addDataType<bool>(
 			([thisWeakPtr](bool openGame)
 			{ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackOpenGame(openGame); }),
 			eHeader::kOpenGame);
 
-	serverTCP_->addDataType<int16_t>(
+	serverTCP_->getDataTCP().addDataType<int16_t>(
 			([thisWeakPtr](int16_t id)
 			{ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackId(id); }),
 			eHeader::kId);
 
-	serverTCP_->addDataType<ChatInfo>(
+	serverTCP_->getDataTCP().addDataType<ChatInfo>(
 			([thisWeakPtr](ChatInfo chatInfo)
 			{ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackChatInfo(chatInfo); }),
 			eHeader::kChat);
 
-	serverTCP_->addDataType<StartInfo>(
+	serverTCP_->getDataTCP().addDataType<StartInfo>(
 			([thisWeakPtr](StartInfo startInfo)
 			{ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackStartInfo(startInfo); }),
 			eHeader::kStartGame);
 
-	serverTCP_->addDataType<FoodInfo>(
+	serverTCP_->getDataTCP().addDataType<FoodInfo>(
 			([thisWeakPtr](FoodInfo foodInfo)
 			{ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackFood(foodInfo); }),
 			eHeader::kFood);
 
-	serverTCP_->addDataType<Snake>(
+	serverTCP_->getDataTCP().addDataType<Snake>(
 			([thisWeakPtr](Snake snake)
 			{ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackSnake(snake); }),
 			eHeader::kSnake);
 
-	serverTCP_->addDataType<int16_t>(
+	serverTCP_->getDataTCP().addDataType<int16_t>(
 			([thisWeakPtr](int16_t id)
 			{ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackForcePause(id); }),
 			eHeader::kForcePause);
 
-	serverTCP_->addDataType<eAction >(
+	serverTCP_->getDataTCP().addDataType<eAction >(
 			([thisWeakPtr](eAction e) { auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackPause(e); }),
 			eHeader::kPause);
 
@@ -160,16 +162,9 @@ void SnakeServer::callbackForcePause(int16_t id) {
 	mutex_.lock();
 	assert(id < SNAKE_MAX);
 	snake_array_[id].isSwitchingLibrary = !snake_array_[id].isSwitchingLibrary;
-	pause_ = std::any_of(snake_array_.begin(), snake_array_.end(), [](auto snake){
-		return snake.isValid && snake.isSwitchingLibrary;
-	});
+	pause_ = true;
 	serverTCP_->writeDataToOpenConnections(snake_array_[id], eHeader::kSnake);
-
 	mutex_.unlock();
-	if (!pause_) {
-		serverTCP_->writeDataToOpenConnections(eAction::kPause, eHeader::kPause);
-		updateInput();
-	}
 }
 
 void SnakeServer::callbackAccept(size_t index) {
@@ -239,7 +234,7 @@ void SnakeServer::startGame() {
 	std::for_each(snake_array_.begin(), snake_array_.end(),
 				  [](auto &snake){ snake.isAlive = true; snake.isUpdate = false; });
 	serverTCP_->writeDataToOpenConnections(snake_array_, eHeader::kSnakeArray);
-	startInfo.nu = serverTCP_->getSizeOfConnections();
+	startInfo.nu = serverTCP_->getSizeOfOpenConnection();
 	startInfo.time_duration = boost::posix_time::microsec_clock::universal_time();
 	serverTCP_->writeDataToOpenConnections(startInfo, eHeader::kStartGame);
 	mutex_.unlock();
@@ -262,8 +257,6 @@ void SnakeServer::updateInput() {
 	std::for_each(snake_array_.begin(), snake_array_.end(), [](auto &snake){ snake.isUpdate = false;});
 	mutex_.unlock();
 
-	log_info("How many null %d",std::count_if(serverTCP_->connections.begin(), serverTCP_->connections.end(),[](auto ptr){
-			return ptr != nullptr; }));
 }
 
 bool SnakeServer::isReady() const {
@@ -271,7 +264,7 @@ bool SnakeServer::isReady() const {
 }
 
 bool SnakeServer::isFull() const {
-	return serverTCP_->getSizeOfConnections() == SNAKE_MAX;
+	return serverTCP_->getSizeOfOpenConnection() == SNAKE_MAX;
 }
 
 unsigned short SnakeServer::getPort_() const {
@@ -296,6 +289,10 @@ SnakeServer::create(Univers &univers, unsigned int port) {
 	auto ptr = boost::shared_ptr<SnakeServer>(new SnakeServer(univers, port));
 	ptr->build();
 	return ptr;
+}
+
+void SnakeServer::closeAcceptorServer() {
+	serverTCP_->stopAccept();
 }
 
 

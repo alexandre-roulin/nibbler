@@ -7,7 +7,7 @@
 #include <component/MotionComponent.hpp>
 #include <component/CollisionComponent.hpp>
 #include <component/FollowComponent.hpp>
-#include <Univers.hpp>
+#include <cores/Univers.hpp>
 #include "Factory.hpp"
 #include <KINU/World.hpp>
 

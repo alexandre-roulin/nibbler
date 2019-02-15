@@ -3,7 +3,7 @@
 #include <events/FoodCreation.hpp>
 #include <KINU/World.hpp>
 #include <events/StartEvent.hpp>
-#include <Univers.hpp>
+#include <cores/Univers.hpp>
 
 SnakeClient::SnakeClient(
 		Univers &univers,
@@ -16,7 +16,10 @@ SnakeClient::SnakeClient(
 		factory_(univers) {
 }
 
-SnakeClient::~SnakeClient() = default;
+SnakeClient::~SnakeClient() {
+	log_info("%s", __PRETTY_FUNCTION__);
+	clientTCP_ = nullptr;
+};
 
 /***** Network Management *****/
 
@@ -27,7 +30,9 @@ void SnakeClient::connect(std::string dns, std::string port) {
 
 
 bool SnakeClient::acceptDataFromServer() const {
-	return !fromIA_ || (univers_.isOnlyIA() && univers_.getSnakeClient()->getId_() == id_);
+	SnakeClient::boost_shared_ptr ptr(univers_.getSnakeClient().lock());
+
+	return !fromIA_ || (univers_.isOnlyIA() && ptr && ptr->getId_() == id_);
 }
 
 void SnakeClient::lock() {
@@ -140,8 +145,6 @@ void SnakeClient::killSnake(uint16_t id) {
 
 void SnakeClient::disconnect() {
 	clientTCP_->disconnect();
-	clientTCP_.reset();
-	build();
 }
 
 /***** Callback *****/
@@ -298,76 +301,75 @@ void SnakeClient::build() {
 
 	boost::weak_ptr<SnakeClient> thisWeakPtr(shared_from_this());
 
-	clientTCP_ = KNW::ClientTCP::create(
-			[thisWeakPtr]()
-			{ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackDeadConnection(); });
+	clientTCP_ = KNW::ClientTCP::create(univers_.getIoManager(), [thisWeakPtr]()
+	{ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackDeadConnection(); });
 
-	clientTCP_->addDataType<int16_t >(
+	clientTCP_->getDataTCP_().addDataType<int16_t >(
 			([thisWeakPtr](int16_t id)
 			{ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackRemoveSnake(id); }),
 			eHeader::kRemoveSnake);
 
-	clientTCP_->addDataType<InputInfo>(
+	clientTCP_->getDataTCP_().addDataType<InputInfo>(
 			([thisWeakPtr](InputInfo ii)
 			{ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackInput(ii); }),
 			eHeader::kInput);
 
-	clientTCP_->addDataType<std::array<Snake, SNAKE_MAX>>(
+	clientTCP_->getDataTCP_().addDataType<std::array<Snake, SNAKE_MAX>>(
 			([thisWeakPtr](std::array<Snake, SNAKE_MAX> snake_array)
 			{ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackSnakeArray(snake_array); }),
 			eHeader::kSnakeArray);
 
-	clientTCP_->addDataType<char>(
+	clientTCP_->getDataTCP_().addDataType<char>(
 			([thisWeakPtr](char c)
 			{ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackPock(c); }),
 			eHeader::kPock);
 
-	clientTCP_->addDataType<bool>(
+	clientTCP_->getDataTCP_().addDataType<bool>(
 			([thisWeakPtr](bool borderless)
 			{ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackBorderless(borderless); }),
 			eHeader::kBorderless);
 
-	clientTCP_->addDataType<unsigned int>(
+	clientTCP_->getDataTCP_().addDataType<unsigned int>(
 			([thisWeakPtr](unsigned int mapSize)
 			{ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackResizeMap(mapSize); }),
 			eHeader::kResizeMap);
 
-	clientTCP_->addDataType<bool>(
+	clientTCP_->getDataTCP_().addDataType<bool>(
 			([thisWeakPtr](bool openGame)
 			{ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackOpenGame(openGame); }),
 			eHeader::kOpenGame);
 
-	clientTCP_->addDataType<int16_t>(
+	clientTCP_->getDataTCP_().addDataType<int16_t>(
 			([thisWeakPtr](int16_t id)
 			{ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackId(id); }),
 			eHeader::kId);
 
-	clientTCP_->addDataType<ChatInfo>(
+	clientTCP_->getDataTCP_().addDataType<ChatInfo>(
 			([thisWeakPtr](ChatInfo chatInfo)
 			{ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackChatInfo(chatInfo); }),
 			eHeader::kChat);
 
-	clientTCP_->addDataType<StartInfo>(
+	clientTCP_->getDataTCP_().addDataType<StartInfo>(
 			([thisWeakPtr](StartInfo startInfo)
 			{ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackStartInfo(startInfo); }),
 			eHeader::kStartGame);
 
-	clientTCP_->addDataType<FoodInfo>(
+	clientTCP_->getDataTCP_().addDataType<FoodInfo>(
 			([thisWeakPtr](FoodInfo foodInfo)
 			{ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackFood(foodInfo); }),
 			eHeader::kFood);
 
-	clientTCP_->addDataType<Snake>(
+	clientTCP_->getDataTCP_().addDataType<Snake>(
 			([thisWeakPtr](Snake snake)
 			{ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackSnake(snake); }),
 			eHeader::kSnake);
 
-	clientTCP_->addDataType<int16_t>(
+	clientTCP_->getDataTCP_().addDataType<int16_t>(
 			([thisWeakPtr](int16_t id)
 			{ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackForcePause(id); }),
 			eHeader::kForcePause);
 
-	clientTCP_->addDataType<eAction >(
+	clientTCP_->getDataTCP_().addDataType<eAction >(
 			([thisWeakPtr](eAction e)
 			{ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackPause(e); }),
 			eHeader::kPause);

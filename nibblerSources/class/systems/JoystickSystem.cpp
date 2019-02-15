@@ -11,7 +11,10 @@ JoystickSystem::JoystickSystem(Univers &univers): univers_(univers) {
 }
 
 void JoystickSystem::update() {
-	std::array<Snake, SNAKE_MAX> snake_array = univers_.getSnakeClient()->getSnakeArray_();
+	SnakeClient::boost_shared_ptr ptr(univers_.getSnakeClient().lock());
+	if (!ptr)
+		return;
+	std::array<Snake, SNAKE_MAX> snake_array = ptr->getSnakeArray_();
 
 	for (auto &snake : snake_array) {
 		if (snake.isValid && getWorld().getEntitiesManager().hasEntityByTagId(snake.id + eTag::kHeadTag)) {

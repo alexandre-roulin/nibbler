@@ -42,8 +42,8 @@ add_executable(${NAME}
         class/gui/widget/WidgetOption.hpp
         class/gui/Gui.cpp
         class/gui/Gui.hpp
-        class/Univers.cpp
-        class/Univers.hpp
+        class/cores/Univers.cpp
+        class/cores/Univers.hpp
         class/logger/display/logger_debug.cpp
         class/logger/display/logger_error.cpp
         class/logger/display/logger_fatal.cpp
@@ -73,8 +73,8 @@ add_executable(${NAME}
         class/systems/MotionSystem.hpp
         class/systems/RenderSystem.cpp
         class/systems/RenderSystem.hpp
-        class/Univers.cpp
-        class/Univers.hpp
+        class/cores/Univers.cpp
+        class/cores/Univers.hpp
         class/ia/Bobby.cpp
         class/ia/Bobby.hpp
 #        class/ia/AStar.cpp
@@ -89,7 +89,8 @@ add_executable(${NAME}
         incs/logger.h
         incs/logger_utils.h
         incs/nibbler.hpp
-
+        class/KNW/IOManager.cpp
+        class/KNW/IOManager.hpp
         class/KNW/BaseDataType.cpp
         class/KNW/BaseDataType.hpp
         class/KNW/ClientTCP.cpp
@@ -132,7 +133,8 @@ add_executable(${NAME}
         incs/MutantGrid.tpp
         class/gui/widget/SpriteColorProperties.hpp
         class/cores/Snake.hpp
-        class/cores/Snake.cpp)
+        class/cores/Snake.cpp
+        class/cores/GameManagement.cpp class/cores/GameManagement.hpp class/cores/ExternalLibraryManager.cpp class/cores/ExternalLibraryManager.hpp)
 
 
 target_include_directories(

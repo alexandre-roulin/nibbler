@@ -20,6 +20,8 @@ public:
 	SnakeClient *getClientTCP_();
 	uint16_t getId() const;
 
+	virtual ~Bobby();
+
 private:
 
 	enum ePriority {
