@@ -126,6 +126,7 @@ void DisplaySfml::update() {
 		if (ev_.type == sf::Event::Closed)
 			exit_ = true;
 		if (ev_.type == sf::Event::KeyPressed) {
+
 			switch (ev_.key.code) {
 				case sf::Keyboard::A:
 					direction_ = kWest;
@@ -144,6 +145,7 @@ void DisplaySfml::update() {
 					break;
 				case sf::Keyboard::W:
 					direction_ = kNorth;
+					break;
 				case sf::Keyboard::Left:
 					direction_ = kWest;
 					break;
