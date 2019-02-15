@@ -1,90 +1,80 @@
 #pragma once
 
 #include <boost/asio.hpp>
-#include <boost/array.hpp>
-#include <boost/bind.hpp>
-#include <boost/shared_ptr.hpp>
-#include <boost/asio/ip/tcp.hpp>
-#include <boost/array.hpp>
-#include <boost/thread/thread.hpp>
-#include <boost/asio/error.hpp>
-#include <boost/array.hpp>
-#include <boost/asio/detail/config.hpp>
-#include <boost/cerrno.hpp>
-#include <boost/thread.hpp>
-#include <boost/system/error_code.hpp>
-#include <boost/system/system_error.hpp>
-#include <array>
-#include "BaseDataType.hpp"
-#include <bitset>
-#include <unordered_map>
 #include <iostream>
-#include "Config.hpp"
-#include "DataTCP.hpp"
+#include <boost/thread/mutex.hpp>
+#include <boost/thread.hpp>
+#include <boost/lexical_cast.hpp>
+#include "IOManager.hpp"
 #include "IOTCP.hpp"
-
-
-using boost::asio::ip::tcp;
+#include "Config.hpp"
 
 namespace KNW {
 
-	class ServerTCP;
 
-	/*********************** ConnectionTCP ************************************/
+	/** Connection TCP **/
+	class ServerTCP;
 
 	class ConnectionTCP : public boost::enable_shared_from_this<ConnectionTCP> {
 	public:
+		using b_sptr = boost::shared_ptr<ConnectionTCP>;
 
-		using boost_weak_ptr = boost::weak_ptr<ConnectionTCP>;
-		using boost_shared_ptr = boost::shared_ptr<ConnectionTCP>;
-		ConnectionTCP() = delete;
+		boost::asio::ip::tcp::socket &getSocket_();
 
-		ConnectionTCP(ConnectionTCP const &) = delete;
+		void write(std::string data);
 
-		static boost::shared_ptr<ConnectionTCP> create(boost::weak_ptr<ServerTCP> weakServerPtr, tcp::socket socket);
+		static b_sptr create(
+				boost::weak_ptr<ServerTCP> serverTCP,
+				boost::shared_ptr<boost::asio::ip::tcp::socket> sock
+		);
 
-		void sendData(std::string data);
-
-		~ConnectionTCP();
-
-		const tcp::socket &getSocket_() const;
-
-		void callbackDeadIOTCP();
+		virtual ~ConnectionTCP();
 
 	private:
-		ConnectionTCP(boost::weak_ptr<ServerTCP> weakServerPtr);
-
 		friend class ServerTCP;
 
-		boost::weak_ptr<ServerTCP> weakServerPtr_;
-		boost::shared_ptr<IOTCP> iotcp;
-		std::mutex mutex;
+		ConnectionTCP();
+
+		void callbackDeadIO();
+
+		boost::weak_ptr<ServerTCP> serverTCP_;
+		IOTCP::b_sptr iotcp;
 	};
 
-	/*************************** ServerTCP ************************************/
 
-	class ServerTCP : public boost::enable_shared_from_this<KNW::ServerTCP> {
+	class ServerTCP : public boost::enable_shared_from_this<ServerTCP> {
+
+		/** Server TCP **/
 	public:
+		ServerTCP() = delete;
 
-		using boost_shared_ptr = boost::shared_ptr<ServerTCP>;
-		using boost_weak_ptr = boost::weak_ptr<ServerTCP>;
+		ServerTCP(ServerTCP &) = delete;
 
-		static boost_shared_ptr create(unsigned short port, std::function<void(size_t)> callbackDeadSocket);
+		ServerTCP(ServerTCP const &) = delete;
+		// typedef
 
-		size_t getSizeOfConnections() const;
+		using b_sptr = boost::shared_ptr<ServerTCP>;
+		using b_wptr = boost::weak_ptr<ServerTCP>;
 
-		void accept();
+		//static creator
 
-		void accept(std::function<void(size_t)>);
+		static b_sptr create(IOManager &io_manager);
 
-		template<typename T>
-		void addDataType(std::function<void(T)> callback);
+		//member function
 
-		template<typename T, typename H>
-		void addDataType(std::function<void(T)> callback, H);
+		DataTCP &getDataTCP();
 
-		template<typename T>
-		void writeDataToOpenConnections(T data);
+		void startServer(uint16_t port) noexcept;
+
+
+		size_t getSizeOfOpenConnection() const;
+
+		void startAsyncAccept() noexcept;
+
+		void startAsyncAccept(std::function<void(size_t)>) noexcept;
+
+		void startAsyncAccept(std::function<void(size_t)>,
+							  std::function<void(size_t)>) noexcept;
 
 		template<typename T>
 		void writeDataToOpenConnection(T data, int index);
@@ -92,119 +82,71 @@ namespace KNW {
 		template<typename T, typename H>
 		void writeDataToOpenConnection(T data, int index, H header);
 
+		template<typename T>
+		void writeDataToOpenConnections(T data);
+
 		template<typename T, typename H>
 		void writeDataToOpenConnections(T data, H header);
 
+		void stopAccept();
+
 		virtual ~ServerTCP();
 
-		std::array<boost::shared_ptr<ConnectionTCP>, kMaxConnectionOpen> connections;
 	private:
 
-		void runIO();
-		ServerTCP(
-				unsigned short port,
-				std::function<void(size_t)> callbackDeadSocket
-		);
+		explicit ServerTCP(IOManager &io_manager);
 
-		void callbackDeadConnection(size_t index);
+		void acceptConnection() noexcept;
 
-		void asyncAccept(boost_weak_ptr weakPtr);
+		std::array<boost::shared_ptr<ConnectionTCP>, eConfigTCP::kMaxConnectionOpen> connections;
 
-		//Network
-		unsigned short port_;
-		boost::asio::io_service io_service_;
-		tcp::acceptor acceptor_;
-		boost::thread thread;
-
-		//connection
-
-		std::function<void(size_t)> callbackAccept_;
-		//Data management
-		DataTCP::boost_shared_ptr dataTCP_;
-		std::function<void(size_t)> callbackDeadSocket_;
+		void handleAcceptConnection(
+				const boost::system::error_code &ec,
+				boost::shared_ptr<boost::asio::ip::tcp::socket> sock);
 
 		friend class ConnectionTCP;
 
-		friend class IOTCP;
-
+		IOManager &io_manager_;
+		DataTCP::b_sptr dataTCP;
+		std::function<void(size_t)> callbackAccept_;
+		std::function<void(size_t)> callbackDeadConnection_;
+	private:
+		boost::shared_ptr<boost::asio::ip::tcp::acceptor> acceptor_;
 	};
 
 	template<typename T>
-	void ServerTCP::addDataType(std::function<void(T)> callback) {
-		assert(!dataTCP_->hasType<T>());
-		dataTCP_->addDataType<T>(callback);
+	void ServerTCP::writeDataToOpenConnection(T data, int index) {
+		assert(dataTCP->hasType<T>());
+		assert(connections[index] != nullptr);
+		connections[index]->write(dataTCP->serializeData(DataType<T>::getHeader(), data));
 	}
 
 	template<typename T, typename H>
-	void ServerTCP::addDataType(std::function<void(T)> callback, H index) {
-		dataTCP_->addDataType<T, H>(callback, index);
-	}
+	void ServerTCP::writeDataToOpenConnection(T data, int index, H header) {
+		assert(connections[index] != nullptr);
+		std::cout << __PRETTY_FUNCTION__ << std::endl;
 
+		connections[index]->write(dataTCP->serializeData(static_cast<BaseDataType::Header>(header), data));
+	}
 
 	template<typename T>
 	void ServerTCP::writeDataToOpenConnections(T data) {
-		assert(dataTCP_->hasType<T>());
-
-		auto header = DataType<T>::getHeader();
-
-		std::string buffer;
-		buffer.append(reinterpret_cast<char *>(&header),
-					  sizeof(BaseDataType::Header));
-		buffer.append(reinterpret_cast<char *>(&data),
-					  dataTCP_->getSizeOfHeader(header));
-
+		assert(dataTCP->hasType<T>());
 		for (auto &connection : connections) {
-			if (connection)
-				connection->sendData(buffer);
+			if (connection) {
+				std::cout << __PRETTY_FUNCTION__ << std::endl;
+				connection->write(dataTCP->serializeData(DataType<T>::getHeader(), data));
+			}
 		}
 	}
 
 	template<typename T, typename H>
 	void ServerTCP::writeDataToOpenConnections(T data, H header) {
-		log_info("%s %d", __PRETTY_FUNCTION__,
-		std::count_if(connections.begin(), connections.end(),[](auto ptr){ return ptr != nullptr;}));
-
-		uint16_t header_ = static_cast<uint16_t >(header);
-		std::string buffer;
-		buffer.append(reinterpret_cast<char *>(&header_),
-					  sizeof(BaseDataType::Header));
-		buffer.append(reinterpret_cast<char *>(&data),
-					  dataTCP_->getSizeOfHeader(header_));
+		std::cout << __PRETTY_FUNCTION__ << std::endl;
 		for (auto &connection : connections) {
 			if (connection)
-				connection->sendData(buffer);
+				connection->write(dataTCP->serializeData(static_cast<BaseDataType::Header>(header), data));
 		}
 	}
 
-
-	template<typename T>
-	void ServerTCP::writeDataToOpenConnection(T data, int index) {
-		assert(index < static_cast<int>(connections.size()));
-
-		auto header = DataType<T>::getHeader();
-		std::string buffer;
-		buffer.append(reinterpret_cast<char *>(&header),
-					  sizeof(BaseDataType::Header));
-		buffer.append(reinterpret_cast<char *>(&data),
-					  dataTCP_->getSizeOfHeader(header));
-
-		connections[index]->sendData(buffer);
-	}
-
-	template<typename T, typename H>
-	void
-	ServerTCP::writeDataToOpenConnection(T data, int index, H header) {
-		uint16_t header_ = static_cast<uint16_t >(header);
-		assert(index < static_cast<int>(connections.size()));
-//		log_success("%s(%d)", __PRETTY_FUNCTION__, index);
-		std::string buffer;
-		buffer.append(reinterpret_cast<char *>(&header_),
-					  sizeof(BaseDataType::Header));
-		buffer.append(reinterpret_cast<char *>(&data),
-					  dataTCP_->getSizeOfHeader(header_));
-		connections[index]->sendData(buffer);
-	}
-
 }
-
-

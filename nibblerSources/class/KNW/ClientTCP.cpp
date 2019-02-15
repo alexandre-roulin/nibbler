@@ -1,68 +1,87 @@
 #include "ClientTCP.hpp"
 
+
 namespace KNW {
 
-	ClientTCP::ClientTCP(std::function<void()> callback)
+	ClientTCP::ClientTCP(IOManager &io_manager)
 			:
-			socket_(io),
-			resolver(io),
 			dataTCP_(DataTCP::create()),
-			callbackDeadConnection_(callback)
+			io_manager_(io_manager) {
 
-			{
-		std::cout << "ClientTCP" << std::endl;
 	}
 
-	void ClientTCP::connect(std::string dns, std::string port) {
-		std::cout << "socket : " << socket_.is_open() << std::endl;
-		tcp::resolver::query query(dns, port);
-		tcp::resolver::iterator it = resolver.resolve(query);
-		boost::asio::connect(socket_, it);
-		iotcp =  IOTCP::create(
-				dataTCP_->weak_from_this(),
-				std::move(socket_),
-				callbackDeadConnection_);
+	ClientTCP::b_sptr ClientTCP::create(IOManager &io_manager,std::function<void()> c) {
+		auto ptr = boost::shared_ptr<ClientTCP>(new ClientTCP(io_manager));
+		ptr->callbackDeadConnection_ = std::move(c);
+		return ptr;
+	}
 
-		iotcp->readSocketHeader();
+	void ClientTCP::connect(const std::string host, const std::string port) {
+		boost::asio::ip::tcp::resolver resolver(io_manager_.getIo());
+		boost::shared_ptr<boost::asio::ip::tcp::socket> socket_(new boost::asio::ip::tcp::socket(io_manager_.getIo()));
 
-		ClientTCP::boost_weak_ptr weakPtr(shared_from_this());
-		thread = boost::thread([weakPtr](){
-			if (auto ptr = weakPtr.lock()) ptr->io.run();
-		});
+		boost::asio::ip::tcp::resolver::query query(
+				host,
+				boost::lexical_cast<std::string>(port));
 
-		thread.detach();
-
+		boost::asio::ip::tcp::resolver::iterator iterator = resolver.resolve(
+				query);
+		ClientTCP::b_wptr wptr(shared_from_this());
+		boost::system::error_code ec;
+		socket_->connect(*iterator, ec);
+		if (!ec) {
+			iotcp = IOTCP::create(dataTCP_, socket_, callbackDeadConnection_);
+		} else {
+			std::cout << ec.message() << std::endl;
+		}
 	}
 
 	bool ClientTCP::isConnect() const {
 		return iotcp != nullptr && iotcp->isConnect();
 	}
 
-	ClientTCP::~ClientTCP() {
-		log_success("%s", __PRETTY_FUNCTION__);
-		if (iotcp != nullptr)
-			iotcp.reset();
-		if (socket_.is_open())
-			socket_.close();
-		if (thread.joinable()) {
-			thread.join();
-			thread.interrupt();
-		}
-		if (!io.stopped())
-			io.reset();
+	DataTCP &ClientTCP::getDataTCP_() {
+		return *dataTCP_;
 	}
+
 
 	void ClientTCP::disconnect() {
-		if (iotcp != nullptr)
-			iotcp.reset();
-		if (thread.joinable()) {
-			thread.join();
-			thread.interrupt();
+		if (iotcp) {
+			boost::system::error_code ec_sock;
+			iotcp->getSocket_().shutdown(
+					boost::asio::ip::tcp::socket::shutdown_both, ec_sock);
+			iotcp->getSocket_().close(ec_sock);
 		}
+		iotcp = nullptr;
 	}
 
-	ClientTCP::boost_shared_ptr ClientTCP::create(std::function<void()> f) {
-		return KNW::ClientTCP::boost_shared_ptr(new ClientTCP(f));
+	ClientTCP::~ClientTCP() {
+		std::cout << __PRETTY_FUNCTION__ << std::endl;
+		disconnect();
 	}
+
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

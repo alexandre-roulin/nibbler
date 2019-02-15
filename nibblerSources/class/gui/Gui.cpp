@@ -1,4 +1,4 @@
-#include <Univers.hpp>
+#include <cores/Univers.hpp>
 #include "Gui.hpp"
 #include "widget/WidgetExit.hpp"
 #include "widget/WidgetSnake.hpp"
@@ -108,8 +108,9 @@ void			Gui::aState(void)
 
 		ImGui::SetNextWindowPos(positionByPercent(sf::Vector2<unsigned int>(95, 0)), 0, sf::Vector2f(0.5f, 0.5f));
 		wexit.render();
+		SnakeClient::boost_shared_ptr ptr(univers.getSnakeClient().lock());
 
-		if (univers.getSnakeClient() && univers.getSnakeClient()->isConnect()) {
+		if (ptr && ptr->isConnect()) {
 			if (!optionSnake)
 				optionSnake = new WidgetOption(*this);
 			ImGui::SetNextWindowPos(positionByPercent(sf::Vector2<unsigned int>(70, 50)));

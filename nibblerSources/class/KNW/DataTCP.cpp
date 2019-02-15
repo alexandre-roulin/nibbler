@@ -6,11 +6,11 @@ namespace KNW {
 
 	DataTCP::DataTCP() = default;
 
-	DataTCP::boost_shared_ptr DataTCP::create() {
-		return DataTCP::boost_shared_ptr(new DataTCP);
+	DataTCP::b_sptr DataTCP::create() {
+		return DataTCP::b_sptr(new DataTCP);
 	}
 
-	size_t DataTCP::getSizeOfHeader(DataTCP::Header header) {
+	int DataTCP::getSizeOfHeader(DataTCP::Header header) {
 		return (header < sizeType.size() ? sizeType[header] : 0);
 	}
 

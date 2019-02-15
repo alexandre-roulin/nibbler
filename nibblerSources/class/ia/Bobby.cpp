@@ -1,5 +1,5 @@
 #include "Bobby.hpp"
-#include <Univers.hpp>
+#include <cores/Univers.hpp>
 #include <logger.h>
 #include <KINU/World.hpp>
 #include <KINU/Entity.hpp>
@@ -346,6 +346,11 @@ void Bobby::clearPriority() {
 	for (int id = 0; id < SNAKE_MAX; ++id) {
 		mapPriority[id] = kUndefined;
 	}
+}
+
+Bobby::~Bobby() {
+	clientTCP_ = nullptr;
+	log_info("%s", __PRETTY_FUNCTION__);
 }
 
 

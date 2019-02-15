@@ -17,7 +17,10 @@ CollisionSystem::CollisionSystem(Univers &univers) : univers_(univers) {
 
 
 void CollisionSystem::checkCollision(
-		KINU::Entity entityHead, KINU::Entity entityCheck) {
+		KINU::Entity entityHead,
+		KINU::Entity entityCheck) {
+	SnakeClient::boost_shared_ptr ptr(univers_.getSnakeClient().lock());
+
 
 	auto &snakePositionComponent = entityHead.getComponent<PositionComponent>();
 	auto &positionComponent = entityCheck.getComponent<PositionComponent>();
@@ -29,35 +32,35 @@ void CollisionSystem::checkCollision(
 
 		if (tagId == eTag::kFoodTag) {
 			log_info("FOOD_TAG::FoodCollision");
-			univers_.playNoise(eNoise::kFoodSound);
+			univers_.getSoundManager().playNoise(eNoise::kFoodSound);
 			entityCheck.kill();
 			getWorld().getEventsManager().emitEvent<FoodEat>(entityHead.getGroupIdByEntity());
 
-			if (univers_.getSnakeClient()->getId_() == entityHead.getGroupIdByEntity() ||
-				univers_.isIASnake(entityHead.getGroupIdByEntity())) {
+			if (ptr && (ptr->getId_() == entityHead.getGroupIdByEntity() ||
+						univers_.isIASnake(entityHead.getGroupIdByEntity()))) {
 
-				univers_.getSnakeClient()->sendDataToServer(
+				ptr->sendDataToServer(
 						FoodInfo(PositionComponent(
 								univers_.getGrid_().getRandomSlot(eSprite::kNone)),
 										false),
 										eHeader::kFood);
 			}
 		} else if (tagId == eTag::kFoodFromSnake) {
-			univers_.playNoise(eNoise::kFoodSound);
+			univers_.getSoundManager().playNoise(eNoise::kFoodSound);
 			entityCheck.kill();
 			if (entityHead.hasGroupId())
 				getWorld().getEventsManager().emitEvent<FoodEat>(entityHead.getGroupIdByEntity());
 		} else if (tagId == kWallTag) {
 			createAppleBySnake(entityHead);
-			univers_.getSnakeClient()->killSnake(entityHead.getGroupIdByEntity());
+			ptr->killSnake(entityHead.getGroupIdByEntity());
 			entityHead.killGroup();
 		} else if (entityCheck.getGroupIdByEntity() == entityHead.getGroupIdByEntity()) {
 			createAppleBySnake(entityHead);
-			univers_.getSnakeClient()->killSnake(entityHead.getGroupIdByEntity());
+			ptr->killSnake(entityHead.getGroupIdByEntity());
 			entityHead.killGroup();
 		} else {
 			createAppleBySnake(entityHead);
-			univers_.getSnakeClient()->killSnake(entityHead.getGroupIdByEntity());
+			ptr->killSnake(entityHead.getGroupIdByEntity());
 			entityHead.killGroup();
 		}
 
@@ -78,13 +81,15 @@ void CollisionSystem::update() {
 
 void CollisionSystem::createAppleBySnake(KINU::Entity snake) {
 
+	SnakeClient::boost_shared_ptr ptr(univers_.getSnakeClient().lock());
+
 	auto appleSnake = getWorld().getEntitiesManager().getEntitiesByGroupId(snake.getGroupIdByEntity());
 	auto positionHead = snake.getComponent<PositionComponent>();
 	for (auto snakeCheck : appleSnake) {
 		if (snakeCheck.hasComponent<PositionComponent>()) {
 			auto positionComponent = snakeCheck.getComponent<PositionComponent>();
-			if (positionComponent != positionHead) {
-				univers_.getSnakeClient()->sendDataToServer(
+			if (positionComponent != positionHead && ptr) {
+				ptr->sendDataToServer(
 						FoodInfo(positionComponent, true), eHeader::kFood);
 			}
 		}

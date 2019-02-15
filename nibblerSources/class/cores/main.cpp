@@ -1,12 +1,5 @@
 #include <utility>
-
-
 #include <iostream>
-#include <KINU/Entity.hpp>
-
-#include <KINU/World.hpp>
-
-
 #include <random>
 #include <fstream>
 #include <gui/Gui.hpp>
@@ -19,20 +12,21 @@ void nibbler(Univers &univers) {
 
 	boost::filesystem::path pathSound(NIBBLER_ROOT_PROJECT_PATH);
 	pathSound = pathSound / "ressources" / "sound";
-	
-	univers.addNoise((pathSound / "appear-online.ogg").generic_string());
-	univers.addNoise((pathSound / "yes-2.wav").generic_string());
-	univers.addNoise((pathSound / "click.wav").generic_string());
-	univers.addNoise((pathSound / "slime10.wav").generic_string());
-	univers.addNoise((pathSound / "hit17.ogg").generic_string());
-	univers.playMusic((pathSound / "zelda.ogg").generic_string());
-	std::unique_ptr<Gui> coreSharedPtr;
+
+	univers.getSoundManager().addNoise((pathSound / "appear-online.ogg").generic_string());
+	univers.getSoundManager().addNoise((pathSound / "yes-2.wav").generic_string());
+	univers.getSoundManager().addNoise((pathSound / "click.wav").generic_string());
+	univers.getSoundManager().addNoise((pathSound / "slime10.wav").generic_string());
+	univers.getSoundManager().addNoise((pathSound / "hit17.ogg").generic_string());
+	univers.getSoundManager().playMusic((pathSound / "zelda.ogg").generic_string());
+
 	while (!univers.isExit()) {
 		univers.createGui();
 		univers.getGui_()->aState();
 		univers.deleteGui();
+
 		if (univers.isOpenGame_()) {
-			univers.new_game();
+			univers.startNewGame();
 		}
 
 	}
@@ -119,46 +113,14 @@ void printints(std::array<int, 6> const &ints) {
 	}
 	std::cout << std::endl;
 }
-void trya() {
-
-	std::array<int, 6> ints = {0, 1, 2, 3, 4, 5};
-	void *pVoid = static_cast<void *>(ints.data());
-	std::array<int, 6> intsCopy;
-	std::cout << "Print ints initialized" << std::endl;
-	printints(ints);
-	std::cout << "Print ints copy empty" << std::endl;
-	printints(intsCopy);
-	std::memcpy(&intsCopy, pVoid, sizeof(ints));
-	std::cout << "Print ints copy full" << std::endl;
-	printints(intsCopy);
-
-}
-
-void tryi() {
-	std::array<int, 6> connectionsId({ -1, -1, -1, -1, -1, -1 });
-
-
-	printints(connectionsId);
-
-	std::cout << std::distance(connectionsId.begin(), std::find(connectionsId.begin(), connectionsId.end(), -1)) << std::endl;
-	connectionsId[0] = 2;
-	std::cout << std::distance(connectionsId.begin(), std::find(connectionsId.begin(), connectionsId.end(), -1)) << std::endl;
-}
 
 int main(int argc, char **argv) {
-//	tryi();
-//	testKstar();
-//	return 1;
 
 	if (!NIBBLER_ROOT_PROJECT_PATH) {
 		std::cerr << "NIBBLER_ROOT_PROJECT_PATH is not defined" << std::endl;
 		return (0);
 	}
-	char hostset[64] = "Kryssou";
-	sethostname(hostset, 64);
-	char hostname[64];
-	gethostname(hostname, 64);
-	std::cout << hostname << std::endl;
+
 	srand(time(NULL));
 	char path[] = "/tmp/log.out";
 	if (argc > 1) {
@@ -186,7 +148,7 @@ int main(int argc, char **argv) {
 				return (0);
 			}
 			if (vm.count("sound"))
-				univers.load_extern_lib_sound(Univers::eSound::kSoundSfmlLibrary);
+				univers.getSoundManager().loadExternalSoundLibrary(eSound::kSoundSfmlLibrary);
 			boost::program_options::notify(vm);
 		}
 		catch (const boost::program_options::error &e) {

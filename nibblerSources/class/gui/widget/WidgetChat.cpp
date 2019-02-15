@@ -1,6 +1,6 @@
 #include "WidgetChat.hpp"
 #include <gui/Gui.hpp>
-#include <Univers.hpp>
+#include <cores/Univers.hpp>
 
 WidgetChat::WidgetChat(Gui &core) :
 		AWidget(core) {
@@ -45,7 +45,9 @@ void WidgetChat::render(void) {
 }
 
 bool WidgetChat::checkClient_() {
-	if (!core_.univers.getSnakeClient()) {
+	SnakeClient::boost_shared_ptr ptr(core_.univers.getSnakeClient().lock());
+
+	if (!ptr) {
 		addLog(eColorLog::kRed, "Your Client should be created");
 		return (false);
 	}
@@ -53,9 +55,10 @@ bool WidgetChat::checkClient_() {
 }
 
 bool WidgetChat::checkClientIsConnect_() {
-	if (!checkClient_())
+	SnakeClient::boost_shared_ptr ptr(core_.univers.getSnakeClient().lock());
+	if (!ptr || !checkClient_())
 		return (false);
-	if (!core_.univers.getSnakeClient()->isConnect()) {
+	if (!ptr->isConnect()) {
 		addLog(eColorLog::kRed, "Your Client should be connected");
 		return (false);
 	}
@@ -69,22 +72,23 @@ void WidgetChat::sendMessage_() {
 }
 
 void WidgetChat::chatText_(void) {
-	if (checkClientIsConnect_()) {
-		core_.univers.getSnakeClient()->sendDataToServer(ChatInfo(
-				core_.univers.getSnakeClient()->getSnake().name,
-				bufferMessage_), eHeader::kChat);
+	SnakeClient::boost_shared_ptr ptr(core_.univers.getSnakeClient().lock());
+
+	if (ptr && checkClientIsConnect_()) {
+		ptr->sendDataToServer(ChatInfo(ptr->getSnake().name, bufferMessage_), eHeader::kChat);
 	}
 }
 
 bool WidgetChat::chatCommand_(void) {
+	SnakeClient::boost_shared_ptr ptr(core_.univers.getSnakeClient().lock());
+
 	if (bufferMessage_[0] != '/')
 		return (false);
 	if (strstr(bufferMessage_, "/help"))
 		addLog(eColorLog::kYellow, "/help\n/name Aname\n");
 	else if (strstr(bufferMessage_, "/name ")) {
-		if (checkClientIsConnect_()) {
-			core_.univers.getSnakeClient()->changeName(
-					bufferMessage_ + sizeof("/name ") - 1);
+		if (ptr && checkClientIsConnect_()) {
+			ptr->changeName(bufferMessage_ + sizeof("/name ") - 1);
 		}
 	}
 	else if (strstr(bufferMessage_, "/color")) {

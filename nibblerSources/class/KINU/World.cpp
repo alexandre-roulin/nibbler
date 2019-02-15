@@ -6,7 +6,7 @@ namespace KINU {
 	World::World() {
 		entitiesManager = std::make_unique<EntitiesManager>(*this);
 		systemsManager = std::make_unique<SystemsManager>(*this);
-		eventsManager = std::make_unique<EventsManager>(*this);
+		eventsManager = std::make_unique<EventsManager>();
 	}
 
 	EntitiesManager &World::getEntitiesManager() const {

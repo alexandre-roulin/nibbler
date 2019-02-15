@@ -60,6 +60,9 @@ void SpriteSystem::update() {
 			}
 		}
 
+		SnakeClient::boost_shared_ptr ptr(univers_.getSnakeClient().lock());
+
+
 		if ((spriteComponent.sprite & eSprite::kHead) == eSprite::kHead) {
 			if (entity.getComponent<MotionComponent>().direction == kNorth)
 				spriteComponent.sprite |= eSprite::kToNorth;
@@ -72,7 +75,7 @@ void SpriteSystem::update() {
 			else if (entity.getComponent<MotionComponent>().direction ==
 					 kWest)
 				spriteComponent.sprite |= eSprite::kToWest;
-			if (entity.hasGroupId() && univers_.getSnakeClient()->getId_() == entity.getGroupIdByEntity()) {
+			if (entity.hasGroupId() && ptr && ptr->getId_() == entity.getGroupIdByEntity()) {
 				spriteComponent.sprite |= eSprite::kYourSnake;
 			}
 		} else {

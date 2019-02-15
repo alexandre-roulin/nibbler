@@ -26,6 +26,8 @@ public:
 
 	bool sendOpenGameToClient();
 
+	void closeAcceptorServer();
+
 private:
 	SnakeServer(Univers &univers, unsigned int port);
 	void build();

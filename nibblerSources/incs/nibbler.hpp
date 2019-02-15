@@ -23,6 +23,38 @@
 #define MAP_DEFAULT 30
 #define MAP_MAX 100
 
+
+enum eFlag {
+	kSound
+};
+
+struct LibraryInfo {
+	char const title[80];
+	char const path[PATH_MAX];
+};
+
+enum eSound {
+	kSoundSfmlLibrary = 0,
+	kSoundSdlLibrary
+};
+
+static const eSound eSoundArray[] = {
+		kSoundSfmlLibrary,
+		kSoundSdlLibrary
+};
+
+enum eDisplay {
+	kDisplaySfmlLibrary = 0,
+	kDisplaySdlLibrary,
+	kDisplayGlfwLibrary
+};
+
+static const eDisplay eDisplayArray[] = {
+		kDisplaySfmlLibrary,
+		kDisplaySdlLibrary,
+		kDisplayGlfwLibrary
+};
+
 enum eTag {
 	kHeadTag = 0,
 	kTailTag = 8,

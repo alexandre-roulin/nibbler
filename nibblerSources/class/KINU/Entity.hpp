@@ -251,7 +251,6 @@ namespace KINU {
 	void EntitiesManager::addComponent(Entity entity, Args &&... args) {
 		T component(std::forward<Args>(args) ...);
 		addComponent<T>(entity, component);
-
 	}
 
 
@@ -300,8 +299,7 @@ namespace KINU {
 			componentPools[componentId] = pool;
 		}
 
-		return std::static_pointer_cast<Pool<T>>(
-				componentPools[componentId]);
+		return std::static_pointer_cast<Pool<T>>(componentPools[componentId]);
 	}
 
 }
