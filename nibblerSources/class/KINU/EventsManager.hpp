@@ -28,7 +28,7 @@ namespace KINU {
 
 	class EventsManager {
 	public:
-		EventsManager(World &world) : world(world) {}
+		EventsManager() = default;
 
 		template<typename T>
 		void emitEvent(T event);
@@ -49,8 +49,6 @@ namespace KINU {
 		std::shared_ptr<Pool<T>> accommodateEvent();
 
 		std::unordered_map<std::type_index, std::shared_ptr<AbstractPool>> eventPools;
-
-		World &world;
 	};
 
 	template<typename T>

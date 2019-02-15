@@ -97,6 +97,7 @@ namespace KINU {
 		}
 		Entity e(newInstance);
 		e.entitiesManager_ = this;
+
 		validId.push_back(newInstance);
 		if (newInstance >= componentMasks.size())
 			componentMasks.resize(newInstance + 1);

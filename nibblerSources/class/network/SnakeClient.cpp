@@ -4,6 +4,7 @@
 #include <KINU/World.hpp>
 #include <events/StartEvent.hpp>
 #include <cores/Univers.hpp>
+#include <cores/GameManager.hpp>
 
 SnakeClient::SnakeClient(
 		Univers &univers,
@@ -58,12 +59,11 @@ bool SnakeClient::allSnakeIsDead() const {
 }
 
 void SnakeClient::deliverEvents() {
-	mutex_.lock();
+	std::lock_guard<std::mutex> guard(mutex_);
 	for (auto foodCreation : foodCreations) {
 		univers_.getWorld_().getEventsManager().emitEvent(foodCreation);
 	}
 	foodCreations.clear();
-	mutex_.unlock();
 }
 
 bool SnakeClient::isSwitchingLibrary() const {
@@ -165,51 +165,45 @@ void SnakeClient::callbackDeadConnection() {
 
 void SnakeClient::callbackPock(char) {
 	log_success("%s %d", __PRETTY_FUNCTION__, acceptDataFromServer());
-	mutex_.lock();
+	std::lock_guard<std::mutex> guard(mutex_);
 	if (acceptDataFromServer() && univers_.isOpenGame_()) {
 		univers_.getWorld_().getEventsManager().emitEvent<NextFrame>();
 	}
-	mutex_.unlock();
 }
 
 void SnakeClient::callbackResizeMap(unsigned int size) {
 	log_success("%s", __PRETTY_FUNCTION__ );
-	mutex_.lock();
+	std::lock_guard<std::mutex> guard(mutex_);
 	if (acceptDataFromServer()) {
 		univers_.setMapSize(size);
-		univers_.playNoise(eNoise::kResizeSound);
+		univers_.getSoundManager().playNoise(eNoise::kResizeSound);
 	}
-	mutex_.unlock();
 }
 
 void SnakeClient::callbackOpenGame(bool open) {
 	log_success("%s", __PRETTY_FUNCTION__ );
-	mutex_.lock();
+	std::lock_guard<std::mutex> guard(mutex_);
 	if (acceptDataFromServer()) {
 		univers_.setOpenGame_(open);
 	}
-	mutex_.unlock();
 }
 
 void SnakeClient::callbackBorderless(bool borderless) {
 	log_success("%s", __PRETTY_FUNCTION__ );
-	mutex_.lock();
+	std::lock_guard<std::mutex> guard(mutex_);
 	if (acceptDataFromServer()) {
 		univers_.setBorderless(borderless);
 	}
-	mutex_.unlock();
 }
 
 void SnakeClient::callbackId(int16_t id) {
 	log_success("%s id : %d id_ : %d", __PRETTY_FUNCTION__ , id, id_);
-	mutex_.lock();
+	std::lock_guard<std::mutex> guard(mutex_);
 	id_ = id;
-
 	if (fromIA_) {
 		changeStateReady(true);
 		changeIsIA(true);
 	}
-	mutex_.unlock();
 }
 
 void SnakeClient::callbackInput(InputInfo) {
@@ -224,34 +218,31 @@ void SnakeClient::callbackForcePause(int16_t) {
 
 void SnakeClient::callbackPause(eAction) {
 	log_success("%s", __PRETTY_FUNCTION__ );
-	mutex_.lock();
-	univers_.refreshTimerLoopWorld();
-	mutex_.unlock();
+	std::lock_guard<std::mutex> guard(mutex_);
+	univers_.getGameManager().refreshTimerLoopWorld();
 }
 
 void SnakeClient::callbackSnake(Snake snake) {
 	log_success("%s", __PRETTY_FUNCTION__ );
-	mutex_.lock();
+	std::lock_guard<std::mutex> guard(mutex_);
 	snake_array_[snake.id] = snake;
 	if (acceptDataFromServer()) {
-		univers_.playNoise(eNoise::kReadySound);
+		univers_.getSoundManager().playNoise(eNoise::kReadySound);
 	}
-	mutex_.unlock();
 }
 
 void SnakeClient::callbackFood(FoodInfo foodInfo) {
 	log_success("%s", __PRETTY_FUNCTION__ );
-	mutex_.lock();
+	std::lock_guard<std::mutex> guard(mutex_);
 	if (acceptDataFromServer()) {
 		foodCreations.push_back(
 				FoodCreation(foodInfo.positionComponent,foodInfo.fromSnake));
 	}
-	mutex_.unlock();
 }
 
 void SnakeClient::callbackStartInfo(StartInfo startInfo) {
 	log_success("%s", __PRETTY_FUNCTION__ );
-	mutex_.lock();
+	std::lock_guard<std::mutex> guard(mutex_);
 	foodCreations.clear();
 	if (acceptDataFromServer()) {
 		factory_.createAllSnake(snake_array_, startInfo.nu);
@@ -268,23 +259,20 @@ void SnakeClient::callbackStartInfo(StartInfo startInfo) {
 		}
 		univers_.getWorld_().getEventsManager().emitEvent<StartEvent>(startInfo.time_duration);
 	}
-	mutex_.unlock();
 }
 
 void SnakeClient::callbackChatInfo(ChatInfo chatInfo) {
 	log_success("%s", __PRETTY_FUNCTION__ );
-	mutex_.lock();
+	std::lock_guard<std::mutex> guard(mutex_);
 	if (acceptDataFromServer()) {
 		univers_.getGui_()->addMessageChat(chatInfo.toString());
 	}
-	mutex_.unlock();
 }
 
 void SnakeClient::callbackSnakeArray(std::array<Snake, SNAKE_MAX> new_snake_array) {
 	log_success("%s %d", __PRETTY_FUNCTION__, snake_array_[id_].isReady);
-	mutex_.lock();
+	std::lock_guard<std::mutex> guard(mutex_);
 	snake_array_ = new_snake_array;
-	mutex_.unlock();
 }
 
 bool SnakeClient::isReady() const {

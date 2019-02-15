@@ -32,7 +32,7 @@ void CollisionSystem::checkCollision(
 
 		if (tagId == eTag::kFoodTag) {
 			log_info("FOOD_TAG::FoodCollision");
-			univers_.playNoise(eNoise::kFoodSound);
+			univers_.getSoundManager().playNoise(eNoise::kFoodSound);
 			entityCheck.kill();
 			getWorld().getEventsManager().emitEvent<FoodEat>(entityHead.getGroupIdByEntity());
 
@@ -46,7 +46,7 @@ void CollisionSystem::checkCollision(
 										eHeader::kFood);
 			}
 		} else if (tagId == eTag::kFoodFromSnake) {
-			univers_.playNoise(eNoise::kFoodSound);
+			univers_.getSoundManager().playNoise(eNoise::kFoodSound);
 			entityCheck.kill();
 			if (entityHead.hasGroupId())
 				getWorld().getEventsManager().emitEvent<FoodEat>(entityHead.getGroupIdByEntity());

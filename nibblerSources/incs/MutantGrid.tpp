@@ -21,7 +21,6 @@ public:
 	typename std::vector<T>::const_reference operator()(size_t x, size_t y) const;
 
 	std::pair<size_t, size_t> getRandomSlot(T value);
-
 	bool isAnyFreeSlotInRow(size_t row, T clear) const;
 
 	bool isFreeSlot(size_t row, size_t column, T clear) const;
@@ -30,6 +29,7 @@ private:
 	size_t x_max_;
 	size_t y_max_;
 };
+
 
 template<typename T>
 MutantGrid<T> &MutantGrid<T>::operator=(MutantGrid<T> const &rvalue) {

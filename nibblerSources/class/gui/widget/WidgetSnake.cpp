@@ -85,7 +85,7 @@ void WidgetSnake::renderIa_(void) {
 		Gui::beginColor(Gui::HUE_PURPLE);
 		if (ImGui::Button("Delete", sf::Vector2f(sizeTexture, ImGui::GetFrameHeight())) && ptr) {
 			std::cout << "BOOB ?!! DO SOMETHING" << std::endl;
-			core_.univers.delete_ia(snake_.id);
+			core_.univers.deleteBobby(snake_.id);
 		}
 	}
 

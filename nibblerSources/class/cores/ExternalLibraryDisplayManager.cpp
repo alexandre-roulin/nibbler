@@ -1,8 +1,8 @@
 #include <dlfcn.h>
-#include "ExternalLibraryManager.hpp"
+#include "ExternalLibraryDisplayManager.hpp"
 #include <boost/filesystem/path.hpp>
 
-ExternalLibraryManager::ExternalLibraryManager():
+ExternalLibraryDisplayManager::ExternalLibraryDisplayManager():
 	dlHandleDisplay(nullptr),
 	newDisplay(nullptr),
 	display(nullptr),
@@ -10,7 +10,7 @@ ExternalLibraryManager::ExternalLibraryManager():
 	kDisplay(kDisplaySfmlLibrary) {
 }
 
-void ExternalLibraryManager::loadExternalDisplayLibrary(eDisplay display) {
+void ExternalLibraryDisplayManager::loadExternalDisplayLibrary(eDisplay display) {
 	if (!(dlHandleDisplay = dlopen(libraryInfo[display].path, RTLD_LAZY | RTLD_LOCAL))) {
 		dlError("dlopen");
 		return;
@@ -27,7 +27,7 @@ void ExternalLibraryManager::loadExternalDisplayLibrary(eDisplay display) {
 	}
 }
 
-void ExternalLibraryManager::unloadExternalDisplayLibrary() {
+void ExternalLibraryDisplayManager::unloadExternalDisplayLibrary() {
 	if (display != nullptr && dlHandleDisplay != nullptr) {
 		if (deleteDisplay) {
 			deleteDisplay(display);
@@ -40,24 +40,36 @@ void ExternalLibraryManager::unloadExternalDisplayLibrary() {
 	}
 }
 
-void ExternalLibraryManager::switchNextLibrary() {
+void ExternalLibraryDisplayManager::switchNextLibrary() {
 	unloadExternalDisplayLibrary();
 	kDisplay = (kDisplay == kDisplayGlfwLibrary) ? kDisplaySfmlLibrary : static_cast<eDisplay>(kDisplay + 1);
 	loadExternalDisplayLibrary(kDisplay);
 }
 
 
-bool ExternalLibraryManager::hasLibraryLoaded() const {
+bool ExternalLibraryDisplayManager::hasLibraryLoaded() const {
 	return display != nullptr;
 }
 
 
-void ExternalLibraryManager::dlError(char const *from) {
+void ExternalLibraryDisplayManager::dlError(char const *from) {
 	std::cerr << "Error " << from << " : " << dlerror() << std::endl;
-	dlclose(dlHandleDisplay);
+	unloadExternalDisplayLibrary();
 }
 
-void ExternalLibraryManager::constructExternalLibrary(int width, int height) {
+void ExternalLibraryDisplayManager::constructExternalLibrary(int width, int height) {
 	assert(newDisplay != nullptr);
 	display = newDisplay(width, height, libraryInfo[kDisplay].title);
+}
+
+IDisplay *ExternalLibraryDisplayManager::getDisplay() const {
+	return display;
+}
+
+eDisplay ExternalLibraryDisplayManager::getKDisplay() const {
+	return kDisplay;
+}
+
+ExternalLibraryDisplayManager::~ExternalLibraryDisplayManager() {
+	unloadExternalDisplayLibrary();
 }

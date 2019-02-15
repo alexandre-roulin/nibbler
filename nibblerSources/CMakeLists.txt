@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.12)
 set(NAME nibbler)
 project(${NAME})
+ADD_DEFINITIONS("-std=c99")
 
 add_executable(${NAME}
         class/component/CollisionComponent.cpp
@@ -134,7 +135,7 @@ add_executable(${NAME}
         class/gui/widget/SpriteColorProperties.hpp
         class/cores/Snake.hpp
         class/cores/Snake.cpp
-        class/cores/GameManagement.cpp class/cores/GameManagement.hpp class/cores/ExternalLibraryManager.cpp class/cores/ExternalLibraryManager.hpp)
+        class/cores/GameManager.cpp class/cores/GameManager.hpp class/cores/ExternalLibraryDisplayManager.cpp class/cores/ExternalLibraryDisplayManager.hpp class/cores/ExternalLibrarySoundManager.cpp class/cores/ExternalLibrarySoundManager.hpp)
 
 
 target_include_directories(

@@ -13,19 +13,18 @@ void WidgetMassiveButton::render(void) {
 				 ImGuiWindowFlags_NoCollapse);
 
 	if (ImGui::Button("create_ia()")) {
-		core_.univers.create_ia();
+		core_.univers.createBobby();
 	}
 	if (ImGui::Button("delete_ia()")) {
-		core_.univers.delete_ia();
 	}
 	if (ImGui::Button("create_server()")) {
-		core_.univers.create_server();
+		core_.univers.createServer();
 	}
 	if (ImGui::Button("delete_server()")) {
 		core_.univers.deleteServer();
 	}
 	if (ImGui::Button("create_client()")) {
-		core_.univers.create_client();
+		core_.univers.createClient();
 	}
 	if (ImGui::Button("connect()")) {
 //		if (core_.univers.getSnakeClient() && !core_.univers.isOnlyIA())

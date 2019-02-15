@@ -12,13 +12,13 @@ void nibbler(Univers &univers) {
 
 	boost::filesystem::path pathSound(NIBBLER_ROOT_PROJECT_PATH);
 	pathSound = pathSound / "ressources" / "sound";
-	
-	univers.addNoise((pathSound / "appear-online.ogg").generic_string());
-	univers.addNoise((pathSound / "yes-2.wav").generic_string());
-	univers.addNoise((pathSound / "click.wav").generic_string());
-	univers.addNoise((pathSound / "slime10.wav").generic_string());
-	univers.addNoise((pathSound / "hit17.ogg").generic_string());
-	univers.playMusic((pathSound / "zelda.ogg").generic_string());
+
+	univers.getSoundManager().addNoise((pathSound / "appear-online.ogg").generic_string());
+	univers.getSoundManager().addNoise((pathSound / "yes-2.wav").generic_string());
+	univers.getSoundManager().addNoise((pathSound / "click.wav").generic_string());
+	univers.getSoundManager().addNoise((pathSound / "slime10.wav").generic_string());
+	univers.getSoundManager().addNoise((pathSound / "hit17.ogg").generic_string());
+	univers.getSoundManager().playMusic((pathSound / "zelda.ogg").generic_string());
 
 	while (!univers.isExit()) {
 		univers.createGui();
@@ -148,7 +148,7 @@ int main(int argc, char **argv) {
 				return (0);
 			}
 			if (vm.count("sound"))
-				univers.load_extern_lib_sound(Univers::eSound::kSoundSfmlLibrary);
+				univers.getSoundManager().loadExternalSoundLibrary(eSound::kSoundSfmlLibrary);
 			boost::program_options::notify(vm);
 		}
 		catch (const boost::program_options::error &e) {

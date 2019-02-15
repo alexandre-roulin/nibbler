@@ -4,24 +4,27 @@
 #include <array>
 #include "nibbler.hpp"
 
-class ExternalLibraryManager {
-	struct LibraryInfo {
-		char const title[80];
-		char const path[PATH_MAX];
-	};
-	ExternalLibraryManager();
+class ExternalLibraryDisplayManager {
+
+public:
+	ExternalLibraryDisplayManager();
 	void switchNextLibrary();
 	void loadExternalDisplayLibrary(eDisplay display);
-	void constructExternalLibrary(int, int);
+	void constructExternalLibrary(int width, int height);
 	void unloadExternalDisplayLibrary();
 	void dlError(char const *from);
 	bool hasLibraryLoaded() const;
+	IDisplay *getDisplay() const;
+	eDisplay getKDisplay() const;
+
+	virtual ~ExternalLibraryDisplayManager();
+
 private:
 
 	static constexpr LibraryInfo libraryInfo[sizeof(eDisplayArray) / sizeof(eDisplay)] = {
-			[kDisplaySfmlLibrary] = {"Nibbler - SFML", "dynamicLibraries/libdisplay_sfml.so"},
-			[kDisplaySdlLibrary] = {"Nibbler - SDL", "dynamicLibraries/libdisplay_sdl.so"},
-			[kDisplayGlfwLibrary] = {"Nibbler - GLFW", "dynamicLibraries/libdisplay_glfw.so"}
+			{"Nibbler - SFML", "dynamicLibraries/libdisplay_sfml.so"}, //[kDisplaySfmlLibrary] = 0
+			{"Nibbler - SDL", "dynamicLibraries/libdisplay_sdl.so"}, //[kDisplaySdlLibrary] = 1
+			{"Nibbler - GLFW", "dynamicLibraries/libdisplay_glfw.so"} //[kDisplayGlfwLibrary] = 2
 	};
 
 	void *dlHandleDisplay;

@@ -66,7 +66,7 @@ void WidgetConnect::render(void) {
 
 		} else {
 			if (ImGui::Button("Create", sf::Vector2f(ImGui::GetWindowSize().x, 20)) && ptr) {
-				core_.univers.create_server();
+				core_.univers.createServer();
 				ptr->connect(dnsBuffer_, portBuffer_);
 			}
 		}

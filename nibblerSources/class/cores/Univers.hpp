@@ -8,168 +8,136 @@
 #include <bitset>
 #include "nibbler.hpp"
 #include "ISound.hpp"
+#include "ExternalLibrarySoundManager.hpp"
+#include "ExternalLibraryDisplayManager.hpp"
 #include <boost/asio/deadline_timer.hpp>
 #include <events/NextFrame.hpp>
 #include <boost/thread.hpp>
 #include <boost/scoped_ptr.hpp>
 
-#define PATH_DISPLAY_LIBRARY_SFML "dynamicLibraries/libdisplay_sfml.so"
-#define PATH_DISPLAY_LIBRARY_GLFW "dynamicLibraries/libdisplay_glfw.so"
-#define PATH_DISPLAY_LIBRARY_SDL "dynamicLibraries/libdisplay_sdl.so"
+#define DEFAULT_DNS "localhost"
+#define DEFAULT_PORT "4242"
 
-#define LOCALHOST "localhost"
-#define PATH_SOUND_LIBRARY_SFML "dynamicLibraries/libsound_sfml.so"
-#define PATH_SOUND_LIBRARY_SDL "dynamicLibraries/libsound_sdl.so"
+class GameManager;
 
 class SnakeServer;
 
 class SnakeClient;
 
-class ClientTCP;
-
 class Gui;
 
-namespace KINU {
-
-	class World;
-};
-
 class Univers {
+
 public:
 
-	enum eDisplay {
-		kDisplaySfmlLibrary,
-		kDisplaySdlLibrary,
-		kDisplayGlfwLibrary
-	};
+	using BobbyContainer = std::vector<std::unique_ptr<Bobby>>;
 
-	enum eSound {
-		kSoundSfmlLibrary,
-		kSoundSdlLibrary
-	};
-
-	enum eFlag {
-		kSound
-	};
+	/** Univers **/
 
 	Univers();
 
-	bool load_extern_lib_display(eDisplay);
+	void resetData();
+	void callbackAction(eAction);
 
-	bool load_extern_lib_sound(eSound eLib);
+	virtual ~Univers();
 
-	void unload_external_sound_library();
-
-	void unload_external_display_library();
-
-	void loopUI();
+	/** Game **/
 
 	void startNewGame();
 
+	void manageSnakeClientInput();
+
+	/** Library **/
 	void defaultAssignmentLibrary();
 
-	void sendHostname();
+	void manageSwitchLibrary();
 
-	void refreshTimerLoopWorld();
-
-	void addNoise(std::string const &path);
-
-	void playNoise(eNoise e) const;
-
-	void playMusic(std::string const &path) const;
+	/** Snake **/
 
 	bool isIASnake(uint16_t client_id) const;
 
-	bool isExit() const;
+	/** Network **/
+	void connect(std::string const &dns = DEFAULT_DNS,
+				 std::string const &port = DEFAULT_PORT);
 
-	void setExit(bool b);
 
-	void connect(std::string const &dns = "localhost",
-				 std::string const &port = "4242");
+	// create
 
-	/** Create && Delete function**/
+	void createBobby();
 
-	void create_ia();
+	void createClient();
 
-	void create_server(unsigned int port = 4242);
-
-	void create_client();
-
-	void delete_ia(int16_t id);
-
-	void delete_ia();
-
-	void deleteServer();
-
-	void deleteClient();
+	void createServer(unsigned int port = 4242);
 
 	void createGui();
 
+	// delete
+
+	void deleteBobby(int16_t id);
+
+	void deleteClient();
+
+	void deleteServer();
+
 	void deleteGui();
+
+	/** UI **/
+
+	void sendHostname();
+
+	void updateDisplayUI();
+
+	bool displayIsAvailable() const;
+
+	/** Getter && Setter **/
+
+	void setGameSpeed(unsigned int gameSpeed);
+
+	unsigned int getGameSpeed() const;
+
+	void setExit(bool b);
+
+	bool isExit() const;
+
+	void setGrid_(const std::shared_ptr<MutantGrid<eSprite>> &grid_);
+
+	void setMapSize(unsigned int mapSize_);
+
+	unsigned int getMapSize() const;
+
+	void setBorderless(bool borderless);
+
+	bool isBorderless() const;
+
+	void setOpenGame_(bool openGame_);
+
+	bool isOpenGame_() const;
+
+	MutantGrid<eSprite> &getGrid_() const;
 
 	std::unique_ptr<Gui> &getGui_();
 
-	/** Setter && Getter**/
-
-	MutantGrid<eSprite> &getGrid_();
-
-	//Network
 	std::array<Snake, SNAKE_MAX> getSnakeArray_() const;
 
 	boost::weak_ptr<SnakeClient> getSnakeClient() const;
 
-	//Game
-
-	KINU::World &getWorld_() const;
-
-	void setMapSize(unsigned int mapSize_);
-
-	bool isBorderless() const;
-
-	void setBorderless(bool borderless);
-
-	unsigned int getMapSize() const;
-
-
-	//Sound
-
-	ISound &getSound() const;
-
-	//State
+	KINU::World &getWorld_();
 
 	bool isOnlyIA() const;
 
 	bool isServer() const;
 
-	void callbackAction(eAction);
+	bool isSwitchLib() const;
 
+	SnakeServer &getSnakeServer() const;
 
-	virtual ~Univers();
+	BobbyContainer &getBobbys();
 
-	bool isOpenGame_() const;
-
-	void setOpenGame_(bool openGame_);
-
-private: // Function
-	void manageSwitchLibrary();
-
-	void cleanAll();
-
-	void manage_input();
-
-	void loopWorld();
 	IOManager &getIoManager();
+	ExternalLibrarySoundManager &getSoundManager();
+	GameManager &getGameManager();
 
-	bool dlError(char const *from);
-	bool load_external_display_library(std::string const &title,
-									   std::string const &libPath);
-
-	bool load_external_sound_library(std::string const &library_path);
-
-	void finish_game();
 private:
-
-	//const
 
 	static const std::string SuccessServerIsCreate;
 	static const std::string SuccessClientIsCreate;
@@ -198,53 +166,24 @@ private:
 	static const std::string ErrorClientConnectionRefused;
 	static const std::string ErrorServerAlreadyUseOnThisPort;
 
-	// Variable
-	//lib
-	void *dlHandleDisplay;
-	IDisplay *(*newDisplay)(int, int, char const *);
-	IDisplay *display;
-	void (*deleteDisplay)(IDisplay *);
-	void (*deleteSound)(ISound *);
 
-	//sound
-
-	ISound *sound;
-	ISound *(*newSound)(char const *);
-	void *dlHandleSound;
-	std::bitset<32> flag_;
-	//game
-	std::vector<NextFrame> nextFrame;
-	boost::asio::deadline_timer timer_loop;
-	std::shared_ptr<KINU::World> world_;
-	//univers
+	std::unique_ptr<IOManager > ioManager;
+	std::unique_ptr<ExternalLibrarySoundManager > soundManager;
+	std::unique_ptr<ExternalLibraryDisplayManager > displayManager;
+	std::unique_ptr<GameManager > gameManager;
 
 	boost::shared_ptr<SnakeServer> snakeServer_;
 	boost::shared_ptr<SnakeClient> snakeClient_;
-	bool exit_;
-	std::unique_ptr<Gui> gui_;
-	IOManager ioManager;
-	bool switchLib;
 	std::shared_ptr<MutantGrid<eSprite>> grid_;
-	std::vector<std::unique_ptr<Bobby>> vecBobby;
+	std::unique_ptr<Gui> gui_;
+	BobbyContainer vecBobby;
 
+	bool exit_;
+	bool switchLib;
 	unsigned int mapSize_;
 	unsigned int gameSpeed;
 	bool borderless;
 	bool openGame_;
-
-	//
-
-	boost::filesystem::path pathRoot_; //??
-
-
-
-
-	eDisplay kDisplay;
-
-
-
-
-
 
 };
 
