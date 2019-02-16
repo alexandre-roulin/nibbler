@@ -260,7 +260,7 @@ void SnakeClient::callbackChatInfo(ChatInfo chatInfo) {
 }
 
 void SnakeClient::callbackSnakeArray(std::array<Snake, SNAKE_MAX> new_snake_array) {
-	log_debug("%s %d", __PRETTY_FUNCTION__, snake_array_[id_].isReady);
+	log_debug("%s %d", __PRETTY_FUNCTION__, snake_array_[id_].isReady );
 	std::lock_guard<std::mutex> guard(mutex_);
 	snake_array_ = new_snake_array;
 	refreshSnakeArray();
