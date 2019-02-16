@@ -16,8 +16,10 @@ class Gui;
 class WidgetLobby : public AWidget {
 public:
 	WidgetLobby(Gui &core);
-
-	~WidgetLobby(void) override = default;
+	~WidgetLobby() override = default;
+	WidgetLobby() = delete;
+	WidgetLobby &operator=(const WidgetLobby &) = default;
+	WidgetLobby(const WidgetLobby &) = default;
 
 	void addSnake(Snake const &snake, bool isYourSnake = false);
 
@@ -31,8 +33,4 @@ private:
 	std::array<Snake, SNAKE_MAX> snakes_;
 
 	void _reload();
-
-	WidgetLobby &operator=(const WidgetLobby &) = delete;
-
-	WidgetLobby(const WidgetLobby &) = delete;
 };

@@ -15,25 +15,12 @@ public:
 	};
 
 	WidgetChat(Gui &);
+	~WidgetChat() override = default;
+	WidgetChat() = delete;
+	WidgetChat &operator=(const WidgetChat &) = default;
+	WidgetChat(const WidgetChat &) = default;
 
-	~WidgetChat(void) override = default;
-
-	void addLog(eColorLog color, char const *format, ...)
-	{
-		va_list args;
-		va_start(args, format);
-		size_t size = std::vsnprintf(nullptr, 0, format, args) + 1;
-		va_end(args);
-
-		std::unique_ptr<char[]> buf = std::make_unique<char[]>(size);
-
-		va_start(args, format);
-		std::vsnprintf(buf.get(), size, format, args);
-		va_end(args);
-
-		log_.emplace_back(color, std::string(buf.get(), buf.get() + size - 1));
-		scrollChat_ = true;
-	}
+	void addLog(eColorLog color, char const *format, ...);
 
 	void render(void) override;
 
@@ -53,10 +40,4 @@ private:
 	void chatText_(void);
 
 	void sendMessage_();
-
-	WidgetChat &operator=(const WidgetChat &) = delete;
-
-	WidgetChat(const WidgetChat &) = delete;
-
-	WidgetChat(void) = delete;
 };

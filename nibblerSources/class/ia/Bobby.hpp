@@ -13,14 +13,17 @@ class Bobby {
 public:
 
 	Bobby(Univers &);
+	virtual ~Bobby();
+	Bobby() = delete;
+	Bobby &operator=(const Bobby &) = delete;
+	Bobby(const Bobby &) = delete;
+
 	static void clearPriority();
 	void buildIA();
 	void sendDirection() ;
 	void calculateDirection();
 	SnakeClient *getClientTCP_();
 	uint16_t getId() const;
-
-	virtual ~Bobby();
 
 private:
 

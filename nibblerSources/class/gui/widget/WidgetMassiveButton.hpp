@@ -11,14 +11,10 @@ class Gui;
 class WidgetMassiveButton : public AWidget {
 public:
 	WidgetMassiveButton(Gui &core);
-
-	~WidgetMassiveButton(void) override = default;
+	~WidgetMassiveButton() override = default;
+	WidgetMassiveButton() = delete;
+	WidgetMassiveButton &operator=(const WidgetMassiveButton &) = default;
+	WidgetMassiveButton(const WidgetMassiveButton &) = default;
 
 	void render(void) override;
-
-private:
-
-	WidgetMassiveButton &operator=(const WidgetMassiveButton &) = default;
-
-	WidgetMassiveButton(const WidgetMassiveButton &) = default;
 };

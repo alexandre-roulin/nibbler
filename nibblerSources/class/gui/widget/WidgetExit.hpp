@@ -5,18 +5,14 @@
 class WidgetExit : public AWidget {
 public:
 	WidgetExit(Gui &, std::function<void(Gui&)> callbackExit);
-
-	~WidgetExit(void) override = default;
-
+	~WidgetExit() override = default;
+	WidgetExit() = delete;
+	WidgetExit &operator=(const WidgetExit &) = default;
+	WidgetExit(const WidgetExit &) = default;
 
 	void render(void) override;
 
 private:
 	std::function<void(Gui&)> callbackExit_;
 
-	WidgetExit &operator=(const WidgetExit &) = delete;
-
-	WidgetExit(const WidgetExit &) = delete;
-
-	WidgetExit(void) = delete;
 };

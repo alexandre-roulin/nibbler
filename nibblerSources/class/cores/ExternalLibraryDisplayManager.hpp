@@ -8,6 +8,10 @@ class ExternalLibraryDisplayManager {
 
 public:
 	ExternalLibraryDisplayManager();
+	virtual ~ExternalLibraryDisplayManager();
+	ExternalLibraryDisplayManager &operator=(const ExternalLibraryDisplayManager &) = delete;
+	ExternalLibraryDisplayManager(const ExternalLibraryDisplayManager &) = delete;
+
 	void switchNextLibrary();
 	void loadExternalDisplayLibrary(eDisplay display);
 	void constructExternalLibrary(int width, int height);
@@ -16,8 +20,6 @@ public:
 	bool hasLibraryLoaded() const;
 	IDisplay *getDisplay() const;
 	eDisplay getKDisplay() const;
-
-	virtual ~ExternalLibraryDisplayManager();
 
 private:
 

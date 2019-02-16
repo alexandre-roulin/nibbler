@@ -25,6 +25,9 @@ public:
 
 	Gui(Univers &univers);
 	~Gui(void);
+	Gui() = delete;
+	Gui &operator=(const Gui &) = delete;
+	Gui(const Gui &) = delete;
 
 	void						aState(void);
 	template < typename ... Args >
@@ -64,9 +67,6 @@ private:
 	void						_render(void);
 	ImGuiIO						&_createContext(void);
 	void						_processEvent(sf::Event const &event);
-
-	Gui          &operator=(Gui const &rhs);
-	Gui(Gui const &src);
 
 	static bool 				_useColor;
 };

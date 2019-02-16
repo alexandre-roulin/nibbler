@@ -16,12 +16,6 @@ enum class eColorLog {
 
 class AWidget : public IWidget {
 public:
-	AWidget(Gui &);
-
-	virtual ~AWidget(void) = default;
-
-	virtual void render(void) = 0;
-
 	class Constructor : public std::invalid_argument {
 	public:
 		Constructor(void) noexcept;
@@ -40,14 +34,17 @@ public:
 		std::string error_;
 	};
 
+	AWidget(Gui &);
+	virtual ~AWidget(void) = default;
+	AWidget() = delete;
+	AWidget &operator=(const AWidget &) = default;
+	AWidget(const AWidget &) = default;
+
+
+	virtual void render(void) = 0;
+
+
 protected:
 	Gui &core_;
 	bool active_;
-
-private:
-	AWidget &operator=(const AWidget &) = delete;
-
-	AWidget(const AWidget &) = delete;
-
-	AWidget(void) = delete;
 };

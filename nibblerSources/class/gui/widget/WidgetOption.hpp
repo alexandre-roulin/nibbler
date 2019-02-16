@@ -8,9 +8,10 @@ class Gui;
 class WidgetOption : public AWidget {
 public:
 	WidgetOption(Gui &);
-
-	~WidgetOption(void) override = default;
-
+	~WidgetOption() override = default;
+	WidgetOption() = delete;
+	WidgetOption &operator=(const WidgetOption &) = delete;
+	WidgetOption(const WidgetOption &) = delete;
 
 	void render(void) override;
 
@@ -18,7 +19,4 @@ private:
 	unsigned int mapSize_;
 	char nameBuffer_[NAME_BUFFER];
 
-	WidgetOption &operator=(const WidgetOption &) = delete;
-
-	WidgetOption(const WidgetOption &) = delete;
 };

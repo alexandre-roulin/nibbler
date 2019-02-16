@@ -9,6 +9,11 @@
 class GameManager {
 public:
 	GameManager(Univers &univers);
+	~GameManager() = default;
+	GameManager() = delete;
+	GameManager &operator=(const GameManager &) = delete;
+	GameManager(const GameManager &) = delete;
+
 	void startNewGame();
 	void loopWorld();
 	void loopUI();

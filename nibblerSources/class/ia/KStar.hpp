@@ -48,6 +48,9 @@ public:
 	using HeuristicFunction = std::function<double (Vec2,Vec2)>;
 
 	KStar();
+	~KStar() = default;
+	KStar &operator=(const KStar &) = delete;
+	KStar(const KStar &) = delete;
 
 	void setWorldSize(Vec2);
 	void addCollision(Vec2);

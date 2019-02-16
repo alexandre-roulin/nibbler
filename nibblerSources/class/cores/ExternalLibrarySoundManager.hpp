@@ -8,6 +8,10 @@ class ExternalLibrarySoundManager {
 
 public:
 	ExternalLibrarySoundManager();
+	virtual ~ExternalLibrarySoundManager();
+	ExternalLibrarySoundManager &operator=(const ExternalLibrarySoundManager &) = delete;
+	ExternalLibrarySoundManager(const ExternalLibrarySoundManager &) = delete;
+
 	void switchNextLibrary();
 	void loadExternalSoundLibrary(eSound sound);
 	void constructExternalLibrary();
@@ -20,7 +24,6 @@ public:
 	void playNoise(eNoise e) const;
 	void playMusic(std::string const &path) const;
 
-	virtual ~ExternalLibrarySoundManager();
 
 private:
 	static constexpr char libraryInfo[sizeof(eSoundArray) / sizeof(eSound)][PATH_MAX] = {

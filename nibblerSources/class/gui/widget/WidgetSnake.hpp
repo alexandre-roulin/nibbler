@@ -15,6 +15,12 @@ public:
 
 	~WidgetSnake(void) override = default;
 
+	WidgetSnake &operator=(const WidgetSnake &) = delete;
+
+	WidgetSnake(const WidgetSnake &) = delete;
+
+	WidgetSnake(void) = delete;
+
 	void render(void) override ;
 
 private:
@@ -35,10 +41,4 @@ private:
 	unsigned int sizeTexture_(void) const;
 
 	void renderSelectionColor_(unsigned int sizeTexture) const;
-
-	WidgetSnake &operator=(const WidgetSnake &) = delete;
-
-	WidgetSnake(const WidgetSnake &) = delete;
-
-	WidgetSnake(void) = delete;
 };

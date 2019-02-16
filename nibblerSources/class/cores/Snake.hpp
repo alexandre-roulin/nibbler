@@ -8,6 +8,9 @@
 struct Snake {
 public:
 	Snake();
+	~Snake() = default;
+	Snake &operator=(Snake const &snake);
+	Snake(const Snake &) = default;
 
 	char name[NAME_BUFFER];
 	eSprite sprite;
@@ -21,7 +24,6 @@ public:
 	size_t indexConnection;
 	bool isValid;
 
-	Snake &operator=(Snake const &snake);
 
 	static Snake randomSnake(int16_t id);
 

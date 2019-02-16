@@ -59,6 +59,9 @@ namespace AStar {
 		void print();
 
 		Generator();
+		~Generator() = default;
+		Generator &operator=(const Generator &) = delete;
+		Generator(const Generator &) = delete;
 
 		void setWorldSize(Vec2i worldSize_);
 
@@ -87,6 +90,11 @@ namespace AStar {
 		static Vec2i getDelta(Vec2i source_, Vec2i target_);
 
 	public:
+		Heuristic() = default;
+		~Heuristic() = default;
+		Heuristic &operator=(const Heuristic &) = delete;
+		Heuristic(const Heuristic &) = delete;
+
 		static uint manhattan(Vec2i source_, Vec2i target_);
 
 		static uint euclidean(Vec2i source_, Vec2i target_);

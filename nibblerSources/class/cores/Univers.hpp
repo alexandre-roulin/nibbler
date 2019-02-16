@@ -35,11 +35,12 @@ public:
 	/** Univers **/
 
 	Univers();
+	virtual ~Univers();
+	Univers &operator=(const Univers &) = delete;
+	Univers(const Univers &) = delete;
 
 	void resetData();
 	void callbackAction(eAction);
-
-	virtual ~Univers();
 
 	/** Game **/
 

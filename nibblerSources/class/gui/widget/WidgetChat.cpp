@@ -1,17 +1,16 @@
 #include "WidgetChat.hpp"
 #include <gui/Gui.hpp>
-#include <cores/Univers.hpp>
 
 WidgetChat::WidgetChat(Gui &core) :
 		AWidget(core) {
 	bzero(bufferMessage_, IM_ARRAYSIZE(bufferMessage_));
 }
 
-void WidgetChat::clear(void) {
+void WidgetChat::clear() {
 	bufferChat_.clear();
 }
 
-void WidgetChat::render(void) {
+void WidgetChat::render() {
 	ImGui::Begin("Chat", NULL,
 				 ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize |
 				 ImGuiWindowFlags_NoCollapse);
@@ -20,14 +19,28 @@ void WidgetChat::render(void) {
 	ImGui::BeginChild("scrolling", ImVec2(0, ImGui::GetWindowHeight() - 4 * ImGui::GetFrameHeightWithSpacing()), false,
 					  ImGuiWindowFlags_HorizontalScrollbar);
 	for (auto const &log : log_) {
-		switch(log.color) {
-			case eColorLog::kNone: ImGui::Text("%s", log.log.c_str()); break;
-			case eColorLog::kRed: ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, .9f), "%s", log.log.c_str()); break;
-			case eColorLog::kGreen: ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, .9f),"%s",  log.log.c_str()); break;
-			case eColorLog::kBlue: ImGui::TextColored(ImVec4(0.0f, 0.0f, 1.0f, .9f), "%s", log.log.c_str()); break;
-			case eColorLog::kPink: ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, .9f), "%s", log.log.c_str()); break;
-			case eColorLog::kOrange: ImGui::TextColored(ImVec4(1.0f, .6f, 0.0f, .9f), "%s", log.log.c_str()); break;
-			case eColorLog::kYellow: ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, .9f), "%s", log.log.c_str()); break;
+		switch (log.color) {
+			case eColorLog::kNone:
+				ImGui::Text("%s", log.log.c_str());
+				break;
+			case eColorLog::kRed:
+				ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, .9f), "%s", log.log.c_str());
+				break;
+			case eColorLog::kGreen:
+				ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, .9f), "%s", log.log.c_str());
+				break;
+			case eColorLog::kBlue:
+				ImGui::TextColored(ImVec4(0.0f, 0.0f, 1.0f, .9f), "%s", log.log.c_str());
+				break;
+			case eColorLog::kPink:
+				ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, .9f), "%s", log.log.c_str());
+				break;
+			case eColorLog::kOrange:
+				ImGui::TextColored(ImVec4(1.0f, .6f, 0.0f, .9f), "%s", log.log.c_str());
+				break;
+			case eColorLog::kYellow:
+				ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, .9f), "%s", log.log.c_str());
+				break;
 		}
 	}
 	if (scrollChat_)
@@ -71,7 +84,7 @@ void WidgetChat::sendMessage_() {
 	memset(bufferMessage_, 0, IM_ARRAYSIZE(bufferMessage_));
 }
 
-void WidgetChat::chatText_(void) {
+void WidgetChat::chatText_() {
 	SnakeClient::boost_shared_ptr ptr(core_.univers.getSnakeClient().lock());
 
 	if (ptr && checkClientIsConnect_()) {
@@ -79,7 +92,7 @@ void WidgetChat::chatText_(void) {
 	}
 }
 
-bool WidgetChat::chatCommand_(void) {
+bool WidgetChat::chatCommand_() {
 	SnakeClient::boost_shared_ptr ptr(core_.univers.getSnakeClient().lock());
 
 	if (bufferMessage_[0] != '/')
@@ -90,8 +103,7 @@ bool WidgetChat::chatCommand_(void) {
 		if (ptr && checkClientIsConnect_()) {
 			ptr->changeName(bufferMessage_ + sizeof("/name ") - 1);
 		}
-	}
-	else if (strstr(bufferMessage_, "/color")) {
+	} else if (strstr(bufferMessage_, "/color")) {
 		addLog(eColorLog::kNone, "eColorLog::kNone");
 		addLog(eColorLog::kRed, "eColorLog::kRed");
 		addLog(eColorLog::kGreen, "eColorLog::kGreen");
@@ -99,9 +111,25 @@ bool WidgetChat::chatCommand_(void) {
 		addLog(eColorLog::kPink, "eColorLog::kPink");
 		addLog(eColorLog::kOrange, "eColorLog::kOrange");
 		addLog(eColorLog::kYellow, "eColorLog::kYellow");
-	}
-	else
+	} else
 		addLog(eColorLog::kOrange, "{%s} n'est pas une commande valide\n",
 			   bufferMessage_);
 	return (true);
+}
+
+void WidgetChat::addLog(eColorLog color, char const *format, ...)
+{
+	va_list args;
+	va_start(args, format);
+	size_t size = std::vsnprintf(nullptr, 0, format, args) + 1;
+	va_end(args);
+
+	std::unique_ptr<char[]> buf = std::make_unique<char[]>(size);
+
+	va_start(args, format);
+	std::vsnprintf(buf.get(), size, format, args);
+	va_end(args);
+
+	log_.emplace_back(color, std::string(buf.get(), buf.get() + size - 1));
+	scrollChat_ = true;
 }

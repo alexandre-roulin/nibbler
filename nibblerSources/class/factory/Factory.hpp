@@ -8,6 +8,10 @@ class Univers;
 class Factory {
 public:
 	Factory(Univers &univers);
+	Factory() = delete;
+	~Factory() = default;
+	Factory &operator=(const Factory &) = delete;
+	Factory(const Factory &) = delete;
 
 	void createAllSnake(std::array<Snake, SNAKE_MAX> snake_array, int16_t nu);
 
