@@ -124,8 +124,6 @@ namespace KNW {
 	template<typename T, typename H>
 	void ServerTCP::writeDataToOpenConnection(T data, int index, H header) {
 		assert(connections[index] != nullptr);
-		std::cout << __PRETTY_FUNCTION__ << std::endl;
-
 		connections[index]->write(dataTCP->serializeData(static_cast<BaseDataType::Header>(header), data));
 	}
 
@@ -134,7 +132,6 @@ namespace KNW {
 		assert(dataTCP->hasType<T>());
 		for (auto &connection : connections) {
 			if (connection) {
-				std::cout << __PRETTY_FUNCTION__ << std::endl;
 				connection->write(dataTCP->serializeData(DataType<T>::getHeader(), data));
 			}
 		}
@@ -142,7 +139,6 @@ namespace KNW {
 
 	template<typename T, typename H>
 	void ServerTCP::writeDataToOpenConnections(T data, H header) {
-		std::cout << __PRETTY_FUNCTION__ << std::endl;
 		for (auto &connection : connections) {
 			if (connection)
 				connection->write(dataTCP->serializeData(static_cast<BaseDataType::Header>(header), data));

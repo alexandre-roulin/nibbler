@@ -46,8 +46,6 @@ public:
 
 	void changeMapSize(unsigned int);
 
-	void sendHostOpenGame();
-
 	void killSnake(uint16_t id);
 
 	void changeStateReady(bool change);
@@ -102,12 +100,15 @@ private:
 
 	bool acceptDataFromServer() const;
 
+	void refreshSnakeArray();
+
 	boost::shared_ptr<KNW::ClientTCP> clientTCP_;
 	Univers &univers_;
 	bool fromIA_;
 	uint16_t id_;
 	std::mutex mutex_;
 	Factory factory_;
+	Snake snake_;
 	std::array<Snake, SNAKE_MAX> snake_array_;
 	std::vector<FoodCreation> foodCreations;
 };

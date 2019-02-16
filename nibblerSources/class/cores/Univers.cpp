@@ -168,9 +168,8 @@ void Univers::startNewGame() {
 }
 
 void Univers::manageSnakeClientInput() {
-	log_info("%s %d", __PRETTY_FUNCTION__, snakeClient_ != nullptr);
 	SnakeClient::boost_shared_ptr ptr(snakeClient_);
-
+	log_info("%s snakeClient[%d] Lib[%d] isAlive[%d]", __PRETTY_FUNCTION__, snakeClient_ != nullptr, displayManager->hasLibraryLoaded(), (ptr && ptr->getSnake().isAlive));
 	eDirection direction = eDirection::kNorth;
 	if (displayManager->hasLibraryLoaded())
 		direction = displayManager->getDisplay()->getDirection();
@@ -215,11 +214,7 @@ void Univers::manageSwitchLibrary() {
 
 bool Univers::isIASnake(uint16_t client_id) const {
 
-	for (auto &bobby : vecBobby) {
-		if (bobby->getId() == client_id)
-			return true;
-	}
-	return false;
+	return std::any_of(vecBobby.begin(), vecBobby.end(), [client_id](auto &bobby){ return bobby->getId() == client_id;});
 }
 
 /** Network **/

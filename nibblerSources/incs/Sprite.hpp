@@ -83,51 +83,5 @@ inline eSprite operator<<(eSprite const lhs, eSprite const rhs) {
 inline eSprite operator>>(eSprite const lhs, eSprite const rhs) {
 	return static_cast<eSprite> (static_cast<int>(lhs) >> static_cast<int>(rhs));
 }
-inline std::ostream &operator<<(std::ostream &os, eSprite &sprite) {
-	switch (sprite) {
-		case eSprite ::kGreen :
-			os << "GREEN";
-			break;
-		case eSprite ::kBlue :
-			os << "BLUE";
-			break;
-		case eSprite ::kPurple :
-			os << "PURPLE";
-			break;
-		case eSprite ::kPink :
-			os << "PINK";
-			break;
-		case eSprite ::kGrey :
-			os << "GREY";
-			break;
-		case eSprite ::kYellow :
-			os << "YELLOW";
-			break;
-		case eSprite ::kOrange :
-			os << "ORANGE";
-			break;
-		case eSprite ::kRed :
-			os << "RED";
-			break;
-		default :
-			break;
-	}
-
-	if ((sprite & eSprite::kHead) == eSprite::kHead)
-		os << "Head";
-	else if ((sprite & eSprite::kTail) == eSprite::kTail)
-		os << "Tail";
-	else if ((sprite & eSprite::kBody) == eSprite::kBody)
-		os << "Body";
-	else if ((sprite & eSprite::kWall) == eSprite::kWall)
-		os << "WALL";
-	else if ((sprite & eSprite::kFood) == eSprite::kFood)
-		os << "OOOO";
-	else if ((sprite & eSprite::kNone) == eSprite::kNone)
-		os << "-N-";
-	else
-		os << static_cast<int>(sprite);
-	return os;
-}
 
 #endif //NIBBLER_SPRITE_HPP

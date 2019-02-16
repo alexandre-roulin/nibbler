@@ -133,7 +133,7 @@ struct FoodInfo {
 };
 
 struct StartInfo {
-	unsigned int nu;
+	size_t nu;
 	boost::posix_time::ptime time_duration;
 };
 

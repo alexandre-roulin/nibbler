@@ -27,13 +27,8 @@ namespace KNW {
 		boost::asio::ip::tcp::resolver::iterator iterator = resolver.resolve(
 				query);
 		ClientTCP::b_wptr wptr(shared_from_this());
-		boost::system::error_code ec;
-		socket_->connect(*iterator, ec);
-		if (!ec) {
-			iotcp = IOTCP::create(dataTCP_, socket_, callbackDeadConnection_);
-		} else {
-			std::cout << ec.message() << std::endl;
-		}
+		socket_->connect(*iterator);
+		iotcp = IOTCP::create(dataTCP_, socket_, callbackDeadConnection_);
 	}
 
 	bool ClientTCP::isConnect() const {

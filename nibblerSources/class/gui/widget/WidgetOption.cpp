@@ -41,7 +41,6 @@ void WidgetOption::render(void) {
 	if (core_.univers.isServer() && ptr && ptr->allSnakeIsReady()) {
 		Gui::beginColor(Gui::HUE_GREEN);
 		if (ImGui::Button("Run the game")) {
-			ptr->sendHostOpenGame();
 		}
 		Gui::endColor();
 	}
