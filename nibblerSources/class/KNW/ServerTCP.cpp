@@ -61,12 +61,10 @@ namespace KNW {
 			: io_manager_(io_manager),
 			dataTCP(DataTCP::create()),
 			acceptor_(new boost::asio::ip::tcp::acceptor(io_manager_.getIo())) {
-		std::cout << __PRETTY_FUNCTION__ << std::endl;
 		connections.fill(nullptr);
 	}
 
 	void ServerTCP::startServer(uint16_t port) noexcept {
-		std::cout << __PRETTY_FUNCTION__ << std::endl;
 		boost::asio::ip::tcp::resolver resolver(io_manager_.getIo());
 		boost::asio::ip::tcp::resolver::query query(
 				"localhost",
@@ -79,13 +77,11 @@ namespace KNW {
 	}
 
 	void ServerTCP::startAsyncAccept() noexcept {
-		std::cout << __PRETTY_FUNCTION__ << std::endl;
 		ServerTCP::b_wptr wptr(shared_from_this());
 		io_manager_.getThreadGroup().create_thread([wptr](){ auto sptr = wptr.lock(); if (sptr) sptr->acceptConnection(); });
 	}
 
 	void ServerTCP::startAsyncAccept(std::function<void(size_t)> c) noexcept {
-		std::cout << __PRETTY_FUNCTION__ << std::endl;
 		callbackAccept_ = std::move(c);
 		startAsyncAccept();
 	}
@@ -99,7 +95,6 @@ namespace KNW {
 	}
 
 	void ServerTCP::acceptConnection() noexcept {
-		std::cout << __PRETTY_FUNCTION__ << acceptor_->is_open() << std::endl;
 		if (acceptor_->is_open()) {
 			boost::shared_ptr<boost::asio::ip::tcp::socket> sock(new boost::asio::ip::tcp::socket(io_manager_.getIo()));
 
@@ -124,9 +119,7 @@ namespace KNW {
 			boost::shared_ptr<boost::asio::ip::tcp::socket> sock
 	) {
 
-		if (ec) {
-			std::cout << "Fail ! " << ec.message() << std::endl;
-		} else {
+		if (!ec) {
 			log_info("%s %d", __PRETTY_FUNCTION__, getSizeOfOpenConnection());
 			acceptConnection();
 			auto it = std::find_if(connections.begin(), connections.end(),
@@ -155,7 +148,6 @@ namespace KNW {
 
 
 	ServerTCP::~ServerTCP() {
-		std::cout << __PRETTY_FUNCTION__ << std::endl;
 		stopAccept();
 	}
 }

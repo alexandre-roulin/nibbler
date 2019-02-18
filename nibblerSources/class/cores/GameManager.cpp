@@ -32,11 +32,6 @@ void GameManager::startNewGame() {
 
 	if (univers_.isServer()) {
 		univers_.getSnakeServer().startGame();
-
-		for (auto &bobby : univers_.getBobbys()) {
-			bobby->buildIA();
-			bobby->sendDirection();
-		}
 	}
 
 	world_->getSystemsManager().addSystem<CollisionSystem>(univers_);
@@ -62,6 +57,12 @@ void GameManager::startNewGame() {
 	timer_start.expires_at(startEvent.front().start_time);
 	timer_start.wait();
 
+	if (univers_.isServer()) {
+		for (auto &bobby : univers_.getBobbys()) {
+			bobby->buildIA();
+			bobby->sendDirection();
+		}
+	}
 	world_->update();
 	world_->getSystemsManager().getSystem<SpriteSystem>().update();
 	world_->getSystemsManager().getSystem<RenderSystem>().update();
@@ -72,22 +73,16 @@ void GameManager::startNewGame() {
 
 void GameManager::loopWorld() {
 	SnakeClient::boost_shared_ptr ptr(univers_.getSnakeClient().lock());
-	std::cout << "Ici" << univers_.isOpenGame_() << " " << (ptr != nullptr) << std::endl;
 	if (!univers_.isOpenGame_() || !ptr)
 		return;
 
-	std::cout << "MA \n";
 	univers_.manageSnakeClientInput();
-	std::cout << "T \n";
-//	threadGroup
 	threadGroup.join_all();
-	std::cout << "Ne \n";
 	for (; nextFrame.empty() && univers_.isOpenGame_() && world_ && ptr;) {
 		ptr->lock();
 		nextFrame = world_->getEventsManager().getEvents<NextFrame>();
 		ptr->unlock();
 	}
-	std::cout << "Wut \n";
 
 	nextFrame.clear();
 	world_->getEventsManager().destroy<NextFrame>();
@@ -135,7 +130,7 @@ void GameManager::loopUI() {
 
 	while (univers_.getGameSpeed() && univers_.displayIsAvailable()) {
 
-		if (ptr->allSnakeIsDead())
+		if (!ptr || ptr->allSnakeIsDead())
 			break;
 
 		if (univers_.isSwitchLib())

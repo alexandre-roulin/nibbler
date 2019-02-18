@@ -20,7 +20,8 @@ Snake::Snake() :
 		isAlive(false),
 		isIA(false),
 		isSwitchingLibrary(false),
-		isValid(false) {
+		isValid(false),
+		isSet(false) {
 	memset(name, 0, NAME_BUFFER);
 }
 
@@ -37,6 +38,7 @@ Snake &Snake::operator=(Snake const &snake) {
 		isSwitchingLibrary = snake.isSwitchingLibrary;
 		indexConnection = snake.indexConnection;
 		isValid = snake.isValid;
+		isSet = snake.isSet;
 	}
 	return *this;
 }

@@ -33,88 +33,6 @@ void nibbler(Univers &univers) {
 	}
 }
 
-
-void testKstar() {
-	int size = 10;
-
-	KStar kStar;
-	KStar::Vec2 source(1, 1);
-	KStar::Vec2 target(9, 9);
-	kStar.setWorldSize(size);
-	kStar.setHeuristic(KStar::Heuristic::euclidean);
-	kStar.setDiagonalMovement(false);
-
-	int collision[10][10] = {
-			{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-			{1, 0, 0, 0, 0, 1, 1, 0, 0, 1},
-			{1, 0, 0, 0, 0, 1, 0, 0, 0, 1},
-			{1, 0, 0, 0, 0, 1, 0, 0, 0, 1},
-			{1, 0, 0, 0, 0, 1, 0, 0, 0, 1},
-			{1, 3, 0, 0, 0, 1, 0, 0, 0, 1},
-			{1, 3, 2, 1, 1, 1, 0, 0, 0, 1},
-			{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-			{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-			{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-	};
-
-	for (int y = 0; y < 10; ++y) {
-		for (int x = 0; x < 10; ++x) {
-			if (collision[y][x] == 1)
-				kStar.addCollision(KStar::Vec2(x, y));
-			if (collision[y][x] == 2)
-				source = KStar::Vec2(x, y);
-			if (collision[y][x] == 3)
-				target = KStar::Vec2(x, y);
-		}
-
-	}
-
-	for (int iy = 0; iy < size; ++iy) {
-		for (int ix = 0; ix < size; ++ix) {
-			if (iy == source.y && ix == source.x)
-				std::cout << std::setw(4) << "_^_";
-			else if (iy == target.y && ix == target.x)
-				std::cout << std::setw(4) << "_O_";
-			else if (kStar.isCollision(KStar::Vec2(ix, iy)))
-				std::cout << std::setw(4) << "_X_";
-			else
-				std::cout << std::setw(4) << "_._";
-		}
-		std::cout << std::endl;
-	}
-	KStar::Path path = kStar.searchPath(source, target);
-	std::cout << std::endl;
-	std::cout << path.size() << std::endl;
-	std::cout << std::endl;
-
-	for (int iy = 0; iy < size; ++iy) {
-		for (int ix = 0; ix < size; ++ix) {
-			if (iy == source.y && ix == source.x)
-				std::cout << std::setw(4) << "_^_";
-			else if (iy == target.y && ix == target.x)
-				std::cout << std::setw(4) << "_O_";
-			else if (kStar.isCollision(KStar::Vec2(ix, iy)))
-				std::cout << std::setw(4) << "_X_";
-			else if (std::find_if(path.begin(), path.end(), [ix, iy](KStar::Vec2 vec){ return vec.x == ix && vec.y == iy; }) != path.end())
-				std::cout << std::setw(4) << "_#_";
-			else
-				std::cout << std::setw(4) << "_._";
-		}
-		std::cout << std::endl;
-	}
-}
-
-//.O
-//
-//
-
-void printints(std::array<int, 6> const &ints) {
-	for (const auto &item : ints) {
-		std::cout << item << " ";
-	}
-	std::cout << std::endl;
-}
-
 void option_dependency(boost::program_options::variables_map const &vm,
 					   std::string const &for_what, std::string const &required_option) {
 	if (vm.count(for_what) && !vm[for_what].defaulted())
@@ -134,7 +52,6 @@ void option_dependency(boost::program_options::variables_map const &vm,
 
 
 int main(int argc, char **argv) {
-
 	if (!NIBBLER_ROOT_PROJECT_PATH) {
 		std::cerr << "NIBBLER_ROOT_PROJECT_PATH is not defined" << std::endl;
 		return 0;

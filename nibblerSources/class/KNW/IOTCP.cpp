@@ -15,7 +15,6 @@ namespace KNW {
 			dataTCP_(std::move(dataTCP)),
 			socket_(std::move(socket)),
 			callbackDeadSocket_(std::move(callbackDeadSocket)) {
-		std::cout << "IOTCP::Created()" << std::endl;
 	}
 
 	void IOTCP::readSocketHeader() {
@@ -25,8 +24,7 @@ namespace KNW {
 				boost::asio::buffer(buffer_data_, sizeof(BaseDataType::Header)),
 				[weakPtr](boost::system::error_code ec, size_t len) {
 					auto ptr = weakPtr.lock();
-					if (ptr)
-						ptr->handleReadHeader(ec, len);
+					if (ptr) ptr->handleReadHeader(ec, len);
 				});
 
 	}
@@ -42,7 +40,6 @@ namespace KNW {
 			readSocketData(header);
 		} else {
 			checkError(ec);
-			std::cout << "handleReadHeader::error" << ec.message() << std::endl;
 		}
 	}
 
@@ -77,15 +74,11 @@ namespace KNW {
 			readSocketHeader();
 		} else {
 			checkError(ec);
-			std::cout << "handleReadData::error" << std::endl;
 		}
 	}
 
 	void
 	IOTCP::handleWrite(const boost::system::error_code &ec, size_t len) {
-//	log_fatal("%s ec %d len %d", __PRETTY_FUNCTION__, ec.value(), len);
-		std::cout << __PRETTY_FUNCTION__ << ec.value() << " " << len << std::endl;
-
 		if (ec.value() != 0 || len == 0) {
 			checkError(ec);
 		}

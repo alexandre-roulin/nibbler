@@ -159,12 +159,11 @@ void SnakeServer::callbackSnake(Snake snake) {
 
 void SnakeServer::callbackForcePause(int16_t id) {
 	log_success("%s", __PRETTY_FUNCTION__ );
-	mutex_.lock();
+	std::lock_guard<std::mutex> guard(mutex_);
 	assert(id < SNAKE_MAX);
 	snake_array_[id].isSwitchingLibrary = !snake_array_[id].isSwitchingLibrary;
 	pause_ = true;
 	serverTCP_->writeDataToOpenConnections(snake_array_[id], eHeader::kSnake);
-	mutex_.unlock();
 }
 
 void SnakeServer::callbackAccept(size_t index) {
@@ -208,36 +207,32 @@ void SnakeServer::callbackResizeMap(unsigned int mapSize) {
 void SnakeServer::callbackOpenGame(bool openGame) {
 	log_success("%s", __PRETTY_FUNCTION__ );
 	serverTCP_->writeDataToOpenConnections(openGame, eHeader::kOpenGame);
-
 }
 
 void SnakeServer::callbackId(int16_t) {
-	log_success("%s", __PRETTY_FUNCTION__ );
+	assert(false);
 }
 
 void SnakeServer::callbackChatInfo(ChatInfo chatInfo) {
-	log_success("%s", __PRETTY_FUNCTION__ );
 	serverTCP_->writeDataToOpenConnections(chatInfo, eHeader::kChat);
 }
 
-void SnakeServer::callbackSnakeArray(std::array<Snake, SNAKE_MAX> array) {
-	log_error("%s ARRAY !?!?!?!?!?", __PRETTY_FUNCTION__ );
-	snake_array_ = array;
+void SnakeServer::callbackSnakeArray(std::array<Snake, SNAKE_MAX>) {
+	assert(false);
 }
 
 
 void SnakeServer::startGame() {
 	assert(isReady());
-	mutex_.lock();
+	std::lock_guard<std::mutex> guard(mutex_);
 	foodInfoArray.clear();
-	StartInfo startInfo;
 	std::for_each(snake_array_.begin(), snake_array_.end(),
 				  [](auto &snake){ snake.isAlive = true; snake.isUpdate = false; });
 	serverTCP_->writeDataToOpenConnections(snake_array_, eHeader::kSnakeArray);
-	startInfo.nu = serverTCP_->getSizeOfOpenConnection();
-	startInfo.time_duration = boost::posix_time::microsec_clock::universal_time();
-	serverTCP_->writeDataToOpenConnections(startInfo, eHeader::kStartGame);
-	mutex_.unlock();
+	serverTCP_->writeDataToOpenConnections<StartInfo>({
+		serverTCP_->getSizeOfOpenConnection(),
+		boost::posix_time::microsec_clock::universal_time()
+		}, eHeader::kStartGame);
 }
 void SnakeServer::updateInput() {
 	for (auto &snake : snake_array_) {
@@ -247,7 +242,7 @@ void SnakeServer::updateInput() {
 													  [](auto snake){ return snake.isValid && snake.isAlive && !snake.isUpdate;} ));
 	if (pause_ || std::any_of(snake_array_.begin(), snake_array_.end(),
 							  [](auto snake){ return snake.isValid && snake.isAlive && !snake.isUpdate;} )) return;
-	mutex_.lock();
+	std::lock_guard<std::mutex> guard(mutex_);
 	serverTCP_->writeDataToOpenConnections(snake_array_, eHeader::kSnakeArray);
 	for (auto infoArray : foodInfoArray) {
 		serverTCP_->writeDataToOpenConnections(infoArray, eHeader::kFood);
@@ -255,7 +250,6 @@ void SnakeServer::updateInput() {
 	foodInfoArray.clear();
 	serverTCP_->writeDataToOpenConnections('c', eHeader::kPock);
 	std::for_each(snake_array_.begin(), snake_array_.end(), [](auto &snake){ snake.isUpdate = false;});
-	mutex_.unlock();
 
 }
 

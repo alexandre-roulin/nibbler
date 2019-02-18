@@ -23,10 +23,9 @@ public:
 	bool isSwitchingLibrary;
 	size_t indexConnection;
 	bool isValid;
-
+	bool isSet;
 
 	static Snake randomSnake(int16_t id);
-
 	static std::string const basicName[SNAKE_MAX_NAME];
 };
 

@@ -12,15 +12,20 @@ public:
 	MutantGrid() = delete;
 
 	MutantGrid(size_t size);
-	MutantGrid(size_t , size_t);
+
+	MutantGrid(size_t, size_t);
+
 	MutantGrid<T> &operator=(MutantGrid<T> const &);
 
 	void fill(T const &fill);
 
 	typename std::vector<T>::reference operator()(size_t x, size_t y);
-	typename std::vector<T>::const_reference operator()(size_t x, size_t y) const;
+
+	typename std::vector<T>::const_reference
+	operator()(size_t x, size_t y) const;
 
 	std::pair<size_t, size_t> getRandomSlot(T value);
+
 	bool isAnyFreeSlotInRow(size_t row, T clear) const;
 
 	bool isFreeSlot(size_t row, size_t column, T clear) const;
@@ -44,36 +49,39 @@ MutantGrid<T> &MutantGrid<T>::operator=(MutantGrid<T> const &rvalue) {
 }
 
 template<typename T>
-typename std::vector<T>::reference MutantGrid<T>::operator()(size_t x, size_t y) {
+typename std::vector<T>::reference
+MutantGrid<T>::operator()(size_t x, size_t y) {
 	if (y * y_max_ + x >= std::vector<T>::size())
 //		log_error("Test : %d , x : %d  y : %d s : %d", y * size_ + x, x, y, size_);
-	assert(y * y_max_ + x < std::vector<T>::size());
-	return this->at(y * y_max_ + x );
+		assert(y * y_max_ + x < std::vector<T>::size());
+	return this->at(y * y_max_ + x);
 }
 
 
 template<typename T>
-typename std::vector<T>::const_reference MutantGrid<T>::operator()(size_t x, size_t y) const {
+typename std::vector<T>::const_reference
+MutantGrid<T>::operator()(size_t x, size_t y) const {
 	assert(y * y_max_ + x < this->size());
-	return this->at(y * y_max_ + x );
+	return this->at(y * y_max_ + x);
 }
 
 template<typename T>
 MutantGrid<T>::MutantGrid(size_t size):
-	std::vector<T>(size * size),
-	x_max_(size),
-	y_max_(size) {
+		std::vector<T>(size * size),
+		x_max_(size),
+		y_max_(size) {
 
 }
+
 template<typename T>
 MutantGrid<T>::MutantGrid(size_t max_x, size_t max_y):
 		std::vector<T>(max_y * max_x),
 		x_max_(max_x),
-		y_max_(max_y)
-		 {
+		y_max_(max_y) {
 
 
 }
+
 template<typename T>
 void MutantGrid<T>::fill(const T &fill) {
 	assert(this->size() == y_max_ * x_max_);
@@ -121,7 +129,6 @@ template<typename T>
 bool MutantGrid<T>::isFreeSlot(size_t y, size_t x, T clear) const {
 	return this->at(y * y_max_ + x) == clear;
 }
-
 
 
 #endif //NIBBLER_MUTANTGRID_HPP
