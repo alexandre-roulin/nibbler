@@ -7,6 +7,10 @@
 #include "widget/WidgetChat.hpp"
 #include "nibbler.hpp"
 #include <cores/Univers.hpp>
+#include <iostream>
+#include <fstream>
+
+#define GUI_INPUT_DIRECTORY "input"
 
 class Gui {
 public:
@@ -56,6 +60,7 @@ public:
 private:
 	//				GUI				//
 	boost::filesystem::path		pathRessources_;
+	std::ofstream					input_;
 
 	sf::Vector2<unsigned int>	_winSize;
 	sf::RenderWindow			_win;
