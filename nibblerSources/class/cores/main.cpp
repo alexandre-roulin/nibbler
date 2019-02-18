@@ -7,9 +7,8 @@
 #include <logger.h>
 #include <ia/KStar.hpp>
 
+
 void nibbler(Univers &univers) {
-
-
 	boost::filesystem::path pathSound(NIBBLER_ROOT_PROJECT_PATH);
 	pathSound = pathSound / "ressources" / "sound";
 
