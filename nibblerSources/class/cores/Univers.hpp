@@ -35,11 +35,15 @@ public:
 	/** Univers **/
 
 	Univers();
+
 	virtual ~Univers();
+
 	Univers &operator=(const Univers &) = delete;
+
 	Univers(const Univers &) = delete;
 
 	void resetData();
+
 	void callbackAction(eAction);
 
 	/** Game **/
@@ -94,9 +98,9 @@ public:
 
 	/** Getter && Setter **/
 
-	void setGameSpeed(unsigned int gameSpeed);
+	void setMicroSecDeltaTime(uint32_t microSecDeltaTime);
 
-	unsigned int getGameSpeed() const;
+	uint32_t getMicroSecDeltaTime() const;
 
 	void setExit(bool b);
 
@@ -120,7 +124,7 @@ public:
 
 	std::unique_ptr<Gui> &getGui_();
 
-	std::array<Snake, SNAKE_MAX> getSnakeArray_() const;
+	SnakeArrayContainer getSnakeArray_() const;
 
 	boost::weak_ptr<SnakeClient> getSnakeClient() const;
 
@@ -137,7 +141,9 @@ public:
 	BobbyContainer &getBobbys();
 
 	IOManager &getIoManager();
+
 	ExternalLibrarySoundManager &getSoundManager();
+
 	GameManager &getGameManager();
 
 private:
@@ -170,10 +176,10 @@ private:
 	static const std::string ErrorServerAlreadyUseOnThisPort;
 
 
-	std::unique_ptr<IOManager > ioManager;
-	std::unique_ptr<ExternalLibrarySoundManager > soundManager;
-	std::unique_ptr<ExternalLibraryDisplayManager > displayManager;
-	std::unique_ptr<GameManager > gameManager;
+	std::unique_ptr<IOManager> ioManager;
+	std::unique_ptr<ExternalLibrarySoundManager> soundManager;
+	std::unique_ptr<ExternalLibraryDisplayManager> displayManager;
+	std::unique_ptr<GameManager> gameManager;
 
 	boost::shared_ptr<SnakeServer> snakeServer_;
 	boost::shared_ptr<SnakeClient> snakeClient_;
@@ -184,7 +190,7 @@ private:
 	bool exit_;
 	bool switchLib;
 	unsigned int mapSize_;
-	unsigned int gameSpeed;
+	uint32_t microSecDeltaTime;
 	bool borderless;
 	bool openGame_;
 

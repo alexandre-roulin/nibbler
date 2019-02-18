@@ -4,7 +4,7 @@ IOManager::IOManager()
 		: io(new boost::asio::io_service),
 		  work(new boost::asio::io_service::work(*io)) {
 	for (int index = 0; index < 4; ++index) {
-		thread_group.create_thread( boost::bind( &IOManager::IORunner, this) );
+		thread_group_io.create_thread( boost::bind( &IOManager::IORunner, this) );
 	}
 }
 
@@ -23,5 +23,6 @@ boost::thread_group &IOManager::getThreadGroup() {
 IOManager::~IOManager() {
 	std::cout << __PRETTY_FUNCTION__ << std::endl;
 	io->stop();
+	thread_group_io.join_all();
 	thread_group.join_all();
 }

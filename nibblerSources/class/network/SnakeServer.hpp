@@ -22,7 +22,7 @@ public:
 
 	unsigned short getPort_() const;
 
-	const std::array<Snake, SNAKE_MAX> &getSnakeArray_() const;
+	const SnakeArrayContainer &getSnakeArray_() const;
 
 	bool sendOpenGameToClient();
 
@@ -34,7 +34,7 @@ private:
 	void callbackRemoveSnake(int16_t);
 
 	void callbackDeadConnection(size_t index);
-	void callbackSnakeArray(std::array<Snake, SNAKE_MAX>);
+	void callbackSnakeArray(SnakeArrayContainer);
 
 	void callbackPock(char);
 
@@ -71,7 +71,7 @@ private:
 	unsigned short port_;
 	unsigned int mapSize_;
 	boost::shared_ptr<KNW::ServerTCP> serverTCP_;
-	std::array<Snake, SNAKE_MAX> snake_array_;
+	SnakeArrayContainer snake_array_;
 	bool borderless_;
 };
 

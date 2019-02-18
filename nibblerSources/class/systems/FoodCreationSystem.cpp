@@ -11,9 +11,8 @@ FoodCreationSystem::FoodCreationSystem() {
 }
 
 void FoodCreationSystem::update() {
-	mutex.lock();
+	log_info("%s", __PRETTY_FUNCTION__);
 	auto foodCreationEvents = getWorld().getEventsManager().getEvents<FoodCreation>();
-	mutex.unlock();
 
 	for (auto foodCreationEvent : foodCreationEvents) {
 		auto food = getWorld().createEntity();

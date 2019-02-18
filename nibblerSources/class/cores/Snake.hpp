@@ -5,7 +5,7 @@
 #include <Sprite.hpp>
 #include <nibbler.hpp>
 
-struct Snake {
+class Snake {
 public:
 	Snake();
 	~Snake() = default;
@@ -23,7 +23,7 @@ public:
 	bool isSwitchingLibrary;
 	size_t indexConnection;
 	bool isValid;
-	bool isSet;
+	uint16_t score_;
 
 	static Snake randomSnake(int16_t id);
 	static std::string const basicName[SNAKE_MAX_NAME];

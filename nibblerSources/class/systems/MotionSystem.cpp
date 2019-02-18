@@ -17,6 +17,7 @@ MotionSystem::MotionSystem(Univers &univers) : univers_(univers) {
 }
 
 void MotionSystem::update() {
+	log_info("%s", __PRETTY_FUNCTION__);
 	unsigned int mapSize = univers_.getMapSize();
 	for (auto &entity : getEntities()) {
 		auto &positionComponent = entity.getComponent<PositionComponent>();

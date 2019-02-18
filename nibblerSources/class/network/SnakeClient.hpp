@@ -7,6 +7,8 @@
 #include <events/FoodCreation.hpp>
 #include <factory/Factory.hpp>
 #include <cores/Snake.hpp>
+#include <nibbler.hpp>
+
 class Univers;
 
 class SnakeClient : public boost::enable_shared_from_this<SnakeClient> {
@@ -36,7 +38,7 @@ public:
 
 	bool isSwitchingLibrary() const;
 
-	const std::array<Snake, SNAKE_MAX> &getSnakeArray_() const;
+	const SnakeArrayContainer &getSnakeArray_() const;
 
 	const Snake &getSnake() const;
 
@@ -50,8 +52,6 @@ public:
 
 	void changeStateReady(bool change);
 
-	void changeIsIA(bool isIA = true);
-
 	void changeIsBorderless(bool borderless);
 
 	bool isReady() const;
@@ -59,6 +59,8 @@ public:
 	void connect(std::string dns, std::string port);
 
 	void disconnect();
+
+	void addScore(uint16_t id, eScore score);
 
 	virtual ~SnakeClient();
 
@@ -86,7 +88,7 @@ private:
 
 	void callbackResizeMap(unsigned int);
 
-	void callbackSnakeArray(std::array<Snake, SNAKE_MAX>);
+	void callbackSnakeArray(SnakeArrayContainer);
 
 	void callbackBorderless(bool);
 
@@ -108,8 +110,11 @@ private:
 	uint16_t id_;
 	std::mutex mutex_;
 	Factory factory_;
-	Snake snake_;
-	std::array<Snake, SNAKE_MAX> snake_array_;
+	std::string name_;
+	eSprite sprite_;
+	bool nameSet_;
+	bool spriteSet_;
+	SnakeArrayContainer snake_array_;
 	std::vector<FoodCreation> foodCreations;
 };
 

@@ -25,7 +25,7 @@ void CollisionSystem::checkCollision(
 	auto &snakePositionComponent = entityHead.getComponent<PositionComponent>();
 	auto &positionComponent = entityCheck.getComponent<PositionComponent>();
 
-	if (snakePositionComponent == positionComponent &&
+	if (ptr && snakePositionComponent == positionComponent &&
 		entityHead != entityCheck && entityCheck.hasGroupId() && entityHead.hasGroupId()) {
 		KINU::TagId tagId = entityCheck.getGroupIdByEntity();
 		log_info("CollisionSystem");
@@ -38,7 +38,7 @@ void CollisionSystem::checkCollision(
 
 			if (ptr && (ptr->getId_() == entityHead.getGroupIdByEntity() ||
 						univers_.isIASnake(entityHead.getGroupIdByEntity()))) {
-
+				ptr->addScore(entityHead.getGroupIdByEntity(), eScore::kFromFood);
 				ptr->sendDataToServer(
 						FoodInfo(PositionComponent(
 								univers_.getGrid_().getRandomSlot(eSprite::kNone)),
@@ -46,8 +46,12 @@ void CollisionSystem::checkCollision(
 										eHeader::kFood);
 			}
 		} else if (tagId == eTag::kFoodFromSnake) {
+
 			univers_.getSoundManager().playNoise(eNoise::kFoodSound);
 			entityCheck.kill();
+			if (ptr && (ptr->getId_() == entityHead.getGroupIdByEntity() ||
+						univers_.isIASnake(entityHead.getGroupIdByEntity())))
+				ptr->addScore(entityHead.getGroupIdByEntity(), eScore::kFromFood);
 			if (entityHead.hasGroupId())
 				getWorld().getEventsManager().emitEvent<FoodEat>(entityHead.getGroupIdByEntity());
 		} else if (tagId == kWallTag) {
@@ -68,6 +72,7 @@ void CollisionSystem::checkCollision(
 }
 
 void CollisionSystem::update() {
+	log_info("%s", __PRETTY_FUNCTION__);
 	std::vector<KINU::Entity> entities_ = getEntities();
 	for (auto entity : getEntities()) {
 		if (entity.hasTagId() &&

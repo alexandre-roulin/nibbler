@@ -22,6 +22,7 @@ private:
 
 	boost::shared_ptr<boost::asio::io_service> io;
 	boost::thread_group thread_group;
+	boost::thread_group thread_group_io;
 	boost::shared_ptr<boost::asio::io_service::work> work;
 };
 

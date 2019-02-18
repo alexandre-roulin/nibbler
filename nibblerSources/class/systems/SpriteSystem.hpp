@@ -3,6 +3,7 @@
 
 #include <KINU/SystemsManager.hpp>
 #include "nibbler.hpp"
+#include <cores/Univers.hpp>
 
 class SpriteSystem : public KINU::System {
 public:

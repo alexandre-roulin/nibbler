@@ -13,6 +13,7 @@ FollowSystem::FollowSystem() {
 
 
 void FollowSystem::update() {
+	log_info("%s", __PRETTY_FUNCTION__);
 	for (const auto &entity : getEntities()) {
 		auto &followComponent = entity.getComponent<FollowComponent>();
 		if (getWorld().getEntitiesManager().hasEntityById(followComponent.idFollowed)) {
