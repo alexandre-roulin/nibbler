@@ -27,6 +27,7 @@ private:
 	Snake const &snake_;
 	std::map<eSprite, SpriteColorProperties> const &mapSprite_;
 	bool isYourSnake_;
+	unsigned int sizeTexture_;
 
 	void renderIa_(void);
 
@@ -34,11 +35,13 @@ private:
 
 	void renderOtherSnake_(void);
 
-	void renderName_(unsigned int sizeTexture) const;
+	void renderStaticDataSnake_() const;
 
-	void renderImage_(unsigned int sizeTexture) const;
+	void renderName_() const;
 
-	unsigned int sizeTexture_(void) const;
+	void renderImage_() const;
 
-	void renderSelectionColor_(unsigned int sizeTexture) const;
+	void updateSizeTexture_(void);
+
+	void renderSelectionColor_() const;
 };

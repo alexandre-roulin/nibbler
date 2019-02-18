@@ -6,6 +6,7 @@
 #include "gui/widget/WidgetOption.hpp"
 #include "gui/widget/WidgetConnect.hpp"
 #include "gui/widget/WidgetMassiveButton.hpp"
+#include "cores/Test.hpp"
 
 Gui::Gui(Univers &univers) :
 univers(univers),
@@ -16,7 +17,20 @@ _io(_createContext()),
 _chat(*this),
 _mapSize(sf::Vector2<int>(20, 20))
 {
+	boost::filesystem::path input(GUI_INPUT_DIRECTORY);
+	boost::filesystem::create_directory(input);
+
 	_io.IniFilename = NULL;
+
+
+	time_t t;
+	tm tm;
+	t = std::time(nullptr);
+	tm = *std::localtime(&t);
+
+	std::ostringstream oss;
+	oss << std::put_time(&tm, "%d-%m_%H-%M-%S");
+	input_.open((input / "input_").generic_string() + oss.str());
 }
 
 ImGuiIO			&Gui::_createContext(void)
@@ -35,6 +49,7 @@ ImGuiIO			&Gui::_createContext(void)
 Gui::~Gui(void)
 {
 	ImGui::SFML::Shutdown();
+	input_.close();
 }
 
 boost::filesystem::path const	&Gui::getPathRessources() const {
@@ -46,6 +61,33 @@ void			callbackExit(Gui &gui)
 	gui.exit();
 }
 
+void			callbackTest(void *vUnivers, std::string const&input) {
+	Univers *univers = reinterpret_cast<Univers*>(vUnivers);
+
+	if (!vUnivers)
+		return ;
+	else if (input == "A")
+		univers->callbackAction(kCreateIA);
+	else if (input == "B")
+		univers->callbackAction(kBorderless);
+	else if (input == "C")
+		univers->callbackAction(kCreateClient);
+	else if (input == "D")
+		univers->callbackAction(kDeleteClient);
+	else if (input == "E")
+		univers->callbackAction(kConnect);
+	else if (input == "R")
+		univers->callbackAction(kSwitchReady);
+	else if (input == "S")
+		univers->callbackAction(kCreateServer);
+	else if (input == "W")
+		univers->callbackAction(kDeleteServer);
+	else if (input == "X")
+		univers->callbackAction(kStartGame);
+	else if (input == "H")
+		univers->callbackAction(kHostname);
+}
+
 void			Gui::aState(void)
 {
 	WidgetExit wexit(*this, callbackExit);
@@ -55,43 +97,64 @@ void			Gui::aState(void)
 	WidgetMassiveButton massiveButton(*this);
 	sf::Event event;
 
+	Test::getInstance().setInputCallback(callbackTest, reinterpret_cast<void*>(&univers));
 
 	while (_win.isOpen() && !univers.isOpenGame_()) {
 		ImGui::SFML::Update(_win, _deltaClock.restart());
-
+		Test::getInstance().update();
 		while (_win.pollEvent(event))
 		{
 			if (event.type == sf::Event::KeyPressed && event.key.control) {
 				switch (event.key.code) {
 					case sf::Keyboard::A:
 						univers.callbackAction(kCreateIA);
+						input_ << "A";
+						Test::getInstance().writeInput("A");
 						break;
 					case sf::Keyboard::B:
 						univers.callbackAction(kBorderless);
+						input_ << "B";
+						Test::getInstance().writeInput("B");
 						break;
 					case sf::Keyboard::C:
 						univers.callbackAction(kCreateClient);
+						input_ << "C";
+						Test::getInstance().writeInput("C");
 						break;
 					case sf::Keyboard::D:
 						univers.callbackAction(kDeleteClient);
+						input_ << "D";
+						Test::getInstance().writeInput("D");
 						break;
 					case sf::Keyboard::E:
 						univers.callbackAction(kConnect);
+						input_ << "E";
+						Test::getInstance().writeInput("E");
 						break;
 					case sf::Keyboard::R:
 						univers.callbackAction(kSwitchReady);
+						input_ << "R";
+						Test::getInstance().writeInput("R");
 						break;
 					case sf::Keyboard::S:
 						univers.callbackAction(kCreateServer);
+						input_ << "S";
+						Test::getInstance().writeInput("S");
 						break;
 					case sf::Keyboard::W:
 						univers.callbackAction(kDeleteServer);
+						input_ << "W";
+						Test::getInstance().writeInput("W");
 						break;
 					case sf::Keyboard::X:
 						univers.callbackAction(kStartGame);
+						input_ << "X";
+						Test::getInstance().writeInput("X");
 						break;
 					case sf::Keyboard::H:
 						univers.callbackAction(kHostname);
+						input_ << "H";
+						Test::getInstance().writeInput("H");
 						break;
 					default:
 						break;

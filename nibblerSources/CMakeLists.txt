@@ -135,7 +135,7 @@ add_executable(${NAME}
         class/gui/widget/SpriteColorProperties.hpp
         class/cores/Snake.hpp
         class/cores/Snake.cpp
-        class/cores/GameManager.cpp class/cores/GameManager.hpp class/cores/ExternalLibraryDisplayManager.cpp class/cores/ExternalLibraryDisplayManager.hpp class/cores/ExternalLibrarySoundManager.cpp class/cores/ExternalLibrarySoundManager.hpp)
+        class/cores/GameManager.cpp class/cores/GameManager.hpp class/cores/ExternalLibraryDisplayManager.cpp class/cores/ExternalLibraryDisplayManager.hpp class/cores/ExternalLibrarySoundManager.cpp class/cores/ExternalLibrarySoundManager.hpp class/cores/Test.cpp class/cores/Test.hpp)
 
 
 target_include_directories(
