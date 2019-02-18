@@ -59,10 +59,6 @@ int main(int argc, char **argv) {
 
 	srand(time(NULL));
 	char path[] = "/tmp/log.out";
-	if (argc > 1)
-		logger_init(argv[1]);
-	else
-		logger_init(path);
 	try {
 		Univers univers;
 
@@ -74,6 +70,7 @@ int main(int argc, char **argv) {
 				("pidTestProcess", boost::program_options::value<int>(), "Pid of shell tester process")
 				("test,t", "Boolean for test mode")
 				("input,i", "Boolean for input mode")
+				("logger,l", boost::program_options::value<std::string>(), "Set file for outpout log")
 				("sound,s", "enable the sound");
 
 		boost::program_options::variables_map vm;
@@ -103,6 +100,11 @@ int main(int argc, char **argv) {
 				Test::getInstance().setId(vm["id"].as<int>());
 				Test::getInstance().setInputFile(vm["fileInput"].as<std::string>());
 			}
+
+			if (vm.count("logger"))
+				logger_init(vm["logger"].as<std::string>().c_str());
+			else
+				logger_init(path);
 			boost::program_options::notify(vm);
 		}
 		catch (const boost::program_options::error &e) {

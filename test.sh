@@ -1,20 +1,17 @@
 #!/bin/bash
 export id=()
-
 index=0
 pid=()
 
-BASEDIR=$(dirname "$0")
 pidOfScript="$(echo ${$})"
 
-trap_with_arg() {
+function trap_with_arg() {
     func="$1" ; shift
     for sig ; do
         trap "$func $sig" "$sig"
     done
 }
-
-func_trap() {
+function func_trap() {
     echo Trapped: $1
     index=0
     while test $index != $numOfClient
@@ -24,7 +21,6 @@ func_trap() {
         index=$(($index + 1))
     done
 }
-
 function in_id {
   for e in ${id[*]}
   do
@@ -86,3 +82,4 @@ for p in ${pid[*]}; do
     done
 done
 
+exit 0
