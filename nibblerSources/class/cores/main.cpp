@@ -102,7 +102,7 @@ int main(int argc, char **argv) {
 			}
 
 			if (vm.count("logger"))
-				logger_init(vm["logger"].as<std::string>().c_str());
+				logger_init(const_cast<char *>(vm["logger"].as<std::string>().c_str()));
 			else
 				logger_init(path);
 			boost::program_options::notify(vm);
