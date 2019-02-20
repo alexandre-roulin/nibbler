@@ -37,7 +37,6 @@ bool Test::needUpdate() const {
 }
 
 void Test::update() {
-	std::cout << id_ << ":" << test_ << "|" << next_ << std::endl;
 	if (!test_ || !next_) {
 		return ;
 	}
@@ -70,6 +69,10 @@ void Test::update() {
 	}
 }
 
+void Test::addLog(std::string const &s) {
+	oLogs_ << s;
+}
+
 void Test::setTest(bool b) {
 	test_ = b;
 }
@@ -88,15 +91,23 @@ void Test::setPidTestProcess(int pidTestProcess) {
 }
 void Test::setInputFile(std::string const &inputFile) {
 	if (test_) {
-		iAction_.open(inputFile);
+		iAction_.open((path_ / TEST_DIR / (inputFile + ".ut")).generic_string());
 		std::getline(iAction_, buffer_);
 	}
 	if (input_)
-		oAction_.open(inputFile, std::ios_base::app);
+		oAction_.open((path_ / TEST_DIR / (inputFile + ".ut")).generic_string(), std::ios_base::app);
+}
+
+void Test::setLogFile(std::string const &logFile) {
+	if (input_)
+		oLogs_.open((path_ / TEST_DIR / (logFile + ".log")).generic_string(), std::ios_base::app);
+	else
+		oLogs_.open((path_ / TEST_OUTPUT / (logFile + ".log")).generic_string(), std::ios_base::app);
 }
 
 
 Test::Test() :
+path_(boost::filesystem::path(NIBBLER_ROOT_PROJECT_PATH)),
 test_(0),
 input_(0),
 id_(0),
@@ -105,11 +116,6 @@ next_(false),
 ptr_(nullptr) {
 	if (signal(SIGUSR1, Test::sigHandler_) == SIG_ERR)
 		printf("\ncan't catch SIGUSR1\n");
-}
-
-Test::~Test() {
-	iAction_.close();
-	oAction_.close();
 }
 
 Test Test::m_instance=Test();

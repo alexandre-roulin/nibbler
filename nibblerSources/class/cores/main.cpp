@@ -65,6 +65,7 @@ int main(int argc, char **argv) {
 		desc.add_options()
 				("help,h", "Print help messages")
 				("fileInput", boost::program_options::value<std::string>(), "File to store input")
+				("fileLog", boost::program_options::value<std::string>(), "File to store log")
 				("id", boost::program_options::value<int>(), "Id of input")
 				("pidTestProcess", boost::program_options::value<int>(), "Pid of shell tester process")
 				("test,t", "Boolean for test mode")
@@ -78,7 +79,7 @@ int main(int argc, char **argv) {
 					boost::program_options::parse_command_line(argc, argv,
 															   desc), vm);
 
-			option_dependency(vm, "test", "id", "fileInput", "pidTestProcess");
+			option_dependency(vm, "test", "id", "fileInput", "pidTestProcess", "fileLog");
 			option_dependency(vm, "input", "id", "fileInput");
 
 			if (vm.count("help")) {
@@ -88,16 +89,21 @@ int main(int argc, char **argv) {
 			}
 			if (vm.count("sound"))
 				univers.getSoundManager().loadExternalSoundLibrary(eSound::kSoundSfmlLibrary);
-			if (vm.count("test") && vm.count("id") && vm.count("fileInput") && vm.count("pidTestProcess")) {
+			if (vm.count("test") && vm.count("id") && vm.count("fileInput") && vm.count("pidTestProcess") && vm.count("fileLog")) {
 				Test::getInstance().setTest(true);
 				Test::getInstance().setId(vm["id"].as<int>());
 				Test::getInstance().setPidTestProcess(vm["pidTestProcess"].as<int>());
 				Test::getInstance().setInputFile(vm["fileInput"].as<std::string>());
+				Test::getInstance().setLogFile(vm["fileLog"].as<std::string>());
 			}
 			else if (vm.count("input") && vm.count("id") && vm.count("fileInput")) {
 				Test::getInstance().setInput(true);
 				Test::getInstance().setId(vm["id"].as<int>());
 				Test::getInstance().setInputFile(vm["fileInput"].as<std::string>());
+				if (vm.count("fileLog"))
+					Test::getInstance().setLogFile(vm["fileLog"].as<std::string>());
+				else
+					Test::getInstance().setLogFile(vm["fileInput"].as<std::string>());
 			}
 
 			if (vm.count("logger"))

@@ -44,31 +44,37 @@ trap_with_arg func_trap SIGUSR1
 trap_with_arg func_trap SIGUSR2
 
 echo "pidOfScript : ${pidOfScript}"
+echo "fileToTest: ${1}"
 
+
+echo "Count all id ..."
 while read ligne ; do
     checkId="$(echo ${ligne} | cut -d' ' -f1)"
     if in_id ${checkId}
     then
         id+=("$(echo ${checkId})")
     fi
-done < $1
-
-for element in "${id[@]}"
-do
-    echo "ID [$element]"sleep
-done
+done < "${1}.ut"
+echo "Where has $numOfClient Id's"
+echo
+echo
 
 numOfClient=${#id[@]}
 
+echo "Run nibbler ..."
 while test ${index} != ${numOfClient}
     do
-    ./nibbler -t --id ${id[$index]} --fileInput ${1} --pidTestProcess ${pidOfScript} &> $2 & pid[$index]=$! > /tmp/log_pid.out
+    fileLog="$(basename ${1})"
+    ${4} -t --id ${id[$index]} --fileInput ${2} --fileLog ${2} --pidTestProcess ${pidOfScript} &> ${3} & pid[$index]=$! > /tmp/log_pid.out
     echo ${id[$index]}
     index=$(($index + 1))
 done
+echo
+echo
 
 sleep 2
 
+echo "Start test ..."
 index=0
 while test ${index} != ${numOfClient}
     do
@@ -76,14 +82,18 @@ while test ${index} != ${numOfClient}
     echo "kill -n 30 ${pid[$index]}"
     index=$(($index + 1))
 done
+echo
+echo
 
+echo "Print Pid of all process :"
 index=0
 while test ${index} != ${numOfClient}
     do
     echo "${pid[$index]}"
     index=$(($index + 1))
 done
-
+echo
+echo
 #while read line ; do
 #    if [ $line = "kill" ]
 #        then
@@ -96,6 +106,7 @@ done
 #done
 
 
+echo "Waiting process exit ..."
 for p in ${pid[*]}; do
     while kill -0 ${p} > /dev/null ; do
         sleep 0.1
@@ -104,10 +115,19 @@ done
 
 sleep 1
 
+echo "diff ${1}.log logTests/${2}.log"
+
+diff="$(diff ${1}.log logTests/${2}.log)"
+
+if [ $returnSucessProcess = $numOfClient ] && [ "$diff" == "" ]
+    then
+        echo "EXIT_DIFF $returnSucessProcess $numOfClient"
+        exit 0
+fi
 if [ $returnSucessProcess = $numOfClient ]
     then
         echo "EXIT_SUCESS $returnSucessProcess $numOfClient"
-        exit 0
+        exit 2
 fi
 echo "EXIT_FAILURE $returnSucessProcess $numOfClient"
 exit 1

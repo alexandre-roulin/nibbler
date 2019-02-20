@@ -9,10 +9,11 @@ function ctrl_c() {
 }
 trap ctrl_c INT
 
-dirTest=$1
-dirTest="$dirTest\/*"
-rm -rf LogTests
-mkdir LogTests
+dirTest=tests
+dirTest="$dirTest\/*.ut"
+echo $dirTest
+rm -rf logTests
+mkdir logTests
 
 for filename in $dirTest
     do
@@ -24,7 +25,7 @@ for filename in $dirTest
                 exit 1
         fi
 
-        gtimeout 20 sh ../test.sh $filename "LogTests/$(basename "$filename" .txt)_Log.txt" &> "LogTests/sh_$(basename "$filename" .txt)_Log.txt"
+        gtimeout 20 sh test.sh tests/$(basename "$filename" .ut) $(basename "$filename" .ut) "logTests/$(basename "$filename" .ut).output" ${1} &> "logTests/sh_$(basename "$filename" .ut).output"
 
         result=$?
 
@@ -34,6 +35,9 @@ for filename in $dirTest
         elif [ $result = 0 ]
             then
                 echo "${GREEN}$filename SUCCESS ${NC}"
+        elif [ $result = 2 ]
+            then
+                echo "${RED}$filename DIFF ${NC}"
         else
             echo "${RED}$filename FAILURE ${NC}"
         fi

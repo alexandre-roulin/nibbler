@@ -1,5 +1,6 @@
 #include "WidgetChat.hpp"
 #include <gui/Gui.hpp>
+#include <cores/Test.hpp>
 
 WidgetChat::WidgetChat(Gui &core) :
 		AWidget(core) {
@@ -131,5 +132,7 @@ void WidgetChat::addLog(eColorLog color, char const *format, ...)
 	va_end(args);
 
 	log_.emplace_back(color, std::string(buf.get(), buf.get() + size - 1));
+	Test::getInstance().addLog(buf.get());
+	Test::getInstance().addLog("\n");
 	scrollChat_ = true;
 }
