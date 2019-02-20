@@ -76,10 +76,12 @@ while test $index != $numOfClient
     index=$(($index + 1))
 done
 
-for p in ${pid[*]}; do
-    while kill -0 $p; do
-        sleep 0.01
-    done
+while read line ; do
+    if [ $line = "kill" ]
+        then
+            for p in ${pid[*]}; do
+                kill $p > /dev/null;
+            done
+        exit
+    fi
 done
-
-exit 0
