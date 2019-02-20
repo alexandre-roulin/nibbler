@@ -118,6 +118,7 @@ bool SnakeClient::isConnect() const {
 
 void SnakeClient::killSnake(uint16_t id) {
 	if (id_ == id || (univers_.isIASnake(id) && univers_.isServer())) {
+		log_debug("%s id[%d]", __PRETTY_FUNCTION__, id);
 		snake_array_[id].isAlive = false;
 		sendDataToServer(snake_array_[id], eHeader::kSnake);
 	}
@@ -200,7 +201,7 @@ void SnakeClient::callbackId(int16_t id) {
 	std::lock_guard<std::mutex> guard(mutex_);
 	id_ = id;
 	if (fromIA_) {
-		snake_array_[id_].id = id;
+		snake_array_[id_].id_ = id;
 		snake_array_[id_].isReady = true;
 		snake_array_[id_].isIA = true;
 		refreshSnakeArray();
@@ -222,17 +223,17 @@ void SnakeClient::callbackPause(eAction) {
 	univers_.getGameManager().refreshTimerLoopWorld();
 }
 
-void SnakeClient::callbackSnake(Snake snake) {
+void SnakeClient::callbackSnake(Snake &snake) {
 	std::lock_guard<std::mutex> guard(mutex_);
-	log_debug("%s id[%d] isUpdate[%d]", __PRETTY_FUNCTION__, id_,
-			  snake_array_[id_].isUpdate);
-	snake_array_[snake.id] = snake;
+//	log_debug("%s id[%d] isUpdate[%d]", __PRETTY_FUNCTION__, id_,
+//			  snake_array_[id_].isUpdate);
+	snake_array_[snake.id_] = snake;
 	if (acceptDataFromServer()) {
 		univers_.getSoundManager().playNoise(eNoise::kReadySound);
 	}
 }
 
-void SnakeClient::callbackSnakeArray(SnakeArrayContainer new_snake_array) {
+void SnakeClient::callbackSnakeArray(SnakeArrayContainer &new_snake_array) {
 	std::lock_guard<std::mutex> guard(mutex_);
 	log_debug("%s id[%d] isUpdate[%d]", __PRETTY_FUNCTION__, id_,
 			  snake_array_[id_].isUpdate);
@@ -325,7 +326,7 @@ void SnakeClient::build() {
 			eHeader::kInput);
 
 	clientTCP_->getDataTCP_().addDataType<std::array<Snake, SNAKE_MAX>>(
-			([thisWeakPtr](SnakeArrayContainer snake_array) {
+			([thisWeakPtr](SnakeArrayContainer &snake_array) {
 				auto myPtr = thisWeakPtr.lock();
 				if (myPtr) myPtr->callbackSnakeArray(snake_array);
 			}),
@@ -388,7 +389,7 @@ void SnakeClient::build() {
 			eHeader::kFood);
 
 	clientTCP_->getDataTCP_().addDataType<Snake>(
-			([thisWeakPtr](Snake snake) {
+			([thisWeakPtr](Snake &snake) {
 				auto myPtr = thisWeakPtr.lock();
 				if (myPtr) myPtr->callbackSnake(snake);
 			}),

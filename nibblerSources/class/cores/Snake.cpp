@@ -14,7 +14,7 @@ std::string const Snake::basicName[SNAKE_MAX_NAME] = {
 Snake::Snake() :
 		sprite(eSprite::kBlue),
 		isReady(false),
-		id(-1),
+		id_(-1),
 		isUpdate(false),
 		direction(kNorth),
 		isAlive(false),
@@ -25,34 +25,34 @@ Snake::Snake() :
 	memset(name, 0, NAME_BUFFER);
 }
 
-Snake &Snake::operator=(Snake const &snake) {
-	if (this != &snake) {
-		std::memcpy(name, snake.name, NAME_BUFFER);
-		sprite = snake.sprite;
-		isReady = snake.isReady;
-		id = snake.id;
-		isUpdate = snake.isUpdate;
-		direction = snake.direction;
-		isAlive = snake.isAlive;
-		isIA = snake.isIA;
-		isSwitchingLibrary = snake.isSwitchingLibrary;
-		indexConnection = snake.indexConnection;
-		isValid = snake.isValid;
-		score_ = snake.score_;
-	}
-	return *this;
+void Snake::randomSnake(int16_t id) {
+
+	sprite = static_cast<eSprite>(static_cast<int>(eSprite::kGreen) + rand() % SNAKE_MAX_COLOR);
+	strncpy(name, Snake::basicName[rand() % SNAKE_MAX_NAME].c_str(), NAME_BUFFER);
+	id_ = id;
+	isAlive = true;
+	isSwitchingLibrary = false;
+	isValid = true;
+	isIA = false;
+	score_ = 0;
 }
 
-Snake Snake::randomSnake(int16_t id) {
-	Snake snake;
+void Snake::lightCopy(Snake &snake) {
+	std::strncpy(name, snake.name, NAME_BUFFER);
+	score_ = snake.score_;
+	id_ = snake.id_;
+	sprite = snake.sprite;
+	isReady = snake.isReady;
+	direction = snake.direction;
+	isAlive = snake.isAlive;
+	isIA = snake.isIA;
+}
 
-	snake.sprite = static_cast<eSprite>(static_cast<int>(eSprite::kGreen) + rand() % SNAKE_MAX_COLOR);
-	strncpy(snake.name, Snake::basicName[rand() % SNAKE_MAX_NAME].c_str(), NAME_BUFFER);
-	snake.id = id;
-	snake.isAlive = true;
-	snake.isSwitchingLibrary = false;
-	snake.isValid = true;
-	snake.isIA = false;
-	snake.score_ = 0;
-	return (snake);
+void Snake::hardCopy(Snake &snake) {
+	lightCopy(snake);
+	isUpdate = snake.isUpdate;
+	isSwitchingLibrary = snake.isSwitchingLibrary;
+	indexConnection = snake.indexConnection;
+	isValid = snake.isValid;
 };
+

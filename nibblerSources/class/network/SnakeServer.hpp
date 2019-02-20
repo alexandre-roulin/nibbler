@@ -34,7 +34,7 @@ private:
 	void callbackRemoveSnake(int16_t);
 
 	void callbackDeadConnection(size_t index);
-	void callbackSnakeArray(SnakeArrayContainer);
+	void callbackSnakeArray(SnakeArrayContainer &);
 
 	void callbackPock(char);
 
@@ -56,7 +56,7 @@ private:
 
 	void callbackAccept(size_t);
 
-	void callbackSnake(Snake);
+	void callbackSnake(Snake &);
 
 	void callbackFood(FoodInfo);
 

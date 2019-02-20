@@ -25,7 +25,8 @@ const uint32_t GameManager::Hard = 80000;  //0.1sec frame
 const uint32_t GameManager::Impossible = 10000;  //0.01sec frame
 
 GameManager::GameManager(Univers &univers)
-	: univers_(univers),
+	:
+	univers_(univers),
 	timer_loop(univers_.getIoManager().getIo()){
 }
 
@@ -75,25 +76,34 @@ void GameManager::startNewGame() {
 	world_->getSystemsManager().getSystem<SpriteSystem>().update();
 	world_->getSystemsManager().getSystem<RenderSystem>().update();
 
-	thread = univers_.getIoManager().getThreadGroup().create_thread([this](){
-		timer_loop.expires_from_now(boost::posix_time::microsec(
-				univers_.getMicroSecDeltaTime()));
-		timer_loop.async_wait(boost::bind(&GameManager::loopWorld, this));
-	});
+	threadWorldLoop_= boost::thread(boost::bind(&GameManager::loopWorld, this));
 }
 
+
 void GameManager::loopWorld() {
+	SnakeClient::boost_shared_ptr ptr(univers_.getSnakeClient().lock());
+
+	while (!ptr->allSnakeIsDead()) {
+		timer_loop.expires_from_now(boost::posix_time::microsec(univers_.getMicroSecDeltaTime()));
+		timer_loop.wait();
+		loopWorldWork();
+	}
+}
+
+
+void GameManager::loopWorldWork() {
 	SnakeClient::boost_shared_ptr ptr(univers_.getSnakeClient().lock());
 	if (!univers_.isOpenGame_() || !ptr || !world_)
 		return;
 
 	univers_.manageSnakeClientInput();
+	univers_.getIoManager().getThreadGroup().join_all();
 	for (; nextFrame.empty() && univers_.isOpenGame_() && world_ && ptr;) {
 		ptr->lock();
 		nextFrame = world_->getEventsManager().getEvents<NextFrame>();
 		ptr->unlock();
 	}
-
+	std::cout << "Librezzzz delivrezzzz" << std::endl;
 	nextFrame.clear();
 
 	world_->getEventsManager().destroy<NextFrame>();
@@ -118,19 +128,9 @@ void GameManager::loopWorld() {
 		for (auto &bobby : univers_.getBobbys()) {
 			if (world_->getEntitiesManager().hasEntityByTagId(bobby->getId() + eTag::kHeadTag)) {
 				ptr->addScore(bobby->getId(), eScore::kFromTime);
-				univers_.getIoManager().getThreadGroup().create_thread(boost::bind(&Bobby::calculateDirection, bobby.get()));
+				univers_.getIoManager().getIo().post([&bobby](){ bobby->calculateDirection(); });
 			}
-
 		}
-	}
-
-
-	if (!ptr->allSnakeIsDead()) {
-		univers_.getIoManager().getThreadGroup().create_thread([this](){
-			timer_loop.expires_from_now(boost::posix_time::microsec(
-					univers_.getMicroSecDeltaTime()));
-			timer_loop.async_wait(boost::bind(&GameManager::loopWorld, this));
-		});
 	}
 }
 
@@ -161,9 +161,7 @@ KINU::World &GameManager::getWorld_() {
 }
 
 void GameManager::finishGame() {
-	log_error("%s", __PRETTY_FUNCTION__);
-	univers_.getIoManager().getThreadGroup().interrupt_all();
+	threadWorldLoop_.join();
 	nextFrame.clear();
-	log_error("%s world == nullptr", __PRETTY_FUNCTION__);
 	world_ = nullptr;
 }

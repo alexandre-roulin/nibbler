@@ -78,7 +78,8 @@ namespace KNW {
 
 	void ServerTCP::startAsyncAccept() noexcept {
 		ServerTCP::b_wptr wptr(shared_from_this());
-		io_manager_.getThreadGroup().create_thread([wptr](){ auto sptr = wptr.lock(); if (sptr) sptr->acceptConnection(); });
+//		boost::asio::post(io_manager_.getIo(), [wptr](){ auto sptr = wptr.lock(); if (sptr) sptr->acceptConnection(); });
+		io_manager_.getIo().post([wptr](){ auto sptr = wptr.lock(); if (sptr) sptr->acceptConnection(); });
 	}
 
 	void ServerTCP::startAsyncAccept(std::function<void(size_t)> c) noexcept {

@@ -13,7 +13,7 @@ public:
 	Factory &operator=(const Factory &) = delete;
 	Factory(const Factory &) = delete;
 
-	void createAllSnake(SnakeArrayContainer snake_array, int16_t nu);
+	void createAllSnake(SnakeArrayContainer &snake_array, int16_t nu);
 
 private:
 

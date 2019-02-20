@@ -21,10 +21,10 @@ namespace KNW {
 		DataTCP(DataTCP const &) = delete;
 
 		template<typename T>
-		void addDataType(std::function<void(T)> callback);
+		void addDataType(std::function<void(T&)> callback);
 
 		template<typename T, typename H>
-		void addDataType(std::function<void(T)> callback, H header);
+		void addDataType(std::function<void(T&)> callback, H header);
 
 		template<typename T>
 		bool hasType() const;
@@ -36,7 +36,7 @@ namespace KNW {
 		~DataTCP();
 
 		template<typename T>
-		std::string serializeData(BaseDataType::Header header, T data);
+		std::string serializeData(BaseDataType::Header header, T &&data);
 
 	private:
 		DataTCP();
@@ -51,12 +51,12 @@ namespace KNW {
 		template<typename T>
 		class CallbackType : public AbstractCallback {
 		public:
-			explicit CallbackType(std::function<void(T)> function)
+			explicit CallbackType(std::function<void(T&)> function)
 					: function_(function) {}
 
 			virtual void operator()(void *pVoid) override;
 
-			std::function<void(T)> function_;
+			std::function<void(T&)> function_;
 		};
 
 		std::vector<int> sizeType;
@@ -72,7 +72,7 @@ namespace KNW {
 
 
 	template<typename T>
-	void DataTCP::addDataType(std::function<void(T)> callback) {
+	void DataTCP::addDataType(std::function<void(T&)> callback) {
 		auto header = DataType<T>::getHeader();
 		assert(!hasType<T>());
 		if (header >= sizeType.size() && header >= callbackType.size()) {
@@ -89,7 +89,7 @@ namespace KNW {
 
 	template<typename T, typename H>
 	void
-	DataTCP::addDataType(std::function<void(T)> callback, H header) {
+	DataTCP::addDataType(std::function<void(T&)> callback, H header) {
 
 		auto header_ = static_cast<BaseDataType::Header>(header);
 		if (header_ >= sizeType.size() && header_ >= callbackType.size()) {
@@ -110,7 +110,7 @@ namespace KNW {
 
 	template<typename T>
 	std::string
-	DataTCP::serializeData(BaseDataType::Header header, T data) {
+	DataTCP::serializeData(BaseDataType::Header header, T &&data) {
 		std::string buffer;
 		buffer.append(reinterpret_cast<char *>(&header),
 					  sizeof(BaseDataType::Header));

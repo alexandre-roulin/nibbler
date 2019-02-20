@@ -9,13 +9,12 @@ class Snake {
 public:
 	Snake();
 	~Snake() = default;
-	Snake &operator=(Snake const &snake);
-	Snake(const Snake &) = default;
+	Snake(const Snake &) = delete;
 
 	char name[NAME_BUFFER];
 	eSprite sprite;
 	bool isReady;
-	int16_t id;
+	int16_t id_;
 	bool isUpdate;
 	eDirection direction;
 	bool isAlive;
@@ -25,7 +24,9 @@ public:
 	bool isValid;
 	uint16_t score_;
 
-	static Snake randomSnake(int16_t id);
+	void lightCopy(Snake &);
+	void hardCopy(Snake &);
+	void randomSnake(int16_t id);
 	static std::string const basicName[SNAKE_MAX_NAME];
 };
 

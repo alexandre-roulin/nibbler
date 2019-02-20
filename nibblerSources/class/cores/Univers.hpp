@@ -124,7 +124,7 @@ public:
 
 	std::unique_ptr<Gui> &getGui_();
 
-	SnakeArrayContainer getSnakeArray_() const;
+	const SnakeArrayContainer &getSnakeArray_() const;
 
 	boost::weak_ptr<SnakeClient> getSnakeClient() const;
 
@@ -193,6 +193,7 @@ private:
 	uint32_t microSecDeltaTime;
 	bool borderless;
 	bool openGame_;
+	SnakeArrayContainer snakeArrayContainer;
 
 };
 
