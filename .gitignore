@@ -1,3 +1,4 @@
+input
 extern/imgui/imconfig-sfml.h
 build
 cmake-build-release/
