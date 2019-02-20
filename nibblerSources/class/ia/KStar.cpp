@@ -142,8 +142,6 @@ KStar::Path KStar::searchPath(KStar::Vec2 source, KStar::Vec2 target) {
 
 	openMap_.fill(Node());
 	closeMap_.fill(Node());
-//	std::cout << source << target << std::endl;
-//	KStar::Node::Node(const KStar::Vec2 vec, double H, double G, double F, Node *parent)
 	if (isCollision(target)) {
 		log_fatal("isCollision(target)");
 		return path;
@@ -158,7 +156,6 @@ KStar::Path KStar::searchPath(KStar::Vec2 source, KStar::Vec2 target) {
 		Node currentNode = getLowestNode();
 		if (!currentNode)
 			return path;
-//		std::cout << "currentNode : " << currentNode << std::endl;
 		if (currentNode.vec == target) {
 			closeMap_(currentNode.vec.x, currentNode.vec.y) = currentNode;
 			break;
@@ -168,15 +165,12 @@ KStar::Path KStar::searchPath(KStar::Vec2 source, KStar::Vec2 target) {
 		openMap_(currentNode.vec.x, currentNode.vec.y).clear();
 		for (int idxDir = 0; idxDir < direction; ++idxDir) {
 			Vec2 currentVec2 = currentNode.vec + directions[idxDir];
-//			log_debug("Condition [%d][%d][%d]", !isOverflow(currentVec2), !isOverflow(currentVec2)  ? !isCollision(currentVec2) : -42 , !isOverflow(currentVec2)  ? !closeMap_(currentVec2.x, currentVec2.y) : -42);
-//			std::cout << "currentVec2 : " << currentVec2 << std::endl;
 				if (!isOverflow(currentVec2) && !isCollision(currentVec2) && !closeMap_(currentVec2.x, currentVec2.y)) {
 
 				double tempH = heuristic_(currentVec2, target);
 				double tempG = heuristic_(currentVec2, source);
 
 				Node newNode = Node(currentVec2, tempH, tempG, tempG + tempH, currentNode.vec);
-//				std::cout << "NewNode : " << newNode << std::endl;
 				if (!openMap_(currentVec2.x, currentVec2.y)) {
 					openMap_(currentVec2.x, currentVec2.y) = newNode;
 				} else {
@@ -186,7 +180,6 @@ KStar::Path KStar::searchPath(KStar::Vec2 source, KStar::Vec2 target) {
 				}
 			}
 		}
-//		sleep(1);
 	}
 	Node traceNode = closeMap_(target.x, target.y);
 	path.push_back(traceNode.vec);

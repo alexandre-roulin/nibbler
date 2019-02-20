@@ -34,7 +34,7 @@ const std::string Univers::ErrorServerAlreadyUseOnThisPort = "Server already in 
 
 Univers::Univers()
 		:
-		ioManager(std::make_unique<IOManager>()),
+		ioManager(std::make_unique<IOManager>(20)),
 		soundManager(std::make_unique<ExternalLibrarySoundManager>()),
 		displayManager(std::make_unique<ExternalLibraryDisplayManager>()),
 		gameManager(std::make_unique<GameManager>(*this)),
@@ -54,7 +54,7 @@ Univers::Univers()
 void Univers::resetData() {
 	for (const auto &snake: getSnakeArray_()) {
 		if (snake.isValid) {
-			std::cout << "ID:" << snake.id << " " << " Score : " << snake.score_ << std::endl;
+			std::cout << "ID:" << snake.id_ << " " << " Score : " << snake.score_ << std::endl;
 		}
 	}
 
@@ -164,14 +164,9 @@ void Univers::startNewGame() {
 
 	gameManager->startNewGame();
 	gameManager->loopUI();
-	std::cout << "Thread in io : "<< getIoManager().getThreadGroup().size() << std::endl;
-	ioManager->getThreadGroup().join_all();
-	std::cout << "Thread in io : "<< getIoManager().getThreadGroup().size() << std::endl;
 	gameManager->finishGame();
-
 	if (displayManager->hasLibraryLoaded())
 		displayManager->unloadExternalDisplayLibrary();
-
 	resetData();
 }
 
@@ -182,7 +177,6 @@ void Univers::manageSnakeClientInput() {
 	if (displayManager->hasLibraryLoaded())
 		direction = displayManager->getDisplay()->getDirection();
 	if (ptr && ptr->getSnake().isAlive && !isIASnake(ptr->getId_())) {
-		std::cout << "RealSend" << std::endl;
 		ptr->addScore(ptr->getId_(), eScore::kFromTime);
 		ptr->sendDataToServer(InputInfo(ptr->getId_(), direction),
 							  eHeader::kInput);
@@ -327,14 +321,14 @@ void Univers::deleteBobby(int16_t id) {
 		return;
 	}
 	vecBobby.erase(std::remove_if(vecBobby.begin(), vecBobby.end(),
-								  [this, id](
-										  const std::unique_ptr<Bobby> &bob) {
-									  if (bob->getId() == id) {
-										  getSnakeArray_()[bob->getId()].isValid = false;
-										  bob->getClientTCP_()->disconnect();
-									  }
-									  return bob->getId() == id;
-								  }), vecBobby.end());
+			[id](std::unique_ptr<Bobby> &bob) {
+
+		if (bob->getId() == id) {
+			bob->getClientTCP_()->disconnect();
+		}
+		return bob->getId() == id;
+
+	}), vecBobby.end());
 }
 
 void Univers::deleteClient() {
@@ -372,8 +366,7 @@ uint32_t Univers::getMicroSecDeltaTime() const {
 }
 
 void Univers::setMicroSecDeltaTime(uint32_t microSecDeltaTime) {
-	Univers::microSecDeltaTime = microSecDeltaTime < GameManager::Hard ? GameManager::Hard : microSecDeltaTime;
-	std::cout << "MicroSecDeltaTime : " << microSecDeltaTime << std::endl;
+	Univers::microSecDeltaTime = microSecDeltaTime < GameManager::Impossible ? GameManager::Impossible : microSecDeltaTime;
 }
 //20000 == 1
 //10000 == 5
@@ -394,15 +387,14 @@ MutantGrid<eSprite> &Univers::getGrid_() const {
 	return *grid_;
 }
 
-SnakeArrayContainer Univers::getSnakeArray_() const {
+const SnakeArrayContainer &Univers::getSnakeArray_() const {
 	SnakeClient::boost_shared_ptr ptr(getSnakeClient().lock());
 
 	if (isServer())
 		return snakeServer_->getSnakeArray_();
 	if (ptr)
 		return ptr->getSnakeArray_();
-
-	return SnakeArrayContainer();
+	return snakeArrayContainer;
 }
 
 KINU::World &Univers::getWorld_() {

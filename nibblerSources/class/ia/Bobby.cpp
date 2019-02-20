@@ -37,8 +37,10 @@ void Bobby::buildIA() {
 
 void Bobby::sendDirection() {
 
-	if (univers_.getWorld_().getEntitiesManager().hasEntityByTagId(eTag::kHeadTag + clientTCP_->getId_()))
+	if (univers_.getWorld_().getEntitiesManager().hasEntityByTagId(eTag::kHeadTag + clientTCP_->getId_())) {
+		std::cout << "Send direction : " << clientTCP_->getId_() << std::endl;
 		clientTCP_->sendDataToServer(InputInfo(clientTCP_->getId_(), direction), eHeader::kInput);
+	}
 
 }
 
@@ -128,7 +130,8 @@ void Bobby::findDirection(KStar::Vec2 vecSource, KStar::Vec2 vecTarget) {
 void Bobby::calculateDirection() {
 
 	log_warn("%s", __PRETTY_FUNCTION__);
-
+	std::cout << "[" << boost::this_thread::get_id()
+			  << "] Bobby "<< getId() << "Start " << std::endl;
 	if (univers_.getWorld_().getEntitiesManager().hasEntityByTagId(
 			clientTCP_->getId_() + eTag::kHeadTag)) {
 
@@ -192,16 +195,6 @@ void Bobby::calculateDirection() {
 				try {
 					findDirection(vecSnake, checkVec2);
 					sendDirection();
-//					std::vector<KINU::Entity> entitiesHead;
-//
-//					for (int id = 0; id < SNAKE_MAX; ++id) {
-//						if (univers_.getWorld_().getEntitiesManager().hasEntityByTagId(id + eTag::HEAD_TAG))
-//							entitiesHead.push_back(univers_.getWorld_().getEntitiesManager().getEntityByTagId(id + eTag::HEAD_TAG));
-//					}
-						for (const auto &item : mapPriority) {
-							std::cout << item.first << "["<< item.second << "]"  << std::endl;
-						}
-						std::cout << std::endl;
 					log_warn("LAST::Pathfinding[%d]", getId());
 					return;
 				} catch (std::exception const &e) {
@@ -211,6 +204,8 @@ void Bobby::calculateDirection() {
 		}
 	}
 	sendDirection();
+	std::cout << "[" << boost::this_thread::get_id()
+			  << "] Bobby Finish" << std::endl;
 }
 
 KStar::Vec2 Bobby::getVecSnakeHead() {

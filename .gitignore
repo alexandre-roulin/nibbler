@@ -12,7 +12,7 @@ tmp/
 ./dynamicLibraries/display_sfml/Makefile
 ./dynamicLibraries/sound_sdl/Makefile
 ./dynamicLibraries/sound_sfml/Makefile
-
+input
 
 jsoncpp/
 imgui/imconfig-sfml.h

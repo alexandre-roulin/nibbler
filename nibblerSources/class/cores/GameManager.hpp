@@ -25,6 +25,8 @@ public:
 
 	void loopWorld();
 
+	void loopWorldWork();
+
 	void loopUI();
 
 	void refreshTimerLoopWorld();
@@ -41,8 +43,7 @@ public:
 	static const uint32_t Hard;
 	static const uint32_t Impossible;
 private:
-
-	boost::thread *thread;
+	boost::thread threadWorldLoop_;
 	Univers &univers_;
 	std::vector<NextFrame> nextFrame;
 	boost::asio::deadline_timer timer_loop;

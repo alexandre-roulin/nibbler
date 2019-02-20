@@ -74,10 +74,10 @@ void WidgetSnake::renderIa_(void) {
 	SnakeClient::boost_shared_ptr ptr(core_.univers.getSnakeClient().lock());
 
 	if (core_.univers.isServer())
-		ImGui::Begin(std::string(std::to_string(snake_.id) + std::string(snake_.name)).c_str(), NULL,
+		ImGui::Begin(std::string(std::to_string(snake_.id_) + std::string(snake_.name)).c_str(), NULL,
 					 ImGuiWindowFlags_NoDecoration);
 	else
-		ImGui::Begin(std::string(std::to_string(snake_.id) + std::string(snake_.name)).c_str(), NULL,
+		ImGui::Begin(std::string(std::to_string(snake_.id_) + std::string(snake_.name)).c_str(), NULL,
 					 ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoInputs);
 
 	updateSizeTexture_();
@@ -89,7 +89,7 @@ void WidgetSnake::renderIa_(void) {
 	Gui::beginColor(Gui::HUE_PURPLE);
 	if (core_.univers.isServer()) {
 		if (ptr && ImGui::Button("Delete", sf::Vector2f(sizeTexture_, ImGui::GetFrameHeight())))
-			core_.univers.deleteBobby(snake_.id);
+			core_.univers.deleteBobby(snake_.id_);
 	}
 	else
 		ImGui::Button("Bot", sf::Vector2f(sizeTexture_, ImGui::GetFrameHeight()));
@@ -101,7 +101,7 @@ void WidgetSnake::renderIa_(void) {
 void WidgetSnake::renderOtherSnake_(void) {
 	SnakeClient::boost_shared_ptr ptr(core_.univers.getSnakeClient().lock());
 
-	ImGui::Begin(std::string(std::to_string(snake_.id) + std::string(snake_.name)).c_str(), NULL,
+	ImGui::Begin(std::string(std::to_string(snake_.id_) + std::string(snake_.name)).c_str(), NULL,
 				 ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoInputs);
 
 	updateSizeTexture_();
@@ -129,7 +129,7 @@ void WidgetSnake::renderOtherSnake_(void) {
 void WidgetSnake::renderYourSnake_(void) {
 	SnakeClient::boost_shared_ptr ptr(core_.univers.getSnakeClient().lock());
 
-	ImGui::Begin(std::string(std::to_string(snake_.id) + std::string(snake_.name)).c_str(), NULL,
+	ImGui::Begin(std::string(std::to_string(snake_.id_) + std::string(snake_.name)).c_str(), NULL,
 				 ImGuiWindowFlags_NoDecoration);
 
 	updateSizeTexture_();

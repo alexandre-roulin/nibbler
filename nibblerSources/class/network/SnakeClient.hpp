@@ -20,7 +20,7 @@ public:
 	static boost_shared_ptr create(Univers &univers, bool fromIA);
 
 	template<typename T>
-	void sendDataToServer(T data, eHeader header);
+	void sendDataToServer(T &&data, eHeader header);
 
 	void lock();
 
@@ -84,11 +84,11 @@ private:
 
 	void callbackOpenGame(bool);
 
-	void callbackSnake(Snake);
+	void callbackSnake(Snake &);
 
 	void callbackResizeMap(unsigned int);
 
-	void callbackSnakeArray(SnakeArrayContainer);
+	void callbackSnakeArray(SnakeArrayContainer &);
 
 	void callbackBorderless(bool);
 
@@ -120,7 +120,6 @@ private:
 
 
 template<typename T>
-void SnakeClient::sendDataToServer(T data, eHeader header) {
-	clientTCP_->writeDataToServer(std::move(data),
-								 static_cast<uint16_t>(header));
+void SnakeClient::sendDataToServer(T &&data, eHeader header) {
+	clientTCP_->writeDataToServer(std::move(data), static_cast<uint16_t>(header));
 }
