@@ -32,7 +32,12 @@ void Test::writeInput(std::string const &s) {
 		oAction_ << id_ << " " << s << std::endl;
 }
 
+bool Test::needUpdate() const {
+	return next_;
+}
+
 void Test::update() {
+	std::cout << id_ << ":" << test_ << "|" << next_ << std::endl;
 	if (!test_ || !next_) {
 		return ;
 	}
@@ -49,9 +54,18 @@ void Test::update() {
 		std::cout << "Continue" << std::endl;
 		usleep(INPUT_WAITING_TIME);
 		kill(pidTestProcess_, SIGUSR1);
+	} else {
+		std::cout << id_;
+		for (auto tok : token) {
+			std::cout << "[" << tok << "]";
+		}
+		std::cout << std::endl;
 	}
 	if (!std::getline(iAction_, buffer_)) {
 		std::cout << id_ << "[END]" << std::endl;
+		//kill(pidTestProcess_, SIGUSR1);
+		kill(pidTestProcess_, SIGUSR2);
+		sleep(1);
 		exit(EXIT_SUCCESS);
 	}
 }

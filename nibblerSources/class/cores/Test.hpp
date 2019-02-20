@@ -8,7 +8,6 @@
 #include <fstream>
 #include <functional>
 
-
 #define INPUT_ID 0
 #define INPUT_ACTION 1
 #define INPUT_WAITING_TIME 500000
@@ -27,6 +26,7 @@ public:
 	void setTest(bool b);
 
 	void writeInput(std::string const &s);
+	bool needUpdate() const;
 
 	void update();
 

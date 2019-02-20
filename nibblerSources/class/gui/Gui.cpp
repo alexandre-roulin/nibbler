@@ -99,7 +99,7 @@ void			Gui::aState(void)
 
 	Test::getInstance().setInputCallback(callbackTest, reinterpret_cast<void*>(&univers));
 
-	while (_win.isOpen() && !univers.isOpenGame_()) {
+	while (Test::getInstance().needUpdate() || (_win.isOpen() && !univers.isOpenGame_())) {
 		ImGui::SFML::Update(_win, _deltaClock.restart());
 		Test::getInstance().update();
 		while (_win.pollEvent(event))
