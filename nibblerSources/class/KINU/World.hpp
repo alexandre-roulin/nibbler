@@ -6,9 +6,6 @@
 #include <vector>
 #include <string>
 #include <memory>
-#include <IDisplay.hpp>
-#include <cores/Univers.hpp>
-#include "MutantGrid.tpp"
 
 namespace KINU {
 

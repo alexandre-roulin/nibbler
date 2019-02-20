@@ -3,6 +3,7 @@
 #include <component/SpriteComponent.hpp>
 #include <component/FollowComponent.hpp>
 #include <component/MotionComponent.hpp>
+#include <cores/Univers.hpp>
 
 SpriteSystem::SpriteSystem(Univers &univers) : univers_(univers) {
 	requireComponent<PositionComponent>();
@@ -33,6 +34,7 @@ eSprite SpriteSystem::spriteDirection(PositionComponent &actual,
 
 void SpriteSystem::update() {
 
+	log_info("%s", __PRETTY_FUNCTION__);
 	FollowComponent *followComponent = nullptr;
 	KINU::Entity entityFollowed;
 	PositionComponent positionComponentFollowed;

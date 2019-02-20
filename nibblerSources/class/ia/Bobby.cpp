@@ -127,6 +127,7 @@ void Bobby::findDirection(KStar::Vec2 vecSource, KStar::Vec2 vecTarget) {
 
 void Bobby::calculateDirection() {
 
+	log_warn("%s", __PRETTY_FUNCTION__);
 
 	if (univers_.getWorld_().getEntitiesManager().hasEntityByTagId(
 			clientTCP_->getId_() + eTag::kHeadTag)) {
@@ -151,8 +152,6 @@ void Bobby::calculateDirection() {
 
 			KStar::Path path = kStar.searchPath(vecSnake, vecFood);
 			log_warn("FOOD::Pathfinding[%d] path.size()[%d]", getId(), path.size());
-			if (path.size() == 0)
-				log_debug("Food value %d", static_cast<int>(univers_.getGrid_()(vecFood.x, vecFood.y)));
 			if (path.size() > 1) {
 				try {
 					log_warn("FOOD::Pathfinding[%d] path.size()[%d]", getId(), path.size());

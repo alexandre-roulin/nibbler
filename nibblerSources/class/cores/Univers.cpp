@@ -45,20 +45,25 @@ Univers::Univers()
 		exit_(false),
 		switchLib(false),
 		mapSize_(MAP_DEFAULT),
-		gameSpeed(150),
+		microSecDeltaTime(GameManager::Impossible),
 		borderless(false),
 		openGame_(false) {
 
 }
 
 void Univers::resetData() {
+	for (const auto &snake: getSnakeArray_()) {
+		if (snake.isValid) {
+			std::cout << "ID:" << snake.id << " " << " Score : " << snake.score_ << std::endl;
+		}
+	}
+
 	openGame_ = false;
 	switchLib = false;
-
+	std::cout << "Couc " << std::endl;
 	SnakeClient::boost_shared_ptr ptr(getSnakeClient().lock());
 	if (ptr && !ptr->isConnect()) {
 		deleteClient();
-		deleteServer();
 		borderless = false;
 		mapSize_ = MAP_DEFAULT;
 	}
@@ -159,6 +164,9 @@ void Univers::startNewGame() {
 
 	gameManager->startNewGame();
 	gameManager->loopUI();
+	std::cout << "Thread in io : "<< getIoManager().getThreadGroup().size() << std::endl;
+	ioManager->getThreadGroup().join_all();
+	std::cout << "Thread in io : "<< getIoManager().getThreadGroup().size() << std::endl;
 	gameManager->finishGame();
 
 	if (displayManager->hasLibraryLoaded())
@@ -173,9 +181,12 @@ void Univers::manageSnakeClientInput() {
 	eDirection direction = eDirection::kNorth;
 	if (displayManager->hasLibraryLoaded())
 		direction = displayManager->getDisplay()->getDirection();
-	if (ptr && ptr->getSnake().isAlive)
+	if (ptr && ptr->getSnake().isAlive && !isIASnake(ptr->getId_())) {
+		std::cout << "RealSend" << std::endl;
+		ptr->addScore(ptr->getId_(), eScore::kFromTime);
 		ptr->sendDataToServer(InputInfo(ptr->getId_(), direction),
 							  eHeader::kInput);
+	}
 
 }
 
@@ -356,13 +367,16 @@ void Univers::deleteGui() {
 
 /** Getter && Setter **/
 
-unsigned int Univers::getGameSpeed() const {
-	return gameSpeed;
+uint32_t Univers::getMicroSecDeltaTime() const {
+	return microSecDeltaTime;
 }
 
-void Univers::setGameSpeed(unsigned int gameSpeed) {
-	Univers::gameSpeed = gameSpeed;
+void Univers::setMicroSecDeltaTime(uint32_t microSecDeltaTime) {
+	Univers::microSecDeltaTime = microSecDeltaTime < GameManager::Hard ? GameManager::Hard : microSecDeltaTime;
+	std::cout << "MicroSecDeltaTime : " << microSecDeltaTime << std::endl;
 }
+//20000 == 1
+//10000 == 5
 
 bool Univers::isExit() const {
 	return exit_;
@@ -380,7 +394,7 @@ MutantGrid<eSprite> &Univers::getGrid_() const {
 	return *grid_;
 }
 
-std::array<Snake, SNAKE_MAX> Univers::getSnakeArray_() const {
+SnakeArrayContainer Univers::getSnakeArray_() const {
 	SnakeClient::boost_shared_ptr ptr(getSnakeClient().lock());
 
 	if (isServer())
@@ -388,7 +402,7 @@ std::array<Snake, SNAKE_MAX> Univers::getSnakeArray_() const {
 	if (ptr)
 		return ptr->getSnakeArray_();
 
-	return std::array<Snake, SNAKE_MAX>();
+	return SnakeArrayContainer();
 }
 
 KINU::World &Univers::getWorld_() {
@@ -445,7 +459,6 @@ void Univers::sendHostname() {
 		gethostname(hostname, 64);
 		gui_->addMessageChat(std::string("[INFO] ") + hostname);
 	}
-
 }
 
 IOManager &Univers::getIoManager() {
@@ -458,7 +471,7 @@ void Univers::setGrid_(const std::shared_ptr<MutantGrid<eSprite>> &grid_) {
 
 bool Univers::displayIsAvailable() const {
 	return !displayManager->hasLibraryLoaded() ||
-		   !displayManager->getDisplay()->exit();
+		!displayManager->getDisplay()->exit();
 }
 
 bool Univers::isSwitchLib() const {

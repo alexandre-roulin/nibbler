@@ -153,7 +153,7 @@ add_subdirectory(dynamicLibrariesSources/display_sdl)
 add_subdirectory(dynamicLibrariesSources/display_sfml)
 add_subdirectory(dynamicLibrariesSources/sound_sdl)
 add_subdirectory(dynamicLibrariesSources/sound_sfml)
-add_subdirectory(testAsio)
+#add_subdirectory(testAsio)
 
 if (APPLE)
     set_target_properties(nibbler display_glfw display_sfml display_sdl sound_sdl sound_sfml PROPERTIES COMPILE_FLAGS "-Wall -Wextra -Wpedantic")

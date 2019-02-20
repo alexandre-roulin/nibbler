@@ -8,13 +8,13 @@ pidOfScript="$(echo ${$})"
 function trap_with_arg() {
     func="$1" ; shift
     for sig ; do
-        trap "$func $sig" "$sig"
+        trap "${func} ${sig}" "$sig"
     done
 }
 function func_trap() {
     echo Trapped: $1
     index=0
-    while test $index != $numOfClient
+    while test ${index} != ${numOfClient}
         do
         kill -n 30 ${pid[$index]}
         echo "kill -n 30 ${pid[$index]}"
@@ -38,10 +38,10 @@ trap_with_arg func_trap SIGUSR1
 echo "pidOfScript : ${pidOfScript}"
 
 while read ligne ; do
-    checkId="$(echo $ligne | cut -d' ' -f1)"
-    if in_id $checkId
+    checkId="$(echo ${ligne} | cut -d' ' -f1)"
+    if in_id ${checkId}
     then
-        id+=("$(echo $checkId)")
+        id+=("$(echo ${checkId})")
     fi
 done < $1
 
@@ -52,7 +52,7 @@ done
 
 numOfClient=${#id[@]}
 
-while test $index != $numOfClient
+while test ${index} != ${numOfClient}
     do
     ./nibbler -t --id ${id[$index]} --fileInput ${1} --pidTestProcess ${pidOfScript} >> /tmp/log_test.out & pid[$index]=$! > /tmp/log_pid.out
     echo ${id[$index]}
@@ -62,7 +62,7 @@ done
 sleep 2
 
 index=0
-while test $index != $numOfClient
+while test ${index} != ${numOfClient}
     do
     kill -n 30 ${pid[$index]}
     echo "kill -n 30 ${pid[$index]}"
@@ -70,7 +70,7 @@ while test $index != $numOfClient
 done
 
 index=0
-while test $index != $numOfClient
+while test ${index} != ${numOfClient}
     do
     echo "${pid[$index]}"
     index=$(($index + 1))

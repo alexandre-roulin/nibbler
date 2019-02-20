@@ -23,6 +23,16 @@
 #define MAP_DEFAULT 30
 #define MAP_MAX 100
 
+class Snake;
+
+using SnakeArrayContainer = std::array<Snake, SNAKE_MAX>;
+
+enum eScore : uint16_t {
+	kFromTime = 1,
+	kFromSnakeFood = 8,
+	kFromFood = 10,
+
+};
 
 enum eFlag {
 	kSound
@@ -77,4 +87,3 @@ enum ePriority {
 	kMinorPriority,
 	kSpecificLast,
 };
-

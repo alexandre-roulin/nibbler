@@ -21,7 +21,7 @@ Snake::Snake() :
 		isIA(false),
 		isSwitchingLibrary(false),
 		isValid(false),
-		isSet(false) {
+		score_(0) {
 	memset(name, 0, NAME_BUFFER);
 }
 
@@ -38,7 +38,7 @@ Snake &Snake::operator=(Snake const &snake) {
 		isSwitchingLibrary = snake.isSwitchingLibrary;
 		indexConnection = snake.indexConnection;
 		isValid = snake.isValid;
-		isSet = snake.isSet;
+		score_ = snake.score_;
 	}
 	return *this;
 }
@@ -53,5 +53,6 @@ Snake Snake::randomSnake(int16_t id) {
 	snake.isSwitchingLibrary = false;
 	snake.isValid = true;
 	snake.isIA = false;
+	snake.score_ = 0;
 	return (snake);
 };

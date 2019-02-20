@@ -16,7 +16,7 @@ Factory::Factory(Univers &univers)
 
 }
 
-void Factory::createAllSnake(std::array<Snake, SNAKE_MAX> snake_array,
+void Factory::createAllSnake(SnakeArrayContainer snake_array,
 							 int16_t nu) {
 	log_info("Create %d snake(s)", nu);
 

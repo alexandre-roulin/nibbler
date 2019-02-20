@@ -16,6 +16,14 @@
 #include <events/FoodCreation.hpp>
 #include <events/JoystickEvent.hpp>
 
+const uint32_t GameManager::ScaleByFrame = 10;
+const uint32_t GameManager::ScaleByRealFood = 600;
+const uint32_t GameManager::ScaleByFakeFood = 150;
+const uint32_t GameManager::Easy = 160000;  //0.2sec frame
+const uint32_t GameManager::Medium = 120000;  //0.15sec frame
+const uint32_t GameManager::Hard = 80000;  //0.1sec frame
+const uint32_t GameManager::Impossible = 10000;  //0.01sec frame
+
 GameManager::GameManager(Univers &univers)
 	: univers_(univers),
 	timer_loop(univers_.getIoManager().getIo()){
@@ -67,17 +75,19 @@ void GameManager::startNewGame() {
 	world_->getSystemsManager().getSystem<SpriteSystem>().update();
 	world_->getSystemsManager().getSystem<RenderSystem>().update();
 
-	timer_loop.expires_from_now(boost::posix_time::milliseconds(univers_.getGameSpeed()));
-	timer_loop.async_wait(boost::bind(&GameManager::loopWorld, this));
+	thread = univers_.getIoManager().getThreadGroup().create_thread([this](){
+		timer_loop.expires_from_now(boost::posix_time::microsec(
+				univers_.getMicroSecDeltaTime()));
+		timer_loop.async_wait(boost::bind(&GameManager::loopWorld, this));
+	});
 }
 
 void GameManager::loopWorld() {
 	SnakeClient::boost_shared_ptr ptr(univers_.getSnakeClient().lock());
-	if (!univers_.isOpenGame_() || !ptr)
+	if (!univers_.isOpenGame_() || !ptr || !world_)
 		return;
 
 	univers_.manageSnakeClientInput();
-	threadGroup.join_all();
 	for (; nextFrame.empty() && univers_.isOpenGame_() && world_ && ptr;) {
 		ptr->lock();
 		nextFrame = world_->getEventsManager().getEvents<NextFrame>();
@@ -85,11 +95,10 @@ void GameManager::loopWorld() {
 	}
 
 	nextFrame.clear();
+
 	world_->getEventsManager().destroy<NextFrame>();
 
 	ptr->deliverEvents();
-
-	world_->update();
 
 	world_->getSystemsManager().getSystem<FollowSystem>().update();
 	world_->getSystemsManager().getSystem<JoystickSystem>().update();
@@ -100,27 +109,28 @@ void GameManager::loopWorld() {
 	world_->getEventsManager().destroy<FoodCreation>();
 	world_->getSystemsManager().getSystem<SpriteSystem>().update();
 	world_->getSystemsManager().getSystem<RenderSystem>().update();
+	world_->getSystemsManager().getSystem<FoodEatSystem>().update();
+	world_->getEventsManager().destroy<FoodEat>();
+	world_->update();
 
 	Bobby::clearPriority();
 	if (univers_.isServer()) {
 		for (auto &bobby : univers_.getBobbys()) {
 			if (world_->getEntitiesManager().hasEntityByTagId(bobby->getId() + eTag::kHeadTag)) {
-				threadGroup.create_thread(boost::bind(&Bobby::calculateDirection, bobby.get()));
+				ptr->addScore(bobby->getId(), eScore::kFromTime);
+				univers_.getIoManager().getThreadGroup().create_thread(boost::bind(&Bobby::calculateDirection, bobby.get()));
 			}
 
 		}
 	}
 
 
-	world_->getSystemsManager().getSystem<FoodEatSystem>().update();
-	world_->getEventsManager().destroy<FoodEat>();
-
 	if (!ptr->allSnakeIsDead()) {
-
-		timer_loop.expires_at(
-				timer_loop.expires_at() +
-				boost::posix_time::milliseconds(univers_.getGameSpeed()));
-		timer_loop.async_wait(boost::bind(&GameManager::loopWorld, this));
+		univers_.getIoManager().getThreadGroup().create_thread([this](){
+			timer_loop.expires_from_now(boost::posix_time::microsec(
+					univers_.getMicroSecDeltaTime()));
+			timer_loop.async_wait(boost::bind(&GameManager::loopWorld, this));
+		});
 	}
 }
 
@@ -128,7 +138,7 @@ void GameManager::loopUI() {
 
 	SnakeClient::boost_shared_ptr ptr(univers_.getSnakeClient().lock());
 
-	while (univers_.getGameSpeed() && univers_.displayIsAvailable()) {
+	while (univers_.isOpenGame_() && univers_.displayIsAvailable()) {
 
 		if (!ptr || ptr->allSnakeIsDead())
 			break;
@@ -138,6 +148,7 @@ void GameManager::loopUI() {
 
 		univers_.updateDisplayUI();
 	}
+	log_error("%s finish", __PRETTY_FUNCTION__);
 }
 
 void GameManager::refreshTimerLoopWorld() {
@@ -150,8 +161,9 @@ KINU::World &GameManager::getWorld_() {
 }
 
 void GameManager::finishGame() {
-	timer_loop.wait();
-	timer_loop.cancel();
+	log_error("%s", __PRETTY_FUNCTION__);
+	univers_.getIoManager().getThreadGroup().interrupt_all();
 	nextFrame.clear();
+	log_error("%s world == nullptr", __PRETTY_FUNCTION__);
 	world_ = nullptr;
 }
