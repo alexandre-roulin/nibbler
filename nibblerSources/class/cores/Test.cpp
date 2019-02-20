@@ -70,7 +70,7 @@ void Test::update() {
 }
 
 void Test::addLog(std::string const &s) {
-	oLogs_ << s;
+	oLogs_ << id_ << " " << s << std::endl;
 }
 
 void Test::setTest(bool b) {
@@ -100,9 +100,9 @@ void Test::setInputFile(std::string const &inputFile) {
 
 void Test::setLogFile(std::string const &logFile) {
 	if (input_)
-		oLogs_.open((path_ / TEST_DIR / (logFile + ".log")).generic_string(), std::ios_base::app);
+		oLogs_.open((path_ / TEST_DIR / (logFile + std::to_string(id_) + ".log")).generic_string(), std::ios_base::app);
 	else
-		oLogs_.open((path_ / TEST_OUTPUT / (logFile + ".log")).generic_string(), std::ios_base::app);
+		oLogs_.open((path_ / TEST_OUTPUT / (logFile + std::to_string(id_) + ".log")).generic_string(), std::ios_base::app);
 }
 
 

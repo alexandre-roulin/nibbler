@@ -113,21 +113,28 @@ for p in ${pid[*]}; do
     done
 done
 
-sleep 1
+sleep 0.1
 
-echo "diff ${1}.log logTests/${2}.log"
-
-diff="$(diff ${1}.log logTests/${2}.log)"
-
-if [ $returnSucessProcess = $numOfClient ] && [ "$diff" == "" ]
+if [ $returnSucessProcess != $numOfClient ]
     then
-        echo "EXIT_DIFF $returnSucessProcess $numOfClient"
+        echo "EXIT_FAILURE $returnSucessProcess $numOfClient"
         exit 0
 fi
-if [ $returnSucessProcess = $numOfClient ]
-    then
-        echo "EXIT_SUCESS $returnSucessProcess $numOfClient"
-        exit 2
-fi
+
+index=0
+while test ${index} != ${numOfClient}
+    do
+
+    diff="$(diff ${1}${id[$index]}.log logTests/${2}${id[$index]}.log)"
+
+    echo "diff ${1}${id[$index]}.log logTests/${2}${id[$index]}.log"
+    if [ "$diff" != "" ]
+        then
+            echo "EXIT_DIFF $returnSucessProcess $numOfClient"
+            exit 2
+    fi
+
+    index=$(($index + 1))
+done
 echo "EXIT_FAILURE $returnSucessProcess $numOfClient"
-exit 1
+exit 0
