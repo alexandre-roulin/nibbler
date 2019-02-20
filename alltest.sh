@@ -9,8 +9,15 @@ function ctrl_c() {
 }
 trap ctrl_c INT
 
-dirTest=tests
-dirTest="$dirTest\/*/*.ut"
+if [ $2 ]
+    then
+        dirTest=$2
+        dirTest="$dirTest/*.ut"
+    else
+        dirTest=tests
+        dirTest="$dirTest\/*/*.ut"
+fi
+
 echo $dirTest
 rm -rf logTests
 mkdir logTests
@@ -25,7 +32,7 @@ for filename in $dirTest
                 exit 1
         fi
 
-        gtimeout 20 sh test.sh tests/$(basename "$filename" .ut) $(basename "$filename" .ut) "logTests/$(basename "$filename" .ut).output" ${1} &> "logTests/sh_$(basename "$filename" .ut).output"
+        gtimeout 2000 sh test.sh tests/$(basename "$filename" .ut) $(basename "$filename" .ut) "logTests/$(basename "$filename" .ut).output" ${1} &> "logTests/sh_$(basename "$filename" .ut).output"
 
         result=$?
 

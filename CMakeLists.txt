@@ -22,7 +22,6 @@ elseif (APPLE)
         execute_process(COMMAND $ENV{HOME}/.brew/bin/brew install boost)
         execute_process(COMMAND $ENV{HOME}/.brew/bin/brew install assimp)
         execute_process(COMMAND $ENV{HOME}/.brew/bin/brew install glm)
-        execute_process(COMMAND $ENV{HOME}/.brew/bin/brew install coreutils)
     endif(INSTALL)
 
     link_directories(/usr/lib/)

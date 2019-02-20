@@ -13,6 +13,13 @@
 #include <cassert>
 #include <boost/algorithm/string.hpp>
 #include <vector>
+#include <unistd.h>
+#include <iostream>
+#include <chrono>
+#include <thread>
+
+
+using namespace std::chrono_literals;
 
 
 Test &Test::getInstance() {
@@ -51,7 +58,8 @@ void Test::update() {
 		std::cout << id_ << ": Is my action [" << token[INPUT_ACTION] << "]" << std::endl;
 		callback_(ptr_, token[INPUT_ACTION]);
 		std::cout << "Continue" << std::endl;
-		usleep(INPUT_WAITING_TIME);
+		//usleep(INPUT_WAITING_TIME);
+		std::this_thread::sleep_for(50ms);
 		kill(pidTestProcess_, SIGUSR1);
 	} else {
 		std::cout << id_;
@@ -62,10 +70,14 @@ void Test::update() {
 	}
 	if (!std::getline(iAction_, buffer_)) {
 		std::cout << id_ << "[END]" << std::endl;
-		//kill(pidTestProcess_, SIGUSR1);
+		kill(pidTestProcess_, SIGUSR1);
 		kill(pidTestProcess_, SIGUSR2);
-		sleep(1);
-		exit(EXIT_SUCCESS);
+		std::cout << id_ << "[sleep]" << std::endl;
+		std::cout.flush();
+		std::this_thread::sleep_for(1s * id_);
+		std::cout << id_ << "[end sleep]" << std::endl;
+		if (1 && printf("l"))
+			exit(EXIT_SUCCESS);
 	}
 }
 

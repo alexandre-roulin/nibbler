@@ -15,15 +15,15 @@ function trap_with_arg() {
 function func_trap() {
     echo Trapped: $1
     index=0
-    if [ $1 = SIGUSR1 ]
+    if [[ $1 = SIGUSR1 ]]
         then
             while test ${index} != ${numOfClient}
             do
                 kill -n 30 ${pid[$index]}
-                echo "kill -n 30 ${pid[$index]}"
+                echo "kill -n 30 ${pid[$index]} $index"
                 index=$(($index + 1))
             done
-    elif [ $1 = SIGUSR2 ]
+    elif [[ $1 = SIGUSR2 ]]
         then
             returnSucessProcess=$((returnSucessProcess + 1))
     fi
@@ -40,8 +40,8 @@ function in_id {
   return 0
 }
 
-trap_with_arg func_trap SIGUSR1
 trap_with_arg func_trap SIGUSR2
+trap_with_arg func_trap SIGUSR1
 
 fileLog="$(basename ${1})/$(basename ${1})"
 
@@ -67,7 +67,7 @@ numOfClient=${#id[@]}
 echo "Run nibbler ..."
 while test ${index} != ${numOfClient}
     do
-    ${4} -t --id ${id[$index]} --fileInput ${2} --fileLog ${2} --pidTestProcess ${pidOfScript} &> ${3} & pid[$index]=$! > /tmp/log_pid.out
+    ${4} -t --id ${id[$index]} --fileInput ${2} --fileLog ${2} --pidTestProcess ${pidOfScript} &> "logTests/${2}${id[$index]}.output" & pid[$index]=$! > /tmp/log_pid.out
     echo ${id[$index]}
     index=$(($index + 1))
 done
@@ -111,16 +111,26 @@ echo
 echo "Waiting process exit ..."
 for p in ${pid[*]}; do
     while kill -0 ${p} > /dev/null ; do
-        sleep 0.1
+    sleep 0.1
     done
 done
 
-sleep 0.1
+#while pgrep -x "nibbler" > /dev/null; do
+#    sleep 0.001
+#done
+
+redp="$(pgrep -x "nibbler")"
+echo $redp
+
+sleep 3
+
+redp="$(pgrep -x "nibbler")"
+echo $redp
 
 if [ $returnSucessProcess != $numOfClient ]
     then
         echo "EXIT_FAILURE $returnSucessProcess $numOfClient"
-        exit 0
+        exit 1
 fi
 
 index=0
@@ -138,5 +148,5 @@ while test ${index} != ${numOfClient}
 
     index=$(($index + 1))
 done
-echo "EXIT_FAILURE $returnSucessProcess $numOfClient"
+echo "EXIT_SUCESS $returnSucessProcess $numOfClient"
 exit 0
