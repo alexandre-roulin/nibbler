@@ -10,7 +10,7 @@ function ctrl_c() {
 trap ctrl_c INT
 
 dirTest=tests
-dirTest="$dirTest\/*.ut"
+dirTest="$dirTest\/*/*.ut"
 echo $dirTest
 rm -rf logTests
 mkdir logTests

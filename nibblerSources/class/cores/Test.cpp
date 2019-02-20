@@ -91,16 +91,22 @@ void Test::setPidTestProcess(int pidTestProcess) {
 }
 void Test::setInputFile(std::string const &inputFile) {
 	if (test_) {
-		iAction_.open((path_ / TEST_DIR / (inputFile + ".ut")).generic_string());
+		iAction_.open((path_ / TEST_DIR / inputFile / (inputFile + ".ut")).generic_string());
 		std::getline(iAction_, buffer_);
 	}
-	if (input_)
-		oAction_.open((path_ / TEST_DIR / (inputFile + ".ut")).generic_string(), std::ios_base::app);
+	if (input_){
+		if (!boost::filesystem::exists(path_ / TEST_DIR / inputFile))
+			boost::filesystem::create_directory(path_ / TEST_DIR / inputFile);
+		oAction_.open((path_ / TEST_DIR / inputFile / (inputFile + ".ut")).generic_string(), std::ios_base::app);
+	}
 }
 
 void Test::setLogFile(std::string const &logFile) {
-	if (input_)
-		oLogs_.open((path_ / TEST_DIR / (logFile + std::to_string(id_) + ".log")).generic_string(), std::ios_base::app);
+	if (input_) {
+		if (!boost::filesystem::exists(path_ / TEST_DIR / logFile))
+			boost::filesystem::create_directory(path_ / TEST_DIR / logFile);
+		oLogs_.open((path_ / TEST_DIR / logFile / (logFile + std::to_string(id_) + ".log")).generic_string(), std::ios_base::app);
+	}
 	else
 		oLogs_.open((path_ / TEST_OUTPUT / (logFile + std::to_string(id_) + ".log")).generic_string(), std::ios_base::app);
 }

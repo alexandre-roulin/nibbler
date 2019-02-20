@@ -43,8 +43,11 @@ function in_id {
 trap_with_arg func_trap SIGUSR1
 trap_with_arg func_trap SIGUSR2
 
+fileLog="$(basename ${1})/$(basename ${1})"
+
 echo "pidOfScript : ${pidOfScript}"
 echo "fileToTest: ${1}"
+echo "fileLog: ${fileLog}"
 
 
 echo "Count all id ..."
@@ -54,7 +57,7 @@ while read ligne ; do
     then
         id+=("$(echo ${checkId})")
     fi
-done < "${1}.ut"
+done < "tests/${fileLog}.ut"
 echo "Where has $numOfClient Id's"
 echo
 echo
@@ -64,7 +67,6 @@ numOfClient=${#id[@]}
 echo "Run nibbler ..."
 while test ${index} != ${numOfClient}
     do
-    fileLog="$(basename ${1})"
     ${4} -t --id ${id[$index]} --fileInput ${2} --fileLog ${2} --pidTestProcess ${pidOfScript} &> ${3} & pid[$index]=$! > /tmp/log_pid.out
     echo ${id[$index]}
     index=$(($index + 1))
@@ -125,9 +127,9 @@ index=0
 while test ${index} != ${numOfClient}
     do
 
-    diff="$(diff ${1}${id[$index]}.log logTests/${2}${id[$index]}.log)"
+    diff="$(diff tests/${fileLog}${id[$index]}.log logTests/${2}${id[$index]}.log)"
 
-    echo "diff ${1}${id[$index]}.log logTests/${2}${id[$index]}.log"
+    echo "diff tests/${fileLog}${id[$index]}.log logTests/${2}${id[$index]}.log"
     if [ "$diff" != "" ]
         then
             echo "EXIT_DIFF $returnSucessProcess $numOfClient"
