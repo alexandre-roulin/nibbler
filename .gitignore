@@ -1,5 +1,6 @@
 input
-logsTests
+logFail
+logTests
 extern/imgui/imconfig-sfml.h
 build
 cmake-build-release/

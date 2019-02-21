@@ -40,8 +40,27 @@ function in_id {
   return 0
 }
 
-trap_with_arg func_trap SIGUSR2
-trap_with_arg func_trap SIGUSR1
+function func_trap_SIGUSR1() {
+    echo "Trapped SIGUSR1"
+    i=0
+    while test ${i} != ${numOfClient}
+    do
+        kill -n 30 ${pid[$i]}
+        echo "kill -n 30 ${pid[$i]} $i"
+        i=$(($i + 1))
+    done
+}
+function func_trap_SIGUSR2() {
+    echo "Trapped SIGUSR2"    
+    returnSucessProcess=$((returnSucessProcess + 1))
+}
+
+trap func_trap_SIGUSR1 SIGUSR1
+trap func_trap_SIGUSR2 SIGUSR2
+
+#trap "func_trap SIGUSR2" SIGUSR2
+#trap "func_trap SIGUSR1" SIGUSR1
+#trap_with_arg func_trap SIGUSR1
 
 fileLog="$(basename ${1})/$(basename ${1})"
 
@@ -114,18 +133,6 @@ for p in ${pid[*]}; do
     sleep 0.1
     done
 done
-
-#while pgrep -x "nibbler" > /dev/null; do
-#    sleep 0.001
-#done
-
-redp="$(pgrep -x "nibbler")"
-echo $redp
-
-sleep 3
-
-redp="$(pgrep -x "nibbler")"
-echo $redp
 
 if [ $returnSucessProcess != $numOfClient ]
     then

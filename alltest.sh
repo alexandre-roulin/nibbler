@@ -21,6 +21,7 @@ fi
 echo $dirTest
 rm -rf logTests
 mkdir logTests
+mkdir logFail &> /dev/null
 
 for filename in $dirTest
     do
@@ -38,14 +39,17 @@ for filename in $dirTest
 
         if [ $result = 124 ]
             then
+                cp "logTests/sh_$(basename "$filename" .ut).output" "logFail/sh_$(basename "$filename" .ut).$(date +%s)"
                 echo "${RED}$filename TIMEOUT ${NC}"
         elif [ $result = 0 ]
             then
                 echo "${GREEN}$filename SUCCESS ${NC}"
         elif [ $result = 2 ]
             then
+                cp "logTests/sh_$(basename "$filename" .ut).output" "logFail/sh_$(basename "$filename" .ut).$(date +%s)"
                 echo "${RED}$filename DIFF ${NC}"
         else
+            cp "logTests/sh_$(basename "$filename" .ut).output" "logFail/sh_$(basename "$filename" .ut).$(date +%s)"
             echo "${RED}$filename FAILURE ${NC}"
         fi
 done
