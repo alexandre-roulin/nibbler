@@ -34,7 +34,7 @@ const std::string Univers::ErrorServerAlreadyUseOnThisPort = "Server already in 
 
 Univers::Univers()
 		:
-		ioManager(std::make_unique<IOManager>(20)),
+		ioManager(std::make_unique<IOManager>(10)),
 		soundManager(std::make_unique<ExternalLibrarySoundManager>()),
 		displayManager(std::make_unique<ExternalLibraryDisplayManager>()),
 		gameManager(std::make_unique<GameManager>(*this)),
@@ -60,7 +60,6 @@ void Univers::resetData() {
 
 	openGame_ = false;
 	switchLib = false;
-	std::cout << "Couc " << std::endl;
 	SnakeClient::boost_shared_ptr ptr(getSnakeClient().lock());
 	if (ptr && !ptr->isConnect()) {
 		deleteClient();

@@ -22,7 +22,7 @@ public:
 	bool isSwitchingLibrary;
 	size_t indexConnection;
 	bool isValid;
-	uint16_t score_;
+	uint32_t score_;
 
 	void lightCopy(Snake &);
 	void hardCopy(Snake &);

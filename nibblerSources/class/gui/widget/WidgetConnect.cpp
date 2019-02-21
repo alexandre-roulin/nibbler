@@ -7,8 +7,8 @@ WidgetConnect::WidgetConnect(Gui &core) :
 		client_(false) {
 	bzero(dnsBuffer_, IM_ARRAYSIZE(dnsBuffer_));
 	bzero(portBuffer_, IM_ARRAYSIZE(portBuffer_));
-	memcpy(dnsBuffer_, "localhost", sizeof("localhost"));
-	memcpy(portBuffer_, "4242", sizeof("4242"));
+	memcpy(dnsBuffer_, DEFAULT_DNS, sizeof(DEFAULT_DNS));
+	memcpy(portBuffer_, DEFAULT_PORT, sizeof(DEFAULT_PORT));
 
 }
 

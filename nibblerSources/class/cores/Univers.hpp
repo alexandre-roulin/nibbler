@@ -16,7 +16,9 @@
 #include <boost/scoped_ptr.hpp>
 
 #define DEFAULT_DNS "localhost"
-#define DEFAULT_PORT "4242"
+//#define DEFAULT_DNS "93.11.149.76"
+#define DEFAULT_PORT "8000"
+#define DEFAULT_PORT_NU 8000
 
 class GameManager;
 
@@ -74,7 +76,7 @@ public:
 
 	void createClient();
 
-	void createServer(unsigned int port = 4242);
+	void createServer(unsigned int port = DEFAULT_PORT_NU);
 
 	void createGui();
 
