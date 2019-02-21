@@ -67,7 +67,7 @@ namespace KNW {
 	void ServerTCP::startServer(uint16_t port) noexcept {
 		boost::asio::ip::tcp::resolver resolver(io_manager_.getIo());
 		boost::asio::ip::tcp::resolver::query query(
-				"192.168.0.101",
+				"localhost", //192.168.0.101
 				boost::lexical_cast<std::string>(port));
 		boost::asio::ip::tcp::endpoint endpoint = *resolver.resolve(query);
 		acceptor_->open(endpoint.protocol());
