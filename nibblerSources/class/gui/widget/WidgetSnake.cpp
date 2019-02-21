@@ -5,11 +5,11 @@
 WidgetSnake::WidgetSnake(Gui &core,
 						 Snake const &snake,
 						 std::map<eSprite, SpriteColorProperties> const &mapSprite,
-						 bool isYourSnake) :
+						 SnakeType type) :
 		AWidget(core),
 		snake_(snake),
 		mapSprite_(mapSprite),
-		isYourSnake_(isYourSnake),
+		type_(type),
 		sizeTexture_(0) {
 	updateSizeTexture_();
 }
@@ -17,9 +17,9 @@ WidgetSnake::WidgetSnake(Gui &core,
 void WidgetSnake::render(void) {
 	if (!snake_.isValid)
 		return;
-	if (isYourSnake_)
+	if (type_ == kYour)
 		renderYourSnake_();
-	else if (snake_.isIA)
+	else if (type_ == kIa)
 		renderIa_();
 	else
 		renderOtherSnake_();
@@ -55,7 +55,7 @@ void WidgetSnake::renderSelectionColor_() const {
 
 	int flagImGuiCombo;
 
-	if (isYourSnake_)
+	if (type_ == kYour)
 		flagImGuiCombo = ImGuiComboFlags_None;
 	else
 		flagImGuiCombo = ImGuiComboFlags_NoArrowButton;

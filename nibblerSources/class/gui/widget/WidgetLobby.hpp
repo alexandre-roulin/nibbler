@@ -21,7 +21,7 @@ public:
 	WidgetLobby &operator=(const WidgetLobby &) = default;
 	WidgetLobby(const WidgetLobby &) = default;
 
-	void addSnake(Snake const &snake, bool isYourSnake = false);
+	void addSnake(Snake const &snake, WidgetSnake::SnakeType type);
 
 	void addColor(eSprite color, std::string const &name, std::string const &pathColor);
 

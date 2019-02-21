@@ -116,6 +116,10 @@ bool SnakeClient::isConnect() const {
 	return clientTCP_ != nullptr && clientTCP_->isConnect();
 }
 
+bool SnakeClient::isIa() const {
+	return fromIA_;
+}
+
 void SnakeClient::killSnake(uint16_t id) {
 	if (id_ == id || (univers_.isIASnake(id) && univers_.isServer())) {
 		log_debug("%s id[%d]", __PRETTY_FUNCTION__, id);

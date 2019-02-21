@@ -34,6 +34,8 @@ public:
 
 	bool isConnect() const;
 
+	bool isIa() const;
+
 	uint16_t getId_() const;
 
 	bool isSwitchingLibrary() const;
