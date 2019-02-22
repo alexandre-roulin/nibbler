@@ -153,6 +153,8 @@ void SnakeClient::addScore(uint16_t id, eScore score) {
 
 void SnakeClient::disconnect() {
 	clientTCP_->disconnect();
+	std::for_each(snake_array_.begin(), snake_array_.end(), [](Snake &snake){ snake.reset(); });
+	refreshSnakeArray();
 }
 
 /***** Callback *****/
@@ -308,6 +310,11 @@ void SnakeClient::refreshSnakeArray() {
 		snake_array_[id_].sprite = sprite_;
 }
 
+
+void SnakeClient::callbackCloseConnection(char) {
+	disconnect();
+}
+
 void SnakeClient::build() {
 
 	boost::weak_ptr<SnakeClient> thisWeakPtr(shared_from_this());
@@ -415,5 +422,11 @@ void SnakeClient::build() {
 				if (myPtr) myPtr->callbackPause(e);
 			}),
 			eHeader::kPause);
-}
 
+	clientTCP_->getDataTCP_().addDataType<char>(
+			([thisWeakPtr](char c) {
+				auto myPtr = thisWeakPtr.lock();
+				if (myPtr) myPtr->callbackCloseConnection(c);
+			}),
+			eHeader::kCloseConnection);
+}

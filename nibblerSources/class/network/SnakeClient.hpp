@@ -71,6 +71,7 @@ private:
 
 	void build();
 
+	void callbackCloseConnection(char);
 
 	void callbackRemoveSnake(int16_t);
 
