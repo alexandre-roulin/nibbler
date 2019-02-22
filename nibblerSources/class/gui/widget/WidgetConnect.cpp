@@ -62,20 +62,12 @@ void WidgetConnect::render(void) {
 		if (ptr && ptr->isConnect()) {
 			if (ImGui::Button("Join new", sf::Vector2f(ImGui::GetWindowSize().x, 20))) {
 				ptr->disconnect();
-				ptr->connect(dnsBuffer_, portBuffer_);
+				core_.univers.connect(dnsBuffer_, portBuffer_);
 			}
 		} else if (ImGui::Button("Join", sf::Vector2f(ImGui::GetWindowSize().x, 20))) {
-			if (!ptr) {
+			if (!ptr)
 				core_.univers.createClient();
-				{
-					SnakeClient::boost_shared_ptr ptr(core_.univers.getSnakeClient().lock());
-					if (!ptr)
-						throw (std::runtime_error("During creation server : Client is not created"));
-					ptr->connect(dnsBuffer_, portBuffer_);
-				}
-			}
-			else
-				ptr->connect(dnsBuffer_, portBuffer_);
+			core_.univers.connect(dnsBuffer_, portBuffer_);
 		}
 	}
 	else if (!client_) {
@@ -84,12 +76,7 @@ void WidgetConnect::render(void) {
 				core_.univers.deleteServer();
 			core_.univers.createServer();
 			core_.univers.createClient();
-			{
-				SnakeClient::boost_shared_ptr ptr(core_.univers.getSnakeClient().lock());
-				if (!ptr)
-					throw (std::runtime_error("During creation server : Client is not created"));
-				ptr->connect(dnsBuffer_, portBuffer_);
-			}
+			core_.univers.connect(dnsBuffer_, portBuffer_);
 		}
 	}
 	Gui::endColor();
