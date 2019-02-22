@@ -21,12 +21,12 @@ Snake::Snake() :
 		isIA(false),
 		isSwitchingLibrary(false),
 		isValid(false),
+		isReadyToExpose(false),
 		score_(0) {
 	memset(name, 0, NAME_BUFFER);
 }
 
 void Snake::randomSnake(int16_t id) {
-
 	sprite = static_cast<eSprite>(static_cast<int>(eSprite::kGreen) + rand() % SNAKE_MAX_COLOR);
 	strncpy(name, Snake::basicName[rand() % SNAKE_MAX_NAME].c_str(), NAME_BUFFER);
 	id_ = id;
@@ -35,6 +35,7 @@ void Snake::randomSnake(int16_t id) {
 	isValid = true;
 	isIA = false;
 	score_ = 0;
+	isReadyToExpose = false;
 }
 
 void Snake::lightCopy(Snake &snake) {
@@ -46,6 +47,7 @@ void Snake::lightCopy(Snake &snake) {
 	direction = snake.direction;
 	isAlive = snake.isAlive;
 	isIA = snake.isIA;
+	isReadyToExpose = snake.isReadyToExpose;
 }
 
 void Snake::hardCopy(Snake &snake) {

@@ -208,9 +208,10 @@ void SnakeClient::callbackId(int16_t id) {
 		snake_array_[id_].id_ = id;
 		snake_array_[id_].isReady = true;
 		snake_array_[id_].isIA = true;
-		refreshSnakeArray();
-		sendDataToServer(snake_array_[id_], eHeader::kSnake);
 	}
+	snake_array_[id_].isReadyToExpose = true;
+	refreshSnakeArray();
+	sendDataToServer(snake_array_[id_], eHeader::kSnake);
 }
 
 void SnakeClient::callbackInput(InputInfo) {

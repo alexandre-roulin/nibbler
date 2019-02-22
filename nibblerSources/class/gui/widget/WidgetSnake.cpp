@@ -15,7 +15,7 @@ WidgetSnake::WidgetSnake(Gui &core,
 }
 
 void WidgetSnake::render(void) {
-	if (!snake_.isValid)
+	if (!snake_.isValid || !snake_.isReadyToExpose)
 		return;
 	if (type_ == kYour)
 		renderYourSnake_();
