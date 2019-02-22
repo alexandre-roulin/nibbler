@@ -7,7 +7,8 @@ WidgetOption::WidgetOption(Gui &core) :
 		mapSize_(core_.univers.getMapSize()) {
 	SnakeClient::boost_shared_ptr ptr(core_.univers.getSnakeClient().lock());
 
-	if (ptr) memcpy(nameBuffer_, ptr->getSnake().name, NAME_BUFFER);
+	if (ptr)
+		memcpy(nameBuffer_, ptr->getSnake().name, NAME_BUFFER);
 }
 
 void WidgetOption::render(void) {
@@ -18,13 +19,11 @@ void WidgetOption::render(void) {
 				 ImGuiWindowFlags_NoCollapse);
 
 	if (ImGui::InputText("Name", nameBuffer_,
-						 IM_ARRAYSIZE(nameBuffer_),
+						 IM_ARRAYSIZE(nameBuffer_) - 1,
 						 ImGuiInputTextFlags_EnterReturnsTrue) && ptr) {
-
-		ptr->changeName(nameBuffer_);
-		memcpy(nameBuffer_,
-			   ptr->getSnake().name,
-			   NAME_BUFFER);
+		if (strlen(nameBuffer_) > 2)
+			ptr->changeName(nameBuffer_);
+		memcpy(nameBuffer_, ptr->getSnake().name, NAME_BUFFER);
 	}
 
 	if (ImGui::InputInt("Size map", reinterpret_cast<int *>(&mapSize_), 1,
