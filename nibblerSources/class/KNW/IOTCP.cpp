@@ -1,9 +1,7 @@
 #include <utility>
-
-#include <utility>
-
 #include "IOTCP.hpp"
 #include "ServerTCP.hpp"
+#include <logger.h>
 
 namespace KNW {
 
@@ -78,10 +76,8 @@ namespace KNW {
 	}
 
 	void
-	IOTCP::handleWrite(const boost::system::error_code &ec, size_t len) {
-		if (ec.value() != 0 || len == 0) {
-			checkError(ec);
-		}
+	IOTCP::handleWrite(const boost::system::error_code &ec, size_t) {
+		checkError(ec);
 	}
 
 	void IOTCP::writeSocket(std::string data) {
@@ -98,6 +94,7 @@ namespace KNW {
 	}
 
 	void IOTCP::checkError(boost::system::error_code const &error_code) {
+		log_info("%s %d", __PRETTY_FUNCTION__, error_code.value());
 		if (error_code) {
 			if (callbackDeadSocket_)
 				callbackDeadSocket_();

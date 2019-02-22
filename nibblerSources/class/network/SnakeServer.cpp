@@ -99,6 +99,10 @@ void SnakeServer::build() {
 			([thisWeakPtr](eAction &e) { auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackPause(e); }),
 			eHeader::kPause);
 
+	serverTCP_->getDataTCP().addDataType<char>(
+			([thisWeakPtr](char c) { auto myPtr = thisWeakPtr.lock(); if (myPtr) myPtr->callbackCloseConnection(c); }),
+			eHeader::kCloseConnection);
+
 }
 
 /***** Callback *****/
@@ -219,6 +223,10 @@ void SnakeServer::callbackSnakeArray(SnakeArrayContainer &) {
 }
 
 
+void SnakeServer::callbackCloseConnection(char) {
+
+}
+
 void SnakeServer::startGame() {
 	assert(isReady());
 	std::lock_guard<std::mutex> guard(mutex_);
@@ -284,6 +292,11 @@ SnakeServer::create(Univers &univers, unsigned int port) {
 
 void SnakeServer::closeAcceptorServer() {
 	serverTCP_->stopAccept();
+
+}
+
+SnakeServer::~SnakeServer() {
+	serverTCP_->writeDataToOpenConnections('*', eHeader::kCloseConnection);
 }
 
 

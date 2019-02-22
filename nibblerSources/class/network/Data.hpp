@@ -21,7 +21,8 @@ enum class eHeader : uint16_t {
 	kSnake,				//11
 	kSnakeArray,		//12
 	kRemoveSnake,		//13
-	kAddScore			//14
+	kAddScore,			//14
+	kCloseConnection	//15
 };
 
 inline std::ostream &operator<<(std::ostream  &os, eHeader const & header) {
@@ -99,8 +100,10 @@ inline std::ostream &operator<<(std::ostream  &os, eHeader const & header) {
 			os << "kSnakeArray";
 			break;
 		}
-
+		default :
+			break;
 	}
+
 	return os;
 }
 

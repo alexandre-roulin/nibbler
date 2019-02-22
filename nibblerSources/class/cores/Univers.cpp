@@ -45,7 +45,7 @@ Univers::Univers()
 		exit_(false),
 		switchLib(false),
 		mapSize_(MAP_DEFAULT),
-		microSecDeltaTime(GameManager::Impossible),
+		microSecDeltaTime(GameManager::Hard),
 		borderless(false),
 		openGame_(false) {
 

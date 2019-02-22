@@ -28,6 +28,8 @@ public:
 
 	void closeAcceptorServer();
 
+	virtual ~SnakeServer();
+
 private:
 	SnakeServer(Univers &univers, unsigned int port);
 	void build();
@@ -61,6 +63,8 @@ private:
 	void callbackFood(FoodInfo);
 
 	void callbackStartInfo(StartInfo);
+
+	void callbackCloseConnection(char);
 
 	void updateInput();
 

@@ -24,6 +24,7 @@ public:
 	bool isValid;
 	uint32_t score_;
 
+	void reset();
 	void lightCopy(Snake &);
 	void hardCopy(Snake &);
 	void randomSnake(int16_t id);
