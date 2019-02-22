@@ -76,7 +76,7 @@ public:
 
 	void createClient();
 
-	void createServer(unsigned int port = DEFAULT_PORT_NU);
+	bool createServer(unsigned int port = DEFAULT_PORT_NU);
 
 	void createGui();
 

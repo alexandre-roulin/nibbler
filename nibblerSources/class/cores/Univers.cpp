@@ -292,13 +292,15 @@ void Univers::createClient() {
 		gui_->addMessageChat(eColorLog::kOrange, WarningClientExist);
 }
 
-void Univers::createServer(unsigned int port) {
-	if (snakeServer_)
+bool Univers::createServer(unsigned int port) {
+	if (snakeServer_) {
 		gui_->addMessageChat(eColorLog::kOrange, WarningServerExist);
+	}
 	else {
 		try {
 			snakeServer_ = SnakeServer::create(*this, port);
 			gui_->addMessageChat(eColorLog::kGreen, SuccessServerIsCreate);
+			return (true);
 		} catch (const boost::system::system_error &ex) {
 			if (boost::system::errc::address_in_use == ex.code()) {
 				gui_->addMessageChat(eColorLog::kRed,
@@ -310,8 +312,7 @@ void Univers::createServer(unsigned int port) {
 			gui_->addMessageChat(e.what());
 		}
 	}
-
-
+	return (false);
 }
 
 
@@ -343,6 +344,7 @@ void Univers::deleteClient() {
 		log_fatal("use count %d", ptr.use_count());
 		ptr->disconnect();
 		gui_->addMessageChat(eColorLog::kGreen, SuccessClientIsDelete);
+		snakeClient_ = nullptr;
 	} else
 		gui_->addMessageChat(eColorLog::kOrange, WarningClientNotExist);
 }
@@ -353,8 +355,9 @@ void Univers::deleteServer() {
 	if (snakeServer_) {
 		snakeServer_ = nullptr;
 		gui_->addMessageChat(eColorLog::kGreen, SuccessServerIsDelete);
-		if (ptr && ptr->isConnect())
+		if (ptr && ptr->isConnect()) {
 			deleteClient();
+		}
 	} else {
 		gui_->addMessageChat(eColorLog::kOrange, WarningServerNotExist);
 	}
