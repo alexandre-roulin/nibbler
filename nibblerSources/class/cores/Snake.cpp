@@ -21,10 +21,10 @@ Snake::Snake() :
 		isIA(false),
 		isSwitchingLibrary(false),
 		isValid(false),
+		isReadyToExpose(false),
 		score_(0) {
 	memset(name, 0, NAME_BUFFER);
 }
-
 
 void Snake::randomSnake(int16_t id) {
 
@@ -38,6 +38,7 @@ void Snake::randomSnake(int16_t id) {
 	isValid = true;
 	isIA = false;
 	score_ = 0;
+	isReadyToExpose = false;
 }
 
 void Snake::lightCopy(Snake &snake) {
@@ -49,6 +50,7 @@ void Snake::lightCopy(Snake &snake) {
 	direction = snake.direction;
 	isAlive = snake.isAlive;
 	isIA = snake.isIA;
+	isReadyToExpose = snake.isReadyToExpose;
 }
 
 void Snake::hardCopy(Snake &snake) {

@@ -58,17 +58,25 @@ void WidgetConnect::render(void) {
 
 	Gui::beginColor(Gui::HUE_GREEN);
 
-	if (ptr) {
-		if (client_) {
-			if (ImGui::Button("Join", sf::Vector2f(ImGui::GetWindowSize().x, 20))) {
-				ptr->connect(dnsBuffer_, portBuffer_);
+	if (client_ && !core_.univers.isServer()) {
+		if (ptr && ptr->isOpen()) {
+			if (ImGui::Button("Join new", sf::Vector2f(ImGui::GetWindowSize().x, 20))) {
+				ptr->disconnect();
+				core_.univers.connect(dnsBuffer_, portBuffer_);
 			}
-
-		} else {
-			if (ImGui::Button("Create", sf::Vector2f(ImGui::GetWindowSize().x, 20)) && ptr) {
-				core_.univers.createServer();
-				ptr->connect(dnsBuffer_, portBuffer_);
-			}
+		} else if (ImGui::Button("Join", sf::Vector2f(ImGui::GetWindowSize().x, 20))) {
+			if (!ptr)
+				core_.univers.createClient();
+			core_.univers.connect(dnsBuffer_, portBuffer_);
+		}
+	}
+	else if (!client_) {
+		if (ImGui::Button("Create Server", sf::Vector2f(ImGui::GetWindowSize().x, 20))) {
+			if (core_.univers.isServer())
+				core_.univers.deleteServer();
+			core_.univers.createServer();
+			core_.univers.createClient();
+			core_.univers.connect(dnsBuffer_, portBuffer_);
 		}
 	}
 	Gui::endColor();

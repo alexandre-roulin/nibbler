@@ -12,6 +12,8 @@ const std::string Univers::SuccessClientIsConnected = "Client is connected.";
 const std::string Univers::SuccessClientIsCreate = "Client is online";
 const std::string Univers::SuccessClientIsDelete = "Client is delete.";
 const std::string Univers::SuccessServerIsDelete = "Server is delete.";
+const std::string Univers::SuccessBorderlessSet = "Borderless is set.";
+const std::string Univers::SuccessBorderlessUnset = "Borderless is unset.";
 
 const std::string Univers::WarningClientExist = "Client is already in place.";
 const std::string Univers::WarningServerCreateIA = "Only the server owner can create IA.";
@@ -122,9 +124,9 @@ void Univers::callbackAction(eAction action) {
 			setBorderless(!isBorderless());
 			ptr_network->notifyBorderless();
 			if (isBorderless())
-				gui_->addMessageChat(eColorLog::kGreen, "is borderless"); //Todo message
+				gui_->addMessageChat(eColorLog::kGreen, SuccessBorderlessSet);
 			else
-				gui_->addMessageChat(eColorLog::kGreen, "is not borderless"); //Todo message
+				gui_->addMessageChat(eColorLog::kGreen, SuccessBorderlessUnset);
 			break;
 		case eAction::kSwitchReady :
 			if (!ptr) {
@@ -376,8 +378,8 @@ void Univers::deleteClient() {
 
 	if (ptr) {
 		ptr->disconnect();
-		snakeServer_ = nullptr;
 		gui_->addMessageChat(eColorLog::kGreen, SuccessClientIsDelete);
+		snakeClient_ = nullptr;
 	} else
 		gui_->addMessageChat(eColorLog::kOrange, WarningClientNotExist);
 }
@@ -514,8 +516,8 @@ void Univers::setGrid_(const std::shared_ptr<MutantGrid<eSprite>> &grid_) {
 }
 
 bool Univers::displayIsAvailable() const {
-	std::cout << !displayManager->hasLibraryLoaded() << " " << !displayManager->getDisplay()->exit() << std::endl;
-	return !displayManager->hasLibraryLoaded() || !displayManager->getDisplay()->exit();
+	return !displayManager->hasLibraryLoaded() ||
+		!displayManager->getDisplay()->exit();
 }
 
 bool Univers::isSwitchLib() const {

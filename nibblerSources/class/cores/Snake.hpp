@@ -22,6 +22,8 @@ public:
 	bool isSwitchingLibrary;
 	size_t indexConnection;
 	bool isValid;
+	// isReadyToExpose: When client recieves his Id, he can make somes modification before re-sended SnakeSelf
+	bool isReadyToExpose;
 	uint32_t score_;
 
 	void reset();

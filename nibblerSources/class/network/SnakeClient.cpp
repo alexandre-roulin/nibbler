@@ -76,9 +76,11 @@ const Snake &SnakeClient::getSnake() const {
 }
 
 void SnakeClient::changeName(std::string const &name) {
+
 	nameSet_ = true;
-	name_ = std::string(NAME_BUFFER, '\0');
-	name_.assign(name, NAME_BUFFER);
+	//name_ = std::string(NAME_BUFFER, '\0');
+	//name_.assign(name, NAME_BUFFER);
+	name_ = name;
 	refreshSnakeArray();
 	sendDataToServer(snake_array_[id_], eHeader::kSnake);
 }
@@ -115,6 +117,10 @@ void SnakeClient::changeStateReady(bool change) {
 
 bool SnakeClient::isOpen() const {
 	return clientTCP_ != nullptr && clientTCP_->isConnect();
+}
+
+bool SnakeClient::isIa() const {
+	return fromIA_;
 }
 
 void SnakeClient::killSnake(uint16_t id) {
@@ -207,9 +213,10 @@ void SnakeClient::callbackId(int16_t id) {
 		snake_array_[id_].id_ = id;
 		snake_array_[id_].isReady = true;
 		snake_array_[id_].isIA = true;
-		refreshSnakeArray();
-		sendDataToServer(snake_array_[id_], eHeader::kSnake);
 	}
+	snake_array_[id_].isReadyToExpose = true;
+	refreshSnakeArray();
+	sendDataToServer(snake_array_[id_], eHeader::kSnake);
 }
 
 void SnakeClient::callbackInput(InputInfo) {

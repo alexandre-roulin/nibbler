@@ -59,7 +59,7 @@ void Test::update() {
 		callback_(ptr_, token[INPUT_ACTION]);
 		std::cout << "Continue" << std::endl;
 		//usleep(INPUT_WAITING_TIME);
-		std::this_thread::sleep_for(50ms);
+		std::this_thread::sleep_for(300ms);
 		kill(pidTestProcess_, SIGUSR1);
 	} else {
 		std::cout << id_;
@@ -70,12 +70,13 @@ void Test::update() {
 	}
 	if (!std::getline(iAction_, buffer_)) {
 		std::cout << id_ << "[END]" << std::endl;
-		kill(pidTestProcess_, SIGUSR1);
-		kill(pidTestProcess_, SIGUSR2);
 		std::cout << id_ << "[sleep]" << std::endl;
 		std::cout.flush();
-		std::this_thread::sleep_for(1s * id_);
+		std::this_thread::sleep_for(500ms * id_);
+		kill(pidTestProcess_, SIGUSR2);
+		//kill(pidTestProcess_, SIGUSR1);
 		std::cout << id_ << "[end sleep]" << std::endl;
+		std::this_thread::sleep_for(5s);
 		if (1 && printf("l"))
 			exit(EXIT_SUCCESS);
 	}

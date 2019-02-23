@@ -10,8 +10,11 @@ class Gui;
 
 class WidgetSnake : public AWidget {
 public:
+
+	enum SnakeType { kBasic, kYour, kIa};
+
 	WidgetSnake(Gui &core, Snake const &snake, std::map<eSprite, SpriteColorProperties> const &mapSprite,
-				bool isYourSnake = false);
+				SnakeType type);
 
 	~WidgetSnake(void) override = default;
 
@@ -26,7 +29,7 @@ public:
 private:
 	Snake const &snake_;
 	std::map<eSprite, SpriteColorProperties> const &mapSprite_;
-	bool isYourSnake_;
+	SnakeType type_;
 	unsigned int sizeTexture_;
 
 	void renderIa_(void);

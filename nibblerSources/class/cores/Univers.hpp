@@ -162,6 +162,8 @@ private:
 	static const std::string SuccessServerIsDelete;
 	static const std::string SuccessIAIsCreate;
 	static const std::string SuccessClientIsConnected;
+	static const std::string SuccessBorderlessSet;
+	static const std::string SuccessBorderlessUnset;
 
 	static const std::string WarningServerCreateIA;
 	static const std::string WarningServerRemoveIA;
@@ -182,7 +184,6 @@ private:
 
 	static const std::string ErrorClientConnectionRefused;
 	static const std::string ErrorServerAlreadyUseOnThisPort;
-
 
 	std::unique_ptr<IOManager> ioManager;
 	std::unique_ptr<ExternalLibrarySoundManager> soundManager;
