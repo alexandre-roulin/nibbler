@@ -72,7 +72,7 @@ bool WidgetChat::checkClientIsConnect_() {
 	SnakeClient::boost_shared_ptr ptr(core_.univers.getSnakeClient().lock());
 	if (!ptr || !checkClient_())
 		return (false);
-	if (!ptr->isConnect()) {
+	if (!ptr->isOpen()) {
 		addLog(eColorLog::kRed, "Your Client should be connected");
 		return (false);
 	}

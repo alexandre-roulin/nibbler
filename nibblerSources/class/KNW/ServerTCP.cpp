@@ -64,7 +64,7 @@ namespace KNW {
 		connections.fill(nullptr);
 	}
 
-	void ServerTCP::startServer(uint16_t port) noexcept {
+	void ServerTCP::startServer(uint16_t port) {
 		boost::asio::ip::tcp::resolver resolver(io_manager_.getIo());
 		boost::asio::ip::tcp::resolver::query query(
 				"localhost",
@@ -77,26 +77,26 @@ namespace KNW {
 		acceptor_->listen(boost::asio::socket_base::max_connections);
 	}
 
-	void ServerTCP::startAsyncAccept() noexcept {
+	void ServerTCP::startAsyncAccept()  {
 		ServerTCP::b_wptr wptr(shared_from_this());
 //		boost::asio::post(io_manager_.getIo(), [wptr](){ auto sptr = wptr.lock(); if (sptr) sptr->acceptConnection(); });
 		io_manager_.getIo().post([wptr](){ auto sptr = wptr.lock(); if (sptr) sptr->acceptConnection(); });
 	}
 
-	void ServerTCP::startAsyncAccept(std::function<void(size_t)> c) noexcept {
+	void ServerTCP::startAsyncAccept(std::function<void(size_t)> c)  {
 		callbackAccept_ = std::move(c);
 		startAsyncAccept();
 	}
 
 	void ServerTCP::startAsyncAccept(
 			std::function<void(size_t)> a,
-			std::function<void(size_t)> d) noexcept {
+			std::function<void(size_t)> d)  {
 		callbackAccept_ = std::move(a);
 		callbackDeadConnection_ = std::move(d);
 		startAsyncAccept();
 	}
 
-	void ServerTCP::acceptConnection() noexcept {
+	void ServerTCP::acceptConnection() {
 		if (acceptor_->is_open()) {
 			boost::shared_ptr<boost::asio::ip::tcp::socket> sock(new boost::asio::ip::tcp::socket(io_manager_.getIo()));
 
@@ -140,7 +140,6 @@ namespace KNW {
 		}
 	}
 
-
 	void ServerTCP::stopAccept() {
 		boost::system::error_code ec;
 		acceptor_->cancel(ec);
@@ -148,6 +147,9 @@ namespace KNW {
 		connections.fill(nullptr);
 	}
 
+	bool ServerTCP::isOpen() const {
+		return acceptor_ != nullptr && acceptor_->is_open();
+	}
 
 	ServerTCP::~ServerTCP() {
 		stopAccept();

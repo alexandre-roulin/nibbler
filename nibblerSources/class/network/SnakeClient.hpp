@@ -8,10 +8,11 @@
 #include <factory/Factory.hpp>
 #include <cores/Snake.hpp>
 #include <nibbler.hpp>
+#include "ISnakeNetwork.hpp"
 
 class Univers;
 
-class SnakeClient : public boost::enable_shared_from_this<SnakeClient> {
+class SnakeClient : public boost::enable_shared_from_this<SnakeClient>, public ISnakeNetwork {
 public:
 
 	using boost_shared_ptr = boost::shared_ptr<SnakeClient>;
@@ -22,23 +23,27 @@ public:
 	template<typename T>
 	void sendDataToServer(T &&data, eHeader header);
 
+	virtual void notifyBorderless();
+
+	virtual void notifyMapSize();
+
+	virtual bool isOpen() const;
+
+	virtual const SnakeArrayContainer &getSnakeArray_() const;
+
+	virtual bool allSnakeIsDead() const;
+
+	virtual bool allSnakeIsReady() const;
+
 	void lock();
 
 	void unlock();
 
-	bool allSnakeIsDead() const;
-
-	bool allSnakeIsReady() const;
-
 	void deliverEvents();
-
-	bool isConnect() const;
 
 	uint16_t getId_() const;
 
 	bool isSwitchingLibrary() const;
-
-	const SnakeArrayContainer &getSnakeArray_() const;
 
 	const Snake &getSnake() const;
 
@@ -46,13 +51,9 @@ public:
 
 	void changeSprite(eSprite);
 
-	void changeMapSize(unsigned int);
-
 	void killSnake(uint16_t id);
 
 	void changeStateReady(bool change);
-
-	void changeIsBorderless(bool borderless);
 
 	bool isReady() const;
 

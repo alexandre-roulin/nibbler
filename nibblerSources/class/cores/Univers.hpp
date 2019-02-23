@@ -86,6 +86,10 @@ public:
 
 	void deleteClient();
 
+	void disconnectClient();
+
+	void closeServer();
+
 	void deleteServer();
 
 	void deleteGui();
@@ -112,11 +116,11 @@ public:
 
 	void setMapSize(unsigned int mapSize_);
 
-	unsigned int getMapSize() const;
+	const unsigned int &getMapSize() const;
 
 	void setBorderless(bool borderless);
 
-	bool isBorderless() const;
+	const bool &isBorderless() const;
 
 	void setOpenGame_(bool openGame_);
 
@@ -129,6 +133,8 @@ public:
 	const SnakeArrayContainer &getSnakeArray_() const;
 
 	boost::weak_ptr<SnakeClient> getSnakeClient() const;
+
+	boost::weak_ptr<ISnakeNetwork> getSnakeNetwork() const;
 
 	KINU::World &getWorld_();
 

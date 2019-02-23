@@ -84,7 +84,7 @@ void GameManager::startNewGame() {
 void GameManager::loopWorld() {
 	SnakeClient::boost_shared_ptr ptr(univers_.getSnakeClient().lock());
 
-	while (!ptr->allSnakeIsDead()) {
+	while (!ptr->allSnakeIsDead() && univers_.isOpenGame_() && univers_.displayIsAvailable()) {
 		timer_loop.expires_from_now(boost::posix_time::microsec(univers_.getMicroSecDeltaTime()));
 		timer_loop.wait();
 		loopWorldWork();
@@ -94,8 +94,6 @@ void GameManager::loopWorld() {
 
 void GameManager::loopWorldWork() {
 	SnakeClient::boost_shared_ptr ptr(univers_.getSnakeClient().lock());
-	if (!univers_.isOpenGame_() || !ptr || !world_)
-		return;
 
 	univers_.manageSnakeClientInput();
 	univers_.getIoManager().getThreadGroup().join_all();
@@ -104,7 +102,6 @@ void GameManager::loopWorldWork() {
 		nextFrame = world_->getEventsManager().getEvents<NextFrame>();
 		ptr->unlock();
 	}
-	std::cout << "Librezzzz delivrezzzz" << std::endl;
 	nextFrame.clear();
 
 	world_->getEventsManager().destroy<NextFrame>();

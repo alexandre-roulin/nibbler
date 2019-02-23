@@ -16,7 +16,7 @@ void WidgetConnect::render(void) {
 
 	SnakeClient::boost_shared_ptr ptr(core_.univers.getSnakeClient().lock());
 
-	if (ptr && ptr->isConnect())
+	if (ptr && ptr->isOpen())
 		ImGui::Begin("Connect", NULL,
 					 ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse);
 	else

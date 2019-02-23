@@ -22,9 +22,7 @@ void WidgetOption::render(void) {
 						 ImGuiInputTextFlags_EnterReturnsTrue) && ptr) {
 
 		ptr->changeName(nameBuffer_);
-		memcpy(nameBuffer_,
-			   ptr->getSnake().name,
-			   NAME_BUFFER);
+		std::memcpy(nameBuffer_,ptr->getSnake().name,NAME_BUFFER);
 	}
 
 	if (ImGui::InputInt("Size map", reinterpret_cast<int *>(&mapSize_), 1,
@@ -35,7 +33,8 @@ void WidgetOption::render(void) {
 			mapSize_ = MAP_MIN;
 		else if (mapSize_ > MAP_MAX)
 			mapSize_ = MAP_MAX;
-		ptr->changeMapSize(mapSize_);
+		core_.univers.setMapSize(mapSize_);
+		core_.univers.callbackAction(eAction::kResizeMap);
 	}
 
 	if (core_.univers.isServer() && ptr && ptr->allSnakeIsReady()) {

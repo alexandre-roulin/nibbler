@@ -83,8 +83,13 @@ void SnakeClient::changeName(std::string const &name) {
 	sendDataToServer(snake_array_[id_], eHeader::kSnake);
 }
 
-void SnakeClient::changeMapSize(unsigned int size) {
-	sendDataToServer(size, eHeader::kResizeMap);
+
+void SnakeClient::notifyBorderless() {
+	sendDataToServer(univers_.isBorderless(), eHeader::kBorderless);
+}
+
+void SnakeClient::notifyMapSize() {
+	sendDataToServer(univers_.getMapSize(), eHeader::kResizeMap);
 }
 
 bool SnakeClient::allSnakeIsReady() const {
@@ -107,12 +112,8 @@ void SnakeClient::changeStateReady(bool change) {
 	sendDataToServer(snake_array_[id_], eHeader::kSnake);
 }
 
-void SnakeClient::changeIsBorderless(bool borderless) {
-	sendDataToServer(borderless, eHeader::kBorderless);
-}
 
-
-bool SnakeClient::isConnect() const {
+bool SnakeClient::isOpen() const {
 	return clientTCP_ != nullptr && clientTCP_->isConnect();
 }
 

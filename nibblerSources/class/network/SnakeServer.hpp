@@ -5,10 +5,11 @@
 #include "Data.hpp"
 #include <network/Data.hpp>
 #include <cores/Snake.hpp>
+#include "ISnakeNetwork.hpp"
 
 class Univers;
 
-class SnakeServer : public boost::enable_shared_from_this<SnakeServer> {
+class SnakeServer : public boost::enable_shared_from_this<SnakeServer>, public ISnakeNetwork {
 
 public:
 	SnakeServer() = delete;
@@ -22,11 +23,22 @@ public:
 
 	unsigned short getPort_() const;
 
-	const SnakeArrayContainer &getSnakeArray_() const;
+	virtual void notifyBorderless();
+
+	virtual bool isOpen() const;
+
+	virtual void notifyMapSize();
+
+	virtual const SnakeArrayContainer &getSnakeArray_() const;
+
+	virtual bool allSnakeIsDead() const;
+
+	virtual bool allSnakeIsReady() const;
 
 	bool sendOpenGameToClient();
 
 	void closeAcceptorServer();
+
 
 	virtual ~SnakeServer();
 
@@ -73,10 +85,8 @@ private:
 	std::mutex mutex_;
 	bool pause_;
 	unsigned short port_;
-	unsigned int mapSize_;
 	boost::shared_ptr<KNW::ServerTCP> serverTCP_;
 	SnakeArrayContainer snake_array_;
-	bool borderless_;
 };
 
 

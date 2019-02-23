@@ -61,18 +61,24 @@ void Univers::resetData() {
 	openGame_ = false;
 	switchLib = false;
 	SnakeClient::boost_shared_ptr ptr(getSnakeClient().lock());
-	if (ptr && !ptr->isConnect()) {
+	if (ptr && !ptr->isOpen()) {
 		deleteClient();
 		borderless = false;
 		mapSize_ = MAP_DEFAULT;
 	}
 	grid_ = nullptr;
 }
-
 void Univers::callbackAction(eAction action) {
 	SnakeClient::boost_shared_ptr ptr(getSnakeClient().lock());
+	boost::shared_ptr<ISnakeNetwork> ptr_network(getSnakeNetwork().lock());
 
 	switch (action) {
+		case eAction::kDisconnectClient :
+			disconnectClient();
+			break;
+		case eAction::kCloseServer :
+			closeServer();
+			break;
 		case eAction::kHostname :
 			sendHostname();
 			break;
@@ -105,23 +111,27 @@ void Univers::callbackAction(eAction action) {
 			connect();
 			break;
 		case eAction::kBorderless :
-			if (!ptr) {
-				gui_->addMessageChat(eColorLog::kOrange, WarningClientNotExist);
+			if (!ptr_network) {
+				gui_->addMessageChat(eColorLog::kOrange, WarningClientNotExist);//Todo message
 				break;
 			}
-			if (!ptr->isConnect()) {
-				gui_->addMessageChat(eColorLog::kOrange,
-									 WarningClientIsNotConnected);
+			if (!ptr_network->isOpen()) {
+				gui_->addMessageChat(eColorLog::kOrange, WarningClientIsNotConnected); //Todo message
 				break;
 			}
-			ptr->changeIsBorderless(!isBorderless());
+			setBorderless(!isBorderless());
+			ptr_network->notifyBorderless();
+			if (isBorderless())
+				gui_->addMessageChat(eColorLog::kGreen, "is borderless"); //Todo message
+			else
+				gui_->addMessageChat(eColorLog::kGreen, "is not borderless"); //Todo message
 			break;
 		case eAction::kSwitchReady :
 			if (!ptr) {
 				gui_->addMessageChat(eColorLog::kOrange, WarningClientNotExist);
 				break;
 			}
-			if (!ptr->isConnect()) {
+			if (!ptr->isOpen()) {
 				gui_->addMessageChat(eColorLog::kOrange,
 									 WarningClientIsNotConnected);
 				break;
@@ -146,6 +156,17 @@ void Univers::callbackAction(eAction action) {
 			}
 
 			snakeServer_->sendOpenGameToClient();
+			break;
+		case eAction::kResizeMap :
+			if (!ptr_network) {
+				gui_->addMessageChat(eColorLog::kOrange, WarningClientNotExist);//Todo message
+				break;
+			}
+			if (!ptr_network->isOpen()) {
+				gui_->addMessageChat(eColorLog::kOrange, WarningClientIsNotConnected); //Todo message
+				break;
+			}
+			ptr_network->notifyMapSize();
 			break;
 	}
 }
@@ -232,14 +253,14 @@ void Univers::connect(const std::string &dns, const std::string &port) {
 		gui_->addMessageChat(eColorLog::kOrange, WarningClientNotExist);
 		return;
 	}
-	if (ptr->isConnect()) {
+	if (ptr->isOpen()) {
 		gui_->addMessageChat(eColorLog::kOrange,
 							 WarningClientIsAlreadyConnected);
 		return;
 	}
 	try {
 		ptr->connect(dns, port);
-		if (ptr->isConnect())
+		if (ptr->isOpen())
 			gui_->addMessageChat(eColorLog::kGreen, SuccessClientIsConnected);
 		else
 			gui_->addMessageChat(eColorLog::kOrange,
@@ -314,6 +335,26 @@ void Univers::createGui() {
 }
 
 
+void Univers::disconnectClient() {
+	SnakeClient::boost_shared_ptr ptr(snakeClient_);
+
+	if (ptr) {
+		ptr->disconnect();
+		gui_->addMessageChat(eColorLog::kGreen, SuccessClientIsDelete); //TODO const
+	} else
+		gui_->addMessageChat(eColorLog::kOrange, WarningClientNotExist);
+}
+
+void Univers::closeServer() {
+	boost::shared_ptr<SnakeServer> ptr(snakeServer_);
+
+	if (ptr) {
+		ptr->closeAcceptorServer();
+	} else {
+		//TODO const
+	}
+}
+
 void Univers::deleteBobby(int16_t id) {
 	if (!isServer()) {
 		gui_->addMessageChat(eColorLog::kOrange, WarningServerRemoveIA);
@@ -334,8 +375,8 @@ void Univers::deleteClient() {
 	SnakeClient::boost_shared_ptr ptr(snakeClient_);
 
 	if (ptr) {
-		log_fatal("use count %d", ptr.use_count());
 		ptr->disconnect();
+		snakeServer_ = nullptr;
 		gui_->addMessageChat(eColorLog::kGreen, SuccessClientIsDelete);
 	} else
 		gui_->addMessageChat(eColorLog::kOrange, WarningClientNotExist);
@@ -347,7 +388,7 @@ void Univers::deleteServer() {
 	if (snakeServer_) {
 		snakeServer_ = nullptr;
 		gui_->addMessageChat(eColorLog::kGreen, SuccessServerIsDelete);
-		if (ptr && ptr->isConnect())
+		if (ptr && ptr->isOpen())
 			deleteClient();
 	} else {
 		gui_->addMessageChat(eColorLog::kOrange, WarningServerNotExist);
@@ -401,6 +442,18 @@ KINU::World &Univers::getWorld_() {
 }
 
 
+boost::weak_ptr<ISnakeNetwork> Univers::getSnakeNetwork() const {
+	SnakeClient::boost_shared_ptr ptr(snakeClient_);
+
+	if (ptr)
+		return ptr->shared_from_this();
+	else if (vecBobby.size() != 0)
+		return vecBobby.front()->getClientTCP_()->shared_from_this();
+	else if (isServer())
+		return snakeServer_->shared_from_this();
+	return boost::weak_ptr<SnakeClient>();
+}
+
 boost::weak_ptr<SnakeClient> Univers::getSnakeClient() const {
 	SnakeClient::boost_shared_ptr ptr(snakeClient_);
 
@@ -411,7 +464,7 @@ boost::weak_ptr<SnakeClient> Univers::getSnakeClient() const {
 	return boost::weak_ptr<SnakeClient>();
 }
 
-unsigned int Univers::getMapSize() const {
+const unsigned int &Univers::getMapSize() const {
 	return mapSize_;
 }
 
@@ -427,7 +480,7 @@ bool Univers::isServer() const {
 	return snakeServer_ != nullptr;
 }
 
-bool Univers::isBorderless() const {
+const bool &Univers::isBorderless() const {
 	return borderless;
 }
 
@@ -461,8 +514,8 @@ void Univers::setGrid_(const std::shared_ptr<MutantGrid<eSprite>> &grid_) {
 }
 
 bool Univers::displayIsAvailable() const {
-	return !displayManager->hasLibraryLoaded() ||
-		!displayManager->getDisplay()->exit();
+	std::cout << !displayManager->hasLibraryLoaded() << " " << !displayManager->getDisplay()->exit() << std::endl;
+	return !displayManager->hasLibraryLoaded() || !displayManager->getDisplay()->exit();
 }
 
 bool Univers::isSwitchLib() const {

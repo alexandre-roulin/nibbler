@@ -56,7 +56,7 @@ void WidgetLobby::_reload() {
 
 		if (ptr)
 			addSnake(snakes_[i],
-					 (i == ptr->getId_() && ptr->isConnect()));
+					 (i == ptr->getId_() && ptr->isOpen()));
 		else
 			addSnake(snakes_[i], false);
 	}

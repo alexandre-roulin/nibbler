@@ -173,7 +173,7 @@ void			Gui::aState(void)
 		wexit.render();
 		SnakeClient::boost_shared_ptr ptr(univers.getSnakeClient().lock());
 
-		if (ptr && ptr->isConnect()) {
+		if (ptr && ptr->isOpen()) {
 			if (!optionSnake)
 				optionSnake = new WidgetOption(*this);
 			ImGui::SetNextWindowPos(positionByPercent(sf::Vector2<unsigned int>(70, 50)));

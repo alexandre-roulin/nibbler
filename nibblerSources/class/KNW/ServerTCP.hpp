@@ -64,17 +64,17 @@ namespace KNW {
 
 		DataTCP &getDataTCP();
 
-		void startServer(uint16_t port) noexcept;
+		void startServer(uint16_t port);
 
 
 		size_t getSizeOfOpenConnection() const;
 
-		void startAsyncAccept() noexcept;
+		void startAsyncAccept();
 
-		void startAsyncAccept(std::function<void(size_t)>) noexcept;
+		void startAsyncAccept(std::function<void(size_t)>);
 
 		void startAsyncAccept(std::function<void(size_t)>,
-							  std::function<void(size_t)>) noexcept;
+							  std::function<void(size_t)>);
 
 		template<typename T>
 		void writeDataToOpenConnection(T &&data, int index);
@@ -90,13 +90,15 @@ namespace KNW {
 
 		void stopAccept();
 
+		bool isOpen() const;
+
 		virtual ~ServerTCP();
 
 	private:
 
 		explicit ServerTCP(IOManager &io_manager);
 
-		void acceptConnection() noexcept;
+		void acceptConnection();
 
 		std::array<boost::shared_ptr<ConnectionTCP>, eConfigTCP::kMaxConnectionOpen> connections;
 
