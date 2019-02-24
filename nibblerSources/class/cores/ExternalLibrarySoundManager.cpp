@@ -48,8 +48,8 @@ void ExternalLibrarySoundManager::unloadExternalSoundLibrary() {
 			deleteSound(sound);
 			deleteSound = nullptr;
 			newSound = nullptr;
+			sound = nullptr;
 		}
-
 		dlclose(dlHandleSound);
 	}
 }

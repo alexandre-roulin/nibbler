@@ -18,5 +18,6 @@ public:
 private:
 	unsigned int mapSize_;
 	char nameBuffer_[NAME_BUFFER];
+	bool sound_;
 
 };

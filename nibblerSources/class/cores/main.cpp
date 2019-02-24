@@ -9,16 +9,6 @@
 #include "cores/Test.hpp"
 
 void nibbler(Univers &univers) {
-	boost::filesystem::path pathSound(NIBBLER_ROOT_PROJECT_PATH);
-	pathSound = pathSound / "ressources" / "sound";
-
-	univers.getSoundManager().addNoise((pathSound / "appear-online.ogg").generic_string());
-	univers.getSoundManager().addNoise((pathSound / "yes-2.wav").generic_string());
-	univers.getSoundManager().addNoise((pathSound / "click.wav").generic_string());
-	univers.getSoundManager().addNoise((pathSound / "slime10.wav").generic_string());
-	univers.getSoundManager().addNoise((pathSound / "hit17.ogg").generic_string());
-	univers.getSoundManager().playMusic((pathSound / "zelda.ogg").generic_string());
-
 	while (!univers.isExit()) {
 		univers.createGui();
 		univers.getGui_()->aState();
@@ -87,7 +77,7 @@ int main(int argc, char **argv) {
 				return (0);
 			}
 			if (vm.count("sound"))
-				univers.getSoundManager().loadExternalSoundLibrary(eSound::kSoundSfmlLibrary);
+				univers.loadSound(eSound::kSoundSfmlLibrary);
 			if (vm.count("test") && vm.count("id") && vm.count("fileInput") && vm.count("pidTestProcess") && vm.count("fileLog")) {
 				Test::getInstance().setTest(true);
 				Test::getInstance().setId(vm["id"].as<int>());

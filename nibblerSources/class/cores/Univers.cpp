@@ -401,6 +401,33 @@ void Univers::deleteGui() {
 	gui_.reset(nullptr);
 }
 
+/** Sound **/
+
+void Univers::loadSoundData_() {
+	boost::filesystem::path pathSound(NIBBLER_ROOT_PROJECT_PATH);
+	pathSound = pathSound / "ressources" / "sound";
+
+	getSoundManager().addNoise((pathSound / "appear-online.ogg").generic_string());
+	getSoundManager().addNoise((pathSound / "yes-2.wav").generic_string());
+	getSoundManager().addNoise((pathSound / "click.wav").generic_string());
+	getSoundManager().addNoise((pathSound / "slime10.wav").generic_string());
+	getSoundManager().addNoise((pathSound / "hit17.ogg").generic_string());
+	getSoundManager().playMusic((pathSound / "zelda.ogg").generic_string());
+}
+
+void Univers::loadSound(eSound sound) {
+	if (getSoundManager().hasLibraryLoaded())
+		throw std::runtime_error("Trying to loadExternalSoundLibrary but it is already loaded");
+	getSoundManager().loadExternalSoundLibrary(sound);
+	getSoundManager().constructExternalLibrary();
+	loadSoundData_();
+}
+void Univers::unloadSound() {
+	if (!getSoundManager().hasLibraryLoaded())
+		throw std::runtime_error("Trying to unloadExternalSoundLibrary but it is already unload");
+	getSoundManager().unloadExternalSoundLibrary();
+}
+
 /** Getter && Setter **/
 
 uint32_t Univers::getMicroSecDeltaTime() const {
