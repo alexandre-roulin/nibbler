@@ -76,6 +76,9 @@ void		Camera::processMouseMovement(float xoffset, float yoffset, GLboolean const
 
 void Camera::setFront(glm::vec3 const &front) {
 	front_ = front;
+	front_ = glm::normalize(front_);
+	yaw_ = atan2(front.z, front.x);
+	pitch_ = asin(front.y);
 }
 void Camera::setUp(glm::vec3 const &up) {
 	up_ = up;
