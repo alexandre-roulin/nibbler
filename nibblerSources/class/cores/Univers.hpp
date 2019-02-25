@@ -136,8 +136,6 @@ public:
 
 	boost::weak_ptr<ISnakeNetwork> getSnakeNetwork() const;
 
-	KINU::World &getWorld_();
-
 	bool isOnlyIA() const;
 
 	bool isServer() const;

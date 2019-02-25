@@ -10,6 +10,7 @@
 #include <cores/Univers.hpp>
 #include "Factory.hpp"
 #include <KINU/World.hpp>
+#include <cores/GameManager.hpp>
 
 Factory::Factory(Univers &univers)
 		: univers_(univers) {
@@ -30,7 +31,7 @@ void Factory::createAllSnake(SnakeArrayContainer &snake_array, int16_t nu) {
 void Factory::createSnake(Snake const &snake, int maxSnakes) {
 	KINU::Entity	snake_follow;
 	KINU::Entity	new_snake;
-
+	std::shared_ptr<KINU::World> world = univers_.getGameManager().getWorld_();
 	// (0 + 1) * 35 / (2 + 1) = 11
 	// 35 / 2 = 17
 
@@ -38,7 +39,7 @@ void Factory::createSnake(Snake const &snake, int maxSnakes) {
 	int base_y = univers_.getMapSize() / 2;
 	for (int index = 0; index < 4; ++index) {
 
-		new_snake = univers_.getWorld_().createEntity();
+		new_snake = world->createEntity();
 
 		if (index == 0) {
 			new_snake.tagByTagId(eTag::kHeadTag + snake.id_);
@@ -91,8 +92,8 @@ void Factory::createWalls() {
 }
 
 void Factory::createWall(int x, int y) {
-//	std::cout << x << " " << y << std::endl;
-	KINU::Entity entity = univers_.getWorld_().createEntity();
+
+	KINU::Entity entity = univers_.getGameManager().getWorld_()->createEntity();
 	univers_.getGrid_()(x, y) = eSprite::kWall;
 	entity.addComponent<PositionComponent>(x, y);
 	entity.addComponent<CollisionComponent>();

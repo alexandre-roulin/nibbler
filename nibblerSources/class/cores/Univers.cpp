@@ -112,7 +112,7 @@ void Univers::manageSnakeClientInput() {
 	eDirection direction = eDirection::kNorth;
 	if (displayManager->hasLibraryLoaded())
 		direction = displayManager->getDisplay()->getDirection();
-	if (ptr && ptr->getSnake().isAlive && !isIASnake(ptr->getId_())) {
+	if (ptr && ptr->isOpen() && ptr->getSnake().isAlive && !isIASnake(ptr->getId_())) {
 		ptr->addScore(ptr->getId_(), eScore::kFromTime);
 		ptr->sendDataToServer(InputInfo(ptr->getId_(), direction),
 							  eHeader::kInput);
@@ -353,15 +353,10 @@ const SnakeArrayContainer &Univers::getSnakeArray_() const {
 	return snakeArrayContainer;
 }
 
-KINU::World &Univers::getWorld_() {
-	return gameManager->getWorld_();
-}
-
-
 boost::weak_ptr<ISnakeNetwork> Univers::getSnakeNetwork() const {
 	SnakeClient::boost_shared_ptr ptr(snakeClient_);
 
-	if (ptr)
+	if (ptr && ptr->isOpen())
 		return ptr->shared_from_this();
 	else if (vecBobby.size() != 0)
 		return vecBobby.front()->getClientTCP_()->shared_from_this();
@@ -373,7 +368,7 @@ boost::weak_ptr<ISnakeNetwork> Univers::getSnakeNetwork() const {
 boost::weak_ptr<SnakeClient> Univers::getSnakeClient() const {
 	SnakeClient::boost_shared_ptr ptr(snakeClient_);
 
-	if (ptr)
+	if (ptr && ptr->isOpen())
 		return ptr->shared_from_this();
 	else if (vecBobby.size() != 0)
 		return vecBobby.front()->getClientTCP_()->shared_from_this();
@@ -401,7 +396,7 @@ const bool &Univers::isBorderless() const {
 }
 
 bool Univers::isOnlyIA() const {
-	return snakeClient_ == nullptr && vecBobby.size() != 0;
+	return (snakeClient_ == nullptr || !snakeClient_->isOpen()) && vecBobby.size() != 0;
 }
 
 
@@ -496,7 +491,7 @@ void Univers::switchReady() {
 }
 
 void Univers::sendOpenGameToServer() {
-	SnakeClient::boost_shared_ptr ptr(snakeClient_);
+	SnakeClient::boost_shared_ptr ptr(getSnakeClient());
 
 	if (!isServer()) {
 		gui_->addMessageChat(eColorLog::kOrange,

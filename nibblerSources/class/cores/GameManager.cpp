@@ -28,7 +28,7 @@ const uint32_t GameManager::Impossible = 10000;  //0.01sec frame
 GameManager::GameManager(Univers &univers)
 	:
 	univers_(univers),
-	timer_loop(univers_.getIoManager().getIo()){
+	timer_loop(univers_.getIoManager().getIo()) {
 }
 
 
@@ -77,7 +77,7 @@ void GameManager::startNewGame() {
 	world_->getSystemsManager().getSystem<SpriteSystem>().update();
 	world_->getSystemsManager().getSystem<RenderSystem>().update();
 
-	threadWorldLoop_= boost::thread(boost::bind(&GameManager::loopWorld, this));
+	threadWorldLoop_ = boost::thread(boost::bind(&GameManager::loopWorld, this));
 }
 
 
@@ -93,10 +93,12 @@ void GameManager::loopWorld() {
 
 
 void GameManager::loopWorldWork() {
+	boost::asio::thread_pool pool(8);
+
 	SnakeClient::boost_shared_ptr ptr(univers_.getSnakeClient().lock());
 
 	univers_.manageSnakeClientInput();
-	univers_.getIoManager().getThreadGroup().join_all();
+
 	for (; nextFrame.empty() && univers_.isOpenGame_() && world_ && ptr;) {
 		ptr->lock();
 		nextFrame = world_->getEventsManager().getEvents<NextFrame>();
@@ -126,9 +128,13 @@ void GameManager::loopWorldWork() {
 		for (auto &bobby : univers_.getBobbys()) {
 			if (world_->getEntitiesManager().hasEntityByTagId(bobby->getId() + eTag::kHeadTag)) {
 				ptr->addScore(bobby->getId(), eScore::kFromTime);
-				univers_.getIoManager().getIo().post([&bobby](){ bobby->calculateDirection(); });
+				boost::asio::post(pool, [&bobby](){
+					bobby->calculateDirection();
+					std::cout << " start ! " << std::endl;
+				});
 			}
 		}
+		pool.join();
 	}
 }
 
@@ -153,13 +159,12 @@ void GameManager::refreshTimerLoopWorld() {
 	timer_loop.expires_at(boost::posix_time::microsec_clock::universal_time());
 }
 
-
-KINU::World &GameManager::getWorld_() {
-	return *world_;
-}
-
 void GameManager::finishGame() {
 	threadWorldLoop_.join();
 	nextFrame.clear();
 	world_ = nullptr;
+}
+
+const std::shared_ptr<KINU::World> &GameManager::getWorld_() {
+	return world_;
 }
