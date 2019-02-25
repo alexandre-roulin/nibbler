@@ -7,8 +7,9 @@
 
 #define CAMERA_GLOBAL 0
 #define CAMERA_SNAKE 1
+#define CAMERA_MOVABLE 2
 
-#define CAMERA_SIZE 2
+#define CAMERA_SIZE 3
 
 IDisplay *newDisplay(int width,
 					 int height,
@@ -78,11 +79,11 @@ DisplayGlfw::DisplayGlfw(int width,
 	camera_.reserve(CAMERA_SIZE);
 	camera_.emplace_back();
 	camera_.emplace_back();
+	camera_.emplace_back();
 
-	if (winTileSize_.getY() < winTileSize_.getX())
-		camera_[CAMERA_GLOBAL].setPosition(glm::vec3(-0.5f, winTileSize_.getY() * -0.9, winTileSize_.getX() * 0.8));
-	else
-		camera_[CAMERA_GLOBAL].setPosition(glm::vec3(-0.5f, winTileSize_.getY() * -0.9, winTileSize_.getY() * 0.8));
+	camera_[CAMERA_GLOBAL].setPosition(glm::vec3(-0.5f, winTileSize_.getY() * -0.9, winTileSize_.getY() * 0.8f));
+	camera_[CAMERA_MOVABLE].setPosition(glm::vec3(0.f, 0.f, winTileSize_.getX() * 2.f));
+
 	glm::vec3 centerOfGrid(0.f, camera_[CAMERA_GLOBAL].getPosition().y, camera_[CAMERA_GLOBAL].getPosition().z);
 	camera_[CAMERA_GLOBAL].setFront(-centerOfGrid);
 	camera_[CAMERA_GLOBAL].setUp(glm::vec3(0.f, 1.f, 0.f));
@@ -218,6 +219,8 @@ void DisplayGlfw::drawGridCaseBody_(int x, int y) {
 				camera_[CAMERA_SNAKE].setPosition(camera_[CAMERA_SNAKE].getPosition() + glm::vec3(0.f, 20.f, 0.f));
 			camera_[CAMERA_SNAKE].setFront(grid_(x, y).getPosition() - camera_[CAMERA_SNAKE].getPosition());
 			camera_[CAMERA_SNAKE].setUp(glm::vec3(0.f, 0.f, 1.f));
+		} else {
+			yourSnakeSprite = eSprite::kNone;
 		}
 	}
 }
@@ -360,13 +363,13 @@ void DisplayGlfw::render() {
 	}
 
 	if (getKey(GLFW_KEY_D))
-		camera_[CAMERA_GLOBAL].processPosition(Camera::Movement::RIGHT, deltaTime_ * 5);
+		camera_[CAMERA_MOVABLE].processPosition(Camera::Movement::RIGHT, deltaTime_ * 5);
 	if (getKey(GLFW_KEY_A))
-		camera_[CAMERA_GLOBAL].processPosition(Camera::Movement::LEFT, deltaTime_ * 5);
+		camera_[CAMERA_MOVABLE].processPosition(Camera::Movement::LEFT, deltaTime_ * 5);
 	if (getKey(GLFW_KEY_S))
-		camera_[CAMERA_GLOBAL].processPosition(Camera::Movement::BACKWARD, deltaTime_ * 5);
+		camera_[CAMERA_MOVABLE].processPosition(Camera::Movement::BACKWARD, deltaTime_ * 5);
 	if (getKey(GLFW_KEY_W))
-		camera_[CAMERA_GLOBAL].processPosition(Camera::Movement::FORWARD, deltaTime_ * 5);
+		camera_[CAMERA_MOVABLE].processPosition(Camera::Movement::FORWARD, deltaTime_ * 5);
 
 	if (getKeyState(GLFW_KEY_P) == KeyState::kDown) {
 		callback_(eAction::kPause);
@@ -375,10 +378,8 @@ void DisplayGlfw::render() {
 		callback_(eAction::kSwitchDisplayLibrary);
 	}
 
-	if (getKey(GLFW_KEY_N) == KeyState::kDown)
+	if (getKey(GLFW_KEY_N) == KeyState::kDown) {
 		activeNextCamera_();
-	if (getKey(GLFW_KEY_B) == KeyState::kDown) {
-		camera_[CAMERA_GLOBAL].setPosition(camera_[CAMERA_SNAKE].getPosition());
 	}
 
 	shader_.activate();
@@ -427,8 +428,8 @@ bool DisplayGlfw::exit() const {
 
 void DisplayGlfw::update() {
 	Glfw::update();
-	if (!cursor_ && Glfw::mouseCallbackCalled_) {
-		camera_[CAMERA_GLOBAL].processMouseMovement(Glfw::offsetX_, Glfw::offsetY_);
+	if (!cursor_ && indexActiveCamera_ == CAMERA_MOVABLE && Glfw::mouseCallbackCalled_) {
+		camera_[CAMERA_MOVABLE].processMouseMovement(Glfw::offsetX_, Glfw::offsetY_);
 		Glfw::mouseCallbackCalled_ = false;
 	}
 }

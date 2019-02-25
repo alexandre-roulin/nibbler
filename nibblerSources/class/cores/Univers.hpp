@@ -100,6 +100,12 @@ public:
 
 	bool displayIsAvailable() const;
 
+	/** Sound **/
+
+	void loadSound(eSound sound);
+
+	void unloadSound();
+
 	/** Getter && Setter **/
 
 	void setMicroSecDeltaTime(uint32_t microSecDeltaTime);
@@ -160,6 +166,8 @@ public:
 
 	void updateSizeMap();
 private:
+
+	void loadSoundData_();
 
 	static const std::string SuccessServerIsCreate;
 	static const std::string SuccessClientIsCreate;

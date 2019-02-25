@@ -27,15 +27,14 @@ public:
 
 private:
 	static constexpr char libraryInfo[sizeof(eSoundArray) / sizeof(eSound)][PATH_MAX] = {
-			{"dynamicLibraries/libdisplay_sfml.so"}, //[kSoundSfmlLibrary] = 0
-			{"dynamicLibraries/libdisplay_sdl.so"}, //[kSoundSdlLibrary] = 1
+			{"dynamicLibraries/libsound_sfml.so"}, //[kSoundSfmlLibrary] = 0
+			{"dynamicLibraries/libsound_sdl.so"}, //[kSoundSdlLibrary] = 1
 	};
 
 	void(*deleteSound)(ISound *);
 	ISound *sound;
 	ISound *(*newSound)();
 	void *dlHandleSound;
-	std::bitset<32> flag_;
 	eSound kSound;
 };
 

@@ -4,7 +4,8 @@
 
 WidgetOption::WidgetOption(Gui &core) :
 		AWidget(core),
-		mapSize_(core_.univers.getMapSize()) {
+		mapSize_(core_.univers.getMapSize()),
+		sound_(core_.univers.getSoundManager().hasLibraryLoaded()) {
 	SnakeClient::boost_shared_ptr ptr(core_.univers.getSnakeClient().lock());
 
 	if (ptr)
@@ -40,6 +41,13 @@ void WidgetOption::render(void) {
 
 		core_.univers.setMapSize(mapSize_);
 		core_.univers.updateSizeMap();
+	}
+
+	if (ImGui::Checkbox("Sound", &sound_)) {
+		if (sound_)
+			core_.univers.loadSound(eSound::kSoundSfmlLibrary);
+		else
+			core_.univers.unloadSound();
 	}
 
 	if (core_.univers.isServer() && ptr && ptr->allSnakeIsReady()) {
