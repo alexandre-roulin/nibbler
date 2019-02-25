@@ -66,9 +66,7 @@ public:
 
 	/** Network **/
 
-	void connect(std::string const &dns = DEFAULT_DNS,
-				 std::string const &port = DEFAULT_PORT);
-
+	void connect(const std::string dns = DEFAULT_DNS, const std::string port = DEFAULT_PORT);
 
 	// create
 
@@ -76,7 +74,7 @@ public:
 
 	void createClient();
 
-	void createServer(unsigned int port = DEFAULT_PORT_NU);
+	void createServer(const std::string ip = DEFAULT_DNS,  unsigned int port = DEFAULT_PORT_NU);
 
 	void createGui();
 
@@ -109,6 +107,8 @@ public:
 	uint32_t getMicroSecDeltaTime() const;
 
 	void setExit(bool b);
+
+	void setBaseMicroSecDeltaTime(uint32_t BaseMicroSecDeltaTime);
 
 	bool isExit() const;
 
@@ -154,6 +154,13 @@ public:
 
 	GameManager &getGameManager();
 
+	void switchBorderless();
+
+	void switchReady();
+
+	void sendOpenGameToServer();
+
+	void updateSizeMap();
 private:
 
 	static const std::string SuccessServerIsCreate;
@@ -200,6 +207,7 @@ private:
 	bool switchLib;
 	unsigned int mapSize_;
 	uint32_t microSecDeltaTime;
+	uint32_t BaseMicroSecDeltaTime;
 	bool borderless;
 	bool openGame_;
 	SnakeArrayContainer snakeArrayContainer;

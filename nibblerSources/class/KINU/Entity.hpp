@@ -30,8 +30,6 @@ namespace KINU {
 
 		Entity operator=(Entity const &entity);
 
-		void is(EntitiesManager &); //TODO REMOVE THIS SHIT
-
 		ID getId() const;
 
 		/** Kill Management**/
@@ -198,6 +196,16 @@ namespace KINU {
 
 		// Component Pool
 		std::vector<std::shared_ptr<AbstractPool>> componentPools;
+
+
+		//std::vector = {
+		//  AbstractPool(PositionComponent) = {
+		// 		[0, 0], [32, 14]
+		//  },
+		//	AbstractPool = {
+		//	}
+		//
+		// }
 
 		// Entity pool
 		std::vector<Entity::ID> validId;

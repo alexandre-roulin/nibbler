@@ -67,25 +67,25 @@ void			callbackTest(void *vUnivers, std::string const&input) {
 	if (!vUnivers)
 		return ;
 	else if (input == "A")
-		univers->callbackAction(kCreateIA);
+		univers->createBobby();
 	else if (input == "B")
-		univers->callbackAction(kBorderless);
+		univers->switchBorderless();
 	else if (input == "C")
-		univers->callbackAction(kCreateClient);
+		univers->createClient();
 	else if (input == "D")
-		univers->callbackAction(kDeleteClient);
+		univers->deleteClient();
 	else if (input == "E")
-		univers->callbackAction(kConnect);
+		univers->connect();
 	else if (input == "R")
-		univers->callbackAction(kSwitchReady);
+		univers->switchReady();
 	else if (input == "S")
-		univers->callbackAction(kCreateServer);
+		univers->createServer();
 	else if (input == "W")
-		univers->callbackAction(kDeleteServer);
+		univers->deleteServer();
 	else if (input == "X")
-		univers->callbackAction(kStartGame);
+		univers->sendOpenGameToServer();
 	else if (input == "H")
-		univers->callbackAction(kHostname);
+		univers->sendHostname();
 }
 
 void			Gui::aState(void)
@@ -107,52 +107,52 @@ void			Gui::aState(void)
 			if (event.type == sf::Event::KeyPressed && event.key.control) {
 				switch (event.key.code) {
 					case sf::Keyboard::A:
-						univers.callbackAction(kCreateIA);
+						univers.createBobby();
 						input_ << "A";
 						Test::getInstance().writeInput("A");
 						break;
 					case sf::Keyboard::B:
-						univers.callbackAction(kBorderless);
+						univers.switchBorderless();
 						input_ << "B";
 						Test::getInstance().writeInput("B");
 						break;
 					case sf::Keyboard::C:
-						univers.callbackAction(kCreateClient);
+						univers.createClient();
 						input_ << "C";
 						Test::getInstance().writeInput("C");
 						break;
 					case sf::Keyboard::D:
-						univers.callbackAction(kDeleteClient);
+						univers.deleteClient();
 						input_ << "D";
 						Test::getInstance().writeInput("D");
 						break;
 					case sf::Keyboard::E:
-						univers.callbackAction(kConnect);
+						univers.connect();
 						input_ << "E";
 						Test::getInstance().writeInput("E");
 						break;
 					case sf::Keyboard::R:
-						univers.callbackAction(kSwitchReady);
+						univers.switchReady();
 						input_ << "R";
 						Test::getInstance().writeInput("R");
 						break;
 					case sf::Keyboard::S:
-						univers.callbackAction(kCreateServer);
+						univers.createServer();
 						input_ << "S";
 						Test::getInstance().writeInput("S");
 						break;
 					case sf::Keyboard::W:
-						univers.callbackAction(kDeleteServer);
+						univers.deleteServer();
 						input_ << "W";
 						Test::getInstance().writeInput("W");
 						break;
 					case sf::Keyboard::X:
-						univers.callbackAction(kStartGame);
+						univers.sendOpenGameToServer();
 						input_ << "X";
 						Test::getInstance().writeInput("X");
 						break;
 					case sf::Keyboard::H:
-						univers.callbackAction(kHostname);
+						univers.sendHostname();
 						input_ << "H";
 						Test::getInstance().writeInput("H");
 						break;
