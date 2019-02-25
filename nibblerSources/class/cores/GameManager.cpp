@@ -152,6 +152,7 @@ void GameManager::loopUI() {
 
 		univers_.updateDisplayUI();
 	}
+
 	log_error("%s finish", __PRETTY_FUNCTION__);
 }
 

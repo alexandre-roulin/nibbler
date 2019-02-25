@@ -100,6 +100,10 @@ void Univers::startNewGame() {
 
 	gameManager->startNewGame();
 	gameManager->loopUI();
+	SnakeClient::boost_shared_ptr ptr(getSnakeClient().lock());
+
+	if (ptr && !ptr->isIa())
+		ptr->killSnake(ptr->getId_());
 	gameManager->finishGame();
 	if (displayManager->hasLibraryLoaded())
 		displayManager->unloadExternalDisplayLibrary();
