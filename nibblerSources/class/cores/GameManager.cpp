@@ -18,7 +18,7 @@
 
 const uint32_t GameManager::ScaleByFrame = 10;
 const uint32_t GameManager::ScaleByRealFood = 600;
-const uint32_t GameManager::ScaleByFakeFood = 150;
+const uint32_t GameManager::ScaleByFakeFood = 50;
 
 const uint32_t GameManager::Easy = 160000;  //0.16sec frame
 const uint32_t GameManager::Medium = 120000;  //0.15sec frame
@@ -101,6 +101,7 @@ void GameManager::loopWorldWork() {
 
 	for (; nextFrame.empty() && univers_.isOpenGame_() && world_ && ptr;) {
 		ptr->lock();
+		std::cout << "Hello "<< std::endl;
 		nextFrame = world_->getEventsManager().getEvents<NextFrame>();
 		ptr->unlock();
 	}

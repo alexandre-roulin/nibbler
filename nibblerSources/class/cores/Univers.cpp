@@ -60,7 +60,6 @@ void Univers::resetData() {
 		}
 	}
 
-	openGame_ = false;
 	switchLib = false;
 	SnakeClient::boost_shared_ptr ptr(getSnakeClient().lock());
 	if (ptr && !ptr->isOpen()) {
@@ -88,7 +87,14 @@ void Univers::callbackAction(eAction action) {
 }
 
 
-Univers::~Univers() = default;
+Univers::~Univers() {
+	ioManager = nullptr;
+	std::for_each(vecBobby.begin(), vecBobby.end(), [](std::unique_ptr<Bobby> &bobby){ bobby->getClientTCP_()->disconnect(); });
+	if (snakeClient_)
+		snakeClient_->disconnect();
+	if (snakeServer_)
+		snakeServer_->closeAcceptorServer();
+};
 
 /** Game **/
 
@@ -101,9 +107,7 @@ void Univers::startNewGame() {
 	gameManager->startNewGame();
 	gameManager->loopUI();
 	SnakeClient::boost_shared_ptr ptr(getSnakeClient().lock());
-
-	if (ptr && !ptr->isIa())
-		ptr->killSnake(ptr->getId_());
+	openGame_ = false;
 	gameManager->finishGame();
 	if (displayManager->hasLibraryLoaded())
 		displayManager->unloadExternalDisplayLibrary();
