@@ -118,8 +118,8 @@ namespace KNW {
 		return ptr;
 	}
 
-	boost::asio::ip::tcp::socket &IOTCP::getSocket_() {
-		return *socket_;
+	const boost::shared_ptr<boost::asio::ip::tcp::socket> &IOTCP::getSocket_() {
+		return socket_;
 	}
 
 	IOTCP::~IOTCP() = default;

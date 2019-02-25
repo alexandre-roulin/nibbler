@@ -11,9 +11,7 @@ IOManager::IOManager(size_t thread_size)
 }
 
 void IOManager::IORunner() {
-	std::cout << "[" << boost::this_thread::get_id() << "] Thread Start" << std::endl;
 	io->run();
-	std::cout << "[" << boost::this_thread::get_id() << "] Thread Finish" << std::endl;
 }
 
 boost::asio::io_service &IOManager::getIo() {

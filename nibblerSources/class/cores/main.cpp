@@ -76,8 +76,8 @@ int main(int argc, char **argv) {
 		boost::program_options::variables_map vm;
 		try {
 			boost::program_options::store(
-					boost::program_options::parse_command_line(argc, argv,
-															   desc), vm);
+					boost::program_options::parse_command_line(
+							argc, argv, desc), vm);
 
 			option_dependency(vm, "test", "id", "fileInput", "pidTestProcess", "fileLog");
 			option_dependency(vm, "input", "id", "fileInput");

@@ -38,7 +38,7 @@ public:
 
 	Univers();
 
-	virtual ~Univers();
+	~Univers();
 
 	Univers &operator=(const Univers &) = delete;
 

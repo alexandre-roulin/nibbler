@@ -88,12 +88,22 @@ void Univers::callbackAction(eAction action) {
 
 
 Univers::~Univers() {
-	ioManager = nullptr;
-	std::for_each(vecBobby.begin(), vecBobby.end(), [](std::unique_ptr<Bobby> &bobby){ bobby->getClientTCP_()->disconnect(); });
-	if (snakeClient_)
-		snakeClient_->disconnect();
-	if (snakeServer_)
+	if (snakeServer_) {
 		snakeServer_->closeAcceptorServer();
+		snakeServer_ = nullptr;
+	}
+	std::for_each(vecBobby.begin(), vecBobby.end(), [](std::unique_ptr<Bobby> &bobby){
+		if (bobby) {
+			bobby->getClientTCP_()->disconnect();
+			bobby = nullptr;
+		}
+	});
+	if (snakeClient_) {
+		snakeClient_->disconnect();
+		snakeClient_ = nullptr;
+	}
+	ioManager = nullptr;
+	std::cout << __PRETTY_FUNCTION__ << std::endl;
 };
 
 /** Game **/

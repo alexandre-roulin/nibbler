@@ -27,7 +27,7 @@ namespace KNW {
 
 		void readSocketHeader();
 
-		boost::asio::ip::tcp::socket &getSocket_();
+		const boost::shared_ptr<boost::asio::ip::tcp::socket> &getSocket_();
 
 		virtual ~IOTCP();
 

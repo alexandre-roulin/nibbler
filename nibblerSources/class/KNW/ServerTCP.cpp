@@ -26,8 +26,8 @@ namespace KNW {
 		if (sptr) {
 			auto it = std::find(sptr->connections.begin(), sptr->connections.end(), shared_from_this());
 			boost::system::error_code ec;
-			iotcp->getSocket_().shutdown(boost::asio::ip::tcp::socket::shutdown_both, ec);
-			iotcp->getSocket_().close(ec);
+			iotcp->getSocket_()->shutdown(boost::asio::ip::tcp::socket::shutdown_both, ec);
+			iotcp->getSocket_()->close(ec);
 			*it = nullptr;
 			if (sptr->callbackDeadConnection_)
 				sptr->callbackDeadConnection_(static_cast<size_t>(
@@ -37,7 +37,8 @@ namespace KNW {
 		}
 	}
 
-	boost::asio::ip::tcp::socket &ConnectionTCP::getSocket_() {
+	const boost::shared_ptr<boost::asio::ip::tcp::socket>
+	&ConnectionTCP::getSocket_() {
 		return iotcp->getSocket_();
 	}
 
@@ -47,8 +48,8 @@ namespace KNW {
 
 	ConnectionTCP::~ConnectionTCP() {
 		boost::system::error_code ec_sock;
-		iotcp->getSocket_().shutdown(boost::asio::ip::tcp::socket::shutdown_both, ec_sock);
-		iotcp->getSocket_().close(ec_sock);
+		iotcp->getSocket_()->shutdown(boost::asio::ip::tcp::socket::shutdown_both, ec_sock);
+		iotcp->getSocket_()->close(ec_sock);
 	}
 
 	/** Server TCP **/

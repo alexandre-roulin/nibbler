@@ -13,7 +13,7 @@ class Bobby {
 public:
 
 	Bobby(Univers &);
-	virtual ~Bobby();
+	~Bobby();
 	Bobby() = delete;
 	Bobby &operator=(const Bobby &) = delete;
 	Bobby(const Bobby &) = delete;
