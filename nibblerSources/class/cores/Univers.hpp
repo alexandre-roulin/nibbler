@@ -66,9 +66,7 @@ public:
 
 	/** Network **/
 
-	void connect(std::string const &dns = DEFAULT_DNS,
-				 std::string const &port = DEFAULT_PORT);
-
+	void connect(const std::string dns = DEFAULT_DNS, const std::string port = DEFAULT_PORT);
 
 	// create
 
@@ -76,7 +74,7 @@ public:
 
 	void createClient();
 
-	void createServer(unsigned int port = DEFAULT_PORT_NU);
+	void createServer(const std::string ip = DEFAULT_DNS,  unsigned int port = DEFAULT_PORT_NU);
 
 	void createGui();
 
@@ -116,6 +114,8 @@ public:
 
 	void setExit(bool b);
 
+	void setBaseMicroSecDeltaTime(uint32_t BaseMicroSecDeltaTime);
+
 	bool isExit() const;
 
 	void setGrid_(const std::shared_ptr<MutantGrid<eSprite>> &grid_);
@@ -142,8 +142,6 @@ public:
 
 	boost::weak_ptr<ISnakeNetwork> getSnakeNetwork() const;
 
-	KINU::World &getWorld_();
-
 	bool isOnlyIA() const;
 
 	bool isServer() const;
@@ -160,6 +158,13 @@ public:
 
 	GameManager &getGameManager();
 
+	void switchBorderless();
+
+	void switchReady();
+
+	void sendOpenGameToServer();
+
+	void updateSizeMap();
 private:
 
 	void loadSoundData_();
@@ -208,6 +213,7 @@ private:
 	bool switchLib;
 	unsigned int mapSize_;
 	uint32_t microSecDeltaTime;
+	uint32_t BaseMicroSecDeltaTime;
 	bool borderless;
 	bool openGame_;
 	SnakeArrayContainer snakeArrayContainer;

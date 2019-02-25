@@ -94,7 +94,7 @@ namespace KNW {
 	}
 
 	void IOTCP::checkError(boost::system::error_code const &error_code) {
-		log_info("%s %d", __PRETTY_FUNCTION__, error_code.value());
+//		log_info("%s %d", __PRETTY_FUNCTION__, error_code.value());
 		if (error_code) {
 			if (callbackDeadSocket_)
 				callbackDeadSocket_();

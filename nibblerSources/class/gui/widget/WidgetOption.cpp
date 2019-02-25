@@ -38,8 +38,9 @@ void WidgetOption::render(void) {
 			mapSize_ = MAP_MIN;
 		else if (mapSize_ > MAP_MAX)
 			mapSize_ = MAP_MAX;
+
 		core_.univers.setMapSize(mapSize_);
-		core_.univers.callbackAction(eAction::kResizeMap);
+		core_.univers.updateSizeMap();
 	}
 
 	if (ImGui::Checkbox("Sound", &sound_)) {

@@ -3,6 +3,7 @@
 #include <logger.h>
 #include <KINU/World.hpp>
 #include <KINU/Entity.hpp>
+#include <cores/GameManager.hpp>
 
 std::mutex Bobby::mutex;
 
@@ -37,7 +38,10 @@ void Bobby::buildIA() {
 
 void Bobby::sendDirection() {
 
-	if (univers_.getWorld_().getEntitiesManager().hasEntityByTagId(eTag::kHeadTag + clientTCP_->getId_())) {
+	std::shared_ptr<KINU::World> world = univers_.getGameManager().getWorld_();
+	if (!world) return;
+
+	if (world->getEntitiesManager().hasEntityByTagId(eTag::kHeadTag + clientTCP_->getId_())) {
 		std::cout << "Send direction : " << clientTCP_->getId_() << std::endl;
 		clientTCP_->sendDataToServer(InputInfo(clientTCP_->getId_(), direction), eHeader::kInput);
 	}
@@ -47,10 +51,12 @@ void Bobby::sendDirection() {
 
 bool Bobby::define_priority(int x, int y) {
 	std::vector<KINU::Entity> entitiesHead;
+	std::shared_ptr<KINU::World> world = univers_.getGameManager().getWorld_();
+	if (!world) return false;
 
 	for (int id = 0; id < SNAKE_MAX; ++id) {
-		if (univers_.getWorld_().getEntitiesManager().hasEntityByTagId(id + eTag::kHeadTag))
-			entitiesHead.push_back(univers_.getWorld_().getEntitiesManager().getEntityByTagId(id + eTag::kHeadTag));
+		if (world->getEntitiesManager().hasEntityByTagId(id + eTag::kHeadTag))
+			entitiesHead.push_back(world->getEntitiesManager().getEntityByTagId(id + eTag::kHeadTag));
 	}
 
 	if (entitiesHead.size() == 1) {
@@ -128,11 +134,13 @@ void Bobby::findDirection(KStar::Vec2 vecSource, KStar::Vec2 vecTarget) {
 }
 
 void Bobby::calculateDirection() {
+	std::shared_ptr<KINU::World> world = univers_.getGameManager().getWorld_();
 
+	if (!world) return;
 	log_warn("%s", __PRETTY_FUNCTION__);
 	std::cout << "[" << boost::this_thread::get_id()
 			  << "] Bobby "<< getId() << "Start " << std::endl;
-	if (univers_.getWorld_().getEntitiesManager().hasEntityByTagId(
+	if (world->getEntitiesManager().hasEntityByTagId(
 			clientTCP_->getId_() + eTag::kHeadTag)) {
 
 		kStar.clearCollisions();
@@ -142,11 +150,11 @@ void Bobby::calculateDirection() {
 		auto vecSnake = getVecSnakeHead();
 
 		kStar.removeCollision(vecSnake);
-		log_error("FoodCondition[%d][%d]", univers_.getWorld_().getEntitiesManager()
-				.hasEntitiesGroupId(eTag::kFoodTag), univers_.getWorld_().getEntitiesManager()
+		log_error("FoodCondition[%d][%d]", world->getEntitiesManager()
+				.hasEntitiesGroupId(eTag::kFoodTag), world->getEntitiesManager()
 				.hasEntitiesGroupId(eTag::kFoodFromSnake));
-		if (univers_.getWorld_().getEntitiesManager()
-				.hasEntitiesGroupId(eTag::kFoodTag) || univers_.getWorld_().getEntitiesManager()
+		if (world->getEntitiesManager()
+				.hasEntitiesGroupId(eTag::kFoodTag) || world->getEntitiesManager()
 																		   .hasEntitiesGroupId(eTag::kFoodFromSnake)) {
 
 			auto vecFood = getVecFood(vecSnake);
@@ -167,9 +175,9 @@ void Bobby::calculateDirection() {
 			}
 			kStar.addCollision(vecFood);
 		}
-		log_error("TailCondition[%d]", univers_.getWorld_().getEntitiesManager().hasEntityByTagId(
+		log_error("TailCondition[%d]", world->getEntitiesManager().hasEntityByTagId(
 				clientTCP_->getId_() + eTag::kTailTag));
-		if (univers_.getWorld_().getEntitiesManager().hasEntityByTagId(
+		if (world->getEntitiesManager().hasEntityByTagId(
 				clientTCP_->getId_() + eTag::kTailTag)) {
 
 			auto vecTail = getVecSnakeTail();
@@ -209,10 +217,13 @@ void Bobby::calculateDirection() {
 }
 
 KStar::Vec2 Bobby::getVecSnakeHead() {
-	auto snakeHead = univers_.getWorld_().getEntitiesManager().getEntityByTagId(
-			clientTCP_->getId_() + eTag::kHeadTag);
-
 	KStar::Vec2 vecSnake;
+
+	std::shared_ptr<KINU::World> world = univers_.getGameManager().getWorld_();
+	if (!world)
+		return vecSnake;
+	auto snakeHead = world->getEntitiesManager().getEntityByTagId(
+			clientTCP_->getId_() + eTag::kHeadTag);
 
 	if (snakeHead.hasComponent<PositionComponent>()) {
 		auto position = snakeHead.getComponent<PositionComponent>();
@@ -225,9 +236,12 @@ KStar::Vec2 Bobby::getVecSnakeHead() {
 }
 
 KStar::Vec2 Bobby::getVecSnakeTail() {
-	KStar::Vec2 vecTail;
+	std::shared_ptr<KINU::World> world = univers_.getGameManager().getWorld_();
 
-	auto snakeTail = univers_.getWorld_().getEntitiesManager().getEntityByTagId(
+	KStar::Vec2 vecTail;
+	if (!world)
+		return vecTail;
+	auto snakeTail = world->getEntitiesManager().getEntityByTagId(
 			clientTCP_->getId_() + eTag::kTailTag);
 
 	if (snakeTail.hasComponent<PositionComponent>()) {
@@ -245,16 +259,18 @@ KStar::Vec2 Bobby::getVecFood(KStar::Vec2 head) {
 	PositionComponent positionComponent;
 	double base_sqrt = -1;
 	double compare;
+	std::shared_ptr<KINU::World> world = univers_.getGameManager().getWorld_();
 	std::vector<KINU::Entity> foods;
-	if (univers_.getWorld_().getEntitiesManager().hasEntitiesGroupId(eTag::kFoodTag)) {
-		auto food_tag = univers_.getWorld_().getEntitiesManager().getEntitiesByGroupId(
+
+	if (world && world->getEntitiesManager().hasEntitiesGroupId(eTag::kFoodTag)) {
+		auto food_tag = world->getEntitiesManager().getEntitiesByGroupId(
 				eTag::kFoodTag);
 		log_fatal("FoodSize(%d)", food_tag.size());
 		foods.insert(foods.end(), food_tag.begin(), food_tag.end());
 	}
 
-	if (univers_.getWorld_().getEntitiesManager().hasEntitiesGroupId(eTag::kFoodFromSnake)) {
-		auto food_tag = univers_.getWorld_().getEntitiesManager().getEntitiesByGroupId(
+	if (world && world->getEntitiesManager().hasEntitiesGroupId(eTag::kFoodFromSnake)) {
+		auto food_tag = world->getEntitiesManager().getEntitiesByGroupId(
 				eTag::kFoodFromSnake);
 		log_fatal("FoodSnakeSize(%d)", food_tag.size());
 		foods.insert(foods.end(), food_tag.begin(), food_tag.end());
@@ -271,36 +287,12 @@ KStar::Vec2 Bobby::getVecFood(KStar::Vec2 head) {
 				for (size_t base_x = 0; base_x < baseIndex; ++base_x) {
 					int scale_x = positionFood.x + base_x * mapSize;
 					int scale_y = positionFood.y + base_y * mapSize;
-//				log_trace("(%d + %d * %d) - (%d + (%d ? %d: 0))",
-//						  positionFood.x, base_x, mapSize, head.x,
-//						  univers_.isBorderless(), mapSize);
-//				log_trace("(%d + %d * %d) - (%d + (%d ? %d: 0))",
-//						  positionFood.y, base_y, mapSize, head.y,
-//						  univers_.isBorderless(), mapSize);
 					compare = std::sqrt(
 							std::pow(scale_x - head.x, 2) +
 							std::pow(scale_y - head.y, 2)
 					);
-//				log_warn("%d = %d - %d", sqrt_x,
-//						 (positionFood.x + base_x * mapSize), (head.x +
-//															   (univers_.isBorderless()
-//																? mapSize
-//																: 0)));
-//				log_warn("%d = %d - %d", sqrt_y,
-//						 (positionFood.y + base_y * mapSize), (head.y +
-//															   (univers_.isBorderless()
-//																? mapSize
-//																: 0)));
-					//&&
-					//					std::count_if(vecPosition.begin(), vecPosition.end(), [x, y](PositionComponent const &p){
-					//						return p.x == x && p.y == y;
-					//					}) == 1)
-
 					if (base_sqrt == -1 || (compare < base_sqrt && (univers_.getGrid_()(positionFood.x, positionFood.y) & eSprite::kFood) == eSprite::kFood)) {
 						base_sqrt = compare;
-//					log_success("{mapSize : %d} Position saved { %d , %d }",
-//								mapSize, positionFood.x + base_x * mapSize,
-//								positionFood.y + base_y * mapSize);
 						positionComponent = PositionComponent(
 								scale_x,
 								scale_y
@@ -315,7 +307,9 @@ KStar::Vec2 Bobby::getVecFood(KStar::Vec2 head) {
 }
 
 void Bobby::addCollision() {
-	auto entities = univers_.getWorld_().getEntitiesManager().getEntities();
+	std::shared_ptr<KINU::World> world = univers_.getGameManager().getWorld_();
+	if (!world) return;
+	auto entities = world->getEntitiesManager().getEntities();
 	for (auto &entity : entities) {
 		if (entity.hasComponent<PositionComponent>()) {
 			auto positionComponent = entity.getComponent<PositionComponent>();

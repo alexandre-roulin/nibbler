@@ -64,10 +64,6 @@ namespace KINU {
 		return *entitiesManager_;
 	}
 
-	void Entity::is(EntitiesManager &e) {
-		entitiesManager_ = &e;
-	}
-
 	Entity Entity::operator=(Entity const &entity) {
 		id_ = entity.id_;
 		entitiesManager_ = entity.entitiesManager_;

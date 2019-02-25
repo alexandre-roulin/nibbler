@@ -58,7 +58,9 @@ bool SnakeClient::allSnakeIsDead() const {
 void SnakeClient::deliverEvents() {
 	std::lock_guard<std::mutex> guard(mutex_);
 	for (auto foodCreation : foodCreations) {
-		univers_.getWorld_().getEventsManager().emitEvent(foodCreation);
+		auto world = univers_.getGameManager().getWorld_();
+		if (world)
+			world->getEventsManager().emitEvent(foodCreation);
 	}
 	foodCreations.clear();
 }
@@ -176,7 +178,9 @@ void SnakeClient::callbackPock(char) {
 	log_info("%s %d", __PRETTY_FUNCTION__, snake_array_[id_].isUpdate);
 	std::lock_guard<std::mutex> guard(mutex_);
 	if (acceptDataFromServer() && univers_.isOpenGame_()) {
-		univers_.getWorld_().getEventsManager().emitEvent<NextFrame>();
+		const std::shared_ptr<KINU::World> &world = univers_.getGameManager().getWorld_();
+		if (world)
+			world->getEventsManager().emitEvent<NextFrame>();
 	}
 }
 
@@ -280,7 +284,9 @@ void SnakeClient::callbackStartInfo(StartInfo startInfo) {
 				);
 			}
 		}
-		univers_.getWorld_().getEventsManager().emitEvent<StartEvent>(
+		const std::shared_ptr<KINU::World> &world = univers_.getGameManager().getWorld_();
+		if (world)
+			world->getEventsManager().emitEvent<StartEvent>(
 				startInfo.time_duration);
 	}
 }

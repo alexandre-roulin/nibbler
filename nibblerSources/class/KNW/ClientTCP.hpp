@@ -47,7 +47,7 @@ namespace KNW {
 
 	template<typename T, typename H>
 	void ClientTCP::writeDataToServer(T &&data, H header) {
-		assert(isConnect());
+		assert(iotcp != nullptr);
 		iotcp->writeSocket(dataTCP_->serializeData(header, data));
 	}
 

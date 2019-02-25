@@ -33,7 +33,7 @@ public:
 
 	void finishGame();
 
-	KINU::World &getWorld_();
+	const std::shared_ptr<KINU::World> &getWorld_();
 
 	static const uint32_t ScaleByFrame;
 	static const uint32_t ScaleByRealFood;
