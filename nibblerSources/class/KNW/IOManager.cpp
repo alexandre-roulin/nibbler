@@ -6,7 +6,7 @@ IOManager::IOManager(size_t thread_size)
 		work_(*io){
 
 	for (size_t index = 0; index < thread_size; ++index) {
-		thread_group_io.create_thread( boost::bind( &IOManager::IORunner, this) );
+		thread_group.create_thread( boost::bind( &IOManager::IORunner, this) );
 	}
 }
 

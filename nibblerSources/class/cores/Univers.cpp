@@ -294,10 +294,6 @@ void Univers::deleteBobby(int16_t id) {
 	}
 	vecBobby.erase(std::remove_if(vecBobby.begin(), vecBobby.end(),
 			[id](std::unique_ptr<Bobby> &bob) {
-
-		if (bob->getId() == id) {
-			bob->getClientTCP_()->disconnect();
-		}
 		return bob->getId() == id;
 
 	}), vecBobby.end());
@@ -321,7 +317,7 @@ void Univers::deleteServer() {
 		snakeServer_ = nullptr;
 		gui_->addMessageChat(eColorLog::kGreen, SuccessServerIsDelete);
 		if (ptr && ptr->isOpen())
-			deleteClient();
+			disconnectClient();
 	} else {
 		gui_->addMessageChat(eColorLog::kOrange, WarningServerNotExist);
 	}

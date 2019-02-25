@@ -15,7 +15,7 @@ public:
 	boost::thread_group &getThreadGroup();
 
 
-	virtual ~IOManager();
+	~IOManager();
 
 private:
 
@@ -23,7 +23,6 @@ private:
 	boost::mutex global_stream_lock;
 	boost::shared_ptr<boost::asio::io_service> io;
 	boost::thread_group thread_group;
-	boost::thread_group thread_group_io;
 	boost::asio::io_service::work work_;
 };
 
