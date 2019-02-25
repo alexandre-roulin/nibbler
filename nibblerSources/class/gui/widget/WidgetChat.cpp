@@ -131,7 +131,8 @@ void WidgetChat::addLog(eColorLog color, char const *format, ...)
 	std::vsnprintf(buf.get(), size, format, args);
 	va_end(args);
 
-	log_.emplace_back(color, std::string(buf.get(), buf.get() + size - 1));
+	std::string te = std::string(buf.get(), buf.get() + size - 1);
+	log_.push_back(colorLog(color, te));
 	Test::getInstance().addLog(buf.get());
 	scrollChat_ = true;
 }

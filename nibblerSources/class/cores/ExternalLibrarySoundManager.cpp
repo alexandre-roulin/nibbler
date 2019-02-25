@@ -6,7 +6,6 @@ ExternalLibrarySoundManager::ExternalLibrarySoundManager() :
 	sound(nullptr),
 	newSound(nullptr),
 	dlHandleSound(nullptr),
-	flag_(0),
 	kSound(kSoundSfmlLibrary){
 }
 
@@ -72,15 +71,15 @@ void ExternalLibrarySoundManager::setKSound(eSound kSound) {
 }
 
 void ExternalLibrarySoundManager::addNoise(std::string const &path) {
-	if (sound && flag_.test(eFlag::kSound))
+	if (sound)
 		sound->addNoise(path);
 }
 void ExternalLibrarySoundManager::playNoise(eNoise e) const {
-	if (sound && flag_.test(eFlag::kSound))
+	if (sound)
 		sound->playNoise(static_cast<int>(e));
 }
 void ExternalLibrarySoundManager::playMusic(std::string const &path) const {
-	if (sound && flag_.test(eFlag::kSound)) {
+	if (sound) {
 		sound->setMusic(path.c_str());
 		sound->playMusic();
 	}

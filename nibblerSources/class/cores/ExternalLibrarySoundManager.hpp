@@ -35,7 +35,6 @@ private:
 	ISound *sound;
 	ISound *(*newSound)();
 	void *dlHandleSound;
-	std::bitset<32> flag_;
 	eSound kSound;
 };
 

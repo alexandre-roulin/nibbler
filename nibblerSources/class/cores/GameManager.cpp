@@ -97,11 +97,12 @@ void GameManager::loopWorldWork() {
 
 	SnakeClient::boost_shared_ptr ptr(univers_.getSnakeClient().lock());
 
+	if (!ptr)
+		return;
 	univers_.manageSnakeClientInput();
 
-	for (; nextFrame.empty() && univers_.isOpenGame_() && world_ && ptr;) {
+	for (; nextFrame.empty() && univers_.isOpenGame_() && world_;) {
 		ptr->lock();
-		std::cout << "Hello "<< std::endl;
 		nextFrame = world_->getEventsManager().getEvents<NextFrame>();
 		ptr->unlock();
 	}
@@ -131,7 +132,6 @@ void GameManager::loopWorldWork() {
 				ptr->addScore(bobby->getId(), eScore::kFromTime);
 				boost::asio::post(pool, [&bobby](){
 					bobby->calculateDirection();
-					std::cout << " start ! " << std::endl;
 				});
 			}
 		}
