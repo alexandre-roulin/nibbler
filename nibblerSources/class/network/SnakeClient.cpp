@@ -275,6 +275,7 @@ void SnakeClient::callbackStartInfo(StartInfo startInfo) {
 		if (univers_.isServer()) {
 			int max_food = (startInfo.nu > 1 ? startInfo.nu - 1 : startInfo.nu);
 			for (int index = 0; index < max_food; ++index) {
+				log_success("IsConnect() ? %d", clientTCP_->isConnect());
 				clientTCP_->writeDataToServer(
 						FoodInfo(
 								PositionComponent(
@@ -286,8 +287,7 @@ void SnakeClient::callbackStartInfo(StartInfo startInfo) {
 		}
 		const std::shared_ptr<KINU::World> &world = univers_.getGameManager().getWorld_();
 		if (world)
-			world->getEventsManager().emitEvent<StartEvent>(
-				startInfo.time_duration);
+			world->getEventsManager().emitEvent<StartEvent>(startInfo.time_duration);
 	}
 }
 
