@@ -5,37 +5,66 @@
 #include <Sprite.hpp>
 #include <nibbler.hpp>
 
-class Snake {
+class BaseSnake {
 public:
-	Snake();
-	~Snake() = default;
-	Snake(const Snake &) = delete;
+	BaseSnake();
+	~BaseSnake() = default;
+	BaseSnake(const BaseSnake &) = default;
+	bool isReady;
+	bool isIA;
+	bool isValid;
+	int16_t id;
+	size_t indexConnection;
+	uint16_t score_;
 
+};
+
+class SnakeUI : virtual public BaseSnake {
+public:
+	SnakeUI();
+	SnakeUI &operator=(SnakeUI const &SnakeUI)  = default;
+	virtual ~SnakeUI() = default;
+
+	SnakeUI(Snake &);
+	SnakeUI(const Snake &);
+	virtual SnakeUI &operator=(Snake &SnakeUI);
+	virtual SnakeUI &operator=(Snake const &SnakeUI);
+
+	SnakeUI(const SnakeUI &) = default;
 	char name[NAME_BUFFER];
 	eSprite sprite;
-	bool isReady;
-	int16_t id_;
+	bool isReadyToExpose;
+
+};
+class SnakeUX : virtual public BaseSnake {
+public:
+	SnakeUX &operator=(SnakeUX const &SnakeUX) = default;
+	SnakeUX();
+	virtual ~SnakeUX() = default;
+	SnakeUX(const SnakeUX &) = default;
 	bool isUpdate;
 	eDirection direction;
 	bool isAlive;
-	bool isIA;
 	bool isSwitchingLibrary;
-	size_t indexConnection;
-	bool isValid;
-	// isReadyToExpose: When client recieves his Id, he can make somes modification before re-sended SnakeSelf
-	bool isReadyToExpose;
-	uint32_t score_;
-
-	void reset();
-	void lightCopy(Snake &);
-	void hardCopy(Snake &);
-	void randomSnake(int16_t id);
-	static std::string const basicName[SNAKE_MAX_NAME];
 };
 
+class Snake : virtual public SnakeUI, virtual public SnakeUX {
+public:
+	Snake();
+
+	virtual ~Snake() = default;
+
+	Snake(Snake &) = default;
+	Snake(const Snake &) = default;
+	virtual Snake &operator=(Snake &Snake) = default;
+	virtual Snake &operator=(Snake const &Snake) = default;
 
 
+	void
+	randomSnake(int16_t id_);
 
+	static std::string const basicName[SNAKE_MAX_NAME];
+};
 
 
 #endif //PROJECT_SNAKE_HPP

@@ -67,9 +67,9 @@ void SnakeServer::callbackPause(eAction pause) {
 }
 
 void SnakeServer::callbackSnake(Snake &snake) {
-	log_success("%s id %d score %d isUpdate %d", __PRETTY_FUNCTION__, snake.id_, snake.score_, snake.isUpdate);
-	assert(snake.id_ >= 0 && snake.id_ < SNAKE_MAX);
-	snake_array_[snake.id_].lightCopy(snake);
+	log_success("%s id %d score %d isUpdate %d", __PRETTY_FUNCTION__, snake.id, snake.score_, snake.isUpdate);
+	assert(snake.id >= 0 && snake.id < SNAKE_MAX);
+//	snake_array_[snake.id].lightCopy(snake); // TODO
 	serverTCP_->writeDataToOpenConnections(snake, eHeader::kSnake);
 }
 
@@ -140,7 +140,7 @@ void SnakeServer::callbackSnakeArray(SnakeArrayContainer &) {
 
 
 void SnakeServer::callbackAddScore(Snake &snake) {
-	snake_array_[snake.id_].score_ = snake.score_;
+	snake_array_[snake.id].score_ = snake.score_;
 }
 
 

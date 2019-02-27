@@ -3,6 +3,7 @@
 #include <KINU/World.hpp>
 #include <network/SnakeServer.hpp>
 #include "GameManager.hpp"
+#include "Snake.hpp"
 
 /** Const Variable **/
 
@@ -54,9 +55,9 @@ Univers::Univers()
 }
 
 void Univers::resetData() {
-	for (const auto &snake: getSnakeArray_()) {
+	for (const auto &snake: getSnakeUIArray_()) {
 		if (snake.isValid) {
-			std::cout << "ID:" << snake.id_ << " " << " Score : " << snake.score_ << std::endl;
+			std::cout << "ID:" << snake.id << " " << " Score : " << snake.score_ << std::endl;
 		}
 	}
 
@@ -383,14 +384,17 @@ MutantGrid<eSprite> &Univers::getGrid_() const {
 	return *grid_;
 }
 
-const SnakeArrayContainer &Univers::getSnakeArray_() const {
-	SnakeClient::boost_shared_ptr ptr(getSnakeClient().lock());
-
-	if (isServer())
-		return snakeServer_->getSnakeArray_();
-	if (ptr)
-		return ptr->getSnakeArray_();
-	return snakeArrayContainer;
+const SnakeUIArrayContainer Univers::getSnakeUIArray_() const {
+	boost::shared_ptr<ISnakeNetwork>  ptr(getSnakeNetwork().lock());
+	SnakeUIArrayContainer snakeUIArrayContainer;
+	SnakeArrayContainer snakeArray;
+	if (ptr) {
+		snakeArray = ptr->getSnakeArray_();
+		snakeArray = static_cast<const SnakeArrayContainer >(snakeUIArrayContainer);
+		snakeUIArrayContainer = static_cast<const SnakeUIArrayContainer >(ptr->getSnakeArray_());
+		std::copy(snakeArray.begin(), snakeArray.end(), snakeUIArrayContainer.begin());
+	}
+	return snakeUIArrayContainer;
 }
 
 boost::weak_ptr<ISnakeNetwork> Univers::getSnakeNetwork() const {

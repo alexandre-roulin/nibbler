@@ -21,7 +21,7 @@ public:
 	WidgetLobby &operator=(const WidgetLobby &) = default;
 	WidgetLobby(const WidgetLobby &) = default;
 
-	void addSnake(Snake const &snake, WidgetSnake::SnakeType type);
+	void addSnake(SnakeUI const &snake, WidgetSnake::SnakeType type);
 
 	void addColor(eSprite color, std::string const &name, std::string const &pathColor);
 
@@ -30,7 +30,7 @@ public:
 private:
 	std::map<eSprite, SpriteColorProperties> mapSprite_;
 	std::deque<WidgetSnake> snakeWidget_;
-	SnakeArrayContainer snakes_;
+	SnakeUIArrayContainer snakes_;
 
 	void _reload();
 };

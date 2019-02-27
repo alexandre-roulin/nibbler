@@ -11,28 +11,37 @@ std::string const Snake::basicName[SNAKE_MAX_NAME] = {
 		"Dautta c bo"
 };
 
-Snake::Snake() :
+Snake::Snake()  {}
+
+SnakeUI::SnakeUI() :
 		sprite(eSprite::kBlue),
-		isReady(false),
-		id_(-1),
-		isUpdate(false),
-		direction(kNorth),
-		isAlive(false),
-		isIA(false),
-		isSwitchingLibrary(false),
-		isValid(false),
-		isReadyToExpose(false),
-		score_(0) {
+		isReadyToExpose(false) {
 	memset(name, 0, NAME_BUFFER);
 }
 
-void Snake::randomSnake(int16_t id) {
+SnakeUX::SnakeUX() :
+		isUpdate(false),
+		direction(kNorth),
+		isAlive(false),
+		isSwitchingLibrary(false) {
+}
+
+BaseSnake::BaseSnake() :
+		isReady(false),
+		isIA(false),
+		isValid(false),
+		id(-1),
+		score_(0) {
+
+}
+
+void Snake::randomSnake(int16_t id_) {
 
 	sprite = static_cast<eSprite>(static_cast<int>(eSprite::kGreen) +
 								  rand() % SNAKE_MAX_COLOR);
 	strncpy(name, Snake::basicName[rand() % SNAKE_MAX_NAME].c_str(),
 			NAME_BUFFER);
-	id_ = id;
+	id = id_;
 	isAlive = true;
 	isSwitchingLibrary = false;
 	isValid = true;
@@ -40,38 +49,4 @@ void Snake::randomSnake(int16_t id) {
 	score_ = 0;
 	isReadyToExpose = false;
 }
-
-void Snake::lightCopy(Snake &snake) {
-	std::strncpy(name, snake.name, NAME_BUFFER);
-	score_ = snake.score_;
-	id_ = snake.id_;
-	sprite = snake.sprite;
-	isReady = snake.isReady;
-	isIA = snake.isIA;
-	isReadyToExpose = snake.isReadyToExpose;
-	isAlive = snake.isAlive;
-}
-
-void Snake::hardCopy(Snake &snake) {
-	lightCopy(snake);
-	direction = snake.direction;
-	isUpdate = snake.isUpdate;
-	isSwitchingLibrary = snake.isSwitchingLibrary;
-	indexConnection = snake.indexConnection;
-	isValid = snake.isValid;
-}
-
-void Snake::reset() {
-	sprite = eSprite::kBlue;
-	isReady = false;
-	id_ = -1;
-	isUpdate = false;
-	direction = kNorth;
-	isAlive = false;
-	isIA = false;
-	isSwitchingLibrary = false;
-	isValid = false;
-	score_ = 0;
-	memset(name, 0, NAME_BUFFER);
-};
 

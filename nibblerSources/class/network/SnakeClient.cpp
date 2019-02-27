@@ -154,7 +154,7 @@ void SnakeClient::addScore(uint16_t id, eScore score) {
 
 void SnakeClient::disconnect() {
 	clientTCP_->disconnect();
-	std::for_each(snake_array_.begin(), snake_array_.end(), [](Snake &snake){ snake.reset(); });
+//	std::for_each(snake_array_.begin(), snake_array_.end(), [](Snake &snake){ snake.reset(); });
 	refreshSnakeArray();
 }
 
@@ -208,7 +208,7 @@ void SnakeClient::callbackBorderless(bool borderless) {
 }
 
 void SnakeClient::callbackAddScore(Snake &snake) {
-	snake_array_[snake.id_].score_ = snake.score_;
+	snake_array_[snake.id].score_ = snake.score_;
 }
 
 void SnakeClient::callbackId(int16_t id) {
@@ -216,7 +216,7 @@ void SnakeClient::callbackId(int16_t id) {
 	std::lock_guard<std::mutex> guard(mutex_);
 	id_ = id;
 	if (fromIA_) {
-		snake_array_[id_].id_ = id;
+		snake_array_[id_].id = id;
 		snake_array_[id_].isReady = true;
 		snake_array_[id_].isIA = true;
 	}
@@ -239,26 +239,26 @@ void SnakeClient::callbackPause(eAction) {
 	univers_.getGameManager().refreshTimerLoopWorld();
 }
 
-void SnakeClient::callbackSnake(Snake &snake) {
+void SnakeClient::callbackSnake(Snake &) {
 	std::lock_guard<std::mutex> guard(mutex_);
 	log_debug("%s id[%d] isUpdate[%d]", __PRETTY_FUNCTION__, id_,
 			  snake_array_[id_].isUpdate);
-	snake_array_[snake.id_].lightCopy(snake);
+//	snake_array_[snake.id_].lightCopy(snake);
 	if (acceptDataFromServer()) {
 		univers_.getSoundManager().playNoise(eNoise::kReadySound);
 	}
 }
 
-void SnakeClient::callbackSnakeArray(SnakeArrayContainer &new_snake_array) {
+void SnakeClient::callbackSnakeArray(SnakeArrayContainer &) {
 	std::lock_guard<std::mutex> guard(mutex_);
 
 	log_debug("%s id[%d] isUpdate[%d]", __PRETTY_FUNCTION__, id_, snake_array_[id_].isUpdate);
 	for (int index = 0; index < SNAKE_MAX; ++index) {
-		snake_array_[index].hardCopy(new_snake_array[index]);
+//		snake_array_[index].hardCopy(new_snake_array[index]);
 	}
 	for (auto &snake : snake_array_) {
 		if (snake.isValid)
-			log_warn("Snake ID : [%d] isValid [%d] isAlive [%d] isUpdate [%d] direction [%d]", snake.id_, snake.isValid, snake.isAlive, snake.isUpdate, snake.direction);
+			log_warn("Snake ID : [%d] isValid [%d] isAlive [%d] isUpdate [%d] direction [%d]", snake.id, snake.isValid, snake.isAlive, snake.isUpdate, snake.direction);
 	}
 	refreshSnakeArray();
 }

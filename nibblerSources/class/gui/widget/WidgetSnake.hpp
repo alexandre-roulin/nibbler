@@ -13,7 +13,7 @@ public:
 
 	enum SnakeType { kBasic, kYour, kIa};
 
-	WidgetSnake(Gui &core, Snake const &snake, std::map<eSprite, SpriteColorProperties> const &mapSprite,
+	WidgetSnake(Gui &core, SnakeUI const &snake, std::map<eSprite, SpriteColorProperties> const &mapSprite,
 				SnakeType type);
 
 	~WidgetSnake(void) override = default;
@@ -27,7 +27,7 @@ public:
 	void render(void) override ;
 
 private:
-	Snake const &snake_;
+	SnakeUI const &snake_;
 	std::map<eSprite, SpriteColorProperties> const &mapSprite_;
 	SnakeType type_;
 	unsigned int sizeTexture_;

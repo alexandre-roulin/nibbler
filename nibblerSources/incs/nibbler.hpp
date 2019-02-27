@@ -24,7 +24,11 @@
 #define MAP_MAX 100
 
 class Snake;
+class SnakeUI;
+class SnakeUX;
 
+using SnakeUIArrayContainer = std::array<SnakeUI, SNAKE_MAX>;
+using SnakeUXArrayContainer = std::array<SnakeUX, SNAKE_MAX>;
 using SnakeArrayContainer = std::array<Snake, SNAKE_MAX>;
 
 enum eScore : uint16_t {
