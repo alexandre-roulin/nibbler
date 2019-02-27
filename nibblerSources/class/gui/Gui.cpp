@@ -61,7 +61,7 @@ void			callbackExit(Gui &gui)
 	gui.exit();
 }
 
-void			callbackTest(void *vUnivers, std::string const&input) {
+void			callbackTest(void *vUnivers, std::string const &input) {
 	Univers *univers = reinterpret_cast<Univers*>(vUnivers);
 
 	if (!vUnivers)
@@ -163,6 +163,7 @@ void			Gui::aState(void)
 			_processEvent(event);
 			ImGui::SFML::ProcessEvent(event);
 		}
+
 		ImGui::SetNextWindowPos(positionByPercent(sf::Vector2<unsigned int>(0, 50)));
 		ImGui::SetNextWindowSize(positionByPercent(sf::Vector2<unsigned int>(50, 50)));
 		_chat.render();
