@@ -104,6 +104,10 @@ private:
 
 	void callbackId(int16_t);
 
+	void callbackAddScore(Snake &);
+
+	void callbackKillSnake(uint16_t);
+
 	bool acceptDataFromServer() const;
 
 	void refreshSnakeArray();

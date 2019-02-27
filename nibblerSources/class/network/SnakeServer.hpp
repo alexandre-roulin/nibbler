@@ -47,9 +47,13 @@ public:
 private:
 	SnakeServer(Univers &univers, unsigned int port);
 	void build();
+
 	void callbackRemoveSnake(int16_t);
 
+	void callbackKillSnake(uint16_t);
+
 	void callbackDeadConnection(size_t index);
+
 	void callbackSnakeArray(SnakeArrayContainer &);
 
 	void callbackPock(char);
@@ -74,13 +78,15 @@ private:
 
 	void callbackSnake(Snake &);
 
+	void callbackAddScore(Snake &);
+
 	void callbackFood(FoodInfo);
 
 	void callbackStartInfo(StartInfo);
 
 	void callbackCloseConnection(char);
 
-	void updateInput();
+	bool updateInput();
 
 	Univers &univers_;
 	std::vector<FoodInfo> foodInfoArray;

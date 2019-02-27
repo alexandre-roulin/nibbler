@@ -11,12 +11,12 @@ FoodCreationSystem::FoodCreationSystem() {
 }
 
 void FoodCreationSystem::update() {
-	log_info("%s", __PRETTY_FUNCTION__);
+//	log_info("%s", __PRETTY_FUNCTION__);
 	auto foodCreationEvents = getWorld().getEventsManager().getEvents<FoodCreation>();
 
 	for (auto foodCreationEvent : foodCreationEvents) {
 		auto food = getWorld().createEntity();
-		log_info("FoodCreationSystem:: x[%d] y[%d]", foodCreationEvent.positionComponent_.x, foodCreationEvent.positionComponent_.y);
+//		log_info("FoodCreationSystem:: x[%d] y[%d]", foodCreationEvent.positionComponent_.x, foodCreationEvent.positionComponent_.y);
 		food.addComponent(foodCreationEvent.positionComponent_);
 		food.addComponent<CollisionComponent>();
 		food.addComponent<SpriteComponent>(eSprite::kFood, kNoPriority);

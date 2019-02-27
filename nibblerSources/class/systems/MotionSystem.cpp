@@ -18,12 +18,12 @@ MotionSystem::MotionSystem(Univers &univers) : univers_(univers) {
 
 void MotionSystem::update() {
 	static int frame = 0;
-	log_info("%s", __PRETTY_FUNCTION__);
+//	log_info("%s", __PRETTY_FUNCTION__);
 	unsigned int mapSize = univers_.getMapSize();
 	for (auto &entity : getEntities()) {
 		auto &positionComponent = entity.getComponent<PositionComponent>();
 		auto &motionComponent = entity.getComponent<MotionComponent>();
-//		std::cout << "On frame : " << frame << "_ Entity : " << entity.getId() << " _ Direction : " << motionComponent.direction << std::endl;
+		std::cout << "On frame : " << frame << "_ Entity : " << entity.getId() << " _ Direction : " << motionComponent.direction << std::endl;
 		switch (motionComponent.direction) {
 			case kNorth:
 				(positionComponent.y == 0 ? positionComponent.y = mapSize - 1 : positionComponent.y--);
@@ -40,7 +40,8 @@ void MotionSystem::update() {
 		}
 	}
 	frame++;
-//	std::cout << std::endl;
+	log_warn("Frame : %d", frame);
+	std::cout << std::endl;
 }
 
 MotionSystem::~MotionSystem() = default;

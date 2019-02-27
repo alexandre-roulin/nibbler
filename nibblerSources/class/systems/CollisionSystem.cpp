@@ -72,7 +72,7 @@ void CollisionSystem::checkCollision(
 }
 
 void CollisionSystem::update() {
-	log_info("%s", __PRETTY_FUNCTION__);
+//	log_info("%s", __PRETTY_FUNCTION__);
 	std::vector<KINU::Entity> entities_ = getEntities();
 	for (auto entity : getEntities()) {
 		if (entity.hasTagId() &&

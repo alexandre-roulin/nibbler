@@ -130,10 +130,10 @@ void Univers::manageSnakeClientInput() {
 	eDirection direction = eDirection::kNorth;
 	if (displayManager->hasLibraryLoaded())
 		direction = displayManager->getDisplay()->getDirection();
-	if (ptr && ptr->isOpen() && ptr->getSnake().isAlive && !isIASnake(ptr->getId_())) {
+
+	if (ptr && ptr->isOpen() && getGameManager().getWorld_()->getEntitiesManager().hasEntityByTagId(ptr->getId_() + eTag::kHeadTag) && !ptr->isIa()) {
 		ptr->addScore(ptr->getId_(), eScore::kFromTime);
-		ptr->sendDataToServer(InputInfo(ptr->getId_(), direction),
-							  eHeader::kInput);
+		ptr->sendDataToServer<InputInfo>({ptr->getId_(), direction}, eHeader::kInput);
 	}
 
 }
@@ -172,7 +172,6 @@ void Univers::manageSwitchLibrary() {
 /** Snake **/
 
 bool Univers::isIASnake(uint16_t client_id) const {
-
 	return std::any_of(vecBobby.begin(), vecBobby.end(), [client_id](auto &bobby){ return bobby->getId() == client_id;});
 }
 

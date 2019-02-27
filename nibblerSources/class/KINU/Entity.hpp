@@ -78,18 +78,15 @@ namespace KINU {
 		template<typename T>
 		T &getComponent() const;
 
-	private:
-		friend class EntitiesManager;
-
-
-	public:
 		Entity(Entity::ID);
 
 		EntitiesManager &getEntitiesManager_() const;
 
 	private:
+		friend class EntitiesManager;
 
 		Entity::ID id_;
+
 		EntitiesManager *entitiesManager_;
 	};
 

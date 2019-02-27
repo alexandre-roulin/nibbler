@@ -128,10 +128,8 @@ bool SnakeClient::isIa() const {
 void SnakeClient::killSnake(uint16_t id) {
 	if (id_ == id || (univers_.isIASnake(id) && univers_.isServer())) {
 		log_debug("%s id[%d]", __PRETTY_FUNCTION__, id);
-		snake_array_[id].isAlive = false;
-		sendDataToServer(snake_array_[id], eHeader::kSnake);
+		sendDataToServer(id, eHeader::kKillSnake);
 	}
-
 }
 
 void SnakeClient::addScore(uint16_t id, eScore score) {
@@ -151,6 +149,7 @@ void SnakeClient::addScore(uint16_t id, eScore score) {
 			break;
 	}
 	univers_.setMicroSecDeltaTime(timeLess);
+	sendDataToServer(snake_array_[id], eHeader::kAddScore);
 }
 
 void SnakeClient::disconnect() {
@@ -174,13 +173,12 @@ void SnakeClient::callbackDeadConnection() {
 }
 
 void SnakeClient::callbackPock(char) {
-	std::cout << "kPock" << std::endl;
+//	std::cout << "kPock" << std::endl;
 	log_info("%s %d", __PRETTY_FUNCTION__, snake_array_[id_].isUpdate);
 	std::lock_guard<std::mutex> guard(mutex_);
 	if (acceptDataFromServer() && univers_.isOpenGame_()) {
 		const std::shared_ptr<KINU::World> &world = univers_.getGameManager().getWorld_();
-		if (world)
-			world->getEventsManager().emitEvent<NextFrame>();
+		if (world) world->getEventsManager().emitEvent<NextFrame>();
 	}
 }
 
@@ -207,6 +205,10 @@ void SnakeClient::callbackBorderless(bool borderless) {
 		log_info("%s %d", __PRETTY_FUNCTION__, snake_array_[id_].isUpdate);
 		univers_.setBorderless(borderless);
 	}
+}
+
+void SnakeClient::callbackAddScore(Snake &snake) {
+	snake_array_[snake.id_].score_ = snake.score_;
 }
 
 void SnakeClient::callbackId(int16_t id) {
@@ -239,9 +241,9 @@ void SnakeClient::callbackPause(eAction) {
 
 void SnakeClient::callbackSnake(Snake &snake) {
 	std::lock_guard<std::mutex> guard(mutex_);
-//	log_debug("%s id[%d] isUpdate[%d]", __PRETTY_FUNCTION__, id_,
-//			  snake_array_[id_].isUpdate);
-	snake_array_[snake.id_] = snake;
+	log_debug("%s id[%d] isUpdate[%d]", __PRETTY_FUNCTION__, id_,
+			  snake_array_[id_].isUpdate);
+	snake_array_[snake.id_].lightCopy(snake);
 	if (acceptDataFromServer()) {
 		univers_.getSoundManager().playNoise(eNoise::kReadySound);
 	}
@@ -249,10 +251,15 @@ void SnakeClient::callbackSnake(Snake &snake) {
 
 void SnakeClient::callbackSnakeArray(SnakeArrayContainer &new_snake_array) {
 	std::lock_guard<std::mutex> guard(mutex_);
-	std::cout << "kSnakeArray" << std::endl;
-	log_debug("%s id[%d] isUpdate[%d]", __PRETTY_FUNCTION__, id_,
-			  snake_array_[id_].isUpdate);
-	snake_array_ = new_snake_array;
+
+	log_debug("%s id[%d] isUpdate[%d]", __PRETTY_FUNCTION__, id_, snake_array_[id_].isUpdate);
+	for (int index = 0; index < SNAKE_MAX; ++index) {
+		snake_array_[index].hardCopy(new_snake_array[index]);
+	}
+	for (auto &snake : snake_array_) {
+		if (snake.isValid)
+			log_warn("Snake ID : [%d] isValid [%d] isAlive [%d] isUpdate [%d] direction [%d]", snake.id_, snake.isValid, snake.isAlive, snake.isUpdate, snake.direction);
+	}
 	refreshSnakeArray();
 }
 
@@ -269,8 +276,7 @@ void SnakeClient::callbackFood(FoodInfo foodInfo) {
 void SnakeClient::callbackStartInfo(StartInfo startInfo) {
 	std::lock_guard<std::mutex> guard(mutex_);
 	foodCreations.clear();
-	log_debug("%s id[%d] isUpdate[%d]", __PRETTY_FUNCTION__, id_,
-			  snake_array_[id_].isUpdate);
+	log_debug("%s id[%d] isUpdate[%d]", __PRETTY_FUNCTION__, id_, snake_array_[id_].isUpdate);
 	if (acceptDataFromServer()) {
 		while (univers_.getGameManager().getWorld_() == nullptr);
 		factory_.createAllSnake(snake_array_, startInfo.nu);
@@ -296,8 +302,14 @@ void SnakeClient::callbackChatInfo(ChatInfo chatInfo) {
 	std::lock_guard<std::mutex> guard(mutex_);
 	if (acceptDataFromServer()) {
 		log_debug("%s", __PRETTY_FUNCTION__);
-		univers_.getGui_()->addMessageChat(chatInfo.toString());
+		std::unique_ptr<Gui> &gui = univers_.getGui_();
+		if (gui) gui->addMessageChat(chatInfo.toString());
 	}
+}
+
+
+void SnakeClient::callbackKillSnake(uint16_t) {
+
 }
 
 bool SnakeClient::isReady() const {
@@ -431,10 +443,26 @@ void SnakeClient::build() {
 			}),
 			eHeader::kPause);
 
+	clientTCP_->getDataTCP_().addDataType<Snake >(
+			([thisWeakPtr](Snake &snake) {
+				auto myPtr = thisWeakPtr.lock();
+				if (myPtr) myPtr->callbackAddScore(snake);
+			}),
+			eHeader::kAddScore);
+
 	clientTCP_->getDataTCP_().addDataType<char>(
 			([thisWeakPtr](char c) {
 				auto myPtr = thisWeakPtr.lock();
 				if (myPtr) myPtr->callbackCloseConnection(c);
 			}),
 			eHeader::kCloseConnection);
+
+	clientTCP_->getDataTCP_().addDataType<uint16_t >(
+			([thisWeakPtr](uint16_t id) {
+				auto myPtr = thisWeakPtr.lock();
+				if (myPtr) myPtr->callbackKillSnake(id);
+			}),
+			eHeader::kKillSnake);
 }
+
+

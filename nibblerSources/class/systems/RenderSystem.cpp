@@ -11,7 +11,7 @@ RenderSystem::RenderSystem(Univers &univers) : univers_(univers) {
 }
 
 void RenderSystem::update() {
-	log_info("%s", __PRETTY_FUNCTION__);
+//	log_info("%s", __PRETTY_FUNCTION__);
 	std::list<std::pair<PositionComponent &, SpriteComponent &>> renderComponents;
 	MutantGrid< eSprite > grid_cache(univers_.getMapSize());
 	grid_cache.fill(eSprite::kNone);

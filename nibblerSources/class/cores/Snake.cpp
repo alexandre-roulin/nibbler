@@ -47,9 +47,9 @@ void Snake::lightCopy(Snake &snake) {
 	id_ = snake.id_;
 	sprite = snake.sprite;
 	isReady = snake.isReady;
-	isAlive = snake.isAlive;
 	isIA = snake.isIA;
 	isReadyToExpose = snake.isReadyToExpose;
+	isAlive = snake.isAlive;
 }
 
 void Snake::hardCopy(Snake &snake) {
