@@ -66,6 +66,9 @@ IDisplay *ExternalLibraryDisplayManager::getDisplay() const {
 	return display;
 }
 
+void ExternalLibraryDisplayManager::setKDisplay(eDisplay k) {
+	kDisplay = k;
+}
 eDisplay ExternalLibraryDisplayManager::getKDisplay() const {
 	return kDisplay;
 }

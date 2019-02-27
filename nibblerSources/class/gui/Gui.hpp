@@ -60,7 +60,7 @@ public:
 private:
 	//				GUI				//
 	boost::filesystem::path		pathRessources_;
-	std::ofstream					input_;
+	std::ofstream				input_;
 
 	sf::Vector2<unsigned int>	_winSize;
 	sf::RenderWindow			_win;

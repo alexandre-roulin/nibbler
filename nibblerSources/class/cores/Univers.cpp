@@ -486,6 +486,10 @@ ExternalLibrarySoundManager &Univers::getSoundManager() {
 	return *soundManager;
 }
 
+ExternalLibraryDisplayManager &Univers::getDisplayManager() {
+	return (*displayManager);
+}
+
 SnakeServer &Univers::getSnakeServer() const {
 	return *snakeServer_;
 }

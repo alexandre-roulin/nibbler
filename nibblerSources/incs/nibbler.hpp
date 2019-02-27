@@ -38,11 +38,6 @@ enum eFlag {
 	kSound
 };
 
-struct LibraryInfo {
-	char const title[80];
-	char const path[PATH_MAX];
-};
-
 enum eSound {
 	kSoundSfmlLibrary = 0,
 	kSoundSdlLibrary
@@ -57,6 +52,12 @@ enum eDisplay {
 	kDisplaySfmlLibrary = 0,
 	kDisplaySdlLibrary,
 	kDisplayGlfwLibrary
+};
+
+struct LibraryInfo {
+	char const title[80];
+	char const path[PATH_MAX];
+	eDisplay kDisplay;
 };
 
 static const eDisplay eDisplayArray[] = {

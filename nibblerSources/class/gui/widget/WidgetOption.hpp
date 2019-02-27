@@ -21,4 +21,5 @@ private:
 	bool &rNoise_;
 	bool &rMusique_;
 	std::string pathSound_;
+	int indexLibrary_;
 };

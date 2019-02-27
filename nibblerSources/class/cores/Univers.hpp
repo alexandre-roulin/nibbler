@@ -156,6 +156,8 @@ public:
 
 	ExternalLibrarySoundManager &getSoundManager();
 
+	ExternalLibraryDisplayManager &getDisplayManager();
+
 	GameManager &getGameManager();
 
 	void switchBorderless();
