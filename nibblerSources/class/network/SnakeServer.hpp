@@ -40,6 +40,8 @@ public:
 	void closeAcceptorServer();
 
 
+	void refreshDataStartGame();
+
 	virtual ~SnakeServer();
 
 private:

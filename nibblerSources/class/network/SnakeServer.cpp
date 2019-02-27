@@ -136,17 +136,23 @@ void SnakeServer::callbackCloseConnection(char) {
 
 }
 
+void SnakeServer::refreshDataStartGame() {
+
+}
 
 void SnakeServer::startGame() {
 	assert(isReady());
 	std::lock_guard<std::mutex> guard(mutex_);
 	foodInfoArray.clear();
-	std::for_each(snake_array_.begin(), snake_array_.end(),
-				  [](auto &snake){ snake.isAlive = true; snake.isUpdate = false; });
+	std::for_each(snake_array_.begin(), snake_array_.end(), [](Snake &snake){
+		snake.isAlive = true;
+		snake.isUpdate = false;
+		snake.direction = kNorth;
+	});
 	serverTCP_->writeDataToOpenConnections(snake_array_, eHeader::kSnakeArray);
 	serverTCP_->writeDataToOpenConnections<StartInfo>({
 		serverTCP_->getSizeOfOpenConnection(),
-		boost::posix_time::microsec_clock::universal_time()
+		boost::posix_time::microsec_clock::universal_time() + boost::posix_time::seconds(3)
 		}, eHeader::kStartGame);
 }
 
@@ -206,7 +212,6 @@ bool SnakeServer::sendOpenGameToClient() {
 	if (!isReady())
 		return false;
 	serverTCP_->writeDataToOpenConnections(true, eHeader::kOpenGame);
-	univers_.setOpenGame_(true);
 	return true;
 }
 

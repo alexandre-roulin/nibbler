@@ -47,7 +47,6 @@ void Snake::lightCopy(Snake &snake) {
 	id_ = snake.id_;
 	sprite = snake.sprite;
 	isReady = snake.isReady;
-	direction = snake.direction;
 	isAlive = snake.isAlive;
 	isIA = snake.isIA;
 	isReadyToExpose = snake.isReadyToExpose;
@@ -55,6 +54,7 @@ void Snake::lightCopy(Snake &snake) {
 
 void Snake::hardCopy(Snake &snake) {
 	lightCopy(snake);
+	direction = snake.direction;
 	isUpdate = snake.isUpdate;
 	isSwitchingLibrary = snake.isSwitchingLibrary;
 	indexConnection = snake.indexConnection;

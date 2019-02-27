@@ -151,7 +151,6 @@ void SnakeClient::addScore(uint16_t id, eScore score) {
 			break;
 	}
 	univers_.setMicroSecDeltaTime(timeLess);
-	sendDataToServer(snake_array_[id], eHeader::kSnake);
 }
 
 void SnakeClient::disconnect() {
@@ -175,6 +174,7 @@ void SnakeClient::callbackDeadConnection() {
 }
 
 void SnakeClient::callbackPock(char) {
+	std::cout << "kPock" << std::endl;
 	log_info("%s %d", __PRETTY_FUNCTION__, snake_array_[id_].isUpdate);
 	std::lock_guard<std::mutex> guard(mutex_);
 	if (acceptDataFromServer() && univers_.isOpenGame_()) {
@@ -249,6 +249,7 @@ void SnakeClient::callbackSnake(Snake &snake) {
 
 void SnakeClient::callbackSnakeArray(SnakeArrayContainer &new_snake_array) {
 	std::lock_guard<std::mutex> guard(mutex_);
+	std::cout << "kSnakeArray" << std::endl;
 	log_debug("%s id[%d] isUpdate[%d]", __PRETTY_FUNCTION__, id_,
 			  snake_array_[id_].isUpdate);
 	snake_array_ = new_snake_array;
@@ -271,6 +272,7 @@ void SnakeClient::callbackStartInfo(StartInfo startInfo) {
 	log_debug("%s id[%d] isUpdate[%d]", __PRETTY_FUNCTION__, id_,
 			  snake_array_[id_].isUpdate);
 	if (acceptDataFromServer()) {
+		while (univers_.getGameManager().getWorld_() == nullptr);
 		factory_.createAllSnake(snake_array_, startInfo.nu);
 		if (univers_.isServer()) {
 			int max_food = (startInfo.nu > 1 ? startInfo.nu - 1 : startInfo.nu);
@@ -285,9 +287,8 @@ void SnakeClient::callbackStartInfo(StartInfo startInfo) {
 				);
 			}
 		}
-		const std::shared_ptr<KINU::World> &world = univers_.getGameManager().getWorld_();
-		if (world)
-			world->getEventsManager().emitEvent<StartEvent>(startInfo.time_duration);
+		univers_.getGameManager().getWorld_()->getEventsManager()
+		.emitEvent<StartEvent>(startInfo.time_duration);
 	}
 }
 

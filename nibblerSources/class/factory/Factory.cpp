@@ -31,6 +31,7 @@ void Factory::createAllSnake(SnakeArrayContainer &snake_array, int16_t nu) {
 void Factory::createSnake(Snake const &snake, int maxSnakes) {
 	KINU::Entity	snake_follow;
 	KINU::Entity	new_snake;
+
 	std::shared_ptr<KINU::World> world = univers_.getGameManager().getWorld_();
 	// (0 + 1) * 35 / (2 + 1) = 11
 	// 35 / 2 = 17

@@ -39,11 +39,6 @@ void GameManager::startNewGame() {
 	univers_.setGrid_(std::make_shared<MutantGrid<eSprite>>(univers_.getMapSize()));
 	univers_.getGrid_().fill(eSprite::kNone);
 
-
-	if (univers_.isServer()) {
-		univers_.getSnakeServer().startGame();
-	}
-
 	world_->getSystemsManager().addSystem<CollisionSystem>(univers_);
 	world_->getSystemsManager().addSystem<FollowSystem>();
 	world_->getSystemsManager().addSystem<JoystickSystem>(univers_);
@@ -58,14 +53,19 @@ void GameManager::startNewGame() {
 	std::vector<StartEvent> startEvent;
 	SnakeClient::boost_shared_ptr ptr(univers_.getSnakeClient().lock());
 
+	if (univers_.isServer()) {
+		univers_.getSnakeServer().startGame();
+	}
+
 	for (;ptr && startEvent.empty();) {
 		ptr->lock();
 		startEvent = world_->getEventsManager().getEvents<StartEvent>();
 		ptr->unlock();
 	}
 
-	timer_start.expires_at(startEvent.front().start_time);
-	timer_start.wait();
+	world_->update();
+	world_->getSystemsManager().getSystem<SpriteSystem>().update();
+	world_->getSystemsManager().getSystem<RenderSystem>().update();
 
 	if (univers_.isServer()) {
 		for (auto &bobby : univers_.getBobbys()) {
@@ -73,9 +73,12 @@ void GameManager::startNewGame() {
 			bobby->sendDirection();
 		}
 	}
-	world_->update();
-	world_->getSystemsManager().getSystem<SpriteSystem>().update();
-	world_->getSystemsManager().getSystem<RenderSystem>().update();
+
+	univers_.manageSnakeClientInput();
+
+	timer_start.expires_at(startEvent.front().start_time);
+	timer_start.wait();
+
 
 	threadWorldLoop_ = boost::thread(boost::bind(&GameManager::loopWorld, this));
 }
@@ -96,47 +99,51 @@ void GameManager::loopWorldWork() {
 	boost::asio::thread_pool pool(8);
 
 	SnakeClient::boost_shared_ptr ptr(univers_.getSnakeClient().lock());
-
 	if (!ptr)
 		return;
-	univers_.manageSnakeClientInput();
 
-	for (; nextFrame.empty() && univers_.isOpenGame_() && world_;) {
-		ptr->lock();
-		nextFrame = world_->getEventsManager().getEvents<NextFrame>();
-		ptr->unlock();
-	}
-	nextFrame.clear();
-
-	world_->getEventsManager().destroy<NextFrame>();
-
-	ptr->deliverEvents();
-
-	world_->getSystemsManager().getSystem<FollowSystem>().update();
-	world_->getSystemsManager().getSystem<JoystickSystem>().update();
-	world_->getEventsManager().destroy<JoystickEvent>();
-	world_->getSystemsManager().getSystem<MotionSystem>().update();
-	world_->getSystemsManager().getSystem<CollisionSystem>().update();
-	world_->getSystemsManager().getSystem<FoodCreationSystem>().update();
-	world_->getEventsManager().destroy<FoodCreation>();
-	world_->getSystemsManager().getSystem<SpriteSystem>().update();
-	world_->getSystemsManager().getSystem<RenderSystem>().update();
-	world_->getSystemsManager().getSystem<FoodEatSystem>().update();
-	world_->getEventsManager().destroy<FoodEat>();
-	world_->update();
-
-	Bobby::clearPriority();
-	if (univers_.isServer()) {
-		for (auto &bobby : univers_.getBobbys()) {
-			if (world_->getEntitiesManager().hasEntityByTagId(bobby->getId() + eTag::kHeadTag)) {
-				ptr->addScore(bobby->getId(), eScore::kFromTime);
-				boost::asio::post(pool, [&bobby](){
-					bobby->calculateDirection();
-				});
-			}
+	{ // Manage Frame
+		for (; nextFrame.empty() && univers_.isOpenGame_() && world_;) {
+			ptr->lock();
+			nextFrame = world_->getEventsManager().getEvents<NextFrame>();
+			ptr->unlock();
 		}
-		pool.join();
+		nextFrame.clear();
+
+		world_->getEventsManager().destroy<NextFrame>();
+
 	}
+	{ //Manage game
+		ptr->deliverEvents();
+		world_->getSystemsManager().getSystem<FollowSystem>().update();
+		world_->getSystemsManager().getSystem<JoystickSystem>().update();
+		world_->getEventsManager().destroy<JoystickEvent>();
+		world_->getSystemsManager().getSystem<MotionSystem>().update();
+		world_->getSystemsManager().getSystem<CollisionSystem>().update();
+		world_->getSystemsManager().getSystem<FoodCreationSystem>().update();
+		world_->getEventsManager().destroy<FoodCreation>();
+		world_->getSystemsManager().getSystem<SpriteSystem>().update();
+		world_->getSystemsManager().getSystem<RenderSystem>().update();
+		world_->getSystemsManager().getSystem<FoodEatSystem>().update();
+		world_->getEventsManager().destroy<FoodEat>();
+		world_->update();
+	}
+	{ //Manage Input
+		Bobby::clearPriority();
+		if (univers_.isServer()) {
+			for (auto &bobby : univers_.getBobbys()) {
+				if (world_->getEntitiesManager().hasEntityByTagId(bobby->getId() + eTag::kHeadTag)) {
+					ptr->addScore(bobby->getId(), eScore::kFromTime);
+					boost::asio::post(pool, [&bobby](){
+						bobby->calculateDirection();
+					});
+				}
+			}
+			pool.join();
+		}
+		univers_.manageSnakeClientInput();
+	}
+
 }
 
 void GameManager::loopUI() {
