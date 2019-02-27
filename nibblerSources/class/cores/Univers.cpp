@@ -501,6 +501,13 @@ GameManager &Univers::getGameManager() {
 
 void Univers::switchBorderless() {
 
+	boost::shared_ptr<ISnakeNetwork> ptr_network(getSnakeNetwork().lock());
+
+	if (!ptr_network || !ptr_network->isOpen()) {
+		gui_->addMessageChat(eColorLog::kOrange, WarningServerNotExist);
+		return ;
+	}
+
 	setBorderless(!isBorderless());
 
 	if (isBorderless())
@@ -508,13 +515,7 @@ void Univers::switchBorderless() {
 	else
 		gui_->addMessageChat(eColorLog::kGreen, SuccessBorderlessUnset);
 
-	boost::shared_ptr<ISnakeNetwork> ptr_network(getSnakeNetwork().lock());
-
-	if (!ptr_network || !ptr_network->isOpen()) {
-		return;
-	}
 	ptr_network->notifyBorderless();
-
 }
 
 void Univers::switchReady() {
