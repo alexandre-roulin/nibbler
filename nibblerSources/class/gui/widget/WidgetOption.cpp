@@ -50,6 +50,12 @@ void WidgetOption::render(void) {
 			core_.univers.unloadSound();
 	}
 
+
+	bool borderless = core_.univers.isBorderless();
+	if (ImGui::Checkbox("Borderless", &borderless)) {
+		core_.univers.switchBorderless();
+	}
+
 	if (core_.univers.isServer() && ptr && ptr->allSnakeIsReady()) {
 		Gui::beginColor(Gui::HUE_GREEN);
 		if (ImGui::Button("Run the game")) {

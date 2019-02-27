@@ -533,7 +533,8 @@ void Univers::switchReady() {
 }
 
 void Univers::sendOpenGameToServer() {
-	SnakeClient::boost_shared_ptr ptr(getSnakeClient());
+
+	SnakeClient::boost_shared_ptr ptr(getSnakeClient().lock());
 
 	if (!isServer()) {
 		gui_->addMessageChat(eColorLog::kOrange,
