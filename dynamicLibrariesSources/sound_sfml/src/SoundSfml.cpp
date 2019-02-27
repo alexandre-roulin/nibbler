@@ -19,6 +19,10 @@ void SoundSfml::playMusic(void) {
 	music_.setLoop(true);
 }
 
+void SoundSfml::stopMusic(void) {
+	music_.stop();
+}
+
 void SoundSfml::addNoise(std::string const &path) {
 	noiseBuffer_.emplace_back(new sf::SoundBuffer());
 	if (!noiseBuffer_.back()->loadFromFile(path)) {

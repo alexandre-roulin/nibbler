@@ -4,15 +4,18 @@
 
 WidgetOption::WidgetOption(Gui &core) :
 		AWidget(core),
-		mapSize_(core_.univers.getMapSize()),
-		sound_(core_.univers.getSoundManager().hasLibraryLoaded()) {
+		sound_(core_.univers.getSoundManager().hasLibraryLoaded()),
+		rNoise_(core_.univers.getSoundManager().getNoise()),
+		rMusique_(core_.univers.getSoundManager().getMusique()) {
 	SnakeClient::boost_shared_ptr ptr(core_.univers.getSnakeClient().lock());
-
 	if (ptr)
 		memcpy(nameBuffer_, ptr->getSnake().name, NAME_BUFFER);
+
+	boost::filesystem::path pathSound(NIBBLER_ROOT_PROJECT_PATH);
+	pathSound_ = (pathSound / "ressources" / "sound" / "zelda.ogg").generic_string();
 }
 
-void WidgetOption::render(void) {
+void WidgetOption::render() {
 	SnakeClient::boost_shared_ptr ptr(core_.univers.getSnakeClient().lock());
 
 	ImGui::Begin("Options", NULL,
@@ -30,30 +33,23 @@ void WidgetOption::render(void) {
 		std::memcpy(nameBuffer_,ptr->getSnake().name,NAME_BUFFER);
 	}
 
-	if (ImGui::InputInt("Size map", reinterpret_cast<int *>(&mapSize_), 1,
-						4, ImGuiInputTextFlags_CharsDecimal |
-						   ImGuiInputTextFlags_CharsNoBlank |
-						   ImGuiInputTextFlags_EnterReturnsTrue) && ptr) {
-		if (mapSize_ < MAP_MIN)
-			mapSize_ = MAP_MIN;
-		else if (mapSize_ > MAP_MAX)
-			mapSize_ = MAP_MAX;
-
-		core_.univers.setMapSize(mapSize_);
-		core_.univers.updateSizeMap();
-	}
-
-	if (ImGui::Checkbox("Sound", &sound_)) {
+	if (ImGui::Checkbox("Son", &sound_)) {
 		if (sound_)
 			core_.univers.loadSound(eSound::kSoundSfmlLibrary);
 		else
 			core_.univers.unloadSound();
 	}
 
+	if (sound_) {
+		ImGui::Checkbox("Bruitage", &rNoise_);
+		if (ImGui::Checkbox("Musique", &rMusique_)) {
+			if (!rMusique_)
+				core_.univers.getSoundManager().stopMusic();
+			else {
 
-	bool borderless = core_.univers.isBorderless();
-	if (ImGui::Checkbox("Borderless", &borderless)) {
-		core_.univers.switchBorderless();
+				core_.univers.getSoundManager().playMusic(pathSound_);
+			}
+		}
 	}
 
 	if (core_.univers.isServer() && ptr && ptr->allSnakeIsReady()) {

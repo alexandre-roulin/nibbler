@@ -27,13 +27,19 @@ public:
 		std::string error_;
 	};
 
-	SoundSfml(void) = default;
+	SoundSfml() = default;
 
-	~SoundSfml(void) override = default;
+	~SoundSfml() override = default;
+
+	SoundSfml &operator=(SoundSfml const &rhs) = delete;
+
+	SoundSfml(SoundSfml const &src) = delete;
 	
 	void setMusic(std::string const &path) override;
 
-	void playMusic(void) override;
+	void playMusic() override;
+
+	void stopMusic() override;
 
 	void addNoise(std::string const &path) override;
 
@@ -41,17 +47,13 @@ public:
 
 private:
 
-	void clean_(void);
+	void clean_();
 
 	sf::Music music_;
 
 	std::vector<std::unique_ptr<sf::SoundBuffer> > noiseBuffer_;
 
 	std::deque<sf::Sound> noiseDeque_;
-
-	SoundSfml &operator=(SoundSfml const &rhs) = delete;
-
-	SoundSfml(SoundSfml const &src) = delete;
 };
 
 extern "C" {

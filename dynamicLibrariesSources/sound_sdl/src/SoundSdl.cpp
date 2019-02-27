@@ -30,8 +30,13 @@ void SoundSdl::setMusic(std::string const &path) {
 		throw (SoundSdl::SdlSoundException("Background music, cannot be loaded"));
 }
 
-void SoundSdl::playMusic(void) {
+void SoundSdl::playMusic() {
 	if (Mix_PlayMusic(music_, -1) < 0)
+		throw (SoundSdl::SdlSoundException("Cannot playing Background music"));
+}
+
+void SoundSdl::stopMusic() {
+	if (Mix_HaltMusic() < 0)
 		throw (SoundSdl::SdlSoundException("Cannot playing Background music"));
 }
 

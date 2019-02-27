@@ -47,8 +47,8 @@ namespace KNW {
 
 	template<typename T, typename H>
 	void ClientTCP::writeDataToServer(T &&data, H header) {
-		assert(iotcp != nullptr);
-		iotcp->writeSocket(dataTCP_->serializeData(header, data));
+		if (iotcp && dataTCP_)
+			iotcp->writeSocket(dataTCP_->serializeData(header, data));
 	}
 
 	template<typename T>

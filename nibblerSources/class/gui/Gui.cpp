@@ -4,6 +4,7 @@
 #include "widget/WidgetSnake.hpp"
 #include "widget/WidgetLobby.hpp"
 #include "gui/widget/WidgetOption.hpp"
+#include "gui/widget/WidgetSettingGame.hpp"
 #include "gui/widget/WidgetConnect.hpp"
 #include "gui/widget/WidgetMassiveButton.hpp"
 #include "cores/Test.hpp"
@@ -93,6 +94,7 @@ void			Gui::aState(void)
 	WidgetExit wexit(*this, callbackExit);
 	WidgetLobby lobby(*this);
 	WidgetOption *optionSnake = nullptr;
+	WidgetSettingGame *settings = nullptr;
 	WidgetConnect optionConnect(*this);
 	WidgetMassiveButton massiveButton(*this);
 	sf::Event event;
@@ -177,14 +179,34 @@ void			Gui::aState(void)
 		if (ptr && ptr->isOpen()) {
 			if (!optionSnake)
 				optionSnake = new WidgetOption(*this);
+			if (!settings)
+				settings = new WidgetSettingGame(*this);
 			ImGui::SetNextWindowPos(positionByPercent(sf::Vector2<unsigned int>(70, 50)));
-			ImGui::SetNextWindowSize(positionByPercent(sf::Vector2<unsigned int>(30, 25)));
+			ImGui::SetNextWindowSize(positionByPercent(sf::Vector2<unsigned int>(15, 25)));
+			settings->render();
+
+
+			ImGui::SetNextWindowPos(positionByPercent(sf::Vector2<unsigned int>(85, 50)));
+			ImGui::SetNextWindowSize(positionByPercent(sf::Vector2<unsigned int>(15, 25)));
 			optionSnake->render();
+
 			ImGui::SetNextWindowPos(positionByPercent(sf::Vector2<unsigned int>(70, 75)));
 			ImGui::SetNextWindowSize(positionByPercent(sf::Vector2<unsigned int>(30, 25)));
 			optionConnect.render();
 		}
-		else {
+		else if (ptr) {
+
+			if (!optionSnake)
+				optionSnake = new WidgetOption(*this);
+
+			ImGui::SetNextWindowPos(positionByPercent(sf::Vector2<unsigned int>(70, 50)));
+			ImGui::SetNextWindowSize(positionByPercent(sf::Vector2<unsigned int>(30, 25)));
+			optionSnake->render();
+
+			ImGui::SetNextWindowPos(positionByPercent(sf::Vector2<unsigned int>(70, 75)));
+			ImGui::SetNextWindowSize(positionByPercent(sf::Vector2<unsigned int>(30, 25)));
+			optionConnect.render();
+		} else {
 			ImGui::SetNextWindowPos(positionByPercent(sf::Vector2<unsigned int>(70, 50)));
 			ImGui::SetNextWindowSize(positionByPercent(sf::Vector2<unsigned int>(30, 50)));
 			optionConnect.render();

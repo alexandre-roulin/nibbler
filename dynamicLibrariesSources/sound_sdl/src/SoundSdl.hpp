@@ -27,13 +27,20 @@ public:
 		std::string error_;
 	};
 
-	SoundSdl(void);
+	SoundSdl();
 
-	~SoundSdl(void) override;
+	~SoundSdl() override;
+
+	SoundSdl &operator=(SoundSdl const &rhs) = delete;
+
+	SoundSdl(SoundSdl const &src) = delete;
+
 
 	void setMusic(std::string const &path) override;
 
-	void playMusic(void) override;
+	void playMusic() override;
+	
+	void stopMusic() override;
 
 	void addNoise(std::string const &path) override;
 
@@ -41,14 +48,10 @@ public:
 
 private:
 
-	void clean_(void);
+	void clean_();
 
 	Mix_Music *music_;
 	std::vector<Mix_Chunk *> sound_;
-
-	SoundSdl &operator=(SoundSdl const &rhs) = delete;
-
-	SoundSdl(SoundSdl const &src) = delete;
 };
 
 extern "C" {

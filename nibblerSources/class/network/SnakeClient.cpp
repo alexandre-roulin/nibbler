@@ -80,8 +80,6 @@ const Snake &SnakeClient::getSnake() const {
 void SnakeClient::changeName(std::string const &name) {
 
 	nameSet_ = true;
-	//name_ = std::string(NAME_BUFFER, '\0');
-	//name_.assign(name, NAME_BUFFER);
 	name_ = name;
 	refreshSnakeArray();
 	sendDataToServer(snake_array_[id_], eHeader::kSnake);

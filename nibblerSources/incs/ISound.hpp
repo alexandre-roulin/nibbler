@@ -8,7 +8,9 @@ public:
 
 	virtual void setMusic(std::string const &path) = 0;
 
-	virtual void playMusic(void) = 0;
+	virtual void playMusic() = 0;
+
+	virtual void stopMusic() = 0;
 
 	virtual void addNoise(std::string const &path) = 0;
 

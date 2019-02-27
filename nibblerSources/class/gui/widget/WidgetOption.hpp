@@ -16,7 +16,9 @@ public:
 	void render(void) override;
 
 private:
-	unsigned int mapSize_;
 	char nameBuffer_[NAME_BUFFER];
 	bool sound_;
+	bool &rNoise_;
+	bool &rMusique_;
+	std::string pathSound_;
 };

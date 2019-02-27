@@ -23,6 +23,11 @@ public:
 	void addNoise(std::string const &path);
 	void playNoise(eNoise e) const;
 	void playMusic(std::string const &path) const;
+	void stopMusic() const;
+	void setMusique(bool b);
+	void setNoise(bool b);
+	bool &getMusique();
+	bool &getNoise();
 
 
 private:
@@ -36,6 +41,8 @@ private:
 	ISound *(*newSound)();
 	void *dlHandleSound;
 	eSound kSound;
+	bool noise_;
+	bool musique_;
 };
 
 

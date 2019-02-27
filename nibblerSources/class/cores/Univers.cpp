@@ -338,7 +338,6 @@ void Univers::loadSoundData_() {
 	getSoundManager().addNoise((pathSound / "click.wav").generic_string());
 	getSoundManager().addNoise((pathSound / "slime10.wav").generic_string());
 	getSoundManager().addNoise((pathSound / "hit17.ogg").generic_string());
-	getSoundManager().playMusic((pathSound / "zelda.ogg").generic_string());
 }
 
 void Univers::loadSound(eSound sound) {
@@ -409,7 +408,7 @@ boost::weak_ptr<ISnakeNetwork> Univers::getSnakeNetwork() const {
 boost::weak_ptr<SnakeClient> Univers::getSnakeClient() const {
 	SnakeClient::boost_shared_ptr ptr(snakeClient_);
 
-	if (ptr && ptr->isOpen())
+	if (ptr)
 		return ptr->shared_from_this();
 	else if (vecBobby.size() != 0)
 		return vecBobby.front()->getClientTCP_()->shared_from_this();
