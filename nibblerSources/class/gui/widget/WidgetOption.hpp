@@ -13,7 +13,7 @@ public:
 	WidgetOption &operator=(const WidgetOption &) = delete;
 	WidgetOption(const WidgetOption &) = delete;
 
-	void render(void) override;
+	void render() override;
 
 private:
 	char nameBuffer_[NAME_BUFFER];

@@ -59,19 +59,12 @@ void WidgetOption::render() {
 		}
 	}
 
-	if (core_.univers.isServer() && ptr && ptr->allSnakeIsReady()) {
-		Gui::beginColor(Gui::HUE_GREEN);
-		if (ImGui::Button("Run the game")) {
-		}
-		Gui::endColor();
-	}
-
 	if (ImGui::BeginCombo("Display", ExternalLibraryDisplayManager::libraryInfo[indexLibrary_].title, 0))  {
 		for (int n = 0; n < IM_ARRAYSIZE(ExternalLibraryDisplayManager::libraryInfo); n++) {
 			bool is_selected = (indexLibrary_ == n);
 			if (ImGui::Selectable(ExternalLibraryDisplayManager::libraryInfo[n].title, is_selected)) {
 				indexLibrary_ = n;
-				core_.univers.getDisplayManager().setKDisplay(ExternalLibraryDisplayManager::libraryInfo[n].kDisplay); 
+				core_.univers.getDisplayManager().setKDisplay(ExternalLibraryDisplayManager::libraryInfo[n].kDisplay);
 			}
 			if (is_selected)
 				ImGui::SetItemDefaultFocus();
