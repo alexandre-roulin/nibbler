@@ -81,6 +81,7 @@ void GameManager::startNewGame() {
 //	univers_.manageSnakeClientInput();
 
 	threadWorldLoop_ = boost::thread([this, &startEvent, &timer_start](){
+		timer_loop.expires_at(startEvent.front().start_time);
 		timer_start.expires_at(startEvent.front().start_time);
 		timer_start.wait();
 		loopWorld();
