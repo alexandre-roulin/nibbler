@@ -391,7 +391,6 @@ const SnakeUIArrayContainer Univers::getSnakeUIArray_() const {
 	SnakeUIArrayContainer snakeUIArrayContainer;
 	if (ptr) {
 		snakeUIArrayContainer = ptr->getSnakeArray_();
-		std::cout << snakeUIArrayContainer[0] << std::endl;
 	}
  	return snakeUIArrayContainer;
 }

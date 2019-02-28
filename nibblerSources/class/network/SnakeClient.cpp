@@ -192,7 +192,9 @@ void SnakeClient::callbackId(uint16_t id) {
 		snakeArray[id_].isIA = true;
 	}
 	snakeArray[id_].isReadyToExpose = true;
-	sendDataToServer(static_cast<SnakeUI>(snakeArray[id_]), eHeader::kSnakeUI);
+	std::cout << id_ << std::endl;
+	std::cout << static_cast<const SnakeUI &>(snakeArray[id_]) << std::endl;
+	sendDataToServer(static_cast<const SnakeUI &>(snakeArray[id_]), eHeader::kSnakeUI);
 }
 
 void SnakeClient::callbackSnakeUX(const SnakeUX &snakeUX) {
@@ -321,47 +323,50 @@ void SnakeClient::build() {
 	boost::weak_ptr<SnakeClient> thisWeakPtr(shared_from_this());
 
 	clientTCP_ = KNW::ClientTCP::create(univers_.getIoManager(),
-										[thisWeakPtr]() {
-											auto myPtr = thisWeakPtr.lock();
-											if (myPtr) myPtr->callbackDeadConnection();
-										});
+			[thisWeakPtr]() { auto myPtr = thisWeakPtr.lock();
+			if (myPtr) myPtr->callbackDeadConnection(); });
 
+
+	/* Callback Snake */
 	clientTCP_->getDataTCP_().addDataType<SnakeUI >(
-			([thisWeakPtr](const SnakeUI &snakeUI)
+			([thisWeakPtr](const SnakeUI snakeUI)
 			{ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackSnakeUI(snakeUI); }),
 			eHeader::kSnakeUI);
 
 	clientTCP_->getDataTCP_().addDataType<SnakeUX >(
-			([thisWeakPtr](const SnakeUX &snakeUX)
+			([thisWeakPtr](const SnakeUX snakeUX)
 			{ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackSnakeUX(snakeUX); }),
 			eHeader::kSnakeUX);
 
 	clientTCP_->getDataTCP_().addDataType<Snake >(
-			([thisWeakPtr](const Snake &snake)
+			([thisWeakPtr](const Snake snake)
 			{ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackSnake(snake); }),
 			eHeader::kSnake);
 
 	clientTCP_->getDataTCP_().addDataType<BaseSnake >(
-			([thisWeakPtr](const BaseSnake &baseSnake)
+			([thisWeakPtr](const BaseSnake baseSnake)
 			{ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackBaseSnake(baseSnake); }),
 			eHeader::kBaseSnake);
 
+	/* Callback SnakeArray */
+
+
 	clientTCP_->getDataTCP_().addDataType<SnakeArrayContainer>(
-			([thisWeakPtr](const SnakeArrayContainer &snakeArrayContainer)
+			([thisWeakPtr](const SnakeArrayContainer snakeArrayContainer)
 			{ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackSnakeArray(snakeArrayContainer); }),
 			eHeader::kSnakeArray);
 
 	clientTCP_->getDataTCP_().addDataType<SnakeUIArrayContainer>(
-			([thisWeakPtr](const SnakeUIArrayContainer &snakeArrayContainer)
+			([thisWeakPtr](const SnakeUIArrayContainer snakeArrayContainer)
 			{ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackSnakeUIArray(snakeArrayContainer); }),
 			eHeader::kSnakeUIArray);
 
 	clientTCP_->getDataTCP_().addDataType<SnakeUXArrayContainer>(
-			([thisWeakPtr](const SnakeUXArrayContainer &snakeArrayContainer)
+			([thisWeakPtr](const SnakeUXArrayContainer snakeArrayContainer)
 			{ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackSnakeUXArray(snakeArrayContainer); }),
 			eHeader::kSnakeUXArray);
 	clientTCP_->getDataTCP_().addDataType<BaseSnakeArrayContainer>(
-			([thisWeakPtr](const BaseSnakeArrayContainer &snakeArrayContainer)
+			([thisWeakPtr](const BaseSnakeArrayContainer snakeArrayContainer)
 			{ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackBaseSnakeArray(snakeArrayContainer); }),
 			eHeader::kBaseSnakeArray);
 
@@ -404,9 +409,6 @@ void SnakeClient::build() {
 			([thisWeakPtr](char c) { auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackCloseConnection(c); }),
 			eHeader::kCloseConnection);
 
-	clientTCP_->getDataTCP_().addDataType<InputInfo>(
-			nullptr, eHeader::kInput);
-
 	clientTCP_->getDataTCP_().addDataType<char>(
 			([thisWeakPtr](char c) {
 				auto myPtr = thisWeakPtr.lock();
@@ -427,10 +429,5 @@ void SnakeClient::build() {
 				if (myPtr) myPtr->callbackId(id);
 			}),
 			eHeader::kId);
-
-	clientTCP_->getDataTCP_().addDataType<int16_t>(
-			nullptr, eHeader::kForcePause);
-
-
 }
 

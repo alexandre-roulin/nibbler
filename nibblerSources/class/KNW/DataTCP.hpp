@@ -67,7 +67,8 @@ namespace KNW {
 
 	template<typename T>
 	void DataTCP::CallbackType<T>::operator()(void *pVoid) {
-		return function_(*reinterpret_cast<T*>(pVoid));
+		T data = *reinterpret_cast<T*>(pVoid);
+		return function_(data);
 	}
 
 
