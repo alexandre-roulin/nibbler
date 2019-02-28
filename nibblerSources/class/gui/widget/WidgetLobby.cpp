@@ -35,8 +35,7 @@ void WidgetLobby::addColor(eSprite color, std::string const &name,
 	mapSprite_[color].color = color;
 	mapSprite_[color].name = name;
 	if (!(mapSprite_[color].sprite.loadFromFile(pathColor)))
-		throw (AWidget::Constructor(
-				std::string("WidgetLobby: Cant load [") + pathColor + "]"));
+		throw (AWidget::Constructor(std::string("WidgetLobby: Cant load [") + pathColor + "]"));
 }
 
 
@@ -54,7 +53,7 @@ void WidgetLobby::_reload() {
 
 		if (ptr && snakes_[i].isIA)
 			addSnake(snakes_[i], WidgetSnake::kIa);
-		else if (ptr && i == ptr->getId_() && ptr->isOpen())
+		else if (ptr && i == ptr->getId_() && ptr->isOpen()) // TODO
 			addSnake(snakes_[i], WidgetSnake::kYour);
 		else
 			addSnake(snakes_[i], WidgetSnake::kBasic);

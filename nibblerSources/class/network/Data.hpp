@@ -20,13 +20,10 @@ enum class eHeader : uint16_t {
 	kPock,				//10
 	kSnake,				//11
 	kSnakeArray,		//12
-	kSnakeUIArray,		//12
-	kSnakeUXArray,		//12
-	kBaseSnakeArray,		//12
-	kRemoveSnake,		//13
-	kAddScore,			//14
-	kCloseConnection,	//15
-	kKillSnake,			//16
+	kSnakeUIArray,		//13
+	kSnakeUXArray,		//14
+	kBaseSnakeArray,	//15
+	kCloseConnection,	//16
 	kSnakeUI,
 	kSnakeUX,
 	kBaseSnake
@@ -35,14 +32,7 @@ enum class eHeader : uint16_t {
 inline std::ostream &operator<<(std::ostream  &os, eHeader const & header) {
 	switch (header) {
 
-		case eHeader::kAddScore: {
-			os << "kAddScore";
-			break;
-		}
-		case eHeader::kRemoveSnake: {
-			os << "kRemoveSnake";
-			break;
-		}
+
 		case eHeader::kChat: {
 			os << "kChat";
 			break;

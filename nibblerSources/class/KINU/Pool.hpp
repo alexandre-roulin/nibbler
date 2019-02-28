@@ -42,7 +42,7 @@ namespace KINU {
 
 		bool set(unsigned int index, T object) {
 			assert(index < getSize());
-			data[index] = object;
+			data.at(index) = object;
 			return true;
 		}
 

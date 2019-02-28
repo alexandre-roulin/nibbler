@@ -218,7 +218,7 @@ void SnakeServer::callbackAccept(size_t index) {
 	serverTCP_->writeDataToOpenConnections(snakeArray_, eHeader::kSnakeArray);
 	serverTCP_->writeDataToOpenConnection(univers_.isBorderless(), index, eHeader::kBorderless);
 	serverTCP_->writeDataToOpenConnection(univers_.getMapSize(), index, eHeader::kResizeMap);
-	serverTCP_->writeDataToOpenConnection(snakeArray_[new_id], index, eHeader::kId);
+	serverTCP_->writeDataToOpenConnection(new_id, index, eHeader::kId);
 }
 
 
@@ -230,7 +230,7 @@ void SnakeServer::build() {
 	serverTCP_ = KNW::ServerTCP::create(univers_.getIoManager());
 	serverTCP_->startServer(port_);
 	serverTCP_->startAsyncAccept();
- 
+
 	serverTCP_->startAsyncAccept(
 			([thisWeakPtr](size_t index) { auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackAccept(index); }),
 			([thisWeakPtr](size_t index){ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackDeadConnection(index); }));
@@ -253,7 +253,7 @@ void SnakeServer::build() {
 	serverTCP_->getDataTCP().addDataType<BaseSnake >(
 			([thisWeakPtr](const BaseSnake baseSnake)
 			{ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackBaseSnake(baseSnake); }),
-			eHeader::kSnakeUI);
+			eHeader::kBaseSnake);
 
 	serverTCP_->getDataTCP().addDataType<InputInfo>(
 			([thisWeakPtr](const InputInfo inputInfo)
