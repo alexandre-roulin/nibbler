@@ -12,11 +12,13 @@ public:
 
 	~BaseSnake() = default;
 
-	BaseSnake(const BaseSnake &) = default;
+	BaseSnake(BaseSnake &);
 
-	virtual BaseSnake &operator=(BaseSnake &) = default;
+	BaseSnake(const BaseSnake &);
 
-	virtual BaseSnake &operator=(BaseSnake const &) = default;
+	virtual BaseSnake &operator=(BaseSnake &);
+
+	virtual BaseSnake &operator=(BaseSnake const &);
 
 	bool isReady;
 	bool isIA;
@@ -36,13 +38,15 @@ public:
 
 	virtual ~SnakeUI() = default;
 
-	SnakeUI(const SnakeUI &) = default;
+	SnakeUI(SnakeUI &);
+
+	SnakeUI(const SnakeUI &);
 
 	friend std::ostream &operator<<(std::ostream &os, const SnakeUI &ui);
 
-	virtual SnakeUI &operator=(SnakeUI &) = default;
+	virtual SnakeUI &operator=(SnakeUI &);
 
-	virtual SnakeUI &operator=(SnakeUI const &) = default;
+	virtual SnakeUI &operator=(SnakeUI const &);
 
 	char name[NAME_BUFFER];
 	eSprite sprite;
@@ -56,11 +60,13 @@ public:
 
 	virtual ~SnakeUX() = default;
 
-	SnakeUX(const SnakeUX &) = default;
+	SnakeUX(SnakeUX &);
 
-	virtual SnakeUX &operator=(SnakeUX &) = default;
+	SnakeUX(const SnakeUX &);
 
-	virtual SnakeUX &operator=(SnakeUX const &) = default;
+	virtual SnakeUX &operator=(SnakeUX &);
+
+	virtual SnakeUX &operator=(SnakeUX const &);
 
 	void reset();
 
@@ -69,10 +75,9 @@ public:
 	bool isUpdate;
 	eDirection direction;
 	bool isAlive;
+	bool isSwitchingLibrary;
 
 	friend std::ostream &operator<<(std::ostream &os, const SnakeUX &ux);
-
-	bool isSwitchingLibrary;
 
 };
 
@@ -82,9 +87,9 @@ public:
 
 	virtual ~Snake() = default;
 
-	Snake(Snake &) = default;
+	Snake(Snake &);
 
-	Snake(const Snake &) = default;
+	Snake(const Snake &);
 
 	Snake &operator=(Snake &Snake);
 
