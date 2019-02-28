@@ -39,52 +39,39 @@ public:
 
 	void closeAcceptorServer();
 
-
-	void refreshDataStartGame();
-
 	virtual ~SnakeServer();
 
 private:
 	SnakeServer(Univers &univers, unsigned int port);
 	void build();
 
-	void callbackRemoveSnake(int16_t);
-
-	void callbackKillSnake(uint16_t);
-
-	void callbackDeadConnection(size_t index);
-
-	void callbackSnakeArray(SnakeArrayContainer &);
-
-	void callbackPock(char);
+	void callbackAccept(size_t);
 
 	void callbackBorderless(bool);
 
-	void callbackResizeMap(unsigned int);
+	void callbackSnakeUI(const SnakeUI &);
 
-	void callbackOpenGame(bool);
+	void callbackSnakeUX(const SnakeUX &);
 
-	void callbackId(int16_t);
+	void callbackSnake(const Snake &);
 
-	void callbackChatInfo(ChatInfo);
+	void callbackBaseSnake(const BaseSnake &);
 
 	void callbackInput(InputInfo);
 
-	void callbackForcePause(int16_t);
+	void callbackOpenGame(bool openGame);
 
-	void callbackPause(eAction);
+	void callbackResizeMap(unsigned int mapSize);
 
-	void callbackAccept(size_t);
-
-	void callbackSnake(Snake &);
-
-	void callbackAddScore(Snake &);
+	void callbackChatInfo(ChatInfo);
 
 	void callbackFood(FoodInfo);
 
-	void callbackStartInfo(StartInfo);
+	void callbackForcePause(int16_t);
 
-	void callbackCloseConnection(char);
+	void callbackDeadConnection(size_t index);
+
+	void callbackPause(eAction);
 
 	bool updateInput();
 
@@ -94,7 +81,5 @@ private:
 	bool pause_;
 	unsigned short port_;
 	boost::shared_ptr<KNW::ServerTCP> serverTCP_;
-	SnakeArrayContainer snake_array_;
+	SnakeArrayContainer snakeArray_;
 };
-
-

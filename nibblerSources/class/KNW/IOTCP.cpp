@@ -54,6 +54,7 @@ namespace KNW {
 										static_cast<size_t>(sharedPtr->getSizeOfHeader(header))),
 					[weakPtr, header](boost::system::error_code ec, size_t len) {
 						auto ptr = weakPtr.lock();
+						std::cout  << "Len : " << len << std::endl;
 						if (ptr) ptr->handleReadData(header, ec, len);
 					});
 		}

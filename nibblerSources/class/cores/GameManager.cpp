@@ -57,6 +57,7 @@ void GameManager::startNewGame() {
 		univers_.getSnakeServer().startGame();
 	}
 
+
 	for (;ptr && startEvent.empty();) {
 		ptr->lock();
 		startEvent = world_->getEventsManager().getEvents<StartEvent>();
@@ -68,8 +69,7 @@ void GameManager::startNewGame() {
 	world_->getSystemsManager().getSystem<RenderSystem>().update();
 	univers_.updateDisplayUI();
 
-	timer_start.expires_at(startEvent.front().start_time);
-	timer_start.wait();
+
 
 	if (univers_.isServer()) {
 		for (auto &bobby : univers_.getBobbys()) {
@@ -80,7 +80,9 @@ void GameManager::startNewGame() {
 
 //	univers_.manageSnakeClientInput();
 
-	threadWorldLoop_ = boost::thread([this](){
+	threadWorldLoop_ = boost::thread([this, &startEvent, &timer_start](){
+		timer_start.expires_at(startEvent.front().start_time);
+		timer_start.wait();
 		loopWorld();
 	});
 }
@@ -90,7 +92,7 @@ void GameManager::loopWorld() {
 	SnakeClient::boost_shared_ptr ptr(univers_.getSnakeClient().lock());
 
 	while (!ptr->allSnakeIsDead() && univers_.isOpenGame_() && univers_.displayIsAvailable()) {
-		timer_loop.expires_from_now(boost::posix_time::microsec(univers_.getMicroSecDeltaTime()));
+		timer_loop.expires_at(timer_loop.expires_at() + boost::posix_time::microsec(univers_.getMicroSecDeltaTime()));
 		timer_loop.wait();
 		loopWorldWork();
 	}
@@ -103,6 +105,21 @@ void GameManager::loopWorldWork() {
 	SnakeClient::boost_shared_ptr ptr(univers_.getSnakeClient().lock());
 	if (!ptr)
 		return;
+	{ //Manage game
+		ptr->deliverEvents();
+		world_->getSystemsManager().getSystem<FollowSystem>().update();
+		world_->getSystemsManager().getSystem<JoystickSystem>().update();
+		world_->getEventsManager().destroy<JoystickEvent>();
+		world_->getSystemsManager().getSystem<MotionSystem>().update();
+		world_->getSystemsManager().getSystem<CollisionSystem>().update();
+		world_->getSystemsManager().getSystem<FoodCreationSystem>().update();
+		world_->getEventsManager().destroy<FoodCreation>();
+		world_->getSystemsManager().getSystem<SpriteSystem>().update();
+		world_->getSystemsManager().getSystem<RenderSystem>().update();
+		world_->getSystemsManager().getSystem<FoodEatSystem>().update();
+		world_->getEventsManager().destroy<FoodEat>();
+		world_->update();
+	}
 	{ //Manage Input
 		Bobby::clearPriority();
 		if (univers_.isServer()) {
@@ -129,21 +146,7 @@ void GameManager::loopWorldWork() {
 		world_->getEventsManager().destroy<NextFrame>();
 
 	}
-	{ //Manage game
-		ptr->deliverEvents();
-		world_->getSystemsManager().getSystem<FollowSystem>().update();
-		world_->getSystemsManager().getSystem<JoystickSystem>().update();
-		world_->getEventsManager().destroy<JoystickEvent>();
-		world_->getSystemsManager().getSystem<MotionSystem>().update();
-		world_->getSystemsManager().getSystem<CollisionSystem>().update();
-		world_->getSystemsManager().getSystem<FoodCreationSystem>().update();
-		world_->getEventsManager().destroy<FoodCreation>();
-		world_->getSystemsManager().getSystem<SpriteSystem>().update();
-		world_->getSystemsManager().getSystem<RenderSystem>().update();
-		world_->getSystemsManager().getSystem<FoodEatSystem>().update();
-		world_->getEventsManager().destroy<FoodEat>();
-		world_->update();
-	}
+
 
 
 }

@@ -38,9 +38,7 @@ void option_dependency(boost::program_options::variables_map const &vm,
 	option_dependency(vm, for_what, args...);
 }
 
-
 int main(int argc, char **argv) {
-
 	if (!NIBBLER_ROOT_PROJECT_PATH) {
 		std::cerr << "NIBBLER_ROOT_PROJECT_PATH is not defined" << std::endl;
 		return 0;

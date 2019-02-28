@@ -12,7 +12,9 @@
 
 class Univers;
 
-class SnakeClient : public boost::enable_shared_from_this<SnakeClient>, public ISnakeNetwork {
+class SnakeClient
+		: public boost::enable_shared_from_this<SnakeClient>,
+		  public ISnakeNetwork {
 public:
 
 	using boost_shared_ptr = boost::shared_ptr<SnakeClient>;
@@ -72,41 +74,74 @@ private:
 
 	void build();
 
-	void callbackCloseConnection(char);
+	void callbackBorderless(bool);
 
-	void callbackRemoveSnake(int16_t);
+	void callbackSnakeUI(const SnakeUI &);
 
-	void callbackDeadConnection();
+	void callbackSnakeUX(const SnakeUX &);
 
-	void callbackInput(InputInfo);
+	void callbackSnake(const Snake &);
 
-	void callbackPock(char);
+	void callbackBaseSnake(const BaseSnake &);
+
+	void callbackOpenGame(bool openGame);
+
+	void callbackResizeMap(unsigned int mapSize);
+
+	void callbackChatInfo(ChatInfo);
+
+	void callbackFood(FoodInfo);
 
 	void callbackForcePause(int16_t);
 
 	void callbackPause(eAction);
 
-	void callbackOpenGame(bool);
+	void callbackSnakeArray(const SnakeArrayContainer &);
 
-	void callbackSnake(Snake &);
+	void callbackSnakeUIArray(const SnakeUIArrayContainer &);
 
-	void callbackResizeMap(unsigned int);
+	void callbackSnakeUXArray(const SnakeUXArrayContainer &);
 
-	void callbackSnakeArray(SnakeArrayContainer &);
-
-	void callbackBorderless(bool);
-
-	void callbackFood(FoodInfo);
+	void callbackBaseSnakeArray(const BaseSnakeArrayContainer &);
 
 	void callbackStartInfo(StartInfo);
 
-	void callbackChatInfo(ChatInfo);
+	void callbackDeadConnection();
 
-	void callbackId(int16_t);
+	void callbackPock(char);
 
-	void callbackAddScore(Snake &);
+	void callbackCloseConnection(char);
 
-	void callbackKillSnake(uint16_t);
+	void callbackId(uint16_t);
+//
+//
+//	void callbackInput(InputInfo);
+//
+//
+//	void callbackForcePause(int16_t);
+//
+//	void callbackPause(eAction);
+//
+//	void callbackOpenGame(bool);
+//
+//	void callbackSnake(Snake &);
+//
+//	void callbackResizeMap(unsigned int);
+//
+//	void callbackSnakeArray(SnakeArrayContainer &);
+//
+//	void callbackBorderless(bool);
+//
+//	void callbackFood(FoodInfo);
+//
+//
+//	void callbackChatInfo(ChatInfo);
+//
+//	void callbackId(int16_t);
+//
+//	void callbackAddScore(Snake &);
+//
+//	void callbackKillSnake(uint16_t);
 
 	bool acceptDataFromServer() const;
 
@@ -122,7 +157,7 @@ private:
 	eSprite sprite_;
 	bool nameSet_;
 	bool spriteSet_;
-	SnakeArrayContainer snake_array_;
+	SnakeArrayContainer snakeArray;
 	std::vector<FoodCreation> foodCreations;
 };
 

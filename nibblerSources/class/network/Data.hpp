@@ -20,10 +20,16 @@ enum class eHeader : uint16_t {
 	kPock,				//10
 	kSnake,				//11
 	kSnakeArray,		//12
+	kSnakeUIArray,		//12
+	kSnakeUXArray,		//12
+	kBaseSnakeArray,		//12
 	kRemoveSnake,		//13
 	kAddScore,			//14
 	kCloseConnection,	//15
-	kKillSnake			//16
+	kKillSnake,			//16
+	kSnakeUI,
+	kSnakeUX,
+	kBaseSnake
 };
 
 inline std::ostream &operator<<(std::ostream  &os, eHeader const & header) {

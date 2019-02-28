@@ -115,7 +115,10 @@ void Univers::startNewGame() {
 
 	defaultAssignmentLibrary();
 
+
+
 	gameManager->startNewGame();
+
 	gameManager->loopUI();
 	SnakeClient::boost_shared_ptr ptr(getSnakeClient().lock());
 	openGame_ = false;
@@ -390,8 +393,6 @@ const SnakeUIArrayContainer Univers::getSnakeUIArray_() const {
 	SnakeArrayContainer snakeArray;
 	if (ptr) {
 		snakeArray = ptr->getSnakeArray_();
-		snakeArray = static_cast<const SnakeArrayContainer >(snakeUIArrayContainer);
-		snakeUIArrayContainer = static_cast<const SnakeUIArrayContainer >(ptr->getSnakeArray_());
 		std::copy(snakeArray.begin(), snakeArray.end(), snakeUIArrayContainer.begin());
 	}
 	return snakeUIArrayContainer;
