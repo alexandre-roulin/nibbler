@@ -11,15 +11,15 @@ JoystickSystem::JoystickSystem(Univers &univers): univers_(univers) {
 }
 
 void JoystickSystem::update() {
-	log_info("%s", __PRETTY_FUNCTION__);
+//	log_info("%s", __PRETTY_FUNCTION__);
 	SnakeClient::boost_shared_ptr ptr(univers_.getSnakeClient().lock());
 	if (!ptr)
 		return;
 	SnakeArrayContainer const &snake_array = ptr->getSnakeArray_();
 
 	for (auto &snake : snake_array) {
-		if (snake.isValid && getWorld().getEntitiesManager().hasEntityByTagId(snake.id_ + eTag::kHeadTag)) {
-			auto entity = getWorld().getEntitiesManager().getEntityByTagId(snake.id_ + eTag::kHeadTag);
+		if (snake.isValid && getWorld().getEntitiesManager().hasEntityByTagId(snake.id + eTag::kHeadTag)) {
+			auto entity = getWorld().getEntitiesManager().getEntityByTagId(snake.id + eTag::kHeadTag);
 			if (entity.hasComponent<JoystickComponent>()) {
 				entity.getComponent<JoystickComponent>().direction = snake.direction;
 			}

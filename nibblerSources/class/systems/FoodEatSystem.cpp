@@ -9,10 +9,10 @@
 #include <events/FoodEat.hpp>
 
 void FoodEatSystem::update() {
-	log_info("%s", __PRETTY_FUNCTION__);
+//	log_info("%s", __PRETTY_FUNCTION__);
 	auto events = getWorld().getEventsManager().getEvents<FoodEat>();
 	for (auto &event : events) {
-		log_debug("Find Snake %d",getWorld().getEntitiesManager().hasEntityByTagId(event.id_ + eTag::kTailTag));
+//		log_debug("Find Snake %d",getWorld().getEntitiesManager().hasEntityByTagId(event.id_ + eTag::kTailTag));
 		if (getWorld().getEntitiesManager().hasEntityByTagId(event.id_ + eTag::kTailTag)) {
 
 			auto entityTail = getWorld().getEntitiesManager()

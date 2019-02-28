@@ -20,9 +20,16 @@ enum class eHeader : uint16_t {
 	kPock,				//10
 	kSnake,				//11
 	kSnakeArray,		//12
+	kSnakeUIArray,		//12
+	kSnakeUXArray,		//12
+	kBaseSnakeArray,		//12
 	kRemoveSnake,		//13
 	kAddScore,			//14
-	kCloseConnection	//15
+	kCloseConnection,	//15
+	kKillSnake,			//16
+	kSnakeUI,
+	kSnakeUX,
+	kBaseSnake
 };
 
 inline std::ostream &operator<<(std::ostream  &os, eHeader const & header) {
@@ -109,8 +116,8 @@ inline std::ostream &operator<<(std::ostream  &os, eHeader const & header) {
 
 struct InputInfo {
 	InputInfo() = default;
-	InputInfo(int16_t id, eDirection dir) : id_(id), dir_(dir) {};
-	int16_t id_;
+	InputInfo(uint16_t id, eDirection dir) : id_(id), dir_(dir) {};
+	uint16_t id_;
 	eDirection dir_;
 };
 

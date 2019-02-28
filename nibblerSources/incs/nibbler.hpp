@@ -3,6 +3,7 @@
 #include <string>
 #include <ostream>
 #include "IDisplay.hpp"
+#include <boost/array.hpp>
 
 #ifndef NIBBLER_ROOT_PROJECT_PATH
 	#define NIBBLER_ROOT_PROJECT_PATH 0
@@ -24,8 +25,14 @@
 #define MAP_MAX 100
 
 class Snake;
+class BaseSnake;
+class SnakeUI;
+class SnakeUX;
 
-using SnakeArrayContainer = std::array<Snake, SNAKE_MAX>;
+using SnakeUIArrayContainer = boost::array<SnakeUI, SNAKE_MAX>;
+using SnakeUXArrayContainer = boost::array<SnakeUX, SNAKE_MAX>;
+using SnakeArrayContainer = boost::array<Snake, SNAKE_MAX>;
+using BaseSnakeArrayContainer = boost::array<BaseSnake, SNAKE_MAX>;
 
 enum eScore : uint16_t {
 	kFromTime = 1,

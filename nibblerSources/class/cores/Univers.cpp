@@ -3,6 +3,7 @@
 #include <KINU/World.hpp>
 #include <network/SnakeServer.hpp>
 #include "GameManager.hpp"
+#include "Snake.hpp"
 
 /** Const Variable **/
 
@@ -54,9 +55,9 @@ Univers::Univers()
 }
 
 void Univers::resetData() {
-	for (const auto &snake: getSnakeArray_()) {
+	for (const auto &snake: getSnakeUIArray_()) {
 		if (snake.isValid) {
-			std::cout << "ID:" << snake.id_ << " " << " Score : " << snake.score_ << std::endl;
+			std::cout << "ID:" << snake.id << " " << " Score : " << snake.score_ << std::endl;
 		}
 	}
 
@@ -114,7 +115,10 @@ void Univers::startNewGame() {
 
 	defaultAssignmentLibrary();
 
+
+
 	gameManager->startNewGame();
+
 	gameManager->loopUI();
 	SnakeClient::boost_shared_ptr ptr(getSnakeClient().lock());
 	openGame_ = false;
@@ -130,10 +134,10 @@ void Univers::manageSnakeClientInput() {
 	eDirection direction = eDirection::kNorth;
 	if (displayManager->hasLibraryLoaded())
 		direction = displayManager->getDisplay()->getDirection();
-	if (ptr && ptr->isOpen() && ptr->getSnake().isAlive && !isIASnake(ptr->getId_())) {
+
+	if (ptr && ptr->isOpen() && getGameManager().getWorld_()->getEntitiesManager().hasEntityByTagId(ptr->getId_() + eTag::kHeadTag) && !ptr->isIa()) {
 		ptr->addScore(ptr->getId_(), eScore::kFromTime);
-		ptr->sendDataToServer(InputInfo(ptr->getId_(), direction),
-							  eHeader::kInput);
+		ptr->sendDataToServer<InputInfo>({ptr->getId_(), direction}, eHeader::kInput);
 	}
 
 }
@@ -172,7 +176,6 @@ void Univers::manageSwitchLibrary() {
 /** Snake **/
 
 bool Univers::isIASnake(uint16_t client_id) const {
-
 	return std::any_of(vecBobby.begin(), vecBobby.end(), [client_id](auto &bobby){ return bobby->getId() == client_id;});
 }
 
@@ -383,14 +386,15 @@ MutantGrid<eSprite> &Univers::getGrid_() const {
 	return *grid_;
 }
 
-const SnakeArrayContainer &Univers::getSnakeArray_() const {
-	SnakeClient::boost_shared_ptr ptr(getSnakeClient().lock());
-
-	if (isServer())
-		return snakeServer_->getSnakeArray_();
-	if (ptr)
-		return ptr->getSnakeArray_();
-	return snakeArrayContainer;
+const SnakeUIArrayContainer Univers::getSnakeUIArray_() const {
+	boost::shared_ptr<ISnakeNetwork>  ptr(getSnakeNetwork().lock());
+	SnakeUIArrayContainer snakeUIArrayContainer;
+	SnakeArrayContainer snakeArray;
+	if (ptr) {
+		snakeArray = ptr->getSnakeArray_();
+		std::copy(snakeArray.begin(), snakeArray.end(), snakeUIArrayContainer.begin());
+	}
+	return snakeUIArrayContainer;
 }
 
 boost::weak_ptr<ISnakeNetwork> Univers::getSnakeNetwork() const {

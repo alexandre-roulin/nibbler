@@ -34,7 +34,7 @@ eSprite SpriteSystem::spriteDirection(PositionComponent &actual,
 
 void SpriteSystem::update() {
 
-	log_info("%s", __PRETTY_FUNCTION__);
+//	log_info("%s", __PRETTY_FUNCTION__);
 	FollowComponent *followComponent = nullptr;
 	KINU::Entity entityFollowed;
 	PositionComponent positionComponentFollowed;
@@ -63,7 +63,6 @@ void SpriteSystem::update() {
 		}
 
 		SnakeClient::boost_shared_ptr ptr(univers_.getSnakeClient().lock());
-
 
 		if ((spriteComponent.sprite & eSprite::kHead) == eSprite::kHead) {
 			if (entity.getComponent<MotionComponent>().direction == kNorth)

@@ -39,46 +39,41 @@ public:
 
 	void closeAcceptorServer();
 
-
 	virtual ~SnakeServer();
 
 private:
 	SnakeServer(Univers &univers, unsigned int port);
 	void build();
-	void callbackRemoveSnake(int16_t);
-
-	void callbackDeadConnection(size_t index);
-	void callbackSnakeArray(SnakeArrayContainer &);
-
-	void callbackPock(char);
-
-	void callbackBorderless(bool);
-
-	void callbackResizeMap(unsigned int);
-
-	void callbackOpenGame(bool);
-
-	void callbackId(int16_t);
-
-	void callbackChatInfo(ChatInfo);
-
-	void callbackInput(InputInfo);
-
-	void callbackForcePause(int16_t);
-
-	void callbackPause(eAction);
 
 	void callbackAccept(size_t);
 
-	void callbackSnake(Snake &);
+	void callbackBorderless(bool);
+
+	void callbackSnakeUI(const SnakeUI &);
+
+	void callbackSnakeUX(const SnakeUX &);
+
+	void callbackSnake(const Snake &);
+
+	void callbackBaseSnake(const BaseSnake &);
+
+	void callbackInput(InputInfo);
+
+	void callbackOpenGame(bool openGame);
+
+	void callbackResizeMap(unsigned int mapSize);
+
+	void callbackChatInfo(ChatInfo);
 
 	void callbackFood(FoodInfo);
 
-	void callbackStartInfo(StartInfo);
+	void callbackForcePause(int16_t);
 
-	void callbackCloseConnection(char);
+	void callbackDeadConnection(size_t index);
 
-	void updateInput();
+	void callbackPause(eAction);
+
+	bool updateInput();
 
 	Univers &univers_;
 	std::vector<FoodInfo> foodInfoArray;
@@ -86,7 +81,5 @@ private:
 	bool pause_;
 	unsigned short port_;
 	boost::shared_ptr<KNW::ServerTCP> serverTCP_;
-	SnakeArrayContainer snake_array_;
+	SnakeArrayContainer snakeArray_;
 };
-
-

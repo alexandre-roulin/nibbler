@@ -136,7 +136,9 @@ public:
 
 	std::unique_ptr<Gui> &getGui_();
 
-	const SnakeArrayContainer &getSnakeArray_() const;
+	const SnakeUIArrayContainer getSnakeUIArray_() const;
+
+	const SnakeUXArrayContainer getSnakeUXArray_() const;
 
 	boost::weak_ptr<SnakeClient> getSnakeClient() const;
 

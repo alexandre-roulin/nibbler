@@ -3,7 +3,7 @@
 
 
 enum eConfigTCP {
-	kMaxBufferSize = 512,
+	kMaxBufferSize = 1024,
 	kMaxConnectionOpen = 8
 };
 
