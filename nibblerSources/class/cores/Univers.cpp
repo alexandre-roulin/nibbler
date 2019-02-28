@@ -389,12 +389,11 @@ MutantGrid<eSprite> &Univers::getGrid_() const {
 const SnakeUIArrayContainer Univers::getSnakeUIArray_() const {
 	boost::shared_ptr<ISnakeNetwork>  ptr(getSnakeNetwork().lock());
 	SnakeUIArrayContainer snakeUIArrayContainer;
-	SnakeArrayContainer snakeArray;
 	if (ptr) {
-		snakeArray = ptr->getSnakeArray_();
-		std::copy(snakeArray.begin(), snakeArray.end(), snakeUIArrayContainer.begin());
+		snakeUIArrayContainer = ptr->getSnakeArray_();
+		std::cout << snakeUIArrayContainer[0] << std::endl;
 	}
-	return snakeUIArrayContainer;
+ 	return snakeUIArrayContainer;
 }
 
 boost::weak_ptr<ISnakeNetwork> Univers::getSnakeNetwork() const {

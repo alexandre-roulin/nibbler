@@ -59,7 +59,9 @@ BaseSnake::BaseSnake() :
 		isIA(false),
 		isValid(false),
 		id(-1),
-		score_(0) {
+		indexConnection(0),
+		score_(0)
+		{
 
 }
 
@@ -73,10 +75,8 @@ std::ostream &operator<<(std::ostream &os, const BaseSnake &snake) {
 
 void Snake::randomSnake(int16_t id_) {
 
-	sprite = static_cast<eSprite>(static_cast<int>(eSprite::kGreen) +
-								  rand() % SNAKE_MAX_COLOR);
-	strncpy(name, Snake::basicName[rand() % SNAKE_MAX_NAME].c_str(),
-			NAME_BUFFER);
+	sprite = static_cast<eSprite>(static_cast<int>(eSprite::kGreen) + rand() % SNAKE_MAX_COLOR);
+	strncpy(name, Snake::basicName[rand() % SNAKE_MAX_NAME].c_str(), NAME_BUFFER);
 	id = id_;
 	isAlive = true;
 	isSwitchingLibrary = false;
@@ -169,6 +169,7 @@ Snake &Snake::operator=(BaseSnake const &baseSnake) noexcept {
 
 std::ostream &operator<<(std::ostream &os, const Snake &snake) {
 	os << static_cast<const SnakeUI &>(snake) << ' '
-	   << static_cast<const SnakeUX &>(snake);
+	   << static_cast<const BaseSnake &>(snake) << ' '
+		<<static_cast<const SnakeUX &>(snake);
 	return os;
 }
