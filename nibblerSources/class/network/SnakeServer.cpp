@@ -230,7 +230,7 @@ void SnakeServer::build() {
 	serverTCP_ = KNW::ServerTCP::create(univers_.getIoManager());
 	serverTCP_->startServer(port_);
 	serverTCP_->startAsyncAccept();
-
+ 
 	serverTCP_->startAsyncAccept(
 			([thisWeakPtr](size_t index) { auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackAccept(index); }),
 			([thisWeakPtr](size_t index){ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackDeadConnection(index); }));
