@@ -43,7 +43,7 @@ void Bobby::sendDirection() {
 
 	if (world->getEntitiesManager().hasEntityByTagId(eTag::kHeadTag + clientTCP_->getId_())) {
 		std::cout << "Send direction : " << clientTCP_->getId_() << std::endl;
-		clientTCP_->sendDirection(direction);
+		clientTCP_->sendDataToServer(InputInfo(clientTCP_->getId_(), direction), eHeader::kInput);
 	}
 
 }

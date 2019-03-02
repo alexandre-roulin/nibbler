@@ -101,13 +101,6 @@ std::ostream &operator<<(std::ostream &os, const Snake &snake) {
 	return os;
 }
 
-void Snake::deepCopy(Snake const &snake) {
-	operator=(snake);
-	operator=(static_cast<SnakeUI>(snake));
-	operator=(static_cast<SnakeUX>(snake));
-	operator=(static_cast<SnakeUN>(snake));
-}
-
 
 /** SnakeUI **/
 

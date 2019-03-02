@@ -101,6 +101,13 @@ inline std::ostream &operator<<(std::ostream  &os, eHeader const & header) {
 	return os;
 }
 
+struct InputInfo {
+	InputInfo() = default;
+	InputInfo(uint16_t id, eDirection dir) : id_(id), dir_(dir) {};
+	uint16_t id_;
+	eDirection dir_;
+};
+
 struct FoodInfo {
 	FoodInfo()
 	: positionComponent(PositionComponent()),fromSnake(false) {

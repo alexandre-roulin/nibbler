@@ -56,8 +56,6 @@ public:
 
 	void randomSnake(int16_t id_);
 
-	void deepCopy(Snake const &snake);
-
 	Snake &operator=(Snake &);
 
 	Snake &operator=(Snake const &);

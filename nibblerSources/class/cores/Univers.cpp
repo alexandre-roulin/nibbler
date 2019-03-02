@@ -48,18 +48,18 @@ Univers::Univers()
 		exit_(false),
 		switchLib(false),
 		mapSize_(MAP_DEFAULT),
-		microSecDeltaTime(GameManager::Easy),
+		microSecDeltaTime(GameManager::Hard),
 		borderless(false),
 		openGame_(false) {
 
 }
 
 void Univers::resetData() {
-//	for (const auto &snake: *getSnakeArray_()) {
-//		if (snake.isValid) {
-//			std::cout << "ID:" << snake.id << " " << " Score : " << snake.score_ << std::endl;
-//		}
-//	}
+	for (const auto &snake: *getSnakeArray_()) {
+		if (snake.isValid) {
+			std::cout << "ID:" << snake.id << " " << " Score : " << snake.score_ << std::endl;
+		}
+	}
 
 	switchLib = false;
 	SnakeClient::boost_shared_ptr ptr(getSnakeClient().lock());
@@ -115,7 +115,10 @@ void Univers::startNewGame() {
 
 	defaultAssignmentLibrary();
 
+
+
 	gameManager->startNewGame();
+
 	gameManager->loopUI();
 	SnakeClient::boost_shared_ptr ptr(getSnakeClient().lock());
 	openGame_ = false;
@@ -127,13 +130,14 @@ void Univers::startNewGame() {
 
 void Univers::manageSnakeClientInput() {
 	SnakeClient::boost_shared_ptr ptr(snakeClient_);
+	log_info("%s snakeClient[%d] Lib[%d] isAlive[%d]", __PRETTY_FUNCTION__, snakeClient_ != nullptr, displayManager->hasLibraryLoaded(), (ptr && ptr->getSnake().isAlive));
 	eDirection direction = eDirection::kNorth;
 	if (displayManager->hasLibraryLoaded())
 		direction = displayManager->getDisplay()->getDirection();
 
 	if (ptr && ptr->isOpen() && getGameManager().getWorld_()->getEntitiesManager().hasEntityByTagId(ptr->getId_() + eTag::kHeadTag) && !ptr->isIa()) {
 		ptr->addScore(ptr->getId_(), eScore::kFromTime);
-		ptr->sendDirection(direction);
+		ptr->sendDataToServer<InputInfo>({ptr->getId_(), direction}, eHeader::kInput);
 	}
 
 }
@@ -303,9 +307,9 @@ void Univers::deleteClient() {
 
 	if (ptr) {
 		ptr->disconnect();
-		if (gui_) gui_->addMessageChat(eColorLog::kGreen, SuccessClientIsDelete);
+		gui_->addMessageChat(eColorLog::kGreen, SuccessClientIsDelete);
 		snakeClient_ = nullptr;
-	} else if (gui_)
+	} else
 		gui_->addMessageChat(eColorLog::kOrange, WarningClientNotExist);
 }
 
@@ -388,7 +392,7 @@ std::shared_ptr<SnakeArrayContainer> Univers::getSnakeArray_() const {
 	if (ptr) {
 		return ptr->getSnakeArray_();
 	}
- 	return std::shared_ptr<SnakeArrayContainer>(nullptr);
+ 	return nullptr;
 }
 
 boost::weak_ptr<ISnakeNetwork> Univers::getSnakeNetwork() const {

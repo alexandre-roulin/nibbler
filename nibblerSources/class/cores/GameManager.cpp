@@ -20,9 +20,9 @@ const uint32_t GameManager::ScaleByFrame = 10;
 const uint32_t GameManager::ScaleByRealFood = 600;
 const uint32_t GameManager::ScaleByFakeFood = 50;
 
-const uint32_t GameManager::Easy = 1000000;  //1 sec frame
-const uint32_t GameManager::Medium = 120000;  //0.12sec frame
-const uint32_t GameManager::Hard = 80000;  //0.08sec frame
+const uint32_t GameManager::Easy = 1000000;  //0.16sec frame
+const uint32_t GameManager::Medium = 120000;  //0.15sec frame
+const uint32_t GameManager::Hard = 80000;  //0.1sec frame
 const uint32_t GameManager::Impossible = 10000;  //0.01sec frame
 
 GameManager::GameManager(Univers &univers)
@@ -41,21 +41,22 @@ void GameManager::startNewGame() {
 
 	world_->getSystemsManager().addSystem<CollisionSystem>(univers_);
 	world_->getSystemsManager().addSystem<FollowSystem>();
-	world_->getSystemsManager().addSystem<JoystickSystem>();
+	world_->getSystemsManager().addSystem<JoystickSystem>(univers_);
 	world_->getSystemsManager().addSystem<MotionSystem>(univers_);
 	world_->getSystemsManager().addSystem<SpriteSystem>(univers_);
 	world_->getSystemsManager().addSystem<RenderSystem>(univers_);
 	world_->getSystemsManager().addSystem<FoodCreationSystem>();
 	world_->getSystemsManager().addSystem<FoodEatSystem>();
 
+	boost::asio::deadline_timer timer_start(univers_.getIoManager().getIo());
+
+	std::vector<StartEvent> startEvent;
+	SnakeClient::boost_shared_ptr ptr(univers_.getSnakeClient().lock());
 
 	if (univers_.isServer()) {
 		univers_.getSnakeServer().startGame();
 	}
 
-	SnakeClient::boost_shared_ptr ptr(univers_.getSnakeClient().lock());
-
-	std::vector<StartEvent> startEvent;
 
 	for (;ptr && startEvent.empty();) {
 		ptr->lock();
@@ -68,6 +69,8 @@ void GameManager::startNewGame() {
 	world_->getSystemsManager().getSystem<RenderSystem>().update();
 	univers_.updateDisplayUI();
 
+
+
 	if (univers_.isServer()) {
 		for (auto &bobby : univers_.getBobbys()) {
 			bobby->buildIA();
@@ -77,84 +80,33 @@ void GameManager::startNewGame() {
 
 //	univers_.manageSnakeClientInput();
 
-	threadWorldLoop_ = boost::thread([this, startEvent](){
-
-		boost::asio::deadline_timer timer_start(univers_.getIoManager().getIo());
-
+	threadWorldLoop_ = boost::thread([this, &startEvent, &timer_start](){
+		timer_loop.expires_at(startEvent.front().start_time);
 		timer_start.expires_at(startEvent.front().start_time);
 		timer_start.wait();
-
-		loopGame();
+		loopWorld();
 	});
 }
 
 
-void GameManager::loopGame() {
+void GameManager::loopWorld() {
 	SnakeClient::boost_shared_ptr ptr(univers_.getSnakeClient().lock());
 
 	while (!ptr->allSnakeIsDead() && univers_.isOpenGame_() && univers_.displayIsAvailable()) {
-		manageGlobalInput();
-		loopWorld();
-		timer_loop.expires_from_now(boost::posix_time::microsec(univers_.getMicroSecDeltaTime()));
+		timer_loop.expires_at(timer_loop.expires_at() + boost::posix_time::microsec(univers_.getMicroSecDeltaTime()));
 		timer_loop.wait();
+		loopWorldWork();
 	}
 }
 
-//  ( Update Delta [Input Frame])
-//			0.01s			1s
 
-// Input < Frame
-//
-
-void GameManager::manageGlobalInput() {
+void GameManager::loopWorldWork() {
 	boost::asio::thread_pool pool(8);
+
 	SnakeClient::boost_shared_ptr ptr(univers_.getSnakeClient().lock());
 	if (!ptr)
 		return;
-
-	{ /** Manage Input **/
-		Bobby::clearPriority();
-		if (univers_.isServer()) {
-			for (auto &bobby : univers_.getBobbys()) {
-				if (world_->getEntitiesManager().hasEntityByTagId(bobby->getId() + eTag::kHeadTag)) {
-					ptr->addScore(bobby->getId(), eScore::kFromTime);
-					boost::asio::post(pool, [&bobby](){
-						bobby->calculateDirection();
-					});
-				}
-			}
-			pool.join();
-		}
-		univers_.manageSnakeClientInput();
-	}
-	{ /** Manage Frame **/
-		for (; nextFrame.empty() && univers_.isOpenGame_();) {
-			ptr->lock();
-			nextFrame = world_->getEventsManager().getEvents<NextFrame>();
-			ptr->unlock();
-		}
-		nextFrame.clear();
-		world_->getEventsManager().destroy<NextFrame>();
-		//std::array<Snake, SNAKE_MAX>
-		//std::array<eDirection, SNAKE_MAX>
-
-		DirectionArray directions;
-		size_t n = 0;
-		SnakeArrayContainer array = *(ptr->getSnakeArray_());
-		std::generate(directions.begin(), directions.end(), [&n, array]{ return array[n++].direction;});
-		world_->getEventsManager().emitEvent<DirectionArray>(directions);
-		for (int index = 0; index < SNAKE_MAX; ++index) {
-			assert(array[index].direction == directions[index]);
-		}
-	}
-}
-
-void GameManager::loopWorld() {
-
-	SnakeClient::boost_shared_ptr ptr(univers_.getSnakeClient().lock());
-	if (!ptr) return;
-
-	{ /** Manage game **/
+	{ //Manage game
 		ptr->deliverEvents();
 		world_->getSystemsManager().getSystem<FollowSystem>().update();
 		world_->getSystemsManager().getSystem<JoystickSystem>().update();
@@ -169,7 +121,32 @@ void GameManager::loopWorld() {
 		world_->getEventsManager().destroy<FoodEat>();
 		world_->update();
 	}
+	{ //Manage Input
+		Bobby::clearPriority();
+		if (univers_.isServer()) {
+			for (auto &bobby : univers_.getBobbys()) {
+				if (world_->getEntitiesManager().hasEntityByTagId(bobby->getId() + eTag::kHeadTag)) {
+					ptr->addScore(bobby->getId(), eScore::kFromTime);
+					boost::asio::post(pool, [&bobby](){
+						bobby->calculateDirection();
+					});
+				}
+			}
+			pool.join();
+		}
+		univers_.manageSnakeClientInput();
+	}
+	{ // Manage Frame
+		for (; nextFrame.empty() && univers_.isOpenGame_();) {
+			ptr->lock();
+			nextFrame = world_->getEventsManager().getEvents<NextFrame>();
+			ptr->unlock();
+		}
+		nextFrame.clear();
 
+		world_->getEventsManager().destroy<NextFrame>();
+
+	}
 
 
 
@@ -190,7 +167,7 @@ void GameManager::loopUI() {
 		univers_.updateDisplayUI();
 	}
 
-	log_error("%s %d", __PRETTY_FUNCTION__,  ptr->allSnakeIsDead());
+	log_error("%s finish", __PRETTY_FUNCTION__);
 }
 
 void GameManager::refreshTimerLoopWorld() {

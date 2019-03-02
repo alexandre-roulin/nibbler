@@ -160,4 +160,12 @@ namespace KNW {
 		stopAccept();
 	}
 
+	template<>
+	void ServerTCP::writeDataToOpenConnections<const void *, unsigned long>(const void *pVoid, unsigned long len) {
+		for (auto &connection : connections) {
+			if (connection)
+				connection->write(pVoid, len);
+		}
+	}
+
 }

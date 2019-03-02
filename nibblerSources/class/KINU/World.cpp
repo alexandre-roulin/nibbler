@@ -35,7 +35,6 @@ namespace KINU {
 			getEntitiesManager().destroyEntity(e);
 		}
 		destroyedEntities.clear();
-
 	}
 
 	Entity World::createEntity() {
