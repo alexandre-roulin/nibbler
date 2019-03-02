@@ -63,7 +63,7 @@ void WidgetLobby::_reload() {
 }
 
 
-void WidgetLobby::render() {
+void WidgetLobby::content_(bool renderContentInWindow) {
 	snakes_ = core_.univers.getSnakeArray_();
 	sf::Vector2<unsigned int> placesForSnakes(4, 2);
 	sf::Vector2<unsigned int> percentPlaceOfSnake;
@@ -81,6 +81,6 @@ void WidgetLobby::render() {
 		ImGui::SetNextWindowSize(core_.positionByPercent(
 				sf::Vector2<unsigned int>(100 / placesForSnakes.x,
 											  50 / placesForSnakes.y)));
-		snakeWidget_[i].render();
+		snakeWidget_[i].render(true);
 	}
 }

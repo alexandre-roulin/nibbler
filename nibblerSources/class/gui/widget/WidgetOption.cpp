@@ -22,7 +22,7 @@ bool getNameOfDisplayLibraryInfo(void *data, int idx, const char **out_str) {
 	return true;
 }
 
-void WidgetOption::render() {
+void WidgetOption::content_(bool renderContentInWindow) {
 	SnakeClient::boost_shared_ptr ptr(core_.univers.getSnakeClient().lock());
 
 	ImGui::Begin("Options", NULL,

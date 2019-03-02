@@ -6,7 +6,7 @@
 WidgetServerPannel::WidgetServerPannel(Gui &core) :
 		AWidget(core) {}
 
-void WidgetServerPannel::render() {
+void WidgetServerPannel::content_(bool renderContentInWindow) {
 	SnakeClient::boost_shared_ptr ptr(core_.univers.getSnakeClient().lock());
 
 	ImGui::Begin("Server Pannel", NULL,

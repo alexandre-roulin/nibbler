@@ -20,3 +20,16 @@ AWidget::Constructor::Constructor(AWidget::Constructor const &src) noexcept :
 
 const char *
 AWidget::Constructor::what() const noexcept { return (error_.c_str()); }
+
+
+void AWidget::render(bool renderContentInWindow) {
+	if (!renderContentInWindow) {
+		ImGui::PushStyleColor(ImGuiCol_FrameBg, IM_COL32(100, 100, 100, 100));
+		ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(100, 100, 100, 100));
+		ImGui::PushStyleColor(ImGuiCol_ChildWindowBg, IM_COL32(100, 100, 100, 100));
+		ImGui::PushStyleColor(ImGuiCol_ChildBg, IM_COL32(100, 100, 100, 100));
+	}
+	content_(renderContentInWindow);
+	if (!renderContentInWindow)
+		ImGui::PopStyleColor(4);
+}

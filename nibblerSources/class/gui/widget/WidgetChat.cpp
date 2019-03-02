@@ -11,7 +11,7 @@ void WidgetChat::clear() {
 	bufferChat_.clear();
 }
 
-void WidgetChat::render() {
+void WidgetChat::content_(bool renderContentInWindow) {
 	ImGui::Begin("Chat", NULL,
 				 ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize |
 				 ImGuiWindowFlags_NoCollapse);

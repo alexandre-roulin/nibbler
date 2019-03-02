@@ -25,12 +25,12 @@ public:
 
 	void addColor(eSprite color, std::string const &name, std::string const &pathColor);
 
-	void render(void) override;
-
 private:
 	std::map<eSprite, SpriteColorProperties> mapSprite_;
 	std::deque<WidgetSnake> snakeWidget_;
 	std::shared_ptr<SnakeArrayContainer> snakes_;
 
 	void _reload();
+
+	void content_(bool renderContentInWindow) override;
 };

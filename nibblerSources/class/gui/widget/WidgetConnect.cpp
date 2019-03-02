@@ -13,7 +13,7 @@ WidgetConnect::WidgetConnect(Gui &core) :
 
 }
 
-void WidgetConnect::render() {
+void WidgetConnect::content_(bool renderContentInWindow) {
 
 	SnakeClient::boost_shared_ptr ptrClient(core_.univers.getSnakeClient().lock());
 

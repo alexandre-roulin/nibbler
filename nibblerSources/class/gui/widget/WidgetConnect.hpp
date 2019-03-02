@@ -13,10 +13,10 @@ public:
 	WidgetConnect &operator=(const WidgetConnect &) = default;
 	WidgetConnect(const WidgetConnect &) = default;
 
-	void render(void) override;
-
 private:
 	bool client_;
 	char dnsBuffer_[NAME_BUFFER];
 	char portBuffer_[NAME_BUFFER];
+
+	void content_(bool renderContentInWindow) override;
 };

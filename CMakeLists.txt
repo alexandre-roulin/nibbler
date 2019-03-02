@@ -42,7 +42,7 @@ endif ()
 
 if(NOT WIN32)
     set(GLAD_LIBRARIES dl)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wvla -Werror")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wvla")# -Werror")
 endif()
 
 find_package(Git QUIET)

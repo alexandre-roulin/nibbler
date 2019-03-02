@@ -22,9 +22,7 @@ public:
 
 	void addLog(eColorLog color, char const *format, ...);
 
-	void render(void) override;
-
-	void clear(void);
+	void clear();
 
 private:
 	ImGuiTextBuffer bufferChat_;
@@ -32,12 +30,11 @@ private:
 	bool scrollChat_;
 	char bufferMessage_[CHAT_BUFFER];
 
-	bool chatCommand_(void);
 
+	void content_(bool renderContentInWindow) override;
+	bool chatCommand_();
 	bool checkClientIsConnect_();
 	bool checkClient_();
-
-	void chatText_(void);
-
+	void chatText_();
 	void sendMessage_();
 };

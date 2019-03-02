@@ -13,7 +13,6 @@ public:
 	WidgetServerPannel &operator=(const WidgetServerPannel &) = delete;
 	WidgetServerPannel(const WidgetServerPannel &) = delete;
 
-	void render() override;
-
 private:
+	void content_(bool renderContentInWindow) override;
 };

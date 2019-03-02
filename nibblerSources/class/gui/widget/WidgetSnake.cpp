@@ -14,7 +14,7 @@ WidgetSnake::WidgetSnake(Gui &core,
 	updateSizeTexture_();
 }
 
-void WidgetSnake::render(void) {
+void WidgetSnake::content_(bool renderContentInWindow) {
 //	std::cout << snake_ << std::endl;
 	if (!snake_.isValid || !snake_.isReadyToExpose)
 		return;
@@ -26,7 +26,7 @@ void WidgetSnake::render(void) {
 		renderOtherSnake_();
 }
 
-void WidgetSnake::updateSizeTexture_(void) {
+void WidgetSnake::updateSizeTexture_() {
 	if (ImGui::GetWindowSize().x <
 		ImGui::GetWindowSize().y - ImGui::GetFrameHeightWithSpacing() * 3)
 		sizeTexture_ = ImGui::GetWindowSize().x * 0.8;
@@ -71,7 +71,7 @@ void WidgetSnake::renderSelectionColor_() const {
 }
 
 
-void WidgetSnake::renderIa_(void) {
+void WidgetSnake::renderIa_() {
 	SnakeClient::boost_shared_ptr ptr(core_.univers.getSnakeClient().lock());
 
 	if (core_.univers.isServer())
@@ -99,7 +99,7 @@ void WidgetSnake::renderIa_(void) {
 	ImGui::End();
 }
 
-void WidgetSnake::renderOtherSnake_(void) {
+void WidgetSnake::renderOtherSnake_() {
 	SnakeClient::boost_shared_ptr ptr(core_.univers.getSnakeClient().lock());
 
 	ImGui::Begin(std::string(std::to_string(snake_.id) + std::string(snake_.name)).c_str(), NULL,
@@ -126,7 +126,7 @@ void WidgetSnake::renderOtherSnake_(void) {
 	ImGui::End();
 }
 
-void WidgetSnake::renderYourSnake_(void) {
+void WidgetSnake::renderYourSnake_() {
 	SnakeClient::boost_shared_ptr ptr(core_.univers.getSnakeClient().lock());
 
 	ImGui::Begin(std::string(std::to_string(snake_.id) + std::string(snake_.name)).c_str(), NULL,

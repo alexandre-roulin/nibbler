@@ -13,8 +13,6 @@ public:
 	WidgetOption &operator=(const WidgetOption &) = delete;
 	WidgetOption(const WidgetOption &) = delete;
 
-	void render() override;
-
 private:
 	char nameBuffer_[NAME_BUFFER];
 	bool sound_;
@@ -22,4 +20,6 @@ private:
 	bool &rMusique_;
 	std::string pathSound_;
 	int indexLibrary_;
+
+	void content_(bool renderContentInWindow) override;
 };

@@ -19,18 +19,12 @@ public:
 	class Constructor : public std::invalid_argument {
 	public:
 		Constructor(void) noexcept;
-
 		Constructor(std::string const &s) noexcept;
-
 		const char *what() const noexcept override;
-
 		~Constructor(void) noexcept = default;
-
 		Constructor(Constructor const &src) noexcept;
-
 	private:
 		Constructor &operator=(Constructor const &rhs) noexcept = delete;
-
 		std::string error_;
 	};
 
@@ -41,10 +35,13 @@ public:
 	AWidget(const AWidget &) = default;
 
 
-	virtual void render(void) = 0;
+	void render(bool renderContentInWindow);
 
 
 protected:
 	Gui &core_;
 	bool active_;
+
+private:
+	virtual void content_(bool renderContentInWindow) = 0;
 };

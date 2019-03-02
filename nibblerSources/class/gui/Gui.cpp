@@ -96,7 +96,6 @@ void			Gui::aState(void)
 	WidgetExit wexit(*this, callbackExit);
 	WidgetLobby lobby(*this);
 	WidgetOption *optionSnake = nullptr;
-	WidgetSettingGame *settings = nullptr;
 	WidgetServerPannel serverPannel(*this);
 	WidgetConnect wOptionConnect(*this);
 	WidgetEtat wEtat(*this);
@@ -106,6 +105,9 @@ void			Gui::aState(void)
 	Test::getInstance().setInputCallback(callbackTest, reinterpret_cast<void*>(&univers));
 
 	while (Test::getInstance().needUpdate() || (_win.isOpen() && !univers.isOpenGame_())) {
+
+		WidgetSettingGame settings(*this);
+
 		ImGui::SFML::Update(_win, _deltaClock.restart());
 		Test::getInstance().update();
 		while (_win.pollEvent(event))
@@ -172,27 +174,25 @@ void			Gui::aState(void)
 
 		ImGui::SetNextWindowPos(positionByPercent(sf::Vector2<unsigned int>(0, 50)));
 		ImGui::SetNextWindowSize(positionByPercent(sf::Vector2<unsigned int>(50, 50)));
-		_chat.render();
+		_chat.render(true);
 
-		lobby.render();
+		lobby.render(true);
 
 		ImGui::SetNextWindowPos(positionByPercent(sf::Vector2<unsigned int>(95, 0)), 0, sf::Vector2f(0.5f, 0.5f));
-		wexit.render();
+		wexit.render(true);
 		SnakeClient::boost_shared_ptr ptr(univers.getSnakeClient().lock());
+
+		ImGui::SetNextWindowPos(positionByPercent(sf::Vector2<unsigned int>(50, 50)));
+		ImGui::SetNextWindowSize(positionByPercent(sf::Vector2<unsigned int>(20, 15)));
+		settings.render((ptr && ptr->isOpen()));
 
 		if (ptr && ptr->isOpen()) {
 			if (!optionSnake)
 				optionSnake = new WidgetOption(*this);
-			if (!settings)
-				settings = new WidgetSettingGame(*this);
+
 			ImGui::SetNextWindowPos(positionByPercent(sf::Vector2<unsigned int>(70, 50)));
-			ImGui::SetNextWindowSize(positionByPercent(sf::Vector2<unsigned int>(15, 10)));
-			settings->render();
-
-
-			ImGui::SetNextWindowPos(positionByPercent(sf::Vector2<unsigned int>(85, 50)));
-			ImGui::SetNextWindowSize(positionByPercent(sf::Vector2<unsigned int>(15, 25)));
-			optionSnake->render();
+			ImGui::SetNextWindowSize(positionByPercent(sf::Vector2<unsigned int>(30, 15)));
+			optionSnake->render(true);
 		}
 		else if (ptr) {
 
@@ -200,27 +200,27 @@ void			Gui::aState(void)
 				optionSnake = new WidgetOption(*this);
 
 			ImGui::SetNextWindowPos(positionByPercent(sf::Vector2<unsigned int>(70, 50)));
-			ImGui::SetNextWindowSize(positionByPercent(sf::Vector2<unsigned int>(30, 25)));
-			optionSnake->render();
+			ImGui::SetNextWindowSize(positionByPercent(sf::Vector2<unsigned int>(30, 15)));
+			optionSnake->render(true);
 
 		}
 
-		ImGui::SetNextWindowPos(positionByPercent(sf::Vector2<unsigned int>(70, 75)));
+		ImGui::SetNextWindowPos(positionByPercent(sf::Vector2<unsigned int>(70, 65)));
+		ImGui::SetNextWindowSize(positionByPercent(sf::Vector2<unsigned int>(30, 20)));
+		wOptionConnect.render(true);
+		ImGui::SetNextWindowPos(positionByPercent(sf::Vector2<unsigned int>(70, 85)));
 		ImGui::SetNextWindowSize(positionByPercent(sf::Vector2<unsigned int>(30, 15)));
-		wOptionConnect.render();
-		ImGui::SetNextWindowPos(positionByPercent(sf::Vector2<unsigned int>(70, 90)));
-		ImGui::SetNextWindowSize(positionByPercent(sf::Vector2<unsigned int>(30, 10)));
-		wEtat.render();
+		wEtat.render(true);
 
 		if (univers.isServer()) {
-			ImGui::SetNextWindowPos(positionByPercent(sf::Vector2<unsigned int>(70, 30)));
-			ImGui::SetNextWindowSize(positionByPercent(sf::Vector2<unsigned int>(15, 15)));
-			serverPannel.render();
+			ImGui::SetNextWindowPos(positionByPercent(sf::Vector2<unsigned int>(50, 65)));
+			ImGui::SetNextWindowSize(positionByPercent(sf::Vector2<unsigned int>(20, 20)));
+			serverPannel.render(true);
 		}
 
-		ImGui::SetNextWindowPos(positionByPercent(sf::Vector2<unsigned int>(50, 50)));
-		ImGui::SetNextWindowSize(positionByPercent(sf::Vector2<unsigned int>(20, 50)));
-		massiveButton.render();
+		ImGui::SetNextWindowPos(positionByPercent(sf::Vector2<unsigned int>(50, 85)));
+		ImGui::SetNextWindowSize(positionByPercent(sf::Vector2<unsigned int>(20, 15)));
+		massiveButton.render(true);
 
 		_render();
 	}

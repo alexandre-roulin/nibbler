@@ -5,7 +5,7 @@ WidgetExit::WidgetExit(Gui &core, std::function<void(Gui&)> callbackExit) :
 		callbackExit_(callbackExit)
 {}
 
-void WidgetExit::render(void) {
+void WidgetExit::content_(bool renderContentInWindow) {
 	ImGui::Begin("Exit", NULL, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoBackground);
 	if (ImGui::Button("Exit.."))
 		ImGui::OpenPopup("Exit ?");

@@ -16,5 +16,6 @@ public:
 	WidgetMassiveButton &operator=(const WidgetMassiveButton &) = default;
 	WidgetMassiveButton(const WidgetMassiveButton &) = default;
 
-	void render(void) override;
+private:
+	void content_(bool renderContentInWindow) override;
 };

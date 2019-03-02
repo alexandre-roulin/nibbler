@@ -7,7 +7,7 @@ WidgetMassiveButton::WidgetMassiveButton(Gui &core) :
 		AWidget(core) {
 }
 
-void WidgetMassiveButton::render(void) {
+void WidgetMassiveButton::content_(bool renderContentInWindow) {
 	ImGui::Begin("MassiveButton", nullptr,
 				 ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize |
 				 ImGuiWindowFlags_NoCollapse);

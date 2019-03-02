@@ -6,7 +6,7 @@ WidgetSettingGame::WidgetSettingGame(Gui &core) :
 		AWidget(core),
 		mapSize_(core_.univers.getMapSize()) {}
 
-void WidgetSettingGame::render(void) {
+void WidgetSettingGame::content_(bool renderContentInWindow) {
 	SnakeClient::boost_shared_ptr ptr(core_.univers.getSnakeClient().lock());
 
 	ImGui::Begin("Settings Game", NULL,

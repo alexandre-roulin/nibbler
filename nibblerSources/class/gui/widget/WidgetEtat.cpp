@@ -6,7 +6,7 @@
 WidgetEtat::WidgetEtat(Gui &core) :
 		AWidget(core) {}
 
-void WidgetEtat::render() {
+void WidgetEtat::content_(bool renderContentInWindow) {
 
 	SnakeClient::boost_shared_ptr ptrClient(core_.univers.getSnakeClient().lock());
 	boost::shared_ptr<ISnakeNetwork> ptrNetwork(core_.univers.getSnakeNetwork().lock());
