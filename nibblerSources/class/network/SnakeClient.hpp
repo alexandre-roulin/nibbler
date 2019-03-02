@@ -22,6 +22,8 @@ public:
 
 	static boost_shared_ptr create(Univers &univers, bool fromIA);
 
+	void sendDirection(eDirection direction);
+
 	template<typename T>
 	void sendDataToServer(T data, eHeader header);
 
@@ -107,35 +109,6 @@ private:
 	void callbackCloseConnection(char);
 
 	void callbackId(uint16_t);
-//
-//
-//	void callbackInput(InputInfo);
-//
-//
-//	void callbackForcePause(int16_t);
-//
-//	void callbackPause(eAction);
-//
-//	void callbackOpenGame(bool);
-//
-//	void callbackSnake(Snake &);
-//
-//	void callbackResizeMap(unsigned int);
-//
-//	void callbackSnakeArray(SnakeArrayContainer &);
-//
-//	void callbackBorderless(bool);
-//
-//	void callbackFood(FoodInfo);
-//
-//
-//	void callbackChatInfo(ChatInfo);
-//
-//	void callbackId(int16_t);
-//
-//	void callbackAddScore(Snake &);
-//
-//	void callbackKillSnake(uint16_t);
 
 	bool acceptDataFromServer() const;
 
