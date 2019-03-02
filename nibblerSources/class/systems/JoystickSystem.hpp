@@ -5,12 +5,9 @@
 
 class JoystickSystem : public KINU::System {
 public:
-	explicit JoystickSystem(Univers &univers);
+	explicit JoystickSystem();
 	void update() override;
-
 	virtual ~JoystickSystem();
-private:
-	Univers &univers_;
 };
 
 

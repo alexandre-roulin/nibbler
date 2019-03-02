@@ -30,7 +30,7 @@ public:
 private:
 	std::map<eSprite, SpriteColorProperties> mapSprite_;
 	std::deque<WidgetSnake> snakeWidget_;
-	std::shared_ptr<SnakeArrayContainer> snakes_;
+	std::weak_ptr<SnakeArrayContainer> snakes_;
 
 	void _reload();
 };

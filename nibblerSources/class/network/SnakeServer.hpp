@@ -57,8 +57,6 @@ private:
 
 	void callbackSnakeUN(const Snake &);
 
-	void callbackInput(InputInfo);
-
 	void callbackOpenGame(bool openGame);
 
 	void callbackResizeMap(unsigned int mapSize);
@@ -73,7 +71,7 @@ private:
 
 	void callbackPause(eAction);
 
-	bool updateInput();
+	void updateInput();
 
 	Univers &univers_;
 	std::vector<FoodInfo> foodInfoArray;

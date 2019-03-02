@@ -40,7 +40,6 @@ void MotionSystem::update() {
 		}
 	}
 	frame++;
-	log_warn("Frame : %d", frame);
 	std::cout << std::endl;
 }
 

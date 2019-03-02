@@ -23,9 +23,11 @@ public:
 
 	void startNewGame();
 
+	void loopGame();
+
 	void loopWorld();
 
-	void loopWorldWork();
+	void manageGlobalInput();
 
 	void loopUI();
 
