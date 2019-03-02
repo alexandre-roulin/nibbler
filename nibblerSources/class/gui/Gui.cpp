@@ -8,6 +8,7 @@
 #include "gui/widget/WidgetConnect.hpp"
 #include "gui/widget/WidgetMassiveButton.hpp"
 #include "gui/widget/WidgetServerPannel.hpp"
+#include "gui/widget/WidgetEtat.hpp"
 #include "cores/Test.hpp"
 
 Gui::Gui(Univers &univers) :
@@ -97,7 +98,8 @@ void			Gui::aState(void)
 	WidgetOption *optionSnake = nullptr;
 	WidgetSettingGame *settings = nullptr;
 	WidgetServerPannel serverPannel(*this);
-	WidgetConnect optionConnect(*this);
+	WidgetConnect wOptionConnect(*this);
+	WidgetEtat wEtat(*this);
 	WidgetMassiveButton massiveButton(*this);
 	sf::Event event;
 
@@ -191,10 +193,6 @@ void			Gui::aState(void)
 			ImGui::SetNextWindowPos(positionByPercent(sf::Vector2<unsigned int>(85, 50)));
 			ImGui::SetNextWindowSize(positionByPercent(sf::Vector2<unsigned int>(15, 25)));
 			optionSnake->render();
-
-			ImGui::SetNextWindowPos(positionByPercent(sf::Vector2<unsigned int>(70, 75)));
-			ImGui::SetNextWindowSize(positionByPercent(sf::Vector2<unsigned int>(30, 25)));
-			optionConnect.render();
 		}
 		else if (ptr) {
 
@@ -205,14 +203,14 @@ void			Gui::aState(void)
 			ImGui::SetNextWindowSize(positionByPercent(sf::Vector2<unsigned int>(30, 25)));
 			optionSnake->render();
 
-			ImGui::SetNextWindowPos(positionByPercent(sf::Vector2<unsigned int>(70, 75)));
-			ImGui::SetNextWindowSize(positionByPercent(sf::Vector2<unsigned int>(30, 25)));
-			optionConnect.render();
-		} else {
-			ImGui::SetNextWindowPos(positionByPercent(sf::Vector2<unsigned int>(70, 50)));
-			ImGui::SetNextWindowSize(positionByPercent(sf::Vector2<unsigned int>(30, 50)));
-			optionConnect.render();
 		}
+
+		ImGui::SetNextWindowPos(positionByPercent(sf::Vector2<unsigned int>(70, 75)));
+		ImGui::SetNextWindowSize(positionByPercent(sf::Vector2<unsigned int>(30, 15)));
+		wOptionConnect.render();
+		ImGui::SetNextWindowPos(positionByPercent(sf::Vector2<unsigned int>(70, 90)));
+		ImGui::SetNextWindowSize(positionByPercent(sf::Vector2<unsigned int>(30, 10)));
+		wEtat.render();
 
 		if (univers.isServer()) {
 			ImGui::SetNextWindowPos(positionByPercent(sf::Vector2<unsigned int>(70, 30)));
@@ -254,20 +252,20 @@ void					Gui::_processEvent(sf::Event const &event) {
 }
 
 
-void					Gui::beginHueColor_(float const color) {
-	ImGui::PushStyleColor(ImGuiCol_Button, static_cast<ImVec4>(ImColor::HSV(color, 0.7f, 0.7f)));
-	ImGui::PushStyleColor(ImGuiCol_ButtonHovered, static_cast<ImVec4>(ImColor::HSV(color, 0.8f, 0.8f)));
-	ImGui::PushStyleColor(ImGuiCol_ButtonActive, static_cast<ImVec4>(ImColor::HSV(color, 0.9f, 0.9f)));
+void					Gui::beginHueColor_(float color, float power) {
+	ImGui::PushStyleColor(ImGuiCol_Button, static_cast<ImVec4>(ImColor::HSV(color, 0.7f * power, 0.7f * power)));
+	ImGui::PushStyleColor(ImGuiCol_ButtonHovered, static_cast<ImVec4>(ImColor::HSV(color, 0.8f * power, 0.8f * power)));
+	ImGui::PushStyleColor(ImGuiCol_ButtonActive, static_cast<ImVec4>(ImColor::HSV(color, 0.9f * power, 0.9f * power)));
 }
-void					Gui::beginColor(Gui::eColor color) {
+void					Gui::beginColor(Gui::eColor color, Gui::eColor power) {
 	assert(!Gui::_useColor);
 	Gui::_useColor = true;
 	if (color == Gui::eColor::kGrey) {
-		ImGui::PushStyleColor(ImGuiCol_Button, static_cast<ImVec4>(ImColor::HSV(0.f, 0.f, 0.5f)));
-		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, static_cast<ImVec4>(ImColor::HSV(0.f, 0.0f, 0.5f)));
-		ImGui::PushStyleColor(ImGuiCol_ButtonActive, static_cast<ImVec4>(ImColor::HSV(0.f, 0.00f, 0.65f)));
+		ImGui::PushStyleColor(ImGuiCol_Button, static_cast<ImVec4>(ImColor::HSV(0.f, 0.f, 0.5f * Gui::mapEColor_.at(power))));
+		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, static_cast<ImVec4>(ImColor::HSV(0.f, 0.0f, 0.5f * Gui::mapEColor_.at(power))));
+		ImGui::PushStyleColor(ImGuiCol_ButtonActive, static_cast<ImVec4>(ImColor::HSV(0.f, 0.00f, 0.65f * Gui::mapEColor_.at(power))));
 	} else
-		beginHueColor_(Gui::mapEColor_.at(color));
+		beginHueColor_(Gui::mapEColor_.at(color), Gui::mapEColor_.at(power));
 }
 void					Gui::endColor() {
 	ImGui::PopStyleColor(3);
@@ -277,7 +275,11 @@ void					Gui::endColor() {
 std::map< Gui::eColor, float > const Gui::mapEColor_ = { { eColor::kGrey, 0.f },
 														 { eColor::kRed, 0.f },
 														 { eColor::kGreen, 0.33f },
-														 { eColor::kPurple, 0.77f } };
+														 { eColor::kPurple, 0.77f },
+														 { eColor::kHard, 1.f },
+														 { eColor::kMedium, .75f },
+														 { eColor::kSoft, .5f },
+														 { eColor::kLight, .33f }};
 
 bool 						Gui::_useColor = false;
 

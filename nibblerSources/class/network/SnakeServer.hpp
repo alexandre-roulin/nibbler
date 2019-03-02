@@ -23,17 +23,17 @@ public:
 
 	unsigned short getPort_() const;
 
-	virtual void notifyBorderless();
+	void notifyBorderless() override;
 
-	virtual bool isOpen() const;
+	bool isOpen() const override;
 
-	virtual void notifyMapSize();
+	void notifyMapSize() override;
 
-	virtual std::shared_ptr<SnakeArrayContainer> getSnakeArray_() const;
+	std::shared_ptr<SnakeArrayContainer> getSnakeArray_() const override;
 
-	virtual bool allSnakeIsDead() const;
+	bool allSnakeIsDead() const override;
 
-	virtual bool allSnakeIsReady() const;
+	bool allSnakeIsReady() const override;
 
 	bool sendOpenGameToClient();
 

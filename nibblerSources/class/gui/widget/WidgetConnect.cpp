@@ -1,6 +1,7 @@
 #include <gui/Gui.hpp>
 #include "WidgetConnect.hpp"
 #include "cores/Univers.hpp"
+#include <network/SnakeServer.hpp>
 
 WidgetConnect::WidgetConnect(Gui &core) :
 		AWidget(core),
@@ -12,11 +13,11 @@ WidgetConnect::WidgetConnect(Gui &core) :
 
 }
 
-void WidgetConnect::render(void) {
+void WidgetConnect::render() {
 
-	SnakeClient::boost_shared_ptr ptr(core_.univers.getSnakeClient().lock());
+	SnakeClient::boost_shared_ptr ptrClient(core_.univers.getSnakeClient().lock());
 
-	if (ptr && ptr->isOpen())
+	if (ptrClient && ptrClient->isOpen())
 		ImGui::Begin("Connect", NULL,
 					 ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse);
 	else
@@ -59,13 +60,13 @@ void WidgetConnect::render(void) {
 	Gui::beginColor(Gui::eColor::kGreen);
 
 	if (client_ && !core_.univers.isServer()) {
-		if (ptr && ptr->isOpen()) {
+		if (ptrClient && ptrClient->isOpen()) {
 			if (ImGui::Button("Join new", sf::Vector2f(ImGui::GetWindowSize().x, 20))) {
-				ptr->disconnect();
+				ptrClient->disconnect();
 				core_.univers.connect(dnsBuffer_, portBuffer_);
 			}
 		} else if (ImGui::Button("Join", sf::Vector2f(ImGui::GetWindowSize().x, 20))) {
-			if (!ptr)
+			if (!ptrClient)
 				core_.univers.createClient();
 			core_.univers.connect(dnsBuffer_, portBuffer_);
 		}

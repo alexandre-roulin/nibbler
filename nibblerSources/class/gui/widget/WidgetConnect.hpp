@@ -19,5 +19,4 @@ private:
 	bool client_;
 	char dnsBuffer_[NAME_BUFFER];
 	char portBuffer_[NAME_BUFFER];
-
 };
