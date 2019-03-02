@@ -55,7 +55,7 @@ Univers::Univers()
 }
 
 void Univers::resetData() {
-	for (const auto &snake: getSnakeArray_()) {
+	for (const auto &snake: *getSnakeArray_()) {
 		if (snake.isValid) {
 			std::cout << "ID:" << snake.id << " " << " Score : " << snake.score_ << std::endl;
 		}
@@ -341,7 +341,6 @@ void Univers::loadSoundData_() {
 	getSoundManager().addNoise((pathSound / "click.wav").generic_string());
 	getSoundManager().addNoise((pathSound / "slime10.wav").generic_string());
 	getSoundManager().addNoise((pathSound / "hit17.ogg").generic_string());
-	getSoundManager().playMusic((pathSound / "zelda.ogg").generic_string());
 }
 
 void Univers::loadSound(eSound sound) {
@@ -386,15 +385,14 @@ std::unique_ptr<Gui> &Univers::getGui_() {
 MutantGrid<eSprite> &Univers::getGrid_() const {
 	return *grid_;
 }
+std::shared_ptr<SnakeArrayContainer> Univers::getSnakeArray_() const {
 
-const SnakeArrayContainer Univers::getSnakeArray_() const {
 	boost::shared_ptr<ISnakeNetwork>  ptr(getSnakeNetwork().lock());
 
 	if (ptr) {
-		log_info("%s", __PRETTY_FUNCTION__);
 		return ptr->getSnakeArray_();
 	}
- 	return snakeArrayContainer;
+ 	return nullptr;
 }
 
 boost::weak_ptr<ISnakeNetwork> Univers::getSnakeNetwork() const {
@@ -412,7 +410,7 @@ boost::weak_ptr<ISnakeNetwork> Univers::getSnakeNetwork() const {
 boost::weak_ptr<SnakeClient> Univers::getSnakeClient() const {
 	SnakeClient::boost_shared_ptr ptr(snakeClient_);
 
-	if (ptr && ptr->isOpen())
+	if (ptr)
 		return ptr->shared_from_this();
 	else if (vecBobby.size() != 0)
 		return vecBobby.front()->getClientTCP_()->shared_from_this();
@@ -490,6 +488,10 @@ ExternalLibrarySoundManager &Univers::getSoundManager() {
 	return *soundManager;
 }
 
+ExternalLibraryDisplayManager &Univers::getDisplayManager() {
+	return (*displayManager);
+}
+
 SnakeServer &Univers::getSnakeServer() const {
 	return *snakeServer_;
 }
@@ -504,6 +506,13 @@ GameManager &Univers::getGameManager() {
 
 void Univers::switchBorderless() {
 
+	boost::shared_ptr<ISnakeNetwork> ptr_network(getSnakeNetwork().lock());
+
+	if (!ptr_network || !ptr_network->isOpen()) {
+		gui_->addMessageChat(eColorLog::kOrange, WarningServerNotExist);
+		return ;
+	}
+
 	setBorderless(!isBorderless());
 
 	if (isBorderless())
@@ -511,13 +520,7 @@ void Univers::switchBorderless() {
 	else
 		gui_->addMessageChat(eColorLog::kGreen, SuccessBorderlessUnset);
 
-	boost::shared_ptr<ISnakeNetwork> ptr_network(getSnakeNetwork().lock());
-
-	if (!ptr_network || !ptr_network->isOpen()) {
-		return;
-	}
 	ptr_network->notifyBorderless();
-
 }
 
 void Univers::switchReady() {
@@ -535,7 +538,8 @@ void Univers::switchReady() {
 }
 
 void Univers::sendOpenGameToServer() {
-	SnakeClient::boost_shared_ptr ptr(getSnakeClient());
+
+	SnakeClient::boost_shared_ptr ptr(getSnakeClient().lock());
 
 	if (!isServer()) {
 		gui_->addMessageChat(eColorLog::kOrange,

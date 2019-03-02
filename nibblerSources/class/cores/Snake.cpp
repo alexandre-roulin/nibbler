@@ -38,6 +38,7 @@ void Snake::randomSnake(int16_t id_) {
 
 Snake &Snake::operator=(SnakeUI const &ui) {
 	SnakeUI::operator=(ui);
+	std::cout << (isReadyToExpose  ? "true" : "false") << std::endl;
 	return *this;
 }
 
@@ -90,6 +91,16 @@ Snake &Snake::operator=(Snake const &snake) {
 	return *this;
 }
 
+std::ostream &operator<<(std::ostream &os, const Snake &snake) {
+	os << static_cast<const SnakeUI &>(snake) << ' '
+	   << static_cast<const SnakeUX &>(snake) << ' '
+	   << static_cast<const SnakeUN &>(snake) << " isReady: " << snake.isReady
+	   << " isIA: " << snake.isIA << " isValid: " << snake.isValid << " id: "
+	   << snake.id << " indexConnection: " << snake.indexConnection
+	   << " score_: " << snake.score_;
+	return os;
+}
+
 
 /** SnakeUI **/
 
@@ -117,6 +128,12 @@ SnakeUI &SnakeUI::operator=(SnakeUI const &snakeUI) {
 	return *this;
 }
 
+std::ostream &operator<<(std::ostream &os, const SnakeUI &ui) {
+	os << "name: " << ui.name
+	   << " isReadyToExpose: " << ui.isReadyToExpose;
+	return os;
+}
+
 /** SnakeUX **/
 
 SnakeUX::SnakeUX() :
@@ -138,6 +155,12 @@ SnakeUX &SnakeUX::operator=(SnakeUX &snakeUX) {
 		isSwitchingLibrary = snakeUX.isSwitchingLibrary;
 	}
 	return *this;
+}
+
+std::ostream &operator<<(std::ostream &os, const SnakeUX &ux) {
+	os << "isAlive: " << ux.isAlive << " isSwitchingLibrary: "
+	   << ux.isSwitchingLibrary;
+	return os;
 }
 
 /** SnakeUN **/
@@ -162,4 +185,9 @@ SnakeUN &SnakeUN::operator=(SnakeUN &snakeUN) {
 		direction = snakeUN.direction;
 	}
 	return *this;
+}
+
+std::ostream &operator<<(std::ostream &os, const SnakeUN &un) {
+	os << "isUpdate: " << un.isUpdate << " direction: " << un.direction;
+	return os;
 }

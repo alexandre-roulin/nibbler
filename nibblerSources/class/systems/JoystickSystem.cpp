@@ -15,9 +15,9 @@ void JoystickSystem::update() {
 	SnakeClient::boost_shared_ptr ptr(univers_.getSnakeClient().lock());
 	if (!ptr)
 		return;
-	SnakeArrayContainer const &snake_array = ptr->getSnakeArray_();
+	std::shared_ptr<SnakeArrayContainer> snake_array = ptr->getSnakeArray_();
 
-	for (auto &snake : snake_array) {
+	for (auto &snake : (*snake_array)) {
 		if (snake.isValid && getWorld().getEntitiesManager().hasEntityByTagId(snake.id + eTag::kHeadTag)) {
 			auto entity = getWorld().getEntitiesManager().getEntityByTagId(snake.id + eTag::kHeadTag);
 			if (entity.hasComponent<JoystickComponent>()) {

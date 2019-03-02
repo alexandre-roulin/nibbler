@@ -39,7 +39,7 @@ void WidgetLobby::addColor(eSprite color, std::string const &name,
 }
 
 
-void WidgetLobby::addSnake(Snake const &snake, WidgetSnake::SnakeType type) {
+void WidgetLobby::addSnake(const Snake &snake, WidgetSnake::SnakeType type) {
 	if (snakeWidget_.size() < SNAKE_MAX)
 		snakeWidget_.emplace_back(core_, snake, mapSprite_, type);
 }
@@ -51,14 +51,14 @@ void WidgetLobby::_reload() {
 
 	for (unsigned int i = 0; i < SNAKE_MAX; i++) {
 
-		if (ptr && snakes_[i].isIA)
-			addSnake(snakes_[i], WidgetSnake::kIa);
-		else if (ptr && i == ptr->getId_() && ptr->isOpen()) // TODO
-			addSnake(snakes_[i], WidgetSnake::kYour);
-		else
-			addSnake(snakes_[i], WidgetSnake::kBasic);
+		if (ptr && snakes_ && (*snakes_)[i].isIA)
+			addSnake((*snakes_)[i], WidgetSnake::kIa);
+		else if (snakes_ && ptr && i == ptr->getId_() && ptr->isOpen())
+			addSnake((*snakes_)[i], WidgetSnake::kYour);
+		else if (snakes_)
+			addSnake((*snakes_)[i], WidgetSnake::kBasic);
 
-		//addSnake(snakes_[i], (i == ptr->getId_() && !ptr->isIa() && ptr->isConnect()));
+		//addSnake((*snake_)[i], (i == ptr->getId_() && !ptr->isIa() && ptr->isConnect()));
 	}
 }
 

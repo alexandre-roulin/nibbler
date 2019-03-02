@@ -15,12 +15,17 @@ public:
 	virtual SnakeUI &operator=(SnakeUI const &);
 
 	char name[NAME_BUFFER];
+
+	friend std::ostream &operator<<(std::ostream &os, const SnakeUI &ui);
+
 	eSprite sprite;
 	bool isReadyToExpose;
 };
 
 class SnakeUX {
 public:
+	friend std::ostream &operator<<(std::ostream &os, const SnakeUX &ux);
+
 	SnakeUX();
 
 	virtual SnakeUX &operator=(SnakeUX &);
@@ -39,6 +44,8 @@ public:
 
 	virtual SnakeUN &operator=(SnakeUN const &);
 
+	friend std::ostream &operator<<(std::ostream &os, const SnakeUN &un);
+
 	bool isUpdate;
 	eDirection direction;
 };
@@ -56,6 +63,8 @@ public:
 	Snake &operator=(SnakeUI &ui);
 
 	Snake &operator=(SnakeUI const &ui);
+
+	friend std::ostream &operator<<(std::ostream &os, const Snake &snake);
 
 	Snake &operator=(SnakeUX &ux);
 

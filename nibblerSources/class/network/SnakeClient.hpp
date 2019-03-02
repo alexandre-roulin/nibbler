@@ -31,7 +31,7 @@ public:
 
 	virtual bool isOpen() const;
 
-	virtual const SnakeArrayContainer &getSnakeArray_() const;
+	virtual std::shared_ptr<SnakeArrayContainer> getSnakeArray_() const;
 
 	virtual bool allSnakeIsDead() const;
 
@@ -151,8 +151,8 @@ private:
 	eSprite sprite_;
 	bool nameSet_;
 	bool spriteSet_;
-	SnakeArrayContainer snakeArray;
 	std::vector<FoodCreation> foodCreations;
+	std::shared_ptr<SnakeArrayContainer> snakeArray;
 };
 
 

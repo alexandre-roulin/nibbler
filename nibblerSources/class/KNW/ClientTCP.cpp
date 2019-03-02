@@ -54,11 +54,6 @@ namespace KNW {
 		disconnect();
 	}
 
-	template<>
-	void ClientTCP::writeDataToServer<char *, unsigned long>(char *pVoid, unsigned long len) {
-		std::cout << __PRETTY_FUNCTION__ << "Function discrete" << std::endl;
-		iotcp->writeSocket(pVoid, len);
-	}
 }
 
 

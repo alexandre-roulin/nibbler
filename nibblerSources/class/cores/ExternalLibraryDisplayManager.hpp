@@ -20,14 +20,15 @@ public:
 	bool hasLibraryLoaded() const;
 	IDisplay *getDisplay() const;
 	eDisplay getKDisplay() const;
-
-private:
+	void setKDisplay(eDisplay k);
 
 	static constexpr LibraryInfo libraryInfo[sizeof(eDisplayArray) / sizeof(eDisplay)] = {
-			{"Nibbler - SFML", "dynamicLibraries/libdisplay_sfml.so"}, //[kDisplaySfmlLibrary] = 0
-			{"Nibbler - SDL", "dynamicLibraries/libdisplay_sdl.so"}, //[kDisplaySdlLibrary] = 1
-			{"Nibbler - GLFW", "dynamicLibraries/libdisplay_glfw.so"} //[kDisplayGlfwLibrary] = 2
+			{"Nibbler - SFML", "dynamicLibraries/libdisplay_sfml.so", eDisplay::kDisplaySfmlLibrary}, //[kDisplaySfmlLibrary] = 0
+			{"Nibbler - SDL", "dynamicLibraries/libdisplay_sdl.so", eDisplay::kDisplaySdlLibrary}, //[kDisplaySdlLibrary] = 1
+			{"Nibbler - GLFW", "dynamicLibraries/libdisplay_glfw.so", eDisplay::kDisplayGlfwLibrary} //[kDisplayGlfwLibrary] = 2
 	};
+
+private:
 
 	void *dlHandleDisplay;
 	IDisplay *(*newDisplay)(int, int, char const *);

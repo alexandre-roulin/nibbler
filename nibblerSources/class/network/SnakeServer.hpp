@@ -29,7 +29,7 @@ public:
 
 	virtual void notifyMapSize();
 
-	virtual const SnakeArrayContainer &getSnakeArray_() const;
+	virtual std::shared_ptr<SnakeArrayContainer> getSnakeArray_() const;
 
 	virtual bool allSnakeIsDead() const;
 
@@ -81,5 +81,5 @@ private:
 	bool pause_;
 	unsigned short port_;
 	boost::shared_ptr<KNW::ServerTCP> serverTCP_;
-	SnakeArrayContainer snakeArray_;
+	std::shared_ptr<SnakeArrayContainer> snakeArray_;
 };

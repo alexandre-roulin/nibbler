@@ -13,11 +13,13 @@ public:
 	WidgetOption &operator=(const WidgetOption &) = delete;
 	WidgetOption(const WidgetOption &) = delete;
 
-	void render(void) override;
+	void render() override;
 
 private:
-	unsigned int mapSize_;
 	char nameBuffer_[NAME_BUFFER];
 	bool sound_;
-
+	bool &rNoise_;
+	bool &rMusique_;
+	std::string pathSound_;
+	int indexLibrary_;
 };

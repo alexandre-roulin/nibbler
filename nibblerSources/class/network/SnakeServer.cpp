@@ -9,7 +9,8 @@ SnakeServer::SnakeServer(
 		univers_(univers),
 		pause_(false),
 		port_(port),
-		serverTCP_(nullptr)
+		serverTCP_(nullptr),
+		snakeArray_(std::make_shared<SnakeArrayContainer >())
 		{
 
 
@@ -18,12 +19,12 @@ SnakeServer::SnakeServer(
 inline bool SnakeServer::updateInput() {
 	std::lock_guard<std::mutex> guard(mutex_);
 
-	log_warn("Condition [%d][%d]",pause_ ,std::any_of(snakeArray_.begin(), snakeArray_.end(),[](const Snake &snake){ return snake.isValid && snake.isAlive && !snake.isUpdate;} ));
+	log_warn("Condition [%d][%d]",pause_ ,std::any_of((*snakeArray_).begin(), (*snakeArray_).end(),[](const Snake &snake){ return snake.isValid && snake.isAlive && !snake.isUpdate;} ));
 
-	if (pause_ || std::any_of(snakeArray_.begin(), snakeArray_.end(), [](const Snake & snake){ return snake.isValid && snake.isAlive && !snake.isUpdate; } )) return false;
+	if (pause_ || std::any_of((*snakeArray_).begin(), (*snakeArray_).end(), [](const Snake & snake){ return snake.isValid && snake.isAlive && !snake.isUpdate; } )) return false;
 
-	std::for_each(snakeArray_.begin(), snakeArray_.end(), [](Snake &snake){ snake.isUpdate = false; });
-	serverTCP_->writeDataToOpenConnections(snakeArray_, eHeader::kSnakeArray);
+	std::for_each((*snakeArray_).begin(), (*snakeArray_).end(), [](Snake &snake){ snake.isUpdate = false; });
+	serverTCP_->writeDataToOpenConnections((*snakeArray_), eHeader::kSnakeArray);
 	for (auto infoArray : foodInfoArray) {
 		serverTCP_->writeDataToOpenConnections(infoArray, eHeader::kFood);
 	}
@@ -37,8 +38,8 @@ void SnakeServer::startGame() {
 	std::lock_guard<std::mutex> guard(mutex_);
 	foodInfoArray.clear();
 
-//	std::for_each(snakeArray_.begin(), snakeArray_.end(), [](Snake &snake){ snake.reset(); });
-	serverTCP_->writeDataToOpenConnections(snakeArray_, eHeader::kSnakeArray);
+//	std::for_each((*snakeArray_).begin(), (*snakeArray_).end(), [](Snake &snake){ snake.reset(); });
+	serverTCP_->writeDataToOpenConnections((*snakeArray_), eHeader::kSnakeArray);
 	serverTCP_->writeDataToOpenConnections<StartInfo>({
 		serverTCP_->getSizeOfOpenConnection(),
 		boost::posix_time::microsec_clock::universal_time() + boost::posix_time::seconds(1)
@@ -46,7 +47,7 @@ void SnakeServer::startGame() {
 }
 
 bool SnakeServer::isReady() const {
-	return std::none_of(snakeArray_.begin(), snakeArray_.end(), [](Snake const &snake){ return snake.isValid && !snake.isReady; });
+	return std::none_of((*snakeArray_).begin(), (*snakeArray_).end(), [](Snake const &snake){ return snake.isValid && !snake.isReady; });
 }
 
 bool SnakeServer::isFull() const {
@@ -66,16 +67,16 @@ void SnakeServer::notifyMapSize() {
 	serverTCP_->writeDataToOpenConnections(univers_.getMapSize(), eHeader::kResizeMap);
 }
 
-const SnakeArrayContainer &SnakeServer::getSnakeArray_() const {
+std::shared_ptr<SnakeArrayContainer> SnakeServer::getSnakeArray_() const {
 	return snakeArray_;
 }
 
 bool SnakeServer::allSnakeIsDead() const {
-	return std::all_of(snakeArray_.begin(), snakeArray_.end(), [](Snake const &snake){ return snake.isAlive; });
+	return std::all_of((*snakeArray_).begin(), (*snakeArray_).end(), [](Snake const &snake){ return snake.isAlive; });
 }
 
 bool SnakeServer::allSnakeIsReady() const {
-	return std::all_of(snakeArray_.begin(), snakeArray_.end(), [](Snake const &snake){ return snake.isReady; });
+	return std::all_of((*snakeArray_).begin(), (*snakeArray_).end(), [](Snake const &snake){ return snake.isReady; });
 }
 
 bool SnakeServer::sendOpenGameToClient() {
@@ -110,30 +111,28 @@ SnakeServer::~SnakeServer() {
 /** Callback **/
 
 
-//			class A {};
 void SnakeServer::callbackSnakeUI(const Snake &snakeUI) {
-	log_success("%s", __PRETTY_FUNCTION__);
+	log_success("%s %d", __PRETTY_FUNCTION__, snakeUI.isReadyToExpose);
 	std::lock_guard<std::mutex> guard(mutex_);
-	snakeArray_[snakeUI.id] = static_cast<SnakeUI>(snakeUI);
+	(*snakeArray_)[snakeUI.id] = static_cast<SnakeUI>(snakeUI);
 	serverTCP_->writeDataToOpenConnections(snakeUI, eHeader::kSnakeUI);
 }
 
 void SnakeServer::callbackSnakeUX(const Snake &snakeUX) {
 	std::lock_guard<std::mutex> guard(mutex_);
-	snakeArray_[snakeUX.id] = static_cast<SnakeUX>(snakeUX);
+	(*snakeArray_)[snakeUX.id] = static_cast<SnakeUX>(snakeUX);
 	serverTCP_->writeDataToOpenConnections(snakeUX, eHeader::kSnakeUX);
 }
 
 void SnakeServer::callbackSnake(const Snake &snake) {
 	std::lock_guard<std::mutex> guard(mutex_);
-	std::cout << snake.isReadyToExpose << std::endl;
-	snakeArray_[snake.id] = snake;
-	serverTCP_->writeDataToOpenConnections(snake, eHeader::kSnake);
+	(*snakeArray_)[snake.id] = snake;
+	serverTCP_->writeDataToOpenConnections((*snakeArray_)[snake.id], eHeader::kSnake);
 }
 
 void SnakeServer::callbackSnakeUN(const Snake &snakeUN) {
 	std::lock_guard<std::mutex> guard(mutex_);
-	snakeArray_[snakeUN.id] = static_cast<SnakeUN>(snakeUN);
+	(*snakeArray_)[snakeUN.id] = static_cast<SnakeUN>(snakeUN);
 	serverTCP_->writeDataToOpenConnections(snakeUN, eHeader::kSnakeUN);
 }
 
@@ -141,7 +140,7 @@ void SnakeServer::callbackInput(InputInfo inputInfo) {
 	log_success("%s ID : %d", __PRETTY_FUNCTION__, inputInfo.id_);
 	{
 		std::lock_guard<std::mutex> guard(mutex_);
-//		snakeArray_[inputInfo.id_].updateDirection(inputInfo.dir_); // TODO
+//		(*snakeArray_)[inputInfo.id_].updateDirection(inputInfo.dir_); // TODO
 	}
 	updateInput();
 }
@@ -179,18 +178,18 @@ void SnakeServer::callbackFood(FoodInfo foodInfo) {
 
 void SnakeServer::callbackForcePause(int16_t id) {
 	std::lock_guard<std::mutex> guard(mutex_);
-	snakeArray_[id].isSwitchingLibrary = !snakeArray_[id].isSwitchingLibrary;
+	(*snakeArray_)[id].isSwitchingLibrary = !(*snakeArray_)[id].isSwitchingLibrary;
 	pause_ = true;
 }
 
 void SnakeServer::callbackDeadConnection(size_t index) {
 	{
 		std::lock_guard<std::mutex> guard(mutex_);
-		auto *it = std::find_if(snakeArray_.begin(), snakeArray_.end(),
+		auto *it = std::find_if((*snakeArray_).begin(), (*snakeArray_).end(),
 								[index](Snake const &snake){
 									return snake.indexConnection == index;
 								});
-		if (it != snakeArray_.end()) {
+		if (it != (*snakeArray_).end()) {
 			log_success("%s index : %d", __PRETTY_FUNCTION__, index);
 			(*it).isValid = false;
 			serverTCP_->writeDataToOpenConnections(*it, eHeader::kSnake);
@@ -203,7 +202,7 @@ void SnakeServer::callbackPause(eAction pause) {
 	log_success("%s", __PRETTY_FUNCTION__ );
 	{
 		std::lock_guard<std::mutex> guard(mutex_);
-		if (std::any_of(snakeArray_.begin(), snakeArray_.end(), [](Snake const &snake){ return snake.isSwitchingLibrary; })) return;
+		if (std::any_of((*snakeArray_).begin(), (*snakeArray_).end(), [](Snake const &snake){ return snake.isSwitchingLibrary; })) return;
 		pause_ = !pause_;
 	}
 	if (!pause_)
@@ -213,14 +212,13 @@ void SnakeServer::callbackPause(eAction pause) {
 
 void SnakeServer::callbackAccept(size_t index) {
 
-	int16_t new_id = std::distance(snakeArray_.begin(), std::find_if(snakeArray_.begin(), snakeArray_.end(), [](Snake const &s){ return !s.isValid;}));
-	log_success("%s isValid : %d new_id %d index %d %d", __PRETTY_FUNCTION__, std::count_if(snakeArray_.begin(), snakeArray_.end(), [](Snake const &s){ return s.isValid;}), new_id, index,
+	int16_t new_id = std::distance((*snakeArray_).begin(), std::find_if((*snakeArray_).begin(), (*snakeArray_).end(), [](Snake const &s){ return !s.isValid;}));
+	log_success("%s isValid : %d new_id %d index %d %d", __PRETTY_FUNCTION__, std::count_if((*snakeArray_).begin(), (*snakeArray_).end(), [](Snake const &s){ return s.isValid;}), new_id, index,
 				sizeof(SnakeArrayContainer));
-	new_id = 0;
-	snakeArray_[new_id].randomSnake(new_id);
-	snakeArray_[new_id].indexConnection = index;
+	(*snakeArray_)[new_id].randomSnake(new_id);
+	(*snakeArray_)[new_id].indexConnection = index;
 
-	serverTCP_->writeDataToOpenConnections(snakeArray_, eHeader::kSnakeArray);
+	serverTCP_->writeDataToOpenConnections((*snakeArray_), eHeader::kSnakeArray);
 	serverTCP_->writeDataToOpenConnection(univers_.isBorderless(), index, eHeader::kBorderless);
 	serverTCP_->writeDataToOpenConnection(univers_.getMapSize(), index, eHeader::kResizeMap);
 	serverTCP_->writeDataToOpenConnection(new_id, index, eHeader::kId);

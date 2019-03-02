@@ -17,10 +17,11 @@ Factory::Factory(Univers &univers)
 
 }
 
-void Factory::createAllSnake(SnakeArrayContainer &snake_array, int16_t nu) {
+void Factory::createAllSnake(std::shared_ptr<SnakeArrayContainer> snake_array, int16_t nu) {
 	log_info("Create %d snake(s)", nu);
-
-	std::for_each(snake_array.begin(), snake_array.end(),
+	if (!snake_array)
+		return;
+	std::for_each((*snake_array).begin(), (*snake_array).end(),
 			[this, nu](Snake const &snake){
 		if (snake.isValid) createSnake(snake, nu);
 	});

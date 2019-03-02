@@ -4,8 +4,10 @@
 #include "widget/WidgetSnake.hpp"
 #include "widget/WidgetLobby.hpp"
 #include "gui/widget/WidgetOption.hpp"
+#include "gui/widget/WidgetSettingGame.hpp"
 #include "gui/widget/WidgetConnect.hpp"
 #include "gui/widget/WidgetMassiveButton.hpp"
+#include "gui/widget/WidgetServerPannel.hpp"
 #include "cores/Test.hpp"
 
 Gui::Gui(Univers &univers) :
@@ -61,7 +63,7 @@ void			callbackExit(Gui &gui)
 	gui.exit();
 }
 
-void			callbackTest(void *vUnivers, std::string const&input) {
+void			callbackTest(void *vUnivers, std::string const &input) {
 	Univers *univers = reinterpret_cast<Univers*>(vUnivers);
 
 	if (!vUnivers)
@@ -93,6 +95,8 @@ void			Gui::aState(void)
 	WidgetExit wexit(*this, callbackExit);
 	WidgetLobby lobby(*this);
 	WidgetOption *optionSnake = nullptr;
+	WidgetSettingGame *settings = nullptr;
+	WidgetServerPannel serverPannel(*this);
 	WidgetConnect optionConnect(*this);
 	WidgetMassiveButton massiveButton(*this);
 	sf::Event event;
@@ -163,6 +167,7 @@ void			Gui::aState(void)
 			_processEvent(event);
 			ImGui::SFML::ProcessEvent(event);
 		}
+
 		ImGui::SetNextWindowPos(positionByPercent(sf::Vector2<unsigned int>(0, 50)));
 		ImGui::SetNextWindowSize(positionByPercent(sf::Vector2<unsigned int>(50, 50)));
 		_chat.render();
@@ -176,17 +181,43 @@ void			Gui::aState(void)
 		if (ptr && ptr->isOpen()) {
 			if (!optionSnake)
 				optionSnake = new WidgetOption(*this);
+			if (!settings)
+				settings = new WidgetSettingGame(*this);
 			ImGui::SetNextWindowPos(positionByPercent(sf::Vector2<unsigned int>(70, 50)));
-			ImGui::SetNextWindowSize(positionByPercent(sf::Vector2<unsigned int>(30, 25)));
+			ImGui::SetNextWindowSize(positionByPercent(sf::Vector2<unsigned int>(15, 10)));
+			settings->render();
+
+
+			ImGui::SetNextWindowPos(positionByPercent(sf::Vector2<unsigned int>(85, 50)));
+			ImGui::SetNextWindowSize(positionByPercent(sf::Vector2<unsigned int>(15, 25)));
 			optionSnake->render();
+
 			ImGui::SetNextWindowPos(positionByPercent(sf::Vector2<unsigned int>(70, 75)));
 			ImGui::SetNextWindowSize(positionByPercent(sf::Vector2<unsigned int>(30, 25)));
 			optionConnect.render();
 		}
-		else {
+		else if (ptr) {
+
+			if (!optionSnake)
+				optionSnake = new WidgetOption(*this);
+
+			ImGui::SetNextWindowPos(positionByPercent(sf::Vector2<unsigned int>(70, 50)));
+			ImGui::SetNextWindowSize(positionByPercent(sf::Vector2<unsigned int>(30, 25)));
+			optionSnake->render();
+
+			ImGui::SetNextWindowPos(positionByPercent(sf::Vector2<unsigned int>(70, 75)));
+			ImGui::SetNextWindowSize(positionByPercent(sf::Vector2<unsigned int>(30, 25)));
+			optionConnect.render();
+		} else {
 			ImGui::SetNextWindowPos(positionByPercent(sf::Vector2<unsigned int>(70, 50)));
 			ImGui::SetNextWindowSize(positionByPercent(sf::Vector2<unsigned int>(30, 50)));
 			optionConnect.render();
+		}
+
+		if (univers.isServer()) {
+			ImGui::SetNextWindowPos(positionByPercent(sf::Vector2<unsigned int>(70, 30)));
+			ImGui::SetNextWindowSize(positionByPercent(sf::Vector2<unsigned int>(15, 15)));
+			serverPannel.render();
 		}
 
 		ImGui::SetNextWindowPos(positionByPercent(sf::Vector2<unsigned int>(50, 50)));
@@ -223,22 +254,31 @@ void					Gui::_processEvent(sf::Event const &event) {
 }
 
 
-void					Gui::beginColor(float const color) {
-	assert(!Gui::_useColor);
-	Gui::_useColor = true;
+void					Gui::beginHueColor_(float const color) {
 	ImGui::PushStyleColor(ImGuiCol_Button, static_cast<ImVec4>(ImColor::HSV(color, 0.7f, 0.7f)));
 	ImGui::PushStyleColor(ImGuiCol_ButtonHovered, static_cast<ImVec4>(ImColor::HSV(color, 0.8f, 0.8f)));
 	ImGui::PushStyleColor(ImGuiCol_ButtonActive, static_cast<ImVec4>(ImColor::HSV(color, 0.9f, 0.9f)));
+}
+void					Gui::beginColor(Gui::eColor color) {
+	assert(!Gui::_useColor);
+	Gui::_useColor = true;
+	if (color == Gui::eColor::kGrey) {
+		ImGui::PushStyleColor(ImGuiCol_Button, static_cast<ImVec4>(ImColor::HSV(0.f, 0.f, 0.5f)));
+		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, static_cast<ImVec4>(ImColor::HSV(0.f, 0.0f, 0.5f)));
+		ImGui::PushStyleColor(ImGuiCol_ButtonActive, static_cast<ImVec4>(ImColor::HSV(0.f, 0.00f, 0.65f)));
+	} else
+		beginHueColor_(Gui::mapEColor_.at(color));
 }
 void					Gui::endColor() {
 	ImGui::PopStyleColor(3);
 	Gui::_useColor = false;
 }
 
+std::map< Gui::eColor, float > const Gui::mapEColor_ = { { eColor::kGrey, 0.f },
+														 { eColor::kRed, 0.f },
+														 { eColor::kGreen, 0.33f },
+														 { eColor::kPurple, 0.77f } };
 
-float const 				Gui::HUE_GREEN = 0.33f;
-float const 				Gui::HUE_RED = 0.f;
-float const 				Gui::HUE_PURPLE = 0.77f;
 bool 						Gui::_useColor = false;
 
 Gui::CoreConstructorException::~CoreConstructorException(void) noexcept{}

@@ -16,7 +16,8 @@ SnakeClient::SnakeClient(
 		name_(NAME_BUFFER, '\0'),
 		sprite_(eSprite::kNone),
 		nameSet_(false),
-		spriteSet_(false) {
+		spriteSet_(false),
+		snakeArray(std::make_shared<SnakeArrayContainer>()){
 }
 
 SnakeClient::~SnakeClient() = default;
@@ -42,7 +43,7 @@ void SnakeClient::unlock() {
 }
 
 bool SnakeClient::isReady() const {
-	return snakeArray[id_].isReady;
+	return (*snakeArray)[id_].isReady;
 }
 
 SnakeClient::boost_shared_ptr
@@ -54,9 +55,9 @@ SnakeClient::create(Univers &univers, bool fromIA) {
 
 void SnakeClient::refreshSnakeArray() {
 	if (nameSet_)
-		std::memcpy(snakeArray[id_].name, name_.c_str(), NAME_BUFFER);
+		std::memcpy((*snakeArray)[id_].name, name_.c_str(), NAME_BUFFER);
 	if (spriteSet_)
-		snakeArray[id_].sprite = sprite_;
+		(*snakeArray)[id_].sprite = sprite_;
 }
 
 /***** Snake Management *****/
@@ -67,7 +68,7 @@ uint16_t SnakeClient::getId_() const {
 }
 
 bool SnakeClient::allSnakeIsDead() const {
-	return std::none_of(snakeArray.begin(), snakeArray.end(),
+	return std::none_of((*snakeArray).begin(), (*snakeArray).end(),
 						[](Snake const &snake) {
 							return snake.isValid && snake.isAlive;
 						});
@@ -84,15 +85,15 @@ void SnakeClient::deliverEvents() {
 }
 
 bool SnakeClient::isSwitchingLibrary() const {
-	return snakeArray[id_].isSwitchingLibrary;
+	return (*snakeArray)[id_].isSwitchingLibrary;
 }
 
-const SnakeArrayContainer &SnakeClient::getSnakeArray_() const {
+std::shared_ptr<SnakeArrayContainer> SnakeClient::getSnakeArray_() const {
 	return snakeArray;
 }
 
 const Snake &SnakeClient::getSnake() const {
-	return snakeArray[id_];
+	return (*snakeArray)[id_];
 }
 
 void SnakeClient::changeName(std::string const &name) {
@@ -100,7 +101,7 @@ void SnakeClient::changeName(std::string const &name) {
 	nameSet_ = true;
 	name_ = name;
 	refreshSnakeArray();
-	sendDataToServer(static_cast<SnakeUI>(snakeArray[id_]), eHeader::kSnakeUI);
+	sendDataToServer(static_cast<SnakeUI>((*snakeArray)[id_]), eHeader::kSnakeUI);
 }
 
 
@@ -113,7 +114,7 @@ void SnakeClient::notifyMapSize() {
 }
 
 bool SnakeClient::allSnakeIsReady() const {
-	return std::none_of(snakeArray.begin(), snakeArray.end(),
+	return std::none_of((*snakeArray).begin(), (*snakeArray).end(),
 						[](Snake const &snake) {
 							return snake.isValid && snake.isReady;
 						});;
@@ -123,13 +124,13 @@ void SnakeClient::changeSprite(eSprite snakeSprite) {
 	spriteSet_ = true;
 	sprite_ = snakeSprite;
 	refreshSnakeArray();
-	sendDataToServer(static_cast<SnakeUI>(snakeArray[id_]), eHeader::kSnakeUI);
+	sendDataToServer(static_cast<SnakeUI>((*snakeArray)[id_]), eHeader::kSnakeUI);
 }
 
 
 void SnakeClient::changeStateReady(bool change) {
-	snakeArray[id_].isReady = change;
-	sendDataToServer(snakeArray[id_], eHeader::kSnake);
+	(*snakeArray)[id_].isReady = change;
+	sendDataToServer((*snakeArray)[id_], eHeader::kSnake);
 }
 
 
@@ -144,14 +145,14 @@ bool SnakeClient::isIa() const {
 void SnakeClient::killSnake(uint16_t id) {
 	if (id_ == id || (univers_.isIASnake(id) && univers_.isServer())) {
 		log_debug("%s id[%d]", __PRETTY_FUNCTION__, id);
-		snakeArray[id_].isAlive = false;
-		sendDataToServer(static_cast<SnakeUX>(snakeArray[id_]), eHeader::kSnakeUX);
+		(*snakeArray)[id_].isAlive = false;
+		sendDataToServer(static_cast<SnakeUX>((*snakeArray)[id_]), eHeader::kSnakeUX);
 	}
 }
 
 void SnakeClient::addScore(uint16_t id, eScore score) {
-	log_info("%s %d", __PRETTY_FUNCTION__, snakeArray[id].isUpdate);
-	snakeArray[id].score_ += score;
+	log_info("%s %d", __PRETTY_FUNCTION__, (*snakeArray)[id].isUpdate);
+	(*snakeArray)[id].score_ += score;
 	uint32_t timeLess = 0;
 	uint32_t actualMicroSec = univers_.getMicroSecDeltaTime();
 	switch (score) {
@@ -166,7 +167,7 @@ void SnakeClient::addScore(uint16_t id, eScore score) {
 			break;
 	}
 //	univers_.setMicroSecDeltaTime(timeLess);
-//	sendDataToServer(static_cast<BaseSnake>(snakeArray[id]), eHeader::kBaseSnake); // TODO
+//	sendDataToServer(static_cast<BaseSnake>((*snakeArray)[id]), eHeader::kBaseSnake); // TODO
 }
 
 void SnakeClient::disconnect() {
@@ -183,7 +184,7 @@ void SnakeClient::callbackSnakeUN(const Snake &snakeUN) {
 	std::lock_guard<std::mutex> guard(mutex_);
 	std::cout << __PRETTY_FUNCTION__ << std::endl;
 	std::cout << snakeUN.id << std::endl;
-	snakeArray[snakeUN.id] = static_cast<SnakeUN>(snakeUN);
+	(*snakeArray)[snakeUN.id] = static_cast<SnakeUN>(snakeUN);
 }
 
 void SnakeClient::callbackForcePause(int16_t) {
@@ -193,34 +194,34 @@ void SnakeClient::callbackForcePause(int16_t) {
 
 void SnakeClient::callbackSnakeUI(const Snake &snakeUI) {
 	std::lock_guard<std::mutex> guard(mutex_);
-	std::cout << __PRETTY_FUNCTION__ << std::endl;
-	std::cout << snakeUI.id << std::endl;
-	snakeArray[snakeUI.id] = static_cast<SnakeUI>(snakeUI);
+	log_success("%s %d", __PRETTY_FUNCTION__, snakeUI.isReadyToExpose);
+	(*snakeArray)[snakeUI.id] = static_cast<SnakeUI>(snakeUI);
 }
 
 void SnakeClient::callbackId(uint16_t id) {
-	std::cout << __PRETTY_FUNCTION__ << std::endl;
+	std::cout << __PRETTY_FUNCTION__ << id << std::endl;
 	std::lock_guard<std::mutex> guard(mutex_);
 	id_ = id;
-	snakeArray[id_].randomSnake(id);
+	(*snakeArray)[id_].randomSnake(id);
 	if (fromIA_) {
-		snakeArray[id_].isReady = true;
-		snakeArray[id_].isIA = true;
+		(*snakeArray)[id_].isReady = true;
+		(*snakeArray)[id_].isIA = true;
 	}
-	sendDataToServer(snakeArray[id_], eHeader::kSnake);
+	sendDataToServer((*snakeArray)[id_], eHeader::kSnake);
+	sendDataToServer((*snakeArray)[id_], eHeader::kSnakeUI);
 }
 
 void SnakeClient::callbackSnakeUX(const Snake &snakeUX) {
 	std::cout << __PRETTY_FUNCTION__ << std::endl;
 	std::lock_guard<std::mutex> guard(mutex_);
-	snakeArray[snakeUX.id] = static_cast<SnakeUX>(snakeUX);
+	(*snakeArray)[snakeUX.id] = static_cast<SnakeUX>(snakeUX);
 }
 
 void SnakeClient::callbackSnake(const Snake &snake) {
 	std::cout << __PRETTY_FUNCTION__ << std::endl;
 	std::lock_guard<std::mutex> guard(mutex_);
-	std::cout << snake.isValid << " " << snake.isReadyToExpose << std::endl;
-	snakeArray[snake.id] = snake;
+	log_success("%s %d", __PRETTY_FUNCTION__, snake.isReadyToExpose);
+	(*snakeArray)[snake.id] = snake;
 
 	if (acceptDataFromServer()) {
 		univers_.getSoundManager().playNoise(eNoise::kReadySound);
@@ -229,7 +230,7 @@ void SnakeClient::callbackSnake(const Snake &snake) {
 
 void SnakeClient::callbackSnakeArray(const SnakeArrayContainer &snakeArrayContainer) {
 	std::lock_guard<std::mutex> guard(mutex_);
-	snakeArray = snakeArrayContainer;
+	(*snakeArray) = snakeArrayContainer;
 }
 
 void SnakeClient::callbackBorderless(bool borderless) {
@@ -342,7 +343,7 @@ void SnakeClient::build() {
 			{ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackSnakeUN(snakeUN); }),
 			eHeader::kSnakeUN);
 
-	/* Callback SnakeArray */
+	/* Callback (*snakeArray) */
 
 
 	clientTCP_->getDataTCP_().addDataType<SnakeArrayContainer>(

@@ -15,6 +15,7 @@ WidgetSnake::WidgetSnake(Gui &core,
 }
 
 void WidgetSnake::render(void) {
+//	std::cout << snake_ << std::endl;
 	if (!snake_.isValid || !snake_.isReadyToExpose)
 		return;
 	if (type_ == kYour)
@@ -86,7 +87,7 @@ void WidgetSnake::renderIa_(void) {
 
 	ImGui::SetCursorPosX((ImGui::GetWindowSize().x - sizeTexture_) / 2);
 
-	Gui::beginColor(Gui::HUE_PURPLE);
+	Gui::beginColor(Gui::Gui::eColor::kPurple);
 	if (core_.univers.isServer()) {
 		if (ptr && ImGui::Button("Delete", sf::Vector2f(sizeTexture_, ImGui::GetFrameHeight())))
 			core_.univers.deleteBobby(snake_.id);
@@ -111,11 +112,11 @@ void WidgetSnake::renderOtherSnake_(void) {
 	ImGui::SetCursorPosX((ImGui::GetWindowSize().x - sizeTexture_) / 2);
 
 	if (!snake_.isReady) {
-		Gui::beginColor(Gui::HUE_RED);
+		Gui::beginColor(Gui::Gui::eColor::kRed);
 		if (ImGui::Button("Ready ?", sf::Vector2f(sizeTexture_, ImGui::GetFrameHeight())) && ptr)
 			ptr->changeStateReady(true);
 	} else {
-		Gui::beginColor(Gui::HUE_GREEN);
+		Gui::beginColor(Gui::Gui::eColor::kGreen);
 		if (ImGui::Button("Ready !", sf::Vector2f(sizeTexture_, ImGui::GetFrameHeight())) && ptr)
 			ptr->changeStateReady(false);
 	}
@@ -137,11 +138,11 @@ void WidgetSnake::renderYourSnake_(void) {
 
 	ImGui::SetCursorPosX((ImGui::GetWindowSize().x - sizeTexture_) / 2);
 	if (!snake_.isReady) {
-		Gui::beginColor(Gui::HUE_RED);
+		Gui::beginColor(Gui::Gui::eColor::kRed);
 		if (ImGui::Button("Ready ?", sf::Vector2f(sizeTexture_, ImGui::GetFrameHeight())) && ptr)
 			ptr->changeStateReady(true);
 	} else {
-		Gui::beginColor(Gui::HUE_GREEN);
+		Gui::beginColor(Gui::Gui::eColor::kGreen);
 		if (ImGui::Button("Ready !", sf::Vector2f(sizeTexture_, ImGui::GetFrameHeight())) && ptr)
 			ptr->changeStateReady(false);
 	}

@@ -136,7 +136,7 @@ public:
 
 	std::unique_ptr<Gui> &getGui_();
 
-	const SnakeArrayContainer getSnakeArray_() const;
+	std::shared_ptr<SnakeArrayContainer> getSnakeArray_() const;
 
 	boost::weak_ptr<SnakeClient> getSnakeClient() const;
 
@@ -155,6 +155,8 @@ public:
 	IOManager &getIoManager();
 
 	ExternalLibrarySoundManager &getSoundManager();
+
+	ExternalLibraryDisplayManager &getDisplayManager();
 
 	GameManager &getGameManager();
 
@@ -216,7 +218,6 @@ private:
 	uint32_t BaseMicroSecDeltaTime;
 	bool borderless;
 	bool openGame_;
-	SnakeArrayContainer snakeArrayContainer;
 
 };
 

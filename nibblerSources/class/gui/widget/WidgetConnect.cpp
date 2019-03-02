@@ -24,18 +24,18 @@ void WidgetConnect::render(void) {
 					 ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse);
 
 	if (client_)
-		Gui::beginColor(Gui::HUE_RED);
+		Gui::beginColor(Gui::eColor::kRed);
 	else
-		Gui::beginColor(Gui::HUE_GREEN);
+		Gui::beginColor(Gui::eColor::kGreen);
 	if (ImGui::Button("Host", sf::Vector2f(ImGui::GetWindowSize().x / 2, 20)))
 		client_ = false;
 	ImGui::SameLine();
 	Gui::endColor();
 
 	if (client_)
-		Gui::beginColor(Gui::HUE_GREEN);
+		Gui::beginColor(Gui::eColor::kGreen);
 	else
-		Gui::beginColor(Gui::HUE_RED);
+		Gui::beginColor(Gui::eColor::kRed);
 	if (ImGui::Button("Client", sf::Vector2f(ImGui::GetWindowSize().x / 2 - 1, 20)))
 		client_ = true;
 
@@ -56,7 +56,7 @@ void WidgetConnect::render(void) {
 	ImGui::Spacing();
 	ImGui::Spacing();
 
-	Gui::beginColor(Gui::HUE_GREEN);
+	Gui::beginColor(Gui::eColor::kGreen);
 
 	if (client_ && !core_.univers.isServer()) {
 		if (ptr && ptr->isOpen()) {

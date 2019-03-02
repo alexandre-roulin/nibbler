@@ -29,7 +29,6 @@ class BaseSnake;
 class SnakeUI;
 class SnakeUX;
 
-using SnakeUIArrayContainer = boost::array<SnakeUI, SNAKE_MAX>;
 using SnakeArrayContainer = boost::array<Snake, SNAKE_MAX>;
 
 enum eScore : uint16_t {
@@ -41,11 +40,6 @@ enum eScore : uint16_t {
 
 enum eFlag {
 	kSound
-};
-
-struct LibraryInfo {
-	char const title[80];
-	char const path[PATH_MAX];
 };
 
 enum eSound {
@@ -62,6 +56,12 @@ enum eDisplay {
 	kDisplaySfmlLibrary = 0,
 	kDisplaySdlLibrary,
 	kDisplayGlfwLibrary
+};
+
+struct LibraryInfo {
+	char const title[80];
+	char const path[PATH_MAX];
+	eDisplay kDisplay;
 };
 
 static const eDisplay eDisplayArray[] = {

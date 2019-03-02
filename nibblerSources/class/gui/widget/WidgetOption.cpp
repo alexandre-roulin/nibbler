@@ -1,18 +1,28 @@
 #include <cores/Univers.hpp>
 #include <gui/Gui.hpp>
 #include "WidgetOption.hpp"
+#include "cores/ExternalLibraryDisplayManager.hpp"
 
 WidgetOption::WidgetOption(Gui &core) :
 		AWidget(core),
-		mapSize_(core_.univers.getMapSize()),
-		sound_(core_.univers.getSoundManager().hasLibraryLoaded()) {
+		sound_(core_.univers.getSoundManager().hasLibraryLoaded()),
+		rNoise_(core_.univers.getSoundManager().getNoise()),
+		rMusique_(core_.univers.getSoundManager().getMusique()),
+		indexLibrary_(0) {
 	SnakeClient::boost_shared_ptr ptr(core_.univers.getSnakeClient().lock());
-
 	if (ptr)
 		memcpy(nameBuffer_, ptr->getSnake().name, NAME_BUFFER);
+
+	boost::filesystem::path pathSound(NIBBLER_ROOT_PROJECT_PATH);
+	pathSound_ = (pathSound / "ressources" / "sound" / "zelda.ogg").generic_string();
 }
 
-void WidgetOption::render(void) {
+bool getNameOfDisplayLibraryInfo(void *data, int idx, const char **out_str) {
+	*out_str = ((const char**)data)[idx];
+	return true;
+}
+
+void WidgetOption::render() {
 	SnakeClient::boost_shared_ptr ptr(core_.univers.getSnakeClient().lock());
 
 	ImGui::Begin("Options", NULL,
@@ -30,31 +40,36 @@ void WidgetOption::render(void) {
 		std::memcpy(nameBuffer_,ptr->getSnake().name,NAME_BUFFER);
 	}
 
-	if (ImGui::InputInt("Size map", reinterpret_cast<int *>(&mapSize_), 1,
-						4, ImGuiInputTextFlags_CharsDecimal |
-						   ImGuiInputTextFlags_CharsNoBlank |
-						   ImGuiInputTextFlags_EnterReturnsTrue) && ptr) {
-		if (mapSize_ < MAP_MIN)
-			mapSize_ = MAP_MIN;
-		else if (mapSize_ > MAP_MAX)
-			mapSize_ = MAP_MAX;
-
-		core_.univers.setMapSize(mapSize_);
-		core_.univers.updateSizeMap();
-	}
-
-	if (ImGui::Checkbox("Sound", &sound_)) {
+	if (ImGui::Checkbox("Son", &sound_)) {
 		if (sound_)
 			core_.univers.loadSound(eSound::kSoundSfmlLibrary);
 		else
 			core_.univers.unloadSound();
 	}
 
-	if (core_.univers.isServer() && ptr && ptr->allSnakeIsReady()) {
-		Gui::beginColor(Gui::HUE_GREEN);
-		if (ImGui::Button("Run the game")) {
+	if (sound_) {
+		ImGui::Checkbox("Bruitage", &rNoise_);
+		if (ImGui::Checkbox("Musique", &rMusique_)) {
+			if (!rMusique_)
+				core_.univers.getSoundManager().stopMusic();
+			else {
+
+				core_.univers.getSoundManager().playMusic(pathSound_);
+			}
 		}
-		Gui::endColor();
+	}
+
+	if (ImGui::BeginCombo("Display", ExternalLibraryDisplayManager::libraryInfo[indexLibrary_].title, 0))  {
+		for (int n = 0; n < IM_ARRAYSIZE(ExternalLibraryDisplayManager::libraryInfo); n++) {
+			bool is_selected = (indexLibrary_ == n);
+			if (ImGui::Selectable(ExternalLibraryDisplayManager::libraryInfo[n].title, is_selected)) {
+				indexLibrary_ = n;
+				core_.univers.getDisplayManager().setKDisplay(ExternalLibraryDisplayManager::libraryInfo[n].kDisplay);
+			}
+			if (is_selected)
+				ImGui::SetItemDefaultFocus();
+		}
+		ImGui::EndCombo();
 	}
 
 	ImGui::End();
