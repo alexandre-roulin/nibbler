@@ -6,43 +6,9 @@
 #include <nibbler.hpp>
 #include <ostream>
 
-class BaseSnake {
-public:
-	BaseSnake();
-
-	~BaseSnake() = default;
-
-	BaseSnake(BaseSnake &);
-
-	BaseSnake(const BaseSnake &);
-
-	virtual BaseSnake &operator=(BaseSnake &);
-
-	virtual BaseSnake &operator=(BaseSnake const &);
-
-	bool isReady;
-	bool isIA;
-	bool isValid;
-	int16_t id;
-
-	friend std::ostream &operator<<(std::ostream &os, const BaseSnake &snake);
-
-	size_t indexConnection;
-	uint16_t score_;
-
-};
-
-class SnakeUI : virtual public BaseSnake {
+class SnakeUI {
 public:
 	SnakeUI();
-
-	virtual ~SnakeUI() = default;
-
-	SnakeUI(SnakeUI &);
-
-	SnakeUI(const SnakeUI &);
-
-	friend std::ostream &operator<<(std::ostream &os, const SnakeUI &ui);
 
 	virtual SnakeUI &operator=(SnakeUI &);
 
@@ -51,66 +17,60 @@ public:
 	char name[NAME_BUFFER];
 	eSprite sprite;
 	bool isReadyToExpose;
-
 };
 
-class SnakeUX : virtual public BaseSnake {
+class SnakeUX {
 public:
 	SnakeUX();
-
-	virtual ~SnakeUX() = default;
-
-	SnakeUX(SnakeUX &);
-
-	SnakeUX(const SnakeUX &);
 
 	virtual SnakeUX &operator=(SnakeUX &);
 
 	virtual SnakeUX &operator=(SnakeUX const &);
 
-	void reset();
+	bool isAlive;
+	bool isSwitchingLibrary;
+};
 
-	void updateDirection(eDirection dir);
+class SnakeUN {
+public:
+	SnakeUN();
+
+	virtual SnakeUN &operator=(SnakeUN &);
+
+	virtual SnakeUN &operator=(SnakeUN const &);
 
 	bool isUpdate;
 	eDirection direction;
-	bool isAlive;
-	bool isSwitchingLibrary;
-
-	friend std::ostream &operator<<(std::ostream &os, const SnakeUX &ux);
-
 };
 
-class Snake : virtual public SnakeUI, virtual public SnakeUX {
+class Snake : public SnakeUI, public SnakeUX, public SnakeUN {
 public:
 	Snake();
 
-	virtual ~Snake() = default;
+	void randomSnake(int16_t id_);
 
-	Snake(Snake &);
+	Snake &operator=(Snake &);
 
-	Snake(const Snake &);
+	Snake &operator=(Snake const &);
 
-	Snake &operator=(Snake &Snake);
+	Snake &operator=(SnakeUI &ui);
 
-	Snake &operator=(Snake const &Snake);
+	Snake &operator=(SnakeUI const &ui);
 
-	friend std::ostream &operator<<(std::ostream &os, const Snake &snake);
+	Snake &operator=(SnakeUX &ux);
 
-	virtual Snake &operator=(SnakeUX &Snake) noexcept override;
+	Snake &operator=(SnakeUX const &ux);
 
-	virtual Snake &operator=(SnakeUX const &Snake) noexcept override;
+	Snake &operator=(SnakeUN &un);
 
-	virtual Snake &operator=(SnakeUI &Snake) noexcept override;
+	Snake &operator=(SnakeUN const &un);
 
-	virtual Snake &operator=(SnakeUI const &Snake) noexcept override;
-
-	virtual Snake &operator=(BaseSnake &Snake) noexcept override;
-
-	virtual Snake &operator=(BaseSnake const &Snake) noexcept override;
-
-	void
-	randomSnake(int16_t id_);
+	bool isReady;
+	bool isIA;
+	bool isValid;
+	int16_t id;
+	size_t indexConnection;
+	uint16_t score_;
 
 	static std::string const basicName[SNAKE_MAX_NAME];
 };

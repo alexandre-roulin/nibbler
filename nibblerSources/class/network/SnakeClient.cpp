@@ -3,7 +3,7 @@
 #include <KINU/World.hpp>
 #include <events/StartEvent.hpp>
 #include <cores/GameManager.hpp>
-
+#include <KNW/BaseDataType.hpp>
 SnakeClient::SnakeClient(
 		Univers &univers,
 		bool fromIA_
@@ -129,7 +129,7 @@ void SnakeClient::changeSprite(eSprite snakeSprite) {
 
 void SnakeClient::changeStateReady(bool change) {
 	snakeArray[id_].isReady = change;
-	sendDataToServer(static_cast<BaseSnake>(snakeArray[id_]), eHeader::kBaseSnake);
+	sendDataToServer(snakeArray[id_], eHeader::kSnake);
 }
 
 
@@ -166,7 +166,7 @@ void SnakeClient::addScore(uint16_t id, eScore score) {
 			break;
 	}
 //	univers_.setMicroSecDeltaTime(timeLess);
-	sendDataToServer(static_cast<BaseSnake>(snakeArray[id]), eHeader::kBaseSnake);
+//	sendDataToServer(static_cast<BaseSnake>(snakeArray[id]), eHeader::kBaseSnake); // TODO
 }
 
 void SnakeClient::disconnect() {
@@ -178,12 +178,28 @@ void SnakeClient::disconnect() {
 /***** Callback *****/
 
 
-void SnakeClient::callbackSnakeUI(const SnakeUI &snakeUI) {
+
+void SnakeClient::callbackSnakeUN(const Snake &snakeUN) {
 	std::lock_guard<std::mutex> guard(mutex_);
-	snakeArray[snakeUI.id] = snakeUI;
+	std::cout << __PRETTY_FUNCTION__ << std::endl;
+	std::cout << snakeUN.id << std::endl;
+	snakeArray[snakeUN.id] = static_cast<SnakeUN>(snakeUN);
+}
+
+void SnakeClient::callbackForcePause(int16_t) {
+
+}
+
+
+void SnakeClient::callbackSnakeUI(const Snake &snakeUI) {
+	std::lock_guard<std::mutex> guard(mutex_);
+	std::cout << __PRETTY_FUNCTION__ << std::endl;
+	std::cout << snakeUI.id << std::endl;
+	snakeArray[snakeUI.id] = static_cast<SnakeUI>(snakeUI);
 }
 
 void SnakeClient::callbackId(uint16_t id) {
+	std::cout << __PRETTY_FUNCTION__ << std::endl;
 	std::lock_guard<std::mutex> guard(mutex_);
 	id_ = id;
 	snakeArray[id_].randomSnake(id);
@@ -191,49 +207,27 @@ void SnakeClient::callbackId(uint16_t id) {
 		snakeArray[id_].isReady = true;
 		snakeArray[id_].isIA = true;
 	}
-	snakeArray[id_].isReadyToExpose = true;
-	std::cout << id_ << std::endl;
-	std::cout << static_cast<const SnakeUI &>(snakeArray[id_]) << std::endl;
-	sendDataToServer(static_cast<const SnakeUI &>(snakeArray[id_]), eHeader::kSnakeUI);
+	sendDataToServer(snakeArray[id_], eHeader::kSnake);
 }
 
-void SnakeClient::callbackSnakeUX(const SnakeUX &snakeUX) {
+void SnakeClient::callbackSnakeUX(const Snake &snakeUX) {
+	std::cout << __PRETTY_FUNCTION__ << std::endl;
 	std::lock_guard<std::mutex> guard(mutex_);
-	snakeArray[snakeUX.id] = snakeUX;
+	snakeArray[snakeUX.id] = static_cast<SnakeUX>(snakeUX);
 }
 
 void SnakeClient::callbackSnake(const Snake &snake) {
+	std::cout << __PRETTY_FUNCTION__ << std::endl;
 	std::lock_guard<std::mutex> guard(mutex_);
+	std::cout << snake.isValid << " " << snake.isReadyToExpose << std::endl;
 	snakeArray[snake.id] = snake;
+
 	if (acceptDataFromServer()) {
 		univers_.getSoundManager().playNoise(eNoise::kReadySound);
 	}
 }
 
-void SnakeClient::callbackBaseSnake(const BaseSnake &baseSnake) {
-	std::lock_guard<std::mutex> guard(mutex_);
-	std::cout << baseSnake << std::endl;
-	snakeArray[baseSnake.id] = baseSnake;
-}
-
 void SnakeClient::callbackSnakeArray(const SnakeArrayContainer &snakeArrayContainer) {
-	std::lock_guard<std::mutex> guard(mutex_);
-	std::cout << sizeof(SnakeArrayContainer) << std::endl;
-	std::cout << sizeof(snakeArray) << std::endl;
-	snakeArray = snakeArrayContainer;
-}
-
-void SnakeClient::callbackSnakeUIArray(const SnakeUIArrayContainer &snakeArrayContainer) {
-	std::lock_guard<std::mutex> guard(mutex_);
-	snakeArray = snakeArrayContainer;
-}
-
-void SnakeClient::callbackSnakeUXArray(const SnakeUXArrayContainer &snakeArrayContainer) {
-	std::lock_guard<std::mutex> guard(mutex_);
-	snakeArray = snakeArrayContainer;
-}
-
-void SnakeClient::callbackBaseSnakeArray(const BaseSnakeArrayContainer &snakeArrayContainer) {
 	std::lock_guard<std::mutex> guard(mutex_);
 	snakeArray = snakeArrayContainer;
 }
@@ -328,13 +322,13 @@ void SnakeClient::build() {
 
 
 	/* Callback Snake */
-	clientTCP_->getDataTCP_().addDataType<SnakeUI >(
-			([thisWeakPtr](const SnakeUI snakeUI)
+	clientTCP_->getDataTCP_().addDataType<Snake >(
+			([thisWeakPtr](const Snake snakeUI)
 			{ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackSnakeUI(snakeUI); }),
 			eHeader::kSnakeUI);
 
-	clientTCP_->getDataTCP_().addDataType<SnakeUX >(
-			([thisWeakPtr](const SnakeUX snakeUX)
+	clientTCP_->getDataTCP_().addDataType<Snake >(
+			([thisWeakPtr](const Snake snakeUX)
 			{ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackSnakeUX(snakeUX); }),
 			eHeader::kSnakeUX);
 
@@ -343,10 +337,10 @@ void SnakeClient::build() {
 			{ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackSnake(snake); }),
 			eHeader::kSnake);
 
-	clientTCP_->getDataTCP_().addDataType<BaseSnake >(
-			([thisWeakPtr](const BaseSnake baseSnake)
-			{ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackBaseSnake(baseSnake); }),
-			eHeader::kBaseSnake);
+	clientTCP_->getDataTCP_().addDataType<Snake >(
+			([thisWeakPtr](const Snake snakeUN)
+			{ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackSnakeUN(snakeUN); }),
+			eHeader::kSnakeUN);
 
 	/* Callback SnakeArray */
 
@@ -355,20 +349,6 @@ void SnakeClient::build() {
 			([thisWeakPtr](const SnakeArrayContainer snakeArrayContainer)
 			{ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackSnakeArray(snakeArrayContainer); }),
 			eHeader::kSnakeArray);
-
-	clientTCP_->getDataTCP_().addDataType<SnakeUIArrayContainer>(
-			([thisWeakPtr](const SnakeUIArrayContainer snakeArrayContainer)
-			{ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackSnakeUIArray(snakeArrayContainer); }),
-			eHeader::kSnakeUIArray);
-
-	clientTCP_->getDataTCP_().addDataType<SnakeUXArrayContainer>(
-			([thisWeakPtr](const SnakeUXArrayContainer snakeArrayContainer)
-			{ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackSnakeUXArray(snakeArrayContainer); }),
-			eHeader::kSnakeUXArray);
-	clientTCP_->getDataTCP_().addDataType<BaseSnakeArrayContainer>(
-			([thisWeakPtr](const BaseSnakeArrayContainer snakeArrayContainer)
-			{ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackBaseSnakeArray(snakeArrayContainer); }),
-			eHeader::kBaseSnakeArray);
 
 	clientTCP_->getDataTCP_().addDataType<InputInfo>(
 			nullptr, eHeader::kInput);
@@ -430,4 +410,3 @@ void SnakeClient::build() {
 			}),
 			eHeader::kId);
 }
-

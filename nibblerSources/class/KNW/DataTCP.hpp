@@ -38,7 +38,7 @@ namespace KNW {
 		~DataTCP();
 
 		template<typename T>
-		std::string serializeData(BaseDataType::Header header, T &&data);
+		std::string serializeData(BaseDataType::Header header, T data);
 
 	private:
 		DataTCP();
@@ -111,13 +111,12 @@ namespace KNW {
 
 	template<typename T>
 	std::string
-	DataTCP::serializeData(BaseDataType::Header header, T &&data) {
+	DataTCP::serializeData(BaseDataType::Header header, T data) {
 		std::string buffer;
 		buffer.append(reinterpret_cast<const char *>(&header),
-					  sizeof(BaseDataType::Header));
+				sizeof(BaseDataType::Header));
 		buffer.append(reinterpret_cast<const char *>(&data),
-					  static_cast<unsigned long>(getSizeOfHeader(
-							  header)));
+				static_cast<unsigned long>(getSizeOfHeader(header)));
 		return buffer;
 	}
 

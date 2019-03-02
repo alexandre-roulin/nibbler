@@ -3,7 +3,7 @@
 #include <gui/Gui.hpp>
 
 WidgetSnake::WidgetSnake(Gui &core,
-						 SnakeUI const &snake,
+						 Snake const &snake,
 						 std::map<eSprite, SpriteColorProperties> const &mapSprite,
 						 SnakeType type) :
 		AWidget(core),
@@ -109,7 +109,6 @@ void WidgetSnake::renderOtherSnake_(void) {
 	renderStaticDataSnake_();
 
 	ImGui::SetCursorPosX((ImGui::GetWindowSize().x - sizeTexture_) / 2);
-
 
 	if (!snake_.isReady) {
 		Gui::beginColor(Gui::HUE_RED);

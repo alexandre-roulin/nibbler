@@ -37,7 +37,7 @@ void SnakeServer::startGame() {
 	std::lock_guard<std::mutex> guard(mutex_);
 	foodInfoArray.clear();
 
-	std::for_each(snakeArray_.begin(), snakeArray_.end(), [](Snake &snake){ snake.reset(); });
+//	std::for_each(snakeArray_.begin(), snakeArray_.end(), [](Snake &snake){ snake.reset(); });
 	serverTCP_->writeDataToOpenConnections(snakeArray_, eHeader::kSnakeArray);
 	serverTCP_->writeDataToOpenConnections<StartInfo>({
 		serverTCP_->getSizeOfOpenConnection(),
@@ -110,36 +110,38 @@ SnakeServer::~SnakeServer() {
 /** Callback **/
 
 
-void SnakeServer::callbackSnakeUI(const SnakeUI &snakeUI) {
+//			class A {};
+void SnakeServer::callbackSnakeUI(const Snake &snakeUI) {
+	log_success("%s", __PRETTY_FUNCTION__);
 	std::lock_guard<std::mutex> guard(mutex_);
-	std::cout << snakeUI.id << std::endl;
-	snakeArray_[snakeUI.id] = snakeUI;
+	snakeArray_[snakeUI.id] = static_cast<SnakeUI>(snakeUI);
 	serverTCP_->writeDataToOpenConnections(snakeUI, eHeader::kSnakeUI);
 }
 
-void SnakeServer::callbackSnakeUX(const SnakeUX &snakeUX) {
+void SnakeServer::callbackSnakeUX(const Snake &snakeUX) {
 	std::lock_guard<std::mutex> guard(mutex_);
-	snakeArray_[snakeUX.id] = snakeUX;
+	snakeArray_[snakeUX.id] = static_cast<SnakeUX>(snakeUX);
 	serverTCP_->writeDataToOpenConnections(snakeUX, eHeader::kSnakeUX);
 }
 
 void SnakeServer::callbackSnake(const Snake &snake) {
 	std::lock_guard<std::mutex> guard(mutex_);
+	std::cout << snake.isReadyToExpose << std::endl;
 	snakeArray_[snake.id] = snake;
 	serverTCP_->writeDataToOpenConnections(snake, eHeader::kSnake);
 }
 
-void SnakeServer::callbackBaseSnake(const BaseSnake &baseSnake) {
+void SnakeServer::callbackSnakeUN(const Snake &snakeUN) {
 	std::lock_guard<std::mutex> guard(mutex_);
-	snakeArray_[baseSnake.id] = baseSnake;
-	serverTCP_->writeDataToOpenConnections(baseSnake, eHeader::kBaseSnake);
+	snakeArray_[snakeUN.id] = static_cast<SnakeUN>(snakeUN);
+	serverTCP_->writeDataToOpenConnections(snakeUN, eHeader::kSnakeUN);
 }
 
 void SnakeServer::callbackInput(InputInfo inputInfo) {
 	log_success("%s ID : %d", __PRETTY_FUNCTION__, inputInfo.id_);
 	{
 		std::lock_guard<std::mutex> guard(mutex_);
-		snakeArray_[inputInfo.id_].updateDirection(inputInfo.dir_);
+//		snakeArray_[inputInfo.id_].updateDirection(inputInfo.dir_); // TODO
 	}
 	updateInput();
 }
@@ -214,9 +216,9 @@ void SnakeServer::callbackAccept(size_t index) {
 	int16_t new_id = std::distance(snakeArray_.begin(), std::find_if(snakeArray_.begin(), snakeArray_.end(), [](Snake const &s){ return !s.isValid;}));
 	log_success("%s isValid : %d new_id %d index %d %d", __PRETTY_FUNCTION__, std::count_if(snakeArray_.begin(), snakeArray_.end(), [](Snake const &s){ return s.isValid;}), new_id, index,
 				sizeof(SnakeArrayContainer));
+	new_id = 0;
 	snakeArray_[new_id].randomSnake(new_id);
 	snakeArray_[new_id].indexConnection = index;
-
 
 	serverTCP_->writeDataToOpenConnections(snakeArray_, eHeader::kSnakeArray);
 	serverTCP_->writeDataToOpenConnection(univers_.isBorderless(), index, eHeader::kBorderless);
@@ -238,13 +240,13 @@ void SnakeServer::build() {
 			([thisWeakPtr](size_t index) { auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackAccept(index); }),
 			([thisWeakPtr](size_t index){ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackDeadConnection(index); }));
 
-	serverTCP_->getDataTCP().addDataType<SnakeUI >(
-			([thisWeakPtr](const SnakeUI snakeUI)
+	serverTCP_->getDataTCP().addDataType<Snake >(
+			([thisWeakPtr](const Snake snakeUI)
 			{ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackSnakeUI(snakeUI); }),
 			eHeader::kSnakeUI);
 
-	serverTCP_->getDataTCP().addDataType<SnakeUX >(
-			([thisWeakPtr](const SnakeUX snakeUX)
+	serverTCP_->getDataTCP().addDataType<Snake >(
+			([thisWeakPtr](const Snake snakeUX)
 			{ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackSnakeUX(snakeUX); }),
 			eHeader::kSnakeUX);
 
@@ -253,10 +255,10 @@ void SnakeServer::build() {
 			{ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackSnake(snake); }),
 			eHeader::kSnake);
 
-	serverTCP_->getDataTCP().addDataType<BaseSnake >(
-			([thisWeakPtr](const BaseSnake baseSnake)
-			{ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackBaseSnake(baseSnake); }),
-			eHeader::kBaseSnake);
+	serverTCP_->getDataTCP().addDataType<Snake >(
+			([thisWeakPtr](const Snake snakeUN)
+			{ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackSnakeUN(snakeUN); }),
+			eHeader::kSnakeUN);
 
 	serverTCP_->getDataTCP().addDataType<InputInfo>(
 			([thisWeakPtr](const InputInfo inputInfo)

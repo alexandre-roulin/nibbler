@@ -46,6 +46,10 @@ namespace KNW {
 		iotcp->writeSocket(std::move(data));
 	}
 
+	void ConnectionTCP::write(const void *pVoid, size_t len) {
+		iotcp->writeSocket(std::move(pVoid), std::move(len));
+	}
+
 	ConnectionTCP::~ConnectionTCP() {
 		boost::system::error_code ec_sock;
 		iotcp->getSocket_()->shutdown(boost::asio::ip::tcp::socket::shutdown_both, ec_sock);
@@ -155,4 +159,13 @@ namespace KNW {
 	ServerTCP::~ServerTCP() {
 		stopAccept();
 	}
+
+	template<>
+	void ServerTCP::writeDataToOpenConnections<const void *, unsigned long>(const void *pVoid, unsigned long len) {
+		for (auto &connection : connections) {
+			if (connection)
+				connection->write(pVoid, len);
+		}
+	}
+
 }

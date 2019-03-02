@@ -24,6 +24,7 @@ namespace KNW {
 				);
 
 		void writeSocket(std::string data);
+		void writeSocket(const void *pVoid, size_t len);
 
 		void readSocketHeader();
 

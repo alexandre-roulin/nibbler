@@ -30,9 +30,7 @@ class SnakeUI;
 class SnakeUX;
 
 using SnakeUIArrayContainer = boost::array<SnakeUI, SNAKE_MAX>;
-using SnakeUXArrayContainer = boost::array<SnakeUX, SNAKE_MAX>;
 using SnakeArrayContainer = boost::array<Snake, SNAKE_MAX>;
-using BaseSnakeArrayContainer = boost::array<BaseSnake, SNAKE_MAX>;
 
 enum eScore : uint16_t {
 	kFromTime = 1,

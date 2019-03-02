@@ -55,7 +55,7 @@ Univers::Univers()
 }
 
 void Univers::resetData() {
-	for (const auto &snake: getSnakeUIArray_()) {
+	for (const auto &snake: getSnakeArray_()) {
 		if (snake.isValid) {
 			std::cout << "ID:" << snake.id << " " << " Score : " << snake.score_ << std::endl;
 		}
@@ -387,13 +387,14 @@ MutantGrid<eSprite> &Univers::getGrid_() const {
 	return *grid_;
 }
 
-const SnakeUIArrayContainer Univers::getSnakeUIArray_() const {
+const SnakeArrayContainer Univers::getSnakeArray_() const {
 	boost::shared_ptr<ISnakeNetwork>  ptr(getSnakeNetwork().lock());
-	SnakeUIArrayContainer snakeUIArrayContainer;
+
 	if (ptr) {
-		snakeUIArrayContainer = ptr->getSnakeArray_();
+		log_info("%s", __PRETTY_FUNCTION__);
+		return ptr->getSnakeArray_();
 	}
- 	return snakeUIArrayContainer;
+ 	return snakeArrayContainer;
 }
 
 boost::weak_ptr<ISnakeNetwork> Univers::getSnakeNetwork() const {

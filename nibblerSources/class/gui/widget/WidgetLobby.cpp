@@ -39,7 +39,7 @@ void WidgetLobby::addColor(eSprite color, std::string const &name,
 }
 
 
-void WidgetLobby::addSnake(SnakeUI const &snake, WidgetSnake::SnakeType type) {
+void WidgetLobby::addSnake(Snake const &snake, WidgetSnake::SnakeType type) {
 	if (snakeWidget_.size() < SNAKE_MAX)
 		snakeWidget_.emplace_back(core_, snake, mapSprite_, type);
 }
@@ -64,7 +64,7 @@ void WidgetLobby::_reload() {
 
 
 void WidgetLobby::render() {
-	snakes_ = core_.univers.getSnakeUIArray_();
+	snakes_ = core_.univers.getSnakeArray_();
 	sf::Vector2<unsigned int> placesForSnakes(4, 2);
 	sf::Vector2<unsigned int> percentPlaceOfSnake;
 

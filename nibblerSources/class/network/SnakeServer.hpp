@@ -49,13 +49,13 @@ private:
 
 	void callbackBorderless(bool);
 
-	void callbackSnakeUI(const SnakeUI &);
+	void callbackSnakeUI(const Snake &);
 
-	void callbackSnakeUX(const SnakeUX &);
+	void callbackSnakeUX(const Snake &);
 
 	void callbackSnake(const Snake &);
 
-	void callbackBaseSnake(const BaseSnake &);
+	void callbackSnakeUN(const Snake &);
 
 	void callbackInput(InputInfo);
 

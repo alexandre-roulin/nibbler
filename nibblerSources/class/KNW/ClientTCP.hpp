@@ -25,10 +25,10 @@ namespace KNW {
 		bool isConnect() const;
 
 		template<typename T>
-		void writeDataToServer(T &&data);
+		void writeDataToServer(T data);
 
 		template<typename T, typename H>
-		void writeDataToServer(T &&data, H header);
+		void writeDataToServer(T data, H header);
 
 		void disconnect();
 		virtual ~ClientTCP();
@@ -46,15 +46,18 @@ namespace KNW {
 	};
 
 	template<typename T, typename H>
-	void ClientTCP::writeDataToServer(T &&data, H header) {
+	void ClientTCP::writeDataToServer(T data, H header) {
+		std::cout << __PRETTY_FUNCTION__ << std::endl;
 		assert(iotcp != nullptr);
 		iotcp->writeSocket(dataTCP_->serializeData(header, data));
 	}
 
 	template<typename T>
-	void ClientTCP::writeDataToServer(T &&data) {
+	void ClientTCP::writeDataToServer(T data) {
 		assert(dataTCP_->hasType<T>());
 		iotcp->writeSocket(dataTCP_->serializeData(DataType<T>::getHeader(), data));
 	}
+
+
 
 }

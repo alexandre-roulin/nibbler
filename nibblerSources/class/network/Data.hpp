@@ -20,13 +20,10 @@ enum class eHeader : uint16_t {
 	kPock,				//10
 	kSnake,				//11
 	kSnakeArray,		//12
-	kSnakeUIArray,		//13
-	kSnakeUXArray,		//14
-	kBaseSnakeArray,	//15
-	kCloseConnection,	//16
-	kSnakeUI,			//17
-	kSnakeUX,			//18
-	kBaseSnake			//19
+	kCloseConnection,	//13
+	kSnakeUI,			//14
+	kSnakeUX,			//15
+	kSnakeUN			//16
 };
 
 inline std::ostream &operator<<(std::ostream  &os, eHeader const & header) {
@@ -137,7 +134,8 @@ struct StartInfo {
 	boost::posix_time::ptime time_duration;
 };
 
-struct ChatInfo {
+class ChatInfo {
+public:
 	ChatInfo() {
 		std::memset(chat_, 0, CHAT_BUFFER);
 		std::memset(offset_, 0, OFFSET);
