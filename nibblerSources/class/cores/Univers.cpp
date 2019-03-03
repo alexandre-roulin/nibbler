@@ -320,6 +320,8 @@ void Univers::deleteServer() {
 	if (snakeServer_) {
 		snakeServer_ = nullptr;
 		gui_->addMessageChat(eColorLog::kGreen, SuccessServerIsDelete);
+		std::for_each(vecBobby.begin(), vecBobby.end(), [](std::unique_ptr<Bobby> &bob){ bob->getClientTCP_()->disconnect(); });
+		vecBobby.clear();
 		if (ptr && ptr->isOpen())
 			disconnectClient();
 	} else {
@@ -506,7 +508,6 @@ GameManager &Univers::getGameManager() {
 }
 
 void Univers::switchBorderless() {
-
 	boost::shared_ptr<ISnakeNetwork> ptr_network(getSnakeNetwork().lock());
 
 	if (!ptr_network || !ptr_network->isOpen()) {
@@ -539,7 +540,6 @@ void Univers::switchReady() {
 }
 
 void Univers::sendOpenGameToServer() {
-
 	SnakeClient::boost_shared_ptr ptr(getSnakeClient().lock());
 
 	if (!isServer()) {
@@ -560,6 +560,7 @@ void Univers::sendOpenGameToServer() {
 
 void Univers::updateSizeMap() {
 	boost::shared_ptr<ISnakeNetwork> ptr_network(getSnakeNetwork().lock());
+
 	if (!ptr_network) {
 		gui_->addMessageChat(eColorLog::kOrange, WarningClientNotExist);//Todo message
 		return;

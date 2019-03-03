@@ -11,8 +11,6 @@ SnakeServer::SnakeServer(
 		serverTCP_(nullptr),
 		snakeArray_(std::make_shared<SnakeArrayContainer >())
 		{
-
-
 }
 
 inline void SnakeServer::updateInput() {

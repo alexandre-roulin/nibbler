@@ -163,7 +163,7 @@ void SnakeClient::killSnake(uint16_t id) {
 
 void SnakeClient::disconnect() {
 	clientTCP_->disconnect();
-//	std::for_each(snake_array_.begin(), snake_array_.end(), [](Snake &snake){ snake.reset(); });
+	snakeArray = std::make_shared<SnakeArrayContainer>();
 	refreshSnakeArray();
 }
 
