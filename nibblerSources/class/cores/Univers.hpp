@@ -140,6 +140,8 @@ public:
 
 	boost::weak_ptr<SnakeClient> getSnakeClient() const;
 
+	boost::weak_ptr<SnakeClient> getBobbyClient(int id) const;
+
 	boost::weak_ptr<ISnakeNetwork> getSnakeNetwork() const;
 
 	bool isOnlyIA() const;

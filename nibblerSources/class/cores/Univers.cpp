@@ -415,6 +415,13 @@ boost::weak_ptr<SnakeClient> Univers::getSnakeClient() const {
 	return boost::weak_ptr<SnakeClient>();
 }
 
+boost::weak_ptr<SnakeClient> Univers::getBobbyClient(int id) const {
+	auto itBobby = std::find_if(vecBobby.begin(), vecBobby.end(), [id](std::unique_ptr<Bobby> const &bob){ return bob->getId() == id; });
+	if (itBobby == vecBobby.end())
+		return boost::weak_ptr<SnakeClient>();
+	return (*itBobby)->getClientTCP_()->shared_from_this();
+}
+
 const unsigned int &Univers::getMapSize() const {
 	return mapSize_;
 }

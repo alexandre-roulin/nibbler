@@ -50,7 +50,7 @@ int main(int argc, char **argv) {
 
 	srand(time(NULL));
 	char path[] = "/tmp/log.out";
-	try {
+	//try {
 		Univers univers;
 
 		boost::program_options::options_description desc("Options");
@@ -110,11 +110,11 @@ int main(int argc, char **argv) {
 			return (0);
 		}
 		nibbler(univers);
-	}
-	catch (const std::exception &e) {
-		std::cerr << "Unhandled Exception reached the top of main: "
-				  << e.what() << ", application will now exit" << std::endl;
-	}
+	//}
+	//catch (const std::exception &e) {
+	//	std::cerr << "Unhandled Exception reached the top of main: "
+	//			  << e.what() << ", application will now exit" << std::endl;
+	//}
 	log_success("main.return()");
 	return (0);
 }
