@@ -47,7 +47,6 @@ public:
 private:
 	boost::thread threadWorldLoop_;
 	Univers &univers_;
-	std::vector<NextFrame> nextFrame;
 	boost::asio::deadline_timer timer_loop;
 	std::shared_ptr<KINU::World> world_;
 };

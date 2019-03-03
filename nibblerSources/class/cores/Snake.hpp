@@ -54,7 +54,7 @@ class Snake : public SnakeUI, public SnakeUX, public SnakeUN {
 public:
 	Snake();
 
-	void randomSnake(int16_t id_);
+	void randomSnake(int16_t id_, eSprite prev);
 
 	void deepCopy(Snake const &snake);
 

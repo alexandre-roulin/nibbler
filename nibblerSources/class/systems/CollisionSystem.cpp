@@ -38,7 +38,6 @@ void CollisionSystem::checkCollision(
 
 			if (ptr && (ptr->getId_() == entityHead.getGroupIdByEntity() ||
 						univers_.isIASnake(entityHead.getGroupIdByEntity()))) {
-				ptr->addScore(entityHead.getGroupIdByEntity(), eScore::kFromFood);
 				ptr->sendDataToServer(
 						FoodInfo(PositionComponent(
 								univers_.getGrid_().getRandomSlot(eSprite::kNone)),
@@ -51,7 +50,6 @@ void CollisionSystem::checkCollision(
 			entityCheck.kill();
 			if (ptr && (ptr->getId_() == entityHead.getGroupIdByEntity() ||
 						univers_.isIASnake(entityHead.getGroupIdByEntity())))
-				ptr->addScore(entityHead.getGroupIdByEntity(), eScore::kFromFood);
 			if (entityHead.hasGroupId())
 				getWorld().getEventsManager().emitEvent<FoodEat>(entityHead.getGroupIdByEntity());
 		} else if (tagId == kWallTag) {

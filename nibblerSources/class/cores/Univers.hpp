@@ -201,7 +201,7 @@ private:
 
 	static const std::string ErrorClientConnectionRefused;
 	static const std::string ErrorServerAlreadyUseOnThisPort;
-
+	static const std::string ErrorPortRange;
 	std::unique_ptr<IOManager> ioManager;
 	std::unique_ptr<ExternalLibrarySoundManager> soundManager;
 	std::unique_ptr<ExternalLibraryDisplayManager> displayManager;

@@ -67,9 +67,9 @@ void WidgetConnect::beginContent_() {
 		if (ImGui::Button("Create Server", sf::Vector2f(ImGui::GetWindowSize().x, 20))) {
 			if (core_.univers.isServer())
 				core_.univers.deleteServer();
-			core_.univers.createServer();
-			core_.univers.createClient();
-			core_.univers.connect(dnsBuffer_, portBuffer_);
+			core_.univers.createServer(dnsBuffer_, std::stoul(portBuffer_));
+//			core_.univers.createClient();
+//			core_.univers.connect(dnsBuffer_, portBuffer_);
 		}
 	}
 	Gui::endColor();

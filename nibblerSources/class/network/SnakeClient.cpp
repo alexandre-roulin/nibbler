@@ -83,6 +83,7 @@ bool SnakeClient::allSnakeIsDead() const {
 }
 
 void SnakeClient::deliverEvents() {
+	std::cout << "d" << std::endl;
 	std::lock_guard<std::mutex> guard(mutex_);
 	for (auto foodCreation : foodCreations) {
 		auto world = univers_.getGameManager().getWorld_();
@@ -90,6 +91,7 @@ void SnakeClient::deliverEvents() {
 			world->getEventsManager().emitEvent(foodCreation);
 	}
 	foodCreations.clear();
+	std::cout << "f" << std::endl;
 }
 
 bool SnakeClient::isSwitchingLibrary() const {
@@ -154,28 +156,9 @@ void SnakeClient::killSnake(uint16_t id) {
 	if (id_ == id || (univers_.isIASnake(id) && univers_.isServer())) {
 		std::lock_guard<std::mutex> guard(mutex_);
 		log_debug("%s id[%d]", __PRETTY_FUNCTION__, id);
-		(*snakeArray)[id_].isAlive = false;
-		sendDataToServer((*snakeArray)[id_], eHeader::kSnakeUX);
+		(*snakeArray)[id].isAlive = false;
+		sendDataToServer((*snakeArray)[id], eHeader::kSnakeUX);
 	}
-}
-
-void SnakeClient::addScore(uint16_t id, eScore score) {
-	(*snakeArray)[id].score_ += score;
-	uint32_t timeLess = 0;
-	uint32_t actualMicroSec = univers_.getMicroSecDeltaTime();
-	switch (score) {
-		case kFromTime :
-			timeLess =  actualMicroSec - actualMicroSec / 10000;
-			break;
-		case kFromSnakeFood :
-			timeLess = actualMicroSec - GameManager::ScaleByFakeFood;
-			break;
-		case kFromFood :
-			timeLess = actualMicroSec - GameManager::ScaleByRealFood;
-			break;
-	}
-//	univers_.setMicroSecDeltaTime(timeLess);
-//	sendDataToServer(static_cast<BaseSnake>((*snakeArray)[id]), eHeader::kBaseSnake); // TODO
 }
 
 void SnakeClient::disconnect() {
@@ -190,8 +173,6 @@ void SnakeClient::disconnect() {
 
 void SnakeClient::callbackSnakeUN(const Snake &snakeUN) {
 	std::lock_guard<std::mutex> guard(mutex_);
-	log_debug("%s", __PRETTY_FUNCTION__ );
-	std::cout << snakeUN.id << std::endl;
 	(*snakeArray)[snakeUN.id] = static_cast<SnakeUN>(snakeUN);
 }
 
@@ -207,10 +188,9 @@ void SnakeClient::callbackSnakeUI(const Snake &snakeUI) {
 }
 
 void SnakeClient::callbackId(uint16_t id) {
-	std::cout << __PRETTY_FUNCTION__ << id << std::endl;
 	std::lock_guard<std::mutex> guard(mutex_);
 	id_ = id;
-	(*snakeArray)[id_].randomSnake(id);
+	(*snakeArray)[id_].randomSnake(id, id == 0 ? eSprite::kGreen : (*snakeArray)[id - 1].sprite);
 	if (fromIA_) {
 		(*snakeArray)[id_].isReady = true;
 		(*snakeArray)[id_].isIA = true;
@@ -220,13 +200,11 @@ void SnakeClient::callbackId(uint16_t id) {
 }
 
 void SnakeClient::callbackSnakeUX(const Snake &snakeUX) {
-	std::cout << __PRETTY_FUNCTION__ << std::endl;
 	std::lock_guard<std::mutex> guard(mutex_);
 	(*snakeArray)[snakeUX.id] = static_cast<SnakeUX>(snakeUX);
 }
 
 void SnakeClient::callbackSnake(const Snake &snake) {
-	std::cout << __PRETTY_FUNCTION__ << std::endl;
 	std::lock_guard<std::mutex> guard(mutex_);
 	log_success("%s %d", __PRETTY_FUNCTION__, snake.isReadyToExpose);
 	(*snakeArray)[snake.id] = snake;
@@ -299,15 +277,14 @@ void SnakeClient::callbackFood(FoodInfo foodInfo) {
 }
 
 
-void SnakeClient::callbackPock(char) {
+void SnakeClient::callbackPock(uint32_t deltaTime) {
 
-	log_warn("%s", __PRETTY_FUNCTION__);
 	std::lock_guard<std::mutex> guard(mutex_);
 	if (acceptDataFromServer() && univers_.isOpenGame_()) {
-		while (std::any_of(snakeArray->begin(), snakeArray->end(), [](Snake const &snake){ return snake.isValid && !snake.isUpdate; }));
+		log_warn("%s", __PRETTY_FUNCTION__);
+		univers_.setMicroSecDeltaTime(univers_.getMicroSecDeltaTime() - deltaTime);
 		const std::shared_ptr<KINU::World> &world = univers_.getGameManager().getWorld_();
 		if (world) world->getEventsManager().emitEvent<NextFrame>();
-		std::for_each((*snakeArray).begin(), (*snakeArray).end(), [](Snake &snake){ snake.isUpdate = false; });
 
 	}
 }
@@ -403,10 +380,10 @@ void SnakeClient::build() {
 			([thisWeakPtr](char c) { auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackCloseConnection(c); }),
 			eHeader::kCloseConnection);
 
-	clientTCP_->getDataTCP_().addDataType<char>(
-			([thisWeakPtr](char c) {
+	clientTCP_->getDataTCP_().addDataType<uint32_t>(
+			([thisWeakPtr](uint32_t delta) {
 				auto myPtr = thisWeakPtr.lock();
-				if (myPtr) myPtr->callbackPock(c);
+				if (myPtr) myPtr->callbackPock(delta);
 			}),
 			eHeader::kPock);
 

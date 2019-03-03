@@ -42,7 +42,6 @@ void Bobby::sendDirection() {
 	if (!world) return;
 
 	if (world->getEntitiesManager().hasEntityByTagId(eTag::kHeadTag + clientTCP_->getId_())) {
-		std::cout << "Send direction : " << clientTCP_->getId_() << std::endl;
 		clientTCP_->sendDirection(direction);
 	}
 
@@ -138,8 +137,6 @@ void Bobby::calculateDirection() {
 
 	if (!world) return;
 	log_warn("%s", __PRETTY_FUNCTION__);
-	std::cout << "[" << boost::this_thread::get_id()
-			  << "] Bobby "<< getId() << "Start " << std::endl;
 	if (world->getEntitiesManager().hasEntityByTagId(
 			clientTCP_->getId_() + eTag::kHeadTag)) {
 
@@ -212,8 +209,6 @@ void Bobby::calculateDirection() {
 		}
 	}
 	sendDirection();
-	std::cout << "[" << boost::this_thread::get_id()
-			  << "] Bobby Finish" << std::endl;
 }
 
 KStar::Vec2 Bobby::getVecSnakeHead() {
