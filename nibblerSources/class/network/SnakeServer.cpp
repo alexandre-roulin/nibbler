@@ -215,9 +215,7 @@ void SnakeServer::callbackAccept(size_t index) {
 	int16_t new_id = std::distance((*snakeArray_).begin(), std::find_if((*snakeArray_).begin(), (*snakeArray_).end(), [](Snake const &s){ return !s.isValid;}));
 	log_success("%s isValid : %d new_id %d index %d %d", __PRETTY_FUNCTION__, std::count_if((*snakeArray_).begin(), (*snakeArray_).end(), [](Snake const &s){ return s.isValid;}), new_id, index,
 				sizeof(SnakeArrayContainer));
-	(*snakeArray_)[new_id].randomSnake(new_id);
 	(*snakeArray_)[new_id].indexConnection = index;
-
 	serverTCP_->writeDataToOpenConnections((*snakeArray_), eHeader::kSnakeArray);
 	serverTCP_->writeDataToOpenConnection(univers_.isBorderless(), index, eHeader::kBorderless);
 	serverTCP_->writeDataToOpenConnection(univers_.getMapSize(), index, eHeader::kResizeMap);

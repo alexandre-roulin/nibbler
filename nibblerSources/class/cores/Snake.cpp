@@ -23,10 +23,16 @@ Snake::Snake() :
 		score_(0) {
 
 }
-void Snake::randomSnake(int16_t id_) {
+void Snake::randomSnake(int16_t id_, eSprite prev) {
 
-	sprite = static_cast<eSprite>(static_cast<int>(eSprite::kGreen) + rand() % SNAKE_MAX_COLOR);
-	strncpy(name, Snake::basicName[rand() % SNAKE_MAX_NAME].c_str(), NAME_BUFFER);
+	if (id_ == 0) {
+		sprite = static_cast<eSprite>(static_cast<int>(eSprite::kGreen) + rand() % SNAKE_MAX_COLOR);
+	} else if (prev == eSprite::kRed) {
+		sprite = eSprite::kGreen;
+	} else {
+		sprite = static_cast<eSprite>(static_cast<int >(prev) + 1);
+	}
+	strncpy(name, Snake::basicName[static_cast<int>(sprite) - 1].c_str(), NAME_BUFFER);
 	id = id_;
 	isAlive = true;
 	isSwitchingLibrary = false;

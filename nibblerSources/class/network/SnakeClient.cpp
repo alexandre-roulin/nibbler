@@ -190,7 +190,7 @@ void SnakeClient::callbackSnakeUI(const Snake &snakeUI) {
 void SnakeClient::callbackId(uint16_t id) {
 	std::lock_guard<std::mutex> guard(mutex_);
 	id_ = id;
-	(*snakeArray)[id_].randomSnake(id);
+	(*snakeArray)[id_].randomSnake(id, id == 0 ? eSprite::kGreen : (*snakeArray)[id - 1].sprite);
 	if (fromIA_) {
 		(*snakeArray)[id_].isReady = true;
 		(*snakeArray)[id_].isIA = true;
