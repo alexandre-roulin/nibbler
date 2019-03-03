@@ -2,6 +2,9 @@
 
 #include "IWidget.hpp"
 
+#define NIBBLER_IMGUI_WINDOW_FLAGS_BASIC (ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse)
+#define NIBBLER_IMGUI_WINDOW_FLAGS_NO_INPUT (ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoInputs | ImGuiWindowFlags_NoMouseInputs)
+
 class Gui;
 
 enum class eColorLog {
@@ -28,7 +31,7 @@ public:
 		std::string error_;
 	};
 
-	AWidget(Gui &);
+	AWidget(Gui &core, std::string const &winName, ImGuiWindowFlags winFlags);
 	virtual ~AWidget(void) = default;
 	AWidget() = delete;
 	AWidget &operator=(const AWidget &) = default;
@@ -37,11 +40,13 @@ public:
 
 	void render(bool renderContentInWindow);
 
-
 protected:
 	Gui &core_;
 	bool active_;
+	std::string winName_;
+	ImGuiWindowFlags winFlags_;
 
 private:
-	virtual void content_(bool renderContentInWindow) = 0;
+	virtual void update_();
+	virtual void beginContent_() = 0;
 };

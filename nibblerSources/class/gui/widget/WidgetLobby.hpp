@@ -32,5 +32,6 @@ private:
 
 	void _reload();
 
-	void content_(bool renderContentInWindow) override;
+	void update_() override;
+	void beginContent_() override;
 };

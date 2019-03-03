@@ -21,7 +21,6 @@ public:
 	WidgetChat(const WidgetChat &) = default;
 
 	void addLog(eColorLog color, char const *format, ...);
-
 	void clear();
 
 private:
@@ -31,7 +30,7 @@ private:
 	char bufferMessage_[CHAT_BUFFER];
 
 
-	void content_(bool renderContentInWindow) override;
+	void beginContent_() override;
 	bool chatCommand_();
 	bool checkClientIsConnect_();
 	bool checkClient_();

@@ -4,7 +4,7 @@
 #include "cores/ExternalLibraryDisplayManager.hpp"
 
 WidgetOption::WidgetOption(Gui &core) :
-		AWidget(core),
+		AWidget(core, "Options", NIBBLER_IMGUI_WINDOW_FLAGS_BASIC),
 		sound_(core_.univers.getSoundManager().hasLibraryLoaded()),
 		rNoise_(core_.univers.getSoundManager().getNoise()),
 		rMusique_(core_.univers.getSoundManager().getMusique()),
@@ -22,12 +22,14 @@ bool getNameOfDisplayLibraryInfo(void *data, int idx, const char **out_str) {
 	return true;
 }
 
-void WidgetOption::content_(bool renderContentInWindow) {
-	SnakeClient::boost_shared_ptr ptr(core_.univers.getSnakeClient().lock());
+void WidgetOption::update_() {
+	sound_ = core_.univers.getSoundManager().hasLibraryLoaded();
+	rNoise_ = core_.univers.getSoundManager().getNoise();
+	rMusique_ = core_.univers.getSoundManager().getMusique();
+}
 
-	ImGui::Begin("Options", NULL,
-				 ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize |
-				 ImGuiWindowFlags_NoCollapse);
+void WidgetOption::beginContent_() {
+	SnakeClient::boost_shared_ptr ptr(core_.univers.getSnakeClient().lock());
 
 	if (ImGui::InputText("Name", nameBuffer_,
 						 IM_ARRAYSIZE(nameBuffer_) - 1,
@@ -71,6 +73,4 @@ void WidgetOption::content_(bool renderContentInWindow) {
 		}
 		ImGui::EndCombo();
 	}
-
-	ImGui::End();
 }

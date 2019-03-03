@@ -26,7 +26,8 @@ private:
 	SnakeType type_;
 	unsigned int sizeTexture_;
 
-	void content_(bool renderContentInWindow) override;
+	void update_() override;
+	void beginContent_() override;
 
 	void renderIa_();
 

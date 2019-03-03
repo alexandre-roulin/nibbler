@@ -3,15 +3,15 @@
 #include "WidgetSettingGame.hpp"
 
 WidgetSettingGame::WidgetSettingGame(Gui &core) :
-		AWidget(core),
+		AWidget(core, "Settings Game", NIBBLER_IMGUI_WINDOW_FLAGS_BASIC),
 		mapSize_(core_.univers.getMapSize()) {}
 
-void WidgetSettingGame::content_(bool renderContentInWindow) {
-	SnakeClient::boost_shared_ptr ptr(core_.univers.getSnakeClient().lock());
+void WidgetSettingGame::update_() {
+	mapSize_ = core_.univers.getMapSize();
+}
 
-	ImGui::Begin("Settings Game", NULL,
-				 ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize |
-				 ImGuiWindowFlags_NoCollapse);
+void WidgetSettingGame::beginContent_() {
+	SnakeClient::boost_shared_ptr ptr(core_.univers.getSnakeClient().lock());
 
 	if (ImGui::InputInt("Size map", reinterpret_cast<int *>(&mapSize_), 1,
 						4, ImGuiInputTextFlags_CharsDecimal |
@@ -30,6 +30,4 @@ void WidgetSettingGame::content_(bool renderContentInWindow) {
 	bool borderless = core_.univers.isBorderless();
 	if (ImGui::Checkbox("Borderless", &borderless))
 		core_.univers.switchBorderless();
-
-	ImGui::End();
 }

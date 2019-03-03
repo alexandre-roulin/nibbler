@@ -14,5 +14,5 @@ public:
 	WidgetServerPannel(const WidgetServerPannel &) = delete;
 
 private:
-	void content_(bool renderContentInWindow) override;
+	void beginContent_() override;
 };

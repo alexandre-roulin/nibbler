@@ -4,7 +4,7 @@
 #include <network/SnakeServer.hpp>
 
 WidgetConnect::WidgetConnect(Gui &core) :
-		AWidget(core),
+		AWidget(core, "Connect", NIBBLER_IMGUI_WINDOW_FLAGS_BASIC),
 		client_(false) {
 	bzero(dnsBuffer_, IM_ARRAYSIZE(dnsBuffer_));
 	bzero(portBuffer_, IM_ARRAYSIZE(portBuffer_));
@@ -13,16 +13,8 @@ WidgetConnect::WidgetConnect(Gui &core) :
 
 }
 
-void WidgetConnect::content_(bool renderContentInWindow) {
-
+void WidgetConnect::beginContent_() {
 	SnakeClient::boost_shared_ptr ptrClient(core_.univers.getSnakeClient().lock());
-
-	if (ptrClient && ptrClient->isOpen())
-		ImGui::Begin("Connect", NULL,
-					 ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse);
-	else
-		ImGui::Begin("Connect", NULL,
-					 ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse);
 
 	if (client_)
 		Gui::beginColor(Gui::eColor::kRed);
@@ -82,7 +74,5 @@ void WidgetConnect::content_(bool renderContentInWindow) {
 	}
 	Gui::endColor();
 
-
-	ImGui::End();
 }
 

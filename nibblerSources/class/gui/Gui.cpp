@@ -95,23 +95,22 @@ void			Gui::aState(void)
 {
 	WidgetExit wexit(*this, callbackExit);
 	WidgetLobby lobby(*this);
-	WidgetOption *optionSnake = nullptr;
 	WidgetServerPannel serverPannel(*this);
 	WidgetConnect wOptionConnect(*this);
 	WidgetEtat wEtat(*this);
 	WidgetMassiveButton massiveButton(*this);
+	WidgetSettingGame settings(*this);
+	WidgetOption optionSnake(*this);
 	sf::Event event;
 
 	Test::getInstance().setInputCallback(callbackTest, reinterpret_cast<void*>(&univers));
 
 	while (Test::getInstance().needUpdate() || (_win.isOpen() && !univers.isOpenGame_())) {
 
-		WidgetSettingGame settings(*this);
-
 		ImGui::SFML::Update(_win, _deltaClock.restart());
 		Test::getInstance().update();
-		while (_win.pollEvent(event))
-		{
+
+		while (_win.pollEvent(event)) {
 			if (event.type == sf::Event::KeyPressed && event.key.control) {
 				switch (event.key.code) {
 					case sf::Keyboard::A:
@@ -186,24 +185,9 @@ void			Gui::aState(void)
 		ImGui::SetNextWindowSize(positionByPercent(sf::Vector2<unsigned int>(20, 15)));
 		settings.render((ptr && ptr->isOpen()));
 
-		if (ptr && ptr->isOpen()) {
-			if (!optionSnake)
-				optionSnake = new WidgetOption(*this);
-
-			ImGui::SetNextWindowPos(positionByPercent(sf::Vector2<unsigned int>(70, 50)));
-			ImGui::SetNextWindowSize(positionByPercent(sf::Vector2<unsigned int>(30, 15)));
-			optionSnake->render(true);
-		}
-		else if (ptr) {
-
-			if (!optionSnake)
-				optionSnake = new WidgetOption(*this);
-
-			ImGui::SetNextWindowPos(positionByPercent(sf::Vector2<unsigned int>(70, 50)));
-			ImGui::SetNextWindowSize(positionByPercent(sf::Vector2<unsigned int>(30, 15)));
-			optionSnake->render(true);
-
-		}
+		ImGui::SetNextWindowPos(positionByPercent(sf::Vector2<unsigned int>(70, 50)));
+		ImGui::SetNextWindowSize(positionByPercent(sf::Vector2<unsigned int>(30, 15)));
+		optionSnake.render(!!ptr);
 
 		ImGui::SetNextWindowPos(positionByPercent(sf::Vector2<unsigned int>(70, 65)));
 		ImGui::SetNextWindowSize(positionByPercent(sf::Vector2<unsigned int>(30, 20)));
@@ -212,11 +196,9 @@ void			Gui::aState(void)
 		ImGui::SetNextWindowSize(positionByPercent(sf::Vector2<unsigned int>(30, 15)));
 		wEtat.render(true);
 
-		if (univers.isServer()) {
-			ImGui::SetNextWindowPos(positionByPercent(sf::Vector2<unsigned int>(50, 65)));
-			ImGui::SetNextWindowSize(positionByPercent(sf::Vector2<unsigned int>(20, 20)));
-			serverPannel.render(true);
-		}
+		ImGui::SetNextWindowPos(positionByPercent(sf::Vector2<unsigned int>(50, 65)));
+		ImGui::SetNextWindowSize(positionByPercent(sf::Vector2<unsigned int>(20, 20)));
+		serverPannel.render(univers.isServer());
 
 		ImGui::SetNextWindowPos(positionByPercent(sf::Vector2<unsigned int>(50, 85)));
 		ImGui::SetNextWindowSize(positionByPercent(sf::Vector2<unsigned int>(20, 15)));
@@ -224,8 +206,6 @@ void			Gui::aState(void)
 
 		_render();
 	}
-	if (optionSnake)
-		delete optionSnake;
 }
 
 void				Gui::_render(void) {
@@ -283,11 +263,11 @@ std::map< Gui::eColor, float > const Gui::mapEColor_ = { { eColor::kGrey, 0.f },
 
 bool 						Gui::_useColor = false;
 
-Gui::CoreConstructorException::~CoreConstructorException(void) noexcept{}
+Gui::CoreConstructorException::~CoreConstructorException(void) noexcept {}
 Gui::CoreConstructorException::CoreConstructorException(void) noexcept :
 	_error("Error on Gui constructor") {}
 Gui::CoreConstructorException::CoreConstructorException(std::string s) noexcept :
-	_error(s) { }
+	_error(s) {}
 Gui::CoreConstructorException::CoreConstructorException(Gui::CoreConstructorException const &src) noexcept :
 	_error(src._error)
 	{ _error = src._error; }

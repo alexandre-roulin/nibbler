@@ -21,5 +21,6 @@ private:
 	std::string pathSound_;
 	int indexLibrary_;
 
-	void content_(bool renderContentInWindow) override;
+	void update_() override;
+	void beginContent_() override;
 };

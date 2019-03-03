@@ -16,5 +16,6 @@ public:
 private:
 	unsigned int mapSize_;
 
-	void content_(bool renderContentInWindow) override;
+	void update_() override;
+	void beginContent_() override;
 };

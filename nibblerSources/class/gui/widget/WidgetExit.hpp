@@ -13,5 +13,5 @@ public:
 private:
 	std::function<void(Gui&)> callbackExit_;
 
-	void content_(bool renderContentInWindow) override;
+	void beginContent_() override;
 };

@@ -13,5 +13,5 @@ public:
 	WidgetEtat &operator=(const WidgetEtat &) = default;
 	WidgetEtat(const WidgetEtat &) = default;
 private:
-	void content_(bool renderContentInWindow) override;
+	void beginContent_() override;
 };

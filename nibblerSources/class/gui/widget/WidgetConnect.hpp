@@ -18,5 +18,5 @@ private:
 	char dnsBuffer_[NAME_BUFFER];
 	char portBuffer_[NAME_BUFFER];
 
-	void content_(bool renderContentInWindow) override;
+	void beginContent_() override;
 };

@@ -1,9 +1,10 @@
 #include "AWidget.hpp"
-#include <gui/Gui.hpp>
 
-AWidget::AWidget(Gui &core) :
+AWidget::AWidget(Gui &core, std::string const &winName, ImGuiWindowFlags winFlags) :
 		core_(core),
-		active_(true) {
+		active_(true),
+		winName_(winName),
+		winFlags_(winFlags) {
 }
 
 AWidget::Constructor::Constructor(void) noexcept :
@@ -22,14 +23,22 @@ const char *
 AWidget::Constructor::what() const noexcept { return (error_.c_str()); }
 
 
+void AWidget::update_() {}
+
 void AWidget::render(bool renderContentInWindow) {
-	if (!renderContentInWindow) {
-		ImGui::PushStyleColor(ImGuiCol_FrameBg, IM_COL32(100, 100, 100, 100));
-		ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(100, 100, 100, 100));
-		ImGui::PushStyleColor(ImGuiCol_ChildWindowBg, IM_COL32(100, 100, 100, 100));
-		ImGui::PushStyleColor(ImGuiCol_ChildBg, IM_COL32(100, 100, 100, 100));
+	update_();
+	if (active_) {
+		if (!renderContentInWindow) {
+			ImGui::PushStyleColor(ImGuiCol_FrameBg, IM_COL32(100, 100, 100, 100));
+			ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(100, 100, 100, 100));
+			ImGui::PushStyleColor(ImGuiCol_ChildWindowBg, IM_COL32(100, 100, 100, 100));
+			ImGui::PushStyleColor(ImGuiCol_ChildBg, IM_COL32(100, 100, 100, 100));
+		}
+		ImGui::Begin(winName_.c_str(), NULL, winFlags_);
+		if (renderContentInWindow)
+			beginContent_();
+		if (!renderContentInWindow)
+			ImGui::PopStyleColor(4);
+		ImGui::End();
 	}
-	content_(renderContentInWindow);
-	if (!renderContentInWindow)
-		ImGui::PopStyleColor(4);
 }

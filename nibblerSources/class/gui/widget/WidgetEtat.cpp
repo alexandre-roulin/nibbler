@@ -4,19 +4,12 @@
 #include <network/SnakeServer.hpp>
 
 WidgetEtat::WidgetEtat(Gui &core) :
-		AWidget(core) {}
+		AWidget(core, "Etat", NIBBLER_IMGUI_WINDOW_FLAGS_NO_INPUT) {}
 
-void WidgetEtat::content_(bool renderContentInWindow) {
+void WidgetEtat::beginContent_() {
 
 	SnakeClient::boost_shared_ptr ptrClient(core_.univers.getSnakeClient().lock());
 	boost::shared_ptr<ISnakeNetwork> ptrNetwork(core_.univers.getSnakeNetwork().lock());
-
-		ImGui::Begin("Etat", NULL,
-				 ImGuiWindowFlags_NoMove
-				 | ImGuiWindowFlags_NoResize
-				 | ImGuiWindowFlags_NoCollapse
-				 | ImGuiWindowFlags_NoInputs
-				 | ImGuiWindowFlags_NoMouseInputs);
 
 	if (ptrNetwork) {
 		Gui::beginColor(Gui::eColor::kGreen, Gui::eColor::kMedium);
@@ -52,6 +45,4 @@ void WidgetEtat::content_(bool renderContentInWindow) {
 	else
 		Gui::beginColor(Gui::eColor::kGreen);
 	Gui::endColor();
-
-	ImGui::End();
 }
