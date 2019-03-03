@@ -3,7 +3,7 @@
 #include <cores/Test.hpp>
 
 WidgetChat::WidgetChat(Gui &core) :
-		AWidget(core) {
+		AWidget(core, "Chat", NIBBLER_IMGUI_WINDOW_FLAGS_BASIC) {
 	bzero(bufferMessage_, IM_ARRAYSIZE(bufferMessage_));
 }
 
@@ -11,10 +11,7 @@ void WidgetChat::clear() {
 	bufferChat_.clear();
 }
 
-void WidgetChat::render() {
-	ImGui::Begin("Chat", NULL,
-				 ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize |
-				 ImGuiWindowFlags_NoCollapse);
+void WidgetChat::beginContent_() {
 	if (ImGui::Button("Clear"))
 		clear();
 	ImGui::BeginChild("scrolling", ImVec2(0, ImGui::GetWindowHeight() - 4 * ImGui::GetFrameHeightWithSpacing()), false,
@@ -54,8 +51,6 @@ void WidgetChat::render() {
 	if (ImGui::InputText("Tap", bufferMessage_, IM_ARRAYSIZE(bufferMessage_), ImGuiInputTextFlags_EnterReturnsTrue)) {
 		sendMessage_();
 	}
-	ImGui::End();
-
 }
 
 bool WidgetChat::checkClient_() {

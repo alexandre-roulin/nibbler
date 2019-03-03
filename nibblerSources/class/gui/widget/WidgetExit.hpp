@@ -10,9 +10,8 @@ public:
 	WidgetExit &operator=(const WidgetExit &) = default;
 	WidgetExit(const WidgetExit &) = default;
 
-	void render(void) override;
-
 private:
 	std::function<void(Gui&)> callbackExit_;
 
+	void beginContent_() override;
 };

@@ -15,16 +15,10 @@ public:
 
 	WidgetSnake(Gui &core, Snake const &snake, std::map<eSprite, SpriteColorProperties> const &mapSprite,
 				SnakeType type);
-
-	~WidgetSnake(void) override = default;
-
+	~WidgetSnake() override = default;
 	WidgetSnake &operator=(const WidgetSnake &) = delete;
-
 	WidgetSnake(const WidgetSnake &) = delete;
-
-	WidgetSnake(void) = delete;
-
-	void render(void) override ;
+	WidgetSnake() = delete;
 
 private:
 	Snake const &snake_;
@@ -32,11 +26,14 @@ private:
 	SnakeType type_;
 	unsigned int sizeTexture_;
 
-	void renderIa_(void);
+	void update_() override;
+	void beginContent_() override;
 
-	void renderYourSnake_(void);
+	void renderIa_();
 
-	void renderOtherSnake_(void);
+	void renderYourSnake_();
+
+	void renderOtherSnake_();
 
 	void renderStaticDataSnake_() const;
 
@@ -44,7 +41,7 @@ private:
 
 	void renderImage_() const;
 
-	void updateSizeTexture_(void);
+	void updateSizeTexture_();
 
 	void renderSelectionColor_() const;
 };

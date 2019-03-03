@@ -4,21 +4,15 @@
 #include "cores/ExternalLibraryDisplayManager.hpp"
 
 WidgetServerPannel::WidgetServerPannel(Gui &core) :
-		AWidget(core) {}
+		AWidget(core, "Server Pannel", NIBBLER_IMGUI_WINDOW_FLAGS_BASIC) {}
 
-void WidgetServerPannel::render() {
+void WidgetServerPannel::beginContent_() {
 	SnakeClient::boost_shared_ptr ptr(core_.univers.getSnakeClient().lock());
 
-	ImGui::Begin("Server Pannel", NULL,
-				 ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize |
-				 ImGuiWindowFlags_NoCollapse);
-
-	if (ImGui::Button("create_ia()")) {
+	if (ImGui::Button("create_ia()"))
 		core_.univers.createBobby();
-	}
-	if (ImGui::Button("delete_server()")) {
+	if (ImGui::Button("delete_server()"))
 		core_.univers.deleteServer();
-	}
 
 	if (ptr && ptr->allSnakeIsReady()) {
 		Gui::beginColor(Gui::eColor::kGreen);
@@ -29,6 +23,4 @@ void WidgetServerPannel::render() {
 		ImGui::Button("Run the game");
 	}
 	Gui::endColor();
-
-	ImGui::End();
 }

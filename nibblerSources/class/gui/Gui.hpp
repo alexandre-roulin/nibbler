@@ -27,7 +27,7 @@ public:
 		std::string			_error;
 	};
 
-	enum class eColor { kGrey, kRed, kGreen, kPurple};
+	enum class eColor { kGrey, kRed, kGreen, kPurple, kHard, kMedium, kSoft, kLight};
 
 	Gui(Univers &univers);
 	~Gui(void);
@@ -52,7 +52,7 @@ public:
 
 	boost::filesystem::path const	&getPathRessources() const;
 
-	static void						beginColor(eColor color);
+	static void						beginColor(eColor color, eColor power = eColor::kHard);
 	static void						endColor();
 
 private:
@@ -72,7 +72,7 @@ private:
 	ImGuiIO						&_createContext(void);
 	void						_processEvent(sf::Event const &event);
 
-	static void						beginHueColor_(float const color);
+	static void					beginHueColor_(float color, float power = 1.f);
 	static bool 				_useColor;
 	static std::map< eColor, float > const mapEColor_;
 };

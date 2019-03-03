@@ -1,12 +1,11 @@
 #include "WidgetExit.hpp"
 
 WidgetExit::WidgetExit(Gui &core, std::function<void(Gui&)> callbackExit) :
-		AWidget(core),
+		AWidget(core, "Exit", ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoBackground),
 		callbackExit_(callbackExit)
 {}
 
-void WidgetExit::render(void) {
-	ImGui::Begin("Exit", NULL, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoBackground);
+void WidgetExit::beginContent_() {
 	if (ImGui::Button("Exit.."))
 		ImGui::OpenPopup("Exit ?");
 	if (ImGui::BeginPopupModal("Exit ?", NULL, ImGuiWindowFlags_AlwaysAutoResize)) {
@@ -25,5 +24,4 @@ void WidgetExit::render(void) {
 		}
 		ImGui::EndPopup();
 	}
-	ImGui::End();
 }
