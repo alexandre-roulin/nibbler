@@ -10,6 +10,4 @@ namespace KINU {
 			pool->clear();
 		}
 	}
-
-
 }

@@ -47,7 +47,8 @@ void GameManager::startNewGame() {
 	world_->getSystemsManager().addSystem<RenderSystem>(univers_);
 	world_->getSystemsManager().addSystem<FoodCreationSystem>();
 	world_->getSystemsManager().addSystem<FoodEatSystem>();
-
+	world_->getEventsManager().emitEvent(NextFrame());
+	world_->getEventsManager().destroy<NextFrame>();
 
 	if (univers_.isServer()) {
 		univers_.getSnakeServer().startGame();
@@ -73,11 +74,9 @@ void GameManager::startNewGame() {
 	if (univers_.isServer()) {
 		for (auto &bobby : univers_.getBobbys()) {
 			bobby->buildIA();
-//			bobby->sendDirection();
 		}
 	}
 
-//	univers_.manageSnakeClientInput();
 	std::cout << "Thread Init" << std::endl;
 
 	threadWorldLoop_ = boost::thread([this, startEvent](){
@@ -103,12 +102,6 @@ void GameManager::loopGame() {
 		timer_loop.wait();
 	}
 }
-
-//  ( Update Delta [Input Frame])
-//			0.01s			1s
-
-// Input < Frame
-//
 
 void GameManager::manageGlobalInput() {
 	boost::asio::thread_pool pool(8);
@@ -157,27 +150,27 @@ void GameManager::loopWorld() {
 	{ /** Manage game **/
 		ptr->deliverEvents();
 		world_->getSystemsManager().getSystem<FollowSystem>().update();
-		log_info("%s", "FollowSystem");
+//		std::cout << "FollowSystem" << std::endl;
 		world_->getSystemsManager().getSystem<JoystickSystem>().update();
-		log_info("%s", "JoystickSystem");
+//		std::cout << "JoystickSystem" << std::endl;
 		world_->getEventsManager().destroy<JoystickEvent>();
-		log_info("%s", "JoystickEvent");
+//		std::cout << "JoystickEvent" << std::endl;
 		world_->getSystemsManager().getSystem<MotionSystem>().update();
-		log_info("%s", "MotionSystem");
+//		std::cout << "MotionSystem" << std::endl;
 		world_->getSystemsManager().getSystem<CollisionSystem>().update();
-		log_info("%s", "CollisionSystem");
+//		std::cout << "CollisionSystem" << std::endl;
 		world_->getSystemsManager().getSystem<FoodCreationSystem>().update();
-		log_info("%s", "FoodCreationSystem");
+//		std::cout << "FoodCreationSystem" << std::endl;
 		world_->getEventsManager().destroy<FoodCreation>();
-		log_info("%s", "FoodCreation");
+//		std::cout << "FoodCreation" << std::endl;
 		world_->getSystemsManager().getSystem<SpriteSystem>().update();
-		log_info("%s", "SpriteSystem");
+//		std::cout << "SpriteSystem" << std::endl;
 		world_->getSystemsManager().getSystem<RenderSystem>().update();
-		log_info("%s", "RenderSystem");
+//		std::cout << "RenderSystem" << std::endl;
 		world_->getSystemsManager().getSystem<FoodEatSystem>().update();
-		log_info("%s", "FoodEatSystem");
+//		std::cout << "FoodEatSystem" << std::endl;
 		world_->getEventsManager().destroy<FoodEat>();
-		log_info("%s", "FoodEat");
+//		std::cout << "FoodEat" << std::endl;
 		world_->update();
 	}
 

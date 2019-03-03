@@ -4,12 +4,10 @@
 #include <cores/GameManager.hpp>
 
 SnakeServer::SnakeServer(
-		Univers &univers,
-		unsigned int port
+		Univers &univers
 		) :
 		univers_(univers),
 		pause_(false),
-		port_(port),
 		serverTCP_(nullptr),
 		snakeArray_(std::make_shared<SnakeArrayContainer >())
 		{
@@ -63,7 +61,7 @@ bool SnakeServer::isFull() const {
 }
 
 unsigned short SnakeServer::getPort_() const {
-	return port_;
+	return serverTCP_->getPort();
 }
 
 void SnakeServer::notifyBorderless() {
@@ -87,18 +85,18 @@ bool SnakeServer::allSnakeIsReady() const {
 	return std::all_of((*snakeArray_).begin(), (*snakeArray_).end(), [](Snake const &snake){ return snake.isReady; });
 }
 
-bool SnakeServer::sendOpenGameToClient() {
+bool SnakeServer::sendOpenGameToClient(bool openGame) {
 	log_success("%s %d", __PRETTY_FUNCTION__, isReady());
 	if (!isReady())
 		return false;
-	serverTCP_->writeDataToOpenConnections(true, eHeader::kOpenGame);
+	serverTCP_->writeDataToOpenConnections(openGame, eHeader::kOpenGame);
 	return true;
 }
 
 boost::shared_ptr<SnakeServer>
-SnakeServer::create(Univers &univers, unsigned int port) {
-	auto ptr = boost::shared_ptr<SnakeServer>(new SnakeServer(univers, port));
-	ptr->build();
+SnakeServer::create(Univers &univers, const std::string dns, unsigned short port) {
+	auto ptr = boost::shared_ptr<SnakeServer>(new SnakeServer(univers));
+	ptr->build(dns, port);
 	return ptr;
 }
 
@@ -228,12 +226,12 @@ void SnakeServer::callbackAccept(size_t index) {
 
 
 
-void SnakeServer::build() {
+void SnakeServer::build(const std::string dns, unsigned short port) {
 
 	boost::weak_ptr<SnakeServer> thisWeakPtr(shared_from_this());
 
 	serverTCP_ = KNW::ServerTCP::create(univers_.getIoManager());
-	serverTCP_->startServer(port_);
+	serverTCP_->startServer(dns, port);
 	serverTCP_->startAsyncAccept();
 
 	serverTCP_->startAsyncAccept(

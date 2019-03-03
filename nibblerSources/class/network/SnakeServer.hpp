@@ -13,7 +13,7 @@ class SnakeServer : public boost::enable_shared_from_this<SnakeServer>, public I
 
 public:
 	SnakeServer() = delete;
-	static boost::shared_ptr<SnakeServer> create(Univers &univers, unsigned int port);
+	static boost::shared_ptr<SnakeServer> create(Univers &univers, const std::string dns, unsigned short port);
 
 	void startGame();
 
@@ -35,15 +35,15 @@ public:
 
 	bool allSnakeIsReady() const override;
 
-	bool sendOpenGameToClient();
+	bool sendOpenGameToClient(bool openGame = true);
 
 	void closeAcceptorServer();
 
 	virtual ~SnakeServer();
 
 private:
-	SnakeServer(Univers &univers, unsigned int port);
-	void build();
+	SnakeServer(Univers &univers);
+	void build(const std::string dns, unsigned short port);
 
 	void callbackAccept(size_t);
 
@@ -77,7 +77,6 @@ private:
 	std::vector<FoodInfo> foodInfoArray;
 	std::mutex mutex_;
 	bool pause_;
-	unsigned short port_;
 	boost::shared_ptr<KNW::ServerTCP> serverTCP_;
 	std::shared_ptr<SnakeArrayContainer> snakeArray_;
 };

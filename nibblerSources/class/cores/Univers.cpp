@@ -7,7 +7,7 @@
 
 /** Const Variable **/
 
-const std::string Univers::SuccessServerIsCreate = "Server is online.";
+const std::string Univers::SuccessServerIsCreate = "Server is online on port %d.";
 const std::string Univers::SuccessIAIsCreate = "IA is online.";
 const std::string Univers::SuccessClientIsConnected = "Client is connected.";
 const std::string Univers::SuccessClientIsCreate = "Client is online";
@@ -32,7 +32,7 @@ const std::string Univers::WarningRequiredAtLeastOneClient = "You need to have a
 
 const std::string Univers::ErrorClientConnectionRefused = "Connection refused.";
 const std::string Univers::ErrorServerAlreadyUseOnThisPort = "Server already in use on this port.";
-
+const std::string Univers::ErrorPortRange = "Port should be between 0 and 65545";
 /** Univers **/
 
 Univers::Univers()
@@ -118,6 +118,9 @@ void Univers::startNewGame() {
 	gameManager->startNewGame();
 	gameManager->loopUI();
 	SnakeClient::boost_shared_ptr ptr(getSnakeClient().lock());
+	ptr->killSnake(ptr->getId_());
+	if (isServer())
+		snakeServer_->sendOpenGameToClient(false);
 	openGame_ = false;
 	gameManager->finishGame();
 	if (displayManager->hasLibraryLoaded())
@@ -201,29 +204,32 @@ void Univers::connect(const std::string dns, const std::string port) {
 		if (ex.code() == boost::system::errc::connection_refused) {
 			gui_->addMessageChat(eColorLog::kRed, ErrorClientConnectionRefused);
 		} else {
-			gui_->addMessageChat(ex.what());
+			gui_->addMessageChat(eColorLog::kRed, ex.what());
 		}
 	} catch (const std::exception &e) {
-		gui_->addMessageChat(e.what());
+		gui_->addMessageChat(eColorLog::kRed, e.what());
 	}
 }
-void Univers::createServer(const std::string, unsigned int port) {
+void Univers::createServer(const std::string dns, unsigned int port) {
 	if (snakeServer_)
 		gui_->addMessageChat(eColorLog::kOrange, WarningServerExist);
+	else if (port >> 16 != 0) {
+		gui_->addMessageChat(eColorLog::kRed, ErrorPortRange);
+	}
 	else {
 		try {
-			snakeServer_ = SnakeServer::create(*this, port);
-			gui_->addMessageChat(eColorLog::kGreen, SuccessServerIsCreate);
+			snakeServer_ = SnakeServer::create(*this, dns, port);
+			gui_->addMessageChat(eColorLog::kGreen, SuccessServerIsCreate, snakeServer_->getPort_());
 		} catch (const boost::system::system_error &ex) {
 			if (boost::system::errc::address_in_use == ex.code()) {
-				gui_->addMessageChat(eColorLog::kRed,
-									 ErrorServerAlreadyUseOnThisPort);
+				gui_->addMessageChat(eColorLog::kRed, ErrorServerAlreadyUseOnThisPort);
 			} else {
 				gui_->addMessageChat(eColorLog::kRed, ex.what());
 			}
 		} catch (std::exception const &e) {
-			gui_->addMessageChat(e.what());
+			gui_->addMessageChat(eColorLog::kRed, e.what());
 		}
+
 	}
 
 

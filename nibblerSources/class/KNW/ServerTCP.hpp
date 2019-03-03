@@ -65,7 +65,9 @@ namespace KNW {
 
 		DataTCP &getDataTCP();
 
-		void startServer(uint16_t port);
+		void startServer(const std::string dns, uint16_t port);
+
+		unsigned short getPort() const;
 
 
 		size_t getSizeOfOpenConnection() const;
@@ -114,6 +116,7 @@ namespace KNW {
 		std::function<void(size_t)> callbackAccept_;
 		std::function<void(size_t)> callbackDeadConnection_;
 	private:
+		unsigned short port_;
 		boost::shared_ptr<boost::asio::ip::tcp::acceptor> acceptor_;
 	};
 

@@ -65,14 +65,17 @@ namespace KNW {
 	ServerTCP::ServerTCP(IOManager &io_manager)
 			: io_manager_(io_manager),
 			dataTCP(DataTCP::create()),
-			acceptor_(new boost::asio::ip::tcp::acceptor(io_manager_.getIo())) {
+			port_(0),
+			acceptor_(new boost::asio::ip::tcp::acceptor(io_manager_.getIo()))
+			{
 		connections.fill(nullptr);
 	}
 
-	void ServerTCP::startServer(uint16_t port) {
+	void ServerTCP::startServer(const std::string dns, uint16_t port) {
 		boost::asio::ip::tcp::resolver resolver(io_manager_.getIo());
 		boost::asio::ip::tcp::resolver::query query(
-				"localhost",
+				dns,
+//				"localhost",
 //				"192.168.0.101",
 				boost::lexical_cast<std::string>(port));
 		boost::asio::ip::tcp::endpoint endpoint = *resolver.resolve(query);
@@ -84,6 +87,7 @@ namespace KNW {
 
 	void ServerTCP::startAsyncAccept()  {
 		ServerTCP::b_wptr wptr(shared_from_this());
+		port_ = acceptor_->local_endpoint().port();
 //		boost::asio::post(io_manager_.getIo(), [wptr](){ auto sptr = wptr.lock(); if (sptr) sptr->acceptConnection(); });
 		io_manager_.getIo().post([wptr](){ auto sptr = wptr.lock(); if (sptr) sptr->acceptConnection(); });
 	}
@@ -154,6 +158,10 @@ namespace KNW {
 
 	bool ServerTCP::isOpen() const {
 		return acceptor_ != nullptr && acceptor_->is_open();
+	}
+
+	unsigned short ServerTCP::getPort() const {
+		return port_;
 	}
 
 	ServerTCP::~ServerTCP() {

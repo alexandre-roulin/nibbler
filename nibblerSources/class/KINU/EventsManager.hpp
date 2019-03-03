@@ -6,6 +6,7 @@
 #include <memory>
 #include <typeindex>
 #include <cstdint>
+#include <iostream>
 
 namespace KINU {
 
@@ -69,9 +70,7 @@ namespace KINU {
 			std::shared_ptr<Pool<T>> pool(new Pool<T>(0));
 			eventPools.insert(std::make_pair(std::type_index(typeid(T)), pool));
 		}
-
-		return std::static_pointer_cast<Pool<T>>(
-				eventPools[std::type_index(typeid(T))]);
+		return std::static_pointer_cast<Pool<T>>(eventPools.at(std::type_index(typeid(T))));
 	}
 
 	template<typename T>
