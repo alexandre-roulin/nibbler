@@ -30,8 +30,7 @@ private:
 	std::deque<WidgetSnake> snakeWidget_;
 	std::weak_ptr<SnakeArrayContainer> snakes_;
 
-	void _reload();
-
+	bool reload_();
 	void update_() override;
 	void beginContent_() override;
 };

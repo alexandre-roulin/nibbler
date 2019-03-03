@@ -12,8 +12,6 @@ SnakeServer::SnakeServer(
 		serverTCP_(nullptr),
 		snakeArray_(std::make_shared<SnakeArrayContainer >())
 		{
-
-
 }
 //void SnakeServer::callbackSnakeUN(const Snake &snakeUN) {
 //	log_warn("%s", __PRETTY_FUNCTION__);

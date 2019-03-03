@@ -31,11 +31,14 @@ WidgetLobby::WidgetLobby(Gui &core) :
 }
 
 void WidgetLobby::update_() {
+	active_ = false;
+	snakeWidget_.clear();
 	snakes_ = core_.univers.getSnakeArray_();
 	sf::Vector2<unsigned int> placesForSnakes(4, 2);
 	sf::Vector2<unsigned int> percentPlaceOfSnake;
 
-	_reload();
+	if (!reload_())
+			return ;
 
 	for (size_t i = 0; i < snakeWidget_.size(); i++) {
 
@@ -50,7 +53,6 @@ void WidgetLobby::update_() {
 										  50 / placesForSnakes.y)));
 		snakeWidget_[i].render(true);
 	}
-	active_ = false;
 }
 
 void WidgetLobby::addColor(eSprite color, std::string const &name,
@@ -67,24 +69,26 @@ void WidgetLobby::addSnake(const Snake &snake, WidgetSnake::SnakeType type) {
 		snakeWidget_.emplace_back(core_, snake, mapSprite_, type);
 }
 
-void WidgetLobby::_reload() {
+bool WidgetLobby::reload_() {
 	snakeWidget_.clear();
 
 	SnakeClient::boost_shared_ptr ptr(core_.univers.getSnakeClient().lock());
 	SnakeArrayPtr ptr_snakes(snakes_.lock());
 
-	if (!ptr || !ptr_snakes) return;
-	for (unsigned int i = 0; i < SNAKE_MAX; i++) {
+	if (!ptr || !ptr_snakes) {
+		return false;
+	}
 
+	for (unsigned int i = 0; i < SNAKE_MAX; i++) {
 		if (ptr && (*ptr_snakes)[i].isIA)
 			addSnake((*ptr_snakes)[i], WidgetSnake::kIa);
 		else if ( ptr && i == ptr->getId_() && ptr->isOpen())
 			addSnake((*ptr_snakes)[i], WidgetSnake::kYour);
 		else
 			addSnake((*ptr_snakes)[i], WidgetSnake::kBasic);
-
 		//addSnake((*snake_)[i], (i == ptr->getId_() && !ptr->isIa() && ptr->isConnect()));
 	}
+	return true;
 }
 
 
