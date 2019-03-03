@@ -1,6 +1,7 @@
 #include <KNW/ServerTCP.hpp>
 #include "SnakeServer.hpp"
 #include <cores/Univers.hpp>
+#include <cores/GameManager.hpp>
 
 SnakeServer::SnakeServer(
 		Univers &univers,
@@ -15,30 +16,27 @@ SnakeServer::SnakeServer(
 
 
 }
-//void SnakeServer::callbackSnakeUN(const Snake &snakeUN) {
-//	log_warn("%s", __PRETTY_FUNCTION__);
-//	{
-//		std::lock_guard<std::mutex> guard(mutex_);
-//		(*snakeArray_)[snakeUN.id] = static_cast<SnakeUN>(snakeUN);
-//		serverTCP_->writeDataToOpenConnections(snakeUN, eHeader::kSnakeUN);
-//	}
-//	updateInput();
-//}
 
 inline void SnakeServer::updateInput() {
 	std::lock_guard<std::mutex> guard(mutex_);
-
+	unsigned int deltaTime = 10;
 	log_warn("Condition [%d][%d]",pause_ ,std::any_of((*snakeArray_).begin(), (*snakeArray_).end(),[](const Snake &snake){ return snake.isValid && snake.isAlive && !snake.isUpdate;} ));
 
-	if (pause_ || std::any_of((*snakeArray_).begin(), (*snakeArray_).end(), [](const Snake & snake){ return snake.isValid && snake.isAlive && !snake.isUpdate; } )) return ;
 
-	std::for_each((*snakeArray_).begin(), (*snakeArray_).end(), [](Snake &snake){ snake.isUpdate = false; });
+	if (pause_ || std::any_of((*snakeArray_).begin(), (*snakeArray_).end(), [](const Snake & snake){ return snake.isValid && snake.isAlive && !snake.isUpdate; } )) return ;
+	std::for_each((*snakeArray_).begin(), (*snakeArray_).end(), [](Snake &snake){
+		snake.isUpdate = false;
+		snake.score_ += GameManager::ScaleByFrame;
+	});
 
 	for (auto infoArray : foodInfoArray) {
+
+		deltaTime += !infoArray.fromSnake ? GameManager::ScaleByRealFood :  GameManager::ScaleByFakeFood;
 		serverTCP_->writeDataToOpenConnections(infoArray, eHeader::kFood);
 	}
 	foodInfoArray.clear();
-	serverTCP_->writeDataToOpenConnections('K', eHeader::kPock);
+	serverTCP_->writeDataToOpenConnections(*snakeArray_, eHeader::kSnakeArray);
+	serverTCP_->writeDataToOpenConnections(deltaTime, eHeader::kPock);
 	return ;
 }
 
@@ -265,7 +263,7 @@ void SnakeServer::build() {
 	serverTCP_->getDataTCP().addDataType<SnakeArrayContainer>(
 			nullptr, eHeader::kSnakeArray);
 
-	serverTCP_->getDataTCP().addDataType<char>(
+	serverTCP_->getDataTCP().addDataType<unsigned int>(
 			nullptr, eHeader::kPock);
 
 	serverTCP_->getDataTCP().addDataType<bool>(

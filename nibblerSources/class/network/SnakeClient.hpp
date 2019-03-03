@@ -67,8 +67,6 @@ public:
 
 	void disconnect();
 
-	void addScore(uint16_t id, eScore score);
-
 	virtual ~SnakeClient();
 
 private:
@@ -104,7 +102,7 @@ private:
 
 	void callbackDeadConnection();
 
-	void callbackPock(char);
+	void callbackPock(uint32_t);
 
 	void callbackCloseConnection(char);
 

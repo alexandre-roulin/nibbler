@@ -15,7 +15,6 @@ WidgetSnake::WidgetSnake(Gui &core,
 }
 
 void WidgetSnake::render(void) {
-//	std::cout << snake_ << std::endl;
 	if (!snake_.isValid || !snake_.isReadyToExpose)
 		return;
 	if (type_ == kYour)

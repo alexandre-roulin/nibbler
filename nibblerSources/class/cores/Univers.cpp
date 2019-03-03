@@ -48,7 +48,7 @@ Univers::Univers()
 		exit_(false),
 		switchLib(false),
 		mapSize_(MAP_DEFAULT),
-		microSecDeltaTime(GameManager::Easy),
+		microSecDeltaTime(GameManager::Impossible),
 		borderless(false),
 		openGame_(false) {
 
@@ -132,7 +132,6 @@ void Univers::manageSnakeClientInput() {
 		direction = displayManager->getDisplay()->getDirection();
 
 	if (ptr && ptr->isOpen() && getGameManager().getWorld_()->getEntitiesManager().hasEntityByTagId(ptr->getId_() + eTag::kHeadTag) && !ptr->isIa()) {
-		ptr->addScore(ptr->getId_(), eScore::kFromTime);
 		ptr->sendDirection(direction);
 	}
 

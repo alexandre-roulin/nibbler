@@ -80,7 +80,6 @@ void Factory::createSnake(Snake const &snake, int maxSnakes) {
 
 void Factory::createWalls() {
 	int max = univers_.getMapSize();
-//	std::cout << "max > " << max << std::endl;
 	int x = 0;
 	int y = 1;
 	for (; x < max; ++x) {

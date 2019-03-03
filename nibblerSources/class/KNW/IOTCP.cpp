@@ -35,7 +35,6 @@ namespace KNW {
 		if (ec.value() == 0 && len != 0) {
 			BaseDataType::Header header;
 			std::memcpy(&header, buffer_data_.data(), len);
-			std::cout << "Header" << header << " Len :" << len << static_cast<int>(buffer_data_.data()[0]) << ' ' << static_cast<int>(buffer_data_.data()[1]) <<  std::endl;
 			readSocketData(header);
 		} else {
 			checkError(ec);
@@ -55,7 +54,6 @@ namespace KNW {
 										static_cast<size_t>(sharedPtr->getSizeOfHeader(header))),
 					[weakPtr, header](boost::system::error_code ec, size_t len) {
 						auto ptr = weakPtr.lock();
-						std::cout << "Header" << header << " " << len << ec.value() << std::endl;
 
 						if (ptr) ptr->handleReadData(header, ec, len);
 					});
@@ -103,7 +101,6 @@ namespace KNW {
 				boost::asio::buffer(pVoid, len),
 				[weakPtr](boost::system::error_code ec, size_t len) {
 					auto ptr = weakPtr.lock();
-					std::cout << __PRETTY_FUNCTION__ << " " << ec.message() << " " << ec.value() << " Len : " << len << std::endl;
 					if (ptr) ptr->handleWrite(ec, len);
 				});
 	}

@@ -38,7 +38,6 @@ void Snake::randomSnake(int16_t id_) {
 
 Snake &Snake::operator=(SnakeUI const &ui) {
 	SnakeUI::operator=(ui);
-	std::cout << (isReadyToExpose  ? "true" : "false") << std::endl;
 	return *this;
 }
 
