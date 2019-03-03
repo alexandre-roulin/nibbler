@@ -4,24 +4,24 @@
 #include <component/JoystickComponent.hpp>
 #include <component/MotionComponent.hpp>
 #include <network/SnakeClient.hpp>
+#include <nibbler.hpp>
 
-JoystickSystem::JoystickSystem(Univers &univers): univers_(univers) {
+JoystickSystem::JoystickSystem() {
 	requireComponent<JoystickComponent>();
 	requireComponent<MotionComponent>();
 }
 
 void JoystickSystem::update() {
 //	log_info("%s", __PRETTY_FUNCTION__);
-	SnakeClient::boost_shared_ptr ptr(univers_.getSnakeClient().lock());
-	if (!ptr)
-		return;
-	std::shared_ptr<SnakeArrayContainer> snake_array = ptr->getSnakeArray_();
 
-	for (auto &snake : (*snake_array)) {
-		if (snake.isValid && getWorld().getEntitiesManager().hasEntityByTagId(snake.id + eTag::kHeadTag)) {
-			auto entity = getWorld().getEntitiesManager().getEntityByTagId(snake.id + eTag::kHeadTag);
+	std::vector<DirectionArray> directions = getWorld().getEventsManager().getEvents<DirectionArray>();
+	getWorld().getEventsManager().destroy<DirectionArray>();
+	assert(directions.size() == 1);
+	for (int id = 0; id < SNAKE_MAX; ++id) {
+		if (getWorld().getEntitiesManager().hasEntityByTagId(id + eTag::kHeadTag)) {
+			auto entity = getWorld().getEntitiesManager().getEntityByTagId(id + eTag::kHeadTag);
 			if (entity.hasComponent<JoystickComponent>()) {
-				entity.getComponent<JoystickComponent>().direction = snake.direction;
+				entity.getComponent<JoystickComponent>().direction = directions[0][id];
 			}
 		}
 	}

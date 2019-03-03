@@ -71,15 +71,17 @@ void WidgetLobby::_reload() {
 	snakeWidget_.clear();
 
 	SnakeClient::boost_shared_ptr ptr(core_.univers.getSnakeClient().lock());
+	SnakeArrayPtr ptr_snakes(snakes_.lock());
 
+	if (!ptr || !ptr_snakes) return;
 	for (unsigned int i = 0; i < SNAKE_MAX; i++) {
 
-		if (ptr && snakes_ && (*snakes_)[i].isIA)
-			addSnake((*snakes_)[i], WidgetSnake::kIa);
-		else if (snakes_ && ptr && i == ptr->getId_() && ptr->isOpen())
-			addSnake((*snakes_)[i], WidgetSnake::kYour);
-		else if (snakes_)
-			addSnake((*snakes_)[i], WidgetSnake::kBasic);
+		if (ptr && (*ptr_snakes)[i].isIA)
+			addSnake((*ptr_snakes)[i], WidgetSnake::kIa);
+		else if ( ptr && i == ptr->getId_() && ptr->isOpen())
+			addSnake((*ptr_snakes)[i], WidgetSnake::kYour);
+		else
+			addSnake((*ptr_snakes)[i], WidgetSnake::kBasic);
 
 		//addSnake((*snake_)[i], (i == ptr->getId_() && !ptr->isIa() && ptr->isConnect()));
 	}

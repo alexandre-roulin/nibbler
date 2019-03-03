@@ -78,16 +78,16 @@ namespace KNW {
 							  std::function<void(size_t)>);
 
 		template<typename T>
-		void writeDataToOpenConnection(T data, int index);
+		void writeDataToOpenConnection(T &&data, int index);
 
 		template<typename T, typename H>
-		void writeDataToOpenConnection(T data, int index, H header);
+		void writeDataToOpenConnection(T &&data, int index, H header);
 
 		template<typename T>
-		void writeDataToOpenConnections(T data);
+		void writeDataToOpenConnections(T &&data);
 
 		template<typename T, typename H>
-		void writeDataToOpenConnections(T data, H header);
+		void writeDataToOpenConnections(T &&data, H header);
 
 		void stopAccept();
 
@@ -118,20 +118,20 @@ namespace KNW {
 	};
 
 	template<typename T>
-	void ServerTCP::writeDataToOpenConnection(T data, int index) {
+	void ServerTCP::writeDataToOpenConnection(T &&data, int index) {
 		assert(dataTCP->hasType<T>());
 		assert(connections[index] != nullptr);
 		connections[index]->write(dataTCP->serializeData(DataType<T>::getHeader(), data));
 	}
 
 	template<typename T, typename H>
-	void ServerTCP::writeDataToOpenConnection(T data, int index, H header) {
+	void ServerTCP::writeDataToOpenConnection(T &&data, int index, H header) {
 		assert(connections[index] != nullptr);
 		connections[index]->write(dataTCP->serializeData(static_cast<BaseDataType::Header>(header), data));
 	}
 
 	template<typename T>
-	void ServerTCP::writeDataToOpenConnections(T data) {
+	void ServerTCP::writeDataToOpenConnections(T &&data) {
 		assert(dataTCP->hasType<T>());
 		for (auto &connection : connections) {
 			if (connection) {
@@ -141,7 +141,7 @@ namespace KNW {
 	}
 
 	template<typename T, typename H>
-	void ServerTCP::writeDataToOpenConnections(T data, H header) {
+	void ServerTCP::writeDataToOpenConnections(T &&data, H header) {
 		for (auto &connection : connections) {
 			if (connection)
 				connection->write(dataTCP->serializeData(static_cast<BaseDataType::Header>(header), data));

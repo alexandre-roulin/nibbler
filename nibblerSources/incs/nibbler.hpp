@@ -29,7 +29,10 @@ class BaseSnake;
 class SnakeUI;
 class SnakeUX;
 
-using SnakeArrayContainer = boost::array<Snake, SNAKE_MAX>;
+using SnakeArrayContainer = std::array<Snake, SNAKE_MAX>;
+using SnakeArrayPtr = std::shared_ptr<SnakeArrayContainer>;
+using DirectionArray = std::array<eDirection, SNAKE_MAX>;
+//NO FUCKING COMMENT PLZ !!!
 
 enum eScore : uint16_t {
 	kFromTime = 1,
