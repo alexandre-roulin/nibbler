@@ -332,7 +332,7 @@ void DisplayGlfw::render() {
 
 
 	if (indexActiveCamera_ == CAMERA_SNAKE) {
-		if (getKeyState(GLFW_KEY_RIGHT) == KeyState::kDown) {
+		if (getKeyState(GLFW_KEY_D) == KeyState::kDown) {
 			if (((yourSnakeSprite & eSprite::kMaskTo) >> eSprite::kBitwiseTo) == eSprite::kEast)
 				direction_ = kSouth;
 			else if (((yourSnakeSprite & eSprite::kMaskTo) >> eSprite::kBitwiseTo) == eSprite::kSouth)
@@ -341,7 +341,7 @@ void DisplayGlfw::render() {
 				direction_ = kNorth;
 			else if (((yourSnakeSprite & eSprite::kMaskTo) >> eSprite::kBitwiseTo) == eSprite::kNorth)
 				direction_ = kEast;
-		} else if (getKeyState(GLFW_KEY_LEFT) == KeyState::kDown) {
+		} else if (getKeyState(GLFW_KEY_A) == KeyState::kDown) {
 			if (((yourSnakeSprite & eSprite::kMaskTo) >> eSprite::kBitwiseTo) == eSprite::kEast)
 				direction_ = kNorth;
 			else if (((yourSnakeSprite & eSprite::kMaskTo) >> eSprite::kBitwiseTo) == eSprite::kSouth)
@@ -352,23 +352,23 @@ void DisplayGlfw::render() {
 				direction_ = kWest;
 		}
 	} else {
-		if (getKey(GLFW_KEY_UP))
+		if (getKey(GLFW_KEY_W))
 			direction_ = kNorth;
-		if (getKey(GLFW_KEY_DOWN))
+		if (getKey(GLFW_KEY_S))
 			direction_ = kSouth;
-		if (getKey(GLFW_KEY_LEFT))
+		if (getKey(GLFW_KEY_A))
 			direction_ = kWest;
-		if (getKey(GLFW_KEY_RIGHT))
+		if (getKey(GLFW_KEY_D))
 			direction_ = kEast;
 	}
 
-	if (getKey(GLFW_KEY_D))
+	if (getKey(GLFW_KEY_RIGHT))
 		camera_[CAMERA_MOVABLE].processPosition(Camera::Movement::RIGHT, deltaTime_ * 5);
-	if (getKey(GLFW_KEY_A))
+	if (getKey(GLFW_KEY_LEFT))
 		camera_[CAMERA_MOVABLE].processPosition(Camera::Movement::LEFT, deltaTime_ * 5);
-	if (getKey(GLFW_KEY_S))
+	if (getKey(GLFW_KEY_DOWN))
 		camera_[CAMERA_MOVABLE].processPosition(Camera::Movement::BACKWARD, deltaTime_ * 5);
-	if (getKey(GLFW_KEY_W))
+	if (getKey(GLFW_KEY_UP))
 		camera_[CAMERA_MOVABLE].processPosition(Camera::Movement::FORWARD, deltaTime_ * 5);
 
 	if (getKeyState(GLFW_KEY_P) == KeyState::kDown) {
