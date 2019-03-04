@@ -237,10 +237,10 @@ void					Gui::beginHueColor_(float color, float power) {
 	ImGui::PushStyleColor(ImGuiCol_ButtonHovered, static_cast<ImVec4>(ImColor::HSV(color, 0.8f * power, 0.8f * power)));
 	ImGui::PushStyleColor(ImGuiCol_ButtonActive, static_cast<ImVec4>(ImColor::HSV(color, 0.9f * power, 0.9f * power)));
 }
-void					Gui::beginColor(Gui::eColor color, Gui::eColor power) {
+void					Gui::beginColor(eColor color, eColor power) {
 	assert(!Gui::_useColor);
 	Gui::_useColor = true;
-	if (color == Gui::eColor::kGrey) {
+	if (color == eColor::kGrey) {
 		ImGui::PushStyleColor(ImGuiCol_Button, static_cast<ImVec4>(ImColor::HSV(0.f, 0.f, 0.5f * Gui::mapEColor_.at(power))));
 		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, static_cast<ImVec4>(ImColor::HSV(0.f, 0.0f, 0.5f * Gui::mapEColor_.at(power))));
 		ImGui::PushStyleColor(ImGuiCol_ButtonActive, static_cast<ImVec4>(ImColor::HSV(0.f, 0.00f, 0.65f * Gui::mapEColor_.at(power))));
@@ -252,7 +252,7 @@ void					Gui::endColor() {
 	Gui::_useColor = false;
 }
 
-std::map< Gui::eColor, float > const Gui::mapEColor_ = { { eColor::kGrey, 0.f },
+std::map< eColor, float > const Gui::mapEColor_ = { { eColor::kGrey, 0.f },
 														 { eColor::kRed, 0.f },
 														 { eColor::kGreen, 0.33f },
 														 { eColor::kPurple, 0.77f },

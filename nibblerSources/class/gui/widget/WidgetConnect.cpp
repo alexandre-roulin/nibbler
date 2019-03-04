@@ -17,18 +17,18 @@ void WidgetConnect::beginContent_() {
 	SnakeClient::boost_shared_ptr ptrClient(core_.univers.getSnakeClient().lock());
 
 	if (client_)
-		Gui::beginColor(Gui::eColor::kRed);
+		Gui::beginColor(eColor::kRed);
 	else
-		Gui::beginColor(Gui::eColor::kGreen);
+		Gui::beginColor(eColor::kGreen);
 	if (ImGui::Button("Host", sf::Vector2f(ImGui::GetWindowSize().x / 2, 20)))
 		client_ = false;
 	ImGui::SameLine();
 	Gui::endColor();
 
 	if (client_)
-		Gui::beginColor(Gui::eColor::kGreen);
+		Gui::beginColor(eColor::kGreen);
 	else
-		Gui::beginColor(Gui::eColor::kRed);
+		Gui::beginColor(eColor::kRed);
 	if (ImGui::Button("Client", sf::Vector2f(ImGui::GetWindowSize().x / 2 - 1, 20)))
 		client_ = true;
 
@@ -53,7 +53,7 @@ void WidgetConnect::beginContent_() {
 	ImGui::Spacing();
 	ImGui::Spacing();
 
-	Gui::beginColor(Gui::eColor::kGreen);
+	Gui::beginColor(eColor::kGreen);
 
 	if (client_) {
 		if (ptrClient && ptrClient->isOpen()) {

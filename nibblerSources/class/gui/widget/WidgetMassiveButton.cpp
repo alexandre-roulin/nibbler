@@ -8,10 +8,10 @@ WidgetMassiveButton::WidgetMassiveButton(Gui &core) :
 }
 
 void WidgetMassiveButton::beginContent_() {
-	if (ImGui::Button("create_server()"))
+	if (button_("create_server()"))
 		core_.univers.createServer();
-	if (ImGui::Button("create_client()"))
+	if (button_("create_client()"))
 		core_.univers.createClient();
-	if (ImGui::Button("delete_client()"))
+	if (button_("delete_client()"))
 		core_.univers.deleteClient();
 }

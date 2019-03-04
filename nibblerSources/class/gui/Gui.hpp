@@ -9,6 +9,7 @@
 #include <cores/Univers.hpp>
 #include <iostream>
 #include <fstream>
+#include "GuiData.hpp"
 
 #define GUI_INPUT_DIRECTORY "input"
 
@@ -26,8 +27,6 @@ public:
 		CoreConstructorException &operator=(CoreConstructorException const &rhs) noexcept;
 		std::string			_error;
 	};
-
-	enum class eColor { kGrey, kRed, kGreen, kPurple, kHard, kMedium, kSoft, kLight};
 
 	Gui(Univers &univers);
 	~Gui(void);

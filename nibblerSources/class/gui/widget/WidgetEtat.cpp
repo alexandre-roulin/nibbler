@@ -11,38 +11,24 @@ void WidgetEtat::beginContent_() {
 	SnakeClient::boost_shared_ptr ptrClient(core_.univers.getSnakeClient().lock());
 	boost::shared_ptr<ISnakeNetwork> ptrNetwork(core_.univers.getSnakeNetwork().lock());
 
-	if (ptrNetwork) {
-		Gui::beginColor(Gui::eColor::kGreen, Gui::eColor::kMedium);
-		ImGui::Button("Server Connected", sf::Vector2f(ImGui::GetWindowSize().x / 2, 20));
-	} else if (!ptrClient || !ptrClient->isOpen()) {
-		Gui::beginColor(Gui::eColor::kRed, Gui::eColor::kMedium);
-		ImGui::Button("Server Not connected", sf::Vector2f(ImGui::GetWindowSize().x / 2, 20));
-	} else {
-		Gui::beginColor(Gui::eColor::kGreen, Gui::eColor::kMedium);
-		ImGui::Button("Server Connected", sf::Vector2f(ImGui::GetWindowSize().x / 2, 20));
-	}
-	Gui::endColor();
+	if (ptrNetwork)
+		button_("Server Connected", ImGui::GetWindowSize().x / 2, eColor::kGreen, eColor::kMedium);
+	else if (!ptrClient || !ptrClient->isOpen())
+		button_("Server Not connected", ImGui::GetWindowSize().x / 2, eColor::kRed, eColor::kMedium);
+	else
+		button_("Server Connected", ImGui::GetWindowSize().x / 2, eColor::kGreen, eColor::kMedium);
+
+	if (!ptrClient)
+		button_("Client disable", ImGui::GetWindowSize().x / 2, eColor::kRed, eColor::kMedium);
+	else if (!ptrClient->isOpen())
+		button_("Client not connected", ImGui::GetWindowSize().x / 2, eColor::kGrey, eColor::kMedium);
+	else if (ptrClient->isOpen())
+		button_("Client connected", ImGui::GetWindowSize().x / 2, eColor::kGreen, eColor::kMedium);
+
 
 	if (ptrNetwork || (ptrClient && ptrClient->isOpen())) {
 		if (core_.univers.isServer()) {
-			ImGui::SameLine();
 			ImGui::Text("You are the host");
 		}
 	}
-
-	if (!ptrClient) {
-		Gui::beginColor(Gui::eColor::kRed, Gui::eColor::kMedium);
-		ImGui::Button("Client disable", sf::Vector2f(ImGui::GetWindowSize().x / 2 - 1, 20));
-	}
-	else if (!ptrClient->isOpen()) {
-		Gui::beginColor(Gui::eColor::kGrey, Gui::eColor::kMedium);
-		ImGui::Button("Client not connected", sf::Vector2f(ImGui::GetWindowSize().x / 2 - 1, 20));
-	}
-	else if (ptrClient->isOpen()) {
-		Gui::beginColor(Gui::eColor::kGreen, Gui::eColor::kMedium);
-		ImGui::Button("Client connected", sf::Vector2f(ImGui::GetWindowSize().x / 2 - 1, 20));
-	}
-	else
-		Gui::beginColor(Gui::eColor::kGreen);
-	Gui::endColor();
 }

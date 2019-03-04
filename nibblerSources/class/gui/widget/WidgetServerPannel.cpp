@@ -9,18 +9,14 @@ WidgetServerPannel::WidgetServerPannel(Gui &core) :
 void WidgetServerPannel::beginContent_() {
 	SnakeClient::boost_shared_ptr ptr(core_.univers.getSnakeClient().lock());
 
-	if (ImGui::Button("Generate IA"))
+	if (button_("Generate IA"))
 		core_.univers.createBobby();
-	if (ImGui::Button("Delete server"))
+	if (button_("Delete server"))
 		core_.univers.deleteServer();
 
 	if (ptr && ptr->allSnakeIsReady()) {
-		Gui::beginColor(Gui::eColor::kGreen);
-		if (ImGui::Button("Run the game")) {
+		if (button_("Run the game", eColor::kGreen)) {
 		}
-	} else {
-		Gui::beginColor(Gui::eColor::kGrey);
-		ImGui::Button("Run the game");
-	}
-	Gui::endColor();
+	} else
+		button_("Run the game", eColor::kGrey);
 }

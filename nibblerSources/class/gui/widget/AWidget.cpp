@@ -1,10 +1,12 @@
 #include "AWidget.hpp"
+#include <gui/Gui.hpp>
 
 AWidget::AWidget(Gui &core, std::string const &winName, ImGuiWindowFlags winFlags) :
 		core_(core),
 		active_(true),
 		winName_(winName),
-		winFlags_(winFlags) {
+		winFlags_(winFlags),
+		sizeButton_(ImVec2(100, 20)) {
 }
 
 AWidget::Constructor::Constructor(void) noexcept :
@@ -41,4 +43,19 @@ void AWidget::render(bool renderContentInWindow) {
 			ImGui::PopStyleColor(4);
 		ImGui::End();
 	}
+}
+
+
+bool AWidget::button_(std::string const &text, int sizeTextX,  eColor color, eColor power) const {
+	if (color != eColor::kNone)
+		Gui::beginColor(color, power);
+	ImGui::SetCursorPosX((ImGui::GetWindowSize().x - sizeTextX) / 2);
+	bool ret =  ImGui::Button(text.c_str(), ImVec2(sizeTextX, sizeButton_.y));
+	if (color != eColor::kNone)
+		Gui::endColor();
+	return ret;
+}
+
+bool AWidget::button_(std::string const &text,  eColor color, eColor power) const {
+	return button_(text, sizeButton_.x, color, power);
 }
