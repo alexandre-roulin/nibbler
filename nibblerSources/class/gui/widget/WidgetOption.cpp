@@ -23,9 +23,9 @@ bool getNameOfDisplayLibraryInfo(void *data, int idx, const char **out_str) {
 }
 
 void WidgetOption::update_() {
-	sound_ = core_.univers.getSoundManager().hasLibraryLoaded();
-	rNoise_ = core_.univers.getSoundManager().getNoise();
-	rMusique_ = core_.univers.getSoundManager().getMusique();
+	//sound_ = core_.univers.getSoundManager().hasLibraryLoaded();
+	//rNoise_ = core_.univers.getSoundManager().getNoise();
+	//rMusique_ = core_.univers.getSoundManager().getMusique();
 }
 
 void WidgetOption::beginContent_() {
@@ -44,7 +44,7 @@ void WidgetOption::beginContent_() {
 
 	if (ImGui::Checkbox("Son", &sound_)) {
 		if (sound_)
-			core_.univers.loadSound(eSound::kSoundSfmlLibrary);
+			sound_ = core_.univers.loadSound(eSound::kSoundSfmlLibrary);
 		else
 			core_.univers.unloadSound();
 	}
@@ -55,7 +55,6 @@ void WidgetOption::beginContent_() {
 			if (!rMusique_)
 				core_.univers.getSoundManager().stopMusic();
 			else {
-
 				core_.univers.getSoundManager().playMusic(pathSound_);
 			}
 		}

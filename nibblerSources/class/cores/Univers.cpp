@@ -361,14 +361,15 @@ void Univers::loadSoundData_() {
 	getSoundManager().addNoise((pathSound / "hit17.ogg").generic_string());
 }
 
-void Univers::loadSound(eSound sound) {
+bool Univers::loadSound(eSound sound) {
 	if (getSoundManager().hasLibraryLoaded())
 		throw std::runtime_error("Trying to loadExternalSoundLibrary but it is already loaded");
 	getSoundManager().loadExternalSoundLibrary(sound);
-	if (!getSoundManager().hasLibraryLoaded())
-		return;
 	getSoundManager().constructExternalLibrary();
+	if (!getSoundManager().hasLibraryLoaded())
+		return false;
 	loadSoundData_();
+	return true;
 }
 void Univers::unloadSound() {
 	if (!getSoundManager().hasLibraryLoaded())

@@ -42,7 +42,8 @@ void ExternalLibrarySoundManager::loadExternalSoundLibrary(eSound sound) {
 }
 
 void ExternalLibrarySoundManager::constructExternalLibrary() {
-	sound = newSound();
+	if (newSound)
+		sound = newSound();
 }
 
 void ExternalLibrarySoundManager::unloadExternalSoundLibrary() {
