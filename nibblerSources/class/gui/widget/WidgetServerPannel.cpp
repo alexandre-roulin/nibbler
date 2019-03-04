@@ -9,9 +9,9 @@ WidgetServerPannel::WidgetServerPannel(Gui &core) :
 void WidgetServerPannel::beginContent_() {
 	SnakeClient::boost_shared_ptr ptr(core_.univers.getSnakeClient().lock());
 
-	if (ImGui::Button("create_ia()"))
+	if (ImGui::Button("Generate IA"))
 		core_.univers.createBobby();
-	if (ImGui::Button("delete_server()"))
+	if (ImGui::Button("Delete server"))
 		core_.univers.deleteServer();
 
 	if (ptr && ptr->allSnakeIsReady()) {

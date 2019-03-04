@@ -5,6 +5,7 @@
 #include <vector>
 #include "nibbler.hpp"
 #include <cores/Snake.hpp>
+#include <network/SnakeClient.hpp>
 
 class Gui;
 
@@ -43,5 +44,5 @@ private:
 
 	void updateSizeTexture_();
 
-	void renderSelectionColor_() const;
+	void renderSelectionColor_(SnakeClient::boost_shared_ptr &ptr) const;
 };

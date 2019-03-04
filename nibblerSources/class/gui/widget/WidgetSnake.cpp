@@ -68,16 +68,15 @@ void WidgetSnake::renderStaticDataSnake_() const {
 	renderImage_();
 }
 
-void WidgetSnake::renderSelectionColor_() const {
-
-	SnakeClient::boost_shared_ptr ptr(core_.univers.getSnakeClient().lock());
+void WidgetSnake::renderSelectionColor_(SnakeClient::boost_shared_ptr &ptr) const {
 
 	int flagImGuiCombo;
 
-	if (type_ == kYour)
+	if (type_ == kYour || type_ == kIa)
 		flagImGuiCombo = ImGuiComboFlags_None;
 	else
 		flagImGuiCombo = ImGuiComboFlags_NoArrowButton;
+
 	ImGui::SetCursorPosX((ImGui::GetWindowSize().x - sizeTexture_) / 2);
 	if (ImGui::BeginCombo("", mapSprite_.at(snake_.sprite).name.c_str(), flagImGuiCombo)) {
 		for (auto const &e : mapSprite_) {
@@ -106,6 +105,11 @@ void WidgetSnake::renderIa_() {
 		ImGui::Button("Bot", sf::Vector2f(sizeTexture_, ImGui::GetFrameHeight()));
 
 	Gui::endColor();
+
+	SnakeClient::boost_shared_ptr ptrBobby(core_.univers.getBobbyClient(snake_.id).lock());
+
+	if (core_.univers.isServer() && ptrBobby)
+		renderSelectionColor_(ptrBobby);
 }
 
 void WidgetSnake::renderOtherSnake_() {
@@ -127,7 +131,7 @@ void WidgetSnake::renderOtherSnake_() {
 	}
 	Gui::endColor();
 
-	renderSelectionColor_();
+	renderSelectionColor_(ptr);
 }
 
 void WidgetSnake::renderYourSnake_() {
@@ -148,5 +152,5 @@ void WidgetSnake::renderYourSnake_() {
 	}
 	Gui::endColor();
 
-	renderSelectionColor_();
+	renderSelectionColor_(ptr);
 }
