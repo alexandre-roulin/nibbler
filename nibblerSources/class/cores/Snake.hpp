@@ -84,6 +84,7 @@ public:
 	uint16_t score_;
 
 	static std::string const basicName[SNAKE_MAX_NAME];
+	static eSprite const color[SNAKE_MAX_COLOR];
 };
 
 

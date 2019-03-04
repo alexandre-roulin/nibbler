@@ -90,6 +90,7 @@ void WidgetSnake::renderSelectionColor_(SnakeClient::boost_shared_ptr &ptr) cons
 
 void WidgetSnake::renderIa_() {
 	SnakeClient::boost_shared_ptr ptr(core_.univers.getSnakeClient().lock());
+	SnakeClient::boost_shared_ptr ptrBobby(core_.univers.getBobbyClient(snake_.id).lock());
 
 	updateSizeTexture_();
 	renderStaticDataSnake_();
@@ -98,15 +99,13 @@ void WidgetSnake::renderIa_() {
 
 	Gui::beginColor(Gui::Gui::eColor::kPurple);
 	if (core_.univers.isServer()) {
-		if (ptr && ImGui::Button("Delete", sf::Vector2f(sizeTexture_, ImGui::GetFrameHeight())))
-			core_.univers.deleteBobby(snake_.id);
+		if (ptr && ptrBobby && ImGui::Button("Delete", sf::Vector2f(sizeTexture_, ImGui::GetFrameHeight())))
+			core_.univers.deleteBobby(ptrBobby);
 	}
 	else
 		ImGui::Button("Bot", sf::Vector2f(sizeTexture_, ImGui::GetFrameHeight()));
 
 	Gui::endColor();
-
-	SnakeClient::boost_shared_ptr ptrBobby(core_.univers.getBobbyClient(snake_.id).lock());
 
 	if (core_.univers.isServer() && ptrBobby)
 		renderSelectionColor_(ptrBobby);

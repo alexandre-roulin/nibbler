@@ -1,5 +1,6 @@
 #include "Snake.hpp"
 #include <boost/serialization/serialization.hpp>
+#include <nibbler.hpp>
 
 std::string const Snake::basicName[SNAKE_MAX_NAME] = {
 		"Jack O'Lantern",
@@ -11,6 +12,17 @@ std::string const Snake::basicName[SNAKE_MAX_NAME] = {
 		"jinou42",
 		"Dautta c bo"
 };
+
+/*eSprite const color[SNAKE_MAX_COLOR] = {
+		eSprite::kGreen,
+		eSprite::kBlue,
+		eSprite::kPurple,
+		eSprite::kPink,
+		eSprite::kGrey,
+		eSprite::kYellow,
+		eSprite::kOrange,
+		eSprite::kRed
+};*/
 
 /** Snake **/
 
@@ -34,10 +46,8 @@ void Snake::randomSnake(int16_t id_, eSprite prev) {
 	}
 	strncpy(name, Snake::basicName[static_cast<int>(sprite) - 1].c_str(), NAME_BUFFER);
 	id = id_;
-	isAlive = true;
 	isSwitchingLibrary = false;
 	isValid = true;
-	isIA = false;
 	score_ = 0;
 	isReadyToExpose = true;
 }

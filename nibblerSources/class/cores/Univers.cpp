@@ -291,16 +291,17 @@ void Univers::closeServer() {
 	}
 }
 
-void Univers::deleteBobby(int16_t id) {
+void Univers::deleteBobby(SnakeClient::boost_shared_ptr &ptr) {
 	if (!isServer()) {
 		gui_->addMessageChat(eColorLog::kOrange, WarningServerRemoveIA);
-		return;
+		return ;
 	}
-	vecBobby.erase(std::remove_if(vecBobby.begin(), vecBobby.end(),
-			[id](std::unique_ptr<Bobby> &bob) {
-		return bob->getId() == id;
 
-	}), vecBobby.end());
+	ptr->disconnect();
+	vecBobby.erase(std::remove_if(vecBobby.begin(), vecBobby.end(),
+			[ptr](std::unique_ptr<Bobby> &bob) {
+		return bob->getId() == ptr->getId_();
+	}));
 }
 
 void Univers::deleteClient() {

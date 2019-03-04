@@ -80,7 +80,7 @@ public:
 
 	// delete
 
-	void deleteBobby(int16_t id);
+	void deleteBobby(SnakeClient::boost_shared_ptr &ptr);
 
 	void deleteClient();
 
