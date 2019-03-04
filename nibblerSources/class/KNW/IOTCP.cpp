@@ -85,6 +85,7 @@ namespace KNW {
 //	log_fatal("%s", __PRETTY_FUNCTION__);
 
 		boost::weak_ptr<IOTCP> weakPtr(shared_from_this());
+		if (socket_ && socket_->is_open())
 		boost::asio::async_write(
 				*socket_,
 				boost::asio::buffer(data),

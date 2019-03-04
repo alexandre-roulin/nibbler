@@ -4,10 +4,12 @@
 #include <bitset>
 #include "nibbler.hpp"
 
+class Univers;
+
 class ExternalLibrarySoundManager {
 
 public:
-	ExternalLibrarySoundManager();
+	ExternalLibrarySoundManager(Univers &univers);
 	virtual ~ExternalLibrarySoundManager();
 	ExternalLibrarySoundManager &operator=(const ExternalLibrarySoundManager &) = delete;
 	ExternalLibrarySoundManager(const ExternalLibrarySoundManager &) = delete;
@@ -16,7 +18,7 @@ public:
 	void loadExternalSoundLibrary(eSound sound);
 	void constructExternalLibrary();
 	void unloadExternalSoundLibrary();
-	void dlError(char const *from);
+	void dlError();
 	bool hasLibraryLoaded() const;
 	eSound getKSound() const;
 	void setKSound(eSound kSound);
@@ -43,6 +45,7 @@ private:
 	eSound kSound;
 	bool noise_;
 	bool musique_;
+	Univers &univers_;
 };
 
 

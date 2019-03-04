@@ -3,11 +3,12 @@
 #include <IDisplay.hpp>
 #include <array>
 #include "nibbler.hpp"
+class Univers;
 
 class ExternalLibraryDisplayManager {
 
 public:
-	ExternalLibraryDisplayManager();
+	ExternalLibraryDisplayManager(Univers &univers);
 	virtual ~ExternalLibraryDisplayManager();
 	ExternalLibraryDisplayManager &operator=(const ExternalLibraryDisplayManager &) = delete;
 	ExternalLibraryDisplayManager(const ExternalLibraryDisplayManager &) = delete;
@@ -16,8 +17,9 @@ public:
 	void loadExternalDisplayLibrary(eDisplay display);
 	void constructExternalLibrary(int width, int height);
 	void unloadExternalDisplayLibrary();
-	void dlError(char const *from);
+	void dlError();
 	bool hasLibraryLoaded() const;
+	bool hasConstructorLoaded() const;
 	IDisplay *getDisplay() const;
 	eDisplay getKDisplay() const;
 	void setKDisplay(eDisplay k);
@@ -35,4 +37,5 @@ private:
 	IDisplay *display;
 	void (*deleteDisplay)(IDisplay *);
 	eDisplay kDisplay;
+	Univers &univers_;
 };

@@ -33,11 +33,10 @@ inline void SnakeServer::updateInput() {
 	foodInfoArray.clear();
 	serverTCP_->writeDataToOpenConnections(*snakeArray_, eHeader::kSnakeArray);
 	serverTCP_->writeDataToOpenConnections(deltaTime, eHeader::kPock);
-	return ;
 }
 
 void SnakeServer::startGame() {
-	assert(isReady());
+	if (!isReady()) return;
 	std::lock_guard<std::mutex> guard(mutex_);
 	foodInfoArray.clear();
 
@@ -121,6 +120,7 @@ SnakeServer::~SnakeServer() {
 
 
 void SnakeServer::callbackSnakeUI(const Snake &snakeUI) {
+	if (snakeUI.id >= 8) return;
 	log_success("%s %d", __PRETTY_FUNCTION__, snakeUI.isReadyToExpose);
 	std::lock_guard<std::mutex> guard(mutex_);
 	(*snakeArray_)[snakeUI.id] = static_cast<SnakeUI>(snakeUI);
@@ -128,18 +128,21 @@ void SnakeServer::callbackSnakeUI(const Snake &snakeUI) {
 }
 
 void SnakeServer::callbackSnakeUX(const Snake &snakeUX) {
+	if (snakeUX.id >= 8) return;
 	std::lock_guard<std::mutex> guard(mutex_);
 	(*snakeArray_)[snakeUX.id] = static_cast<SnakeUX>(snakeUX);
 	serverTCP_->writeDataToOpenConnections(snakeUX, eHeader::kSnakeUX);
 }
 
 void SnakeServer::callbackSnake(const Snake &snake) {
+	if (snake.id >= 8) return;
 	std::lock_guard<std::mutex> guard(mutex_);
 	(*snakeArray_)[snake.id] = snake;
 	serverTCP_->writeDataToOpenConnections((*snakeArray_)[snake.id], eHeader::kSnake);
 }
 
 void SnakeServer::callbackSnakeUN(const Snake &snakeUN) {
+	if (snakeUN.id >= 8) return;
 	{
 		std::lock_guard<std::mutex> guard(mutex_);
 		(*snakeArray_)[snakeUN.id] = static_cast<SnakeUN>(snakeUN);
@@ -155,6 +158,7 @@ void SnakeServer::callbackBorderless(bool borderless) {
 
 
 void SnakeServer::callbackResizeMap(unsigned int mapSize) {
+	if (mapSize > MAP_MAX && mapSize < MAP_MIN) return;
 	std::lock_guard<std::mutex> guard(mutex_);
 	serverTCP_->writeDataToOpenConnections(mapSize, eHeader::kResizeMap);
 }
@@ -179,18 +183,21 @@ void SnakeServer::callbackFood(FoodInfo foodInfo) {
 }
 
 
-void SnakeServer::callbackForcePause(int16_t id) {
+void SnakeServer::callbackForcePause(uint16_t id) {
+	if (id >= 8 ) return;
+
 	std::lock_guard<std::mutex> guard(mutex_);
 	(*snakeArray_)[id].isSwitchingLibrary = !(*snakeArray_)[id].isSwitchingLibrary;
 	pause_ = true;
 }
 
 void SnakeServer::callbackDeadConnection(size_t index) {
+	if (index >= 8) return;
 	{
 		std::lock_guard<std::mutex> guard(mutex_);
 		auto *it = std::find_if((*snakeArray_).begin(), (*snakeArray_).end(),
 								[index](Snake const &snake){
-									return snake.indexConnection == index;
+									return snake.indexConnection == index && snake.isValid;
 								});
 		if (it != (*snakeArray_).end()) {
 			log_success("%s index : %d", __PRETTY_FUNCTION__, index);
@@ -202,6 +209,8 @@ void SnakeServer::callbackDeadConnection(size_t index) {
 }
 
 void SnakeServer::callbackPause(eAction pause) {
+	if (pause == kPause || pause == kSwitchDisplayLibrary) return;
+
 	log_success("%s", __PRETTY_FUNCTION__ );
 	{
 		std::lock_guard<std::mutex> guard(mutex_);
@@ -214,7 +223,7 @@ void SnakeServer::callbackPause(eAction pause) {
 }
 
 void SnakeServer::callbackAccept(size_t index) {
-
+	if (index >= 8) return;
 	int16_t new_id = std::distance((*snakeArray_).begin(), std::find_if((*snakeArray_).begin(), (*snakeArray_).end(), [](Snake const &s){ return !s.isValid;}));
 	log_success("%s isValid : %d new_id %d index %d %d", __PRETTY_FUNCTION__, std::count_if((*snakeArray_).begin(), (*snakeArray_).end(), [](Snake const &s){ return s.isValid;}), new_id, index,
 				sizeof(SnakeArrayContainer));
@@ -293,8 +302,8 @@ void SnakeServer::build(const std::string dns, unsigned short port) {
 			{ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackFood(foodInfo); }),
 			eHeader::kFood);
 
-	serverTCP_->getDataTCP().addDataType<int16_t>(
-			([thisWeakPtr](int16_t id)
+	serverTCP_->getDataTCP().addDataType<uint16_t >(
+			([thisWeakPtr](uint16_t  id)
 			{ auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackForcePause(id); }),
 			eHeader::kForcePause);
 

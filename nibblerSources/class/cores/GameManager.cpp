@@ -45,7 +45,7 @@ void GameManager::startNewGame() {
 	world_->getSystemsManager().addSystem<MotionSystem>(univers_);
 	world_->getSystemsManager().addSystem<SpriteSystem>(univers_);
 	world_->getSystemsManager().addSystem<RenderSystem>(univers_);
-	world_->getSystemsManager().addSystem<FoodCreationSystem>();
+	world_->getSystemsManager().addSystem<FoodCreationSystem>(univers_.getMapSize());
 	world_->getSystemsManager().addSystem<FoodEatSystem>();
 	world_->getEventsManager().emitEvent(NextFrame());
 	world_->getEventsManager().destroy<NextFrame>();

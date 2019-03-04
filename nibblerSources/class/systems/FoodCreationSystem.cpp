@@ -7,7 +7,7 @@
 #include <logger.h>
 #include <events/FoodCreation.hpp>
 
-FoodCreationSystem::FoodCreationSystem() {
+FoodCreationSystem::FoodCreationSystem(unsigned int mapSize): mapSize_(mapSize) {
 }
 
 void FoodCreationSystem::update() {
@@ -17,10 +17,14 @@ void FoodCreationSystem::update() {
 	for (auto foodCreationEvent : foodCreationEvents) {
 		auto food = getWorld().createEntity();
 //		log_info("FoodCreationSystem:: x[%d] y[%d]", foodCreationEvent.positionComponent_.x, foodCreationEvent.positionComponent_.y);
-		food.addComponent(foodCreationEvent.positionComponent_);
-		food.addComponent<CollisionComponent>();
-		food.addComponent<SpriteComponent>(eSprite::kFood, kNoPriority);
-		food.groupEntityByGroupId((foodCreationEvent.fromSnake_ ? eTag::kFoodFromSnake : eTag::kFoodTag));
+		if (foodCreationEvent.positionComponent_.y >= 0 && foodCreationEvent.positionComponent_.y < mapSize_ &&
+				foodCreationEvent.positionComponent_.x >= 0 && foodCreationEvent.positionComponent_.x < mapSize_) {
+
+			food.addComponent(foodCreationEvent.positionComponent_);
+			food.addComponent<CollisionComponent>();
+			food.addComponent<SpriteComponent>(eSprite::kFood, kNoPriority);
+			food.groupEntityByGroupId((foodCreationEvent.fromSnake_ ? eTag::kFoodFromSnake : eTag::kFoodTag));
+		}
 	}
 }
 

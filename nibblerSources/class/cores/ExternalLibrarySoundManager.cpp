@@ -1,14 +1,16 @@
 #include "ExternalLibrarySoundManager.hpp"
 #include <dlfcn.h>
+#include <gui/Gui.hpp>
 
-ExternalLibrarySoundManager::ExternalLibrarySoundManager() :
+ExternalLibrarySoundManager::ExternalLibrarySoundManager(Univers &univers) :
 	deleteSound(nullptr),
 	sound(nullptr),
 	newSound(nullptr),
 	dlHandleSound(nullptr),
 	kSound(kSoundSfmlLibrary),
 	noise_(false),
-	musique_(false) {
+	musique_(false),
+	univers_(univers) {
 }
 
 void ExternalLibrarySoundManager::switchNextLibrary() {
@@ -23,18 +25,18 @@ void ExternalLibrarySoundManager::switchNextLibrary() {
 void ExternalLibrarySoundManager::loadExternalSoundLibrary(eSound sound) {
 
 	if (!(dlHandleSound = dlopen(libraryInfo[sound], RTLD_LAZY | RTLD_LOCAL))) {
-		dlError("dlopen");
+		dlError();
 		return;
 	}
 
 	if (!(newSound = reinterpret_cast<ISound *(*)() >(
 			dlsym(dlHandleSound, "newSound")))) {
-		dlError("dlsym");
+		dlError();
 		return;
 	}
 	if (!(deleteSound = reinterpret_cast<void (*)(
 			ISound *)>(dlsym(dlHandleSound, "deleteSound")))) {
-		dlError("dlsym");
+		dlError();
 		return;
 	}
 }
@@ -55,8 +57,10 @@ void ExternalLibrarySoundManager::unloadExternalSoundLibrary() {
 	}
 }
 
-void ExternalLibrarySoundManager::dlError(char const *from) {
-	std::cerr << "Error " << from << " : " << dlerror() << std::endl;
+void ExternalLibrarySoundManager::dlError() {
+	std::unique_ptr<Gui> &gui = univers_.getGui_();
+	if (gui)
+		gui->addMessageChat(eColorLog::kRed, dlerror());
 	unloadExternalSoundLibrary();
 }
 

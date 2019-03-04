@@ -1,28 +1,32 @@
 #include <dlfcn.h>
 #include "ExternalLibraryDisplayManager.hpp"
 #include <boost/filesystem/path.hpp>
+#include <gui/Gui.hpp>
 
-ExternalLibraryDisplayManager::ExternalLibraryDisplayManager():
+ExternalLibraryDisplayManager::ExternalLibraryDisplayManager(Univers & univers):
 	dlHandleDisplay(nullptr),
 	newDisplay(nullptr),
 	display(nullptr),
 	deleteDisplay(nullptr),
-	kDisplay(kDisplaySfmlLibrary) {
+	kDisplay(kDisplaySfmlLibrary),
+	univers_(univers) {
 }
 
 void ExternalLibraryDisplayManager::loadExternalDisplayLibrary(eDisplay display) {
 	if (!(dlHandleDisplay = dlopen(libraryInfo[display].path, RTLD_LAZY | RTLD_LOCAL))) {
-		dlError("dlopen");
+		dlError();
 		return;
 	}
-	if (!(newDisplay = reinterpret_cast<IDisplay *(*)(
-			int, int, const char *)>(dlsym(dlHandleDisplay, "newDisplay")))) {
-		dlError("dlsym - new");
+	if (!(newDisplay = reinterpret_cast<
+			IDisplay *(*)(int, int, const char *)
+			>(dlsym(dlHandleDisplay, "newDisplay")))) {
+		dlError();
 		return;
 	}
-	if (!(deleteDisplay = reinterpret_cast<void (*)(IDisplay *
-	)>(dlsym(dlHandleDisplay, "deleteDisplay")))) {
-		dlError("dlsym - delete");
+	if (!(deleteDisplay = reinterpret_cast<
+			void (*)(IDisplay *)
+			>(dlsym(dlHandleDisplay, "deleteDisplay")))) {
+		dlError();
 		return;
 	}
 }
@@ -52,8 +56,10 @@ bool ExternalLibraryDisplayManager::hasLibraryLoaded() const {
 }
 
 
-void ExternalLibraryDisplayManager::dlError(char const *from) {
-	std::cerr << "Error " << from << " : " << dlerror() << std::endl;
+void ExternalLibraryDisplayManager::dlError() {
+	std::unique_ptr<Gui> &gui = univers_.getGui_();
+	if (gui)
+		gui->addMessageChat(eColorLog::kRed, dlerror());
 	unloadExternalDisplayLibrary();
 }
 
@@ -75,4 +81,10 @@ eDisplay ExternalLibraryDisplayManager::getKDisplay() const {
 
 ExternalLibraryDisplayManager::~ExternalLibraryDisplayManager() {
 	unloadExternalDisplayLibrary();
+}
+
+bool ExternalLibraryDisplayManager::hasConstructorLoaded() const {
+	return	newDisplay != nullptr &&
+			dlHandleDisplay != nullptr &&
+			deleteDisplay != nullptr;
 }

@@ -6,7 +6,7 @@
 #include "Snake.hpp"
 
 /** Const Variable **/
-
+const std::string Univers::SuccessServerHasBeenClosed = "Server now refused connection.";
 const std::string Univers::SuccessServerIsCreate = "Server is online on port %d.";
 const std::string Univers::SuccessIAIsCreate = "IA is online.";
 const std::string Univers::SuccessClientIsConnected = "Client is connected.";
@@ -15,6 +15,8 @@ const std::string Univers::SuccessClientIsDelete = "Client is delete.";
 const std::string Univers::SuccessServerIsDelete = "Server is delete.";
 const std::string Univers::SuccessBorderlessSet = "Borderless is set.";
 const std::string Univers::SuccessBorderlessUnset = "Borderless is unset.";
+const std::string Univers::SuccessClientIsDisconnect = "Client is disconnect.";
+const std::string Univers::SuccessResizeMapTo = "Map has been resize to %d.";
 
 const std::string Univers::WarningClientExist = "Client is already in place.";
 const std::string Univers::WarningServerCreateIA = "Only the server owner can create IA.";
@@ -38,8 +40,8 @@ const std::string Univers::ErrorPortRange = "Port should be between 0 and 65545"
 Univers::Univers()
 		:
 		ioManager(std::make_unique<IOManager>(10)),
-		soundManager(std::make_unique<ExternalLibrarySoundManager>()),
-		displayManager(std::make_unique<ExternalLibraryDisplayManager>()),
+		soundManager(std::make_unique<ExternalLibrarySoundManager>(*this)),
+		displayManager(std::make_unique<ExternalLibraryDisplayManager>(*this)),
 		gameManager(std::make_unique<GameManager>(*this)),
 		snakeServer_(nullptr),
 		snakeClient_(nullptr),
@@ -110,17 +112,25 @@ Univers::~Univers() {
 /** Game **/
 
 void Univers::startNewGame() {
-	if (!displayManager->hasLibraryLoaded())
-		displayManager->loadExternalDisplayLibrary(displayManager->getKDisplay());
+	SnakeClient::boost_shared_ptr ptr(getSnakeClient().lock());
+	SnakeServer::b_ptr ptrServer(snakeServer_);
 
+	displayManager->loadExternalDisplayLibrary(displayManager->getKDisplay());
+
+	std::cout << "hasLib : " << displayManager->hasLibraryLoaded() << std::endl;
+	if (!displayManager->hasConstructorLoaded()) {
+		openGame_ = false;
+		return;
+	} else {
+		deleteGui();
+	}
 	defaultAssignmentLibrary();
 
 	gameManager->startNewGame();
 	gameManager->loopUI();
-	SnakeClient::boost_shared_ptr ptr(getSnakeClient().lock());
 	ptr->killSnake(ptr->getId_());
-	if (isServer())
-		snakeServer_->sendOpenGameToClient(false);
+	if (ptrServer)
+		ptrServer->sendOpenGameToClient(false);
 	openGame_ = false;
 	gameManager->finishGame();
 	if (displayManager->hasLibraryLoaded())
@@ -184,7 +194,7 @@ void Univers::connect(const std::string dns, const std::string port) {
 	log_info("%s", __PRETTY_FUNCTION__);
 	SnakeClient::boost_shared_ptr ptr(snakeClient_);
 
-	if (ptr == nullptr) {
+	if (!ptr) {
 		gui_->addMessageChat(eColorLog::kOrange, WarningClientNotExist);
 		return;
 	}
@@ -211,6 +221,7 @@ void Univers::connect(const std::string dns, const std::string port) {
 	}
 }
 void Univers::createServer(const std::string dns, unsigned int port) {
+
 	if (snakeServer_)
 		gui_->addMessageChat(eColorLog::kOrange, WarningServerExist);
 	else if (port >> 16 != 0) {
@@ -246,8 +257,7 @@ void Univers::createBobby() {
 	}
 	std::unique_ptr<Bobby> bobby = std::make_unique<Bobby>(*this);
 	try {
-		bobby->getClientTCP_()->connect(DEFAULT_DNS, std::to_string(
-				snakeServer_->getPort_()));
+		bobby->getClientTCP_()->connect(DEFAULT_DNS, std::to_string(snakeServer_->getPort_()));
 	} catch (const std::exception &e) {
 		gui_->addMessageChat(e.what());
 	}
@@ -276,8 +286,8 @@ void Univers::disconnectClient() {
 
 	if (ptr) {
 		ptr->disconnect();
-		gui_->addMessageChat(eColorLog::kGreen, SuccessClientIsDelete); //TODO const
-	} else
+		if (gui_) gui_->addMessageChat(eColorLog::kGreen, SuccessClientIsDisconnect);
+	} else if (gui_)
 		gui_->addMessageChat(eColorLog::kOrange, WarningClientNotExist);
 }
 
@@ -286,8 +296,9 @@ void Univers::closeServer() {
 
 	if (ptr) {
 		ptr->closeAcceptorServer();
+		if (gui_) gui_->addMessageChat(eColorLog::kOrange, SuccessServerHasBeenClosed);
 	} else {
-		//TODO const
+		if (gui_) gui_->addMessageChat(eColorLog::kOrange, WarningServerNotExist);
 	}
 }
 
@@ -305,28 +316,31 @@ void Univers::deleteBobby(SnakeClient::boost_shared_ptr &ptr) {
 }
 
 void Univers::deleteClient() {
+
 	SnakeClient::boost_shared_ptr ptr(snakeClient_);
 
 	if (ptr) {
 		ptr->disconnect();
 		if (gui_) gui_->addMessageChat(eColorLog::kGreen, SuccessClientIsDelete);
-		snakeClient_ = nullptr;
+		ptr = nullptr;
 	} else if (gui_)
 		gui_->addMessageChat(eColorLog::kOrange, WarningClientNotExist);
 }
 
 void Univers::deleteServer() {
 	SnakeClient::boost_shared_ptr ptr(snakeClient_);
+	SnakeServer::b_ptr ptrServer(snakeServer_);
 
-	if (snakeServer_) {
-		snakeServer_ = nullptr;
-		gui_->addMessageChat(eColorLog::kGreen, SuccessServerIsDelete);
+	if (ptrServer) {
+		ptrServer = nullptr;
+		if (gui_)
+			gui_->addMessageChat(eColorLog::kGreen, SuccessServerIsDelete);
 		std::for_each(vecBobby.begin(), vecBobby.end(), [](std::unique_ptr<Bobby> &bob){ bob->getClientTCP_()->disconnect(); });
 		vecBobby.clear();
 		if (ptr && ptr->isOpen())
 			disconnectClient();
-	} else {
-		gui_->addMessageChat(eColorLog::kOrange, WarningServerNotExist);
+	} else if (gui_) {
+			gui_->addMessageChat(eColorLog::kOrange, WarningServerNotExist);
 	}
 }
 
@@ -351,6 +365,8 @@ void Univers::loadSound(eSound sound) {
 	if (getSoundManager().hasLibraryLoaded())
 		throw std::runtime_error("Trying to loadExternalSoundLibrary but it is already loaded");
 	getSoundManager().loadExternalSoundLibrary(sound);
+	if (!getSoundManager().hasLibraryLoaded())
+		return;
 	getSoundManager().constructExternalLibrary();
 	loadSoundData_();
 }
@@ -400,21 +416,23 @@ std::shared_ptr<SnakeArrayContainer> Univers::getSnakeArray_() const {
 }
 
 boost::weak_ptr<ISnakeNetwork> Univers::getSnakeNetwork() const {
+
 	SnakeClient::boost_shared_ptr ptr(snakeClient_);
+	SnakeServer::b_ptr ptrServer(snakeServer_);
 
 	if (ptr && ptr->isOpen())
 		return ptr->shared_from_this();
 	else if (vecBobby.size() != 0)
 		return vecBobby.front()->getClientTCP_()->shared_from_this();
 	else if (isServer())
-		return snakeServer_->shared_from_this();
+		return ptrServer->shared_from_this();
 	return boost::weak_ptr<SnakeClient>();
 }
 
 boost::weak_ptr<SnakeClient> Univers::getSnakeClient() const {
 	SnakeClient::boost_shared_ptr ptr(snakeClient_);
 
-	if (ptr)
+	if (ptr && ((openGame_ && ptr->isOpen()) || !openGame_))
 		return ptr->shared_from_this();
 	else if (vecBobby.size() != 0)
 		return vecBobby.front()->getClientTCP_()->shared_from_this();
@@ -503,10 +521,6 @@ ExternalLibraryDisplayManager &Univers::getDisplayManager() {
 	return (*displayManager);
 }
 
-SnakeServer &Univers::getSnakeServer() const {
-	return *snakeServer_;
-}
-
 Univers::BobbyContainer &Univers::getBobbys() {
 	return vecBobby;
 }
@@ -549,6 +563,7 @@ void Univers::switchReady() {
 
 void Univers::sendOpenGameToServer() {
 	SnakeClient::boost_shared_ptr ptr(getSnakeClient().lock());
+	SnakeServer::b_ptr ptrServer(snakeServer_);
 
 	if (!isServer()) {
 		gui_->addMessageChat(eColorLog::kOrange,
@@ -559,23 +574,28 @@ void Univers::sendOpenGameToServer() {
 		gui_->addMessageChat(eColorLog::kOrange, WarningRequiredAtLeastOneClient);
 		return;
 	}
-	if (!snakeServer_->isReady()) {
+	if (!ptrServer->isReady()) {
 		gui_->addMessageChat(eColorLog::kOrange, WarningAllClientIsNotReady);
 		return;
 	}
-	snakeServer_->sendOpenGameToClient();
+	ptrServer->sendOpenGameToClient();
 }
 
 void Univers::updateSizeMap() {
 	boost::shared_ptr<ISnakeNetwork> ptr_network(getSnakeNetwork().lock());
 
 	if (!ptr_network) {
-		gui_->addMessageChat(eColorLog::kOrange, WarningClientNotExist);//Todo message
+		gui_->addMessageChat(eColorLog::kOrange, SuccessResizeMapTo, mapSize_);
 		return;
 	}
 	if (!ptr_network->isOpen()) {
-		gui_->addMessageChat(eColorLog::kOrange, WarningClientIsNotConnected); //Todo message
+		gui_->addMessageChat(eColorLog::kOrange, SuccessResizeMapTo, mapSize_);
 		return;
 	}
+
 	ptr_network->notifyMapSize();
+}
+
+SnakeServer &Univers::getSnakeServer() const {
+	return *snakeServer_;
 }

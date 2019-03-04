@@ -12,6 +12,8 @@ class Univers;
 class SnakeServer : public boost::enable_shared_from_this<SnakeServer>, public ISnakeNetwork {
 
 public:
+	using b_ptr = boost::shared_ptr<SnakeServer>;
+	using w_ptr = boost::weak_ptr<SnakeServer>;
 	SnakeServer() = delete;
 	static boost::shared_ptr<SnakeServer> create(Univers &univers, const std::string dns, unsigned short port);
 
@@ -67,7 +69,7 @@ private:
 
 	void callbackFood(FoodInfo);
 
-	void callbackForcePause(int16_t);
+	void callbackForcePause(uint16_t);
 
 	void callbackDeadConnection(size_t index);
 
