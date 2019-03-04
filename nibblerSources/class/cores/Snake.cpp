@@ -1,8 +1,9 @@
 #include "Snake.hpp"
 #include <boost/serialization/serialization.hpp>
 #include <nibbler.hpp>
+#include <array>
 
-std::string const Snake::basicName[SNAKE_MAX_NAME] = {
+std::vector< std::string > const Snake::names = {
 		"Jack O'Lantern",
 		"Eden",
 		"Jacky",
@@ -13,7 +14,7 @@ std::string const Snake::basicName[SNAKE_MAX_NAME] = {
 		"Dautta c bo"
 };
 
-/*eSprite const color[SNAKE_MAX_COLOR] = {
+std::vector< eSprite > const Snake::colors = {
 		eSprite::kGreen,
 		eSprite::kBlue,
 		eSprite::kPurple,
@@ -22,7 +23,7 @@ std::string const Snake::basicName[SNAKE_MAX_NAME] = {
 		eSprite::kYellow,
 		eSprite::kOrange,
 		eSprite::kRed
-};*/
+};
 
 /** Snake **/
 
@@ -35,16 +36,54 @@ Snake::Snake() :
 		score_(0) {
 
 }
-void Snake::randomSnake(int16_t id_, eSprite prev) {
 
-	if (id_ == 0) {
-		sprite = static_cast<eSprite>(static_cast<int>(eSprite::kGreen) + rand() % SNAKE_MAX_COLOR);
-	} else if (prev == eSprite::kRed) {
-		sprite = eSprite::kGreen;
-	} else {
-		sprite = static_cast<eSprite>(static_cast<int >(prev) + 1);
+std::vector< eSprite > getUnusedColor(SnakeArrayContainer const &snakeArrayContainer) {
+	std::vector< eSprite > colorUsed(0);
+	std::vector< eSprite > colorUnused(0);
+
+	for (int index = 0; index < SNAKE_MAX; ++index) {
+		if (snakeArrayContainer[index].isValid)
+		colorUsed.push_back(snakeArrayContainer[index].sprite);
 	}
-	strncpy(name, Snake::basicName[static_cast<int>(sprite) - 1].c_str(), NAME_BUFFER);
+	for (auto const &color : Snake::colors) {
+		if (!std::any_of(colorUsed.begin(), colorUsed.end(),
+				[color](eSprite used) { return used == color; })) {
+			colorUnused.push_back(color);
+		}
+	}
+	return colorUnused;
+}
+
+std::vector< std::string > getUnusedName(SnakeArrayContainer const &snakeArrayContainer) {
+	std::vector< std::string > nameUsed(0);
+	std::vector< std::string > nameUnused(0);
+
+	for (int index = 0; index < SNAKE_MAX; ++index) {
+		if (snakeArrayContainer[index].isValid)
+			nameUsed.push_back(snakeArrayContainer[index].name);
+	}
+	for (auto const &name : Snake::names) {
+		if (!std::any_of(nameUsed.begin(), nameUsed.end(),
+						 [name](std::string const &used) { return used == name; })) {
+			nameUnused.push_back(name);
+		}
+	}
+	return nameUnused;
+}
+
+void Snake::randomSnake(int16_t id_, SnakeArrayContainer const &snakeArrayContainer) {
+
+	std::vector< eSprite > &&unusedColor = getUnusedColor(snakeArrayContainer);
+	std::vector< std::string > &&unusedName = getUnusedName(snakeArrayContainer);
+
+	if (unusedColor.size())
+		sprite = unusedColor[rand() % unusedColor.size()];
+	else
+		sprite = Snake::colors[rand() % Snake::colors.size()];
+	if (unusedName.size())
+		strncpy(name, unusedName[rand() % unusedName.size()].c_str(), NAME_BUFFER);
+	else
+		strncpy(name, Snake::names[rand() %  Snake::names.size()].c_str(), NAME_BUFFER);
 	id = id_;
 	isSwitchingLibrary = false;
 	isValid = true;

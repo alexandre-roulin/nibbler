@@ -54,7 +54,7 @@ class Snake : public SnakeUI, public SnakeUX, public SnakeUN {
 public:
 	Snake();
 
-	void randomSnake(int16_t id_, eSprite prev);
+	void randomSnake(int16_t id_, SnakeArrayContainer const &snakeArrayContainer);
 
 	void deepCopy(Snake const &snake);
 
@@ -83,9 +83,12 @@ public:
 	size_t indexConnection;
 	uint16_t score_;
 
-	static std::string const basicName[SNAKE_MAX_NAME];
-	static eSprite const color[SNAKE_MAX_COLOR];
+	static std::vector< std::string > const names;
+	static std::vector< eSprite > const colors;
 };
+
+std::vector< eSprite > getUnusedColor(SnakeArrayContainer const &snakeArrayContainer);
+std::vector< std::string > getUnusedName(SnakeArrayContainer const &snakeArrayContainer);
 
 
 #endif //PROJECT_SNAKE_HPP
