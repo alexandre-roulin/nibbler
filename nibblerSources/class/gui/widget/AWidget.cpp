@@ -45,7 +45,6 @@ void AWidget::render(bool renderContentInWindow) {
 	}
 }
 
-
 bool AWidget::button_(std::string const &text, int sizeTextX,  eColor color, eColor power) const {
 	if (color != eColor::kNone)
 		Gui::beginColor(color, power);
@@ -57,5 +56,5 @@ bool AWidget::button_(std::string const &text, int sizeTextX,  eColor color, eCo
 }
 
 bool AWidget::button_(std::string const &text,  eColor color, eColor power) const {
-	return button_(text, sizeButton_.x, color, power);
+	return button_(text, ImGui::GetWindowSize().x * 0.75f, color, power);
 }

@@ -26,9 +26,7 @@ void WidgetEtat::beginContent_() {
 		button_("Client connected", ImGui::GetWindowSize().x / 2, eColor::kGreen, eColor::kMedium);
 
 
-	if (ptrNetwork || (ptrClient && ptrClient->isOpen())) {
-		if (core_.univers.isServer()) {
+	if (ptrNetwork || (ptrClient && ptrClient->isOpen()))
+		if (core_.univers.isServer())
 			ImGui::Text("You are the host");
-		}
-	}
 }
