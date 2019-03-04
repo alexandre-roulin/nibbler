@@ -69,6 +69,7 @@ namespace KNW {
 
 		unsigned short getPort() const;
 
+		std::string const &getAddress() const;
 
 		size_t getSizeOfOpenConnection() const;
 
@@ -117,6 +118,7 @@ namespace KNW {
 		std::function<void(size_t)> callbackDeadConnection_;
 	private:
 		unsigned short port_;
+		std::string address_;
 		boost::shared_ptr<boost::asio::ip::tcp::acceptor> acceptor_;
 	};
 

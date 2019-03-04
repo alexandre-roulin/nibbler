@@ -23,6 +23,8 @@ public:
 
 	unsigned short getPort_() const;
 
+	std::string const &getAddress_() const;
+
 	void notifyBorderless() override;
 
 	bool isOpen() const override;

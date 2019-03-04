@@ -34,16 +34,20 @@ void WidgetConnect::beginContent_() {
 
 	Gui::endColor();
 
+	if (!(core_.univers.isServer() && client_)) {
+		if (ImGui::InputText("DNS", dnsBuffer_,
+							 IM_ARRAYSIZE(dnsBuffer_),
+							 ImGuiInputTextFlags_EnterReturnsTrue)) {
+			if (!strcmp(dnsBuffer_, ""))
+				strcpy(dnsBuffer_, "localhost");
+		}
 
-	if (ImGui::InputText("DNS", dnsBuffer_,
-						 IM_ARRAYSIZE(dnsBuffer_),
-						 ImGuiInputTextFlags_EnterReturnsTrue)) {
-
-	}
-	if (ImGui::InputText("PORT", portBuffer_,
-						 IM_ARRAYSIZE(portBuffer_),
-						 ImGuiInputTextFlags_EnterReturnsTrue)) {
-
+		if (ImGui::InputText("PORT", portBuffer_,
+							 IM_ARRAYSIZE(portBuffer_),
+							 ImGuiInputTextFlags_EnterReturnsTrue)) {
+			if (!strcmp(portBuffer_, ""))
+				strcpy(portBuffer_, "8000");
+		}
 	}
 
 	ImGui::Spacing();
@@ -51,7 +55,7 @@ void WidgetConnect::beginContent_() {
 
 	Gui::beginColor(Gui::eColor::kGreen);
 
-	if (client_ && !core_.univers.isServer()) {
+	if (client_) {
 		if (ptrClient && ptrClient->isOpen()) {
 			if (ImGui::Button("Join new", sf::Vector2f(ImGui::GetWindowSize().x, 20))) {
 				ptrClient->disconnect();
@@ -60,7 +64,10 @@ void WidgetConnect::beginContent_() {
 		} else if (ImGui::Button("Join", sf::Vector2f(ImGui::GetWindowSize().x, 20))) {
 			if (!ptrClient)
 				core_.univers.createClient();
-			core_.univers.connect(dnsBuffer_, portBuffer_);
+			if (core_.univers.isServer())
+				core_.univers.connect(core_.univers.getSnakeServer().getAddress_(), std::to_string(core_.univers.getSnakeServer().getPort_()));
+			else
+				core_.univers.connect(dnsBuffer_, portBuffer_);
 		}
 	}
 	else if (!client_) {
@@ -68,8 +75,6 @@ void WidgetConnect::beginContent_() {
 			if (core_.univers.isServer())
 				core_.univers.deleteServer();
 			core_.univers.createServer(dnsBuffer_, std::stoul(portBuffer_));
-//			core_.univers.createClient();
-//			core_.univers.connect(dnsBuffer_, portBuffer_);
 		}
 	}
 	Gui::endColor();

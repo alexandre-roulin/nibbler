@@ -88,6 +88,7 @@ namespace KNW {
 	void ServerTCP::startAsyncAccept()  {
 		ServerTCP::b_wptr wptr(shared_from_this());
 		port_ = acceptor_->local_endpoint().port();
+		address_ = acceptor_->local_endpoint().address().to_string();
 //		boost::asio::post(io_manager_.getIo(), [wptr](){ auto sptr = wptr.lock(); if (sptr) sptr->acceptConnection(); });
 		io_manager_.getIo().post([wptr](){ auto sptr = wptr.lock(); if (sptr) sptr->acceptConnection(); });
 	}
@@ -162,6 +163,10 @@ namespace KNW {
 
 	unsigned short ServerTCP::getPort() const {
 		return port_;
+	}
+
+	std::string const &ServerTCP::getAddress() const {
+		return address_;
 	}
 
 	ServerTCP::~ServerTCP() {

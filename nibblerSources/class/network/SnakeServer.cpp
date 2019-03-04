@@ -62,6 +62,11 @@ unsigned short SnakeServer::getPort_() const {
 	return serverTCP_->getPort();
 }
 
+
+std::string const &SnakeServer::getAddress_() const {
+	return serverTCP_->getAddress();
+}
+
 void SnakeServer::notifyBorderless() {
 	serverTCP_->writeDataToOpenConnections(univers_.isBorderless(), eHeader::kBorderless);
 }
