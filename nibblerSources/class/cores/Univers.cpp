@@ -40,8 +40,8 @@ const std::string Univers::ErrorPortRange = "Port should be between 0 and 65545"
 Univers::Univers()
 		:
 		ioManager(std::make_unique<IOManager>(10)),
-		soundManager(std::make_unique<ExternalLibrarySoundManager>()),
-		displayManager(std::make_unique<ExternalLibraryDisplayManager>()),
+		soundManager(std::make_unique<ExternalLibrarySoundManager>(*this)),
+		displayManager(std::make_unique<ExternalLibraryDisplayManager>(*this)),
 		gameManager(std::make_unique<GameManager>(*this)),
 		snakeServer_(nullptr),
 		snakeClient_(nullptr),
@@ -115,9 +115,15 @@ void Univers::startNewGame() {
 	SnakeClient::boost_shared_ptr ptr(getSnakeClient().lock());
 	SnakeServer::b_ptr ptrServer(snakeServer_);
 
-	if (!displayManager->hasLibraryLoaded())
-		displayManager->loadExternalDisplayLibrary(displayManager->getKDisplay());
+	displayManager->loadExternalDisplayLibrary(displayManager->getKDisplay());
 
+	std::cout << "hasLib : " << displayManager->hasLibraryLoaded() << std::endl;
+	if (!displayManager->hasConstructorLoaded()) {
+		openGame_ = false;
+		return;
+	} else {
+		deleteGui();
+	}
 	defaultAssignmentLibrary();
 
 	gameManager->startNewGame();
@@ -358,6 +364,8 @@ void Univers::loadSound(eSound sound) {
 	if (getSoundManager().hasLibraryLoaded())
 		throw std::runtime_error("Trying to loadExternalSoundLibrary but it is already loaded");
 	getSoundManager().loadExternalSoundLibrary(sound);
+	if (!getSoundManager().hasLibraryLoaded())
+		return;
 	getSoundManager().constructExternalLibrary();
 	loadSoundData_();
 }
