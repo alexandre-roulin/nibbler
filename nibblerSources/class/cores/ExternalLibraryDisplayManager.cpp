@@ -17,13 +17,15 @@ void ExternalLibraryDisplayManager::loadExternalDisplayLibrary(eDisplay display)
 		dlError();
 		return;
 	}
-	if (!(newDisplay = reinterpret_cast<IDisplay *(*)(
-			int, int, const char *)>(dlsym(dlHandleDisplay, "newDisplay")))) {
+	if (!(newDisplay = reinterpret_cast<
+			IDisplay *(*)(int, int, const char *)
+			>(dlsym(dlHandleDisplay, "newDisplay")))) {
 		dlError();
 		return;
 	}
-	if (!(deleteDisplay = reinterpret_cast<void (*)(IDisplay *
-	)>(dlsym(dlHandleDisplay, "deleteDisplay")))) {
+	if (!(deleteDisplay = reinterpret_cast<
+			void (*)(IDisplay *)
+			>(dlsym(dlHandleDisplay, "deleteDisplay")))) {
 		dlError();
 		return;
 	}
