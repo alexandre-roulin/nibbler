@@ -79,7 +79,7 @@ public:
 	bool isReady;
 	bool isIA;
 	bool isValid;
-	int16_t id;
+	uint16_t id;
 	size_t indexConnection;
 	uint16_t score_;
 

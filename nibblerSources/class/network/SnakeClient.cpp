@@ -173,22 +173,24 @@ void SnakeClient::disconnect() {
 
 void SnakeClient::callbackSnakeUN(const Snake &snakeUN) {
 	std::lock_guard<std::mutex> guard(mutex_);
+	if (snakeUN.id >= 8) return;
 	(*snakeArray)[snakeUN.id] = static_cast<SnakeUN>(snakeUN);
 }
 
 void SnakeClient::callbackForcePause(int16_t) {
-
 }
 
 
 void SnakeClient::callbackSnakeUI(const Snake &snakeUI) {
 	std::lock_guard<std::mutex> guard(mutex_);
+	if (snakeUI.id >= 8) return;
 	log_success("%s %d", __PRETTY_FUNCTION__, snakeUI.isReadyToExpose);
 	(*snakeArray)[snakeUI.id] = static_cast<SnakeUI>(snakeUI);
 }
 
 void SnakeClient::callbackId(uint16_t id) {
 	std::lock_guard<std::mutex> guard(mutex_);
+	if (id >= 8) return;
 	id_ = id;
 	(*snakeArray)[id_].randomSnake(id, id == 0 ? eSprite::kGreen : (*snakeArray)[id - 1].sprite);
 	if (fromIA_) {
@@ -201,12 +203,14 @@ void SnakeClient::callbackId(uint16_t id) {
 
 void SnakeClient::callbackSnakeUX(const Snake &snakeUX) {
 	std::lock_guard<std::mutex> guard(mutex_);
+	if (snakeUX.id >= 8) return;
 	(*snakeArray)[snakeUX.id] = static_cast<SnakeUX>(snakeUX);
 }
 
 void SnakeClient::callbackSnake(const Snake &snake) {
 	std::lock_guard<std::mutex> guard(mutex_);
 	log_success("%s %d", __PRETTY_FUNCTION__, snake.isReadyToExpose);
+	if (snake.id >= 8) return;
 	(*snakeArray)[snake.id] = snake;
 
 	if (acceptDataFromServer()) {
@@ -217,7 +221,8 @@ void SnakeClient::callbackSnake(const Snake &snake) {
 void SnakeClient::callbackSnakeArray(const SnakeArrayContainer &snakeArrayContainer) {
 	std::lock_guard<std::mutex> guard(mutex_);
 	for (int index = 0; index < SNAKE_MAX; ++index) {
-		(*snakeArray)[index].deepCopy(snakeArrayContainer[index]);
+		if (snakeArrayContainer[index].id < 8)
+			(*snakeArray)[index].deepCopy(snakeArrayContainer[index]);
 	}
 }
 
@@ -264,6 +269,10 @@ void SnakeClient::callbackStartInfo(StartInfo startInfo) {
 void SnakeClient::callbackDeadConnection() {
 	log_debug("%s", __PRETTY_FUNCTION__);
 	univers_.setOpenGame_(false);
+	auto &gui = univers_.getGui_();
+	if (gui) {
+		gui->addMessageChat("Connection has been closed.");
+	}
 	if (clientTCP_ != nullptr) {
 		clientTCP_->disconnect();
 	}
@@ -303,7 +312,8 @@ void SnakeClient::callbackPause(eAction) {
 }
 
 void SnakeClient::callbackCloseConnection(char) {
-	disconnect();
+	if (isOpen())
+		disconnect();
 }
 
 void SnakeClient::build() {

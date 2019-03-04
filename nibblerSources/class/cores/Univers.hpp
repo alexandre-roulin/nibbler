@@ -170,7 +170,9 @@ public:
 private:
 
 	void loadSoundData_();
-
+	static const std::string SuccessServerHasBeenClosed;
+	static const std::string SuccessClientIsDisconnect;
+	static const std::string SuccessResizeMapTo;
 	static const std::string SuccessServerIsCreate;
 	static const std::string SuccessClientIsCreate;
 	static const std::string SuccessClientIsDelete;

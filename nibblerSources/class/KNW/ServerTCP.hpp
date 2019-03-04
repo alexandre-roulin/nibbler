@@ -122,6 +122,8 @@ namespace KNW {
 
 	template<typename T>
 	void ServerTCP::writeDataToOpenConnection(T &&data, int index) {
+		if (index < 0 && index >= eConfigTCP::kMaxConnectionOpen)
+			return;
 		assert(dataTCP->hasType<T>());
 		assert(connections[index] != nullptr);
 		connections[index]->write(dataTCP->serializeData(DataType<T>::getHeader(), data));
@@ -129,6 +131,9 @@ namespace KNW {
 
 	template<typename T, typename H>
 	void ServerTCP::writeDataToOpenConnection(T &&data, int index, H header) {
+		if (index < 0 && index >= eConfigTCP::kMaxConnectionOpen &&
+		connections[index] != nullptr)
+			return;
 		assert(connections[index] != nullptr);
 		connections[index]->write(dataTCP->serializeData(static_cast<BaseDataType::Header>(header), data));
 	}
@@ -145,9 +150,10 @@ namespace KNW {
 
 	template<typename T, typename H>
 	void ServerTCP::writeDataToOpenConnections(T &&data, H header) {
+
 		for (auto &connection : connections) {
 			if (connection)
-				connection->write(dataTCP->serializeData(static_cast<BaseDataType::Header>(header), data));
+				connection->write(this->getDataTCP().serializeData(static_cast<BaseDataType::Header>(header), data));
 		}
 	}
 

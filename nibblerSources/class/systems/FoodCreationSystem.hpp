@@ -5,8 +5,11 @@
 
 class FoodCreationSystem: public KINU::System {
 public:
-	FoodCreationSystem();
+	FoodCreationSystem(unsigned int mapSize);
 	virtual void update();
+
+protected:
+	int mapSize_;
 };
 
 

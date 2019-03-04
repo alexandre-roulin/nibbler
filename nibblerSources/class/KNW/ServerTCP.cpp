@@ -23,16 +23,17 @@ namespace KNW {
 
 	void ConnectionTCP::callbackDeadIO() {
 		auto sptr = serverTCP_.lock();
-		if (sptr) {
+		if (sptr) { //TODO
 			auto it = std::find(sptr->connections.begin(), sptr->connections.end(), shared_from_this());
 			boost::system::error_code ec;
 			iotcp->getSocket_()->shutdown(boost::asio::ip::tcp::socket::shutdown_both, ec);
 			iotcp->getSocket_()->close(ec);
-			*it = nullptr;
 			if (sptr->callbackDeadConnection_)
-				sptr->callbackDeadConnection_(static_cast<size_t>(
-													  std::distance(sptr->connections.begin(),
-																	std::find(sptr->connections.begin(), sptr->connections.end(), *it))));
+				sptr->callbackDeadConnection_(
+						static_cast<size_t>(std::distance(
+								sptr->connections.begin(),
+								std::find(sptr->connections.begin(), sptr->connections.end(), *it))));
+			*it = nullptr;
 			log_success("%s num_connection_open %d", __PRETTY_FUNCTION__, sptr->getSizeOfOpenConnection());
 		}
 	}
@@ -82,7 +83,7 @@ namespace KNW {
 		acceptor_->open(endpoint.protocol());
 		acceptor_->set_option(boost::asio::ip::tcp::acceptor::reuse_address(true));
 		acceptor_->bind(endpoint);
-		acceptor_->listen(boost::asio::socket_base::max_connections);
+		acceptor_->listen(eConfigTCP::kMaxConnectionOpen);
 	}
 
 	void ServerTCP::startAsyncAccept()  {
@@ -108,7 +109,6 @@ namespace KNW {
 	void ServerTCP::acceptConnection() {
 		if (acceptor_->is_open()) {
 			boost::shared_ptr<boost::asio::ip::tcp::socket> sock(new boost::asio::ip::tcp::socket(io_manager_.getIo()));
-
 			ServerTCP::b_wptr wptr(weak_from_this());
 			acceptor_->async_accept(*sock, [wptr, sock](const boost::system::error_code &ec){auto sptr = wptr.lock(); if (sptr) sptr->handleAcceptConnection(ec, sock); });
 		}
