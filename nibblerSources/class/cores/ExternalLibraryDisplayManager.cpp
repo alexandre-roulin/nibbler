@@ -25,7 +25,7 @@ void ExternalLibraryDisplayManager::loadExternalDisplayLibrary(eDisplay display)
 	}
 	if (!(deleteDisplay = reinterpret_cast<
 			void (*)(IDisplay *)
-			>(dlsym(dlHandleDisplay, "deleteDisplay")))) {
+			>(dlsym(dlHandleDisplay, "deleteInstance")))) {
 		dlError();
 		return;
 	}

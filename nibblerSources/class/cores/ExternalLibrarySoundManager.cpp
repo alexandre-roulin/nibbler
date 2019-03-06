@@ -24,7 +24,7 @@ void ExternalLibrarySoundManager::switchNextLibrary() {
 
 void ExternalLibrarySoundManager::loadExternalSoundLibrary(eSound sound) {
 
-	if (!(dlHandleSound = dlopen(libraryInfo[sound], RTLD_LAZY | RTLD_LOCAL))) {
+	if (!(dlHandleSound = dlopen(libraryInfo[sound].path, RTLD_LAZY | RTLD_LOCAL))) {
 		dlError();
 		return;
 	}
@@ -69,14 +69,6 @@ bool ExternalLibrarySoundManager::hasLibraryLoaded() const {
 	return sound != nullptr;
 }
 
-eSound ExternalLibrarySoundManager::getKSound() const {
-	return kSound;
-}
-
-void ExternalLibrarySoundManager::setKSound(eSound kSound) {
-	ExternalLibrarySoundManager::kSound = kSound;
-}
-
 void ExternalLibrarySoundManager::addNoise(std::string const &path) {
 	if (sound)
 		sound->addNoise(path);
@@ -110,6 +102,17 @@ bool &ExternalLibrarySoundManager::getMusique() {
 }
 bool &ExternalLibrarySoundManager::getNoise() {
 	return noise_;
+}
+
+ISound *ExternalLibrarySoundManager::getSound() const {
+	return sound;
+}
+
+void ExternalLibrarySoundManager::setKSound(eSound k) {
+	kSound = k;
+}
+eSound ExternalLibrarySoundManager::getKSound() const {
+	return kSound;
 }
 
 ExternalLibrarySoundManager::~ExternalLibrarySoundManager() {

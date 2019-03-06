@@ -61,10 +61,11 @@ enum eDisplay {
 	kDisplayGlfwLibrary
 };
 
+template < typename T >
 struct LibraryInfo {
 	char const title[80];
 	char const path[PATH_MAX];
-	eDisplay kDisplay;
+	T kLibrary;
 };
 
 static const eDisplay eDisplayArray[] = {

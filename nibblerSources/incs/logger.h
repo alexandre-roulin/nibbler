@@ -18,7 +18,7 @@
 # define D_TRACE        7
 
 /*
-** Functions to use for display log messages.
+** Functions to use for instance log messages.
 */
 
 #define log_fatal(...)        \

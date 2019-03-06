@@ -19,8 +19,11 @@ private:
 	bool &rNoise_;
 	bool &rMusique_;
 	std::string pathSound_;
-	int indexLibrary_;
+	int indexDisplayLibrary_;
+	int indexSoundLibrary_;
 
+	bool musicManagemet_();
+	bool soundManagement_();
 	void update_() override;
 	void beginContent_() override;
 };

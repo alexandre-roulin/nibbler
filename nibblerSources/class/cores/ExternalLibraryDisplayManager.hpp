@@ -24,7 +24,7 @@ public:
 	eDisplay getKDisplay() const;
 	void setKDisplay(eDisplay k);
 
-	static constexpr LibraryInfo libraryInfo[sizeof(eDisplayArray) / sizeof(eDisplay)] = {
+	static constexpr LibraryInfo<eDisplay> libraryInfo[sizeof(eDisplayArray) / sizeof(eDisplay)] = {
 			{"Nibbler - SFML", "dynamicLibraries/libdisplay_sfml.so", eDisplay::kDisplaySfmlLibrary}, //[kDisplaySfmlLibrary] = 0
 			{"Nibbler - SDL", "dynamicLibraries/libdisplay_sdl.so", eDisplay::kDisplaySdlLibrary}, //[kDisplaySdlLibrary] = 1
 			{"Nibbler - GLFW", "dynamicLibraries/libdisplay_glfw.so", eDisplay::kDisplayGlfwLibrary} //[kDisplayGlfwLibrary] = 2

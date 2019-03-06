@@ -20,8 +20,6 @@ public:
 	void unloadExternalSoundLibrary();
 	void dlError();
 	bool hasLibraryLoaded() const;
-	eSound getKSound() const;
-	void setKSound(eSound kSound);
 	void addNoise(std::string const &path);
 	void playNoise(eNoise e) const;
 	void playMusic(std::string const &path) const;
@@ -30,13 +28,16 @@ public:
 	void setNoise(bool b);
 	bool &getMusique();
 	bool &getNoise();
+	ISound *getSound() const;
+	eSound getKSound() const;
+	void setKSound(eSound kSound);
 
+	static constexpr LibraryInfo< eSound > libraryInfo[sizeof(eSoundArray) / sizeof(eSound)] = {
+			{"SFML", "dynamicLibraries/libsound_sfml.so", eSound::kSoundSfmlLibrary}, //[kDisplaySfmlLibrary] = 0
+			{"SDL", "dynamicLibraries/libsound_sdl.so", eSound::kSoundSdlLibrary}, //[kDisplaySfmlLibrary] = 0
+	};
 
 private:
-	static constexpr char libraryInfo[sizeof(eSoundArray) / sizeof(eSound)][PATH_MAX] = {
-			{"dynamicLibraries/libsound_sfml.so"}, //[kSoundSfmlLibrary] = 0
-			{"dynamicLibraries/libsound_sdl.so"}, //[kSoundSdlLibrary] = 1
-	};
 
 	void(*deleteSound)(ISound *);
 	ISound *sound;

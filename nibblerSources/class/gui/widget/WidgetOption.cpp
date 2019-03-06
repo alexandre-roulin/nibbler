@@ -8,7 +8,8 @@ WidgetOption::WidgetOption(Gui &core) :
 		sound_(core_.univers.getSoundManager().hasLibraryLoaded()),
 		rNoise_(core_.univers.getSoundManager().getNoise()),
 		rMusique_(core_.univers.getSoundManager().getMusique()),
-		indexLibrary_(0) {
+		indexDisplayLibrary_(0),
+		indexSoundLibrary_(0) {
 	SnakeClient::boost_shared_ptr ptr(core_.univers.getSnakeClient().lock());
 	if (ptr)
 		memcpy(nameBuffer_, ptr->getSnake().name, NAME_BUFFER);
@@ -22,10 +23,34 @@ bool getNameOfDisplayLibraryInfo(void *data, int idx, const char **out_str) {
 	return true;
 }
 
-void WidgetOption::update_() {
-	//sound_ = core_.univers.getSoundManager().hasLibraryLoaded();
-	//rNoise_ = core_.univers.getSoundManager().getNoise();
-	//rMusique_ = core_.univers.getSoundManager().getMusique();
+void WidgetOption::update_() {}
+
+bool WidgetOption::soundManagement_() {
+	try {
+		if (sound_) {
+			return core_.univers.loadSound(eSound::kSoundSfmlLibrary);;
+		} else {
+			core_.univers.unloadSound();
+		}
+	} catch (std::exception const &e) {
+		core_.addMessageChat(eColorLog::kRed, e.what());
+		return false;
+	}
+	return true;
+}
+
+bool WidgetOption::musicManagemet_() {
+	try {
+		if (!rMusique_)
+			core_.univers.getSoundManager().stopMusic();
+		else {
+			core_.univers.getSoundManager().playMusic(pathSound_);
+		}
+	} catch (std::exception const &e) {
+		core_.addMessageChat(eColorLog::kRed, e.what());
+		return false;
+	}
+	return true;
 }
 
 void WidgetOption::beginContent_() {
@@ -42,30 +67,34 @@ void WidgetOption::beginContent_() {
 		std::memcpy(nameBuffer_,ptr->getSnake().name,NAME_BUFFER);
 	}
 
-	if (ImGui::Checkbox("Son", &sound_)) {
-		if (sound_)
-			sound_ = core_.univers.loadSound(eSound::kSoundSfmlLibrary);
-		else
-			core_.univers.unloadSound();
+	if (ImGui::BeginCombo("Sound", ExternalLibrarySoundManager::libraryInfo[indexSoundLibrary_].title, 0)) {
+		for (int n = 0; n < IM_ARRAYSIZE(ExternalLibrarySoundManager::libraryInfo); n++) {
+			bool is_selected = (indexSoundLibrary_ == n);
+			if (ImGui::Selectable(ExternalLibrarySoundManager::libraryInfo[n].title, is_selected)) {
+				indexSoundLibrary_ = n;
+				core_.univers.getSoundManager().setKSound(ExternalLibrarySoundManager::libraryInfo[n].kLibrary);
+			}
+			if (is_selected)
+				ImGui::SetItemDefaultFocus();
+		}
+		ImGui::EndCombo();
 	}
+
+	if (ImGui::Checkbox("Son", &sound_))
+		sound_ = soundManagement_();
 
 	if (sound_) {
 		ImGui::Checkbox("Bruitage", &rNoise_);
-		if (ImGui::Checkbox("Musique", &rMusique_)) {
-			if (!rMusique_)
-				core_.univers.getSoundManager().stopMusic();
-			else {
-				core_.univers.getSoundManager().playMusic(pathSound_);
-			}
-		}
+		if (ImGui::Checkbox("Musique", &rMusique_))
+			rMusique_ = musicManagemet_();
 	}
 
-	if (ImGui::BeginCombo("Display", ExternalLibraryDisplayManager::libraryInfo[indexLibrary_].title, 0))  {
+	if (ImGui::BeginCombo("Display", ExternalLibraryDisplayManager::libraryInfo[indexDisplayLibrary_].title, 0)) {
 		for (int n = 0; n < IM_ARRAYSIZE(ExternalLibraryDisplayManager::libraryInfo); n++) {
-			bool is_selected = (indexLibrary_ == n);
+			bool is_selected = (indexDisplayLibrary_ == n);
 			if (ImGui::Selectable(ExternalLibraryDisplayManager::libraryInfo[n].title, is_selected)) {
-				indexLibrary_ = n;
-				core_.univers.getDisplayManager().setKDisplay(ExternalLibraryDisplayManager::libraryInfo[n].kDisplay);
+				indexDisplayLibrary_ = n;
+				core_.univers.getDisplayManager().setKDisplay(ExternalLibraryDisplayManager::libraryInfo[n].kLibrary);
 			}
 			if (is_selected)
 				ImGui::SetItemDefaultFocus();
