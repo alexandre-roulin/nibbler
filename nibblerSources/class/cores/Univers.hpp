@@ -140,7 +140,9 @@ public:
 
 	boost::weak_ptr<SnakeClient> getSnakeClient() const;
 
-	boost::weak_ptr<SnakeClient> getBobbyClient(int id) const;
+	boost::weak_ptr<SnakeClient> getMySnakeClient() const;
+
+	boost::weak_ptr<SnakeClient> getBobbySnakeClient(int id) const;
 
 	boost::weak_ptr<ISnakeNetwork> getSnakeNetwork() const;
 

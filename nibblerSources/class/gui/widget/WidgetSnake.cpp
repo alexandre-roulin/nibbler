@@ -90,7 +90,7 @@ void WidgetSnake::renderSelectionColor_(SnakeClient::boost_shared_ptr &ptr) cons
 
 void WidgetSnake::renderIa_() {
 	SnakeClient::boost_shared_ptr ptr(core_.univers.getSnakeClient().lock());
-	SnakeClient::boost_shared_ptr ptrBobby(core_.univers.getBobbyClient(snake_.id).lock());
+	SnakeClient::boost_shared_ptr ptrBobby(core_.univers.getBobbySnakeClient(snake_.id).lock());
 
 	updateSizeTexture_();
 	renderStaticDataSnake_();

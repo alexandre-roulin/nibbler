@@ -8,7 +8,7 @@ WidgetEtat::WidgetEtat(Gui &core) :
 
 void WidgetEtat::beginContent_() {
 
-	SnakeClient::boost_shared_ptr ptrClient(core_.univers.getSnakeClient().lock());
+	SnakeClient::boost_shared_ptr ptrClient(core_.univers.getMySnakeClient().lock());
 	boost::shared_ptr<ISnakeNetwork> ptrNetwork(core_.univers.getSnakeNetwork().lock());
 
 	if (ptrNetwork)

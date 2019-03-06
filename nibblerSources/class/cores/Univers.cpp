@@ -440,7 +440,15 @@ boost::weak_ptr<SnakeClient> Univers::getSnakeClient() const {
 	return boost::weak_ptr<SnakeClient>();
 }
 
-boost::weak_ptr<SnakeClient> Univers::getBobbyClient(int id) const {
+boost::weak_ptr<SnakeClient> Univers::getMySnakeClient() const {
+	SnakeClient::boost_shared_ptr ptr(snakeClient_);
+
+	if (ptr && ((openGame_ && ptr->isOpen()) || !openGame_))
+		return ptr->shared_from_this();
+	return boost::weak_ptr<SnakeClient>();
+}
+
+boost::weak_ptr<SnakeClient> Univers::getBobbySnakeClient(int id) const {
 	auto itBobby = std::find_if(vecBobby.begin(), vecBobby.end(), [id](std::unique_ptr<Bobby> const &bob){ return bob->getId() == id; });
 	if (itBobby == vecBobby.end())
 		return boost::weak_ptr<SnakeClient>();
