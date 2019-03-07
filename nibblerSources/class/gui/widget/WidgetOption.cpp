@@ -13,6 +13,8 @@ WidgetOption::WidgetOption(Gui &core) :
 	SnakeClient::boost_shared_ptr ptr(core_.univers.getSnakeClient().lock());
 	if (ptr)
 		memcpy(nameBuffer_, ptr->getSnake().name, NAME_BUFFER);
+	else
+		memset(nameBuffer_, 0, NAME_BUFFER);
 
 	boost::filesystem::path pathSound(NIBBLER_ROOT_PROJECT_PATH);
 	pathSound_ = (pathSound / "ressources" / "sound" / "zelda.ogg").generic_string();
@@ -28,29 +30,32 @@ void WidgetOption::update_() {}
 bool WidgetOption::soundManagement_() {
 	try {
 		if (sound_) {
-			return core_.univers.loadSound(eSound::kSoundSfmlLibrary);;
+			return core_.univers.loadSound();
 		} else {
 			core_.univers.unloadSound();
+			rMusique_ = false;
+			rNoise_ = false;
+			return false;
 		}
 	} catch (std::exception const &e) {
 		core_.addMessageChat(eColorLog::kRed, e.what());
 		return false;
 	}
-	return true;
 }
 
 bool WidgetOption::musicManagemet_() {
 	try {
-		if (!rMusique_)
+		if (!rMusique_) {
 			core_.univers.getSoundManager().stopMusic();
-		else {
+			return false;
+		} else {
 			core_.univers.getSoundManager().playMusic(pathSound_);
+			return true;
 		}
 	} catch (std::exception const &e) {
 		core_.addMessageChat(eColorLog::kRed, e.what());
 		return false;
 	}
-	return true;
 }
 
 void WidgetOption::beginContent_() {
@@ -72,7 +77,10 @@ void WidgetOption::beginContent_() {
 			bool is_selected = (indexSoundLibrary_ == n);
 			if (ImGui::Selectable(SoundDynamicLibrary::libraryInfo[n].title.c_str(), is_selected)) {
 				indexSoundLibrary_ = n;
-				core_.univers.getSoundManager().loadDynamicLibrary(SoundDynamicLibrary::libraryInfo[n].kLibrary);
+				sound_ = false;
+				if (!(sound_ = soundManagement_())) {
+					core_.univers.getSoundManager().setNextKInstance(SoundDynamicLibrary::libraryInfo[n].kLibrary);
+				}
 			}
 			if (is_selected)
 				ImGui::SetItemDefaultFocus();
@@ -94,7 +102,7 @@ void WidgetOption::beginContent_() {
 			bool is_selected = (indexDisplayLibrary_ == n);
 			if (ImGui::Selectable(DisplayDynamicLibrary::libraryInfo[n].title.c_str(), is_selected)) {
 				indexDisplayLibrary_ = n;
-				core_.univers.getDisplayManager().loadDynamicLibrary(DisplayDynamicLibrary::libraryInfo[n].kLibrary);
+				core_.univers.getDisplayManager().setNextKInstance(DisplayDynamicLibrary::libraryInfo[n].kLibrary);
 			}
 			if (is_selected)
 				ImGui::SetItemDefaultFocus();

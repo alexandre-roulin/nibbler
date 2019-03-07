@@ -7,6 +7,8 @@ SoundDynamicLibrary::SoundDynamicLibrary() :
 	ADynamicLinkLibrary< ISound, eSound, ISound *(*)() >::libraryInfo.reserve(2);
 	ADynamicLinkLibrary< ISound, eSound, ISound *(*)() >::libraryInfo.emplace_back("SFML", "dynamicLibraries/libsound_sfml.so", eSound::kSoundSfmlLibrary);
 	ADynamicLinkLibrary< ISound, eSound, ISound *(*)() >::libraryInfo.emplace_back("SDL", "dynamicLibraries/libsound_sdl.so", eSound::kSoundSdlLibrary);
+
+	setNextKInstance(kSoundSfmlLibrary);
 }
 
 void SoundDynamicLibrary::addNoise(std::string const &path) {
@@ -23,9 +25,10 @@ void SoundDynamicLibrary::playMusic(std::string const &path) const {
 		instance_->playMusic();
 	}
 }
-void SoundDynamicLibrary::stopMusic() const {
+void SoundDynamicLibrary::stopMusic() {
 	if (instance_) {
 		instance_->stopMusic();
+		musique_ = false;
 	}
 }
 

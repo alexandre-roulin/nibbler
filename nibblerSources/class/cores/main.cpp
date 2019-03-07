@@ -81,7 +81,7 @@ int main(int argc, char **argv) {
 				return (0);
 			}
 			if (vm.count("sound"))
-				univers.loadSound(eSound::kSoundSfmlLibrary);
+				univers.loadSound();
 			if (vm.count("test") && vm.count("id") && vm.count("fileInput") && vm.count("pidTestProcess") && vm.count("fileLog")) {
 				Test::getInstance().setTest(true);
 				Test::getInstance().setId(vm["id"].as<int>());

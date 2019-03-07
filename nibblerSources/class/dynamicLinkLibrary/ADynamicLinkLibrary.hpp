@@ -42,26 +42,52 @@ public:
 	ADynamicLinkLibrary(const ADynamicLinkLibrary &) = delete;
 
 	template< typename ...Args >
-	void constructDynamicLibrary(Args... args) {
-		assert(newInstance_ != nullptr);
-		instance_ = newInstance_(args...);
-	}
+	void loadDynamicLibrary(Args... args) {
+		auto lib = std::find_if(libraryInfo.begin(), libraryInfo.end(),
+								[this](LibraryInfo< E > const &info){
+									return info.kLibrary == kNextInstance_;
+								});
 
-	void switchNextLibrary();
-	void loadDynamicLibrary(E typeInstance);
+		if (lib == libraryInfo.end())
+			throw(std::range_error("DynamicLinkLibrary:: Library info is not found"));
+
+		unloadDynamicLibrary();
+
+		if (!(dlHandle_ = dlopen(lib->path.c_str(), RTLD_LAZY | RTLD_LOCAL))) {
+			dlError();
+			return;
+		}
+		if (!(newInstance_ = reinterpret_cast< SIGNATURE >(dlsym(dlHandle_, "newInstance")))) {
+			dlError();
+			return;
+		}
+		if (!(deleteInstance_ = reinterpret_cast<
+				void (*)(T *)
+				>(dlsym(dlHandle_, "deleteInstance")))) {
+			dlError();
+			return;
+		}
+		currentLibraryInfo_ = lib;
+		instance_ = newInstance_(args...);
+		kInstance_ = kNextInstance_;
+	}
+	void setNextKInstance();
 	void unloadDynamicLibrary();
 	void dlError();
 	bool hasLibraryLoaded() const;
-	bool hasConstructorLoaded() const;
-	T *getDisplay() const;
-	E getKDisplay() const;
+
+	T *getInstance() const;
+	void setNextKInstance(E kinstance);
 	LibraryInfo< E > const &getCurrentLibraryInfo() const;
+	LibraryInfo< E > const &getNextLibraryInfo() const;
 
 	static std::vector< LibraryInfo< E > > libraryInfo;
 
 protected:
 	T *instance_;
 	E kInstance_;
+	E kNextInstance_;
+	typename std::vector< LibraryInfo< E > >::iterator nextLibraryInfo_;
 	typename std::vector< LibraryInfo< E > >::iterator currentLibraryInfo_;
 	SIGNATURE newInstance_;
 
@@ -94,34 +120,6 @@ void ADynamicLinkLibrary< T, E, SIGNATURE >::dlError() {
 }
 
 template < typename T, typename E, typename SIGNATURE >
-void ADynamicLinkLibrary< T, E, SIGNATURE >::loadDynamicLibrary(E typeInstance) {
-	auto lib = std::find_if(libraryInfo.begin(), libraryInfo.end(),
-			[typeInstance](LibraryInfo< E > const &info){
-				return info.kLibrary == typeInstance;
-			});
-
-	if (lib == libraryInfo.end())
-		throw(std::range_error("DynamicLinkLibrary:: Library info is not found"));
-
-	if (!(dlHandle_ = dlopen(lib->path.c_str(), RTLD_LAZY | RTLD_LOCAL))) {
-		dlError();
-		return;
-	}
-	if (!(newInstance_ = reinterpret_cast< SIGNATURE >(dlsym(dlHandle_, "newInstance")))) {
-		dlError();
-		return;
-	}
-	if (!(deleteInstance_ = reinterpret_cast<
-			void (*)(T *)
-			>(dlsym(dlHandle_, "deleteInstance")))) {
-		dlError();
-		return;
-	}
-	kInstance_ = typeInstance;
-	currentLibraryInfo_ = lib;
-}
-
-template < typename T, typename E, typename SIGNATURE >
 void ADynamicLinkLibrary< T, E, SIGNATURE >::unloadDynamicLibrary() {
 	if (deleteInstance_ && instance_)
 		deleteInstance_(instance_);
@@ -134,34 +132,38 @@ void ADynamicLinkLibrary< T, E, SIGNATURE >::unloadDynamicLibrary() {
 }
 
 template < typename T, typename E, typename SIGNATURE >
-void ADynamicLinkLibrary< T, E, SIGNATURE >::switchNextLibrary() {
-	unloadDynamicLibrary();
-	++currentLibraryInfo_;
-	if (currentLibraryInfo_ == ADynamicLinkLibrary< T, E, SIGNATURE >::libraryInfo.end())
-		ADynamicLinkLibrary< T, E, SIGNATURE >::libraryInfo.front();
-	loadDynamicLibrary(kInstance_);
+void ADynamicLinkLibrary< T, E, SIGNATURE >::setNextKInstance() {
+	auto nextLibraryInfo = currentLibraryInfo_;
+	++nextLibraryInfo;
+	if (nextLibraryInfo == ADynamicLinkLibrary< T, E, SIGNATURE >::libraryInfo.end())
+		nextLibraryInfo = ADynamicLinkLibrary< T, E, SIGNATURE >::libraryInfo.begin();
+	kInstance_ = nextLibraryInfo->kLibrary;
 }
 
-template < typename T, typename E, typename SIGNATURE >
-bool ADynamicLinkLibrary< T, E, SIGNATURE >::hasConstructorLoaded() const {
-	return	newInstance_ != nullptr && dlHandle_ != nullptr && deleteInstance_ != nullptr;
-}
 template < typename T, typename E, typename SIGNATURE >
 bool ADynamicLinkLibrary< T, E, SIGNATURE >::hasLibraryLoaded() const {
 	return instance_ != nullptr;
 }
 
 template < typename T, typename E, typename SIGNATURE >
-T *ADynamicLinkLibrary< T, E, SIGNATURE >::getDisplay() const {
+T *ADynamicLinkLibrary< T, E, SIGNATURE >::getInstance() const {
 	return instance_;
 }
 template < typename T, typename E, typename SIGNATURE >
-E ADynamicLinkLibrary< T, E, SIGNATURE >::getKDisplay() const {
-	return kInstance_;
+void ADynamicLinkLibrary< T, E, SIGNATURE >::setNextKInstance(E kinstance) {
+	kNextInstance_= kinstance;
+	nextLibraryInfo_ = std::find_if(libraryInfo.begin(), libraryInfo.end(),
+									[this](LibraryInfo< E > const &info){
+										return info.kLibrary == kNextInstance_;
+									});
 }
 template < typename T, typename E, typename SIGNATURE >
 LibraryInfo< E > const &ADynamicLinkLibrary< T, E, SIGNATURE >::getCurrentLibraryInfo() const {
 	return *currentLibraryInfo_;
+}
+template < typename T, typename E, typename SIGNATURE >
+LibraryInfo< E > const &ADynamicLinkLibrary< T, E, SIGNATURE >::getNextLibraryInfo() const {
+	return *nextLibraryInfo_;
 }
 
 template < typename T, typename E, typename SIGNATURE >

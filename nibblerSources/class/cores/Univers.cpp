@@ -116,15 +116,8 @@ void Univers::startNewGame() {
 	SnakeServer::b_ptr ptrServer(snakeServer_);
 
 	try {
-		displayManager->loadDynamicLibrary(displayManager->getKDisplay());
-		std::cout << "hasLib : " << displayManager->hasLibraryLoaded() << std::endl;
-		if (!displayManager->hasConstructorLoaded()) {
-			openGame_ = false;
-			return;
-		} else {
-			deleteGui();
-		}
 		defaultAssignmentLibrary();
+		deleteGui();
 	} catch (std::exception const &e) {
 		log_fatal("%s\n", e.what());
 		openGame_ = false;
@@ -147,7 +140,7 @@ void Univers::manageSnakeClientInput() {
 	SnakeClient::boost_shared_ptr ptr(snakeClient_);
 	eDirection direction = eDirection::kNorth;
 	if (displayManager->hasLibraryLoaded())
-		direction = displayManager->getDisplay()->getDirection();
+		direction = displayManager->getInstance()->getDirection();
 
 	if (ptr && ptr->isOpen() && getGameManager().getWorld_()->getEntitiesManager().hasEntityByTagId(ptr->getId_() + eTag::kHeadTag) && !ptr->isIa()) {
 		ptr->sendDirection(direction);
@@ -164,12 +157,13 @@ void Univers::defaultAssignmentLibrary() {
 	MutantGrid<eSprite> grid(mapSize_);
 	grid.fill(eSprite::kGround);
 
-	displayManager->constructDynamicLibrary(mapSize_,mapSize_, displayManager->getCurrentLibraryInfo().title.c_str());
-	displayManager->getDisplay()->setBackground(grid);
-	displayManager->getDisplay()->registerCallbackAction(
+	displayManager->loadDynamicLibrary(mapSize_,mapSize_, displayManager->getNextLibraryInfo().title.c_str());
+
+	displayManager->getInstance()->setBackground(grid);
+	displayManager->getInstance()->registerCallbackAction(
 			std::bind(&Univers::callbackAction, this, std::placeholders::_1));
-	displayManager->getDisplay()->update();
-	displayManager->getDisplay()->render();
+	displayManager->getInstance()->update();
+	displayManager->getInstance()->render();
 }
 
 
@@ -179,7 +173,7 @@ void Univers::manageSwitchLibrary() {
 	if (!ptr->isSwitchingLibrary()) {
 		int16_t id = ptr->getId_();
 		ptr->sendDataToServer(id, eHeader::kForcePause);
-		displayManager->switchNextLibrary();
+		displayManager->setNextKInstance();
 		defaultAssignmentLibrary();
 		ptr->sendDataToServer(id, eHeader::kForcePause);
 	}
@@ -366,11 +360,10 @@ void Univers::loadSoundData_() {
 	getSoundManager().addNoise((pathSound / "hit17.ogg").generic_string());
 }
 
-bool Univers::loadSound(eSound sound) {
+bool Univers::loadSound() {
 	if (getSoundManager().hasLibraryLoaded())
 		throw std::runtime_error("Trying to loadExternalSoundLibrary but it is already loaded");
-	getSoundManager().loadDynamicLibrary(sound);
-	getSoundManager().constructDynamicLibrary();
+	getSoundManager().loadDynamicLibrary();
 	if (!getSoundManager().hasLibraryLoaded())
 		return false;
 	loadSoundData_();
@@ -511,7 +504,7 @@ void Univers::setGrid_(const std::shared_ptr<MutantGrid<eSprite>> &grid_) {
 
 bool Univers::displayIsAvailable() const {
 	return !displayManager->hasLibraryLoaded() ||
-		!displayManager->getDisplay()->exit();
+		!displayManager->getInstance()->exit();
 }
 
 bool Univers::isSwitchLib() const {
@@ -520,11 +513,11 @@ bool Univers::isSwitchLib() const {
 
 void Univers::updateDisplayUI() {
 	assert(displayManager != nullptr);
-	assert(displayManager->getDisplay() != nullptr);
+	assert(displayManager->getInstance() != nullptr);
 
-	displayManager->getDisplay()->update();
-	displayManager->getDisplay()->drawGrid(*grid_);
-	displayManager->getDisplay()->render();
+	displayManager->getInstance()->update();
+	displayManager->getInstance()->drawGrid(*grid_);
+	displayManager->getInstance()->render();
 }
 
 SoundDynamicLibrary &Univers::getSoundManager() {

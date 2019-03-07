@@ -62,6 +62,7 @@ void SoundSdl::clean_(void) {
 	}
 	for (auto &it : sound_)
 		delete it;
+	Mix_CloseAudio();
 }
 
 SoundSdl::SdlSoundException::SdlSoundException(void) noexcept :

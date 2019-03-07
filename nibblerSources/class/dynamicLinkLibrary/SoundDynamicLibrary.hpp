@@ -31,7 +31,7 @@ public:
 	void addNoise(std::string const &path);
 	void playNoise(eNoise e) const;
 	void playMusic(std::string const &path) const;
-	void stopMusic() const;
+	void stopMusic();
 	void setMusique(bool b);
 	void setNoise(bool b);
 	bool &getMusique();

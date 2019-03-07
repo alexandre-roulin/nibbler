@@ -102,7 +102,7 @@ public:
 
 	/** Sound **/
 
-	bool loadSound(eSound sound);
+	bool loadSound();
 
 	void unloadSound();
 
