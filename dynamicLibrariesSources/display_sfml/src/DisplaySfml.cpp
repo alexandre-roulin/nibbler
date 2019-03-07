@@ -3,13 +3,13 @@
 #include "DisplaySfml.hpp"
 #include "Display2D.hpp"
 
-IDisplay *newDisplay(int width,
+IDisplay *newInstance(int width,
 					 int height,
 					 char const *windowName) {
 	return (new DisplaySfml(width, height, windowName));
 }
 
-void deleteDisplay(IDisplay *display) {
+void deleteInstance(IDisplay *display) {
 	delete display;
 }
 

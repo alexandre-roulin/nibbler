@@ -1,11 +1,11 @@
 #include <iostream>
 #include "SoundSdl.hpp"
 
-ISound *newSound(void) {
+ISound *newInstance(void) {
 	return (new SoundSdl());
 }
 
-void deleteSound(ISound *sound) {
+void deleteInstance(ISound *sound) {
 	delete sound;
 }
 

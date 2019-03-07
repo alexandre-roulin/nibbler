@@ -89,8 +89,8 @@ private:
 };
 
 extern "C" {
-IDisplay *newDisplay(int width,
+IDisplay *newInstance(int width,
 					 int height,
 					 char const *windowName);
-void deleteDisplay(IDisplay *display);
+void deleteInstance(IDisplay *display);
 }

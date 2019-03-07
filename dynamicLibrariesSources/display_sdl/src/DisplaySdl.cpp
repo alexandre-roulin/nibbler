@@ -4,13 +4,13 @@
 #include "DisplaySdl.hpp"
 #include "Display2D.hpp"
 
-IDisplay *newDisplay(int width,
+IDisplay *newInstance(int width,
 					 int height,
 					 char const *windowName) {
 	return (new DisplaySdl(width, height, windowName));
 }
 
-void deleteDisplay(IDisplay *display) {
+void deleteInstance(IDisplay *display) {
 	delete display;
 }
 

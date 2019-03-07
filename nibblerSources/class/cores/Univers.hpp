@@ -8,8 +8,8 @@
 #include <bitset>
 #include "nibbler.hpp"
 #include "ISound.hpp"
-#include "SoundDynamicLibrary.hpp"
-#include "DisplayDynamicLibrary.hpp"
+#include "dynamicLinkLibrary/SoundDynamicLibrary.hpp"
+#include "dynamicLinkLibrary/DisplayDynamicLibrary.hpp"
 #include <boost/asio/deadline_timer.hpp>
 #include <events/NextFrame.hpp>
 #include <boost/thread.hpp>

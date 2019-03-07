@@ -1,7 +1,7 @@
 #include <cores/Univers.hpp>
 #include <gui/Gui.hpp>
 #include "WidgetOption.hpp"
-#include "cores/DisplayDynamicLibrary.hpp"
+#include "dynamicLinkLibrary/DisplayDynamicLibrary.hpp"
 
 WidgetOption::WidgetOption(Gui &core) :
 		AWidget(core, "Options", NIBBLER_IMGUI_WINDOW_FLAGS_BASIC),

@@ -88,8 +88,9 @@ ADynamicLinkLibrary< T, E, SIGNATURE >::~ADynamicLinkLibrary() {
 
 template < typename T, typename E, typename SIGNATURE >
 void ADynamicLinkLibrary< T, E, SIGNATURE >::dlError() {
+	std::string error(dlerror());
 	unloadDynamicLibrary();
-	throw(ADynamicLinkLibrary< T, E, SIGNATURE >::Error(dlerror()));
+	throw(ADynamicLinkLibrary< T, E, SIGNATURE >::Error(error));
 }
 
 template < typename T, typename E, typename SIGNATURE >
@@ -106,7 +107,7 @@ void ADynamicLinkLibrary< T, E, SIGNATURE >::loadDynamicLibrary(E typeInstance) 
 		dlError();
 		return;
 	}
-	if (!(newInstance_ = reinterpret_cast< SIGNATURE >(dlsym(dlHandle_, "newInstance_")))) {
+	if (!(newInstance_ = reinterpret_cast< SIGNATURE >(dlsym(dlHandle_, "newInstance")))) {
 		dlError();
 		return;
 	}

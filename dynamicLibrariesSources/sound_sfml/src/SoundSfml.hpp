@@ -57,6 +57,6 @@ private:
 };
 
 extern "C" {
-ISound *newSound(void);
-void deleteSound(ISound *sound);
+ISound *newInstance(void);
+void deleteInstance(ISound *sound);
 }

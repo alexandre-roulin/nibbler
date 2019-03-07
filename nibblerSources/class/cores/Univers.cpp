@@ -115,16 +115,21 @@ void Univers::startNewGame() {
 	SnakeClient::boost_shared_ptr ptr(getSnakeClient().lock());
 	SnakeServer::b_ptr ptrServer(snakeServer_);
 
-	displayManager->loadDynamicLibrary(displayManager->getKDisplay());
-
-	std::cout << "hasLib : " << displayManager->hasLibraryLoaded() << std::endl;
-	if (!displayManager->hasConstructorLoaded()) {
+	try {
+		displayManager->loadDynamicLibrary(displayManager->getKDisplay());
+		std::cout << "hasLib : " << displayManager->hasLibraryLoaded() << std::endl;
+		if (!displayManager->hasConstructorLoaded()) {
+			openGame_ = false;
+			return;
+		} else {
+			deleteGui();
+		}
+		defaultAssignmentLibrary();
+	} catch (std::exception const &e) {
+		log_fatal("%s\n", e.what());
 		openGame_ = false;
 		return;
-	} else {
-		deleteGui();
 	}
-	defaultAssignmentLibrary();
 
 	gameManager->startNewGame();
 	gameManager->loopUI();

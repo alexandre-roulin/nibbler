@@ -11,13 +11,13 @@
 
 #define CAMERA_SIZE 3
 
-IDisplay *newDisplay(int width,
+IDisplay *newInstance(int width,
 					 int height,
 					 char const *windowName) {
 	return (new DisplayGlfw(width, height, windowName));
 }
 
-void deleteDisplay(IDisplay *display) {
+void deleteInstance(IDisplay *display) {
 	delete display;
 }
 
