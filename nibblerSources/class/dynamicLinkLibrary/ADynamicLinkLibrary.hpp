@@ -132,15 +132,6 @@ void ADynamicLinkLibrary< T, E, SIGNATURE >::unloadDynamicLibrary() {
 }
 
 template < typename T, typename E, typename SIGNATURE >
-void ADynamicLinkLibrary< T, E, SIGNATURE >::setNextKInstance() {
-	auto nextLibraryInfo = currentLibraryInfo_;
-	++nextLibraryInfo;
-	if (nextLibraryInfo == ADynamicLinkLibrary< T, E, SIGNATURE >::libraryInfo.end())
-		nextLibraryInfo = ADynamicLinkLibrary< T, E, SIGNATURE >::libraryInfo.begin();
-	kInstance_ = nextLibraryInfo->kLibrary;
-}
-
-template < typename T, typename E, typename SIGNATURE >
 bool ADynamicLinkLibrary< T, E, SIGNATURE >::hasLibraryLoaded() const {
 	return instance_ != nullptr;
 }
@@ -148,6 +139,17 @@ bool ADynamicLinkLibrary< T, E, SIGNATURE >::hasLibraryLoaded() const {
 template < typename T, typename E, typename SIGNATURE >
 T *ADynamicLinkLibrary< T, E, SIGNATURE >::getInstance() const {
 	return instance_;
+}
+
+template < typename T, typename E, typename SIGNATURE >
+void ADynamicLinkLibrary< T, E, SIGNATURE >::setNextKInstance() {
+	typename std::vector< LibraryInfo< E > >::iterator nextLibraryInfo = currentLibraryInfo_;
+	std::advance(nextLibraryInfo, 1);
+
+	if (nextLibraryInfo == ADynamicLinkLibrary< T, E, SIGNATURE >::libraryInfo.end()) {
+		nextLibraryInfo = ADynamicLinkLibrary< T, E, SIGNATURE >::libraryInfo.begin();
+	}
+	setNextKInstance(nextLibraryInfo->kLibrary);
 }
 template < typename T, typename E, typename SIGNATURE >
 void ADynamicLinkLibrary< T, E, SIGNATURE >::setNextKInstance(E kinstance) {

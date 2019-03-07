@@ -77,10 +77,12 @@ void WidgetOption::beginContent_() {
 			bool is_selected = (indexSoundLibrary_ == n);
 			if (ImGui::Selectable(SoundDynamicLibrary::libraryInfo[n].title.c_str(), is_selected)) {
 				indexSoundLibrary_ = n;
-				sound_ = false;
-				if (!(sound_ = soundManagement_())) {
-					core_.univers.getSoundManager().setNextKInstance(SoundDynamicLibrary::libraryInfo[n].kLibrary);
+				if (sound_) {
+					sound_ = false;
+					sound_ = soundManagement_();
 				}
+				if (!sound_)
+					core_.univers.getSoundManager().setNextKInstance(SoundDynamicLibrary::libraryInfo[n].kLibrary);
 			}
 			if (is_selected)
 				ImGui::SetItemDefaultFocus();
