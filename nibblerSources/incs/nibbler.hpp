@@ -45,35 +45,6 @@ enum eFlag {
 	kSound
 };
 
-enum eSound {
-	kSoundSfmlLibrary = 0,
-	kSoundSdlLibrary
-};
-
-static const eSound eSoundArray[] = {
-		kSoundSfmlLibrary,
-		kSoundSdlLibrary
-};
-
-enum eDisplay {
-	kDisplaySfmlLibrary = 0,
-	kDisplaySdlLibrary,
-	kDisplayGlfwLibrary
-};
-
-template < typename T >
-struct LibraryInfo {
-	char const title[80];
-	char const path[PATH_MAX];
-	T kLibrary;
-};
-
-static const eDisplay eDisplayArray[] = {
-		kDisplaySfmlLibrary,
-		kDisplaySdlLibrary,
-		kDisplayGlfwLibrary
-};
-
 enum eTag {
 	kHeadTag = 0,
 	kTailTag = 8,
@@ -81,15 +52,6 @@ enum eTag {
 	kFoodFromSnake = 32,
 	kWallTag = 64,
 };
-
-enum class eNoise {
-	kWelcomeSound = 0,
-	kReadySound = 2,
-	kResizeSound = 0,
-	kFoodSound = 3,
-	kDeathSound = 4
-};
-
 
 enum ePriority {
 	kNoPriority,

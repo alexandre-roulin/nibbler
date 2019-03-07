@@ -1,7 +1,7 @@
 #include <cores/Univers.hpp>
 #include <gui/Gui.hpp>
 #include "WidgetOption.hpp"
-#include "cores/ExternalLibraryDisplayManager.hpp"
+#include "cores/DisplayDynamicLibrary.hpp"
 
 WidgetOption::WidgetOption(Gui &core) :
 		AWidget(core, "Options", NIBBLER_IMGUI_WINDOW_FLAGS_BASIC),
@@ -67,12 +67,12 @@ void WidgetOption::beginContent_() {
 		std::memcpy(nameBuffer_,ptr->getSnake().name,NAME_BUFFER);
 	}
 
-	if (ImGui::BeginCombo("Sound", ExternalLibrarySoundManager::libraryInfo[indexSoundLibrary_].title, 0)) {
-		for (int n = 0; n < IM_ARRAYSIZE(ExternalLibrarySoundManager::libraryInfo); n++) {
+	if (ImGui::BeginCombo("Sound", SoundDynamicLibrary::libraryInfo[indexSoundLibrary_].title.c_str(), 0)) {
+		for (unsigned long n = 0; n < SoundDynamicLibrary::libraryInfo.size(); n++) {
 			bool is_selected = (indexSoundLibrary_ == n);
-			if (ImGui::Selectable(ExternalLibrarySoundManager::libraryInfo[n].title, is_selected)) {
+			if (ImGui::Selectable(SoundDynamicLibrary::libraryInfo[n].title.c_str(), is_selected)) {
 				indexSoundLibrary_ = n;
-				core_.univers.getSoundManager().setKSound(ExternalLibrarySoundManager::libraryInfo[n].kLibrary);
+				core_.univers.getSoundManager().loadDynamicLibrary(SoundDynamicLibrary::libraryInfo[n].kLibrary);
 			}
 			if (is_selected)
 				ImGui::SetItemDefaultFocus();
@@ -89,12 +89,12 @@ void WidgetOption::beginContent_() {
 			rMusique_ = musicManagemet_();
 	}
 
-	if (ImGui::BeginCombo("Display", ExternalLibraryDisplayManager::libraryInfo[indexDisplayLibrary_].title, 0)) {
-		for (int n = 0; n < IM_ARRAYSIZE(ExternalLibraryDisplayManager::libraryInfo); n++) {
+	if (ImGui::BeginCombo("Display", DisplayDynamicLibrary::libraryInfo[indexDisplayLibrary_].title.c_str(), 0)) {
+		for (unsigned long n = 0; n < DisplayDynamicLibrary::libraryInfo.size(); n++) {
 			bool is_selected = (indexDisplayLibrary_ == n);
-			if (ImGui::Selectable(ExternalLibraryDisplayManager::libraryInfo[n].title, is_selected)) {
+			if (ImGui::Selectable(DisplayDynamicLibrary::libraryInfo[n].title.c_str(), is_selected)) {
 				indexDisplayLibrary_ = n;
-				core_.univers.getDisplayManager().setKDisplay(ExternalLibraryDisplayManager::libraryInfo[n].kLibrary);
+				core_.univers.getDisplayManager().loadDynamicLibrary(DisplayDynamicLibrary::libraryInfo[n].kLibrary);
 			}
 			if (is_selected)
 				ImGui::SetItemDefaultFocus();

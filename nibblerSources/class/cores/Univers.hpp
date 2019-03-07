@@ -8,8 +8,8 @@
 #include <bitset>
 #include "nibbler.hpp"
 #include "ISound.hpp"
-#include "ExternalLibrarySoundManager.hpp"
-#include "ExternalLibraryDisplayManager.hpp"
+#include "SoundDynamicLibrary.hpp"
+#include "DisplayDynamicLibrary.hpp"
 #include <boost/asio/deadline_timer.hpp>
 #include <events/NextFrame.hpp>
 #include <boost/thread.hpp>
@@ -158,9 +158,9 @@ public:
 
 	IOManager &getIoManager();
 
-	ExternalLibrarySoundManager &getSoundManager();
+	SoundDynamicLibrary &getSoundManager();
 
-	ExternalLibraryDisplayManager &getDisplayManager();
+	DisplayDynamicLibrary &getDisplayManager();
 
 	GameManager &getGameManager();
 
@@ -207,8 +207,8 @@ private:
 	static const std::string ErrorServerAlreadyUseOnThisPort;
 	static const std::string ErrorPortRange;
 	std::unique_ptr<IOManager> ioManager;
-	std::unique_ptr<ExternalLibrarySoundManager> soundManager;
-	std::unique_ptr<ExternalLibraryDisplayManager> displayManager;
+	std::unique_ptr<SoundDynamicLibrary> soundManager;
+	std::unique_ptr<DisplayDynamicLibrary> displayManager;
 	std::unique_ptr<GameManager> gameManager;
 
 	boost::shared_ptr<SnakeServer> snakeServer_;

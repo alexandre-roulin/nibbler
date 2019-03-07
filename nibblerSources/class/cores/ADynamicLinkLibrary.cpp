@@ -1,5 +1,5 @@
 #include <dlfcn.h>
-#include "DynamicLinkLibrary.hpp"
+#include "ADynamicLinkLibrary.hpp"
 #include <boost/filesystem/path.hpp>
 
 

@@ -1,7 +1,7 @@
 #include <cores/Univers.hpp>
 #include <gui/Gui.hpp>
 #include "WidgetServerPannel.hpp"
-#include "cores/ExternalLibraryDisplayManager.hpp"
+#include "cores/DisplayDynamicLibrary.hpp"
 
 WidgetServerPannel::WidgetServerPannel(Gui &core) :
 		AWidget(core, "Server Pannel", NIBBLER_IMGUI_WINDOW_FLAGS_BASIC) {}

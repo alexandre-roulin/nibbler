@@ -40,8 +40,8 @@ const std::string Univers::ErrorPortRange = "Port should be between 0 and 65545"
 Univers::Univers()
 		:
 		ioManager(std::make_unique<IOManager>(10)),
-		soundManager(std::make_unique<ExternalLibrarySoundManager>(*this)),
-		displayManager(std::make_unique<ExternalLibraryDisplayManager>(*this)),
+		soundManager(std::make_unique<SoundDynamicLibrary>()),
+		displayManager(std::make_unique<DisplayDynamicLibrary>()),
 		gameManager(std::make_unique<GameManager>(*this)),
 		snakeServer_(nullptr),
 		snakeClient_(nullptr),
@@ -115,7 +115,7 @@ void Univers::startNewGame() {
 	SnakeClient::boost_shared_ptr ptr(getSnakeClient().lock());
 	SnakeServer::b_ptr ptrServer(snakeServer_);
 
-	displayManager->loadExternalDisplayLibrary(displayManager->getKDisplay());
+	displayManager->loadDynamicLibrary(displayManager->getKDisplay());
 
 	std::cout << "hasLib : " << displayManager->hasLibraryLoaded() << std::endl;
 	if (!displayManager->hasConstructorLoaded()) {
@@ -134,7 +134,7 @@ void Univers::startNewGame() {
 	openGame_ = false;
 	gameManager->finishGame();
 	if (displayManager->hasLibraryLoaded())
-		displayManager->unloadExternalDisplayLibrary();
+		displayManager->unloadDynamicLibrary();
 	resetData();
 }
 
@@ -159,7 +159,7 @@ void Univers::defaultAssignmentLibrary() {
 	MutantGrid<eSprite> grid(mapSize_);
 	grid.fill(eSprite::kGround);
 
-	displayManager->constructExternalLibrary(mapSize_,mapSize_);
+	displayManager->constructDynamicLibrary(mapSize_,mapSize_, displayManager->getCurrentLibraryInfo().title.c_str());
 	displayManager->getDisplay()->setBackground(grid);
 	displayManager->getDisplay()->registerCallbackAction(
 			std::bind(&Univers::callbackAction, this, std::placeholders::_1));
@@ -364,8 +364,8 @@ void Univers::loadSoundData_() {
 bool Univers::loadSound(eSound sound) {
 	if (getSoundManager().hasLibraryLoaded())
 		throw std::runtime_error("Trying to loadExternalSoundLibrary but it is already loaded");
-	getSoundManager().loadExternalSoundLibrary(sound);
-	getSoundManager().constructExternalLibrary();
+	getSoundManager().loadDynamicLibrary(sound);
+	getSoundManager().constructDynamicLibrary();
 	if (!getSoundManager().hasLibraryLoaded())
 		return false;
 	loadSoundData_();
@@ -374,7 +374,7 @@ bool Univers::loadSound(eSound sound) {
 void Univers::unloadSound() {
 	if (!getSoundManager().hasLibraryLoaded())
 		throw std::runtime_error("Trying to unloadExternalSoundLibrary but it is already unload");
-	getSoundManager().unloadExternalSoundLibrary();
+	getSoundManager().unloadDynamicLibrary();
 }
 
 /** Getter && Setter **/
@@ -522,11 +522,11 @@ void Univers::updateDisplayUI() {
 	displayManager->getDisplay()->render();
 }
 
-ExternalLibrarySoundManager &Univers::getSoundManager() {
+SoundDynamicLibrary &Univers::getSoundManager() {
 	return *soundManager;
 }
 
-ExternalLibraryDisplayManager &Univers::getDisplayManager() {
+DisplayDynamicLibrary &Univers::getDisplayManager() {
 	return (*displayManager);
 }
 
