@@ -50,7 +50,7 @@ Univers::Univers()
 		exit_(false),
 		switchLib(false),
 		mapSize_(MAP_DEFAULT),
-		microSecDeltaTime(GameManager::Impossible),
+		microSecDeltaTime(GameManager::Hard),
 		borderless(false),
 		openGame_(false) {
 
@@ -79,11 +79,9 @@ void Univers::callbackAction(eAction action) {
 
 	switch (action) {
 		case eAction::kPause :
-			log_success(" eAction::kPause");
 			ptr->sendDataToServer(action, eHeader::kPause);
 			break;
 		case eAction::kSwitchDisplayLibrary:
-			log_success("eAction::kSwitchDisplayLibrary");
 			switchLib = true;
 			break;
 	}
@@ -119,14 +117,14 @@ void Univers::startNewGame() {
 		deleteGui();
 		defaultAssignmentLibrary();
 	} catch (std::exception const &e) {
-		log_fatal("%s\n", e.what());
 		openGame_ = false;
 		return;
 	}
 
 	gameManager->startNewGame();
 	gameManager->loopUI();
-	ptr->killSnake(ptr->getId_());
+	if (ptr)
+		ptr->killSnake(ptr->getId_());
 	if (ptrServer)
 		ptrServer->sendOpenGameToClient(false);
 	openGame_ = false;
@@ -169,7 +167,6 @@ void Univers::defaultAssignmentLibrary() {
 
 void Univers::manageSwitchLibrary() {
 	SnakeClient::boost_shared_ptr ptr(getSnakeClient().lock());
-	log_success("sw %d", !ptr->isSwitchingLibrary());
 	if (!ptr->isSwitchingLibrary()) {
 		int16_t id = ptr->getId_();
 		ptr->sendDataToServer(id, eHeader::kForcePause);
@@ -190,7 +187,6 @@ bool Univers::isIASnake(uint16_t client_id) const {
 
 
 void Univers::connect(const std::string dns, const std::string port) {
-	log_info("%s", __PRETTY_FUNCTION__);
 	SnakeClient::boost_shared_ptr ptr(snakeClient_);
 
 	if (!ptr) {
@@ -204,40 +200,43 @@ void Univers::connect(const std::string dns, const std::string port) {
 	}
 	try {
 		ptr->connect(dns, port);
-		if (ptr->isOpen())
+		if (ptr->isOpen() && gui_)
 			gui_->addMessageChat(eColorLog::kGreen, SuccessClientIsConnected);
-		else
+		else if (gui_)
 			gui_->addMessageChat(eColorLog::kOrange,
 								 WarningClientIsNotConnected);
 	} catch (const boost::system::system_error &ex) {
-		if (ex.code() == boost::system::errc::connection_refused) {
+		if (ex.code() == boost::system::errc::connection_refused && gui_) {
 			gui_->addMessageChat(eColorLog::kRed, ErrorClientConnectionRefused);
-		} else {
+		} else if (gui_) {
 			gui_->addMessageChat(eColorLog::kRed, ex.what());
 		}
 	} catch (const std::exception &e) {
-		gui_->addMessageChat(eColorLog::kRed, e.what());
+		if (gui_)
+			gui_->addMessageChat(eColorLog::kRed, e.what());
 	}
 }
 void Univers::createServer(const std::string dns, unsigned int port) {
 
-	if (snakeServer_)
+	if (snakeServer_ && gui_)
 		gui_->addMessageChat(eColorLog::kOrange, WarningServerExist);
-	else if (port >> 16 != 0) {
+	else if (port >> 16 != 0 && gui_) {
 		gui_->addMessageChat(eColorLog::kRed, ErrorPortRange);
 	}
 	else {
 		try {
 			snakeServer_ = SnakeServer::create(*this, dns, port);
+			if (gui_)
 			gui_->addMessageChat(eColorLog::kGreen, SuccessServerIsCreate, snakeServer_->getPort_());
 		} catch (const boost::system::system_error &ex) {
-			if (boost::system::errc::address_in_use == ex.code()) {
+			if (boost::system::errc::address_in_use == ex.code() && gui_) {
 				gui_->addMessageChat(eColorLog::kRed, ErrorServerAlreadyUseOnThisPort);
-			} else {
+			} else if (gui_) {
 				gui_->addMessageChat(eColorLog::kRed, ex.what());
 			}
 		} catch (std::exception const &e) {
-			gui_->addMessageChat(eColorLog::kRed, e.what());
+			if (gui_)
+				gui_->addMessageChat(eColorLog::kRed, e.what());
 		}
 
 	}
@@ -246,11 +245,11 @@ void Univers::createServer(const std::string dns, unsigned int port) {
 }
 
 void Univers::createBobby() {
-	if (!isServer()) {
+	if (!isServer() && gui_) {
 		gui_->addMessageChat(eColorLog::kOrange, WarningServerCreateIA);
 		return;
 	}
-	if (snakeServer_->isFull()) {
+	if (snakeServer_->isFull() && gui_) {
 		gui_->addMessageChat(eColorLog::kOrange, WarningServerFull);
 		return;
 	}
@@ -258,22 +257,25 @@ void Univers::createBobby() {
 	try {
 		bobby->getClientTCP_()->connect(DEFAULT_DNS, std::to_string(snakeServer_->getPort_()));
 	} catch (const std::exception &e) {
-		gui_->addMessageChat(e.what());
+		if (gui_)
+			gui_->addMessageChat(e.what());
 	}
 	vecBobby.push_back(std::move(bobby));
-	gui_->addMessageChat(eColorLog::kGreen, SuccessIAIsCreate);
+	if (gui_)
+		gui_->addMessageChat(eColorLog::kGreen, SuccessIAIsCreate);
 }
 
 void Univers::createClient() {
-	log_info("%s", __PRETTY_FUNCTION__);
 
 	if (!snakeClient_) {
 		snakeClient_ = SnakeClient::create(*this, false);
-		gui_->addMessageChat(eColorLog::kGreen, SuccessClientIsCreate);
-	} else
+		if (gui_)
+			gui_->addMessageChat(eColorLog::kGreen, SuccessClientIsCreate);
+	} else if (gui_) {
 		gui_->addMessageChat(eColorLog::kOrange, WarningClientExist);
-}
+	}
 
+}
 
 void Univers::createGui() {
 	gui_ = std::make_unique<Gui>(*this);
@@ -319,9 +321,9 @@ void Univers::deleteClient() {
 	SnakeClient::boost_shared_ptr ptr(snakeClient_);
 
 	if (ptr) {
-		ptr->disconnect();
+		snakeClient_->disconnect();
 		if (gui_) gui_->addMessageChat(eColorLog::kGreen, SuccessClientIsDelete);
-		ptr = nullptr;
+		snakeClient_ = nullptr;
 	} else if (gui_)
 		gui_->addMessageChat(eColorLog::kOrange, WarningClientNotExist);
 }
@@ -331,7 +333,7 @@ void Univers::deleteServer() {
 	SnakeServer::b_ptr ptrServer(snakeServer_);
 
 	if (ptrServer) {
-		ptrServer = nullptr;
+		snakeServer_ = nullptr;
 		if (gui_)
 			gui_->addMessageChat(eColorLog::kGreen, SuccessServerIsDelete);
 		std::for_each(vecBobby.begin(), vecBobby.end(), [](std::unique_ptr<Bobby> &bob){ bob->getClientTCP_()->disconnect(); });

@@ -4,7 +4,6 @@
 #include <fstream>
 #include <gui/Gui.hpp>
 #include <boost/program_options.hpp>
-#include <logger.h>
 #include <ia/KStar.hpp>
 #include "cores/Test.hpp"
 
@@ -50,7 +49,6 @@ int main(int argc, char **argv) {
 	}
 
 	srand(time(NULL));
-	char path[] = "/tmp/log.out";
 	//try {
 		Univers univers;
 
@@ -99,10 +97,6 @@ int main(int argc, char **argv) {
 					Test::getInstance().setLogFile(vm["fileInput"].as<std::string>());
 			}
 
-			if (vm.count("logger"))
-				logger_init(const_cast<char *>(vm["logger"].as<std::string>().c_str()));
-			else
-				logger_init(path);
 			boost::program_options::notify(vm);
 		}
 		catch (const boost::program_options::error &e) {
@@ -116,6 +110,5 @@ int main(int argc, char **argv) {
 	//	std::cerr << "Unhandled Exception reached the top of main: "
 	//			  << e.what() << ", application will now exit" << std::endl;
 	//}
-	log_success("main.return()");
 	return (0);
 }

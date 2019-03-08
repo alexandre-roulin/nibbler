@@ -1,7 +1,6 @@
 #include <utility>
 #include "IOTCP.hpp"
 #include "ServerTCP.hpp"
-#include <logger.h>
 
 namespace KNW {
 
@@ -12,7 +11,8 @@ namespace KNW {
 			:
 			dataTCP_(std::move(dataTCP)),
 			socket_(std::move(socket)),
-			callbackDeadSocket_(std::move(callbackDeadSocket)) {
+			callbackDeadSocket_(std::move(callbackDeadSocket)),
+			open_(true){
 	}
 
 	void IOTCP::readSocketHeader() {
@@ -32,18 +32,24 @@ namespace KNW {
 			const boost::system::error_code &ec,
 			size_t len) {
 
-		if (ec.value() == 0 && len != 0) {
+		if (!open_) return;
+		if (ec.value() != 0 ) {
+			checkError(ec);
+		} else {
 			BaseDataType::Header header;
 			std::memcpy(&header, buffer_data_.data(), len);
-			readSocketData(header);
-		} else {
-			checkError(ec);
+			if (header == 0) {
+				checkError(ec);
+			}
+			else
+				readSocketData(header);
 		}
 	}
 
 
 	void IOTCP::readSocketData(BaseDataType::Header header) {
 
+		if (!open_) return;
 		DataTCP::b_sptr sharedPtr = dataTCP_.lock();
 		if (sharedPtr) {
 			boost::weak_ptr<IOTCP> weakPtr(weak_from_this());
@@ -81,8 +87,13 @@ namespace KNW {
 		checkError(ec);
 	}
 
+	void IOTCP::writeSyncSocket(std::string data) {
+		boost::system::error_code ec;
+		boost::asio::write(*socket_, boost::asio::buffer(data), ec);
+	}
+
 	void IOTCP::writeSocket(std::string data) {
-//	log_fatal("%s", __PRETTY_FUNCTION__);
+		if (!open_) return;
 
 		boost::weak_ptr<IOTCP> weakPtr(shared_from_this());
 		if (socket_ && socket_->is_open())
@@ -97,6 +108,7 @@ namespace KNW {
 
 	void IOTCP::writeSocket(const void *pVoid, size_t len) {
 		boost::weak_ptr<IOTCP> weakPtr(shared_from_this());
+		if (!open_) return;
 		boost::asio::async_write(
 				*socket_,
 				boost::asio::buffer(pVoid, len),
@@ -107,8 +119,8 @@ namespace KNW {
 	}
 
 	void IOTCP::checkError(boost::system::error_code const &error_code) {
-//		log_info("%s %d", __PRETTY_FUNCTION__, error_code.value());
 		if (error_code) {
+			open_ = false;
 			if (callbackDeadSocket_)
 				callbackDeadSocket_();
 		}
@@ -134,6 +146,7 @@ namespace KNW {
 	const boost::shared_ptr<boost::asio::ip::tcp::socket> &IOTCP::getSocket_() {
 		return socket_;
 	}
+
 
 	IOTCP::~IOTCP() = default;
 }

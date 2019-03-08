@@ -1,7 +1,6 @@
 #ifndef NIBBLER_MUTANTGRID_HPP
 #define NIBBLER_MUTANTGRID_HPP
 
-#include <logger.h>
 #include <vector>
 #include <assert.h>
 #include <iostream>

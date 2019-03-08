@@ -7,23 +7,23 @@
 #include <boost/date_time/posix_time/ptime.hpp>
 
 enum class eHeader : uint16_t {
-	kChat,				//0
-	kOpenGame,			//1
-	kStartGame,			//2
-	kResizeMap,			//3
-	kBorderless,		//4
-	kId,				//5
-	kPause,				//6
-	kInput,				//7
-	kFood,				//8
-	kForcePause,		//9
-	kPock,				//10
-	kSnake,				//11
-	kSnakeArray,		//12
-	kCloseConnection,	//13
-	kSnakeUI,			//14
-	kSnakeUX,			//15
-	kSnakeUN			//16
+	kChat = 1,			//1
+	kOpenGame,			//2
+	kStartGame,			//3
+	kResizeMap,			//4
+	kBorderless,		//5
+	kId,				//6
+	kPause,				//7
+	kInput,				//8
+	kFood,				//9
+	kForcePause,		//10
+	kPock,				//11
+	kSnake,				//12
+	kSnakeArray,		//13
+	kCloseConnection,	//14
+	kSnakeUI,			//15
+	kSnakeUX,			//16
+	kSnakeUN			//17
 };
 
 inline std::ostream &operator<<(std::ostream  &os, eHeader const & header) {

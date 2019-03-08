@@ -7,7 +7,6 @@
 #include "Pool.hpp"
 #include <map>
 #include <unordered_map>
-#include <logger.h>
 #include <mutex>
 
 namespace KINU {

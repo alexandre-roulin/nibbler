@@ -88,6 +88,9 @@ void Snake::randomSnake(int16_t id_, SnakeArrayContainer const &snakeArrayContai
 	isSwitchingLibrary = false;
 	isValid = true;
 	score_ = 0;
+	isReady = false;
+	isIA = false;
+	isInGame = false;
 	isReadyToExpose = true;
 }
 

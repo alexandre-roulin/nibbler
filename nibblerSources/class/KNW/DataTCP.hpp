@@ -8,6 +8,8 @@
 #include <iostream>
 #include <cores/Snake.hpp>
 
+
+
 namespace KNW {
 
 	class DataTCP : public boost::enable_shared_from_this<KNW::DataTCP> {
@@ -116,7 +118,8 @@ namespace KNW {
 		buffer.append(reinterpret_cast<const char *>(&header),
 				sizeof(BaseDataType::Header));
 		buffer.append(reinterpret_cast<const char *>(&data),
-				static_cast<unsigned long>(getSizeOfHeader(header)));
+				static_cast<unsigned long>(sizeof(T)));
+		assert(buffer.size() == (sizeof(T) + sizeof(BaseDataType::Header)));
 		return buffer;
 	}
 

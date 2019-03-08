@@ -1,5 +1,4 @@
 #include <utility>
-#include <logger.h>
 #include "ServerTCP.hpp"
 
 namespace KNW {
@@ -23,18 +22,19 @@ namespace KNW {
 
 	void ConnectionTCP::callbackDeadIO() {
 		auto sptr = serverTCP_.lock();
-		if (sptr) { //TODO
+		DataTCP::b_sptr dataPtr = sptr->getDataTCP();
+		if (sptr && dataPtr) {
 			auto it = std::find(sptr->connections.begin(), sptr->connections.end(), shared_from_this());
 			boost::system::error_code ec;
+			iotcp->writeSyncSocket(dataPtr->serializeData(0, 0));
 			iotcp->getSocket_()->shutdown(boost::asio::ip::tcp::socket::shutdown_both, ec);
 			iotcp->getSocket_()->close(ec);
-			if (sptr->callbackDeadConnection_)
+			if (sptr->callbackDeadConnection_ && sptr->isOpen() && it != sptr->connections.end())
 				sptr->callbackDeadConnection_(
 						static_cast<size_t>(std::distance(
 								sptr->connections.begin(),
 								std::find(sptr->connections.begin(), sptr->connections.end(), *it))));
 			*it = nullptr;
-			log_success("%s num_connection_open %d", __PRETTY_FUNCTION__, sptr->getSizeOfOpenConnection());
 		}
 	}
 
@@ -57,6 +57,10 @@ namespace KNW {
 		iotcp->getSocket_()->close(ec_sock);
 	}
 
+	bool ConnectionTCP::isOpen() const {
+		return iotcp && iotcp->getSocket_()->is_open();
+	}
+
 	/** Server TCP **/
 
 	ServerTCP::b_sptr ServerTCP::create(IOManager &io_manager) {
@@ -67,7 +71,8 @@ namespace KNW {
 			: io_manager_(io_manager),
 			dataTCP(DataTCP::create()),
 			port_(0),
-			acceptor_(new boost::asio::ip::tcp::acceptor(io_manager_.getIo()))
+			acceptor_(new boost::asio::ip::tcp::acceptor(io_manager_.getIo())),
+			open(true)
 			{
 		connections.fill(nullptr);
 	}
@@ -84,6 +89,16 @@ namespace KNW {
 		acceptor_->set_option(boost::asio::ip::tcp::acceptor::reuse_address(true));
 		acceptor_->bind(endpoint);
 		acceptor_->listen(eConfigTCP::kMaxConnectionOpen);
+	}
+
+	void ServerTCP::registerAcceptCallback(std::function<void(size_t)> f) {
+		callbackAccept_ = std::move(f);
+	}
+
+	void
+	ServerTCP::registerDeadConnectionCallback(std::function<void(size_t)> f) {
+		callbackDeadConnection_ = std::move(f);
+
 	}
 
 	void ServerTCP::startAsyncAccept()  {
@@ -115,8 +130,8 @@ namespace KNW {
 		}
 	}
 
-	DataTCP &ServerTCP::getDataTCP(){
-		return *dataTCP;
+	DataTCP::b_sptr ServerTCP::getDataTCP(){
+		return dataTCP;
 	}
 
 	size_t ServerTCP::getSizeOfOpenConnection() const {
@@ -132,7 +147,6 @@ namespace KNW {
 	) {
 
 		if (!ec) {
-			log_info("%s %d", __PRETTY_FUNCTION__, getSizeOfOpenConnection());
 			acceptConnection();
 			auto it = std::find_if(connections.begin(), connections.end(),
 								   [](boost::shared_ptr<ConnectionTCP> ptr) {
@@ -152,13 +166,13 @@ namespace KNW {
 
 	void ServerTCP::stopAccept() {
 		boost::system::error_code ec;
+		connections.fill(nullptr);
 		acceptor_->cancel(ec);
 		acceptor_->close(ec);
-		connections.fill(nullptr);
 	}
 
 	bool ServerTCP::isOpen() const {
-		return acceptor_ != nullptr && acceptor_->is_open();
+		return acceptor_ != nullptr && acceptor_->is_open() && open;
 	}
 
 	unsigned short ServerTCP::getPort() const {
@@ -170,6 +184,7 @@ namespace KNW {
 	}
 
 	ServerTCP::~ServerTCP() {
+		open = false;
 		stopAccept();
 	}
 

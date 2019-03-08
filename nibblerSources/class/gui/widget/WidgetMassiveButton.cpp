@@ -8,8 +8,11 @@ WidgetMassiveButton::WidgetMassiveButton(Gui &core) :
 }
 
 void WidgetMassiveButton::beginContent_() {
+
 	if (button_("create_server()"))
 		core_.univers.createServer();
+	if (button_("closeAcceptorServer()"))
+		core_.univers.getSnakeServer().closeAcceptorServer();
 	if (button_("create_client()"))
 		core_.univers.createClient();
 	if (button_("delete_client()"))

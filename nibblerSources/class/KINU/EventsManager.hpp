@@ -48,12 +48,14 @@ namespace KINU {
 	private:
 		template<typename T>
 		std::shared_ptr<Pool<T>> accommodateEvent();
+		std::mutex mutex_;
 
 		std::unordered_map<std::type_index, std::shared_ptr<AbstractPool>> eventPools;
 	};
 
 	template<typename T>
 	void EventsManager::emitEvent(T event) {
+		std::lock_guard<std::mutex> guard(mutex_);
 		std::shared_ptr<Pool<T>> eventPool = accommodateEvent<T>();
 		eventPool->add(event);
 	}
@@ -75,11 +77,13 @@ namespace KINU {
 
 	template<typename T>
 	std::vector<T> EventsManager::getEvents() {
+		std::lock_guard<std::mutex> guard(mutex_);
 		return accommodateEvent<T>()->getData();
 	}
 
 	template<typename T>
 	void EventsManager::destroy() {
+		std::lock_guard<std::mutex> guard(mutex_);
 		std::shared_ptr<Pool<T>> eventPool = accommodateEvent<T>();
 		eventPool->clear();
 	}

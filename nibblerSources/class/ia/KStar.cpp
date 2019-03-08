@@ -143,7 +143,6 @@ KStar::Path KStar::searchPath(KStar::Vec2 source, KStar::Vec2 target) {
 	openMap_.fill(Node());
 	closeMap_.fill(Node());
 	if (isCollision(target)) {
-		log_fatal("isCollision(target)");
 		return path;
 	}
 	openMap_(source.x, source.y) = Node(source,

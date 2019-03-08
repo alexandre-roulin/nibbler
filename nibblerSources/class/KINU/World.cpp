@@ -1,4 +1,3 @@
-#include <logger.h>
 #include "World.hpp"
 
 namespace KINU {

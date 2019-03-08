@@ -34,7 +34,8 @@ void SnakeClient::sendDirection(eDirection direction) {
 }
 
 void SnakeClient::connect(std::string dns, std::string port) {
-	clientTCP_->connect(dns, port);
+	if (clientTCP_)
+		clientTCP_->connect(dns, port);
 }
 
 bool SnakeClient::acceptDataFromServer() const {
@@ -155,7 +156,6 @@ bool SnakeClient::isIa() const {
 void SnakeClient::killSnake(uint16_t id) {
 	if (id_ == id || (univers_.isIASnake(id) && univers_.isServer())) {
 		std::lock_guard<std::mutex> guard(mutex_);
-		log_debug("%s id[%d]", __PRETTY_FUNCTION__, id);
 		(*snakeArray)[id].isAlive = false;
 		sendDataToServer((*snakeArray)[id], eHeader::kSnakeUX);
 	}
@@ -184,7 +184,6 @@ void SnakeClient::callbackForcePause(int16_t) {
 void SnakeClient::callbackSnakeUI(const Snake &snakeUI) {
 	std::lock_guard<std::mutex> guard(mutex_);
 	if (snakeUI.id >= 8) return;
-	log_success("%s %d", __PRETTY_FUNCTION__, snakeUI.isReadyToExpose);
 	(*snakeArray)[snakeUI.id] = static_cast<SnakeUI>(snakeUI);
 }
 
@@ -210,7 +209,6 @@ void SnakeClient::callbackSnakeUX(const Snake &snakeUX) {
 
 void SnakeClient::callbackSnake(const Snake &snake) {
 	std::lock_guard<std::mutex> guard(mutex_);
-	log_success("%s %d", __PRETTY_FUNCTION__, snake.isReadyToExpose);
 	if (snake.id >= 8) return;
 	(*snakeArray)[snake.id] = snake;
 
@@ -229,14 +227,14 @@ void SnakeClient::callbackSnakeArray(const SnakeArrayContainer &snakeArrayContai
 
 void SnakeClient::callbackBorderless(bool borderless) {
 	std::lock_guard<std::mutex> guard(mutex_);
-	if (acceptDataFromServer()) {
+	if (acceptDataFromServer() && !univers_.isOpenGame_()) {
 		univers_.setBorderless(borderless);
 	}
 }
 
 void SnakeClient::callbackResizeMap(unsigned int size) {
 	std::lock_guard<std::mutex> guard(mutex_);
-	if (acceptDataFromServer()) {
+	if (acceptDataFromServer() && !univers_.isOpenGame_()) {
 		univers_.setMapSize(size);
 		univers_.getSoundManager().playNoise(eNoise::kResizeSound);
 	}
@@ -268,13 +266,12 @@ void SnakeClient::callbackStartInfo(StartInfo startInfo) {
 }
 
 void SnakeClient::callbackDeadConnection() {
-	log_debug("%s", __PRETTY_FUNCTION__);
 	univers_.setOpenGame_(false);
 	auto &gui = univers_.getGui_();
-	if (gui) {
-		gui->addMessageChat("Connection has been closed.");
+	if (gui && !fromIA_) {
+		gui->addMessageChat(eColorLog::kOrange, "Connection has been closed.");
 	}
-	if (clientTCP_ != nullptr) {
+	if (clientTCP_) {
 		clientTCP_->disconnect();
 	}
 }
@@ -291,7 +288,6 @@ void SnakeClient::callbackPock(uint32_t deltaTime) {
 
 	std::lock_guard<std::mutex> guard(mutex_);
 	if (acceptDataFromServer() && univers_.isOpenGame_()) {
-		log_warn("%s", __PRETTY_FUNCTION__);
 		univers_.setMicroSecDeltaTime(univers_.getMicroSecDeltaTime() - deltaTime);
 		const std::shared_ptr<KINU::World> &world = univers_.getGameManager().getWorld_();
 		if (world) world->getEventsManager().emitEvent<NextFrame>();
@@ -301,13 +297,12 @@ void SnakeClient::callbackPock(uint32_t deltaTime) {
 
 void SnakeClient::callbackOpenGame(bool open) {
 	std::lock_guard<std::mutex> guard(mutex_);
-	if (acceptDataFromServer()) {
+	if (acceptDataFromServer() ) {
 		univers_.setOpenGame_(open);
 	}
 }
 
 void SnakeClient::callbackPause(eAction) {
-	log_debug("%s", __PRETTY_FUNCTION__);
 	std::lock_guard<std::mutex> guard(mutex_);
 	univers_.getGameManager().refreshTimerLoopWorld();
 }

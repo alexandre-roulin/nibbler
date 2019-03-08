@@ -51,6 +51,7 @@ enum class eSprite {
 	kWall = (1 << 23),
 	kFood = (1 << 24),
 	kGround = (1 << 25),
+	kTree = (1 << 26),
 
 	kYourSnake = (1 << 30)
 };

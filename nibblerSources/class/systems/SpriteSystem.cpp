@@ -34,7 +34,6 @@ eSprite SpriteSystem::spriteDirection(PositionComponent &actual,
 
 void SpriteSystem::update() {
 
-//	log_info("%s", __PRETTY_FUNCTION__);
 	FollowComponent *followComponent = nullptr;
 	KINU::Entity entityFollowed;
 	PositionComponent positionComponentFollowed;

@@ -1,7 +1,6 @@
 
 #include <component/SpriteComponent.hpp>
 #include <events/FoodCreation.hpp>
-#include <logger.h>
 #include <KINU/Entity.hpp>
 #include <component/JoystickComponent.hpp>
 #include <component/MotionComponent.hpp>
@@ -13,12 +12,15 @@
 #include <cores/GameManager.hpp>
 
 Factory::Factory(Univers &univers)
-		: univers_(univers) {
+		: univers_(univers),
+		tempGrid(0) {
 
 }
 
 void Factory::createAllSnake(std::shared_ptr<SnakeArrayContainer> snake_array, int16_t nu) {
-	log_info("Create %d snake(s)", nu);
+
+	tempGrid = MutantGrid<bool>(univers_.getMapSize());
+	tempGrid.fill(false);
 	if (!snake_array)
 		return;
 	std::for_each((*snake_array).begin(), (*snake_array).end(),
@@ -27,6 +29,21 @@ void Factory::createAllSnake(std::shared_ptr<SnakeArrayContainer> snake_array, i
 	});
 	if (!univers_.isBorderless())
 		createWalls();
+//	createTree();
+}
+
+void Factory::createTree() {
+	std::shared_ptr<KINU::World> world = univers_.getGameManager().getWorld_();
+	if (!world) return;
+	for (int index = 0; index < 5; ++index) {
+		KINU::Entity entity = world->createEntity();
+
+		entity.addComponent<PositionComponent>(tempGrid.getRandomSlot(false));
+		entity.addComponent<CollisionComponent>();
+		entity.addComponent<SpriteComponent>(eSprite::kTree, kNoPriority);
+
+		entity.groupEntityByGroupId(eTag::kWallTag);
+	}
 }
 
 void Factory::createSnake(Snake const &snake, int maxSnakes) {
@@ -51,8 +68,6 @@ void Factory::createSnake(Snake const &snake, int maxSnakes) {
 			new_snake.addComponent<CollisionComponent>();
 			new_snake.addComponent<SpriteComponent>(eSprite::kHead | snake.sprite, kSpecificLast);
 			new_snake.addComponent<PositionComponent>(base_x, base_y);
-			//univers_.getGrid_()(base_x, base_y) = eSprite::HEAD | snake.sprite;
-			log_warn("Factory::creationHead x[%d] y[%d] id[%d] tag[%d]",base_x, base_y,snake.id,  eTag::kHeadTag + snake.id);
 		}
 		else if (index == 3) {
 			new_snake.tagByTagId(eTag::kTailTag + snake.id);
@@ -60,17 +75,14 @@ void Factory::createSnake(Snake const &snake, int maxSnakes) {
 			new_snake.addComponent<CollisionComponent>();
 			new_snake.addComponent<SpriteComponent>(eSprite::kTail | snake.sprite, kSpecificLast);
 			new_snake.addComponent<PositionComponent>(base_x + 1, base_y);
-			//univers_.getGrid_()(base_x + 1, base_y) = eSprite::TAIL | snake.sprite;
-			log_warn("Factory::creationTail x[%d] y[%d] id[%d] tag[%d]",base_x + 1, base_y,snake.id, eTag::kTailTag + snake.id);
 		}
 		else {
 			new_snake.addComponent<FollowComponent>(snake_follow.getId(), false);
 			new_snake.addComponent<CollisionComponent>();
 			new_snake.addComponent<PositionComponent>(base_x + (index - 1), base_y + 1);
-			//univers_.getGrid_()(base_x + (index - 1), base_y + 1) = eSprite::BODY | snake.sprite;
 			new_snake.addComponent<SpriteComponent>(eSprite::kBody | snake.sprite, kMinorPriority);
-			log_warn("Factory::creationBody x[%d] y[%d]",base_x + (index - 1), base_y + 1);
 		}
+		tempGrid(base_x, base_y) = true;
 		new_snake.groupEntityByGroupId(snake.id);
 		snake_follow = new_snake;
 	}
@@ -84,11 +96,15 @@ void Factory::createWalls() {
 	int y = 1;
 	for (; x < max; ++x) {
 		createWall(x, 0);
+		tempGrid(x, 0) = true;
 		createWall(x, max - 1);
+		tempGrid(x, max - 1) = true;
 	}
 	for (; y < max - 1; ++y) {
 		createWall(0, y);
+		tempGrid(0, y) = true;
 		createWall(max - 1, y);
+		tempGrid(max - 1, y) = true;
 	}
 }
 
@@ -102,4 +118,3 @@ void Factory::createWall(int x, int y) {
 
 	entity.groupEntityByGroupId(eTag::kWallTag);
 }
-

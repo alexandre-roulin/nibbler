@@ -24,4 +24,6 @@ private:
 	void createWall(int x, int y);
 
 	Univers &univers_;
+	MutantGrid<bool> tempGrid;
+	void createTree();
 };
