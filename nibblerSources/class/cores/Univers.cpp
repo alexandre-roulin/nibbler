@@ -116,8 +116,8 @@ void Univers::startNewGame() {
 	SnakeServer::b_ptr ptrServer(snakeServer_);
 
 	try {
-		defaultAssignmentLibrary();
 		deleteGui();
+		defaultAssignmentLibrary();
 	} catch (std::exception const &e) {
 		log_fatal("%s\n", e.what());
 		openGame_ = false;
