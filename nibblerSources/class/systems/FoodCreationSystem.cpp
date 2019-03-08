@@ -4,19 +4,16 @@
 #include <component/FollowComponent.hpp>
 #include <component/SpriteComponent.hpp>
 #include <systems/SpriteSystem.hpp>
-#include <logger.h>
 #include <events/FoodCreation.hpp>
 
 FoodCreationSystem::FoodCreationSystem(unsigned int mapSize): mapSize_(mapSize) {
 }
 
 void FoodCreationSystem::update() {
-//	log_info("%s", __PRETTY_FUNCTION__);
 	auto foodCreationEvents = getWorld().getEventsManager().getEvents<FoodCreation>();
 
 	for (auto foodCreationEvent : foodCreationEvents) {
 		auto food = getWorld().createEntity();
-//		log_info("FoodCreationSystem:: x[%d] y[%d]", foodCreationEvent.positionComponent_.x, foodCreationEvent.positionComponent_.y);
 		if (foodCreationEvent.positionComponent_.y >= 0 && foodCreationEvent.positionComponent_.y < mapSize_ &&
 				foodCreationEvent.positionComponent_.x >= 0 && foodCreationEvent.positionComponent_.x < mapSize_) {
 

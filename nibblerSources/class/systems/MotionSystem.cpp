@@ -1,5 +1,3 @@
-#include <logger.h>
-
 #include "MotionSystem.hpp"
 #include <component/PositionComponent.hpp>
 #include <component/MotionComponent.hpp>

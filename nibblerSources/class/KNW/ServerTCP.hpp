@@ -35,7 +35,7 @@ namespace KNW {
 		friend class ServerTCP;
 
 		ConnectionTCP();
-
+		bool isOpen() const;
 		void callbackDeadIO();
 
 		boost::weak_ptr<ServerTCP> serverTCP_;
@@ -63,7 +63,8 @@ namespace KNW {
 
 		//member function
 
-		DataTCP &getDataTCP();
+		DataTCP::b_sptr getDataTCP();
+		bool hasDataTCP() const;
 
 		void startServer(const std::string dns, uint16_t port);
 
@@ -79,6 +80,9 @@ namespace KNW {
 
 		void startAsyncAccept(std::function<void(size_t)>,
 							  std::function<void(size_t)>);
+
+		void registerAcceptCallback(std::function<void(size_t)>);
+		void registerDeadConnectionCallback(std::function<void(size_t)>);
 
 		template<typename T>
 		void writeDataToOpenConnection(T &&data, int index);
@@ -120,6 +124,7 @@ namespace KNW {
 		unsigned short port_;
 		std::string address_;
 		boost::shared_ptr<boost::asio::ip::tcp::acceptor> acceptor_;
+		bool open;
 	};
 
 	template<typename T>
@@ -127,8 +132,8 @@ namespace KNW {
 		if (index < 0 && index >= eConfigTCP::kMaxConnectionOpen)
 			return;
 		assert(dataTCP->hasType<T>());
-		assert(connections[index] != nullptr);
-		connections[index]->write(dataTCP->serializeData(DataType<T>::getHeader(), data));
+		if (connections[index] && connections[index]->isOpen())
+			connections[index]->write(dataTCP->serializeData(DataType<T>::getHeader(), data));
 	}
 
 	template<typename T, typename H>
@@ -136,15 +141,15 @@ namespace KNW {
 		if (index < 0 && index >= eConfigTCP::kMaxConnectionOpen &&
 		connections[index] != nullptr)
 			return;
-		assert(connections[index] != nullptr);
-		connections[index]->write(dataTCP->serializeData(static_cast<BaseDataType::Header>(header), data));
+		if (connections[index] && connections[index]->isOpen())
+			connections[index]->write(dataTCP->serializeData(static_cast<BaseDataType::Header>(header), data));
 	}
 
 	template<typename T>
 	void ServerTCP::writeDataToOpenConnections(T &&data) {
 		assert(dataTCP->hasType<T>());
 		for (auto &connection : connections) {
-			if (connection) {
+			if (connection && connection->isOpen()) {
 				connection->write(dataTCP->serializeData(DataType<T>::getHeader(), data));
 			}
 		}
@@ -154,8 +159,9 @@ namespace KNW {
 	void ServerTCP::writeDataToOpenConnections(T &&data, H header) {
 
 		for (auto &connection : connections) {
-			if (connection)
-				connection->write(this->getDataTCP().serializeData(static_cast<BaseDataType::Header>(header), data));
+			if (connection && connection->isOpen() && dataTCP) {
+				connection->write(dataTCP->serializeData(static_cast<BaseDataType::Header>(header), data));
+			}
 		}
 	}
 

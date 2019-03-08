@@ -1,6 +1,5 @@
 #include "Bobby.hpp"
 #include <cores/Univers.hpp>
-#include <logger.h>
 #include <KINU/World.hpp>
 #include <KINU/Entity.hpp>
 #include <cores/GameManager.hpp>
@@ -59,7 +58,6 @@ bool Bobby::define_priority(int x, int y) {
 	}
 
 	if (entitiesHead.size() == 1) {
-		log_warn("(entitiesHead.size() == 1)");
 		return false;
 	}
 
@@ -73,32 +71,25 @@ bool Bobby::define_priority(int x, int y) {
 	});
 
 	entitiesFiltered.resize(std::distance(entitiesFiltered.begin(),it));
-//	log_warn(" %d define_priority::entitiesFiltered %d", getId(), entitiesFiltered.size());
 
 	if (entitiesFiltered.size() < 2 || mapPriority[getId()] == kPriority) return false;
 	if (entitiesHead.size() == 1) {
-		log_warn("(%d || %d)", entitiesFiltered.size() < 2 , mapPriority[getId()] == kPriority);
 		return false;
 	}
 	if (std::any_of(entitiesFiltered.begin(), entitiesFiltered.end(), [](KINU::Entity e){ return mapPriority[e.getId()] == kPriority;})) {
-		log_warn("any_of is true");
 		return true;
 	}
 
 	int ran = rand() % entitiesFiltered.size();
 	mapPriority[entitiesFiltered[ran].getGroupIdByEntity()] = kPriority;
-	log_warn("mapPriority[getId()] != kPriority %d %d", mapPriority[getId()] != kPriority, kPriority);
 	return mapPriority[getId()] != kPriority;
 }
 
 void Bobby::findDirection(KStar::Vec2 vecSource, KStar::Vec2 vecTarget) {
 
 
-//	if (getId() == 0)
-//		std::cout << "VecSource : " << vecSource << " Direction : "<< vecTarget << std::endl;
 	mutex.lock();
 
-//	log_warn("B4 mapPriority[%d] %d",getId(), mapPriority[getId()]);
 	if (mapPriority[getId()] == kUndefined)
 		if (define_priority(vecTarget.x, vecTarget.y)) {
 //			std::for_each(mapPriority.begin(), mapPriority.end(), [](std::pair<KINU::Entity::ID, Bobby::ePriority> pair){ std::cout << pair.first << " " << pair.second << std::endl; });
@@ -106,29 +97,21 @@ void Bobby::findDirection(KStar::Vec2 vecSource, KStar::Vec2 vecTarget) {
 			throw std::exception();
 		}
 	mutex.unlock();
-//	log_warn("A6 mapPriority[%d] %d",getId(), mapPriority[getId()]);
 
 	if (vecTarget.x == vecSource.x - 1 &&
 		vecTarget.y == vecSource.y) {
-//		log_success("eDirection::WEST");
 		direction = eDirection::kWest;
 	} else if (vecTarget.x == vecSource.x &&
 			   vecTarget.y == vecSource.y - 1) {
-//		log_success("eDirection::North");
 		direction = eDirection::kNorth;
 	} else if (vecTarget.x == vecSource.x &&
 			   vecTarget.y == vecSource.y + 1) {
-//		log_success("eDirection::SOUTH");
 		direction = eDirection::kSouth;
 	} else if (vecTarget.x == vecSource.x + 1 &&
 			   vecTarget.y == vecSource.y) {
-//		log_success("eDirection::EAST");
 		direction = eDirection::kEast;
 	} else {
-		log_warn("throw findDirection");
-
 		throw std::exception();
-
 	}
 }
 
@@ -136,7 +119,6 @@ void Bobby::calculateDirection() {
 	std::shared_ptr<KINU::World> world = univers_.getGameManager().getWorld_();
 
 	if (!world) return;
-	log_warn("%s", __PRETTY_FUNCTION__);
 	if (world->getEntitiesManager().hasEntityByTagId(
 			clientTCP_->getId_() + eTag::kHeadTag)) {
 
@@ -147,9 +129,6 @@ void Bobby::calculateDirection() {
 		auto vecSnake = getVecSnakeHead();
 
 		kStar.removeCollision(vecSnake);
-		log_error("FoodCondition[%d][%d]", world->getEntitiesManager()
-				.hasEntitiesGroupId(eTag::kFoodTag), world->getEntitiesManager()
-				.hasEntitiesGroupId(eTag::kFoodFromSnake));
 		if (world->getEntitiesManager()
 				.hasEntitiesGroupId(eTag::kFoodTag) || world->getEntitiesManager()
 																		   .hasEntitiesGroupId(eTag::kFoodFromSnake)) {
@@ -159,21 +138,16 @@ void Bobby::calculateDirection() {
 			kStar.removeCollision(vecFood);
 
 			KStar::Path path = kStar.searchPath(vecSnake, vecFood);
-			log_warn("FOOD::Pathfinding[%d] path.size()[%d]", getId(), path.size());
 			if (path.size() > 1) {
 				try {
-					log_warn("FOOD::Pathfinding[%d] path.size()[%d]", getId(), path.size());
 					findDirection(vecSnake, path[1]);
 					sendDirection();
 					return;
 				} catch (std::exception const &e) {
-					log_error("WARN::NO_FOOD");
 				}
 			}
 			kStar.addCollision(vecFood);
 		}
-		log_error("TailCondition[%d]", world->getEntitiesManager().hasEntityByTagId(
-				clientTCP_->getId_() + eTag::kTailTag));
 		if (world->getEntitiesManager().hasEntityByTagId(
 				clientTCP_->getId_() + eTag::kTailTag)) {
 
@@ -182,15 +156,12 @@ void Bobby::calculateDirection() {
 			kStar.removeCollision(vecTail);
 
 				KStar::Path path = kStar.searchPath(vecSnake, vecTail);
-				log_warn("TAIL::Pathfinding[%d] path.size()[%d]", getId(), path.size());
 				if (path.size() > 1) {
 					try {
-						log_warn("TAIL::Pathfinding[%d] path.size()[%d]", getId(), path.size());
 						findDirection(vecSnake, path[1]);
 						sendDirection();
 						return;
 					} catch (std::exception const &e) {
-						log_error("WARN::NO_TAIL");
 					}
 				}
 		}
@@ -200,10 +171,8 @@ void Bobby::calculateDirection() {
 				try {
 					findDirection(vecSnake, checkVec2);
 					sendDirection();
-					log_warn("LAST::Pathfinding[%d]", getId());
 					return;
 				} catch (std::exception const &e) {
-					log_error("WARN::NO_LAST");
 				}
 			}
 		}
@@ -260,14 +229,12 @@ KStar::Vec2 Bobby::getVecFood(KStar::Vec2 head) {
 	if (world && world->getEntitiesManager().hasEntitiesGroupId(eTag::kFoodTag)) {
 		auto food_tag = world->getEntitiesManager().getEntitiesByGroupId(
 				eTag::kFoodTag);
-		log_fatal("FoodSize(%d)", food_tag.size());
 		foods.insert(foods.end(), food_tag.begin(), food_tag.end());
 	}
 
 	if (world && world->getEntitiesManager().hasEntitiesGroupId(eTag::kFoodFromSnake)) {
 		auto food_tag = world->getEntitiesManager().getEntitiesByGroupId(
 				eTag::kFoodFromSnake);
-		log_fatal("FoodSnakeSize(%d)", food_tag.size());
 		foods.insert(foods.end(), food_tag.begin(), food_tag.end());
 	}
 
@@ -276,8 +243,6 @@ KStar::Vec2 Bobby::getVecFood(KStar::Vec2 head) {
 		if (food.hasComponent<PositionComponent>()) {
 
 			auto positionFood = food.getComponent<PositionComponent>();
-//			log_warn("Food : %d - Position : %d",eSprite::FOOD, grid_(positionComponent.x, positionComponent.y));
-//			if (grid_(positionComponent.x, positionComponent.y) == eSprite::FOOD)
 			for (size_t base_y = 0; base_y < baseIndex; ++base_y) {
 				for (size_t base_x = 0; base_x < baseIndex; ++base_x) {
 					int scale_x = positionFood.x + base_x * mapSize;
@@ -297,7 +262,6 @@ KStar::Vec2 Bobby::getVecFood(KStar::Vec2 head) {
 			}
 		}
 	}
-//	log_info("vecFood : x %d, y: %d", positionComponent.x, positionComponent.y);
 	return KStar::Vec2(positionComponent.x, positionComponent.y);
 }
 
@@ -333,7 +297,6 @@ void Bobby::clearPriority() {
 
 Bobby::~Bobby() {
 	clientTCP_ = nullptr;
-	log_info("%s", __PRETTY_FUNCTION__);
 }
 
 

@@ -3,7 +3,7 @@
 #include <vector>
 #include <cassert>
 #include <KINU/Config.hpp>
-#include <logger.h>
+
 namespace KINU {
 
 // Required to have a vector of pools containing different object types.

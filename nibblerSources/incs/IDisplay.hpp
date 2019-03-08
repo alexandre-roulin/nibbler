@@ -3,11 +3,12 @@
 #include <MutantGrid.tpp>
 #include <Sprite.hpp>
 
+#define SIZE_LINE_TILESET 15
 #define SPRITE_GROUND 8 * SIZE_LINE_TILESET
 #define SPRITE_WALL 8 * SIZE_LINE_TILESET + 1
+#define SPRITE_TREE 9 * SIZE_LINE_TILESET + 1
 #define SPRITE_FOOD SIZE_LINE_TILESET
 #define PATH_TILESET "snake_tileset.png"
-#define SIZE_LINE_TILESET 15
 
 #define DISPLAY_DEFAULT_TILESET_PATH "snake_tileset.png"
 #define DISPLAY_DEFAULT_TILE_SIZE 32

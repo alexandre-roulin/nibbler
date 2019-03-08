@@ -8,12 +8,11 @@
 
 class IOManager {
 public:
-	IOManager(size_t thread_size = 4);
+	IOManager(size_t thread_size = 1);
 
 	boost::asio::io_service &getIo();
 
 	boost::thread_group &getThreadGroup();
-
 
 	~IOManager();
 

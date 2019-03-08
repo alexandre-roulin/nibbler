@@ -192,7 +192,6 @@ void GameManager::loopUI() {
 		univers_.updateDisplayUI();
 	}
 
-	log_error("%s %d", __PRETTY_FUNCTION__,  ptr->allSnakeIsDead());
 }
 
 void GameManager::refreshTimerLoopWorld() {

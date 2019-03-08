@@ -4,7 +4,6 @@
 #include <KINU/World.hpp>
 #include <component/FollowComponent.hpp>
 #include <component/PositionComponent.hpp>
-#include <logger.h>
 
 FollowSystem::FollowSystem() {
 	requireComponent<FollowComponent>();
@@ -13,7 +12,6 @@ FollowSystem::FollowSystem() {
 
 
 void FollowSystem::update() {
-//	log_info("%s", __PRETTY_FUNCTION__);
 	for (const auto &entity : getEntities()) {
 		auto &followComponent = entity.getComponent<FollowComponent>();
 		if (getWorld().getEntitiesManager().hasEntityById(followComponent.idFollowed)) {

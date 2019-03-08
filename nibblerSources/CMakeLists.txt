@@ -45,21 +45,6 @@ add_executable(${NAME}
         class/gui/Gui.hpp
         class/cores/Univers.cpp
         class/cores/Univers.hpp
-        class/logger/display/logger_debug.cpp
-        class/logger/display/logger_error.cpp
-        class/logger/display/logger_fatal.cpp
-        class/logger/display/logger_info.cpp
-        class/logger/display/logger_success.cpp
-        class/logger/display/logger_trace.cpp
-        class/logger/display/logger_warn.cpp
-        class/logger/logger/logger_init.cpp
-        class/logger/utils/logger_get_time.cpp
-        class/logger/utils/logger_init_open_file.cpp
-#        class/network/ClientTCP.cpp
-#        class/network/ClientTCP.hpp
-#        class/network/ServerTCP.cpp
-#        class/network/ServerTCP.hpp
-#        class/network/IGameNetwork.hpp
         class/systems/FoodEatSystem.cpp
         class/systems/FoodEatSystem.hpp
         class/systems/CollisionSystem.cpp
@@ -78,8 +63,6 @@ add_executable(${NAME}
         class/cores/Univers.hpp
         class/ia/Bobby.cpp
         class/ia/Bobby.hpp
-#        class/ia/AStar.cpp
-#        class/ia/AStar.hpp
         class/ia/KStar.cpp
         class/ia/KStar.hpp
 
@@ -87,8 +70,6 @@ add_executable(${NAME}
         incs/Display2D.hpp
         incs/ISound.hpp
         incs/IWidget.hpp
-        incs/logger.h
-        incs/logger_utils.h
         incs/nibbler.hpp
         class/KNW/IOManager.cpp
         class/KNW/IOManager.hpp

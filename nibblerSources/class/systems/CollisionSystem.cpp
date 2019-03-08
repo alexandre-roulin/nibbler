@@ -1,7 +1,6 @@
 #include "CollisionSystem.hpp"
 #include <factory/Factory.hpp>
 #include <events/FoodEat.hpp>
-#include <logger.h>
 #include <MutantGrid.tpp>
 #include <component/CollisionComponent.hpp>
 #include <KINU/Entity.hpp>
@@ -28,10 +27,8 @@ void CollisionSystem::checkCollision(
 	if (ptr && snakePositionComponent == positionComponent &&
 		entityHead != entityCheck && entityCheck.hasGroupId() && entityHead.hasGroupId()) {
 		KINU::TagId tagId = entityCheck.getGroupIdByEntity();
-		log_info("CollisionSystem");
 
 		if (tagId == eTag::kFoodTag) {
-			log_info("FOOD_TAG::FoodCollision");
 			univers_.getSoundManager().playNoise(eNoise::kFoodSound);
 			entityCheck.kill();
 			getWorld().getEventsManager().emitEvent<FoodEat>(entityHead.getGroupIdByEntity());
@@ -48,8 +45,6 @@ void CollisionSystem::checkCollision(
 
 			univers_.getSoundManager().playNoise(eNoise::kFoodSound);
 			entityCheck.kill();
-			if (ptr && (ptr->getId_() == entityHead.getGroupIdByEntity() ||
-						univers_.isIASnake(entityHead.getGroupIdByEntity())))
 			if (entityHead.hasGroupId())
 				getWorld().getEventsManager().emitEvent<FoodEat>(entityHead.getGroupIdByEntity());
 		} else if (tagId == kWallTag) {
@@ -70,7 +65,6 @@ void CollisionSystem::checkCollision(
 }
 
 void CollisionSystem::update() {
-//	log_info("%s", __PRETTY_FUNCTION__);
 	std::vector<KINU::Entity> entities_ = getEntities();
 	for (auto entity : getEntities()) {
 		if (entity.hasTagId() &&

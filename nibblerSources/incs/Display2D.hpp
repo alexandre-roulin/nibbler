@@ -57,6 +57,8 @@ public:
 
 		if ((sprite & eSprite::kWall) == eSprite::kWall)
 			return (SPRITE_WALL);
+		if ((sprite & eSprite::kTree) == eSprite::kTree)
+			return (SPRITE_TREE);
 		if ((sprite & eSprite::kGround) == eSprite::kGround)
 			return (SPRITE_GROUND);
 		if ((sprite & eSprite::kFood) == eSprite::kFood) {

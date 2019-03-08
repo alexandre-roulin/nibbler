@@ -107,7 +107,6 @@ namespace KINU {
 
 	void EntitiesManager::destroyEntity(Entity entity) {
 		// Reset componentMask of entity destroyed
-		log_fatal("Entity destroy %d", entity.getId());
 		componentMasks[entity.id_].reset();
 
 		mutex_.lock();

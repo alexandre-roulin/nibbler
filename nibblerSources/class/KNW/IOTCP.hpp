@@ -24,6 +24,7 @@ namespace KNW {
 				);
 
 		void writeSocket(std::string data);
+		void writeSyncSocket(std::string data);
 		void writeSocket(const void *pVoid, size_t len);
 
 		void readSocketHeader();
@@ -55,6 +56,7 @@ namespace KNW {
 		boost::array<char, eConfigTCP::kMaxBufferSize> buffer_data_;
 		boost::shared_ptr<boost::asio::ip::tcp::socket> socket_;
 		std::function<void()> callbackDeadSocket_;
+		bool open_;
 	};
 }
 

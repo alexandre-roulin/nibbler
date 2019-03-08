@@ -1,4 +1,3 @@
-#include <logger.h>
 #include <KINU/World.hpp>
 #include "JoystickSystem.hpp"
 #include <component/JoystickComponent.hpp>
@@ -12,7 +11,6 @@ JoystickSystem::JoystickSystem() {
 }
 
 void JoystickSystem::update() {
-//	log_info("%s", __PRETTY_FUNCTION__);
 
 	std::vector<DirectionArray> directions = getWorld().getEventsManager().getEvents<DirectionArray>();
 	getWorld().getEventsManager().destroy<DirectionArray>();
