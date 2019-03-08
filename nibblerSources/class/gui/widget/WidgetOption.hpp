@@ -19,8 +19,6 @@ private:
 	bool &rNoise_;
 	bool &rMusique_;
 	std::string pathSound_;
-	unsigned long indexDisplayLibrary_;
-	unsigned long indexSoundLibrary_;
 
 	bool musicManagemet_();
 	bool soundManagement_();

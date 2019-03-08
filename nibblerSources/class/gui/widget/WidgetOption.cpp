@@ -7,9 +7,7 @@ WidgetOption::WidgetOption(Gui &core) :
 		AWidget(core, "Options", NIBBLER_IMGUI_WINDOW_FLAGS_BASIC),
 		sound_(core_.univers.getSoundManager().hasLibraryLoaded()),
 		rNoise_(core_.univers.getSoundManager().getNoise()),
-		rMusique_(core_.univers.getSoundManager().getMusique()),
-		indexDisplayLibrary_(0),
-		indexSoundLibrary_(0) {
+		rMusique_(core_.univers.getSoundManager().getMusique()) {
 	SnakeClient::boost_shared_ptr ptr(core_.univers.getSnakeClient().lock());
 	if (ptr)
 		memcpy(nameBuffer_, ptr->getSnake().name, NAME_BUFFER);
@@ -72,11 +70,10 @@ void WidgetOption::beginContent_() {
 		std::memcpy(nameBuffer_,ptr->getSnake().name,NAME_BUFFER);
 	}
 
-	if (ImGui::BeginCombo("Sound", SoundDynamicLibrary::libraryInfo[indexSoundLibrary_].title.c_str(), 0)) {
+	if (ImGui::BeginCombo("Sound", core_.univers.getSoundManager().getNextLibraryInfo().title.c_str(), 0)) {
 		for (unsigned long n = 0; n < SoundDynamicLibrary::libraryInfo.size(); n++) {
-			bool is_selected = (indexSoundLibrary_ == n);
+			bool is_selected = (core_.univers.getSoundManager().getNextLibraryInfo().kLibrary == SoundDynamicLibrary::libraryInfo[n].kLibrary);
 			if (ImGui::Selectable(SoundDynamicLibrary::libraryInfo[n].title.c_str(), is_selected)) {
-				indexSoundLibrary_ = n;
 				if (sound_) {
 					sound_ = false;
 					sound_ = soundManagement_();
@@ -99,13 +96,11 @@ void WidgetOption::beginContent_() {
 			rMusique_ = musicManagemet_();
 	}
 
-	if (ImGui::BeginCombo("Display", DisplayDynamicLibrary::libraryInfo[indexDisplayLibrary_].title.c_str(), 0)) {
+	if (ImGui::BeginCombo("Display", core_.univers.getDisplayManager().getNextLibraryInfo().title.c_str(), 0)) {
 		for (unsigned long n = 0; n < DisplayDynamicLibrary::libraryInfo.size(); n++) {
-			bool is_selected = (indexDisplayLibrary_ == n);
-			if (ImGui::Selectable(DisplayDynamicLibrary::libraryInfo[n].title.c_str(), is_selected)) {
-				indexDisplayLibrary_ = n;
+			bool is_selected = (core_.univers.getDisplayManager().getNextLibraryInfo().kLibrary == n);
+			if (ImGui::Selectable(DisplayDynamicLibrary::libraryInfo[n].title.c_str(), is_selected))
 				core_.univers.getDisplayManager().setNextKInstance(DisplayDynamicLibrary::libraryInfo[n].kLibrary);
-			}
 			if (is_selected)
 				ImGui::SetItemDefaultFocus();
 		}
