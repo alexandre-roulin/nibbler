@@ -18,11 +18,16 @@ namespace KINU {
 	template<typename T>
 	class Pool : public AbstractPool {
 	public:
+
 		Pool(int size) {
 			resize(size);
 		}
 
 		virtual ~Pool() {}
+
+		Pool() = delete;
+		Pool &operator=(const Pool &) = delete;
+		Pool(const Pool &) = delete;
 
 		bool isEmpty() const {
 			return data.empty();

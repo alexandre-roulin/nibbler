@@ -22,12 +22,14 @@ namespace KINU {
 		using ID = uint16_t;
 
 		Entity();
+		~Entity() = default;
+		Entity(const Entity &) = default;
+		Entity operator=(Entity const &entity);
 
 		bool operator==(const Entity &rhs) const;
 
 		bool operator!=(const Entity &rhs) const;
 
-		Entity operator=(Entity const &entity);
 
 		ID getId() const;
 
@@ -91,8 +93,12 @@ namespace KINU {
 
 	class EntitiesManager {
 	public:
-		EntitiesManager(World &world);
+		EntitiesManager() = delete;
+		~EntitiesManager() = default;
+		EntitiesManager &operator=(const EntitiesManager &) = delete;
+		EntitiesManager(const EntitiesManager &) = delete;
 
+		EntitiesManager(World &world);
 
 		/** Constructor && Destructor**/
 		Entity createEntity();

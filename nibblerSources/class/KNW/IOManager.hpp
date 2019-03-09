@@ -9,12 +9,15 @@
 class IOManager {
 public:
 	IOManager(size_t thread_size = 1);
+	IOManager() = delete;
+	~IOManager();
+	IOManager &operator=(const IOManager &) = delete;
+	IOManager(const IOManager &) = delete;
 
 	boost::asio::io_service &getIo();
 
 	boost::thread_group &getThreadGroup();
 
-	~IOManager();
 
 private:
 

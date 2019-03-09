@@ -17,6 +17,11 @@ namespace KNW {
 		using b_sptr = boost::shared_ptr<ClientTCP>;
 		using b_wptr = boost::weak_ptr<ClientTCP>;
 
+		ClientTCP() = default;
+		virtual ~ClientTCP();
+		ClientTCP &operator=(const ClientTCP &) = delete;
+		ClientTCP(const ClientTCP &) = delete;
+
 		void connect(const std::string host, const std::string port);
 
 		static b_sptr
@@ -31,7 +36,6 @@ namespace KNW {
 		void writeDataToServer(T &&data, H header);
 
 		void disconnect();
-		virtual ~ClientTCP();
 
 		DataTCP &getDataTCP_();
 

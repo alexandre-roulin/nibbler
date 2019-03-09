@@ -14,7 +14,12 @@ class SnakeServer : public boost::enable_shared_from_this<SnakeServer>, public I
 public:
 	using b_ptr = boost::shared_ptr<SnakeServer>;
 	using w_ptr = boost::weak_ptr<SnakeServer>;
+
 	SnakeServer() = delete;
+	virtual ~SnakeServer();
+	SnakeServer &operator=(const SnakeServer &) = delete;
+	SnakeServer(const SnakeServer &) = delete;
+
 	static boost::shared_ptr<SnakeServer> create(Univers &univers, const std::string dns, unsigned short port);
 
 	void startGame();
@@ -42,8 +47,6 @@ public:
 	bool sendOpenGameToClient(bool openGame = true);
 
 	void closeAcceptorServer();
-
-	virtual ~SnakeServer();
 
 private:
 	SnakeServer(Univers &univers);

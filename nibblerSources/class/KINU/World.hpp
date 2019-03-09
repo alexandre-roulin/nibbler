@@ -13,6 +13,9 @@ namespace KINU {
 	class World {
 	public:
 		World();
+		~World() = default;
+		World &operator=(const World &) = delete;
+		World(const World &) = delete;
 
 		EntitiesManager &getEntitiesManager() const;
 

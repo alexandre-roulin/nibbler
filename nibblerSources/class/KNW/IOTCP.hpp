@@ -13,6 +13,9 @@ namespace KNW {
 
 	public:
 		IOTCP() = delete;
+		virtual ~IOTCP();
+		IOTCP &operator=(const IOTCP &) = delete;
+		IOTCP(const IOTCP &) = delete;
 
 		using b_sptr = boost::shared_ptr<IOTCP>;
 		using b_wptr = boost::weak_ptr<IOTCP>;
@@ -30,8 +33,6 @@ namespace KNW {
 		void readSocketHeader();
 
 		const boost::shared_ptr<boost::asio::ip::tcp::socket> &getSocket_();
-
-		virtual ~IOTCP();
 
 		bool isConnect() const;
 	private:

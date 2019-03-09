@@ -30,6 +30,9 @@ namespace KINU {
 	class EventsManager {
 	public:
 		EventsManager() = default;
+		~EventsManager() = default;
+		EventsManager &operator=(const EventsManager &) = delete;
+		EventsManager(const EventsManager &) = delete;
 
 		template<typename T>
 		void emitEvent(T event);

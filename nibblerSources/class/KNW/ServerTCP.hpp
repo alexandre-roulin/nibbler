@@ -19,6 +19,10 @@ namespace KNW {
 	public:
 		using b_sptr = boost::shared_ptr<ConnectionTCP>;
 
+		virtual ~ConnectionTCP();
+		ConnectionTCP &operator=(const ConnectionTCP &) = delete;
+		ConnectionTCP(const ConnectionTCP &) = delete;
+
 		const boost::shared_ptr<boost::asio::ip::tcp::socket> &getSocket_();
 
 		void write(std::string data);
@@ -29,7 +33,6 @@ namespace KNW {
 				boost::shared_ptr<boost::asio::ip::tcp::socket> sock
 		);
 
-		virtual ~ConnectionTCP();
 
 	private:
 		friend class ServerTCP;
@@ -48,10 +51,10 @@ namespace KNW {
 		/** Server TCP **/
 	public:
 		ServerTCP() = delete;
-
 		ServerTCP(ServerTCP &) = delete;
-
 		ServerTCP(ServerTCP const &) = delete;
+		ServerTCP &operator=(const ServerTCP &) = delete;
+
 		// typedef
 
 		using b_sptr = boost::shared_ptr<ServerTCP>;

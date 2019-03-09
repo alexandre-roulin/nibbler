@@ -22,7 +22,9 @@ namespace KNW {
 
 		static b_sptr create();
 
-		DataTCP(DataTCP const &) = delete;
+		~DataTCP() = default;
+		DataTCP &operator=(const DataTCP &) = delete;
+		DataTCP(const DataTCP &) = delete;
 
 		template<typename T>
 		void addDataType(std::function<void(T)> callback);
@@ -37,14 +39,11 @@ namespace KNW {
 
 		int getSizeOfHeader(Header header);
 
-		~DataTCP();
-
 		template<typename T>
 		std::string serializeData(BaseDataType::Header header, T data);
 
 	private:
-		DataTCP();
-
+		DataTCP() = default;
 
 		class AbstractCallback {
 		public:

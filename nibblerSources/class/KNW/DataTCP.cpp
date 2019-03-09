@@ -4,8 +4,6 @@
 
 namespace KNW {
 
-	DataTCP::DataTCP() = default;
-
 	DataTCP::b_sptr DataTCP::create() {
 		return DataTCP::b_sptr(new DataTCP);
 	}
@@ -18,7 +16,4 @@ namespace KNW {
 		if (header < callbackType.size() && callbackType[header])
 			(*callbackType[header])(data);
 	}
-
-	DataTCP::~DataTCP() = default;
-
 }

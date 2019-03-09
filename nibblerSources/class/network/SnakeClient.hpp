@@ -20,6 +20,11 @@ public:
 	using boost_shared_ptr = boost::shared_ptr<SnakeClient>;
 	using boost_weak_ptr = boost::weak_ptr<SnakeClient>;
 
+	SnakeClient() = delete;
+	virtual ~SnakeClient();
+	SnakeClient &operator=(const SnakeClient &) = delete;
+	SnakeClient(const SnakeClient &) = delete;
+
 	static boost_shared_ptr create(Univers &univers, bool fromIA);
 
 	void sendDirection(eDirection direction);
@@ -66,8 +71,6 @@ public:
 	void connect(std::string dns, std::string port);
 
 	void disconnect();
-
-	virtual ~SnakeClient();
 
 private:
 	SnakeClient(Univers &univers, bool fromIA);

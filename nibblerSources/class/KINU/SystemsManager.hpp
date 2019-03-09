@@ -10,7 +10,10 @@ namespace KINU {
 
 	class System {
 	public:
-		virtual ~System() {}
+		System() = default;
+		virtual ~System() = default;
+		System &operator=(const System &) = delete;
+		System(const System &) = delete;
 
 		// what component types the system requires of entities (we can use this method in the constructor for example)
 		template<typename T>
@@ -46,6 +49,12 @@ namespace KINU {
 	class SystemsManager {
 
 	public:
+
+		SystemsManager() = delete;
+		~SystemsManager() = default;
+		SystemsManager &operator=(const SystemsManager &) = delete;
+		SystemsManager(const SystemsManager &) = delete;
+
 		SystemsManager(World &world) : world(world) {}
 
 		template<typename T>
