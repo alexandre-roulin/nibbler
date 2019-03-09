@@ -6,14 +6,7 @@ WidgetChat::WidgetChat(Gui &core) :
 		AWidget(core, "Chat", NIBBLER_IMGUI_WINDOW_FLAGS_BASIC) {
 	bzero(bufferMessage_, IM_ARRAYSIZE(bufferMessage_));
 }
-
-void WidgetChat::clear() {
-	bufferChat_.clear();
-}
-
 void WidgetChat::beginContent_() {
-	if (ImGui::Button("Clear"))
-		clear();
 	ImGui::BeginChild("scrolling", ImVec2(0, ImGui::GetWindowHeight() - 4 * ImGui::GetFrameHeightWithSpacing()), false,
 					  ImGuiWindowFlags_HorizontalScrollbar);
 	for (auto const &log : log_) {

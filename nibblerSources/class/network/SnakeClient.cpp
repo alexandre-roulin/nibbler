@@ -125,7 +125,7 @@ void SnakeClient::notifyMapSize() {
 }
 
 bool SnakeClient::allSnakeIsReady() const {
-	return std::none_of((*snakeArray).begin(), (*snakeArray).end(),
+	return !std::none_of((*snakeArray).begin(), (*snakeArray).end(),
 						[](Snake const &snake) {
 							return snake.isValid && snake.isReady;
 						});;

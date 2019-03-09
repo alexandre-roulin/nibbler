@@ -18,6 +18,11 @@ void WidgetEtat::beginContent_() {
 	else
 		button_("Server Connected", ImGui::GetWindowSize().x / 2, eColor::kGreen, eColor::kMedium);
 
+	if (core_.univers.isServer() && core_.univers.getSnakeServer().isOpen())
+		button_("Server is open", ImGui::GetWindowSize().x / 2, eColor::kGreen, eColor::kMedium);
+	else if (core_.univers.isServer() && !core_.univers.getSnakeServer().isOpen())
+		button_("Server is close", ImGui::GetWindowSize().x / 2, eColor::kRed, eColor::kMedium);
+
 	if (!ptrClient)
 		button_("Client disable", ImGui::GetWindowSize().x / 2, eColor::kRed, eColor::kMedium);
 	else if (!ptrClient->isOpen())

@@ -21,7 +21,6 @@ public:
 	WidgetChat(const WidgetChat &) = default;
 
 	void addLog(eColorLog color, char const *format, ...);
-	void clear();
 
 private:
 	ImGuiTextBuffer bufferChat_;
