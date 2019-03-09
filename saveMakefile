@@ -1,0 +1,17 @@
+NAME = nibbler
+
+all: $(NAME)
+
+$(NAME):
+	mkdir build ; cd build ; cmake .. -DCMAKE_CXX_COMPILER="/usr/bin/g++" ; make -j 4
+
+clean:
+	@/bin/rm -rf build/CMakefiles build/dynamicLibrariesSources build/extern build/nibblerSources build/cmake_install.cmake build/CMakeCache.txt build/Maefile build/Project.cbp
+
+fclean:
+	@/bin/rm -rf build
+
+re: fclean all
+
+install:
+	mkdir build ; cd build ; cmake .. -DCMAKE_CXX_COMPILER="/usr/bin/g++" ; make -j 4

@@ -42,8 +42,10 @@ endif ()
 
 if(NOT WIN32)
     set(GLAD_LIBRARIES dl)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wvla -Werror")
+    #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wvla -Werror")
 endif()
+
+file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/dynamicLibraries")
 
 find_package(Git QUIET)
 if (GIT_FOUND AND EXISTS "${CMAKE_SOURCE_DIR}/.git")
@@ -153,8 +155,11 @@ add_subdirectory(dynamicLibrariesSources/display_sdl)
 add_subdirectory(dynamicLibrariesSources/display_sfml)
 add_subdirectory(dynamicLibrariesSources/sound_sdl)
 add_subdirectory(dynamicLibrariesSources/sound_sfml)
-#add_subdirectory(testAsio)
 
 if (APPLE)
-    set_target_properties(nibbler display_glfw display_sfml display_sdl sound_sdl sound_sfml PROPERTIES COMPILE_FLAGS "-Wall -Wextra -Wpedantic")
+    set_target_properties(nibbler display_glfw display_sfml display_sdl sound_sdl sound_sfml PROPERTIES COMPILE_FLAGS "-Wall -Wextra -Wvla -Werror")
 endif()
+
+set_target_properties(display_glfw display_sfml display_sdl sound_sdl sound_sfml
+        PROPERTIES
+        LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/dynamicLibraries")

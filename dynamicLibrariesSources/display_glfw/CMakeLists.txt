@@ -2,8 +2,6 @@ cmake_minimum_required(VERSION 3.0)
 set(NAME display_glfw)
 project(${NAME})
 
-#add_definitions(-DGLFW_INCLUDE_NONE -DPROJECT_SOURCE_DIR=\"${PROJECT_SOURCE_DIR}\")
-#add_executable(${NAME} src/main.cpp
 add_library(${NAME} MODULE
         ../../extern/glad/src/glad.c
        src/ActModel.cpp

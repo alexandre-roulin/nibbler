@@ -34,7 +34,7 @@ public:
 
 	Glfw(std::string const &name, uint16_t width, uint16_t height);
 
-	~Glfw();
+	virtual ~Glfw();
 
 	virtual void update();
 
