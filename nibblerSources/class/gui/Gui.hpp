@@ -18,10 +18,10 @@ public:
 
 	class CoreConstructorException : public std::exception {
 	public:
-		CoreConstructorException(void) noexcept;
+		CoreConstructorException() noexcept;
 		CoreConstructorException(std::string) noexcept;
 		virtual const char* what() const noexcept;
-		~CoreConstructorException(void) noexcept;
+		~CoreConstructorException() noexcept;
 		CoreConstructorException(CoreConstructorException const &src) noexcept;
 	private:
 		CoreConstructorException &operator=(CoreConstructorException const &rhs) noexcept;

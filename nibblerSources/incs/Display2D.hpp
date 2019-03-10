@@ -5,9 +5,10 @@
 
 class Display2D {
 public:
-	Display2D() {};
-
-	virtual ~Display2D() {};
+	Display2D() = default;
+	virtual ~Display2D() = default;
+	Display2D &operator=(const Display2D &) = delete;
+	Display2D(const Display2D &) = delete;
 
 	static void debugSpriteSnake(eSprite sprite) {
 		eSprite from = (sprite & eSprite::kMaskFrom) >> eSprite::kBitwiseFrom;
@@ -110,8 +111,4 @@ private:
 			return (2);
 		return (3);
 	}
-
-	Display2D(Display2D const &src) = delete;
-
-	Display2D &operator=(Display2D const &src) = delete;
 };

@@ -6,6 +6,13 @@
 class CollisionSystem : public KINU::System {
 public:
 	CollisionSystem(Univers &univers);
+	CollisionSystem() = delete;
+	~CollisionSystem() = default;
+	CollisionSystem &operator=(const CollisionSystem &) = delete;
+	CollisionSystem(const CollisionSystem &) = delete;
+
+
+
 	virtual void update();
 
 private:

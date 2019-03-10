@@ -9,7 +9,10 @@ namespace KINU {
 // Required to have a vector of pools containing different object types.
 	class AbstractPool {
 	public:
-		virtual ~AbstractPool() {}
+		AbstractPool() = default;
+		virtual ~AbstractPool() = default;
+		AbstractPool &operator=(const AbstractPool &) = delete;
+		AbstractPool(const AbstractPool &) = delete;
 
 		virtual void clear() = 0;
 	};
@@ -23,9 +26,8 @@ namespace KINU {
 			resize(size);
 		}
 
-		virtual ~Pool() {}
-
 		Pool() = delete;
+		virtual ~Pool() {}
 		Pool &operator=(const Pool &) = delete;
 		Pool(const Pool &) = delete;
 

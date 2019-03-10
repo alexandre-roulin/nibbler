@@ -9,10 +9,10 @@
 class SnakeUI {
 public:
 	SnakeUI();
-
+	virtual ~SnakeUI() = default;
 	virtual SnakeUI &operator=(SnakeUI &);
-
 	virtual SnakeUI &operator=(SnakeUI const &);
+	SnakeUI(const SnakeUI &) = default;
 
 	char name[NAME_BUFFER];
 
@@ -27,10 +27,10 @@ public:
 	friend std::ostream &operator<<(std::ostream &os, const SnakeUX &ux);
 
 	SnakeUX();
-
+	virtual ~SnakeUX() = default;
 	virtual SnakeUX &operator=(SnakeUX &);
-
 	virtual SnakeUX &operator=(SnakeUX const &);
+	SnakeUX(const SnakeUX &) = default;
 
 	bool isAlive;
 	bool isSwitchingLibrary;
@@ -39,10 +39,10 @@ public:
 class SnakeUN {
 public:
 	SnakeUN();
-
+	virtual ~SnakeUN() = default;
 	virtual SnakeUN &operator=(SnakeUN &);
-
 	virtual SnakeUN &operator=(SnakeUN const &);
+	SnakeUN(const SnakeUN &) = default;
 
 	friend std::ostream &operator<<(std::ostream &os, const SnakeUN &un);
 
@@ -53,28 +53,22 @@ public:
 class Snake : public SnakeUI, public SnakeUX, public SnakeUN {
 public:
 	Snake();
+	~Snake() = default;
+	Snake &operator=(Snake &);
+	Snake &operator=(Snake const &);
+	Snake &operator=(SnakeUI &ui);
+	Snake &operator=(SnakeUI const &ui);
+	Snake &operator=(SnakeUX &ux);
+	Snake &operator=(SnakeUX const &ux);
+	Snake &operator=(SnakeUN &un);
+	Snake &operator=(SnakeUN const &un);
+	Snake(const Snake &) = default;
 
 	void randomSnake(int16_t id_, SnakeArrayContainer const &snakeArrayContainer);
 
 	void deepCopy(Snake const &snake);
 
-	Snake &operator=(Snake &);
-
-	Snake &operator=(Snake const &);
-
-	Snake &operator=(SnakeUI &ui);
-
-	Snake &operator=(SnakeUI const &ui);
-
 	friend std::ostream &operator<<(std::ostream &os, const Snake &snake);
-
-	Snake &operator=(SnakeUX &ux);
-
-	Snake &operator=(SnakeUX const &ux);
-
-	Snake &operator=(SnakeUN &un);
-
-	Snake &operator=(SnakeUN const &un);
 
 	bool isReady;
 	bool isIA;

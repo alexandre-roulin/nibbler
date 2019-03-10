@@ -47,7 +47,10 @@ namespace KNW {
 
 		class AbstractCallback {
 		public:
+			AbstractCallback() = default;
 			virtual ~AbstractCallback() = default;
+			AbstractCallback &operator=(const AbstractCallback &) = delete;
+			AbstractCallback(const AbstractCallback &) = delete;
 			virtual void operator()(void *) = 0;
 		};
 
@@ -56,6 +59,11 @@ namespace KNW {
 		public:
 			explicit CallbackType(std::function<void(T)> function)
 					: function_(function) {}
+
+			CallbackType() = delete;
+			virtual ~CallbackType() = default;
+			CallbackType &operator=(const CallbackType &) = delete;
+			CallbackType(const CallbackType &) = delete;
 
 			virtual void operator()(void *pVoid) override;
 

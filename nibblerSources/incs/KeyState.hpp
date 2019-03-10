@@ -16,8 +16,12 @@ public:
 	};
 
 	KeyState();
-	KeyState(const KeyState& value);
 	KeyState(eKeyState value);
+	~KeyState() = default;
+	KeyState &operator=(KeyState const &rhs);
+	KeyState &operator=(eKeyState rhs);
+	KeyState(KeyState const &value);
+
 
 	void setState(eKeyState state);
 
@@ -30,8 +34,6 @@ public:
 	std::chrono::milliseconds		getDurationLastPress() const ;
 
 
-	KeyState		&operator=(KeyState const &rhs);
-	KeyState		&operator=(eKeyState rhs);
 	inline operator eKeyState() const;
 	inline bool		operator==(KeyState const &rhs) const;
 	inline bool		operator==(KeyState::eKeyState rhs) const;

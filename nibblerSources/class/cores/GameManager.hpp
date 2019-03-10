@@ -12,13 +12,9 @@ public:
 
 
 	GameManager(Univers &univers);
-
 	GameManager() = delete;
-
 	~GameManager() = default;
-
 	GameManager &operator=(const GameManager &) = delete;
-
 	GameManager(const GameManager &) = delete;
 
 	void startNewGame();

@@ -37,11 +37,8 @@ public:
 	/** Univers **/
 
 	Univers();
-
 	~Univers();
-
 	Univers &operator=(const Univers &) = delete;
-
 	Univers(const Univers &) = delete;
 
 	void resetData();

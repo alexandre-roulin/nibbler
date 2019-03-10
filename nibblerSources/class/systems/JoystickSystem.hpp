@@ -6,8 +6,11 @@
 class JoystickSystem : public KINU::System {
 public:
 	explicit JoystickSystem();
-	void update() override;
 	virtual ~JoystickSystem();
+	JoystickSystem &operator=(const JoystickSystem &) = delete;
+	JoystickSystem(const JoystickSystem &) = delete;
+
+	void update() override;
 };
 
 

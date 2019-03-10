@@ -7,6 +7,9 @@ class KeyStateManager {
 public:
 	KeyStateManager() = default;
 	~KeyStateManager() = default;
+	KeyStateManager(KeyState const &) = delete;
+	KeyStateManager &operator=(KeyStateManager const &keyState) = delete;
+
 
 	KeyState::eKeyState       getKeyState(int key) const;
 	KeyState const &getKey(int key) const;
@@ -22,7 +25,4 @@ private:
 
 	static KeyState				KeyStateNone_;
 	static KeyState::eKeyState	getKeyStateOf_(int key, std::map<int, KeyState> const &keyState_);
-
-	KeyStateManager(KeyState const &) = delete;
-	KeyStateManager &operator=(KeyStateManager const &keyState) = delete;
 };

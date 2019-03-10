@@ -16,11 +16,6 @@ enum class eNoise {
 	kDeathSound = 4
 };
 
-static const eSound eSoundArray[] = {
-		kSoundSfmlLibrary,
-		kSoundSdlLibrary
-};
-
 class SoundDynamicLibrary : public ADynamicLinkLibrary< ISound, eSound, ISound *(*)() > {
 public:
 	SoundDynamicLibrary();
