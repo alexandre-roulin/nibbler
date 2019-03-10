@@ -17,29 +17,24 @@ public:
 	class ConstructorException : public std::exception {
 	public:
 		ConstructorException(void) noexcept;
-
 		ConstructorException(std::string) noexcept;
-
 		virtual const char *what() const noexcept;
-
 		~ConstructorException(void) noexcept;
-
 		ConstructorException(ConstructorException const &src) noexcept;
-
 	private:
 		ConstructorException &operator=(ConstructorException const &rhs) noexcept;
-
 		std::string _error;
 	};
 
+	Glfw() = delete;
 	Glfw(std::string const &name, uint16_t width, uint16_t height);
-
 	virtual ~Glfw();
+	Glfw(Glfw const &shader) = delete;
+	Glfw &operator=(Glfw const &shader) = delete;
+
 
 	virtual void update();
-
 	void render();
-
 	bool exit() const;
 
 protected:
@@ -61,12 +56,6 @@ private:
 	static bool firstMouse_;
 
 	static void mouseCallback_(GLFWwindow *, double xpos, double ypos);
-
 	static void callbackKey_(GLFWwindow *window, int key, int, int action, int);
-
 	static void callbackError_(int, const char *errorMessage);
-
-	Glfw(Glfw const &shader) = delete;
-
-	Glfw &operator=(Glfw const &shader) = delete;
 };

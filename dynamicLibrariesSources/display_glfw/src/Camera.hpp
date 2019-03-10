@@ -15,7 +15,7 @@ public:
 	};
 
 	Camera();
-	~Camera() {};
+	~Camera() = default;
 
 	Camera(Camera const &camera);
 	Camera &operator=(Camera const &camera);

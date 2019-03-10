@@ -7,10 +7,8 @@ public:
 
     Engine() = default;
     ~Engine() = default;
+	Engine(Engine const &shader) = delete;
+	Engine &operator=(Engine const &shader) = delete;
 
 protected:
-
-
-    Engine(Engine const &shader) = delete;
-    Engine &operator=(Engine const &shader) = delete;
 };

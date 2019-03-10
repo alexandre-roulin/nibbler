@@ -23,11 +23,11 @@ public:
 
 	enum eFace { RIGHT = 0, LEFT, UP, DOWN, FRONT, BACK };
 
+	Skybox() = delete;
 	Skybox(std::string const &pathSkybox,
 			std::string const &pathDirectorySkyBox,
 			std::list< std::string > const &skyboxFile);
 	~Skybox() noexcept;
-	Skybox() noexcept = delete;
 	Skybox(Skybox const &shader) = delete;
 	Skybox &operator=(Skybox const &shader) = delete;
 

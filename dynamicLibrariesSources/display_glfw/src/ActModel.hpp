@@ -10,6 +10,7 @@ public:
 	ActModel(Model const *model);
 	virtual ~ActModel() = default;
 	ActModel(ActModel const &src);
+	ActModel &operator=(ActModel const &src) = delete;
 
 	Model const		*getModel() const;
 	void			assign(Model const *model);
@@ -19,6 +20,4 @@ public:
 private:
 	std::bitset<16>		flag_;
 	Model const			*model_;
-
-	ActModel &operator=(ActModel const &src) = delete;
 };

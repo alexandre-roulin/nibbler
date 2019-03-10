@@ -34,6 +34,8 @@ public:
     Shader() noexcept;
 	Shader(std::string const &file1, std::string const &file2);
 	~Shader() noexcept;
+	Shader(Shader const &shader) = delete;
+	Shader &operator=(Shader const &shader) = delete;
 
     Shader		&activate() noexcept;
 	Shader		&attach(std::string const &filename);
@@ -56,7 +58,4 @@ private:
 	void	clean_() noexcept;
 	
 	static bool				debug_;
-	
-	Shader(Shader const &shader) = delete;
-    Shader &operator=(Shader const &shader) = delete;
 };

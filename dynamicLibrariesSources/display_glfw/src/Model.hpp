@@ -18,25 +18,21 @@ public:
 	class ModelException : public std::exception {
 	public:
 		ModelException() noexcept;
-
 		explicit ModelException(std::string) noexcept;
-
 		const char *what() const noexcept override;
-
 		~ModelException() noexcept override;
-
 		ModelException(ModelException const &src) noexcept;
-
 	private:
 		ModelException &
 		operator=(ModelException const &rhs) noexcept;
-
 		std::string error_;
 	};
 	
 	Model();
 	Model(std::string const &path);
 	~Model();
+	Model(Model const &Model) = delete;
+	Model &operator=(Model const &Model) = delete;
 
 	void	setModel(std::string const &path);
 	std::deque<Mesh> const &getMeshes() const;
@@ -66,7 +62,5 @@ private:
 	std::vector<Texture>	loadMaterialTextures_(aiMaterial *mat, aiTextureType type, Texture::eType eType);
 
     static bool				debug_;
-
-	Model(Model const &Model) = delete;
-    Model &operator=(Model const &Model) = delete;
+    
 };

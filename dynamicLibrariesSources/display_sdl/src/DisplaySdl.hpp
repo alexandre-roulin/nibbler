@@ -13,40 +13,30 @@ public:
 	class SdlConstructorException : public std::exception {
 	public:
 		SdlConstructorException(void) noexcept;
-
 		SdlConstructorException(std::string const &) noexcept;
-
 		const char *what() const noexcept override;
-
 		~SdlConstructorException(void) noexcept = default;
-
 	private:
 		SdlConstructorException &
 		operator=(SdlConstructorException const &rhs) noexcept = delete;
-
 		SdlConstructorException(SdlConstructorException const &src) noexcept = delete;
-
 		std::string error_;
 	};
 
+	DisplaySdl() = delete;
 	DisplaySdl(int width,
 			   int height,
 			   char const *windowName);
+	~DisplaySdl() override;
+	DisplaySdl &operator=(DisplaySdl const &rhs) = delete;
+	DisplaySdl(DisplaySdl const &src) = delete;
 
-	~DisplaySdl(void) override;
-
-	bool exit(void) const override;
-
+	bool exit() const override;
 	void render() override;
-
 	void update() override;
-
 	void drawGrid(MutantGrid<eSprite> const &grid) override;
-
 	void setBackground(MutantGrid<eSprite> const &grid) override;
-
 	eDirection getDirection(void) const override;
-
 	void registerCallbackAction(std::function<void(eAction)> function) override;
 
 private:
@@ -68,23 +58,12 @@ private:
 
 
 	void drawGrid_(SDL_Surface *surface, MutantGrid<eSprite> const &grid);
-
 	void drawTileGrid_(int indexTile, int indexWidthGrid, int indexHeightGrid);
-
 	void drawTileGrid_(SDL_Surface *surface, int indexTile, int indexWidthGrid,
 					   int indexHeightGrid);
-
 	SDL_Rect getRectTile_(int width, int height);
-
 	void error_(void);
-
 	void clean_(void);
-
-	DisplaySdl &operator=(DisplaySdl const &rhs) = delete;
-
-	DisplaySdl(DisplaySdl const &src) = delete;
-
-	DisplaySdl(void) = delete;
 
 	static SDL_Surface *sdlSurface_(int widht, int height);
 

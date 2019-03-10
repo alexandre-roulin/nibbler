@@ -32,25 +32,20 @@ public:
     class GlfwConstructorException : public std::exception {
     public:
         GlfwConstructorException() noexcept;
-
 		explicit GlfwConstructorException(std::string const &s) noexcept;
-
 		const char *what() const noexcept override;
-
         ~GlfwConstructorException() noexcept override;
-
 	private:
         GlfwConstructorException &
         operator=(GlfwConstructorException const &rhs) noexcept;
-
         std::string error_;
     };
 
-    DisplayGlfw(int width,
-                int height,
-                char const *windowName);
-
+	DisplayGlfw() = delete;
+    DisplayGlfw(int width, int height, char const *windowName);
 	~DisplayGlfw() override;
+	DisplayGlfw &operator=(DisplayGlfw const &rhs) = delete;
+	DisplayGlfw(DisplayGlfw const &src) = delete;
 
 	void render() override;
     void update() override;
@@ -60,9 +55,6 @@ public:
 	void		setBackground(MutantGrid< eSprite > const &grid) override;
 	void		registerCallbackAction(std::function<void(eAction)>) override;
 
-	DisplayGlfw &operator=(DisplayGlfw const &rhs) = delete;
-	DisplayGlfw(DisplayGlfw const &src) = delete;
-	DisplayGlfw() = delete;
 
 private:
 	std::bitset<16>					flag_;

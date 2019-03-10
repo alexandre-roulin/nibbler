@@ -11,41 +11,30 @@ public:
 	class SfmlConstructorException : public std::exception {
 	public:
 		SfmlConstructorException(void) noexcept;
-
 		SfmlConstructorException(std::string const &s) noexcept;
-
 		const char *what() const noexcept override;
-
 		~SfmlConstructorException(void) noexcept = default;
-
 	private:
 		SfmlConstructorException &
 		operator=(SfmlConstructorException const &rhs) noexcept = delete;
-
 		SfmlConstructorException(SfmlConstructorException const &src) noexcept = delete;
-
 		std::string _error;
 	};
 
+	DisplaySfml() = delete;
 	DisplaySfml(int width,
 				int height,
 				char const *windowName);
+	~DisplaySfml() override;
+	DisplaySfml &operator=(DisplaySfml const &rhs) = delete;
+	DisplaySfml(DisplaySfml const &src) = delete;
 
-	~DisplaySfml(void) override;
-
-	void registerCallbackAction(std::function<void(eAction)> function) override; // TODO
-
-
+	void registerCallbackAction(std::function<void(eAction)> function) override;
 	bool exit(void) const override;
-
 	void render() override;
-
 	void update() override;
-
 	void drawGrid(MutantGrid<eSprite> const &grid) override;
-
 	void setBackground(MutantGrid<eSprite> const &grid) override;
-
 	eDirection getDirection(void) const override;
 
 private:
@@ -67,25 +56,13 @@ private:
 	sf::Event ev_;
 
 	void drawTileGrid_(int indexTile, int indexWidthGrid, int indexHeightGrid);
-
 	void drawGrid_(sf::RenderTarget &target, MutantGrid<eSprite> const &grid);
-
 	void drawTileGrid_(sf::RenderTarget &target, int indexTile, int indexWidthGrid,
 					   int indexHeightGrid);
-
 	sf::VertexArray getQuadTilePixel_(int indexWidthTile, int indexHeightTile,
 									  int indexWidthGrid, int indexHeightGrid);
-
 	void _error(std::string const &s);
-
 	void _clean(void);
-
-
-	DisplaySfml &operator=(DisplaySfml const &rhs) = delete;
-
-	DisplaySfml(DisplaySfml const &src) = delete;
-
-	DisplaySfml(void) = delete;
 };
 
 extern "C" {

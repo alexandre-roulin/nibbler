@@ -1,1 +1,0 @@
-g++ src/main.cpp -I ~/.brew/include -I ../../incs -I ../../sfml/src/sfml/include/ -rpath ../../sfml/src/sfml-build/lib -L ../../sfml/src/sfml-build/lib -I include src/SoundSfml.cpp -L ~/.brew/lib -lsfml-audio -std=c++1z

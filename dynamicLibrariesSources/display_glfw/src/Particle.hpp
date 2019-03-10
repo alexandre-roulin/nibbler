@@ -21,9 +21,11 @@ struct PhysicsMovement {
 class Particle {
 public:
 
+	Particle() = delete;
 	Particle(std::string const &, unsigned int size);
-
 	~Particle();
+	Particle(Particle const &) = delete;
+	Particle &operator=(Particle const &) = delete;
 
 	void render(Shader &shader, GLenum typeOfDraw = GL_TRIANGLES);
 	void update();
@@ -44,8 +46,4 @@ private:
 	std::vector<PhysicsMovement>	physicsMovement_;
 
 	void updateTransforms_();
-
-	Particle() = delete;
-	Particle(Particle const &) = delete;
-	Particle &operator=(Particle const &) = delete;
 };
