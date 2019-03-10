@@ -89,6 +89,8 @@ public:
 
 	void deleteGui();
 
+	void handlingGameError();
+
 	/** UI **/
 
 	void sendHostname();

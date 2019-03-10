@@ -117,18 +117,7 @@ void Univers::startNewGame() {
 		deleteGui();
 		defaultAssignmentLibrary();
 	} catch (std::exception const &e) {
-		SnakeClient::boost_shared_ptr ptr(snakeClient_);
-		SnakeServer::b_ptr ptrServer(snakeServer_);
-
-		if (ptr)
-			ptr->killSnake(ptr->getId_());
-		if (ptrServer)
-			ptrServer->sendOpenGameToClient(false);
-		openGame_ = false;
-		gameManager->finishGame();
-		if (displayManager->hasLibraryLoaded())
-			displayManager->unloadDynamicLibrary();
-		resetData();
+		handlingGameError();
 		return;
 	}
 
@@ -160,6 +149,20 @@ void Univers::manageSnakeClientInput() {
 
 /** Library **/
 
+void Univers::handlingGameError() {
+	SnakeClient::boost_shared_ptr ptr(snakeClient_);
+	SnakeServer::b_ptr ptrServer(snakeServer_);
+
+	if (ptrServer)
+		ptrServer->sendOpenGameToClient(false);
+	else if (ptr)
+		ptr->sendOpenGameToServer(false);
+	openGame_ = false;
+	gameManager->finishGame();
+	if (displayManager->hasLibraryLoaded())
+		displayManager->unloadDynamicLibrary();
+	resetData();
+}
 
 void Univers::defaultAssignmentLibrary() {
 
@@ -190,11 +193,8 @@ void Univers::manageSwitchLibrary() {
 			defaultAssignmentLibrary();
 		} catch (std::exception const &e) {
 			ptr->sendDataToServer(id, eHeader::kForcePause);
-			SnakeServer::b_ptr ptrServer(snakeServer_);
-
-			if (ptrServer)
-				ptrServer->sendOpenGameToClient(false);
-			gameManager->finishGame();
+			boost::this_thread::sleep_for(boost::chrono::milliseconds(100));
+			handlingGameError();
 			throw(e);
 		}
 		ptr->sendDataToServer(id, eHeader::kForcePause);

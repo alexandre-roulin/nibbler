@@ -153,13 +153,19 @@ bool SnakeClient::isIa() const {
 	return fromIA_;
 }
 
+
+bool SnakeClient::sendOpenGameToServer(bool openGame) {
+	if (!isReady())
+		return false;
+	sendDataToServer(openGame, eHeader::kOpenGame);
+	return true;
+}
+
 void SnakeClient::killSnake(uint16_t id) {
 	if (id_ == id || (univers_.isIASnake(id) && univers_.isServer())) {
-		//std::lock_guard<std::mutex> guard(mutex_);
+		std::lock_guard<std::mutex> guard(mutex_);
 		(*snakeArray)[id].isAlive = false;
-		Snake osef = (*snakeArray)[id];
-		osef.isAlive = false;
-		sendDataToServer(osef, eHeader::kSnakeUX);
+		sendDataToServer((*snakeArray)[id], eHeader::kSnakeUX);
 	}
 }
 
@@ -170,8 +176,6 @@ void SnakeClient::disconnect() {
 }
 
 /***** Callback *****/
-
-
 
 void SnakeClient::callbackSnakeUN(const Snake &snakeUN) {
 	std::lock_guard<std::mutex> guard(mutex_);

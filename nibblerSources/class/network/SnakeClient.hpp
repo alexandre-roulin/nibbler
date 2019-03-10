@@ -72,6 +72,8 @@ public:
 
 	void disconnect();
 
+	bool sendOpenGameToServer(bool openGame);
+
 private:
 	SnakeClient(Univers &univers, bool fromIA);
 
