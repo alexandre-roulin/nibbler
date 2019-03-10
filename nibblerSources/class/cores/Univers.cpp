@@ -117,7 +117,18 @@ void Univers::startNewGame() {
 		deleteGui();
 		defaultAssignmentLibrary();
 	} catch (std::exception const &e) {
+		SnakeClient::boost_shared_ptr ptr(snakeClient_);
+		SnakeServer::b_ptr ptrServer(snakeServer_);
+
+		if (ptr)
+			ptr->killSnake(ptr->getId_());
+		if (ptrServer)
+			ptrServer->sendOpenGameToClient(false);
 		openGame_ = false;
+		gameManager->finishGame();
+		if (displayManager->hasLibraryLoaded())
+			displayManager->unloadDynamicLibrary();
+		resetData();
 		return;
 	}
 
@@ -155,7 +166,11 @@ void Univers::defaultAssignmentLibrary() {
 	MutantGrid<eSprite> grid(mapSize_);
 	grid.fill(eSprite::kGround);
 
-	displayManager->loadDynamicLibrary(mapSize_,mapSize_, displayManager->getNextLibraryInfo().title.c_str());
+	try {
+		displayManager->loadDynamicLibrary(mapSize_,mapSize_, displayManager->getNextLibraryInfo().title.c_str());
+	} catch (std::exception const &e){
+		throw (std::runtime_error("Cant laod IDisplay"));
+	}
 
 	displayManager->getInstance()->setBackground(grid);
 	displayManager->getInstance()->registerCallbackAction(
@@ -171,7 +186,17 @@ void Univers::manageSwitchLibrary() {
 		int16_t id = ptr->getId_();
 		ptr->sendDataToServer(id, eHeader::kForcePause);
 		displayManager->setNextKInstance();
-		defaultAssignmentLibrary();
+		try {
+			defaultAssignmentLibrary();
+		} catch (std::exception const &e) {
+			ptr->sendDataToServer(id, eHeader::kForcePause);
+			SnakeServer::b_ptr ptrServer(snakeServer_);
+
+			if (ptrServer)
+				ptrServer->sendOpenGameToClient(false);
+			gameManager->finishGame();
+			throw(e);
+		}
 		ptr->sendDataToServer(id, eHeader::kForcePause);
 	}
 	switchLib = false;

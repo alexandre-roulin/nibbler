@@ -12,7 +12,6 @@ void nibbler(Univers &univers) {
 		if (univers.getGui_() == nullptr)
 			univers.createGui();
 		univers.getGui_()->aState();
-//		univers.deleteGui();
 
 		if (univers.isOpenGame_()) {
 			univers.startNewGame();
@@ -49,7 +48,7 @@ int main(int argc, char **argv) {
 	}
 
 	srand(time(NULL));
-	//try {
+	try {
 		Univers univers;
 
 		boost::program_options::options_description desc("Options");
@@ -105,10 +104,10 @@ int main(int argc, char **argv) {
 			return (0);
 		}
 		nibbler(univers);
-	//}
-	//catch (const std::exception &e) {
-	//	std::cerr << "Unhandled Exception reached the top of main: "
-	//			  << e.what() << ", application will now exit" << std::endl;
-	//}
+	}
+	catch (const std::exception &e) {
+		std::cerr << "Unhandled Exception reached the top of main: "
+				  << e.what() << ", application will now exit" << std::endl;
+	}
 	return (0);
 }

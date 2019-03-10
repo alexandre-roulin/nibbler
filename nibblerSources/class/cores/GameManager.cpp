@@ -63,6 +63,8 @@ void GameManager::startNewGame() {
 		ptr->lock();
 		startEvent = world_->getEventsManager().getEvents<StartEvent>();
 		ptr->unlock();
+		if (!univers_.isOpenGame_())
+			return ;
 	}
 	std::cout << "Post Event Init" << std::endl;
 

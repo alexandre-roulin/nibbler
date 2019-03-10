@@ -155,9 +155,11 @@ bool SnakeClient::isIa() const {
 
 void SnakeClient::killSnake(uint16_t id) {
 	if (id_ == id || (univers_.isIASnake(id) && univers_.isServer())) {
-		std::lock_guard<std::mutex> guard(mutex_);
+		//std::lock_guard<std::mutex> guard(mutex_);
 		(*snakeArray)[id].isAlive = false;
-		sendDataToServer((*snakeArray)[id], eHeader::kSnakeUX);
+		Snake osef = (*snakeArray)[id];
+		osef.isAlive = false;
+		sendDataToServer(osef, eHeader::kSnakeUX);
 	}
 }
 
@@ -253,7 +255,10 @@ void SnakeClient::callbackStartInfo(StartInfo startInfo) {
 	std::lock_guard<std::mutex> guard(mutex_);
 	foodCreations.clear();
 	if (acceptDataFromServer()) {
-		while (univers_.getGameManager().getWorld_() == nullptr);
+		while (univers_.getGameManager().getWorld_() == nullptr) {
+			if (!univers_.isOpenGame_())
+				return ;
+		}
 		factory_.createAllSnake(snakeArray, startInfo.nu);
 		if (univers_.isServer()) {
 			int max_food = (startInfo.nu > 1 ? startInfo.nu - 1 : startInfo.nu);

@@ -20,7 +20,7 @@ void WidgetServerPannel::beginContent_() {
 
 	if (ptr && ptr->allSnakeIsReady()) {
 		if (core_.univers.isServer() && button_("Run the game", eColor::kGreen)) {
-			core_.univers.getSnakeServer().startGame();
+			core_.univers.sendOpenGameToServer();
 		}
 	} else
 		button_("Run the game", eColor::kGrey);
