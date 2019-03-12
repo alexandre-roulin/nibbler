@@ -84,7 +84,6 @@ bool SnakeClient::allSnakeIsDead() const {
 }
 
 void SnakeClient::deliverEvents() {
-	std::cout << "d" << std::endl;
 	std::lock_guard<std::mutex> guard(mutex_);
 	for (auto foodCreation : foodCreations) {
 		auto world = univers_.getGameManager().getWorld_();
@@ -92,7 +91,6 @@ void SnakeClient::deliverEvents() {
 			world->getEventsManager().emitEvent(foodCreation);
 	}
 	foodCreations.clear();
-	std::cout << "f" << std::endl;
 }
 
 bool SnakeClient::isSwitchingLibrary() const {
@@ -278,7 +276,7 @@ void SnakeClient::callbackStartInfo(StartInfo startInfo) {
 		if (univers_.isServer()) {
 			int max_food = (startInfo.nu > 1 ? startInfo.nu - 1 : startInfo.nu);
 			for (int index = 0; index < max_food; ++index) {
-				sendDataToServer(FoodInfo(PositionComponent(univers_.getGrid_().getRandomSlot(eSprite::kNone)),false), eHeader::kFood);
+				sendDataToServer(FoodInfo(PositionComponent(univers_.getGrid_().getRandomSlot(eSprite::kNone)),false, -1), eHeader::kFood);
 			}
 		}
 		univers_.getGameManager().getWorld_()->getEventsManager().emitEvent<StartEvent>(startInfo.time_duration);

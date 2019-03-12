@@ -87,7 +87,7 @@ bool WidgetChat::chatCommand_() {
 	if (bufferMessage_[0] != '/')
 		return (false);
 	if (strstr(bufferMessage_, "/help"))
-		addLog(eColorLog::kYellow, "/help\n/name Aname\n");
+		addLog(eColorLog::kYellow, "/help\n/name Aname\n/host");
 	else if (strstr(bufferMessage_, "/name ")) {
 		if (ptr && checkClientIsConnect_()) {
 			ptr->changeName(bufferMessage_ + sizeof("/name ") - 1);

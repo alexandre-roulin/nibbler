@@ -197,6 +197,9 @@ void SnakeServer::callbackChatInfo(ChatInfo chatInfo) {
 
 void SnakeServer::callbackFood(FoodInfo foodInfo) {
 	std::lock_guard<std::mutex> guard(mutex_);
+	if (foodInfo.id_ >= 0 && foodInfo.id_ < 8) {
+		(*snakeArray_)[foodInfo.id_].score_ += GameManager::ScaleByRealFood * 2;
+	}
 	foodInfoArray.push_back(foodInfo);
 }
 

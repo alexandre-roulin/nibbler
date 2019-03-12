@@ -16,7 +16,7 @@
 #include <events/FoodCreation.hpp>
 #include <events/JoystickEvent.hpp>
 
-const uint32_t GameManager::ScaleByFrame = 10;
+const uint32_t GameManager::ScaleByFrame = 20;
 const uint32_t GameManager::ScaleByRealFood = 600;
 const uint32_t GameManager::ScaleByFakeFood = 50;
 
@@ -105,7 +105,6 @@ void GameManager::manageGlobalInput() {
 	SnakeClient::boost_shared_ptr ptr(univers_.getSnakeClient().lock());
 	if (!ptr)
 		return;
-	std::cout << " /** Manage Input **/" << std::endl;
 	{ /** Manage Input **/
 		Bobby::clearPriority();
 		if (univers_.isServer()) {
@@ -118,7 +117,6 @@ void GameManager::manageGlobalInput() {
 		}
 		univers_.manageSnakeClientInput();
 	}
-	std::cout << " /** Manage Frame **/" << std::endl;
 	{ /** Manage Frame **/
 		for (; world_->getEventsManager().getEvents<NextFrame>().empty() && univers_.isOpenGame_(););
 		ptr->lock();
@@ -142,7 +140,6 @@ void GameManager::loopWorld() {
 
 	SnakeClient::boost_shared_ptr ptr(univers_.getSnakeClient().lock());
 	if (!ptr) return;
-	std::cout << "/** Manage game **/" << std::endl;
 
 	{ /** Manage game **/
 		ptr->deliverEvents();
