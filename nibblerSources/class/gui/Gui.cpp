@@ -9,12 +9,13 @@
 #include "gui/widget/WidgetServerPannel.hpp"
 #include "gui/widget/WidgetEtat.hpp"
 #include "cores/Test.hpp"
+#include <network/SnakeServer.hpp>
 
 Gui::Gui(Univers &univers) :
 univers(univers),
 pathRessources_(boost::filesystem::path(NIBBLER_ROOT_PROJECT_PATH) / "ressources/"),
 winSize_(sf::Vector2<unsigned int>(1000, 900)),
-win_(sf::VideoMode(winSize_.x, winSize_.y), "Project Sanke"),
+win_(sf::VideoMode(winSize_.x, winSize_.y), "Project Snake"),
 io_(createContext_()),
 chat_(*this) {
 	boost::filesystem::path input(GUI_INPUT_DIRECTORY);
@@ -71,11 +72,11 @@ void			callbackTest(void *vUnivers, std::string const &input) {
 	else if (input == "D")
 		univers->deleteClient();
 	else if (input == "E")
-		univers->connect();
+		univers->connect(univers->getIPAddress(), univers->isServer() ? std::to_string(univers->getSnakeServer().getPort_()) : DEFAULT_PORT);
 	else if (input == "R")
 		univers->switchReady();
 	else if (input == "S")
-		univers->createServer();
+		univers->createServer(univers->getIPAddress(), DEFAULT_PORT_NU);
 	else if (input == "W")
 		univers->deleteServer();
 	else if (input == "X")
@@ -117,7 +118,7 @@ void					Gui::processEvent_(sf::Event const &event) {
 				Test::getInstance().writeInput("D");
 				break;
 			case sf::Keyboard::E:
-				univers.connect();
+				univers.connect(univers.getIPAddress(), univers.isServer() ? std::to_string(univers.getSnakeServer().getPort_()) : DEFAULT_PORT);
 				input_ << "E";
 				Test::getInstance().writeInput("E");
 				break;
@@ -127,7 +128,7 @@ void					Gui::processEvent_(sf::Event const &event) {
 				Test::getInstance().writeInput("R");
 				break;
 			case sf::Keyboard::S:
-				univers.createServer();
+				univers.createServer(univers.getIPAddress(), DEFAULT_PORT_NU);
 				input_ << "S";
 				Test::getInstance().writeInput("S");
 				break;

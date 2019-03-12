@@ -37,9 +37,6 @@ void option_dependency(boost::program_options::variables_map const &vm,
 	option_dependency(vm, for_what, args...);
 }
 
-#include <KNW/ServerTCP.hpp>
-#include <KNW/ClientTCP.hpp>
-
 int main(int argc, char **argv) {
 
 	if (!NIBBLER_ROOT_PROJECT_PATH) {

@@ -6,9 +6,11 @@
 WidgetConnect::WidgetConnect(Gui &core) :
 		AWidget(core, "Connect", NIBBLER_IMGUI_WINDOW_FLAGS_BASIC),
 		client_(false) {
+	std::string ip = core_.univers.getIPAddress();
+
 	bzero(dnsBuffer_, IM_ARRAYSIZE(dnsBuffer_));
 	bzero(portBuffer_, IM_ARRAYSIZE(portBuffer_));
-	memcpy(dnsBuffer_, DEFAULT_DNS, sizeof(DEFAULT_DNS));
+	memcpy(dnsBuffer_, ip.c_str(), ip.size());
 	memcpy(portBuffer_, DEFAULT_PORT, sizeof(DEFAULT_PORT));
 
 }

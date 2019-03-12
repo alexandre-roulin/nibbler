@@ -16,6 +16,13 @@
 #include <boost/thread.hpp>
 #include <boost/scoped_ptr.hpp>
 #include <cores/GameManager.hpp>
+#include <arpa/inet.h>
+#include <sys/socket.h>
+#include <netdb.h>
+#include <ifaddrs.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
 
 #define DEFAULT_DNS "localhost"
 #define DEFAULT_PORT "8000"
@@ -62,15 +69,16 @@ public:
 
 	/** Network **/
 
-	void connect(const std::string dns = DEFAULT_DNS, const std::string port = DEFAULT_PORT);
+	void connect(const std::string dns, const std::string port);
 
+	std::string getIPAddress();
 	// create
 
 	void createBobby();
 
 	void createClient();
 
-	void createServer(const std::string ip = DEFAULT_DNS,  unsigned int port = DEFAULT_PORT_NU);
+	void createServer(const std::string ip,  unsigned int port);
 
 	void createGui();
 

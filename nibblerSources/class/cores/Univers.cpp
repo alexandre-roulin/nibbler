@@ -4,6 +4,13 @@
 #include <network/SnakeServer.hpp>
 #include "GameManager.hpp"
 #include "Snake.hpp"
+#include <arpa/inet.h>
+#include <sys/socket.h>
+#include <netdb.h>
+#include <ifaddrs.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
 
 /** Const Variable **/
 const std::string Univers::SuccessServerHasBeenClosed = "Server now refused connection.";
@@ -519,7 +526,8 @@ void Univers::sendHostname() {
 	if (gui_) {
 		char hostname[64];
 		gethostname(hostname, 64);
-		gui_->addMessageChat(std::string("[INFO] ") + hostname);
+		gui_->addMessageChat(std::string("[ Hostname ] ") + hostname);
+		gui_->addMessageChat(std::string("[ IP Address ] ") + getIPAddress());
 	}
 }
 
@@ -631,4 +639,27 @@ const GameManager::eSpeed &Univers::getBaseSpeed() const {
 
 void Univers::setBaseSpeed(const GameManager::eSpeed &baseSpeed) {
 	Univers::baseSpeed = baseSpeed;
+}
+
+std::string Univers::getIPAddress() {
+	std::string ipAddress = "Unable to get IP Address";
+	struct ifaddrs *interfaces = nullptr;
+	struct ifaddrs *temp_addr = nullptr;
+	int success = 0;
+
+	success = getifaddrs(&interfaces);
+
+	if (success == 0) {
+		temp_addr = interfaces;
+		while ( temp_addr != NULL ) {
+			if ( temp_addr->ifa_addr->sa_family == AF_INET ) {
+				if ( strcmp(temp_addr->ifa_name, "en0") == 0 ){
+					ipAddress = inet_ntoa((reinterpret_cast<struct sockaddr_in*>(temp_addr->ifa_addr))->sin_addr);
+				}
+			}
+			temp_addr = temp_addr->ifa_next;
+		}
+	}
+	freeifaddrs(interfaces);
+	return ipAddress;
 }
