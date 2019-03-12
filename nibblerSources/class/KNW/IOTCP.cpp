@@ -33,16 +33,14 @@ namespace KNW {
 			size_t len) {
 
 		if (!open_) return;
-		if (ec.value() != 0 ) {
+
+		BaseDataType::Header header;
+		std::memcpy(&header, buffer_data_.data(), len);
+		std::cout << __PRETTY_FUNCTION__ << header << " e : " << ec.value() << std::endl;
+		if (ec.value() != 0 || header == 0) {
 			checkError(ec);
 		} else {
-			BaseDataType::Header header;
-			std::memcpy(&header, buffer_data_.data(), len);
-			if (header == 0) {
-				checkError(ec);
-			}
-			else
-				readSocketData(header);
+			readSocketData(header);
 		}
 	}
 
@@ -84,7 +82,8 @@ namespace KNW {
 
 	void
 	IOTCP::handleWrite(const boost::system::error_code &ec, size_t) {
-		checkError(ec);
+		if (ec.value() != 0)
+			checkError(ec);
 	}
 
 	void IOTCP::writeSyncSocket(std::string data) {
@@ -118,12 +117,10 @@ namespace KNW {
 				});
 	}
 
-	void IOTCP::checkError(boost::system::error_code const &error_code) {
-		if (error_code) {
-			open_ = false;
-			if (callbackDeadSocket_)
-				callbackDeadSocket_();
-		}
+	void IOTCP::checkError(boost::system::error_code const &) {
+		open_ = false;
+		if (callbackDeadSocket_)
+			callbackDeadSocket_();
 	}
 
 
