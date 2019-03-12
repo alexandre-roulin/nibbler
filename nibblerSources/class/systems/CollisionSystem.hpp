@@ -19,6 +19,8 @@ private:
 	Univers &univers_;
 	void createAppleBySnake(KINU::Entity);
 	void checkCollision(KINU::Entity entityHead, KINU::Entity entityCheck);
+	std::vector<KINU::Entity> entitiesToKill;
+	std::vector<KINU::Entity> entitiesToKillGroup;
 };
 
 

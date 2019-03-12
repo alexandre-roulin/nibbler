@@ -30,7 +30,7 @@ void CollisionSystem::checkCollision(
 
 		if (tagId == eTag::kFoodTag) {
 			univers_.getSoundManager().playNoise(eNoise::kFoodSound);
-			entityCheck.kill();
+			entitiesToKill.push_back(entityCheck);
 			getWorld().getEventsManager().emitEvent<FoodEat>(entityHead.getGroupIdByEntity());
 
 			if (ptr && (ptr->getId_() == entityHead.getGroupIdByEntity() ||
@@ -45,21 +45,21 @@ void CollisionSystem::checkCollision(
 		} else if (tagId == eTag::kFoodFromSnake) {
 
 			univers_.getSoundManager().playNoise(eNoise::kFoodSound);
-			entityCheck.kill();
+			entitiesToKill.push_back(entityCheck);
 			if (entityHead.hasGroupId())
 				getWorld().getEventsManager().emitEvent<FoodEat>(entityHead.getGroupIdByEntity());
 		} else if (tagId == kWallTag) {
 			createAppleBySnake(entityHead);
 			ptr->killSnake(entityHead.getGroupIdByEntity());
-			entityHead.killGroup();
+			entitiesToKillGroup.push_back(entityHead);
 		} else if (entityCheck.getGroupIdByEntity() == entityHead.getGroupIdByEntity()) {
 			createAppleBySnake(entityHead);
 			ptr->killSnake(entityHead.getGroupIdByEntity());
-			entityHead.killGroup();
+			entitiesToKillGroup.push_back(entityHead);
 		} else {
 			createAppleBySnake(entityHead);
 			ptr->killSnake(entityHead.getGroupIdByEntity());
-			entityHead.killGroup();
+			entitiesToKillGroup.push_back(entityHead);
 		}
 
 	}
@@ -75,6 +75,12 @@ void CollisionSystem::update() {
 			}
 		}
 	}
+	std::for_each(entitiesToKill.begin(), entitiesToKill.end(), [](KINU::Entity e){
+		e.kill();
+	});
+	std::for_each(entitiesToKillGroup.begin(), entitiesToKillGroup.end(), [](KINU::Entity e){
+		e.killGroup();
+	});
 }
 
 void CollisionSystem::createAppleBySnake(KINU::Entity snake) {
