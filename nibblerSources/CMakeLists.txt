@@ -107,8 +107,6 @@ add_executable(${NAME}
         class/KINU/Config.hpp
         class/ia/Bobby.cpp
         class/ia/Bobby.hpp
-        class/gui/widget/WidgetMassiveButton.cpp
-        class/gui/widget/WidgetMassiveButton.hpp
         incs/Sprite.hpp
         class/ia/KStar.cpp
         class/ia/KStar.hpp

@@ -25,7 +25,7 @@ public:
 		CoreConstructorException(CoreConstructorException const &src) noexcept;
 	private:
 		CoreConstructorException &operator=(CoreConstructorException const &rhs) noexcept;
-		std::string			_error;
+		std::string			error_;
 	};
 
 	Gui(Univers &univers);
@@ -34,14 +34,14 @@ public:
 	Gui &operator=(const Gui &) = delete;
 	Gui(const Gui &) = delete;
 
-	void						aState(void);
+	void						mainLoop(void);
 	template < typename ... Args >
 	void addMessageChat(eColorLog color, std::string const &log, Args ... args) {
-		_chat.addLog(color, log.c_str(), args...);
+		chat_.addLog(color, log.c_str(), args...);
 	}
 	template < typename ... Args >
 	void addMessageChat(std::string const &log, Args ... args) {
-		_chat.addLog(eColorLog::kNone, log.c_str(), args...);
+		chat_.addLog(eColorLog::kNone, log.c_str(), args...);
 	}
 
 	void 						exit(void);
@@ -60,18 +60,18 @@ private:
 	boost::filesystem::path		pathRessources_;
 	std::ofstream				input_;
 
-	sf::Vector2<unsigned int>	_winSize;
-	sf::RenderWindow			_win;
-	ImGuiIO						&_io;
-	sf::Clock					_deltaClock;
-	WidgetChat					_chat;
-	sf::Vector2<int>			_mapSize;
+	sf::Vector2<unsigned int>	winSize_;
+	sf::RenderWindow			win_;
+	ImGuiIO						&io_;
+	sf::Clock					deltaClock_;
+	WidgetChat					chat_;
 
-	void						_render(void);
-	ImGuiIO						&_createContext(void);
-	void						_processEvent(sf::Event const &event);
+	void						updateEvent_();
+	void						render_();
+	ImGuiIO						&createContext_();
+	void						processEvent_(sf::Event const &event);
 
 	static void					beginHueColor_(float color, float power = 1.f);
-	static bool 				_useColor;
+	static bool 				useColor_;
 	static std::map< eColor, float > const mapEColor_;
 };

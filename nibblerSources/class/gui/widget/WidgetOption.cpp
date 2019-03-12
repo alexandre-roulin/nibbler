@@ -3,20 +3,11 @@
 #include "WidgetOption.hpp"
 #include "dynamicLinkLibrary/DisplayDynamicLibrary.hpp"
 
-const std::array<std::string, 4> WidgetOption::difficultyDisplay = {
-	"Easy",
-	"Medium",
-	"Hard",
-	"Impossible"
-};
-
-
 WidgetOption::WidgetOption(Gui &core) :
 		AWidget(core, "Options", NIBBLER_IMGUI_WINDOW_FLAGS_BASIC),
 		sound_(core_.univers.getSoundManager().hasLibraryLoaded()),
 		rNoise_(core_.univers.getSoundManager().getNoise()),
-		rMusique_(core_.univers.getSoundManager().getMusique()),
-		speed(core_.univers.getBaseSpeed()) {
+		rMusique_(core_.univers.getSoundManager().getMusique()) {
 	SnakeClient::boost_shared_ptr ptr(core_.univers.getSnakeClient().lock());
 	if (ptr)
 		memcpy(nameBuffer_, ptr->getSnake().name, NAME_BUFFER);
@@ -105,17 +96,6 @@ void WidgetOption::beginContent_() {
 			rMusique_ = musicManagemet_();
 	}
 
-	if (ImGui::BeginCombo("Difficulty", getDifficultyDisplay_(speed).c_str(), 0)) {
-		for (size_t n = 0; n < 4; ++n) {
-			bool is_selected = difficultyDisplay[n] == getDifficultyDisplay_(speed);
-			if (ImGui::Selectable(difficultyDisplay[n].c_str(), is_selected))
-				core_.univers.setBaseSpeed(getSpeedEnum(difficultyDisplay[n]));
-			if (is_selected)
-				ImGui::SetItemDefaultFocus();
-		}
-		ImGui::EndCombo();
-	}
-
 	if (ImGui::BeginCombo("Display", core_.univers.getDisplayManager().getNextLibraryInfo().title.c_str(), 0)) {
 		for (unsigned long n = 0; n < DisplayDynamicLibrary::libraryInfo.size(); n++) {
 			bool is_selected = (core_.univers.getDisplayManager().getNextLibraryInfo().kLibrary == n);
@@ -126,28 +106,4 @@ void WidgetOption::beginContent_() {
 		}
 		ImGui::EndCombo();
 	}
-}
-
-const std::string &
-WidgetOption::getDifficultyDisplay_(const GameManager::eSpeed s) {
-	switch (s) {
-		case GameManager::Easy:
-			return difficultyDisplay[0];
-		case GameManager::Medium:
-			return difficultyDisplay[1];
-		case GameManager::Hard:
-			return difficultyDisplay[2];
-		case GameManager::Impossible:
-			return difficultyDisplay[3];
-	}
-}
-
-GameManager::eSpeed WidgetOption::getSpeedEnum(const std::string &string) {
-	if (difficultyDisplay[0] == string)
-		return GameManager::eSpeed::Easy;
-	if (difficultyDisplay[2] == string)
-		return GameManager::eSpeed::Hard;
-	if (difficultyDisplay[3] == string)
-		return GameManager::eSpeed::Impossible;
-	return GameManager::eSpeed::Medium;
 }

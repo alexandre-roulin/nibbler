@@ -11,7 +11,7 @@ void nibbler(Univers &univers) {
 	while (!univers.isExit()) {
 		if (univers.getGui_() == nullptr)
 			univers.createGui();
-		univers.getGui_()->aState();
+		univers.getGui_()->mainLoop();
 
 		if (univers.isOpenGame_()) {
 			univers.startNewGame();

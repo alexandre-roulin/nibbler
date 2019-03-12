@@ -34,7 +34,8 @@ void WidgetConnect::beginContent_() {
 
 	Gui::endColor();
 
-	if (!(core_.univers.isServer() && client_)) {
+	if (!(core_.univers.isServer() && client_)
+		&& !(!ptrClient && client_)) {
 		if (ImGui::InputText("DNS", dnsBuffer_,
 							 IM_ARRAYSIZE(dnsBuffer_),
 							 ImGuiInputTextFlags_EnterReturnsTrue)) {
@@ -56,14 +57,17 @@ void WidgetConnect::beginContent_() {
 	Gui::beginColor(eColor::kGreen);
 
 	if (client_) {
-		if (ptrClient && ptrClient->isOpen()) {
+		if (!ptrClient) {
+			if (ImGui::Button("Create Client", sf::Vector2f(ImGui::GetWindowSize().x, 20))) {
+				core_.univers.createClient();
+			}
+		}
+		else if (ptrClient && ptrClient->isOpen()) {
 			if (ImGui::Button("Join new", sf::Vector2f(ImGui::GetWindowSize().x, 20))) {
 				ptrClient->disconnect();
 				core_.univers.connect(dnsBuffer_, portBuffer_);
 			}
 		} else if (ImGui::Button("Join", sf::Vector2f(ImGui::GetWindowSize().x, 20))) {
-			if (!ptrClient)
-				core_.univers.createClient();
 			if (core_.univers.isServer())
 				core_.univers.connect(core_.univers.getSnakeServer().getAddress_(), std::to_string(core_.univers.getSnakeServer().getPort_()));
 			else
@@ -79,5 +83,18 @@ void WidgetConnect::beginContent_() {
 	}
 	Gui::endColor();
 
+	Gui::beginColor(eColor::kRed);
+	if (client_) {
+		if (ptrClient) {
+			if (ImGui::Button("Delete client", sf::Vector2f(ImGui::GetWindowSize().x, 20)))
+				core_.univers.deleteClient();
+		}
+	} else if (!client_) {
+		if (core_.univers.isServer()) {
+			if (ImGui::Button("Delete server", sf::Vector2f(ImGui::GetWindowSize().x, 20)))
+				core_.univers.deleteServer();
+		}
+	}
+	Gui::endColor();
 }
 
