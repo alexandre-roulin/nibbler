@@ -27,19 +27,24 @@ void WidgetOption::update_() {}
 
 bool WidgetOption::soundManagement_() {
 	try {
-		if (sound_) {
-			return core_.univers.loadSound();
-		} else {
-			core_.univers.unloadSound();
-			rMusique_ = false;
-			rNoise_ = false;
-			return false;
-		}
+			if (sound_) {
+				bool ret = core_.univers.loadSound();
+				return ret;
+			} else {
+				core_.univers.unloadSound();
+				rMusique_ = false;
+				rNoise_ = false;
+				return false;
+			}
 	} catch (std::exception const &e) {
 		core_.addMessageChat(eColorLog::kRed, e.what());
-		return false;
 	}
+	core_.univers.unloadSound();
+	rMusique_ = false;
+	rNoise_ = false;
+	return false;
 }
+
 
 bool WidgetOption::musicManagemet_() {
 	try {
@@ -52,8 +57,11 @@ bool WidgetOption::musicManagemet_() {
 		}
 	} catch (std::exception const &e) {
 		core_.addMessageChat(eColorLog::kRed, e.what());
-		return false;
 	}
+	core_.univers.unloadSound();
+	rMusique_ = false;
+	rNoise_ = false;
+	return false;
 }
 
 void WidgetOption::beginContent_() {
