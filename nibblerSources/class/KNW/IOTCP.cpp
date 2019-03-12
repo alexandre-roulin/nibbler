@@ -124,7 +124,7 @@ namespace KNW {
 
 
 	bool IOTCP::isConnect() const {
-		return socket_->is_open();
+		return socket_->is_open() && open_;
 	}
 	IOTCP::b_sptr IOTCP::create(
 			DataTCP::b_wptr dataTCP_,

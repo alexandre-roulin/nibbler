@@ -22,19 +22,21 @@ namespace KNW {
 
 	void ConnectionTCP::callbackDeadIO() {
 		auto sptr = serverTCP_.lock();
-		DataTCP::b_sptr dataPtr = sptr->getDataTCP();
-		if (sptr && dataPtr) {
+		if (sptr) {
+			DataTCP::b_sptr dataPtr = sptr->getDataTCP();
+			if (dataPtr)
+				iotcp->writeSyncSocket(dataPtr->serializeData(0, 0));
 			auto it = std::find(sptr->connections.begin(), sptr->connections.end(), shared_from_this());
-			boost::system::error_code ec;
-			iotcp->writeSyncSocket(dataPtr->serializeData(0, 0));
-			iotcp->getSocket_()->shutdown(boost::asio::ip::tcp::socket::shutdown_both, ec);
-			iotcp->getSocket_()->close(ec);
 			if (sptr->callbackDeadConnection_ && sptr->isOpen() && it != sptr->connections.end())
 				sptr->callbackDeadConnection_(
 						static_cast<size_t>(std::distance(
 								sptr->connections.begin(),
 								std::find(sptr->connections.begin(), sptr->connections.end(), *it))));
 			*it = nullptr;
+			boost::system::error_code ec;
+			iotcp->getSocket_()->shutdown(boost::asio::ip::tcp::socket::shutdown_both, ec);
+			iotcp->getSocket_()->close(ec);
+
 		}
 	}
 

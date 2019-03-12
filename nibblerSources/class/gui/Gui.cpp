@@ -179,15 +179,15 @@ void			Gui::aState(void)
 
 		ImGui::SetNextWindowPos(positionByPercent(sf::Vector2<unsigned int>(95, 0)), 0, sf::Vector2f(0.5f, 0.5f));
 		wexit.render(true);
-		SnakeClient::boost_shared_ptr ptr(univers.getSnakeClient().lock());
 
 		ImGui::SetNextWindowPos(positionByPercent(sf::Vector2<unsigned int>(50, 50)));
 		ImGui::SetNextWindowSize(positionByPercent(sf::Vector2<unsigned int>(20, 15)));
-		settings.render((ptr && ptr->isOpen()));
+		settings.render(true);
 
 		ImGui::SetNextWindowPos(positionByPercent(sf::Vector2<unsigned int>(70, 50)));
 		ImGui::SetNextWindowSize(positionByPercent(sf::Vector2<unsigned int>(30, 15)));
-		optionSnake.render(!!ptr);
+
+		optionSnake.render(!univers.getSnakeClient().expired());
 
 		ImGui::SetNextWindowPos(positionByPercent(sf::Vector2<unsigned int>(70, 65)));
 		ImGui::SetNextWindowSize(positionByPercent(sf::Vector2<unsigned int>(30, 20)));

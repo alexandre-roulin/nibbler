@@ -11,12 +11,11 @@ void WidgetSettingGame::update_() {
 }
 
 void WidgetSettingGame::beginContent_() {
-	SnakeClient::boost_shared_ptr ptr(core_.univers.getSnakeClient().lock());
 
 	if (ImGui::InputInt("Size map", reinterpret_cast<int *>(&mapSize_), 1,
 						4, ImGuiInputTextFlags_CharsDecimal |
 						   ImGuiInputTextFlags_CharsNoBlank |
-						   ImGuiInputTextFlags_EnterReturnsTrue) && ptr) {
+						   ImGuiInputTextFlags_EnterReturnsTrue)) {
 		if (mapSize_ < MAP_MIN)
 			mapSize_ = MAP_MIN;
 		else if (mapSize_ > MAP_MAX)

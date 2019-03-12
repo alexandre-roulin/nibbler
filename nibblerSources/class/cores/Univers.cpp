@@ -570,19 +570,15 @@ GameManager &Univers::getGameManager() {
 void Univers::switchBorderless() {
 	boost::shared_ptr<ISnakeNetwork> ptr_network(getSnakeNetwork().lock());
 
-	if (!ptr_network || !ptr_network->isOpen()) {
-		gui_->addMessageChat(eColorLog::kOrange, WarningServerNotExist);
-		return ;
-	}
-
 	setBorderless(!isBorderless());
 
 	if (isBorderless())
 		gui_->addMessageChat(eColorLog::kGreen, SuccessBorderlessSet);
 	else
 		gui_->addMessageChat(eColorLog::kGreen, SuccessBorderlessUnset);
-
-	ptr_network->notifyBorderless();
+	if (ptr_network) {
+		ptr_network->notifyBorderless();
+	}
 }
 
 void Univers::switchReady() {
@@ -622,16 +618,9 @@ void Univers::sendOpenGameToServer() {
 void Univers::updateSizeMap() {
 	boost::shared_ptr<ISnakeNetwork> ptr_network(getSnakeNetwork().lock());
 
-	if (!ptr_network) {
-		gui_->addMessageChat(eColorLog::kOrange, SuccessResizeMapTo, mapSize_);
-		return;
-	}
-	if (!ptr_network->isOpen()) {
-		gui_->addMessageChat(eColorLog::kOrange, SuccessResizeMapTo, mapSize_);
-		return;
-	}
-
-	ptr_network->notifyMapSize();
+	gui_->addMessageChat(eColorLog::kGreen, SuccessResizeMapTo, mapSize_);
+	if (ptr_network)
+		ptr_network->notifyMapSize();
 }
 
 SnakeServer &Univers::getSnakeServer() const {

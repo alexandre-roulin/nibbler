@@ -42,10 +42,7 @@ namespace KNW {
 
 	void ClientTCP::disconnect() {
 		if (iotcp && iotcp->getSocket_() && iotcp->getSocket_()->is_open()) {
-			boost::system::error_code ec_sock;
 			iotcp->writeSyncSocket(dataTCP_->serializeData(0, 0));
-			iotcp->getSocket_()->shutdown(boost::asio::ip::tcp::socket::shutdown_both, ec_sock);
-			iotcp->getSocket_()->close(ec_sock);
 		}
 		iotcp = nullptr;
 	}

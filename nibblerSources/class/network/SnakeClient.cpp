@@ -281,7 +281,7 @@ void SnakeClient::callbackDeadConnection() {
 	if (gui && !fromIA_) {
 		gui->addMessageChat(eColorLog::kOrange, "Connection has been closed.");
 	}
-	if (clientTCP_) {
+	if (clientTCP_ && clientTCP_->isConnect()) {
 		clientTCP_->disconnect();
 	}
 }
