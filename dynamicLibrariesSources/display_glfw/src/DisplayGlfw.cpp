@@ -175,6 +175,7 @@ void DisplayGlfw::setBackground(MutantGrid<eSprite> const &grid) {
 void DisplayGlfw::drawGridCaseBody_(int x, int y) {
 	eSprite sprite = tileGrid_(x, y);
 
+
 	if ((sprite & eSprite::kMaskBody) == eSprite::kTail)
 		grid_(x, y).scale(glm::vec3(-0.1f));
 	else if ((sprite & eSprite::kMaskBody) == eSprite::kHead) {
@@ -205,6 +206,7 @@ void DisplayGlfw::drawGridCaseBody_(int x, int y) {
 		materialMap_.at(sprite & eSprite::kMaskColor).putMaterialToShader(shader_);
 		if ((sprite & eSprite::kYourSnake) == eSprite::kYourSnake) {
 			yourSnakeSprite = sprite;
+			bYourSnakeSprite_ = true;
 			yourSnakeX = x;
 			yourSnakeY = y;
 			camera_[CAMERA_SNAKE].setPosition(grid_(x, y).getPosition() + glm::vec3(0.f, 0.f, 10.f));
@@ -218,8 +220,6 @@ void DisplayGlfw::drawGridCaseBody_(int x, int y) {
 				camera_[CAMERA_SNAKE].setPosition(camera_[CAMERA_SNAKE].getPosition() + glm::vec3(0.f, 20.f, 0.f));
 			camera_[CAMERA_SNAKE].setFront(grid_(x, y).getPosition() - camera_[CAMERA_SNAKE].getPosition());
 			camera_[CAMERA_SNAKE].setUp(glm::vec3(0.f, 0.f, 1.f));
-		} else {
-			yourSnakeSprite = eSprite::kNone;
 		}
 	}
 }
@@ -254,6 +254,7 @@ void DisplayGlfw::drawGrid(MutantGrid<eSprite> const &grid) {
 	shader_.setVec3("uCameraPosition", getActiveCamera_().getPosition());
 
 
+	bYourSnakeSprite_ = false;
 	for (int y = 0; y < winTileSize_.getY(); ++y) {
 		for (int x = 0; x < winTileSize_.getX(); ++x) {
 			if ((grid(x, y) & eSprite::kFood) == eSprite::kFood) {
@@ -275,6 +276,8 @@ void DisplayGlfw::drawGrid(MutantGrid<eSprite> const &grid) {
 				renderLine_(grid_(x, y));
 		}
 	}
+	if (!bYourSnakeSprite_)
+		yourSnakeSprite = eSprite::kNone;
 }
 
 void DisplayGlfw::renderLine_(ActModel const &model) {

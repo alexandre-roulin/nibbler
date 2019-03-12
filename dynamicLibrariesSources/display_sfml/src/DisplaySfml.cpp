@@ -128,6 +128,9 @@ void DisplaySfml::update() {
 		if (ev_.type == sf::Event::KeyPressed) {
 
 			switch (ev_.key.code) {
+				case sf::Keyboard::Escape:
+					exit_ = true;
+					break;
 				case sf::Keyboard::A:
 					direction_ = kWest;
 					break;
