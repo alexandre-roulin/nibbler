@@ -120,6 +120,7 @@ void Univers::startNewGame() {
 		deleteGui();
 		defaultAssignmentLibrary();
 	} catch (std::exception const &e) {
+		std::cerr << e.what() << std::endl;
 		handlingGameError();
 		return;
 	}

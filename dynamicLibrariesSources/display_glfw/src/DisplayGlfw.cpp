@@ -67,7 +67,6 @@ DisplayGlfw::DisplayGlfw(int width,
 	shader_.attach((pathRoot_ / "dynamicLibrariesSources" / "display_glfw" / "shader" / "basic.frag").generic_string());
 	shader_.link();
 
-	block_.setModel((pathRoot_ / "ressources" / "objects" / "nanosuit" / "nanosuit.obj").generic_string());
 	modelGrass_.setModel((pathRoot_ / "ressources" / "objects" / "grass" / "grass.obj").generic_string());
 	modelSphere_.setModel((pathRoot_ / "ressources" / "objects" / "sphere.obj").generic_string());
 	modelHead_.setModel((pathRoot_ / "ressources" / "objects" / "head.obj").generic_string());
@@ -267,7 +266,7 @@ void DisplayGlfw::drawGrid(MutantGrid<eSprite> const &grid) {
 				grid_(x, y).assign(&modelWall_);
 				materialMap_.at(eSprite::kWall).putMaterialToShader(shader_);
 			} else if (grid(x, y) != eSprite::kNone)
-				grid_(x, y).assign(&block_);
+				grid_(x, y).assign(&modelWall_);
 
 			if (grid(x, y) != eSprite::kNone)
 				drawGridCase_(grid(x, y), x, y);

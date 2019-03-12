@@ -74,7 +74,6 @@ private:
 	int 							yourSnakeY;
 	Shader							shader_;
 	Shader							shaderMultiple_;
-	Model							block_;
 	Model							modelGrass_;
 	Model							modelWall_;
 	Model							appleModel_;
