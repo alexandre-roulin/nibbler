@@ -287,7 +287,7 @@ void Univers::createBobby() {
 	}
 	std::unique_ptr<Bobby> bobby = std::make_unique<Bobby>(*this);
 	try {
-		bobby->getClientTCP_()->connect(DEFAULT_DNS, std::to_string(snakeServer_->getPort_()));
+		bobby->getClientTCP_()->connect(getSnakeServer().getAddress_(), std::to_string(snakeServer_->getPort_()));
 	} catch (const std::exception &e) {
 		if (gui_)
 			gui_->addMessageChat(e.what());
@@ -397,8 +397,6 @@ void Univers::loadSoundData_() {
 }
 
 bool Univers::loadSound() {
-	if (getSoundManager().hasLibraryLoaded())
-		throw std::runtime_error("Trying to loadExternalSoundLibrary but it is already loaded");
 	getSoundManager().loadDynamicLibrary();
 	if (!getSoundManager().hasLibraryLoaded())
 		return false;
@@ -406,8 +404,6 @@ bool Univers::loadSound() {
 	return true;
 }
 void Univers::unloadSound() {
-	if (!getSoundManager().hasLibraryLoaded())
-		throw std::runtime_error("Trying to unloadExternalSoundLibrary but it is already unload");
 	getSoundManager().unloadDynamicLibrary();
 }
 
