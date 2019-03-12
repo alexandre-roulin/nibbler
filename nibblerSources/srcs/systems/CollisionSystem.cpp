@@ -81,6 +81,8 @@ void CollisionSystem::update() {
 	std::for_each(entitiesToKillGroup.begin(), entitiesToKillGroup.end(), [](KINU::Entity e){
 		e.killGroup();
 	});
+	entitiesToKill.clear();
+	entitiesToKillGroup.clear();
 }
 
 void CollisionSystem::createAppleBySnake(KINU::Entity snake) {

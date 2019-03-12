@@ -246,6 +246,7 @@ void SnakeServer::callbackAccept(size_t index) {
 	serverTCP_->writeDataToOpenConnections((*snakeArray_), eHeader::kSnakeArray);
 	serverTCP_->writeDataToOpenConnection(univers_.isBorderless(), index, eHeader::kBorderless);
 	serverTCP_->writeDataToOpenConnection(univers_.getMapSize(), index, eHeader::kResizeMap);
+	serverTCP_->writeDataToOpenConnections(univers_.getBaseSpeed(), eHeader::kGameSpeed);
 	serverTCP_->writeDataToOpenConnection(new_id, index, eHeader::kId);
 }
 
