@@ -58,7 +58,7 @@ Univers::Univers()
 		switchLib_(false),
 		mapSize_(MAP_DEFAULT),
 		microSecDeltaTime_(0),
-		baseSpeed(GameManager::eSpeed::Medium),
+		baseSpeed(GameManager::eSpeed::Impossible),
 		borderless_(false),
 		openGame_(false) {
 	ioManager->startIORunner();

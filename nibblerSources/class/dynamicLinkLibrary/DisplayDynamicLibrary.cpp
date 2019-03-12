@@ -10,5 +10,5 @@ DisplayDynamicLibrary::DisplayDynamicLibrary() :
 			"Nibbler - SDL", "dynamicLibraries/libdisplay_sdl.so", eDisplay::kDisplaySdlLibrary);
 	ADynamicLinkLibrary<IDisplay, eDisplay, IDisplay *(*)(int, int, char const *)>::libraryInfo.emplace_back(
 			"Nibbler - GLFW", "dynamicLibraries/libdisplay_glfw.so", eDisplay::kDisplayGlfwLibrary);
-	setNextKInstance(kDisplaySfmlLibrary);
+	setNextKInstance(kDisplayGlfwLibrary);
 }

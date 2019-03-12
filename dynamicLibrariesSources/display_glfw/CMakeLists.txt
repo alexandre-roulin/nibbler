@@ -26,7 +26,13 @@ add_library(${NAME} MODULE
        src/Shader.hpp
        src/Skybox.cpp
        src/Skybox.hpp
-        ../../nibblerSources/incs/KeyState.cpp ../../nibblerSources/incs/KeyState.hpp ../../nibblerSources/incs/KeyStateManager.cpp ../../nibblerSources/incs/KeyStateManager.hpp src/Transform.cpp src/Transform.hpp src/Engine.cpp src/Engine.hpp ../../nibblerSources/class/cores/Snake.cpp)
+        ../../nibblerSources/incs/KeyState.cpp
+        ../../nibblerSources/incs/KeyState.hpp
+        ../../nibblerSources/incs/KeyStateManager.cpp
+        ../../nibblerSources/incs/KeyStateManager.hpp
+        src/Transform.cpp src/Transform.hpp
+        src/Engine.cpp src/Engine.hpp
+        ../../nibblerSources/class/cores/Snake.cpp)
 
 set_target_properties(${NAME}
         PROPERTIES
