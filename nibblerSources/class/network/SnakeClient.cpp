@@ -156,7 +156,6 @@ bool SnakeClient::isIa() const {
 
 
 bool SnakeClient::sendOpenGameToServer(bool openGame) {
-	std::cout << __PRETTY_FUNCTION__ << " will return : " << !isReady() << std::endl;
 	if (!isReady())
 		return false;
 	sendDataToServer(openGame, eHeader::kOpenGame);
@@ -182,7 +181,6 @@ void SnakeClient::disconnect() {
 
 
 void SnakeClient::callbackGameSpeed(GameManager::eSpeed speed) {
-	std::cout << __PRETTY_FUNCTION__ << std::endl;
 	univers_.setBaseSpeed(speed);
 }
 

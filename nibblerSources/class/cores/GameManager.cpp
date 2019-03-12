@@ -28,7 +28,6 @@ GameManager::GameManager(Univers &univers)
 
 
 void GameManager::startNewGame() {
-	std::cout << "Game Init" << std::endl;
 	world_ = std::make_unique<KINU::World>();
 
 	univers_.setGrid_(std::make_shared<MutantGrid<eSprite>>(univers_.getMapSize()));
@@ -52,7 +51,6 @@ void GameManager::startNewGame() {
 	SnakeClient::boost_shared_ptr ptr(univers_.getSnakeClient().lock());
 
 	std::vector<StartEvent> startEvent;
-	std::cout << "Wait Event Init" << std::endl;
 
 	for (;ptr && startEvent.empty();) {
 		ptr->lock();
@@ -61,7 +59,6 @@ void GameManager::startNewGame() {
 		if (!univers_.isOpenGame_())
 			return ;
 	}
-	std::cout << "Post Event Init" << std::endl;
 
 	world_->update();
 	world_->getSystemsManager().getSystem<SpriteSystem>().update();
@@ -74,7 +71,6 @@ void GameManager::startNewGame() {
 		}
 	}
 
-	std::cout << "Thread Init" << std::endl;
 	univers_.getSoundManager().playNoise(eNoise::kGo);
 	threadWorldLoop_ = boost::thread([this, startEvent](){
 
@@ -85,7 +81,6 @@ void GameManager::startNewGame() {
 
 		loopGame();
 	});
-	std::cout << "Thread Init" << std::endl;
 }
 
 
@@ -144,27 +139,16 @@ void GameManager::loopWorld() {
 	{ /** Manage game **/
 		ptr->deliverEvents();
 		world_->getSystemsManager().getSystem<FollowSystem>().update();
-//		std::cout << "FollowSystem" << std::endl;
 		world_->getSystemsManager().getSystem<JoystickSystem>().update();
-//		std::cout << "JoystickSystem" << std::endl;
 		world_->getEventsManager().destroy<JoystickEvent>();
-//		std::cout << "JoystickEvent" << std::endl;
 		world_->getSystemsManager().getSystem<MotionSystem>().update();
-//		std::cout << "MotionSystem" << std::endl;
 		world_->getSystemsManager().getSystem<CollisionSystem>().update();
-//		std::cout << "CollisionSystem" << std::endl;
 		world_->getSystemsManager().getSystem<FoodCreationSystem>().update();
-//		std::cout << "FoodCreationSystem" << std::endl;
 		world_->getEventsManager().destroy<FoodCreation>();
-//		std::cout << "FoodCreation" << std::endl;
 		world_->getSystemsManager().getSystem<SpriteSystem>().update();
-//		std::cout << "SpriteSystem" << std::endl;
 		world_->getSystemsManager().getSystem<RenderSystem>().update();
-//		std::cout << "RenderSystem" << std::endl;
 		world_->getSystemsManager().getSystem<FoodEatSystem>().update();
-//		std::cout << "FoodEatSystem" << std::endl;
 		world_->getEventsManager().destroy<FoodEat>();
-//		std::cout << "FoodEat" << std::endl;
 		world_->update();
 	}
 

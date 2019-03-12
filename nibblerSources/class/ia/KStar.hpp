@@ -90,12 +90,7 @@ public:
 		static double euclidean(Vec2, Vec2);
 	};
 
-	void print(Vec2 s, Vec2 t, Path p);
-
-private:
-public:
 	int getDirection() const;
-
 	static const std::array<Vec2, 8> &getDirections();
 
 private:

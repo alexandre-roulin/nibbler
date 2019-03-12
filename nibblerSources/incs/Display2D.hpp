@@ -10,42 +10,6 @@ public:
 	Display2D &operator=(const Display2D &) = delete;
 	Display2D(const Display2D &) = delete;
 
-	static void debugSpriteSnake(eSprite sprite) {
-		eSprite from = (sprite & eSprite::kMaskFrom) >> eSprite::kBitwiseFrom;
-		eSprite to = (sprite & eSprite::kMaskTo) >> eSprite::kBitwiseTo;
-
-		std::cout << "Entity : [";
-
-		if ((sprite & eSprite::kMaskBody) == eSprite::kHead)
-			std::cout << "HEAD";
-		if ((sprite & eSprite::kMaskBody) == eSprite::kBody)
-			std::cout << "BODY";
-		if ((sprite & eSprite::kMaskBody) == eSprite::kTail)
-			std::cout << "TAIL";
-
-		std::cout << "] FROM [";
-		if ((from & eSprite::kNorth) == eSprite::kNorth)
-			std::cout << "North";
-		if ((from & eSprite::kSouth) == eSprite::kSouth)
-			std::cout << "SOUTH";
-		if ((from & eSprite::kWest) == eSprite::kWest)
-			std::cout << "WEST";
-		if ((from & eSprite::kEast) == eSprite::kEast)
-			std::cout << "EAST";
-		std::cout << "]TO [";
-		if ((to & eSprite::kNorth) == eSprite::kNorth)
-			std::cout << "North";
-		if ((to & eSprite::kSouth) == eSprite::kSouth)
-			std::cout << "SOUTH";
-		if ((to & eSprite::kWest) == eSprite::kWest)
-			std::cout << "WEST";
-		if ((to & eSprite::kEast) == eSprite::kEast)
-			std::cout << "EAST";
-		std::bitset<32> c(static_cast<int>(sprite));
-
-		std::cout << "::  : [" << c << "]" << std::endl;
-	}
-
 	static int getSpriteSnakeByColor(eSprite color, int part) {
 		return (SIZE_LINE_TILESET *
 				(static_cast<int>(color & eSprite::kMaskColor) - 1) + part);

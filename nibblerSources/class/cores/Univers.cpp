@@ -65,12 +65,6 @@ Univers::Univers()
 }
 
 void Univers::resetData() {
-//	for (const auto &snake: *getSnakeArray_()) {
-//		if (snake.isValid) {
-//			std::cout << "ID:" << snake.id << " " << " Score : " << snake.score_ << std::endl;
-//		}
-//	}
-
 	switchLib_ = false;
 	SnakeClient::boost_shared_ptr ptr(getSnakeClient().lock());
 	if (ptr && !ptr->isOpen()) {
@@ -112,7 +106,6 @@ Univers::~Univers() {
 		snakeClient_ = nullptr;
 	}
 	ioManager = nullptr;
-	std::cout << __PRETTY_FUNCTION__ << std::endl;
 };
 
 /** Game **/
@@ -122,7 +115,6 @@ void Univers::startNewGame() {
 	SnakeClient::boost_shared_ptr ptr(getSnakeClient().lock());
 	SnakeServer::b_ptr ptrServer(snakeServer_);
 	setMicroSecDeltaTime(static_cast<uint32_t >(baseSpeed));
-	std::cout << "btry" << std::endl;
 	try {
 		deleteGui();
 		defaultAssignmentLibrary();
@@ -131,7 +123,6 @@ void Univers::startNewGame() {
 		handlingGameError();
 		return;
 	}
-	std::cout << "atry" << std::endl;
 
 	gameManager->startNewGame();
 	gameManager->loopUI();
@@ -422,7 +413,6 @@ uint32_t Univers::getMicroSecDeltaTime() const {
 
 void Univers::setMicroSecDeltaTime(uint32_t microSecDeltaTime) {
 	microSecDeltaTime_ = microSecDeltaTime < GameManager::Impossible ? GameManager::Impossible : microSecDeltaTime;
-	std::cout << microSecDeltaTime_ << std::endl;
 }
 
 bool Univers::isExit() const {

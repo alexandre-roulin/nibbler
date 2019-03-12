@@ -220,24 +220,6 @@ bool KStar::isCollision(KStar::Vec2 vec) {
 	return collision_(vec.x, vec.y);
 }
 
-void KStar::print(KStar::Vec2 s, KStar::Vec2 t, KStar::Path p) {
-	for (int iy = 0; iy < worldSize_.y; ++iy) {
-		for (int ix = 0; ix < worldSize_.x; ++ix) {
-			if (iy == s.y && ix == s.x)
-				std::cout << std::setw(4) << "_^_";
-			else if (iy == t.y && ix == t.x)
-				std::cout << std::setw(4) << "_O_";
-			else if (isCollision(KStar::Vec2(ix, iy)))
-				std::cout << std::setw(4) << "_X_";
-			else if (std::find_if(p.begin(), p.end(), [ix, iy](KStar::Vec2 vec){ return vec.x == ix && vec.y == iy; }) != p.end())
-				std::cout << std::setw(4) << "_#_";
-			else
-				std::cout << std::setw(4) << "_._";
-		}
-		std::cout << std::endl;
-	}
-	std::cout << std::endl;
-}
 
 int KStar::getDirection() const {
 	return direction;
