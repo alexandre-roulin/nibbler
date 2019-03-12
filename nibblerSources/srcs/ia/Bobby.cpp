@@ -92,7 +92,6 @@ void Bobby::findDirection(KStar::Vec2 vecSource, KStar::Vec2 vecTarget) {
 
 	if (mapPriority[getId()] == kUndefined)
 		if (define_priority(vecTarget.x, vecTarget.y)) {
-//			std::for_each(mapPriority.begin(), mapPriority.end(), [](std::pair<KINU::Entity::ID, Bobby::ePriority> pair){ std::cout << pair.first << " " << pair.second << std::endl; });
 			mutex.unlock();
 			throw std::exception();
 		}

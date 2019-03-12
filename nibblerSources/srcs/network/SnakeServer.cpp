@@ -98,7 +98,6 @@ bool SnakeServer::allSnakeIsReady() const {
 bool SnakeServer::sendOpenGameToClient(bool openGame) {
 	if (!isReady())
 		return false;
-	std::cout << __PRETTY_FUNCTION__ << std::endl;
 	serverTCP_->writeDataToOpenConnections(openGame, eHeader::kOpenGame);
 	return true;
 }
@@ -213,7 +212,6 @@ void SnakeServer::callbackForcePause(uint16_t id) {
 
 void SnakeServer::callbackDeadConnection(size_t index) {
 	if (index >= 8) return;
-	std::cout << __PRETTY_FUNCTION__ << std::endl;
 	{
 		std::lock_guard<std::mutex> guard(mutex_);
 		auto *it = std::find_if((*snakeArray_).begin(), (*snakeArray_).end(),
