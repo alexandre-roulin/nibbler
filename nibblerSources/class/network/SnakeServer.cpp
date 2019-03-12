@@ -49,7 +49,7 @@ void SnakeServer::startGame() {
 
 	serverTCP_->writeDataToOpenConnections<StartInfo>({
 		static_cast<size_t >(std::count_if((*snakeArray_).begin(), (*snakeArray_).end(), [](Snake &snake){ return snake.isValid; })),
-		boost::posix_time::microsec_clock::universal_time() + boost::posix_time::seconds(2)
+		boost::posix_time::microsec_clock::universal_time() + boost::posix_time::seconds(3)
 		}, eHeader::kStartGame);
 }
 
@@ -94,6 +94,7 @@ bool SnakeServer::allSnakeIsReady() const {
 bool SnakeServer::sendOpenGameToClient(bool openGame) {
 	if (!isReady())
 		return false;
+	std::cout << __PRETTY_FUNCTION__ << std::endl;
 	serverTCP_->writeDataToOpenConnections(openGame, eHeader::kOpenGame);
 	return true;
 }
@@ -117,7 +118,7 @@ bool SnakeServer::isOpen() const {
 
 
 SnakeServer::~SnakeServer() {
-	serverTCP_->writeDataToOpenConnections('*', eHeader::kCloseConnection);
+	serverTCP_->writeDataToOpenConnections(0, 0);
 }
 
 /** Callback **/
@@ -325,4 +326,35 @@ void SnakeServer::build(const std::string dns, unsigned short port) {
 
 	serverTCP_->getDataTCP()->addDataType<char>(
 			nullptr, eHeader::kCloseConnection);
+
+	serverTCP_->getDataTCP()->addDataType<char>(
+			([thisWeakPtr](char c) { auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackShowScore(c); }),
+			eHeader::kShowScore);
+}
+
+void SnakeServer::callbackShowScore(char) {
+	const char position[4][3]{
+			"st",
+			"nd",
+			"rd",
+			"th"
+	};
+	std::vector<Snake> vector(snakeArray_->data(), snakeArray_->data() + 8);
+	std::vector<Snake>::iterator it = std::remove_if(vector.begin(), vector.end(), [](Snake const &snake){ return !(snake.isValid && snake.isInGame);});
+
+	std::sort(vector.begin(), it, [](Snake const &lhs, Snake const &rhs){
+		return lhs.score_ < rhs.score_;
+	});
+	size_t n = 0;
+	std::for_each(vector.begin(), it, [this, &n, &position](Snake const & snake){
+		std::string s;
+		s = "is in ";
+		s += static_cast<char>(n + 49);
+		s += position[(n > 3 ? 3 : n)];
+		s += " position with ";
+		s += std::to_string(snake.score_);
+		s += " score.";
+		n++;
+		serverTCP_->writeDataToOpenConnections(ChatInfo(snake.name, s.c_str()), eHeader::kChat);
+	});
 }

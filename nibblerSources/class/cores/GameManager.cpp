@@ -20,11 +20,6 @@ const uint32_t GameManager::ScaleByFrame = 10;
 const uint32_t GameManager::ScaleByRealFood = 600;
 const uint32_t GameManager::ScaleByFakeFood = 50;
 
-const uint32_t GameManager::Easy = 150000;  //0.15 sec frame
-const uint32_t GameManager::Medium = 115000;  //0.115sec frame
-const uint32_t GameManager::Hard = 80000;  //0.08sec frame
-const uint32_t GameManager::Impossible = 10000;  //0.01sec frame
-
 GameManager::GameManager(Univers &univers)
 	:
 	univers_(univers),
@@ -80,7 +75,7 @@ void GameManager::startNewGame() {
 	}
 
 	std::cout << "Thread Init" << std::endl;
-
+	univers_.getSoundManager().playNoise(eNoise::kGo);
 	threadWorldLoop_ = boost::thread([this, startEvent](){
 
 		boost::asio::deadline_timer timer_start(univers_.getIoManager().getIo());

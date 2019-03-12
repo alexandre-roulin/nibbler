@@ -166,7 +166,6 @@ namespace KNW {
 
 	void ServerTCP::stopAccept() {
 		boost::system::error_code ec;
-		connections.fill(nullptr);
 		acceptor_->cancel(ec);
 		acceptor_->close(ec);
 	}
@@ -184,6 +183,7 @@ namespace KNW {
 	}
 
 	ServerTCP::~ServerTCP() {
+		connections.fill(nullptr);
 		open = false;
 		stopAccept();
 	}

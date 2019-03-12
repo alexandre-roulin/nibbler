@@ -36,7 +36,6 @@ namespace KNW {
 
 		BaseDataType::Header header;
 		std::memcpy(&header, buffer_data_.data(), len);
-		std::cout << __PRETTY_FUNCTION__ << header << " e : " << ec.value() << std::endl;
 		if (ec.value() != 0 || header == 0) {
 			checkError(ec);
 		} else {

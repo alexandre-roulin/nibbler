@@ -13,7 +13,8 @@ enum class eNoise {
 	kReadySound = 2,
 	kResizeSound = 0,
 	kFoodSound = 3,
-	kDeathSound = 4
+	kDeathSound = 4,
+	kGo = 5
 };
 
 class SoundDynamicLibrary : public ADynamicLinkLibrary< ISound, eSound, ISound *(*)() > {

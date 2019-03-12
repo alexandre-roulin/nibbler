@@ -10,17 +10,16 @@
 #include "ISound.hpp"
 #include "dynamicLinkLibrary/SoundDynamicLibrary.hpp"
 #include "dynamicLinkLibrary/DisplayDynamicLibrary.hpp"
+#include "GameManager.hpp"
 #include <boost/asio/deadline_timer.hpp>
 #include <events/NextFrame.hpp>
 #include <boost/thread.hpp>
 #include <boost/scoped_ptr.hpp>
+#include <cores/GameManager.hpp>
 
 #define DEFAULT_DNS "localhost"
-//#define DEFAULT_DNS "93.11.149.76"
 #define DEFAULT_PORT "8000"
 #define DEFAULT_PORT_NU 8000
-
-class GameManager;
 
 class SnakeServer;
 
@@ -113,8 +112,6 @@ public:
 
 	void setExit(bool b);
 
-	void setBaseMicroSecDeltaTime(uint32_t BaseMicroSecDeltaTime);
-
 	bool isExit() const;
 
 	void setGrid_(const std::shared_ptr<MutantGrid<eSprite>> &grid_);
@@ -162,6 +159,10 @@ public:
 	DisplayDynamicLibrary &getDisplayManager();
 
 	GameManager &getGameManager();
+
+	const GameManager::eSpeed &getBaseSpeed() const;
+
+	void setBaseSpeed(const GameManager::eSpeed &baseSpeed);
 
 	void switchBorderless();
 
@@ -217,11 +218,11 @@ private:
 	BobbyContainer vecBobby;
 
 	bool exit_;
-	bool switchLib;
+	bool switchLib_;
 	unsigned int mapSize_;
-	uint32_t microSecDeltaTime;
-	uint32_t BaseMicroSecDeltaTime;
-	bool borderless;
+	uint32_t microSecDeltaTime_;
+	GameManager::eSpeed baseSpeed;
+	bool borderless_;
 	bool openGame_;
 
 };

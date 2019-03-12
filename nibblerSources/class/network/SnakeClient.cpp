@@ -155,6 +155,7 @@ bool SnakeClient::isIa() const {
 
 
 bool SnakeClient::sendOpenGameToServer(bool openGame) {
+	std::cout << __PRETTY_FUNCTION__ << " will return : " << !isReady() << std::endl;
 	if (!isReady())
 		return false;
 	sendDataToServer(openGame, eHeader::kOpenGame);
@@ -415,4 +416,7 @@ void SnakeClient::build() {
 				if (myPtr) myPtr->callbackId(id);
 			}),
 			eHeader::kId);
+	clientTCP_->getDataTCP_().addDataType<char>(
+			nullptr, eHeader::kShowScore);
 }
+

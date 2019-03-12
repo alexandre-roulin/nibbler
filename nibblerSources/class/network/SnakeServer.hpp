@@ -54,6 +54,8 @@ private:
 
 	void callbackAccept(size_t);
 
+	void callbackShowScore(char);
+
 	void callbackBorderless(bool);
 
 	void callbackSnakeUI(const Snake &);

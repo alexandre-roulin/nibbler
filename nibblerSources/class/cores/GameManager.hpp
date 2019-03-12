@@ -5,12 +5,18 @@
 #include <KINU/World.hpp>
 #include <events/NextFrame.hpp>
 #include <boost/asio/deadline_timer.hpp>
-#include <cores/Univers.hpp>
+#include <boost/thread.hpp>
+class Univers;
 
 class GameManager {
 public:
 
-
+	enum eSpeed : uint32_t {
+		Easy = 150000,
+		Medium = 115000,
+		Hard = 80000,
+		Impossible = 10000,
+	};
 	GameManager(Univers &univers);
 	GameManager() = delete;
 	~GameManager() = default;
@@ -36,10 +42,7 @@ public:
 	static const uint32_t ScaleByFrame;
 	static const uint32_t ScaleByRealFood;
 	static const uint32_t ScaleByFakeFood;
-	static const uint32_t Easy;
-	static const uint32_t Medium;
-	static const uint32_t Hard;
-	static const uint32_t Impossible;
+
 private:
 	boost::thread threadWorldLoop_;
 	Univers &univers_;

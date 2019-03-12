@@ -48,10 +48,11 @@ Univers::Univers()
 		grid_(nullptr),
 		gui_(nullptr),
 		exit_(false),
-		switchLib(false),
+		switchLib_(false),
 		mapSize_(MAP_DEFAULT),
-		microSecDeltaTime(GameManager::Hard),
-		borderless(false),
+		microSecDeltaTime_(0),
+		baseSpeed(GameManager::eSpeed::Medium),
+		borderless_(false),
 		openGame_(false) {
 
 }
@@ -63,11 +64,11 @@ void Univers::resetData() {
 //		}
 //	}
 
-	switchLib = false;
+	switchLib_ = false;
 	SnakeClient::boost_shared_ptr ptr(getSnakeClient().lock());
 	if (ptr && !ptr->isOpen()) {
 		deleteClient();
-		borderless = false;
+		borderless_ = false;
 		mapSize_ = MAP_DEFAULT;
 	}
 	grid_ = nullptr;
@@ -82,7 +83,7 @@ void Univers::callbackAction(eAction action) {
 			ptr->sendDataToServer(action, eHeader::kPause);
 			break;
 		case eAction::kSwitchDisplayLibrary:
-			switchLib = true;
+			switchLib_ = true;
 			break;
 	}
 }
@@ -110,9 +111,11 @@ Univers::~Univers() {
 /** Game **/
 
 void Univers::startNewGame() {
+
 	SnakeClient::boost_shared_ptr ptr(getSnakeClient().lock());
 	SnakeServer::b_ptr ptrServer(snakeServer_);
-
+	setMicroSecDeltaTime(static_cast<uint32_t >(baseSpeed));
+	std::cout << "btry" << std::endl;
 	try {
 		deleteGui();
 		defaultAssignmentLibrary();
@@ -120,6 +123,7 @@ void Univers::startNewGame() {
 		handlingGameError();
 		return;
 	}
+	std::cout << "atry" << std::endl;
 
 	gameManager->startNewGame();
 	gameManager->loopUI();
@@ -132,6 +136,9 @@ void Univers::startNewGame() {
 	if (displayManager->hasLibraryLoaded())
 		displayManager->unloadDynamicLibrary();
 	resetData();
+	createGui();
+	if (ptr)
+		ptr->sendDataToServer('0', eHeader::kShowScore);
 }
 
 void Univers::manageSnakeClientInput() {
@@ -143,7 +150,6 @@ void Univers::manageSnakeClientInput() {
 	if (ptr && ptr->isOpen() && getGameManager().getWorld_()->getEntitiesManager().hasEntityByTagId(ptr->getId_() + eTag::kHeadTag) && !ptr->isIa()) {
 		ptr->sendDirection(direction);
 	}
-
 }
 
 
@@ -199,7 +205,7 @@ void Univers::manageSwitchLibrary() {
 		}
 		ptr->sendDataToServer(id, eHeader::kForcePause);
 	}
-	switchLib = false;
+	switchLib_ = false;
 }
 
 /** Snake **/
@@ -385,6 +391,8 @@ void Univers::loadSoundData_() {
 	getSoundManager().addNoise((pathSound / "click.wav").generic_string());
 	getSoundManager().addNoise((pathSound / "slime10.wav").generic_string());
 	getSoundManager().addNoise((pathSound / "hit17.ogg").generic_string());
+	getSoundManager().addNoise((pathSound / "gogogogo-mp3cut.ogg").generic_string());
+
 }
 
 bool Univers::loadSound() {
@@ -405,15 +413,11 @@ void Univers::unloadSound() {
 /** Getter && Setter **/
 
 uint32_t Univers::getMicroSecDeltaTime() const {
-	return microSecDeltaTime;
+	return microSecDeltaTime_;
 }
 
 void Univers::setMicroSecDeltaTime(uint32_t microSecDeltaTime) {
-	Univers::microSecDeltaTime = microSecDeltaTime < GameManager::Impossible ? GameManager::Impossible : microSecDeltaTime;
-}
-
-void Univers::setBaseMicroSecDeltaTime(uint32_t BaseMicroSecDeltaTime) {
-	Univers::BaseMicroSecDeltaTime = BaseMicroSecDeltaTime;
+	microSecDeltaTime_ = microSecDeltaTime < GameManager::Impossible ? GameManager::Impossible : microSecDeltaTime;
 }
 
 bool Univers::isExit() const {
@@ -489,7 +493,7 @@ void Univers::setMapSize(unsigned int mapSize) {
 }
 
 void Univers::setBorderless(bool borderless) {
-	Univers::borderless = borderless;
+	Univers::borderless_ = borderless;
 }
 
 bool Univers::isServer() const {
@@ -497,7 +501,7 @@ bool Univers::isServer() const {
 }
 
 const bool &Univers::isBorderless() const {
-	return borderless;
+	return borderless_;
 }
 
 bool Univers::isOnlyIA() const {
@@ -535,7 +539,7 @@ bool Univers::displayIsAvailable() const {
 }
 
 bool Univers::isSwitchLib() const {
-	return switchLib;
+	return switchLib_;
 }
 
 void Univers::updateDisplayUI() {
@@ -632,4 +636,12 @@ void Univers::updateSizeMap() {
 
 SnakeServer &Univers::getSnakeServer() const {
 	return *snakeServer_;
+}
+
+const GameManager::eSpeed &Univers::getBaseSpeed() const {
+	return baseSpeed;
+}
+
+void Univers::setBaseSpeed(const GameManager::eSpeed &baseSpeed) {
+	Univers::baseSpeed = baseSpeed;
 }
