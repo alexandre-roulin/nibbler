@@ -76,7 +76,7 @@ void WidgetChat::sendMessage_() {
 void WidgetChat::chatText_() {
 	SnakeClient::boost_shared_ptr ptr(core_.univers.getSnakeClient().lock());
 
-	if (ptr && checkClientIsConnect_()) {
+	if (ptr && checkClientIsConnect_() && bufferMessage_[0] != '\0') {
 		ptr->sendDataToServer(ChatInfo(ptr->getSnake().name, bufferMessage_), eHeader::kChat);
 	}
 }

@@ -115,6 +115,9 @@ void SnakeClient::changeName(std::string const &name) {
 	sendDataToServer((*snakeArray)[id_], eHeader::kSnakeUI);
 }
 
+void SnakeClient::notifyGameSpeed() {
+	sendDataToServer(univers_.getBaseSpeed(), eHeader::kGameSpeed);
+}
 
 void SnakeClient::notifyBorderless() {
 	sendDataToServer(univers_.isBorderless(), eHeader::kBorderless);
@@ -177,6 +180,13 @@ void SnakeClient::disconnect() {
 }
 
 /***** Callback *****/
+
+
+
+void SnakeClient::callbackGameSpeed(GameManager::eSpeed speed) {
+	std::cout << __PRETTY_FUNCTION__ << std::endl;
+	univers_.setBaseSpeed(speed);
+}
 
 void SnakeClient::callbackSnakeUN(const Snake &snakeUN) {
 	std::lock_guard<std::mutex> guard(mutex_);
@@ -416,7 +426,11 @@ void SnakeClient::build() {
 				if (myPtr) myPtr->callbackId(id);
 			}),
 			eHeader::kId);
+
 	clientTCP_->getDataTCP_().addDataType<char>(
 			nullptr, eHeader::kShowScore);
-}
 
+	clientTCP_->getDataTCP_().addDataType<GameManager::eSpeed >(
+			([thisWeakPtr](GameManager::eSpeed speed) { auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackGameSpeed(speed); }),
+			eHeader::kGameSpeed);
+}

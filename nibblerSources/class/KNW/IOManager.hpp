@@ -8,21 +8,22 @@
 
 class IOManager {
 public:
-	IOManager(size_t thread_size = 1);
-	IOManager() = delete;
+	using b_sptr = boost::shared_ptr<IOManager>;
+	using b_wptr = boost::weak_ptr<IOManager>;
+
+	static b_sptr create();
+	IOManager();
 	~IOManager();
 	IOManager &operator=(const IOManager &) = delete;
 	IOManager(const IOManager &) = delete;
 
 	boost::asio::io_service &getIo();
-
+	void startIORunner();
 	boost::thread_group &getThreadGroup();
-
 
 private:
 
 	void IORunner();
-	boost::mutex global_stream_lock;
 	boost::shared_ptr<boost::asio::io_service> io;
 	boost::thread_group thread_group;
 	boost::asio::io_service::work work_;

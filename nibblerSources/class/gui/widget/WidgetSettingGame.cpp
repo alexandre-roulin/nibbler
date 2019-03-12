@@ -16,8 +16,12 @@ void WidgetSettingGame::beginContent_() {
 	if (ImGui::BeginCombo("Difficulty", getDifficultyDisplay_(speed).c_str(), 0)) {
 		for (size_t n = 0; n < 4; ++n) {
 			bool is_selected = difficultyDisplay[n] == getDifficultyDisplay_(speed);
-			if (ImGui::Selectable(difficultyDisplay[n].c_str(), is_selected))
+			if (ImGui::Selectable(difficultyDisplay[n].c_str(), is_selected)) {
 				core_.univers.setBaseSpeed(getSpeedEnum(difficultyDisplay[n]));
+				boost::shared_ptr<ISnakeNetwork> ptr(core_.univers.getSnakeNetwork().lock());
+				if (ptr)
+					ptr->notifyGameSpeed();
+			}
 			if (is_selected)
 				ImGui::SetItemDefaultFocus();
 		}

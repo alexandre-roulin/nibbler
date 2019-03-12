@@ -39,7 +39,7 @@ const std::string Univers::ErrorPortRange = "Port should be between 0 and 65545"
 
 Univers::Univers()
 		:
-		ioManager(std::make_unique<IOManager>(10)),
+		ioManager(std::make_unique<IOManager>()),
 		soundManager(std::make_unique<SoundDynamicLibrary>()),
 		displayManager(std::make_unique<DisplayDynamicLibrary>()),
 		gameManager(std::make_unique<GameManager>(*this)),
@@ -54,7 +54,7 @@ Univers::Univers()
 		baseSpeed(GameManager::eSpeed::Medium),
 		borderless_(false),
 		openGame_(false) {
-
+	ioManager->startIORunner();
 }
 
 void Univers::resetData() {

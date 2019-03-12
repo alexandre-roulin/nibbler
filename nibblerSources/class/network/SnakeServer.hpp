@@ -6,6 +6,7 @@
 #include <network/Data.hpp>
 #include <cores/Snake.hpp>
 #include "ISnakeNetwork.hpp"
+#include <cores/GameManager.hpp>
 
 class Univers;
 
@@ -32,17 +33,19 @@ public:
 
 	std::string const &getAddress_() const;
 
-	void notifyBorderless() override;
+	void notifyBorderless() ;
 
-	bool isOpen() const override;
+	bool isOpen() const ;
 
-	void notifyMapSize() override;
+	void notifyMapSize() ;
 
-	std::shared_ptr<SnakeArrayContainer> getSnakeArray_() const override;
+	std::shared_ptr<SnakeArrayContainer> getSnakeArray_() const ;
 
-	bool allSnakeIsDead() const override;
+	bool allSnakeIsDead() const ;
 
-	bool allSnakeIsReady() const override;
+	bool allSnakeIsReady() const ;
+
+	virtual void notifyGameSpeed() ;
 
 	bool sendOpenGameToClient(bool openGame = true);
 
@@ -55,6 +58,8 @@ private:
 	void callbackAccept(size_t);
 
 	void callbackShowScore(char);
+
+	void callbackGameSpeed(GameManager::eSpeed speed);
 
 	void callbackBorderless(bool);
 

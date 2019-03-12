@@ -24,7 +24,9 @@ enum class eHeader : uint16_t {
 	kSnakeUI,			//15
 	kSnakeUX,			//16
 	kSnakeUN,			//17
-	kShowScore			//18
+	kShowScore,			//18
+	kGameSpeed
+
 };
 
 inline std::ostream &operator<<(std::ostream  &os, eHeader const & header) {
