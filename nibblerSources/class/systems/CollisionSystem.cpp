@@ -38,7 +38,8 @@ void CollisionSystem::checkCollision(
 				ptr->sendDataToServer(
 						FoodInfo(PositionComponent(
 								univers_.getGrid_().getRandomSlot(eSprite::kNone)),
-										false),
+										false,
+										entityHead.getGroupIdByEntity()),
 										eHeader::kFood);
 			}
 		} else if (tagId == eTag::kFoodFromSnake) {
@@ -87,7 +88,7 @@ void CollisionSystem::createAppleBySnake(KINU::Entity snake) {
 			auto positionComponent = snakeCheck.getComponent<PositionComponent>();
 			if (positionComponent != positionHead && ptr) {
 				ptr->sendDataToServer(
-						FoodInfo(positionComponent, true), eHeader::kFood);
+						FoodInfo(positionComponent, true, -1), eHeader::kFood);
 			}
 		}
 	}

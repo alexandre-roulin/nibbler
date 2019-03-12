@@ -75,6 +75,10 @@ void SnakeServer::notifyBorderless() {
 }
 
 
+void SnakeServer::notifyGameSpeed() {
+	serverTCP_->writeDataToOpenConnections(univers_.getBaseSpeed(), eHeader::kGameSpeed);
+}
+
 void SnakeServer::notifyMapSize() {
 	serverTCP_->writeDataToOpenConnections(univers_.getMapSize(), eHeader::kResizeMap);
 }
@@ -193,6 +197,9 @@ void SnakeServer::callbackChatInfo(ChatInfo chatInfo) {
 
 void SnakeServer::callbackFood(FoodInfo foodInfo) {
 	std::lock_guard<std::mutex> guard(mutex_);
+	if (foodInfo.id_ >= 0 && foodInfo.id_ < 8) {
+		(*snakeArray_)[foodInfo.id_].score_ += GameManager::ScaleByRealFood * 2;
+	}
 	foodInfoArray.push_back(foodInfo);
 }
 
@@ -244,6 +251,10 @@ void SnakeServer::callbackAccept(size_t index) {
 	serverTCP_->writeDataToOpenConnection(new_id, index, eHeader::kId);
 }
 
+
+void SnakeServer::callbackGameSpeed(GameManager::eSpeed speed) {
+	serverTCP_->writeDataToOpenConnections(speed, eHeader::kGameSpeed);
+}
 
 
 void SnakeServer::build(const std::string dns, unsigned short port) {
@@ -330,6 +341,10 @@ void SnakeServer::build(const std::string dns, unsigned short port) {
 	serverTCP_->getDataTCP()->addDataType<char>(
 			([thisWeakPtr](char c) { auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackShowScore(c); }),
 			eHeader::kShowScore);
+
+	serverTCP_->getDataTCP()->addDataType<GameManager::eSpeed >(
+			([thisWeakPtr](GameManager::eSpeed speed) { auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackGameSpeed(speed); }),
+			eHeader::kGameSpeed);
 }
 
 void SnakeServer::callbackShowScore(char) {
@@ -357,4 +372,5 @@ void SnakeServer::callbackShowScore(char) {
 		n++;
 		serverTCP_->writeDataToOpenConnections(ChatInfo(snake.name, s.c_str()), eHeader::kChat);
 	});
+	std::for_each(snakeArray_->begin(), snakeArray_->end(), [](Snake &snake){ snake.score_ = 0; });
 }

@@ -206,7 +206,7 @@ private:
 	static const std::string ErrorClientConnectionRefused;
 	static const std::string ErrorServerAlreadyUseOnThisPort;
 	static const std::string ErrorPortRange;
-	std::unique_ptr<IOManager> ioManager;
+	boost::shared_ptr<IOManager> ioManager;
 	std::unique_ptr<SoundDynamicLibrary> soundManager;
 	std::unique_ptr<DisplayDynamicLibrary> displayManager;
 	std::unique_ptr<GameManager> gameManager;

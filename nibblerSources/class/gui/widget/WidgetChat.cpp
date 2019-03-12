@@ -76,7 +76,7 @@ void WidgetChat::sendMessage_() {
 void WidgetChat::chatText_() {
 	SnakeClient::boost_shared_ptr ptr(core_.univers.getSnakeClient().lock());
 
-	if (ptr && checkClientIsConnect_()) {
+	if (ptr && checkClientIsConnect_() && bufferMessage_[0] != '\0') {
 		ptr->sendDataToServer(ChatInfo(ptr->getSnake().name, bufferMessage_), eHeader::kChat);
 	}
 }
@@ -87,7 +87,7 @@ bool WidgetChat::chatCommand_() {
 	if (bufferMessage_[0] != '/')
 		return (false);
 	if (strstr(bufferMessage_, "/help"))
-		addLog(eColorLog::kYellow, "/help\n/name Aname\n");
+		addLog(eColorLog::kYellow, "/help\n/name Aname\n/host");
 	else if (strstr(bufferMessage_, "/name ")) {
 		if (ptr && checkClientIsConnect_()) {
 			ptr->changeName(bufferMessage_ + sizeof("/name ") - 1);

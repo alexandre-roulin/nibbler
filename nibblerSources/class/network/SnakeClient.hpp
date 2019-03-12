@@ -9,7 +9,7 @@
 #include <cores/Snake.hpp>
 #include <nibbler.hpp>
 #include "ISnakeNetwork.hpp"
-
+#include <cores/GameManager.hpp>
 class Univers;
 
 class SnakeClient
@@ -40,7 +40,7 @@ public:
 
 	virtual std::shared_ptr<SnakeArrayContainer> getSnakeArray_() const;
 
-	virtual bool allSnakeIsDead() const;
+	virtual bool allSnakeIsDead() const ;
 
 	virtual bool allSnakeIsReady() const;
 
@@ -74,10 +74,14 @@ public:
 
 	bool sendOpenGameToServer(bool openGame);
 
+	virtual void notifyGameSpeed();
+
 private:
 	SnakeClient(Univers &univers, bool fromIA);
 
 	void build();
+
+	void callbackGameSpeed(GameManager::eSpeed speed);
 
 	void callbackBorderless(bool);
 

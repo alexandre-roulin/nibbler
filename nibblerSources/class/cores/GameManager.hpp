@@ -12,10 +12,10 @@ class GameManager {
 public:
 
 	enum eSpeed : uint32_t {
-		Easy = 150000,
-		Medium = 115000,
-		Hard = 80000,
-		Impossible = 10000,
+		Easy = 100000,
+		Medium = 80000,
+		Hard = 60000,
+		Impossible = 30000,
 	};
 	GameManager(Univers &univers);
 	GameManager() = delete;

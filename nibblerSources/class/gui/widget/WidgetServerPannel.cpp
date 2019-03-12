@@ -15,7 +15,7 @@ void WidgetServerPannel::beginContent_() {
 	if (button_("Delete server"))
 		core_.univers.deleteServer();
 
-	if (core_.univers.isServer() && button_("closeAcceptorServer"))
+	if (core_.univers.isServer() && button_("Close Accept Server"))
 		core_.univers.getSnakeServer().closeAcceptorServer();
 
 	if (ptr && ptr->allSnakeIsReady()) {

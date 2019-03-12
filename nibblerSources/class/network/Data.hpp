@@ -24,7 +24,9 @@ enum class eHeader : uint16_t {
 	kSnakeUI,			//15
 	kSnakeUX,			//16
 	kSnakeUN,			//17
-	kShowScore			//18
+	kShowScore,			//18
+	kGameSpeed
+
 };
 
 inline std::ostream &operator<<(std::ostream  &os, eHeader const & header) {
@@ -104,23 +106,21 @@ inline std::ostream &operator<<(std::ostream  &os, eHeader const & header) {
 
 struct FoodInfo {
 	FoodInfo()
-	: positionComponent(PositionComponent()),fromSnake(false) {
+	: positionComponent(PositionComponent()),fromSnake(false), id_(0) {
 
 	}
 
-	FoodInfo(
-			PositionComponent component,
-			bool b
-			) :
+	FoodInfo(PositionComponent component,bool b, int16_t id) :
 			positionComponent(component),
-			fromSnake(b)
+			fromSnake(b),
+			id_(id)
 			{
 
 	}
 
 	PositionComponent positionComponent;
 	bool fromSnake;
-
+	int16_t id_;
 };
 
 struct StartInfo {

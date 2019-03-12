@@ -34,12 +34,12 @@ const std::string Univers::WarningRequiredAtLeastOneClient = "You need to have a
 
 const std::string Univers::ErrorClientConnectionRefused = "Connection refused.";
 const std::string Univers::ErrorServerAlreadyUseOnThisPort = "Server already in use on this port.";
-const std::string Univers::ErrorPortRange = "Port should be between 0 and 65545";
+const std::string Univers::ErrorPortRange = "Port should be between 1024 and 65545.";
 /** Univers **/
 
 Univers::Univers()
 		:
-		ioManager(std::make_unique<IOManager>(10)),
+		ioManager(std::make_unique<IOManager>()),
 		soundManager(std::make_unique<SoundDynamicLibrary>()),
 		displayManager(std::make_unique<DisplayDynamicLibrary>()),
 		gameManager(std::make_unique<GameManager>(*this)),
@@ -54,7 +54,7 @@ Univers::Univers()
 		baseSpeed(GameManager::eSpeed::Medium),
 		borderless_(false),
 		openGame_(false) {
-
+	ioManager->startIORunner();
 }
 
 void Univers::resetData() {
@@ -415,6 +415,7 @@ uint32_t Univers::getMicroSecDeltaTime() const {
 
 void Univers::setMicroSecDeltaTime(uint32_t microSecDeltaTime) {
 	microSecDeltaTime_ = microSecDeltaTime < GameManager::Impossible ? GameManager::Impossible : microSecDeltaTime;
+	std::cout << microSecDeltaTime_ << std::endl;
 }
 
 bool Univers::isExit() const {

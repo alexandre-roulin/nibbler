@@ -84,7 +84,6 @@ bool SnakeClient::allSnakeIsDead() const {
 }
 
 void SnakeClient::deliverEvents() {
-	std::cout << "d" << std::endl;
 	std::lock_guard<std::mutex> guard(mutex_);
 	for (auto foodCreation : foodCreations) {
 		auto world = univers_.getGameManager().getWorld_();
@@ -92,7 +91,6 @@ void SnakeClient::deliverEvents() {
 			world->getEventsManager().emitEvent(foodCreation);
 	}
 	foodCreations.clear();
-	std::cout << "f" << std::endl;
 }
 
 bool SnakeClient::isSwitchingLibrary() const {
@@ -115,6 +113,9 @@ void SnakeClient::changeName(std::string const &name) {
 	sendDataToServer((*snakeArray)[id_], eHeader::kSnakeUI);
 }
 
+void SnakeClient::notifyGameSpeed() {
+	sendDataToServer(univers_.getBaseSpeed(), eHeader::kGameSpeed);
+}
 
 void SnakeClient::notifyBorderless() {
 	sendDataToServer(univers_.isBorderless(), eHeader::kBorderless);
@@ -177,6 +178,13 @@ void SnakeClient::disconnect() {
 }
 
 /***** Callback *****/
+
+
+
+void SnakeClient::callbackGameSpeed(GameManager::eSpeed speed) {
+	std::cout << __PRETTY_FUNCTION__ << std::endl;
+	univers_.setBaseSpeed(speed);
+}
 
 void SnakeClient::callbackSnakeUN(const Snake &snakeUN) {
 	std::lock_guard<std::mutex> guard(mutex_);
@@ -268,7 +276,7 @@ void SnakeClient::callbackStartInfo(StartInfo startInfo) {
 		if (univers_.isServer()) {
 			int max_food = (startInfo.nu > 1 ? startInfo.nu - 1 : startInfo.nu);
 			for (int index = 0; index < max_food; ++index) {
-				sendDataToServer(FoodInfo(PositionComponent(univers_.getGrid_().getRandomSlot(eSprite::kNone)),false), eHeader::kFood);
+				sendDataToServer(FoodInfo(PositionComponent(univers_.getGrid_().getRandomSlot(eSprite::kNone)),false, -1), eHeader::kFood);
 			}
 		}
 		univers_.getGameManager().getWorld_()->getEventsManager().emitEvent<StartEvent>(startInfo.time_duration);
@@ -416,7 +424,11 @@ void SnakeClient::build() {
 				if (myPtr) myPtr->callbackId(id);
 			}),
 			eHeader::kId);
+
 	clientTCP_->getDataTCP_().addDataType<char>(
 			nullptr, eHeader::kShowScore);
-}
 
+	clientTCP_->getDataTCP_().addDataType<GameManager::eSpeed >(
+			([thisWeakPtr](GameManager::eSpeed speed) { auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackGameSpeed(speed); }),
+			eHeader::kGameSpeed);
+}
