@@ -14,4 +14,4 @@ fclean:
 re: fclean all
 
 install:
-	mkdir build ; cd build ; cmake .. -DCMAKE_CXX_COMPILER="/usr/bin/g++" ; make -j 4
+	mkdir build ; cd build ; cmake .. -DINSTALL=ON -DCMAKE_CXX_COMPILER="/usr/bin/g++" ; make -j 4
