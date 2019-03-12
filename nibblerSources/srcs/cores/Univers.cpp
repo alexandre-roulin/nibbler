@@ -136,8 +136,8 @@ void Univers::startNewGame() {
 		displayManager->unloadDynamicLibrary();
 	resetData();
 	createGui();
-	if (ptr)
-		ptr->sendDataToServer('0', eHeader::kShowScore);
+	if (ptrServer)
+		ptrServer->callbackShowScore('0');
 }
 
 void Univers::manageSnakeClientInput() {
@@ -412,7 +412,7 @@ uint32_t Univers::getMicroSecDeltaTime() const {
 }
 
 void Univers::setMicroSecDeltaTime(uint32_t microSecDeltaTime) {
-	microSecDeltaTime_ = microSecDeltaTime < GameManager::Impossible ? GameManager::Impossible : microSecDeltaTime;
+	microSecDeltaTime_ = microSecDeltaTime < GameManager::Hard ? GameManager::Hard : microSecDeltaTime;
 }
 
 bool Univers::isExit() const {
