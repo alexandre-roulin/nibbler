@@ -22,6 +22,7 @@ elseif (APPLE)
         execute_process(COMMAND $ENV{HOME}/.brew/bin/brew install boost)
         execute_process(COMMAND $ENV{HOME}/.brew/bin/brew install assimp)
         execute_process(COMMAND $ENV{HOME}/.brew/bin/brew install glm)
+        execute_process(COMMAND $ENV{HOME}/.brew/bin/brew install glfw3)
     endif(INSTALL)
 
     link_directories(/usr/lib/)
@@ -111,7 +112,22 @@ elseif (NOT TARGET glm)
 endif()
 
 list(APPEND CMAKE_MODULE_PATH "~/.brew/lib/cmake/glfw3")
-find_package(glfw3 REQUIRED)
+find_package(glfw3 QUIET)
+if (glfw3_FOUND)
+    message("EXTERN : glfw3 finded")
+elseif (NOT TARGET glfw3)
+    message("EXTERN : Unable to find glfw3, cloning...")
+    if (GIT_FOUND AND EXISTS "${CMAKE_SOURCE_DIR}/.git")
+        execute_process(COMMAND ${GIT_EXECUTABLE} submodule update --init extern/glfw3
+                WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+                RESULT_VARIABLE GIT_SUBMOD_RESULT)
+        if (NOT GIT_SUBMOD_RESULT EQUAL "0")
+            message(FATAL_ERROR "git submodule update --init failed with ${GIT_SUBMOD_RESULT}, please checkout submodules")
+        endif ()
+    endif ()
+    add_subdirectory(extern/glfw3)
+endif()
+
 
 list(APPEND CMAKE_MODULE_PATH "~/.brew/lib/cmake/assimp")
 find_package(assimp QUIET)
