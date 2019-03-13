@@ -70,6 +70,22 @@ namespace KINU {
 		return *this;
 	}
 
+	bool Entity::operator<(const Entity &rhs) const {
+		return id_ < rhs.id_;
+	}
+
+	bool Entity::operator>(const Entity &rhs) const {
+		return rhs < *this;
+	}
+
+	bool Entity::operator<=(const Entity &rhs) const {
+		return !(rhs < *this);
+	}
+
+	bool Entity::operator>=(const Entity &rhs) const {
+		return !(*this < rhs);
+	}
+
 
 	/** *** ENTITIES_MANAGER PART *** **/
 

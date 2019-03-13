@@ -16,11 +16,11 @@ public:
 	virtual void update();
 
 private:
+	void cleanVector(std::vector<KINU::Entity> &vec);
 	Univers &univers_;
 	void createAppleBySnake(KINU::Entity);
 	void checkCollision(KINU::Entity entityHead, KINU::Entity entityCheck);
-	std::vector<KINU::Entity> entitiesToKill;
-	std::vector<KINU::Entity> entitiesToKillGroup;
+	std::set<KINU::Entity> entitiesToKill;
 };
 
 

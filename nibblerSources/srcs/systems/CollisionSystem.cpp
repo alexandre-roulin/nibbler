@@ -30,7 +30,7 @@ void CollisionSystem::checkCollision(
 
 		if (tagId == eTag::kFoodTag) {
 			univers_.getSoundManager().playNoise(eNoise::kFoodSound);
-			entitiesToKill.push_back(entityCheck);
+			entitiesToKill.insert(entityCheck);
 			getWorld().getEventsManager().emitEvent<FoodEat>(entityHead.getGroupIdByEntity());
 
 			if (ptr && (ptr->getId_() == entityHead.getGroupIdByEntity() ||
@@ -45,21 +45,17 @@ void CollisionSystem::checkCollision(
 		} else if (tagId == eTag::kFoodFromSnake) {
 
 			univers_.getSoundManager().playNoise(eNoise::kFoodSound);
-			entitiesToKill.push_back(entityCheck);
+			entitiesToKill.insert(entityCheck);
 			if (entityHead.hasGroupId())
 				getWorld().getEventsManager().emitEvent<FoodEat>(entityHead.getGroupIdByEntity());
-		} else if (tagId == kWallTag) {
-			createAppleBySnake(entityHead);
-			ptr->killSnake(entityHead.getGroupIdByEntity());
-			entitiesToKillGroup.push_back(entityHead);
-		} else if (entityCheck.getGroupIdByEntity() == entityHead.getGroupIdByEntity()) {
-			createAppleBySnake(entityHead);
-			ptr->killSnake(entityHead.getGroupIdByEntity());
-			entitiesToKillGroup.push_back(entityHead);
 		} else {
 			createAppleBySnake(entityHead);
 			ptr->killSnake(entityHead.getGroupIdByEntity());
-			entitiesToKillGroup.push_back(entityHead);
+			auto entities = getWorld().getEntitiesManager().getEntitiesByGroupId(entityHead.getGroupIdByEntity());
+
+			for (auto entity : entities) {
+				entitiesToKill.insert(entity);
+			}
 		}
 
 	}
@@ -75,14 +71,13 @@ void CollisionSystem::update() {
 			}
 		}
 	}
-	std::for_each(entitiesToKill.begin(), entitiesToKill.end(), [](KINU::Entity e){
-		e.kill();
-	});
-	std::for_each(entitiesToKillGroup.begin(), entitiesToKillGroup.end(), [](KINU::Entity e){
-		e.killGroup();
-	});
-	entitiesToKill.clear();
-	entitiesToKillGroup.clear();
+
+	if (!entitiesToKill.empty()) {
+		std::for_each(entitiesToKill.begin(), entitiesToKill.end(), [](KINU::Entity e){
+			e.kill();
+		});
+		entitiesToKill.clear();
+	}
 }
 
 void CollisionSystem::createAppleBySnake(KINU::Entity snake) {
@@ -101,3 +96,4 @@ void CollisionSystem::createAppleBySnake(KINU::Entity snake) {
 		}
 	}
 }
+
