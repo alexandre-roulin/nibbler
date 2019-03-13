@@ -3,16 +3,14 @@ NAME = nibbler
 all: $(NAME)
 
 $(NAME):
-	mkdir -p build ; cd build ; cmake .. -DCMAKE_CXX_COMPILER="/usr/bin/g++" ; make -j 4
+	brew install cmake
+	mkdir -p build ; cd build ; cmake .. -DINSTALL=ON -DCMAKE_CXX_COMPILER="/usr/bin/g++" ; make -j 4
+	@cp build/nibbler .
 
 clean:
-	@/bin/rm -rf build/CMakefiles build/dynamicLibrariesSources build/extern build/nibblerSources build/cmake_install.cmake build/CMakeCache.txt build/Maefile build/Project.cbp
+	@/bin/rm -rf build/CMakefiles build/dynamicLibrariesSources build/extern build/nibblerSources build/cmake_install.cmake build/CMakeCache.txt build/Project.cbp
 
 fclean:
-	@/bin/rm -rf build
+	@/bin/rm -rf build nibbler
 
 re: fclean all
-
-install:
-	brew install cmake
-	mkdir build ; cd build ; cmake .. -DINSTALL=ON -DCMAKE_CXX_COMPILER="/usr/bin/g++" ; make -j 4
