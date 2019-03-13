@@ -22,9 +22,6 @@ make
 ./build/nibbler
 ```
 
-And repeat
-
-
 ## Built With
 
 * [ Cmake for compile ](https://github.com/Orphis/boost-cmake)
