@@ -67,9 +67,7 @@ void 					Model::loadModel_() {
     if(!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)  {
         throw(Model::ModelException(std::string("ERROR::ASSIMP::") + import.GetErrorString()));
     }
-	std::cout << "[path_] : " << path_ << std::endl;
     directory_ = path_.parent_path();
-	std::cout << "[directory_] : " << directory_ << std::endl;
     processNode_(scene->mRootNode, scene);
 }
 
@@ -89,7 +87,6 @@ void					Model::processMesh_(aiMesh *mesh, const aiScene *scene) {
     std::vector<unsigned int>   indices;
     std::vector<Texture>        textures;
 
-	std::cout << "node NumMeshes : " << mesh->mNumVertices << std::endl;
     for(unsigned int i = 0; i < mesh->mNumVertices; i++)  {
         Vertex vertex;
 
@@ -202,7 +199,6 @@ unsigned int Texture::TextureFromFile(const char *path, boost::filesystem::path 
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        std::cout << "Texture : " << filename.generic_string() << std::endl;
     }
     else
 	{

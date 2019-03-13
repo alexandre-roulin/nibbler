@@ -39,7 +39,7 @@ void SoundSfml::playNoise(unsigned int index) {
 	noiseDeque_.back().play();
 
 	for (; noiseDeque_.front().getStatus() == sf::Sound::Stopped; noiseDeque_.pop_front())
-		std::cout << "Size: " << noiseDeque_.size() << std::endl;
+		;
 }
 
 SoundSfml::SfmlSoundException::SfmlSoundException(void) noexcept :

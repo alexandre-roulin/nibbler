@@ -201,8 +201,6 @@ void Univers::defaultAssignmentLibrary() {
 	displayManager->getInstance()->setBackground(grid);
 	displayManager->getInstance()->registerCallbackAction(
 			std::bind(&Univers::callbackAction, this, std::placeholders::_1));
-	displayManager->getInstance()->update();
-	displayManager->getInstance()->render();
 }
 
 

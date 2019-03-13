@@ -268,6 +268,8 @@ void DisplayGlfw::drawGrid(MutantGrid<eSprite> const &grid) {
 				materialMap_.at(eSprite::kWall).putMaterialToShader(shader_);
 			} else if (grid(x, y) != eSprite::kNone)
 				grid_(x, y).assign(&modelWall_);
+			else
+				grid_(x, y).assign(&modelWall_);
 
 			if (grid(x, y) != eSprite::kNone)
 				drawGridCase_(grid(x, y), x, y);

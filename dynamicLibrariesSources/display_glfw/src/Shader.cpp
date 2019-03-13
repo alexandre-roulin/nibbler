@@ -35,11 +35,6 @@ Shader	&Shader::attach(std::string const &filename) {
 						   (std::istreambuf_iterator<char>()));
 	const char *source = src.c_str();
 
-	if (Shader::debug_) {
-		std::cout << "Source path :" <<  filename << std::endl;
-		std::cout << source << std::endl;
-	}
-	
 	auto shader = create(filename);
 	glShaderSource(shader, 1, &source, nullptr);
 	glCompileShader(shader);
