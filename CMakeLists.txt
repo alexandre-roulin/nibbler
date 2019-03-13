@@ -43,8 +43,36 @@ endif ()
 
 if(NOT WIN32)
     set(GLAD_LIBRARIES dl)
-    #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wvla -Werror")
 endif()
+
+message("EXTERN : KINU, cloning...")
+if (GIT_FOUND AND EXISTS "${CMAKE_SOURCE_DIR}/.git")
+    execute_process(COMMAND ${GIT_EXECUTABLE} submodule update --init extern/KINU
+            WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+            RESULT_VARIABLE GIT_SUBMOD_RESULT)
+    if (NOT GIT_SUBMOD_RESULT EQUAL "0")
+        message(FATAL_ERROR "git submodule update --init failed with ${GIT_SUBMOD_RESULT}, please checkout submodules")
+    endif ()
+endif ()
+message("EXTERN : KNetwork, cloning...")
+if (GIT_FOUND AND EXISTS "${CMAKE_SOURCE_DIR}/.git")
+    execute_process(COMMAND ${GIT_EXECUTABLE} submodule update --init extern/KNetwork
+            WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+            RESULT_VARIABLE GIT_SUBMOD_RESULT)
+    if (NOT GIT_SUBMOD_RESULT EQUAL "0")
+        message(FATAL_ERROR "git submodule update --init failed with ${GIT_SUBMOD_RESULT}, please checkout submodules")
+    endif ()
+endif ()
+message("EXTERN : KStar, cloning...")
+if (GIT_FOUND AND EXISTS "${CMAKE_SOURCE_DIR}/.git")
+    execute_process(COMMAND ${GIT_EXECUTABLE} submodule update --init extern/KStar
+            WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+            RESULT_VARIABLE GIT_SUBMOD_RESULT)
+    if (NOT GIT_SUBMOD_RESULT EQUAL "0")
+        message(FATAL_ERROR "git submodule update --init failed with ${GIT_SUBMOD_RESULT}, please checkout submodules")
+    endif ()
+endif ()
+add_subdirectory(cmake/boost-cmake)
 
 file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/dynamicLibraries")
 
@@ -154,6 +182,7 @@ include_directories(
         ${CMAKE_SOURCE_DIR}/nibblerSources/incs/)
 
 include_directories(SYSTEM
+        ${CMAKE_SOURCE_DIR}/extern/
         ${CMAKE_SOURCE_DIR}/extern/imgui/
         ${CMAKE_SOURCE_DIR}/extern/imgui/imgui/
         ${CMAKE_SOURCE_DIR}/extern/imgui/imgui-sfml/
