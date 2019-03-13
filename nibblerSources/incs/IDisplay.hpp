@@ -24,6 +24,9 @@ enum eDirection {
 enum eAction {
 	kPause,
 	kSwitchDisplayLibrary,
+	kSwitchDisplayLibrarySFML,
+	kSwitchDisplayLibrarySDL,
+	kSwitchDisplayLibraryGLFW,
 };
 
 class IDisplay {

@@ -82,10 +82,29 @@ void Univers::callbackAction(eAction action) {
 	boost::shared_ptr<ISnakeNetwork> ptr_network(getSnakeNetwork().lock());
 
 	switch (action) {
+		case eAction::kSwitchDisplayLibrarySFML:
+			if (eDisplay::kDisplaySfmlLibrary == displayManager->getKInstance())
+				return;
+			displayManager->setNextKInstance(eDisplay::kDisplaySfmlLibrary);
+			switchLib_ = true;
+			break;
+		case eAction::kSwitchDisplayLibrarySDL:
+			if (eDisplay::kDisplaySdlLibrary == displayManager->getKInstance())
+				return;
+			displayManager->setNextKInstance(eDisplay::kDisplaySdlLibrary);
+			switchLib_ = true;
+			break;
+		case eAction::kSwitchDisplayLibraryGLFW:
+			if (eDisplay::kDisplayGlfwLibrary == displayManager->getKInstance())
+				return;
+			displayManager->setNextKInstance(eDisplay::kDisplayGlfwLibrary);
+			switchLib_ = true;
+			break;
 		case eAction::kPause :
 			ptr->sendDataToServer(action, eHeader::kPause);
 			break;
 		case eAction::kSwitchDisplayLibrary:
+			displayManager->setNextKInstance();
 			switchLib_ = true;
 			break;
 	}
@@ -191,8 +210,8 @@ void Univers::manageSwitchLibrary() {
 	if (!ptr->isSwitchingLibrary()) {
 		int16_t id = ptr->getId_();
 		ptr->sendDataToServer(id, eHeader::kForcePause);
-		displayManager->setNextKInstance();
 		try {
+			displayManager->loadDynamicConstructor();
 			defaultAssignmentLibrary();
 		} catch (std::exception const &e) {
 			ptr->sendDataToServer(id, eHeader::kForcePause);
@@ -393,6 +412,7 @@ void Univers::loadSoundData_() {
 }
 
 bool Univers::loadSound() {
+	getSoundManager().loadDynamicConstructor();
 	getSoundManager().loadDynamicLibrary();
 	if (!getSoundManager().hasLibraryLoaded())
 		return false;

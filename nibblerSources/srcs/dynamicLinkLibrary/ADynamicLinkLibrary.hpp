@@ -69,6 +69,8 @@ public:
 
 	void setNextKInstance(E kinstance);
 
+	E getKInstance() const;
+
 	LibraryInfo<E> const &getCurrentLibraryInfo() const;
 
 	LibraryInfo<E> const &getNextLibraryInfo() const;
@@ -198,7 +200,6 @@ void ADynamicLinkLibrary<T, E, SIGNATURE>::loadDynamicConstructor() {
 	currentLibraryInfo_ = lib;
 }
 
-
 template<typename T, typename E, typename SIGNATURE>
 bool ADynamicLinkLibrary<T, E, SIGNATURE>::hasConstructorLoaded() const {
 	return dlHandle_ && newInstance_ && deleteInstance_;
@@ -209,6 +210,11 @@ template<typename... Args>
 void ADynamicLinkLibrary<T, E, SIGNATURE>::loadDynamicLibrary(Args... args) {
 	instance_ = newInstance_(args...);
 	kInstance_ = kNextInstance_;
+}
+
+template<typename T, typename E, typename SIGNATURE>
+E ADynamicLinkLibrary<T, E, SIGNATURE>::getKInstance() const {
+	return kInstance_;
 }
 
 template<typename T, typename E, typename SIGNATURE>
