@@ -365,7 +365,7 @@ void SnakeServer::showScore() {
 	std::vector<Snake>::iterator it = std::remove_if(vector.begin(), vector.end(), [](Snake const &snake){ return !(snake.isValid && snake.isInGame);});
 
 	std::sort(vector.begin(), it, [](Snake const &lhs, Snake const &rhs){
-		return lhs.score_ < rhs.score_;
+		return lhs.score_ > rhs.score_;
 	});
 	size_t n = 0;
 	std::for_each(vector.begin(), it, [this, &n, &position](Snake const & snake){
