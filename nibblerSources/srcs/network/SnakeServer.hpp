@@ -51,13 +51,16 @@ public:
 
 	void closeAcceptorServer();
 
+	virtual void notifyBarrier();
+
+	void showScore();
 private:
 	SnakeServer(Univers &univers);
 	void build(const std::string dns, unsigned short port);
 
 	void callbackAccept(size_t);
 
-	void callbackShowScore(char);
+	void callbackBarrier(bool barrier);
 
 	void callbackGameSpeed(GameManager::eSpeed speed);
 

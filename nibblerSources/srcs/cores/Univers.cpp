@@ -24,6 +24,8 @@ const std::string Univers::SuccessBorderlessSet = "Borderless is set.";
 const std::string Univers::SuccessBorderlessUnset = "Borderless is unset.";
 const std::string Univers::SuccessClientIsDisconnect = "Client is disconnect.";
 const std::string Univers::SuccessResizeMapTo = "Map has been resize to %d.";
+const std::string Univers::SuccessBarrierSet = "Barrier is set.";
+const std::string Univers::SuccessBarrierUnset = "Barrier is unset.";
 
 const std::string Univers::WarningClientExist = "Client is already in place.";
 const std::string Univers::WarningServerCreateIA = "Only the server owner can create IA.";
@@ -58,10 +60,10 @@ Univers::Univers()
 		switchLib_(false),
 		mapSize_(MAP_DEFAULT),
 		microSecDeltaTime_(0),
-		baseSpeed(GameManager::eSpeed::Impossible),
+		baseSpeed(GameManager::eSpeed::Hard),
 		borderless_(false),
-		openGame_(false) {
-	ioManager->startIORunner();
+		openGame_(false),
+		barrier_(false) {
 }
 
 void Univers::resetData() {
@@ -80,10 +82,29 @@ void Univers::callbackAction(eAction action) {
 	boost::shared_ptr<ISnakeNetwork> ptr_network(getSnakeNetwork().lock());
 
 	switch (action) {
+		case eAction::kSwitchDisplayLibrarySFML:
+			if (eDisplay::kDisplaySfmlLibrary == displayManager->getKInstance())
+				return;
+			displayManager->setNextKInstance(eDisplay::kDisplaySfmlLibrary);
+			switchLib_ = true;
+			break;
+		case eAction::kSwitchDisplayLibrarySDL:
+			if (eDisplay::kDisplaySdlLibrary == displayManager->getKInstance())
+				return;
+			displayManager->setNextKInstance(eDisplay::kDisplaySdlLibrary);
+			switchLib_ = true;
+			break;
+		case eAction::kSwitchDisplayLibraryGLFW:
+			if (eDisplay::kDisplayGlfwLibrary == displayManager->getKInstance())
+				return;
+			displayManager->setNextKInstance(eDisplay::kDisplayGlfwLibrary);
+			switchLib_ = true;
+			break;
 		case eAction::kPause :
 			ptr->sendDataToServer(action, eHeader::kPause);
 			break;
 		case eAction::kSwitchDisplayLibrary:
+			displayManager->setNextKInstance();
 			switchLib_ = true;
 			break;
 	}
@@ -115,29 +136,25 @@ void Univers::startNewGame() {
 	SnakeClient::boost_shared_ptr ptr(getSnakeClient().lock());
 	SnakeServer::b_ptr ptrServer(snakeServer_);
 	setMicroSecDeltaTime(static_cast<uint32_t >(baseSpeed));
+
 	try {
+		displayManager->loadDynamicConstructor();
 		deleteGui();
 		defaultAssignmentLibrary();
 	} catch (std::exception const &e) {
-		std::cerr << e.what() << std::endl;
-		handlingGameError();
+		if (gui_)
+			gui_->addMessageChat(eColorLog::kRed, e.what());
+		postGameDataManagement();
 		return;
 	}
 
 	gameManager->startNewGame();
 	gameManager->loopUI();
-	if (ptr)
-		ptr->killSnake(ptr->getId_());
-	if (ptrServer)
-		ptrServer->sendOpenGameToClient(false);
-	openGame_ = false;
-	gameManager->finishGame();
-	if (displayManager->hasLibraryLoaded())
-		displayManager->unloadDynamicLibrary();
-	resetData();
+
+	postGameDataManagement();
 	createGui();
-	if (ptr)
-		ptr->sendDataToServer('0', eHeader::kShowScore);
+	if (ptrServer)
+		ptrServer->showScore();
 }
 
 void Univers::manageSnakeClientInput() {
@@ -154,14 +171,14 @@ void Univers::manageSnakeClientInput() {
 
 /** Library **/
 
-void Univers::handlingGameError() {
+void Univers::postGameDataManagement() {
 	SnakeClient::boost_shared_ptr ptr(snakeClient_);
 	SnakeServer::b_ptr ptrServer(snakeServer_);
 
+	if (ptr)
+		ptr->killSnake(ptr->getId_());
 	if (ptrServer)
 		ptrServer->sendOpenGameToClient(false);
-	else if (ptr)
-		ptr->sendOpenGameToServer(false);
 	openGame_ = false;
 	gameManager->finishGame();
 	if (displayManager->hasLibraryLoaded())
@@ -177,7 +194,7 @@ void Univers::defaultAssignmentLibrary() {
 	try {
 		displayManager->loadDynamicLibrary(mapSize_,mapSize_, displayManager->getNextLibraryInfo().title.c_str());
 	} catch (std::exception const &e){
-		throw (std::runtime_error("Cant laod IDisplay"));
+		throw (std::runtime_error("Cant load IDisplay"));
 	}
 
 	displayManager->getInstance()->setBackground(grid);
@@ -193,13 +210,13 @@ void Univers::manageSwitchLibrary() {
 	if (!ptr->isSwitchingLibrary()) {
 		int16_t id = ptr->getId_();
 		ptr->sendDataToServer(id, eHeader::kForcePause);
-		displayManager->setNextKInstance();
 		try {
+			displayManager->loadDynamicConstructor();
 			defaultAssignmentLibrary();
 		} catch (std::exception const &e) {
 			ptr->sendDataToServer(id, eHeader::kForcePause);
 			boost::this_thread::sleep_for(boost::chrono::milliseconds(100));
-			handlingGameError();
+			postGameDataManagement();
 			throw(e);
 		}
 		ptr->sendDataToServer(id, eHeader::kForcePause);
@@ -395,6 +412,7 @@ void Univers::loadSoundData_() {
 }
 
 bool Univers::loadSound() {
+	getSoundManager().loadDynamicConstructor();
 	getSoundManager().loadDynamicLibrary();
 	if (!getSoundManager().hasLibraryLoaded())
 		return false;
@@ -407,12 +425,35 @@ void Univers::unloadSound() {
 
 /** Getter && Setter **/
 
+
+void Univers::setBarrier_(bool barrier_) {
+	Univers::barrier_ = barrier_;
+}
+
+bool Univers::isBarrier_() const {
+	return barrier_;
+}
+
+void Univers::switchBarrier() {
+	boost::shared_ptr<ISnakeNetwork> ptr_network(getSnakeNetwork().lock());
+
+	barrier_ = !barrier_;
+
+	if (isBarrier_())
+		gui_->addMessageChat(eColorLog::kGreen, SuccessBarrierSet); //TODO
+	else
+		gui_->addMessageChat(eColorLog::kGreen, SuccessBarrierUnset); //TODO
+	if (ptr_network) {
+		ptr_network->notifyBarrier();
+	}
+}
+
 uint32_t Univers::getMicroSecDeltaTime() const {
 	return microSecDeltaTime_;
 }
 
 void Univers::setMicroSecDeltaTime(uint32_t microSecDeltaTime) {
-	microSecDeltaTime_ = microSecDeltaTime < GameManager::Impossible ? GameManager::Impossible : microSecDeltaTime;
+	microSecDeltaTime_ = microSecDeltaTime < GameManager::Hard ? GameManager::Hard : microSecDeltaTime;
 }
 
 bool Univers::isExit() const {
@@ -632,7 +673,7 @@ void Univers::setBaseSpeed(const GameManager::eSpeed &baseSpeed) {
 }
 
 std::string Univers::getIPAddress() {
-	std::string ipAddress = "Unable to get IP Address";
+	std::string ipAddress = "localhost";
 	struct ifaddrs *interfaces = nullptr;
 	struct ifaddrs *temp_addr = nullptr;
 	int success = 0;

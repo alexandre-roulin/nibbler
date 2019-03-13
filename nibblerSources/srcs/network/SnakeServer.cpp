@@ -70,6 +70,11 @@ std::string const &SnakeServer::getAddress_() const {
 	return serverTCP_->getAddress();
 }
 
+void SnakeServer::notifyBarrier() {
+	serverTCP_->writeDataToOpenConnections(univers_.isBarrier_(), eHeader::kBarrier);
+}
+
+
 void SnakeServer::notifyBorderless() {
 	serverTCP_->writeDataToOpenConnections(univers_.isBorderless(), eHeader::kBorderless);
 }
@@ -250,6 +255,9 @@ void SnakeServer::callbackAccept(size_t index) {
 	serverTCP_->writeDataToOpenConnection(new_id, index, eHeader::kId);
 }
 
+void SnakeServer::callbackBarrier(bool barrier) {
+	serverTCP_->writeDataToOpenConnections(barrier, eHeader::kBarrier);
+}
 
 void SnakeServer::callbackGameSpeed(GameManager::eSpeed speed) {
 	serverTCP_->writeDataToOpenConnections(speed, eHeader::kGameSpeed);
@@ -337,16 +345,16 @@ void SnakeServer::build(const std::string dns, unsigned short port) {
 	serverTCP_->getDataTCP()->addDataType<char>(
 			nullptr, eHeader::kCloseConnection);
 
-	serverTCP_->getDataTCP()->addDataType<char>(
-			([thisWeakPtr](char c) { auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackShowScore(c); }),
-			eHeader::kShowScore);
-
 	serverTCP_->getDataTCP()->addDataType<GameManager::eSpeed >(
 			([thisWeakPtr](GameManager::eSpeed speed) { auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackGameSpeed(speed); }),
 			eHeader::kGameSpeed);
+
+	serverTCP_->getDataTCP()->addDataType<bool >(
+			([thisWeakPtr](bool barrier) { auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackBarrier(barrier); }),
+			eHeader::kBarrier);
 }
 
-void SnakeServer::callbackShowScore(char) {
+void SnakeServer::showScore() {
 	const char position[4][3]{
 			"st",
 			"nd",
@@ -357,7 +365,7 @@ void SnakeServer::callbackShowScore(char) {
 	std::vector<Snake>::iterator it = std::remove_if(vector.begin(), vector.end(), [](Snake const &snake){ return !(snake.isValid && snake.isInGame);});
 
 	std::sort(vector.begin(), it, [](Snake const &lhs, Snake const &rhs){
-		return lhs.score_ < rhs.score_;
+		return lhs.score_ > rhs.score_;
 	});
 	size_t n = 0;
 	std::for_each(vector.begin(), it, [this, &n, &position](Snake const & snake){

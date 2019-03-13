@@ -18,7 +18,6 @@ public:
 	IOManager(const IOManager &) = delete;
 
 	boost::asio::io_service &getIo();
-	void startIORunner();
 	boost::thread_group &getThreadGroup();
 
 private:

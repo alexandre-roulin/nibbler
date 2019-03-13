@@ -83,16 +83,36 @@ void WidgetChat::chatText_() {
 
 bool WidgetChat::chatCommand_() {
 	SnakeClient::boost_shared_ptr ptr(core_.univers.getSnakeClient().lock());
-
 	if (bufferMessage_[0] != '/')
 		return (false);
 	if (strstr(bufferMessage_, "/help"))
-		addLog(eColorLog::kYellow, "/help\n/name Aname\n/host");
-	else if (strstr(bufferMessage_, "/name ")) {
+		addLog(eColorLog::kYellow,
+				"/help - show help.\n"
+ "/name <name> - change name.\n"
+ "/host - show local ip and dns.\n"
+ "* In Game *\n"
+ "p - pause.\n"
+ "o - change current library.\n"
+ "ESC - quit the game.\n"
+ "F1 - change to SFML library.\n"
+ "F2 - change to SDL library.\n"
+ "F3 - change to GLFW library.\n"
+ "view top down :\n"
+ "> / D - turn right.\n"
+ "< / A - turn left.\n"
+ "^ / W - turn up.\n"
+ "v / S - turn down.\n"
+ "view third person :\n"
+ "< / A - turn left.\n"
+ "^ / W - turn up.\n"
+ );
+	else if (strstr(bufferMessage_, "/host")) {
+		core_.univers.sendHostname();
+	} else if (strstr(bufferMessage_, "/name ")) {
 		if (ptr && checkClientIsConnect_()) {
 			ptr->changeName(bufferMessage_ + sizeof("/name ") - 1);
 		}
-	} else if (strstr(bufferMessage_, "/color")) {
+	}else if (strstr(bufferMessage_, "/color")) {
 		addLog(eColorLog::kNone, "eColorLog::kNone");
 		addLog(eColorLog::kRed, "eColorLog::kRed");
 		addLog(eColorLog::kGreen, "eColorLog::kGreen");

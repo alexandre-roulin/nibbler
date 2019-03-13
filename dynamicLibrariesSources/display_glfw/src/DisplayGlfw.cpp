@@ -373,6 +373,15 @@ void DisplayGlfw::render() {
 	if (getKey(GLFW_KEY_UP))
 		camera_[CAMERA_MOVABLE].processPosition(Camera::Movement::FORWARD, deltaTime_ * 5);
 
+	if (getKeyState(GLFW_KEY_F1) == KeyState::kDown) {
+		callback_(eAction::kSwitchDisplayLibrarySFML);
+	}
+	if (getKeyState(GLFW_KEY_F2) == KeyState::kDown) {
+		callback_(eAction::kSwitchDisplayLibrarySDL);
+	}
+	if (getKeyState(GLFW_KEY_F3) == KeyState::kDown) {
+		callback_(eAction::kSwitchDisplayLibraryGLFW);
+	}
 	if (getKeyState(GLFW_KEY_P) == KeyState::kDown) {
 		callback_(eAction::kPause);
 	}

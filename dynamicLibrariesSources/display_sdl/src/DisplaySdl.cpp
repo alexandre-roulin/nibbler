@@ -150,6 +150,15 @@ void DisplaySdl::update() {
 			exit_ = true;
 		if (ev_.type == SDL_KEYDOWN) {
 			switch (ev_.key.keysym.scancode) {
+				case SDL_SCANCODE_F1:
+					callback_(eAction::kSwitchDisplayLibrarySFML);
+					break;
+				case SDL_SCANCODE_F2:
+					callback_(eAction::kSwitchDisplayLibrarySDL);
+					break;
+				case SDL_SCANCODE_F3:
+					callback_(eAction::kSwitchDisplayLibraryGLFW);
+					break;
 				case SDL_SCANCODE_ESCAPE:
 					exit_ = true;
 					break;

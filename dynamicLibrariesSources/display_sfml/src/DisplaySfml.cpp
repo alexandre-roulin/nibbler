@@ -128,6 +128,15 @@ void DisplaySfml::update() {
 		if (ev_.type == sf::Event::KeyPressed) {
 
 			switch (ev_.key.code) {
+				case sf::Keyboard::F1:
+					callback_(eAction::kSwitchDisplayLibrarySFML);
+					break;
+				case sf::Keyboard::F2:
+					callback_(eAction::kSwitchDisplayLibrarySDL);
+					break;
+				case sf::Keyboard::F3:
+					callback_(eAction::kSwitchDisplayLibraryGLFW);
+					break;
 				case sf::Keyboard::Escape:
 					exit_ = true;
 					break;

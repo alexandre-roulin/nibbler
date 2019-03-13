@@ -32,6 +32,3 @@ IOManager::~IOManager() {
 	thread_group.join_all();
 }
 
-void IOManager::startIORunner() {
-
-}
