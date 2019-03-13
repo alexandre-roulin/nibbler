@@ -29,19 +29,19 @@ void Factory::createAllSnake(std::shared_ptr<SnakeArrayContainer> snake_array, i
 	});
 	if (!univers_.isBorderless())
 		createWalls();
-//	createTree();
+	if (univers_.isBarrier_())
+		createTree();
 }
 
 void Factory::createTree() {
 	std::shared_ptr<KINU::World> world = univers_.getGameManager().getWorld_();
 	if (!world) return;
-	for (int index = 0; index < 5; ++index) {
+	for (size_t index = 0; index < univers_.getMapSize() / 2; ++index) {
 		KINU::Entity entity = world->createEntity();
 
 		entity.addComponent<PositionComponent>(tempGrid.getRandomSlot(false));
 		entity.addComponent<CollisionComponent>();
-		entity.addComponent<SpriteComponent>(eSprite::kTree, kNoPriority);
-
+		entity.addComponent<SpriteComponent>(eSprite::kWall, kNoPriority);
 		entity.groupEntityByGroupId(eTag::kWallTag);
 	}
 }

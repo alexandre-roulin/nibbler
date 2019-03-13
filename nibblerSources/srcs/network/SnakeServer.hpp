@@ -51,6 +51,8 @@ public:
 
 	void closeAcceptorServer();
 
+	virtual void notifyBarrier();
+
 	void callbackShowScore(char);
 private:
 	SnakeServer(Univers &univers);
@@ -58,6 +60,7 @@ private:
 
 	void callbackAccept(size_t);
 
+	void callbackBarrier(bool barrier);
 
 	void callbackGameSpeed(GameManager::eSpeed speed);
 

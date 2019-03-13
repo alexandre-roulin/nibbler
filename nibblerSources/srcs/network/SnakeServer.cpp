@@ -70,6 +70,11 @@ std::string const &SnakeServer::getAddress_() const {
 	return serverTCP_->getAddress();
 }
 
+void SnakeServer::notifyBarrier() {
+	serverTCP_->writeDataToOpenConnections(univers_.isBarrier_(), eHeader::kBarrier);
+}
+
+
 void SnakeServer::notifyBorderless() {
 	serverTCP_->writeDataToOpenConnections(univers_.isBorderless(), eHeader::kBorderless);
 }
@@ -250,6 +255,9 @@ void SnakeServer::callbackAccept(size_t index) {
 	serverTCP_->writeDataToOpenConnection(new_id, index, eHeader::kId);
 }
 
+void SnakeServer::callbackBarrier(bool barrier) {
+	serverTCP_->writeDataToOpenConnections(barrier, eHeader::kBarrier);
+}
 
 void SnakeServer::callbackGameSpeed(GameManager::eSpeed speed) {
 	serverTCP_->writeDataToOpenConnections(speed, eHeader::kGameSpeed);
@@ -344,6 +352,10 @@ void SnakeServer::build(const std::string dns, unsigned short port) {
 	serverTCP_->getDataTCP()->addDataType<GameManager::eSpeed >(
 			([thisWeakPtr](GameManager::eSpeed speed) { auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackGameSpeed(speed); }),
 			eHeader::kGameSpeed);
+
+	serverTCP_->getDataTCP()->addDataType<bool >(
+			([thisWeakPtr](bool barrier) { auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackBarrier(barrier); }),
+			eHeader::kBarrier);
 }
 
 void SnakeServer::callbackShowScore(char) {

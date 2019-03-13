@@ -24,6 +24,8 @@ const std::string Univers::SuccessBorderlessSet = "Borderless is set.";
 const std::string Univers::SuccessBorderlessUnset = "Borderless is unset.";
 const std::string Univers::SuccessClientIsDisconnect = "Client is disconnect.";
 const std::string Univers::SuccessResizeMapTo = "Map has been resize to %d.";
+const std::string Univers::SuccessBarrierSet = "Barrier is set.";
+const std::string Univers::SuccessBarrierUnset = "Barrier is unset.";
 
 const std::string Univers::WarningClientExist = "Client is already in place.";
 const std::string Univers::WarningServerCreateIA = "Only the server owner can create IA.";
@@ -58,10 +60,10 @@ Univers::Univers()
 		switchLib_(false),
 		mapSize_(MAP_DEFAULT),
 		microSecDeltaTime_(0),
-		baseSpeed(GameManager::eSpeed::Impossible),
+		baseSpeed(GameManager::eSpeed::Hard),
 		borderless_(false),
-		openGame_(false) {
-	ioManager->startIORunner();
+		openGame_(false),
+		barrier_(false) {
 }
 
 void Univers::resetData() {
@@ -407,6 +409,29 @@ void Univers::unloadSound() {
 
 /** Getter && Setter **/
 
+
+void Univers::setBarrier_(bool barrier_) {
+	Univers::barrier_ = barrier_;
+}
+
+bool Univers::isBarrier_() const {
+	return barrier_;
+}
+
+void Univers::switchBarrier() {
+	boost::shared_ptr<ISnakeNetwork> ptr_network(getSnakeNetwork().lock());
+
+	barrier_ = !barrier_;
+
+	if (isBarrier_())
+		gui_->addMessageChat(eColorLog::kGreen, SuccessBarrierSet); //TODO
+	else
+		gui_->addMessageChat(eColorLog::kGreen, SuccessBarrierUnset); //TODO
+	if (ptr_network) {
+		ptr_network->notifyBarrier();
+	}
+}
+
 uint32_t Univers::getMicroSecDeltaTime() const {
 	return microSecDeltaTime_;
 }
@@ -632,7 +657,7 @@ void Univers::setBaseSpeed(const GameManager::eSpeed &baseSpeed) {
 }
 
 std::string Univers::getIPAddress() {
-	std::string ipAddress = "Unable to get IP Address";
+	std::string ipAddress = "localhost";
 	struct ifaddrs *interfaces = nullptr;
 	struct ifaddrs *temp_addr = nullptr;
 	int success = 0;

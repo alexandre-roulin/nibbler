@@ -114,6 +114,10 @@ public:
 
 	/** Getter && Setter **/
 
+	bool isBarrier_() const;
+
+	void switchBarrier();
+
 	void setMicroSecDeltaTime(uint32_t microSecDeltaTime);
 
 	uint32_t getMicroSecDeltaTime() const;
@@ -162,6 +166,8 @@ public:
 
 	IOManager &getIoManager();
 
+	void setBarrier_(bool barrier_);
+
 	SoundDynamicLibrary &getSoundManager();
 
 	DisplayDynamicLibrary &getDisplayManager();
@@ -193,6 +199,8 @@ private:
 	static const std::string SuccessClientIsConnected;
 	static const std::string SuccessBorderlessSet;
 	static const std::string SuccessBorderlessUnset;
+	static const std::string SuccessBarrierSet;
+	static const std::string SuccessBarrierUnset;
 
 	static const std::string WarningServerCreateIA;
 	static const std::string WarningServerRemoveIA;
@@ -232,7 +240,7 @@ private:
 	GameManager::eSpeed baseSpeed;
 	bool borderless_;
 	bool openGame_;
-
+	bool barrier_;
 };
 
 

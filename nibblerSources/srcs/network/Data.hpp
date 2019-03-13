@@ -25,7 +25,8 @@ enum class eHeader : uint16_t {
 	kSnakeUX,			//16
 	kSnakeUN,			//17
 	kShowScore,			//18
-	kGameSpeed
+	kGameSpeed,
+	kBarrier
 
 };
 
