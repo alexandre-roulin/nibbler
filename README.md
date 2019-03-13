@@ -2,7 +2,7 @@
 
 Nibbler is a 42 project with external library link during the runing time
 
-Project work with SDL/SFML/GLFW Display. Multiplayer game. Manage with a design oriented data.
+Project work with SDL/SFML/GLFW Display. Multiplayer game. Manage data with a `design oriented data`.
 
 ## Getting Started
 
