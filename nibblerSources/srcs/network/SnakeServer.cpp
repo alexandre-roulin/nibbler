@@ -345,10 +345,6 @@ void SnakeServer::build(const std::string dns, unsigned short port) {
 	serverTCP_->getDataTCP()->addDataType<char>(
 			nullptr, eHeader::kCloseConnection);
 
-	serverTCP_->getDataTCP()->addDataType<char>(
-			([thisWeakPtr](char c) { auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackShowScore(c); }),
-			eHeader::kShowScore);
-
 	serverTCP_->getDataTCP()->addDataType<GameManager::eSpeed >(
 			([thisWeakPtr](GameManager::eSpeed speed) { auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackGameSpeed(speed); }),
 			eHeader::kGameSpeed);
@@ -358,7 +354,7 @@ void SnakeServer::build(const std::string dns, unsigned short port) {
 			eHeader::kBarrier);
 }
 
-void SnakeServer::callbackShowScore(char) {
+void SnakeServer::showScore() {
 	const char position[4][3]{
 			"st",
 			"nd",

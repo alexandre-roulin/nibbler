@@ -53,7 +53,7 @@ public:
 
 	virtual void notifyBarrier();
 
-	void callbackShowScore(char);
+	void showScore();
 private:
 	SnakeServer(Univers &univers);
 	void build(const std::string dns, unsigned short port);

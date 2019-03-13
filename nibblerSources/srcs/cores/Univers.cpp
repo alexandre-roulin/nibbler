@@ -117,29 +117,25 @@ void Univers::startNewGame() {
 	SnakeClient::boost_shared_ptr ptr(getSnakeClient().lock());
 	SnakeServer::b_ptr ptrServer(snakeServer_);
 	setMicroSecDeltaTime(static_cast<uint32_t >(baseSpeed));
+
 	try {
+		displayManager->loadDynamicConstructor();
 		deleteGui();
 		defaultAssignmentLibrary();
 	} catch (std::exception const &e) {
-		std::cerr << e.what() << std::endl;
-		handlingGameError();
+		if (gui_)
+			gui_->addMessageChat(eColorLog::kRed, e.what());
+		postGameDataManagement();
 		return;
 	}
 
 	gameManager->startNewGame();
 	gameManager->loopUI();
-	if (ptr)
-		ptr->killSnake(ptr->getId_());
-	if (ptrServer)
-		ptrServer->sendOpenGameToClient(false);
-	openGame_ = false;
-	gameManager->finishGame();
-	if (displayManager->hasLibraryLoaded())
-		displayManager->unloadDynamicLibrary();
-	resetData();
+
+	postGameDataManagement();
 	createGui();
 	if (ptrServer)
-		ptrServer->callbackShowScore('0');
+		ptrServer->showScore();
 }
 
 void Univers::manageSnakeClientInput() {
@@ -156,14 +152,14 @@ void Univers::manageSnakeClientInput() {
 
 /** Library **/
 
-void Univers::handlingGameError() {
+void Univers::postGameDataManagement() {
 	SnakeClient::boost_shared_ptr ptr(snakeClient_);
 	SnakeServer::b_ptr ptrServer(snakeServer_);
 
+	if (ptr)
+		ptr->killSnake(ptr->getId_());
 	if (ptrServer)
 		ptrServer->sendOpenGameToClient(false);
-	else if (ptr)
-		ptr->sendOpenGameToServer(false);
 	openGame_ = false;
 	gameManager->finishGame();
 	if (displayManager->hasLibraryLoaded())
@@ -179,7 +175,7 @@ void Univers::defaultAssignmentLibrary() {
 	try {
 		displayManager->loadDynamicLibrary(mapSize_,mapSize_, displayManager->getNextLibraryInfo().title.c_str());
 	} catch (std::exception const &e){
-		throw (std::runtime_error("Cant laod IDisplay"));
+		throw (std::runtime_error("Cant load IDisplay"));
 	}
 
 	displayManager->getInstance()->setBackground(grid);
@@ -201,7 +197,7 @@ void Univers::manageSwitchLibrary() {
 		} catch (std::exception const &e) {
 			ptr->sendDataToServer(id, eHeader::kForcePause);
 			boost::this_thread::sleep_for(boost::chrono::milliseconds(100));
-			handlingGameError();
+			postGameDataManagement();
 			throw(e);
 		}
 		ptr->sendDataToServer(id, eHeader::kForcePause);

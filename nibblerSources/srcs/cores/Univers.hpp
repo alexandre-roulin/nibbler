@@ -96,7 +96,7 @@ public:
 
 	void deleteGui();
 
-	void handlingGameError();
+	void postGameDataManagement();
 
 	/** UI **/
 

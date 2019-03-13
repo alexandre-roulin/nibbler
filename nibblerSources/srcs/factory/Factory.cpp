@@ -38,7 +38,6 @@ void Factory::createTree() {
 	if (!world) return;
 	for (size_t index = 0; index < univers_.getMapSize() / 2; ++index) {
 		KINU::Entity entity = world->createEntity();
-
 		entity.addComponent<PositionComponent>(tempGrid.getRandomSlot(false));
 		entity.addComponent<CollisionComponent>();
 		entity.addComponent<SpriteComponent>(eSprite::kWall, kNoPriority);
