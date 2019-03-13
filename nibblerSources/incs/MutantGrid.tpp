@@ -1,5 +1,5 @@
-#ifndef GRID_HPP
-#define GRID_HPP
+#ifndef NIBBLER_MUTANTGRID_HPP
+#define NIBBLER_MUTANTGRID_HPP
 
 #include <vector>
 #include <assert.h>

@@ -45,39 +45,11 @@ if(NOT WIN32)
     set(GLAD_LIBRARIES dl)
 endif()
 
-message("EXTERN : KINU, cloning...")
-if (GIT_FOUND AND EXISTS "${CMAKE_SOURCE_DIR}/.git")
-    execute_process(COMMAND ${GIT_EXECUTABLE} submodule update --init extern/KINU
-            WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-            RESULT_VARIABLE GIT_SUBMOD_RESULT)
-    if (NOT GIT_SUBMOD_RESULT EQUAL "0")
-        message(FATAL_ERROR "git submodule update --init failed with ${GIT_SUBMOD_RESULT}, please checkout submodules")
-    endif ()
-endif ()
-message("EXTERN : KNetwork, cloning...")
-if (GIT_FOUND AND EXISTS "${CMAKE_SOURCE_DIR}/.git")
-    execute_process(COMMAND ${GIT_EXECUTABLE} submodule update --init extern/KNetwork
-            WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-            RESULT_VARIABLE GIT_SUBMOD_RESULT)
-    if (NOT GIT_SUBMOD_RESULT EQUAL "0")
-        message(FATAL_ERROR "git submodule update --init failed with ${GIT_SUBMOD_RESULT}, please checkout submodules")
-    endif ()
-endif ()
-message("EXTERN : KStar, cloning...")
-if (GIT_FOUND AND EXISTS "${CMAKE_SOURCE_DIR}/.git")
-    execute_process(COMMAND ${GIT_EXECUTABLE} submodule update --init extern/KStar
-            WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-            RESULT_VARIABLE GIT_SUBMOD_RESULT)
-    if (NOT GIT_SUBMOD_RESULT EQUAL "0")
-        message(FATAL_ERROR "git submodule update --init failed with ${GIT_SUBMOD_RESULT}, please checkout submodules")
-    endif ()
-endif ()
-
 file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/dynamicLibraries")
 
 find_package(Git QUIET)
 if (GIT_FOUND AND EXISTS "${CMAKE_SOURCE_DIR}/.git")
-    execute_process(COMMAND ${GIT_EXECUTABLE} submodule update --init extern/imgui extern/stb extern/glad cmake/sdl2-cmake-scripts
+    execute_process(COMMAND ${GIT_EXECUTABLE} submodule update --init extern/imgui extern/stb extern/glad cmake/sdl2-cmake-scripts extern/KINU extern/KNetwork extern/KStar
             WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
             RESULT_VARIABLE GIT_SUBMOD_RESULT)
     if (NOT GIT_SUBMOD_RESULT EQUAL "0")
