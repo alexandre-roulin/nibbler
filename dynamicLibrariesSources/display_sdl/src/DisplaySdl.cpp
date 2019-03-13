@@ -150,6 +150,9 @@ void DisplaySdl::update() {
 			exit_ = true;
 		if (ev_.type == SDL_KEYDOWN) {
 			switch (ev_.key.keysym.scancode) {
+				case SDL_SCANCODE_ESCAPE:
+					exit_ = true;
+					break;
 				case SDL_SCANCODE_A:
 					direction_ = kWest;
 					break;

@@ -92,6 +92,7 @@ private:
 
 	std::function<void(eAction)>	callback_;
 
+	bool 							bYourSnakeSprite_;
 
 	void            	    error_(std::string const &s = std::string("Error"));
     void            	    clean_();
