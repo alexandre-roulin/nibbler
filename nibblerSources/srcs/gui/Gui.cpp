@@ -18,6 +18,7 @@ winSize_(sf::Vector2<unsigned int>(1000, 900)),
 win_(sf::VideoMode(winSize_.x, winSize_.y), "Project Snake"),
 io_(createContext_()),
 chat_(*this) {
+	addMessageChat(eColorLog::kYellow, "/help to display help usage.");
 	boost::filesystem::path input(GUI_INPUT_DIRECTORY);
 	boost::filesystem::create_directory(input);
 

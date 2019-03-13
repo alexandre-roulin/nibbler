@@ -87,7 +87,6 @@ bool WidgetChat::chatCommand_() {
 		return (false);
 	if (strstr(bufferMessage_, "/help"))
 		addLog(eColorLog::kYellow,
-				"/help - show help.\n"
  "/name <name> - change name.\n"
  "/host - show local ip and dns.\n"
  "* In Game *\n"
@@ -121,7 +120,7 @@ bool WidgetChat::chatCommand_() {
 		addLog(eColorLog::kOrange, "eColorLog::kOrange");
 		addLog(eColorLog::kYellow, "eColorLog::kYellow");
 	} else
-		addLog(eColorLog::kOrange, "{%s} n'est pas une commande valide\n",
+		addLog(eColorLog::kOrange, "{%s} is not a valid entry\n",
 			   bufferMessage_);
 	return (true);
 }
