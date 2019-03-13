@@ -157,17 +157,16 @@ void GameManager::loopWorld() {
 
 void GameManager::loopUI() {
 
-	SnakeClient::boost_shared_ptr ptr(univers_.getSnakeClient().lock());
+	boost::shared_ptr<ISnakeNetwork> ptrNetwork(univers_.getSnakeNetwork().lock());
 
-	while (univers_.isOpenGame_() && univers_.displayIsAvailable()) {
+	if (!ptrNetwork) return;
+	while (univers_.isOpenGame_() && univers_.displayIsAvailable() && !ptrNetwork->allSnakeIsDead()) {
 
-		if (!ptr || ptr->allSnakeIsDead())
-			break;
+		univers_.updateDisplayUI();
 
 		if (univers_.isSwitchLib())
 			univers_.manageSwitchLibrary();
 
-		univers_.updateDisplayUI();
 	}
 
 }

@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <iostream>
 
 /** Const Variable **/
 const std::string Univers::SuccessServerHasBeenClosed = "Server now refused connection.";
@@ -60,7 +61,7 @@ Univers::Univers()
 		switchLib_(false),
 		mapSize_(MAP_DEFAULT),
 		microSecDeltaTime_(0),
-		baseSpeed(GameManager::eSpeed::Hard),
+		baseSpeed(GameManager::eSpeed::Medium),
 		borderless_(false),
 		openGame_(false),
 		barrier_(false) {
@@ -213,11 +214,20 @@ void Univers::manageSwitchLibrary() {
 		try {
 			displayManager->loadDynamicConstructor();
 			defaultAssignmentLibrary();
-		} catch (std::exception const &e) {
+		} catch (const DisplayDynamicLibrary::Error &ae ){
 			ptr->sendDataToServer(id, eHeader::kForcePause);
 			boost::this_thread::sleep_for(boost::chrono::milliseconds(100));
 			postGameDataManagement();
-			throw(e);
+			displayManager->unloadDynamicLibrary();
+			boost::asio::post(ioManager->getIo(), [this, ae](){
+				while (gui_ == nullptr);
+				std::cout << (gui_ == nullptr) << std::endl;
+				if (gui_)
+					gui_->addMessageChat(eColorLog::kRed, ae.what());
+
+			});
+		} catch (std::exception const &e) {
+
 		}
 		ptr->sendDataToServer(id, eHeader::kForcePause);
 	}

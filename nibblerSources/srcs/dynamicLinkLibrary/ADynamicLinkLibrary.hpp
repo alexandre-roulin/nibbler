@@ -231,7 +231,7 @@ ADynamicLinkLibrary<T, E, SIGNATURE>::Error::Error(
 template<typename T, typename E, typename SIGNATURE>
 ADynamicLinkLibrary<T, E, SIGNATURE>::Error::Error(
 		ADynamicLinkLibrary<T, E, SIGNATURE>::Error const &src) noexcept
-		: std::runtime_error(error_),
+		: std::runtime_error(src.error_),
 		  error_(src.error_) { error_ = src.error_; }
 
 template<typename T, typename E, typename SIGNATURE>
