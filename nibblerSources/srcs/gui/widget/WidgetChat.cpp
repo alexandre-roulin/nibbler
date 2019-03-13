@@ -98,13 +98,13 @@ bool WidgetChat::chatCommand_() {
  "F2 - change to SDL library.\n"
  "F3 - change to GLFW library.\n"
  "view top down :\n"
- "> / D - turn right.\n"
- "< / A - turn left.\n"
  "^ / W - turn up.\n"
+ "< / A - turn left.\n"
  "v / S - turn down.\n"
+ "> / D - turn right.\n"
  "view third person :\n"
  "< / A - turn left.\n"
- "^ / W - turn up.\n"
+ "^ / D - turn right.\n"
  );
 	else if (strstr(bufferMessage_, "/host")) {
 		core_.univers.sendHostname();
