@@ -4,8 +4,7 @@
 #include <map>
 #include <network/SnakeClient.hpp>
 #include <KINU/Entity.hpp>
-#include "KStar.hpp"
-
+#include <KStar/KStar.hpp>
 
 class Univers;
 

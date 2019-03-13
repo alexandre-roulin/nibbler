@@ -6,8 +6,6 @@ build
 cmake-build-release/
 cmake-build-debug/
 tmp/
-./Makefile
-./nibbler/Makefile
 ./dynamicLibraries/display_glfw/Makefile
 ./dynamicLibraries/display_sdl/Makefile
 ./dynamicLibraries/display_sfml/Makefile

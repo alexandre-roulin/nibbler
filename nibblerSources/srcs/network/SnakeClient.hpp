@@ -1,6 +1,6 @@
 #pragma once
 
-#include <KNW/ClientTCP.hpp>
+#include <KNetwork/ClientTCP.hpp>
 #include "SnakeClient.hpp"
 #include "Data.hpp"
 #include <network/Data.hpp>

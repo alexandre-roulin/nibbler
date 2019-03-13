@@ -3,7 +3,7 @@
 #include <KINU/World.hpp>
 #include <events/StartEvent.hpp>
 #include <cores/GameManager.hpp>
-#include <KNW/BaseDataType.hpp>
+#include <KNetwork/BaseDataType.hpp>
 SnakeClient::SnakeClient(
 		Univers &univers,
 		bool fromIA_

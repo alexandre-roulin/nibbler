@@ -72,7 +72,6 @@ if (GIT_FOUND AND EXISTS "${CMAKE_SOURCE_DIR}/.git")
         message(FATAL_ERROR "git submodule update --init failed with ${GIT_SUBMOD_RESULT}, please checkout submodules")
     endif ()
 endif ()
-add_subdirectory(cmake/boost-cmake)
 
 file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/dynamicLibraries")
 
@@ -193,7 +192,9 @@ include_directories(SYSTEM
         ${CMAKE_SOURCE_DIR}/extern/stb/)
 
 add_subdirectory(extern/imgui)
-
+add_subdirectory(extern/KINU)
+add_subdirectory(extern/KStar)
+add_subdirectory(extern/KNetwork)
 add_subdirectory(nibblerSources)
 add_subdirectory(dynamicLibrariesSources/display_glfw)
 add_subdirectory(dynamicLibrariesSources/display_sdl)

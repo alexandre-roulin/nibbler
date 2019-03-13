@@ -1,7 +1,7 @@
 #pragma once
 
 #include "SnakeServer.hpp"
-#include <KNW/ServerTCP.hpp>
+#include <KNetwork/ServerTCP.hpp>
 #include "Data.hpp"
 #include <network/Data.hpp>
 #include <cores/Snake.hpp>

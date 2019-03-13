@@ -22,3 +22,12 @@
 [submodule "extern/stb"]
 	path = extern/stb
 	url = https://github.com/nothings/stb.git
+[submodule "extern/KINU"]
+	path = extern/KINU
+	url = https://github.com/Krystalz42/KINU.git
+[submodule "extern/KNetwork"]
+	path = extern/KNetwork
+	url = https://github.com/Krystalz42/KNetwork
+[submodule "extern/KStar"]
+	path = extern/KStar
+	url = https://github.com/Krystalz42/KStar

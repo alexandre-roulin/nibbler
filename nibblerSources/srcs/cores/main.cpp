@@ -4,7 +4,6 @@
 #include <fstream>
 #include <gui/Gui.hpp>
 #include <boost/program_options.hpp>
-#include <ia/KStar.hpp>
 #include "cores/Test.hpp"
 
 void nibbler(Univers &univers) {

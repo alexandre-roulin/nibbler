@@ -63,27 +63,13 @@ add_executable(${NAME}
         srcs/cores/Univers.hpp
         srcs/ia/Bobby.cpp
         srcs/ia/Bobby.hpp
-        srcs/ia/KStar.cpp
-        srcs/ia/KStar.hpp
 
         incs/IDisplay.hpp
         incs/Display2D.hpp
         incs/ISound.hpp
         incs/IWidget.hpp
         incs/nibbler.hpp
-        srcs/KNW/IOManager.cpp
-        srcs/KNW/IOManager.hpp
-        srcs/KNW/BaseDataType.cpp
-        srcs/KNW/BaseDataType.hpp
-        srcs/KNW/ClientTCP.cpp
-        srcs/KNW/ClientTCP.hpp
-        srcs/KNW/Config.hpp
-        srcs/KNW/DataTCP.cpp
-        srcs/KNW/DataTCP.hpp
-        srcs/KNW/IOTCP.cpp
-        srcs/KNW/IOTCP.hpp
-        srcs/KNW/ServerTCP.cpp
-        srcs/KNW/ServerTCP.hpp
+
         srcs/network/Data.hpp
         srcs/network/SnakeClient.cpp
         srcs/network/SnakeClient.hpp
@@ -93,23 +79,9 @@ add_executable(${NAME}
         srcs/systems/SpriteSystem.hpp
         srcs/gui/widget/WidgetConnect.cpp
         srcs/gui/widget/WidgetConnect.hpp
-        srcs/KINU/Component.cpp
-        srcs/KINU/Component.hpp
-        srcs/KINU/Entity.cpp
-        srcs/KINU/Entity.hpp
-        srcs/KINU/EventsManager.cpp
-        srcs/KINU/EventsManager.hpp
-        srcs/KINU/Pool.hpp
-        srcs/KINU/SystemsManager.cpp
-        srcs/KINU/SystemsManager.hpp
-        srcs/KINU/World.cpp
-        srcs/KINU/World.hpp
-        srcs/KINU/Config.hpp
         srcs/ia/Bobby.cpp
         srcs/ia/Bobby.hpp
         incs/Sprite.hpp
-        srcs/ia/KStar.cpp
-        srcs/ia/KStar.hpp
         incs/MutantGrid.tpp
         srcs/gui/widget/SpriteColorProperties.hpp
         srcs/cores/Snake.hpp
@@ -138,4 +110,7 @@ target_link_libraries(${NAME} PRIVATE Boost::thread)
 target_link_libraries(${NAME} PRIVATE Boost::program_options)
 target_link_libraries(${NAME} PRIVATE ${SFML_LIBRARIES})
 target_link_libraries(${NAME} PRIVATE imgui-sfml)
+target_link_libraries(${NAME} PRIVATE KStar)
+target_link_libraries(${NAME} PRIVATE KINU)
+target_link_libraries(${NAME} PRIVATE KNetwork)
 target_link_libraries(${NAME} PRIVATE ${OPENGL_LIBRARIES})

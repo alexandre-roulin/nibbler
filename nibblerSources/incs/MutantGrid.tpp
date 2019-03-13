@@ -1,5 +1,5 @@
-#ifndef NIBBLER_MUTANTGRID_HPP
-#define NIBBLER_MUTANTGRID_HPP
+#ifndef GRID_HPP
+#define GRID_HPP
 
 #include <vector>
 #include <assert.h>
@@ -130,4 +130,4 @@ bool MutantGrid<T>::isFreeSlot(size_t y, size_t x, T clear) const {
 }
 
 
-#endif //NIBBLER_MUTANTGRID_HPP
+#endif //GRID_HPP
