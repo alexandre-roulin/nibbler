@@ -146,11 +146,10 @@ public:
 
 	std::string toString() {
 		std::string message;
-		message.append("[");
-		message.append(name_);
-		message.append("] ");
-		message.append(chat_);
-		message.resize(SIZEOF_CHAT_PCKT);
+		message.append("[", 1);
+		message.append(name_, NAME_BUFFER);
+		message.append("] ", 2);
+		message.append(chat_, CHAT_BUFFER);
 		return message;
 	}
 };

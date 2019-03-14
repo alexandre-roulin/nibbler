@@ -191,12 +191,13 @@ void Univers::defaultAssignmentLibrary() {
 
 	MutantGrid<eSprite> grid(mapSize_);
 	grid.fill(eSprite::kGround);
-
+	SnakeClient::boost_shared_ptr client(snakeClient_);
+	
 	try {
 		displayManager->loadDynamicLibrary(
 				mapSize_, mapSize_,
 				displayManager->getNextLibraryInfo().title.c_str(),
-				(snakeClient_ ? snakeClient_->getSnake().direction : eDirection::kNorth));
+				(client ? client->getSnake().direction : eDirection::kNorth));
 		displayManager->getInstance()->setBackground(grid);
 		displayManager->getInstance()->registerCallbackAction(std::bind(&Univers::callbackAction, this, std::placeholders::_1));
 	} catch (std::exception const &e){

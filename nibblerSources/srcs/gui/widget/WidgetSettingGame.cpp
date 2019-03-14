@@ -59,6 +59,8 @@ WidgetSettingGame::getDifficultyDisplay_(const GameManager::eSpeed s) {
 			return difficultyDisplay[2];
 		case GameManager::Impossible:
 			return difficultyDisplay[3];
+		default:
+			exit(1);
 	}
 }
 
