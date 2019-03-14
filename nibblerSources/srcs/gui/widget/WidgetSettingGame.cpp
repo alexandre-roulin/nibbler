@@ -46,9 +46,6 @@ void WidgetSettingGame::beginContent_() {
 	if (ImGui::Checkbox("Borderless", &borderless))
 		core_.univers.switchBorderless();
 
-	bool barrier = core_.univers.isBarrier_();
-	if (ImGui::Checkbox("Barrier", &barrier))
-		core_.univers.switchBarrier();
 }
 
 const std::string &
