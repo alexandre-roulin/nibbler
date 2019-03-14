@@ -27,7 +27,7 @@
 	url = https://github.com/Krystalz42/KINU.git
 [submodule "extern/KNetwork"]
 	path = extern/KNetwork
-	url = https://github.com/Krystalz42/KNetwork
+	url = https://github.com/krystalz42/KNetwork
 [submodule "extern/KStar"]
 	path = extern/KStar
 	url = https://github.com/Krystalz42/KStar
