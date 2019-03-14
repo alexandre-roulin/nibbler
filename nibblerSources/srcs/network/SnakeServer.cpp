@@ -352,12 +352,14 @@ void SnakeServer::showScore() {
 			"rd",
 			"th"
 	};
-	std::vector<Snake> vector(snakeArray_->data(), snakeArray_->data() + 8);
 
+	std::vector<Snake> vector(8);
+
+	size_t n = 0;
+	std::for_each(vector.begin(), vector.end(), [&n, this](Snake &snake){ return snake.deepCopy((*snakeArray_)[n++]);});
 	std::sort(vector.begin(), vector.end(), [](Snake const &lhs, Snake const &rhs){
 		return lhs.score_ > rhs.score_;
 	});
-	size_t n = 0;
 	std::for_each(vector.begin(), vector.end(), [this, &n, &position](Snake const & snake){
 		if (snake.isValid && snake.isInGame) {
 			std::string s;
