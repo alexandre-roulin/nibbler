@@ -671,7 +671,11 @@ const GameManager::eSpeed &Univers::getBaseSpeed() const {
 }
 
 void Univers::setBaseSpeed(const GameManager::eSpeed &baseSpeed) {
-	Univers::baseSpeed = baseSpeed;
+	if (baseSpeed == GameManager::eSpeed::Easy ||
+	baseSpeed == GameManager::eSpeed::Medium ||
+	baseSpeed == GameManager::eSpeed::Hard ||
+	baseSpeed == GameManager::eSpeed::Impossible)
+		Univers::baseSpeed = baseSpeed;
 }
 
 std::string Univers::getIPAddress() {

@@ -133,7 +133,6 @@ class ChatInfo {
 public:
 	ChatInfo() {
 		std::memset(chat_, 0, CHAT_BUFFER);
-		std::memset(offset_, 0, OFFSET);
 		std::memset(name_, 0, NAME_BUFFER);
 	}
 	ChatInfo(std::string const &name, std::string const &chat) {
@@ -143,13 +142,18 @@ public:
 	char offset_[OFFSET];
 	char chat_[CHAT_BUFFER];
 	char name_[NAME_BUFFER];
+	size_t _strlen(const char *string, size_t max) {
+		size_t index = 0;
+		while (string[index] && index < max) index++;
+		return index;
+	}
 
 	std::string toString() {
 		std::string message;
 		message.append("[", 1);
-		message.append(name_, NAME_BUFFER);
+		message.append(name_, _strlen(name_, NAME_BUFFER - 1));
 		message.append("] ", 2);
-		message.append(chat_, CHAT_BUFFER);
+		message.append(chat_, _strlen(chat_, CHAT_BUFFER - 1));
 		return message;
 	}
 };
