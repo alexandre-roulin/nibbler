@@ -15,7 +15,7 @@
 
 /** Const Variable **/
 const std::string Univers::SuccessServerHasBeenClosed = "Server now refused connection.";
-const std::string Univers::SuccessServerIsCreate = "Server is online on port %d.";
+const std::string Univers::SuccessServerIsCreate = "Server is online on port ";
 const std::string Univers::SuccessIAIsCreate = "IA is online.";
 const std::string Univers::SuccessClientIsConnected = "Client is connected.";
 const std::string Univers::SuccessClientIsCreate = "Client is online";
@@ -24,7 +24,7 @@ const std::string Univers::SuccessServerIsDelete = "Server is delete.";
 const std::string Univers::SuccessBorderlessSet = "Borderless is set.";
 const std::string Univers::SuccessBorderlessUnset = "Borderless is unset.";
 const std::string Univers::SuccessClientIsDisconnect = "Client is disconnect.";
-const std::string Univers::SuccessResizeMapTo = "Map has been resize to %d.";
+const std::string Univers::SuccessResizeMapTo = "Map has been resize to ";
 
 const std::string Univers::WarningClientExist = "Client is already in place.";
 const std::string Univers::WarningServerCreateIA = "Only the server owner can create IA.";
@@ -292,7 +292,7 @@ void Univers::createServer(const std::string dns, unsigned int port) {
 		try {
 			snakeServer_ = SnakeServer::create(*this, dns, port);
 			if (gui_)
-			gui_->addMessageChat(eColorLog::kGreen, SuccessServerIsCreate + std::to_string(snakeServer_->getPort_()));
+			gui_->addMessageChat(eColorLog::kGreen, SuccessServerIsCreate + std::to_string(snakeServer_->getPort_()) + "." );
 		} catch (const boost::system::system_error &ex) {
 			if (boost::system::errc::address_in_use == ex.code() && gui_) {
 				gui_->addMessageChat(eColorLog::kRed, ErrorServerAlreadyUseOnThisPort);
@@ -656,7 +656,7 @@ void Univers::sendOpenGameToServer() {
 void Univers::updateSizeMap() {
 	boost::shared_ptr<ISnakeNetwork> ptr_network(getSnakeNetwork().lock());
 
-	gui_->addMessageChat(eColorLog::kGreen, SuccessResizeMapTo, mapSize_);
+	gui_->addMessageChat(eColorLog::kGreen, SuccessResizeMapTo + std::to_string(mapSize_) + ".");
 	if (ptr_network)
 		ptr_network->notifyMapSize();
 }
