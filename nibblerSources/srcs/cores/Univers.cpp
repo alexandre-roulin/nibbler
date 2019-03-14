@@ -563,10 +563,16 @@ void Univers::setOpenGame_(bool openGame) {
 
 void Univers::sendHostname() {
 	if (gui_) {
+		std::stringstream ss;
+		std::string s;
 		char hostname[64];
 		gethostname(hostname, 64);
 		gui_->addMessageChat(std::string("[ Hostname ] ") + hostname);
-		gui_->addMessageChat(std::string("[ IP Address ] ") + getIPAddress());
+		gui_->addMessageChat(std::string("[ Local IP Address ] ") + getIPAddress());
+		std::system("curl \"http://myexternalip.com/raw\" 2>&- > /tmp/external_ip");
+		ss << std::ifstream("/tmp/external_ip").rdbuf();
+		ss >> s;
+		gui_->addMessageChat(std::string("[ Extern IP Address ] ") + s);
 	}
 }
 

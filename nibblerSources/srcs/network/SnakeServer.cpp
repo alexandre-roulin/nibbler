@@ -21,7 +21,8 @@ inline void SnakeServer::updateInput() {
 	if (pause_ || std::any_of((*snakeArray_).begin(), (*snakeArray_).end(), [](const Snake & snake){ return snake.isValid && snake.isInGame && snake.isAlive && !snake.isUpdate; } )) return ;
 	std::for_each((*snakeArray_).begin(), (*snakeArray_).end(), [](Snake &snake){
 		snake.isUpdate = false;
-		snake.score_ += GameManager::ScaleByFrame;
+		if (snake.isAlive)
+			snake.score_ += GameManager::ScaleByFrame;
 	});
 
 	for (auto infoArray : foodInfoArray) {
