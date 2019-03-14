@@ -6,6 +6,8 @@ WidgetChat::WidgetChat(Gui &core) :
 	bzero(bufferMessage_, IM_ARRAYSIZE(bufferMessage_));
 }
 void WidgetChat::beginContent_() {
+	std::lock_guard<std::mutex> guard(mutex_);
+
 	ImGui::BeginChild("scrolling", ImVec2(0, ImGui::GetWindowHeight() - 4 * ImGui::GetFrameHeightWithSpacing()), false,
 					  ImGuiWindowFlags_HorizontalScrollbar);
 	for (auto const &log : log_) {
@@ -127,6 +129,8 @@ bool WidgetChat::chatCommand_() {
 }
 
 void WidgetChat::addLog(eColorLog color, std::string const &log) {
+	std::lock_guard<std::mutex> guard(mutex_);
+
 	log_.push_back(colorLog(color, log));
 	scrollChat_ = true;
 }

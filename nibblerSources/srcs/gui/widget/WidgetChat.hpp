@@ -27,6 +27,7 @@ private:
 	std::vector<colorLog> log_;
 	bool scrollChat_;
 	char bufferMessage_[CHAT_BUFFER];
+	std::mutex mutex_;
 
 
 	void beginContent_() override;
