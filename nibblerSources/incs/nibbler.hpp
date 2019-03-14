@@ -6,7 +6,10 @@
 #include <boost/array.hpp>
 
 #ifndef NIBBLER_ROOT_PROJECT_PATH
-	#define NIBBLER_ROOT_PROJECT_PATH 0
+	#define NIBBLER_ROOT_PROJECT_PATH ""
+#endif
+#ifndef NIBBLER_BUILD_PROJECT_PATH
+	#define NIBBLER_BUILD_PROJECT_PATH ""
 #endif
 
 #define SNAKE_MAX 8

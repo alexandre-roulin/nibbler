@@ -1,12 +1,16 @@
 #include "SoundDynamicLibrary.hpp"
+#include <boost/filesystem.hpp>
+#include <nibbler.hpp>
 
 SoundDynamicLibrary::SoundDynamicLibrary() :
 		ADynamicLinkLibrary< ISound, eSound, ISound *(*)() >(kSoundSfmlLibrary),
 		noise_(false),
 		musique_(false) {
+	boost::filesystem::path pathDynamicLibraries(NIBBLER_BUILD_PROJECT_PATH);
+
 	ADynamicLinkLibrary< ISound, eSound, ISound *(*)() >::libraryInfo.reserve(2);
-	ADynamicLinkLibrary< ISound, eSound, ISound *(*)() >::libraryInfo.emplace_back("SFML", "dynamicLibraries/libsound_sfml.so", eSound::kSoundSfmlLibrary);
-	ADynamicLinkLibrary< ISound, eSound, ISound *(*)() >::libraryInfo.emplace_back("SDL", "dynamicLibraries/libsound_sdl.so", eSound::kSoundSdlLibrary);
+	ADynamicLinkLibrary< ISound, eSound, ISound *(*)() >::libraryInfo.emplace_back("SFML", (pathDynamicLibraries / "dynamicLibraries/libsound_sfml.so").generic_path().c_str(), eSound::kSoundSfmlLibrary);
+	ADynamicLinkLibrary< ISound, eSound, ISound *(*)() >::libraryInfo.emplace_back("SDL", (pathDynamicLibraries / "dynamicLibraries/libsound_sdl.so").generic_path().c_str(), eSound::kSoundSdlLibrary);
 
 	setNextKInstance(kSoundSfmlLibrary);
 }
