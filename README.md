@@ -7,7 +7,7 @@ Project work with SDL/SFML/GLFW Display. Multiplayer game. Manage data with a `d
 ## Getting Started
 
 ```
-git clone https://github.com/krystalz/nibbler.git
+git clone https://github.com/krystalz42/nibbler.git
 ```
 
 ### Prerequisites
