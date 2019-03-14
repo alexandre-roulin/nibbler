@@ -103,6 +103,9 @@ bool WidgetChat::chatCommand_() {
  "view third person :\n"
  "< / A - turn left.\n"
  "^ / D - turn right.\n"
+ "glfw special key :\n"
+ "h - helper column and rows view"
+ "n - change view (top/down - 3rd person - )" //todo
  );
 	else if (strstr(bufferMessage_, "/host")) {
 		core_.univers.sendHostname();

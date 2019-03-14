@@ -51,8 +51,6 @@ public:
 
 	void closeAcceptorServer();
 
-	virtual void notifyBarrier();
-
 	void showScore();
 private:
 	SnakeServer(Univers &univers);

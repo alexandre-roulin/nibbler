@@ -25,5 +25,4 @@ private:
 
 	Univers &univers_;
 	MutantGrid<bool> tempGrid;
-	void createTree();
 };
