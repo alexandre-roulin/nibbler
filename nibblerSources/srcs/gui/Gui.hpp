@@ -34,7 +34,7 @@ public:
 	Gui &operator=(const Gui &) = delete;
 	Gui(const Gui &) = delete;
 
-	void						mainLoop(void);
+	void						mainLoop();
 	template < typename ... Args >
 	void addMessageChat(eColorLog color, std::string const &log, Args ... args) {
 		chat_.addLog(color, log.c_str(), args...);
@@ -44,7 +44,7 @@ public:
 		chat_.addLog(eColorLog::kNone, log.c_str(), args...);
 	}
 
-	void 						exit(void);
+	void 						exit();
 	sf::Vector2<unsigned int>	positionByPercent(sf::Vector2<unsigned int> const &percent) const;
 
 	Univers						&univers;
@@ -58,7 +58,6 @@ private:
 
 	//				GUI				//
 	boost::filesystem::path		pathRessources_;
-	std::ofstream				input_;
 
 	sf::Vector2<unsigned int>	winSize_;
 	sf::RenderWindow			win_;

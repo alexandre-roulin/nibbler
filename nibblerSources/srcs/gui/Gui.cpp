@@ -8,7 +8,6 @@
 #include "gui/widget/WidgetConnect.hpp"
 #include "gui/widget/WidgetServerPannel.hpp"
 #include "gui/widget/WidgetEtat.hpp"
-#include "cores/Test.hpp"
 #include <network/SnakeServer.hpp>
 
 Gui::Gui(Univers &univers) :
@@ -19,19 +18,7 @@ win_(sf::VideoMode(winSize_.x, winSize_.y), "Project Snake"),
 io_(createContext_()),
 chat_(*this) {
 	addMessageChat(eColorLog::kYellow, "/help to display help usage.");
-	boost::filesystem::path input(GUI_INPUT_DIRECTORY);
-	boost::filesystem::create_directory(input);
-
 	io_.IniFilename = NULL;
-
-	time_t t;
-	tm tm;
-	t = std::time(nullptr);
-	tm = *std::localtime(&t);
-
-	std::ostringstream oss;
-	oss << std::put_time(&tm, "%d-%m_%H-%M-%S");
-	input_.open((input / "input_").generic_string() + oss.str());
 }
 
 ImGuiIO			&Gui::createContext_(void) {
@@ -48,7 +35,6 @@ ImGuiIO			&Gui::createContext_(void) {
 
 Gui::~Gui() {
 	ImGui::SFML::Shutdown();
-	input_.close();
 }
 
 boost::filesystem::path const	&Gui::getPathRessources() const {
@@ -100,53 +86,33 @@ void					Gui::processEvent_(sf::Event const &event) {
 		switch (event.key.code) {
 			case sf::Keyboard::A:
 				univers.createBobby();
-				input_ << "A";
-				Test::getInstance().writeInput("A");
 				break;
 			case sf::Keyboard::B:
 				univers.switchBorderless();
-				input_ << "B";
-				Test::getInstance().writeInput("B");
 				break;
 			case sf::Keyboard::C:
 				univers.createClient();
-				input_ << "C";
-				Test::getInstance().writeInput("C");
 				break;
 			case sf::Keyboard::D:
 				univers.deleteClient();
-				input_ << "D";
-				Test::getInstance().writeInput("D");
 				break;
 			case sf::Keyboard::E:
 				univers.connect(univers.getIPAddress(), univers.isServer() ? std::to_string(univers.getSnakeServer().getPort_()) : DEFAULT_PORT);
-				input_ << "E";
-				Test::getInstance().writeInput("E");
 				break;
 			case sf::Keyboard::R:
 				univers.switchReady();
-				input_ << "R";
-				Test::getInstance().writeInput("R");
 				break;
 			case sf::Keyboard::S:
 				univers.createServer(univers.getIPAddress(), DEFAULT_PORT_NU);
-				input_ << "S";
-				Test::getInstance().writeInput("S");
 				break;
 			case sf::Keyboard::W:
 				univers.deleteServer();
-				input_ << "W";
-				Test::getInstance().writeInput("W");
 				break;
 			case sf::Keyboard::X:
 				univers.sendOpenGameToServer();
-				input_ << "X";
-				Test::getInstance().writeInput("X");
 				break;
 			case sf::Keyboard::H:
 				univers.sendHostname();
-				input_ << "H";
-				Test::getInstance().writeInput("H");
 				break;
 			default:
 				break;
@@ -169,12 +135,9 @@ void			Gui::mainLoop()
 	WidgetSettingGame settings(*this);
 	WidgetOption optionSnake(*this);
 
-	Test::getInstance().setInputCallback(callbackTest, reinterpret_cast<void*>(&univers));
-
-	while (Test::getInstance().needUpdate() || (win_.isOpen() && !univers.isOpenGame_())) {
+	while ((win_.isOpen() && !univers.isOpenGame_())) {
 
 		ImGui::SFML::Update(win_, deltaClock_.restart());
-		Test::getInstance().update();
 
 		updateEvent_();
 
