@@ -114,9 +114,6 @@ void SnakeClient::changeName(std::string const &name) {
 }
 
 
-void SnakeClient::notifyBarrier() {
-	sendDataToServer(univers_.isBarrier_(), eHeader::kBarrier);
-}
 
 void SnakeClient::notifyGameSpeed() {
 	sendDataToServer(univers_.getBaseSpeed(), eHeader::kGameSpeed);
@@ -131,9 +128,9 @@ void SnakeClient::notifyMapSize() {
 }
 
 bool SnakeClient::allSnakeIsReady() const {
-	return !std::none_of((*snakeArray).begin(), (*snakeArray).end(),
+	return std::all_of((*snakeArray).begin(), (*snakeArray).end(),
 						[](Snake const &snake) {
-							return snake.isValid && snake.isReady;
+							return !snake.isValid || (snake.isValid && snake.isReady);
 						});;
 }
 
@@ -183,9 +180,6 @@ void SnakeClient::disconnect() {
 
 /***** Callback *****/
 
-void SnakeClient::callbackBarrier(bool barrier) {
-	univers_.setBarrier_(barrier);
-}
 
 void SnakeClient::callbackGameSpeed(GameManager::eSpeed speed) {
 	univers_.setBaseSpeed(speed);
@@ -438,7 +432,4 @@ void SnakeClient::build() {
 			([thisWeakPtr](GameManager::eSpeed speed) { auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackGameSpeed(speed); }),
 			eHeader::kGameSpeed);
 
-	clientTCP_->getDataTCP_().addDataType<bool>(
-			([thisWeakPtr](bool barrier) { auto myPtr = thisWeakPtr.lock(); if(myPtr) myPtr->callbackBarrier(barrier); }),
-			eHeader::kBarrier);
 }

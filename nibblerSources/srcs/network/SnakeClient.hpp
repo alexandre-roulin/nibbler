@@ -64,8 +64,6 @@ public:
 
 	void killSnake(uint16_t id);
 
-	virtual void notifyBarrier();
-
 	void changeStateReady(bool change);
 
 	bool isReady() const;
@@ -82,8 +80,6 @@ private:
 	SnakeClient(Univers &univers, bool fromIA);
 
 	void build();
-
-	void callbackBarrier(bool barrier);
 
 	void callbackGameSpeed(GameManager::eSpeed speed);
 

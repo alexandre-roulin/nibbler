@@ -38,7 +38,7 @@ void WidgetConnect::beginContent_() {
 
 	if (!(core_.univers.isServer() && client_)
 		&& !(!ptrClient && client_)) {
-		if (ImGui::InputText("DNS", dnsBuffer_,
+		if (ImGui::InputText("IP", dnsBuffer_,
 							 IM_ARRAYSIZE(dnsBuffer_),
 							 ImGuiInputTextFlags_EnterReturnsTrue)) {
 			if (!strcmp(dnsBuffer_, ""))
