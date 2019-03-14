@@ -198,6 +198,7 @@ void SnakeServer::callbackChatInfo(ChatInfo chatInfo) {
 void SnakeServer::callbackFood(FoodInfo foodInfo) {
 	std::lock_guard<std::mutex> guard(mutex_);
 	if (foodInfo.id_ >= 0 && foodInfo.id_ < 8) {
+		std::cout << "Add Food to id : " << (*snakeArray_)[foodInfo.id_].name << " " << foodInfo.id_ << std::endl;
 		(*snakeArray_)[foodInfo.id_].score_ += GameManager::ScaleByRealFood * 2;
 	}
 	foodInfoArray.push_back(foodInfo);
@@ -352,22 +353,23 @@ void SnakeServer::showScore() {
 			"th"
 	};
 	std::vector<Snake> vector(snakeArray_->data(), snakeArray_->data() + 8);
-	std::vector<Snake>::iterator it = std::remove_if(vector.begin(), vector.end(), [](Snake const &snake){ return !(snake.isValid && snake.isInGame);});
 
-	std::sort(vector.begin(), it, [](Snake const &lhs, Snake const &rhs){
+	std::sort(vector.begin(), vector.end(), [](Snake const &lhs, Snake const &rhs){
 		return lhs.score_ > rhs.score_;
 	});
 	size_t n = 0;
-	std::for_each(vector.begin(), it, [this, &n, &position](Snake const & snake){
-		std::string s;
-		s = "is in ";
-		s += static_cast<char>(n + 49);
-		s += position[(n > 3 ? 3 : n)];
-		s += " position with ";
-		s += std::to_string(snake.score_);
-		s += " score.";
-		n++;
-		serverTCP_->writeDataToOpenConnections(ChatInfo(snake.name, s.c_str()), eHeader::kChat);
+	std::for_each(vector.begin(), vector.end(), [this, &n, &position](Snake const & snake){
+		if (snake.isValid && snake.isInGame) {
+			std::string s;
+			s = "is in ";
+			s += static_cast<char>(n + 49);
+			s += position[(n > 3 ? 3 : n)];
+			s += " position with ";
+			s += std::to_string(snake.score_);
+			s += " score.";
+			n++;
+			serverTCP_->writeDataToOpenConnections(ChatInfo(snake.name, s.c_str()), eHeader::kChat);
+		}
 	});
 	std::for_each(snakeArray_->begin(), snakeArray_->end(), [](Snake &snake){ snake.score_ = 0; });
 }
