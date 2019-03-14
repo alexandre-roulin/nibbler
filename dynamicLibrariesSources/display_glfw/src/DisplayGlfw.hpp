@@ -42,7 +42,7 @@ public:
     };
 
 	DisplayGlfw() = delete;
-    DisplayGlfw(int width, int height, char const *windowName);
+    DisplayGlfw(int width, int height, char const *windowName, eDirection direction);
 	~DisplayGlfw() override;
 	DisplayGlfw &operator=(DisplayGlfw const &rhs) = delete;
 	DisplayGlfw(DisplayGlfw const &src) = delete;
@@ -53,6 +53,7 @@ public:
 	eDirection getDirection() const override;
 	void		drawGrid(MutantGrid< eSprite > const &grid) override;
 	void		setBackground(MutantGrid< eSprite > const &grid) override;
+	void		setDirection(eDirection direction) override;
 	void		registerCallbackAction(std::function<void(eAction)>) override;
 
 
@@ -114,6 +115,7 @@ private:
 extern "C" {
 IDisplay *newInstance(int width,
                      int height,
-                     char const *windowName);
+                     char const *windowName,
+                     eDirection direction);
 void deleteInstance(IDisplay *display);
 }

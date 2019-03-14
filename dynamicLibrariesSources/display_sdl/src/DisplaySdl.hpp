@@ -26,7 +26,8 @@ public:
 	DisplaySdl() = delete;
 	DisplaySdl(int width,
 			   int height,
-			   char const *windowName);
+			   char const *windowName,
+			   eDirection direction);
 	~DisplaySdl() override;
 	DisplaySdl &operator=(DisplaySdl const &rhs) = delete;
 	DisplaySdl(DisplaySdl const &src) = delete;
@@ -36,7 +37,8 @@ public:
 	void update() override;
 	void drawGrid(MutantGrid<eSprite> const &grid) override;
 	void setBackground(MutantGrid<eSprite> const &grid) override;
-	eDirection getDirection(void) const override;
+	eDirection getDirection() const override;
+	void setDirection(eDirection direction) override;
 	void registerCallbackAction(std::function<void(eAction)> function) override;
 
 private:
@@ -72,7 +74,8 @@ private:
 extern "C" {
 IDisplay *newInstance(int width,
 					 int height,
-					 char const *windowName);
+					 char const *windowName,
+					 eDirection direction);
 void deleteInstance(IDisplay *display);
 }
 

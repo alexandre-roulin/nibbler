@@ -64,7 +64,8 @@ Univers::Univers()
 		baseSpeed(GameManager::eSpeed::Medium),
 		borderless_(false),
 		openGame_(false),
-		barrier_(false) {
+		barrier_(false),
+		lastDirection_(kNorth) {
 }
 
 void Univers::resetData() {
@@ -160,9 +161,11 @@ void Univers::startNewGame() {
 
 void Univers::manageSnakeClientInput() {
 	SnakeClient::boost_shared_ptr ptr(snakeClient_);
-	eDirection direction = eDirection::kNorth;
-	if (displayManager->hasLibraryLoaded())
+	eDirection direction = lastDirection_;
+	if (displayManager->hasLibraryLoaded()) {
 		direction = displayManager->getInstance()->getDirection();
+		lastDirection_ = direction;
+	}
 
 	if (ptr && ptr->isOpen() && getGameManager().getWorld_()->getEntitiesManager().hasEntityByTagId(ptr->getId_() + eTag::kHeadTag) && !ptr->isIa()) {
 		ptr->sendDirection(direction);
@@ -187,22 +190,20 @@ void Univers::postGameDataManagement() {
 	resetData();
 }
 
-void Univers::defaultAssignmentLibrary() {
+void Univers::defaultAssignmentLibrary(eDirection direction) {
 
 	MutantGrid<eSprite> grid(mapSize_);
 	grid.fill(eSprite::kGround);
 
 	try {
-		displayManager->loadDynamicLibrary(mapSize_,mapSize_, displayManager->getNextLibraryInfo().title.c_str());
+		displayManager->loadDynamicLibrary(mapSize_,mapSize_, displayManager->getNextLibraryInfo().title.c_str(), direction);
+		//displayManager->getInstance()->setDirection(direction);
+		displayManager->getInstance()->setBackground(grid);
+		displayManager->getInstance()->registerCallbackAction(std::bind(&Univers::callbackAction, this, std::placeholders::_1));
 	} catch (std::exception const &e){
 		throw (std::runtime_error("Cant load IDisplay"));
 	}
-
-	displayManager->getInstance()->setBackground(grid);
-	displayManager->getInstance()->registerCallbackAction(
-			std::bind(&Univers::callbackAction, this, std::placeholders::_1));
 }
-
 
 void Univers::manageSwitchLibrary() {
 	SnakeClient::boost_shared_ptr ptr(getSnakeClient().lock());
@@ -210,8 +211,11 @@ void Univers::manageSwitchLibrary() {
 		int16_t id = ptr->getId_();
 		ptr->sendDataToServer(id, eHeader::kForcePause);
 		try {
+			eDirection direction = eDirection::kNorth;
+			if (displayManager && displayManager->getInstance())
+				direction = displayManager->getInstance()->getDirection();
 			displayManager->loadDynamicConstructor();
-			defaultAssignmentLibrary();
+			defaultAssignmentLibrary(direction);
 		} catch (const DisplayDynamicLibrary::Error &ae ){
 			ptr->sendDataToServer(id, eHeader::kForcePause);
 			boost::this_thread::sleep_for(boost::chrono::milliseconds(100));

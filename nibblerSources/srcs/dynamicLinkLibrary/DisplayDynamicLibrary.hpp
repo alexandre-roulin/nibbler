@@ -9,7 +9,7 @@ enum eDisplay {
 	kDisplayGlfwLibrary
 };
 
-class DisplayDynamicLibrary : public ADynamicLinkLibrary< IDisplay, eDisplay, IDisplay *(*)(int, int, char const *) > {
+class DisplayDynamicLibrary : public ADynamicLinkLibrary< IDisplay, eDisplay, IDisplay *(*)(int, int, char const *, eDirection) > {
 public:
 	DisplayDynamicLibrary();
 	virtual ~DisplayDynamicLibrary() = default;
