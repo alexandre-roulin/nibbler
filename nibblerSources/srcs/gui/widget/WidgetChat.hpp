@@ -20,7 +20,7 @@ public:
 	WidgetChat &operator=(const WidgetChat &) = default;
 	WidgetChat(const WidgetChat &) = default;
 
-	void addLog(eColorLog color, char const *format, ...);
+	void addLog(eColorLog color, std::string const &log);
 
 private:
 	ImGuiTextBuffer bufferChat_;

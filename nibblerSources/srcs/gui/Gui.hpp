@@ -35,14 +35,8 @@ public:
 	Gui(const Gui &) = delete;
 
 	void						mainLoop();
-	template < typename ... Args >
-	void addMessageChat(eColorLog color, std::string const &log, Args ... args) {
-		chat_.addLog(color, log.c_str(), args...);
-	}
-	template < typename ... Args >
-	void addMessageChat(std::string const &log, Args ... args) {
-		chat_.addLog(eColorLog::kNone, log.c_str(), args...);
-	}
+	void						addMessageChat(eColorLog color, std::string const &log);
+	void						addMessageChat(std::string const &log);
 
 	void 						exit();
 	sf::Vector2<unsigned int>	positionByPercent(sf::Vector2<unsigned int> const &percent) const;
