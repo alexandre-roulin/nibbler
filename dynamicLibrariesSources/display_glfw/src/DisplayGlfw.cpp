@@ -13,8 +13,9 @@
 
 IDisplay *newInstance(int width,
 					 int height,
-					 char const *windowName) {
-	return (new DisplayGlfw(width, height, windowName));
+					 char const *windowName,
+					 eDirection direction) {
+	return (new DisplayGlfw(width, height, windowName, direction));
 }
 
 void deleteInstance(IDisplay *display) {
@@ -23,10 +24,11 @@ void deleteInstance(IDisplay *display) {
 
 DisplayGlfw::DisplayGlfw(int width,
 						 int height,
-						 char const *windowName) :
+						 char const *windowName,
+						 eDirection direction) :
 		Glfw(windowName, DISPLAY_GLFW_WIN_WIDTH, DISPLAY_GLFW_WIN_HEIGHT),
 		pathRoot_(NIBBLER_ROOT_PROJECT_PATH),
-		direction_(kNorth),
+		direction_(direction),
 		winTileSize_(Vector2D<int>(width, height)),
 		tileBackground_(winTileSize_.getX(), winTileSize_.getY()),
 		background_(winTileSize_.getX(), winTileSize_.getY()),
@@ -448,17 +450,17 @@ void DisplayGlfw::update() {
 }
 
 eDirection DisplayGlfw::getDirection() const {
-	return (direction_);
+	return direction_;
+}
+
+void DisplayGlfw::setDirection(eDirection direction) {
+	direction_ = direction;
 }
 
 DisplayGlfw::GlfwConstructorException::~GlfwConstructorException() noexcept = default;
-
 DisplayGlfw::GlfwConstructorException::GlfwConstructorException() noexcept :
 		error_("Error on Glfw constructor") {}
-
 DisplayGlfw::GlfwConstructorException::GlfwConstructorException(
 		std::string const &s) noexcept :
 		error_(s) {}
-
-const char *
-DisplayGlfw::GlfwConstructorException::what() const noexcept { return (error_.c_str()); }
+const char * DisplayGlfw::GlfwConstructorException::what() const noexcept { return (error_.c_str()); }

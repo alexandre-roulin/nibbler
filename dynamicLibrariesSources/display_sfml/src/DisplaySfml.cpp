@@ -5,8 +5,9 @@
 
 IDisplay *newInstance(int width,
 					 int height,
-					 char const *windowName) {
-	return (new DisplaySfml(width, height, windowName));
+					 char const *windowName,
+					  eDirection direction) {
+	return (new DisplaySfml(width, height, windowName, direction));
 }
 
 void deleteInstance(IDisplay *display) {
@@ -15,9 +16,10 @@ void deleteInstance(IDisplay *display) {
 
 DisplaySfml::DisplaySfml(int width,
 						 int height,
-						 char const *windowName) :
+						 char const *windowName,
+						 eDirection direction) :
 		exit_(false),
-		direction_(kNorth),
+		direction_(direction),
 		tileSize_(DISPLAY_DEFAULT_TILE_SIZE),
 		winTileSize_(Vector2D<int>(width, height)),
 		winPixelSize_(Vector2D<int>(width * tileSize_, height * tileSize_)),
@@ -177,12 +179,16 @@ void DisplaySfml::update() {
 	}
 }
 
-eDirection DisplaySfml::getDirection(void) const {
-	return (direction_);
+eDirection DisplaySfml::getDirection() const {
+	return direction_;
+}
+
+void DisplaySfml::setDirection(eDirection direction) {
+	direction_ = direction;
 }
 
 bool DisplaySfml::exit(void) const {
-	return (exit_);
+	return exit_;
 }
 
 void

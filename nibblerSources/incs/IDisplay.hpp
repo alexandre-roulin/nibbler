@@ -8,9 +8,6 @@
 #define SPRITE_WALL 8 * SIZE_LINE_TILESET + 1
 #define SPRITE_TREE 8 * SIZE_LINE_TILESET + 1
 #define SPRITE_FOOD SIZE_LINE_TILESET
-#define PATH_TILESET "snake_tileset.png"
-
-#define DISPLAY_DEFAULT_TILESET_PATH "snake_tileset.png"
 #define DISPLAY_DEFAULT_TILE_SIZE 32
 
 
@@ -34,7 +31,7 @@ public:
 
 	virtual ~IDisplay() {}
 
-	virtual bool exit(void) const = 0;
+	virtual bool exit() const = 0;
 
 	virtual void render() = 0;
 
@@ -44,7 +41,9 @@ public:
 
 	virtual void setBackground(MutantGrid<eSprite> const &grid) = 0;
 
-	virtual eDirection getDirection(void) const = 0;
+	virtual eDirection getDirection() const = 0;
+
+	virtual void setDirection(eDirection direction) = 0;
 
 	virtual void registerCallbackAction(std::function<void(eAction)>) = 0;
 };

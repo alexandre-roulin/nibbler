@@ -59,7 +59,7 @@ public:
 
 	/** Library **/
 
-	void defaultAssignmentLibrary();
+	void defaultAssignmentLibrary(eDirection direction = eDirection::kNorth);
 
 	void manageSwitchLibrary();
 
@@ -241,6 +241,7 @@ private:
 	bool borderless_;
 	bool openGame_;
 	bool barrier_;
+	eDirection lastDirection_;
 };
 
 

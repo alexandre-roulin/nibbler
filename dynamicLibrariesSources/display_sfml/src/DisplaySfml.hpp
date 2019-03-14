@@ -24,7 +24,8 @@ public:
 	DisplaySfml() = delete;
 	DisplaySfml(int width,
 				int height,
-				char const *windowName);
+				char const *windowName,
+				eDirection direction);
 	~DisplaySfml() override;
 	DisplaySfml &operator=(DisplaySfml const &rhs) = delete;
 	DisplaySfml(DisplaySfml const &src) = delete;
@@ -35,7 +36,8 @@ public:
 	void update() override;
 	void drawGrid(MutantGrid<eSprite> const &grid) override;
 	void setBackground(MutantGrid<eSprite> const &grid) override;
-	eDirection getDirection(void) const override;
+	eDirection getDirection() const override;
+	void setDirection(eDirection direction) override;
 
 private:
 	std::function<void(eAction)> callback_;
@@ -68,6 +70,7 @@ private:
 extern "C" {
 IDisplay *newInstance(int width,
 					 int height,
-					 char const *windowName);
+					 char const *windowName,
+					 eDirection direction);
 void deleteInstance(IDisplay *display);
 }

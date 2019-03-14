@@ -6,8 +6,9 @@
 
 IDisplay *newInstance(int width,
 					 int height,
-					 char const *windowName) {
-	return (new DisplaySdl(width, height, windowName));
+					 char const *windowName,
+					 eDirection direction) {
+	return (new DisplaySdl(width, height, windowName, direction));
 }
 
 void deleteInstance(IDisplay *display) {
@@ -16,9 +17,10 @@ void deleteInstance(IDisplay *display) {
 
 DisplaySdl::DisplaySdl(int width,
 					   int height,
-					   char const *windowName) :
+					   char const *windowName,
+					   eDirection direction) :
 		exit_(false),
-		direction_(kNorth),
+		direction_(direction),
 		tileSize_(DISPLAY_DEFAULT_TILE_SIZE),
 		winTileSize_(Vector2D<int>(width, height)),
 		winPixelSize_(Vector2D<int>(width * tileSize_, height * tileSize_)),
@@ -199,28 +201,29 @@ void DisplaySdl::update() {
 	}
 }
 
-eDirection DisplaySdl::getDirection(void) const {
-	return (direction_);
+eDirection DisplaySdl::getDirection() const {
+	return direction_;
 }
 
+void DisplaySdl::setDirection(eDirection direction) {
+	direction_ = direction;
+}
 
 bool DisplaySdl::exit(void) const {
-	return (exit_);
+	return exit_;
 }
 
 SDL_Surface *DisplaySdl::sdlSurface_(int widht, int height) {
-	return (SDL_CreateRGBSurface(0, widht, height,
-								 32, 0xff000000, 0x00ff0000, 0x0000ff00, 0x000000ff));
+	return SDL_CreateRGBSurface(0, widht, height, 32, 0xff000000, 0x00ff0000, 0x0000ff00, 0x000000ff);
 }
 
 void DisplaySdl::registerCallbackAction(std::function<void(eAction)> function) {
 	callback_ = function;
 }
 
+
 DisplaySdl::SdlConstructorException::SdlConstructorException(void) noexcept :
 		error_("Error on Sdl constructor") {}
-
 DisplaySdl::SdlConstructorException::SdlConstructorException(std::string const &s) noexcept :
 		error_(s) {}
-
 const char *DisplaySdl::SdlConstructorException::what() const noexcept { return (error_.c_str()); }

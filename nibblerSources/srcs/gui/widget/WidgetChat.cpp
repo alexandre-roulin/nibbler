@@ -1,6 +1,5 @@
 #include "WidgetChat.hpp"
 #include <gui/Gui.hpp>
-#include <cores/Test.hpp>
 
 WidgetChat::WidgetChat(Gui &core) :
 		AWidget(core, "Chat", NIBBLER_IMGUI_WINDOW_FLAGS_BASIC) {
@@ -140,6 +139,5 @@ void WidgetChat::addLog(eColorLog color, char const *format, ...)
 
 	std::string te = std::string(buf.get(), buf.get() + size - 1);
 	log_.push_back(colorLog(color, te));
-	Test::getInstance().addLog(buf.get());
 	scrollChat_ = true;
 }
