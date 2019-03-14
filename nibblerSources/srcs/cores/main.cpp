@@ -14,7 +14,6 @@ void nibbler(Univers &univers) {
 		if (univers.isOpenGame_()) {
 			univers.startNewGame();
 		}
-
 	}
 }
 

@@ -175,7 +175,7 @@ void SnakeServer::callbackBorderless(bool borderless) {
 
 
 void SnakeServer::callbackResizeMap(unsigned int mapSize) {
-	if (mapSize > MAP_MAX && mapSize < MAP_MIN) return;
+	if (mapSize > MAP_MAX || mapSize < MAP_MIN) return;
 	std::lock_guard<std::mutex> guard(mutex_);
 	serverTCP_->writeDataToOpenConnections(mapSize, eHeader::kResizeMap);
 }

@@ -247,6 +247,7 @@ void SnakeClient::callbackBorderless(bool borderless) {
 }
 
 void SnakeClient::callbackResizeMap(unsigned int size) {
+	if (size > MAP_MAX || size < MAP_MIN) return;
 	std::lock_guard<std::mutex> guard(mutex_);
 	if (acceptDataFromServer() && !univers_.isOpenGame_()) {
 		univers_.setMapSize(size);

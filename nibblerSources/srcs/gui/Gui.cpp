@@ -210,6 +210,13 @@ void					Gui::endColor() {
 	Gui::useColor_ = false;
 }
 
+void					Gui::addMessageChat(eColorLog color, std::string const &log) {
+	chat_.addLog(color, log);
+}
+void					Gui::addMessageChat(std::string const &log) {
+	chat_.addLog(eColorLog::kNone, log);
+}
+
 std::map< eColor, float > const Gui::mapEColor_ = { { eColor::kGrey, 0.f },
 														 { eColor::kRed, 0.f },
 														 { eColor::kGreen, 0.33f },

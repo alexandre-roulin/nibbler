@@ -122,25 +122,11 @@ bool WidgetChat::chatCommand_() {
 		addLog(eColorLog::kOrange, "eColorLog::kOrange");
 		addLog(eColorLog::kYellow, "eColorLog::kYellow");
 	} else
-		addLog(eColorLog::kOrange, "{%s} is not a valid entry\n",
-			   bufferMessage_);
+		addLog(eColorLog::kOrange, std::string(bufferMessage_) + " is not a valid entry\n");
 	return (true);
 }
 
-void WidgetChat::addLog(eColorLog color, char const *format, ...)
-{
-	va_list args;
-	va_start(args, format);
-	size_t size = std::vsnprintf(nullptr, 0, format, args) + 1;
-	va_end(args);
-
-	std::unique_ptr<char[]> buf = std::make_unique<char[]>(size);
-
-	va_start(args, format);
-	std::vsnprintf(buf.get(), size, format, args);
-	va_end(args);
-
-	std::string te = std::string(buf.get(), buf.get() + size - 1);
-	log_.push_back(colorLog(color, te));
+void WidgetChat::addLog(eColorLog color, std::string const &log) {
+	log_.push_back(colorLog(color, log));
 	scrollChat_ = true;
 }

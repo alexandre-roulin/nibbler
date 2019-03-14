@@ -293,7 +293,7 @@ void Univers::createServer(const std::string dns, unsigned int port) {
 		try {
 			snakeServer_ = SnakeServer::create(*this, dns, port);
 			if (gui_)
-			gui_->addMessageChat(eColorLog::kGreen, SuccessServerIsCreate + std::to_string(snakeServer_->getPort_()) + "." );
+			gui_->addMessageChat(eColorLog::kGreen, SuccessServerIsCreate + std::to_string(snakeServer_->getPort_()));
 		} catch (const boost::system::system_error &ex) {
 			if (boost::system::errc::address_in_use == ex.code() && gui_) {
 				gui_->addMessageChat(eColorLog::kRed, ErrorServerAlreadyUseOnThisPort);
@@ -657,7 +657,7 @@ void Univers::sendOpenGameToServer() {
 void Univers::updateSizeMap() {
 	boost::shared_ptr<ISnakeNetwork> ptr_network(getSnakeNetwork().lock());
 
-	gui_->addMessageChat(eColorLog::kGreen, SuccessResizeMapTo + std::to_string(mapSize_) + ".");
+	gui_->addMessageChat(eColorLog::kGreen, SuccessResizeMapTo + std::to_string(mapSize_));
 	if (ptr_network)
 		ptr_network->notifyMapSize();
 }
