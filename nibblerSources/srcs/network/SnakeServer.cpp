@@ -26,8 +26,7 @@ void SnakeServer::updateInput() {
 
 	std::for_each((*snakeArray_).begin(), (*snakeArray_).end(), [](Snake &snake){
 		snake.isUpdate = false;
-		if (snake.isAlive)
-			snake.score_ += GameManager::ScaleByFrame;
+		snake.score_ += GameManager::ScaleByFrame;
 	});
 
 	for (auto infoArray : foodInfoArray) {
@@ -96,11 +95,11 @@ std::shared_ptr<SnakeArrayContainer> SnakeServer::getSnakeArray_() const {
 }
 
 bool SnakeServer::allSnakeIsDead() const {
-	return std::all_of((*snakeArray_).begin(), (*snakeArray_).end(), [](Snake const &snake){ return snake.isAlive; });
+	return std::all_of((*snakeArray_).begin(), (*snakeArray_).end(), [](Snake const &snake){ return !snake.isValid || (snake.isValid && snake.isAlive); });
 }
 
 bool SnakeServer::allSnakeIsReady() const {
-	return std::all_of((*snakeArray_).begin(), (*snakeArray_).end(), [](Snake const &snake){ return snake.isValid && snake.isReady; });
+	return std::all_of((*snakeArray_).begin(), (*snakeArray_).end(), [](Snake const &snake){ return !snake.isValid || (snake.isValid && snake.isReady); });
 }
 
 bool SnakeServer::sendOpenGameToClient(bool openGame) {
@@ -372,7 +371,7 @@ void SnakeServer::showScore() {
 	size_t n = 0;
 	std::for_each(vector.begin(), vector.end(), [&n, this](Snake &snake){ snake.deepCopy((*snakeArray_)[n++]); });
 	std::sort(vector.begin(), vector.end(), [](Snake const &lhs, Snake const &rhs) {
-		return lhs.score_ > rhs.score_;
+		return lhs.score_ < rhs.score_;
 	});
 	n = 0;
 	std::for_each(vector.begin(), vector.end(), [this, &n, &position](Snake const & snake){

@@ -37,8 +37,7 @@ Snake::Snake() :
 		isValid(false),
 		isInGame(false),
 		id(0),
-		indexConnection(0),
-		score_(0) {
+		indexConnection(0) {
 
 }
 
@@ -137,7 +136,6 @@ Snake &Snake::operator=(Snake &snake) {
 		isValid = snake.isValid;
 		id = snake.id;
 		indexConnection = snake.indexConnection;
-		score_ = snake.score_;
 		isInGame = snake.isInGame;
 	}
 	return *this;
@@ -150,7 +148,6 @@ Snake &Snake::operator=(Snake const &snake) {
 		isValid = snake.isValid;
 		id = snake.id;
 		indexConnection = snake.indexConnection;
-		score_ = snake.score_;
 		isInGame = snake.isInGame;
 	}
 	return *this;
@@ -167,6 +164,7 @@ std::ostream &operator<<(std::ostream &os, const Snake &snake) {
 }
 
 void Snake::deepCopy(Snake const &snake) {
+	score_ = snake.score_;
 	operator=(snake);
 	operator=(static_cast<SnakeUI>(snake));
 	operator=(static_cast<SnakeUX>(snake));
@@ -178,7 +176,8 @@ void Snake::deepCopy(Snake const &snake) {
 
 SnakeUI::SnakeUI() :
 		sprite(eSprite::kBlue),
-		isReadyToExpose(false) {
+		isReadyToExpose(false),
+		score_(0) {
 	memset(name, 0, NAME_BUFFER);
 }
 

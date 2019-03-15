@@ -78,9 +78,9 @@ uint16_t SnakeClient::getId_() const {
 }
 
 bool SnakeClient::allSnakeIsDead() const {
-	return std::none_of((*snakeArray).begin(), (*snakeArray).end(),
+	return std::all_of((*snakeArray).begin(), (*snakeArray).end(),
 						[](Snake const &snake) {
-							return snake.isValid && snake.isAlive;
+							return !snake.isValid || (snake.isValid && !snake.isAlive);
 						});
 }
 
@@ -131,7 +131,7 @@ void SnakeClient::notifyMapSize() {
 bool SnakeClient::allSnakeIsReady() const {
 	return std::all_of((*snakeArray).begin(), (*snakeArray).end(),
 						[](Snake const &snake) {
-							return snake.isValid && snake.isReady;
+							return !snake.isValid && (snake.isValid && snake.isReady);
 						});;
 }
 

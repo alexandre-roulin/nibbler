@@ -20,6 +20,7 @@ public:
 
 	eSprite sprite;
 	bool isReadyToExpose;
+	uint16_t score_;
 };
 
 class SnakeUX {
@@ -76,7 +77,6 @@ public:
 	bool isInGame;
 	uint16_t id;
 	size_t indexConnection;
-	uint16_t score_;
 
 	static std::vector< std::string > const names;
 	static std::vector< eSprite > const colors;
