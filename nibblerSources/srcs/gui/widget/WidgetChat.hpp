@@ -29,6 +29,7 @@ private:
 	char bufferMessage_[CHAT_BUFFER];
 	std::mutex mutex_;
 
+	void addLog_(eColorLog color, std::string const &log);
 
 	void beginContent_() override;
 	bool chatCommand_();

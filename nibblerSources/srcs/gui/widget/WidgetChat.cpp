@@ -51,7 +51,7 @@ bool WidgetChat::checkClient_() {
 	SnakeClient::boost_shared_ptr ptr(core_.univers.getSnakeClient().lock());
 
 	if (!ptr) {
-		addLog(eColorLog::kRed, "Your Client should be created");
+		addLog_(eColorLog::kRed, "Your Client should be created");
 		return (false);
 	}
 	return (true);
@@ -62,7 +62,7 @@ bool WidgetChat::checkClientIsConnect_() {
 	if (!ptr || !checkClient_())
 		return (false);
 	if (!ptr->isOpen()) {
-		addLog(eColorLog::kRed, "Your Client should be connected");
+		addLog_(eColorLog::kRed, "Your Client should be connected");
 		return (false);
 	}
 	return (true);
@@ -87,7 +87,7 @@ bool WidgetChat::chatCommand_() {
 	if (bufferMessage_[0] != '/')
 		return (false);
 	if (strstr(bufferMessage_, "/help"))
-		addLog(eColorLog::kYellow,
+		addLog_(eColorLog::kYellow,
  "/name <name> - change name.\n"
  "/host - show local ip and dns.\n"
  "* In Game *\n"
@@ -116,21 +116,25 @@ bool WidgetChat::chatCommand_() {
 			ptr->changeName(bufferMessage_ + sizeof("/name ") - 1);
 		}
 	}else if (strstr(bufferMessage_, "/color")) {
-		addLog(eColorLog::kNone, "eColorLog::kNone");
-		addLog(eColorLog::kRed, "eColorLog::kRed");
-		addLog(eColorLog::kGreen, "eColorLog::kGreen");
-		addLog(eColorLog::kBlue, "eColorLog::kBlue");
-		addLog(eColorLog::kPink, "eColorLog::kPink");
-		addLog(eColorLog::kOrange, "eColorLog::kOrange");
-		addLog(eColorLog::kYellow, "eColorLog::kYellow");
+		addLog_(eColorLog::kNone, "eColorLog::kNone");
+		addLog_(eColorLog::kRed, "eColorLog::kRed");
+		addLog_(eColorLog::kGreen, "eColorLog::kGreen");
+		addLog_(eColorLog::kBlue, "eColorLog::kBlue");
+		addLog_(eColorLog::kPink, "eColorLog::kPink");
+		addLog_(eColorLog::kOrange, "eColorLog::kOrange");
+		addLog_(eColorLog::kYellow, "eColorLog::kYellow");
 	} else
-		addLog(eColorLog::kOrange, std::string(bufferMessage_) + " is not a valid entry\n");
+		addLog_(eColorLog::kOrange, std::string(bufferMessage_) + " is not a valid entry\n");
 	return (true);
 }
 
 void WidgetChat::addLog(eColorLog color, std::string const &log) {
 	std::lock_guard<std::mutex> guard(mutex_);
 
+	addLog_(color, log);
+}
+
+void WidgetChat::addLog_(eColorLog color, std::string const &log) {
 	log_.push_back(colorLog(color, log));
 	scrollChat_ = true;
 }
