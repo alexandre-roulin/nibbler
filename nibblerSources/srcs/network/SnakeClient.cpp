@@ -276,7 +276,7 @@ void SnakeClient::callbackStartInfo(StartInfo startInfo) {
 
 	std::lock_guard<std::mutex> guard(mutex_);
 	foodCreations.clear();
-	if (acceptDataFromServer()) {
+	if (acceptDataFromServer() && univers_.isOpenGame_()) {
 		while (univers_.getGameManager().getWorld_() == nullptr) {
 			if (!univers_.isOpenGame_())
 				return ;
