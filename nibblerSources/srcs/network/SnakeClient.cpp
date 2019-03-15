@@ -31,7 +31,6 @@ void SnakeClient::sendDirection(eDirection direction) {
 	std::lock_guard<std::mutex> guard(mutex_);
 	(*snakeArray)[id_].direction = direction;
 	(*snakeArray)[id_].isUpdate = true;
-	std::cout << __PRETTY_FUNCTION__ << ::std::endl;
 	sendDataToServer((*snakeArray)[id_], eHeader::kSnakeUN);
 }
 
@@ -137,7 +136,6 @@ bool SnakeClient::allSnakeIsReady() const {
 }
 
 void SnakeClient::quitGame() {
-	std::cout << __PRETTY_FUNCTION__ << std::endl;
 	(*snakeArray)[id_].isInGame = false;
 	sendDataToServer((*snakeArray)[id_], eHeader::kSnake);
 }
@@ -175,7 +173,6 @@ bool SnakeClient::sendOpenGameToServer(bool openGame) {
 void SnakeClient::killSnake(uint16_t id) {
 	if (id_ == id || (univers_.isIASnake(id) && univers_.isServer())) {
 		std::lock_guard<std::mutex> guard(mutex_);
-		std::cout << __PRETTY_FUNCTION__ << id << std::endl;
 		(*snakeArray)[id].isAlive = false;
 		sendDataToServer((*snakeArray)[id], eHeader::kSnakeUX);
 	}
@@ -315,7 +312,6 @@ void SnakeClient::callbackPock(uint32_t deltaTime) {
 
 	std::lock_guard<std::mutex> guard(mutex_);
 	if (acceptDataFromServer()) {
-		std::cout << __PRETTY_FUNCTION__ << std::endl;
 		univers_.setMicroSecDeltaTime(univers_.getMicroSecDeltaTime() - deltaTime);
 		const std::shared_ptr<KINU::World> &world = univers_.getGameManager().getWorld_();
 		DirectionArray directions;

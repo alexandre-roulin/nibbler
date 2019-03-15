@@ -222,7 +222,6 @@ void Univers::manageSwitchLibrary() {
 			displayManager->unloadDynamicLibrary();
 			boost::asio::post(ioManager->getIo(), [this, ae](){
 				while (gui_ == nullptr);
-				std::cout << (gui_ == nullptr) << std::endl;
 				if (gui_)
 					gui_->addMessageChat(eColorLog::kRed, ae.what());
 
@@ -234,7 +233,6 @@ void Univers::manageSwitchLibrary() {
 			displayManager->unloadDynamicLibrary();
 			boost::asio::post(ioManager->getIo(), [this, e](){
 				while (gui_ == nullptr);
-				std::cout << (gui_ == nullptr) << std::endl;
 				if (gui_)
 					gui_->addMessageChat(eColorLog::kRed, e.what());
 

@@ -16,7 +16,6 @@ SnakeServer::SnakeServer(
 void SnakeServer::updateInput() {
 	std::lock_guard<std::mutex> guard(mutex_);
 	unsigned int deltaTime = 10;
-	std::cout << __PRETTY_FUNCTION__ << "Conditions :> "<< pause_ << " : " << std::any_of((*snakeArray_).begin(), (*snakeArray_).end(), [](const Snake & snake){ return snake.isValid && snake.isInGame && !snake.isUpdate; } ) << std::endl;
 	if (
 			pause_ ||
 			std::any_of((*snakeArray_).begin(), (*snakeArray_).end(), [](const Snake & snake){
@@ -37,7 +36,6 @@ void SnakeServer::updateInput() {
 
 		serverTCP_->writeDataToOpenConnections(infoArray, eHeader::kFood);
 	}
-	std::cout << __PRETTY_FUNCTION__ << "SEND" << std::endl;
 
 	foodInfoArray.clear();
 	serverTCP_->writeDataToOpenConnections(deltaTime, eHeader::kPock);
@@ -50,7 +48,7 @@ void SnakeServer::startGame() {
 
 	std::for_each((*snakeArray_).begin(), (*snakeArray_).end(), [](Snake &snake){
 		snake.score_ = 0;
-		snake.isAlive = true;
+		snake.isAlive = snake.isValid;
 		snake.direction = kNorth;
 		snake.isInGame = snake.isValid;
 		snake.isUpdate = false;
@@ -160,7 +158,6 @@ void SnakeServer::callbackSnakeUX(const Snake &snakeUX) {
 }
 
 void SnakeServer::callbackSnake(const Snake &snake) {
-	std::cout << __PRETTY_FUNCTION__ << "ID : " << snake.id << " - isInGame : " << snake.isInGame << std::endl;
 
 	if (snake.id >= 8) return;
 	{
@@ -214,10 +211,8 @@ void SnakeServer::callbackChatInfo(ChatInfo chatInfo) {
 void SnakeServer::callbackFood(FoodInfo foodInfo) {
 	std::lock_guard<std::mutex> guard(mutex_);
 	if (foodInfo.id_ >= 0 && foodInfo.id_ < 8) {
-		std::cout << "Add Food to id : " << (*snakeArray_)[foodInfo.id_].name << " " << foodInfo.id_ << std::endl;
 		(*snakeArray_)[foodInfo.id_].score_ += GameManager::ScaleByRealFood * 2;
 	}
-	std::cout << "Add Food " << foodInfo.positionComponent << std::endl;
 
 	foodInfoArray.push_back(foodInfo);
 }
@@ -231,7 +226,6 @@ void SnakeServer::callbackForcePause(uint16_t id) {
 }
 
 void SnakeServer::callbackDeadConnection(size_t index) {
-	std::cout << __PRETTY_FUNCTION__ << std::endl;
 	if (index >= 8) return;
 	{
 		std::lock_guard<std::mutex> guard(mutex_);

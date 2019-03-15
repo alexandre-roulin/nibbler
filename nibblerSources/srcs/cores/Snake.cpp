@@ -13,7 +13,8 @@ std::vector< std::string > const Snake::names = {
 		"Tuik",
 		"Mochi",
 		"Throw",
-		"Python"
+		"Python",
+		"Kanon"
 
 };
 
@@ -89,6 +90,7 @@ void Snake::randomSnake(int16_t id_, SnakeArrayContainer const &snakeArrayContai
 	else
 		strncpy(name, Snake::names[rand() %  Snake::names.size()].c_str(), NAME_BUFFER);
 	id = id_;
+	isAlive = false;
 	isSwitchingLibrary = false;
 	isValid = true;
 	score_ = 0;
