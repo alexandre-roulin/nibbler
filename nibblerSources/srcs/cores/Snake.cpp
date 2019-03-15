@@ -171,7 +171,6 @@ void Snake::deepCopy(Snake const &snake) {
 	operator=(static_cast<SnakeUN>(snake));
 }
 
-
 /** SnakeUI **/
 
 SnakeUI::SnakeUI() :

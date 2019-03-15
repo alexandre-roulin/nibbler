@@ -63,6 +63,7 @@ public:
 	Snake &operator=(SnakeUX const &ux);
 	Snake &operator=(SnakeUN &un);
 	Snake &operator=(SnakeUN const &un);
+	Snake(Snake &) = default;
 	Snake(const Snake &) = default;
 
 	void randomSnake(int16_t id_, SnakeArrayContainer const &snakeArrayContainer);

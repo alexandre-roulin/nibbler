@@ -77,12 +77,6 @@ uint16_t SnakeClient::getId_() const {
 	return id_;
 }
 
-bool SnakeClient::allSnakeIsDead() const {
-	return std::all_of((*snakeArray).begin(), (*snakeArray).end(),
-						[](Snake const &snake) {
-							return !snake.isValid || (snake.isValid && !snake.isAlive);
-						});
-}
 
 void SnakeClient::deliverEvents() {
 	std::lock_guard<std::mutex> guard(mutex_);
@@ -128,11 +122,13 @@ void SnakeClient::notifyMapSize() {
 	sendDataToServer(univers_.getMapSize(), eHeader::kResizeMap);
 }
 
+bool SnakeClient::allSnakeIsDead() const {
+	return !std::none_of((*snakeArray).begin(), (*snakeArray).end(), [](Snake const &snake){ return snake.isValid && snake.isAlive; });
+}
+
 bool SnakeClient::allSnakeIsReady() const {
-	return std::all_of((*snakeArray).begin(), (*snakeArray).end(),
-						[](Snake const &snake) {
-							return !snake.isValid && (snake.isValid && snake.isReady);
-						});;
+	return !std::all_of((*snakeArray).begin(), (*snakeArray).end(), [](Snake const &snake){ return !snake.isValid; }) &&
+		std::none_of((*snakeArray).begin(), (*snakeArray).end(), [](Snake const &snake){ return snake.isValid && !snake.isReady; });
 }
 
 void SnakeClient::quitGame() {
