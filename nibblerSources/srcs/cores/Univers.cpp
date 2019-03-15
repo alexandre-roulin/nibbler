@@ -151,9 +151,6 @@ void Univers::startNewGame() {
 	gameManager->loopUI();
 
 	postGameDataManagement();
-	createGui();
-	if (ptrServer)
-		ptrServer->showScore();
 }
 
 void Univers::manageSnakeClientInput() {

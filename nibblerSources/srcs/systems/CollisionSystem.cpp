@@ -35,6 +35,7 @@ void CollisionSystem::checkCollision(
 
 			if (ptr && (ptr->getId_() == entityHead.getGroupIdByEntity() ||
 						univers_.isIASnake(entityHead.getGroupIdByEntity()))) {
+				std::cout << "Send food head kill id :" << entityHead.getGroupIdByEntity() << " - ptr->gedId() : " <<ptr->getId_() << " - IsIA " << univers_.isIASnake(entityHead.getGroupIdByEntity()) << std::endl;
 				ptr->sendDataToServer(
 						FoodInfo(PositionComponent(
 								univers_.getGrid_().getRandomSlot(eSprite::kNone)),
@@ -84,14 +85,16 @@ void CollisionSystem::createAppleBySnake(KINU::Entity snake) {
 
 	SnakeClient::boost_shared_ptr ptr(univers_.getSnakeClient().lock());
 
+	if (ptr && ptr->getId_() != snake.getGroupIdByEntity())
+		return;
 	auto appleSnake = getWorld().getEntitiesManager().getEntitiesByGroupId(snake.getGroupIdByEntity());
 	auto positionHead = snake.getComponent<PositionComponent>();
 	for (auto snakeCheck : appleSnake) {
 		if (snakeCheck.hasComponent<PositionComponent>()) {
 			auto positionComponent = snakeCheck.getComponent<PositionComponent>();
 			if (positionComponent != positionHead && ptr) {
-				ptr->sendDataToServer(
-						FoodInfo(positionComponent, true, -1), eHeader::kFood);
+				std::cout << "Send " << positionComponent << " with " << snake.getId() << std::endl;
+				ptr->sendDataToServer(FoodInfo(positionComponent, true, -1), eHeader::kFood);
 			}
 		}
 	}

@@ -16,10 +16,11 @@ void FoodEatSystem::update() {
 			auto entityTail = getWorld().getEntitiesManager()
 					.getEntityByTagId(event.id_ + eTag::kTailTag);
 			auto newEntity = getWorld().createEntity();
+			auto followComponent = entityTail.getComponent<FollowComponent>();
 			newEntity.addComponent<PositionComponent>(
-					entityTail.getComponent<PositionComponent>());
+					followComponent.positionComponent);
 			newEntity.addComponent<FollowComponent>(
-					entityTail.getComponent<FollowComponent>().idFollowed, false);
+					followComponent.idFollowed, false);
 			newEntity.addComponent<CollisionComponent>();
 
 			assert(getWorld().getEntitiesManager().hasEntityById(entityTail.getComponent<FollowComponent>().idFollowed));
@@ -27,9 +28,9 @@ void FoodEatSystem::update() {
 					entityTail.getComponent<FollowComponent>().idFollowed);
 			newEntity.addComponent<SpriteComponent>(entity.getComponent<SpriteComponent>());
 
-			auto &followComponent = entityTail.getComponent<FollowComponent>();
-			followComponent.idFollowed = newEntity.getId();
-			followComponent.skip = true;
+			auto &followComponentRef = entityTail.getComponent<FollowComponent>();
+			followComponentRef.idFollowed = newEntity.getId();
+			followComponentRef.skip = true;
 
 			newEntity.groupEntityByGroupId(entityTail.getGroupIdByEntity());
 

@@ -16,14 +16,15 @@ SnakeServer::SnakeServer(
 void SnakeServer::updateInput() {
 	std::lock_guard<std::mutex> guard(mutex_);
 	unsigned int deltaTime = 10;
-	for (const auto &s : *snakeArray_) {
-		std::cout << "ID: "<< s.id << " - Update : " << s.isUpdate << " - IsInGame : " << s.isInGame << std::endl;
-
-
-	}
 	std::cout << __PRETTY_FUNCTION__ << "Conditions :> "<< pause_ << " : " << std::any_of((*snakeArray_).begin(), (*snakeArray_).end(), [](const Snake & snake){ return snake.isValid && snake.isInGame && !snake.isUpdate; } ) << std::endl;
+	if (
+			pause_ ||
+			std::any_of((*snakeArray_).begin(), (*snakeArray_).end(), [](const Snake & snake){
+				return snake.isValid && snake.isInGame && !snake.isUpdate; } ) ||
+			std::all_of((*snakeArray_).begin(), (*snakeArray_).end(), [](const Snake & snake){
+				return !snake.isValid || !snake.isInGame; }))
+		return ;
 
-	if (pause_ || std::any_of((*snakeArray_).begin(), (*snakeArray_).end(), [](const Snake & snake){ return snake.isValid && snake.isInGame && !snake.isUpdate; } )) return ;
 	std::for_each((*snakeArray_).begin(), (*snakeArray_).end(), [](Snake &snake){
 		snake.isUpdate = false;
 		if (snake.isAlive)
@@ -48,6 +49,7 @@ void SnakeServer::startGame() {
 	foodInfoArray.clear();
 
 	std::for_each((*snakeArray_).begin(), (*snakeArray_).end(), [](Snake &snake){
+		snake.score_ = 0;
 		snake.isAlive = true;
 		snake.direction = kNorth;
 		snake.isInGame = snake.isValid;
@@ -215,6 +217,8 @@ void SnakeServer::callbackFood(FoodInfo foodInfo) {
 		std::cout << "Add Food to id : " << (*snakeArray_)[foodInfo.id_].name << " " << foodInfo.id_ << std::endl;
 		(*snakeArray_)[foodInfo.id_].score_ += GameManager::ScaleByRealFood * 2;
 	}
+	std::cout << "Add Food " << foodInfo.positionComponent << std::endl;
+
 	foodInfoArray.push_back(foodInfo);
 }
 
@@ -389,5 +393,4 @@ void SnakeServer::showScore() {
 			serverTCP_->writeDataToOpenConnections(ChatInfo(snake.name, s.c_str()), eHeader::kChat);
 		}
 	});
-	std::for_each(snakeArray_->begin(), snakeArray_->end(), [](Snake &snake){ snake.score_ = 0; });
 }
