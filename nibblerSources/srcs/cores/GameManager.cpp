@@ -86,7 +86,6 @@ void GameManager::loopGame() {
 	SnakeClient::boost_shared_ptr ptr(univers_.getSnakeClient().lock());
 
 	while (!ptr->allSnakeIsDead() && univers_.isOpenGame_() && univers_.displayIsAvailable()) {
-		std::cout << __PRETTY_FUNCTION__ << " dead : " << !ptr->allSnakeIsDead() << std::endl;
 		manageGlobalInput();
 		timer_loop.expires_from_now(boost::posix_time::microsec(univers_.getMicroSecDeltaTime()));
 		timer_loop.wait();
