@@ -61,6 +61,7 @@ bool WidgetOption::musicManagemet_() {
 	core_.univers.unloadSound();
 	rMusique_ = false;
 	rNoise_ = false;
+	sound_ = false;
 	return false;
 }
 
