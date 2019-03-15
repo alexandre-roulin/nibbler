@@ -371,10 +371,10 @@ void SnakeServer::showScore() {
 	size_t n = 0;
 	std::for_each(vector.begin(), vector.end(), [&n, this](Snake &snake){ snake.deepCopy((*snakeArray_)[n++]); });
 	std::sort(vector.begin(), vector.end(), [](Snake const &lhs, Snake const &rhs) {
-		return lhs.score_ < rhs.score_;
+		return lhs.score_ > rhs.score_;
 	});
 	n = 0;
-	std::for_each(vector.begin(), vector.end(), [this, &n, &position](Snake const & snake){
+	std::for_each(vector.rbegin(), vector.rend(), [this, &n, &position](Snake const & snake){
 		if (snake.isValid) {
 			std::string s;
 			s = "is in ";
