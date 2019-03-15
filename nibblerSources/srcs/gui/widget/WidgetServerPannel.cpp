@@ -24,4 +24,7 @@ void WidgetServerPannel::beginContent_() {
 		}
 	} else
 		button_("Run the game", eColor::kGrey);
+
+	if (button_("Show score", eColor::kPurple, eColor::kSoft))
+		core_.univers.getSnakeServer().showScore();
 }

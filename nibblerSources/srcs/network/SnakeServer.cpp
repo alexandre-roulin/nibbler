@@ -102,7 +102,7 @@ bool SnakeServer::allSnakeIsDead() const {
 }
 
 bool SnakeServer::allSnakeIsReady() const {
-	return std::all_of((*snakeArray_).begin(), (*snakeArray_).end(), [](Snake const &snake){ return snake.isReady; });
+	return std::all_of((*snakeArray_).begin(), (*snakeArray_).end(), [](Snake const &snake){ return snake.isValid && snake.isReady; });
 }
 
 bool SnakeServer::sendOpenGameToClient(bool openGame) {
@@ -376,13 +376,13 @@ void SnakeServer::showScore() {
 	std::vector<Snake> vector(8);
 
 	size_t n = 0;
-	std::for_each(vector.begin(), vector.end(), [&n, this](Snake &snake){ snake.deepCopy((*snakeArray_)[n++]);});
+	std::for_each(vector.begin(), vector.end(), [&n, this](Snake &snake){ snake.deepCopy((*snakeArray_)[n++]); });
 	std::sort(vector.begin(), vector.end(), [](Snake const &lhs, Snake const &rhs) {
 		return lhs.score_ > rhs.score_;
 	});
 	n = 0;
 	std::for_each(vector.begin(), vector.end(), [this, &n, &position](Snake const & snake){
-		if (snake.isValid && snake.isInGame) {
+		if (snake.isValid) {
 			std::string s;
 			s = "is in ";
 			s += static_cast<char>(n + 49);

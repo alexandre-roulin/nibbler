@@ -132,7 +132,7 @@ void SnakeClient::notifyMapSize() {
 bool SnakeClient::allSnakeIsReady() const {
 	return std::all_of((*snakeArray).begin(), (*snakeArray).end(),
 						[](Snake const &snake) {
-							return !snake.isValid || (snake.isValid && snake.isReady);
+							return snake.isValid && snake.isReady;
 						});;
 }
 

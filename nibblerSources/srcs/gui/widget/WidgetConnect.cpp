@@ -40,14 +40,14 @@ void WidgetConnect::beginContent_() {
 		&& !(!ptrClient && client_)) {
 		if (ImGui::InputText("IP", dnsBuffer_,
 							 IM_ARRAYSIZE(dnsBuffer_),
-							 ImGuiInputTextFlags_EnterReturnsTrue)) {
+							 ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_CharsDecimal)) {
 			if (!strcmp(dnsBuffer_, ""))
 				strcpy(dnsBuffer_, "localhost");
 		}
 
 		if (ImGui::InputText("PORT", portBuffer_,
 							 IM_ARRAYSIZE(portBuffer_),
-							 ImGuiInputTextFlags_EnterReturnsTrue)) {
+							 ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_CharsDecimal)) {
 			if (!strcmp(portBuffer_, ""))
 				strcpy(portBuffer_, "8000");
 		}
