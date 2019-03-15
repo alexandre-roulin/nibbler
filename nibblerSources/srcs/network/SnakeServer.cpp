@@ -13,12 +13,16 @@ SnakeServer::SnakeServer(
 		{
 }
 
-inline void SnakeServer::updateInput() {
+void SnakeServer::updateInput() {
 	std::lock_guard<std::mutex> guard(mutex_);
 	unsigned int deltaTime = 10;
+	for (const auto &s : *snakeArray_) {
+		if (s.isValid)
+			std::cout << s << std::endl;
+	}
+	std::cout << __PRETTY_FUNCTION__ << "Conditions :> "<< pause_ << " : " << std::any_of((*snakeArray_).begin(), (*snakeArray_).end(), [](const Snake & snake){ return snake.isValid && snake.isInGame && !snake.isUpdate; } ) << std::endl;
 
-
-	if (pause_ || std::any_of((*snakeArray_).begin(), (*snakeArray_).end(), [](const Snake & snake){ return snake.isValid && snake.isInGame && snake.isAlive && !snake.isUpdate; } )) return ;
+	if (pause_ || std::any_of((*snakeArray_).begin(), (*snakeArray_).end(), [](const Snake & snake){ return snake.isValid && snake.isInGame && !snake.isUpdate; } )) return ;
 	std::for_each((*snakeArray_).begin(), (*snakeArray_).end(), [](Snake &snake){
 		snake.isUpdate = false;
 		if (snake.isAlive)
@@ -31,8 +35,9 @@ inline void SnakeServer::updateInput() {
 
 		serverTCP_->writeDataToOpenConnections(infoArray, eHeader::kFood);
 	}
+	std::cout << __PRETTY_FUNCTION__ << "SEND" << std::endl;
+
 	foodInfoArray.clear();
-	serverTCP_->writeDataToOpenConnections(*snakeArray_, eHeader::kSnakeArray);
 	serverTCP_->writeDataToOpenConnections(deltaTime, eHeader::kPock);
 }
 
@@ -45,6 +50,7 @@ void SnakeServer::startGame() {
 		snake.isAlive = true;
 		snake.direction = kNorth;
 		snake.isInGame = snake.isValid;
+		snake.isUpdate = false;
 	});
 	serverTCP_->writeDataToOpenConnections((*snakeArray_), eHeader::kSnakeArray);
 
@@ -346,6 +352,7 @@ void SnakeServer::build(const std::string dns, unsigned short port) {
 }
 
 void SnakeServer::showScore() {
+
 	const char position[4][3]{
 			"st",
 			"nd",
@@ -360,6 +367,7 @@ void SnakeServer::showScore() {
 	std::sort(vector.begin(), vector.end(), [](Snake const &lhs, Snake const &rhs){
 		return lhs.score_ > rhs.score_;
 	});
+	n = 0;
 	std::for_each(vector.begin(), vector.end(), [this, &n, &position](Snake const & snake){
 		if (snake.isValid && snake.isInGame) {
 			std::string s;

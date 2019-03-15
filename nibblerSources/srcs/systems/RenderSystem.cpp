@@ -26,8 +26,10 @@ void RenderSystem::update() {
 					   renderPair2.second.priority;
 			});
 
+	int mapSize = univers_.getMapSize();
 	for (auto &renderComponent : renderComponents) {
-		grid_cache(renderComponent.first.x, renderComponent.first.y) = renderComponent.second.sprite;
+		if (renderComponent.first.x >= 0 && renderComponent.first.x < mapSize && renderComponent.first.y >= 0 && renderComponent.first.y < mapSize)
+			grid_cache(renderComponent.first.x, renderComponent.first.y) = renderComponent.second.sprite;
 	}
 	univers_.getGrid_() = grid_cache;
 }

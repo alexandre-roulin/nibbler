@@ -39,10 +39,7 @@ void Bobby::sendDirection() {
 
 	std::shared_ptr<KINU::World> world = univers_.getGameManager().getWorld_();
 	if (!world) return;
-
-	if (world->getEntitiesManager().hasEntityByTagId(eTag::kHeadTag + clientTCP_->getId_())) {
-		clientTCP_->sendDirection(direction);
-	}
+	clientTCP_->sendDirection(direction);
 
 }
 
@@ -118,8 +115,7 @@ void Bobby::calculateDirection() {
 	std::shared_ptr<KINU::World> world = univers_.getGameManager().getWorld_();
 
 	if (!world) return;
-	if (world->getEntitiesManager().hasEntityByTagId(
-			clientTCP_->getId_() + eTag::kHeadTag)) {
+	if (world->getEntitiesManager().hasEntityByTagId(clientTCP_->getId_() + eTag::kHeadTag)) {
 
 		kStar.clearCollisions();
 		addCollision();

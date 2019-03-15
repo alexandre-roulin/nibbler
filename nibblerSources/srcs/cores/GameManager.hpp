@@ -15,7 +15,7 @@ public:
 		Easy = 100000,
 		Medium = 80000,
 		Hard = 60000,
-		Impossible = 20000,
+		Impossible = 2000,
 	};
 	GameManager(Univers &univers);
 	GameManager() = delete;

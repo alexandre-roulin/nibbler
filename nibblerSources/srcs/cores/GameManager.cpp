@@ -41,8 +41,6 @@ void GameManager::startNewGame() {
 	world_->getSystemsManager().addSystem<RenderSystem>(univers_);
 	world_->getSystemsManager().addSystem<FoodCreationSystem>(univers_.getMapSize());
 	world_->getSystemsManager().addSystem<FoodEatSystem>();
-	world_->getEventsManager().emitEvent(NextFrame());
-	world_->getEventsManager().destroy<NextFrame>();
 
 	if (univers_.isServer()) {
 		univers_.getSnakeServer().startGame();
@@ -104,9 +102,7 @@ void GameManager::manageGlobalInput() {
 		Bobby::clearPriority();
 		if (univers_.isServer()) {
 			for (auto &bobby : univers_.getBobbys()) {
-				if (world_->getEntitiesManager().hasEntityByTagId(bobby->getId() + eTag::kHeadTag)) {
-					boost::asio::post(pool, [&bobby](){ bobby->calculateDirection(); });
-				}
+				boost::asio::post(pool, [&bobby](){ bobby->calculateDirection(); });
 			}
 			pool.join();
 		}
@@ -114,20 +110,7 @@ void GameManager::manageGlobalInput() {
 	}
 	{ /** Manage Frame **/
 		for (; world_->getEventsManager().getEvents<NextFrame>().empty() && univers_.isOpenGame_(););
-		ptr->lock();
 		world_->getEventsManager().destroy<NextFrame>();
-
-		DirectionArray directions;
-		size_t n = 0;
-		SnakeArrayContainer array = *(ptr->getSnakeArray_());
-		assert(array.size() == directions.size());
-		assert(array.size() == SNAKE_MAX);
-		std::generate(directions.begin(), directions.end(), [&n, array]{ return array[n++].direction;});
-		world_->getEventsManager().emitEvent<DirectionArray>(directions);
-		for (int index = 0; index < SNAKE_MAX; ++index) {
-			assert(array[index].direction == directions[index]);
-		}
-		ptr->unlock();
 	}
 }
 
@@ -151,8 +134,6 @@ void GameManager::loopWorld() {
 		world_->getEventsManager().destroy<FoodEat>();
 		world_->update();
 	}
-
-
 }
 
 void GameManager::loopUI() {

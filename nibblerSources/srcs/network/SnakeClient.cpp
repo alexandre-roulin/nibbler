@@ -4,6 +4,8 @@
 #include <events/StartEvent.hpp>
 #include <cores/GameManager.hpp>
 #include <KNetwork/BaseDataType.hpp>
+#include <KINU/World.hpp>
+
 SnakeClient::SnakeClient(
 		Univers &univers,
 		bool fromIA_
@@ -27,10 +29,10 @@ SnakeClient::~SnakeClient() = default;
 
 void SnakeClient::sendDirection(eDirection direction) {
 	std::lock_guard<std::mutex> guard(mutex_);
-	Snake snake = (*snakeArray)[id_];
-	snake.direction = direction;
-	snake.isUpdate = true;
-	sendDataToServer(snake, eHeader::kSnakeUN);
+	(*snakeArray)[id_].direction = direction;
+	(*snakeArray)[id_].isUpdate = true;
+	std::cout << __PRETTY_FUNCTION__ << ::std::endl;
+	sendDataToServer((*snakeArray)[id_], eHeader::kSnakeUN);
 }
 
 void SnakeClient::connect(std::string dns, std::string port) {
@@ -167,6 +169,7 @@ bool SnakeClient::sendOpenGameToServer(bool openGame) {
 void SnakeClient::killSnake(uint16_t id) {
 	if (id_ == id || (univers_.isIASnake(id) && univers_.isServer())) {
 		std::lock_guard<std::mutex> guard(mutex_);
+		std::cout << __PRETTY_FUNCTION__ << id << std::endl;
 		(*snakeArray)[id].isAlive = false;
 		sendDataToServer((*snakeArray)[id], eHeader::kSnakeUX);
 	}
@@ -306,9 +309,18 @@ void SnakeClient::callbackPock(uint32_t deltaTime) {
 
 	std::lock_guard<std::mutex> guard(mutex_);
 	if (acceptDataFromServer() && univers_.isOpenGame_()) {
+		std::cout << __PRETTY_FUNCTION__ << std::endl;
 		univers_.setMicroSecDeltaTime(univers_.getMicroSecDeltaTime() - deltaTime);
 		const std::shared_ptr<KINU::World> &world = univers_.getGameManager().getWorld_();
+		DirectionArray directions;
+		size_t n = 0;
+		std::generate(directions.begin(), directions.end(), [&n, this]{ return (*snakeArray)[n++].direction;});
+		const std::shared_ptr<KINU::World> & world_= univers_.getGameManager().getWorld_();
+		if (world_ != nullptr)
+			world_->getEventsManager().emitEvent<DirectionArray>(directions);
+
 		if (world) world->getEventsManager().emitEvent<NextFrame>();
+
 
 	}
 }

@@ -164,7 +164,7 @@ void Univers::manageSnakeClientInput() {
 		lastDirection_ = direction;
 	}
 
-	if (ptr && ptr->isOpen() && getGameManager().getWorld_()->getEntitiesManager().hasEntityByTagId(ptr->getId_() + eTag::kHeadTag) && !ptr->isIa()) {
+	if (ptr && ptr->isOpen() && !ptr->isIa()) {
 		ptr->sendDirection(direction);
 	}
 }
@@ -449,7 +449,10 @@ uint32_t Univers::getMicroSecDeltaTime() const {
 }
 
 void Univers::setMicroSecDeltaTime(uint32_t microSecDeltaTime) {
-	microSecDeltaTime_ = microSecDeltaTime < GameManager::Hard ? GameManager::Hard : microSecDeltaTime;
+	if (microSecDeltaTime < GameManager::Impossible || microSecDeltaTime > GameManager::Easy)
+		microSecDeltaTime_ = GameManager::Impossible;
+	else
+		microSecDeltaTime_ = microSecDeltaTime;
 }
 
 bool Univers::isExit() const {
