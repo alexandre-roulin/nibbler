@@ -5,13 +5,16 @@
 
 std::vector< std::string > const Snake::names = {
 		"Jack O'Lantern",
-		"Eden",
-		"Jacky",
-		"Emerald",
+		"Elliot",
+		"Turing",
 		"Broutille",
-		"Veggie-vie",
-		"jinou42",
-		"Dautta c bo"
+		"Nier",
+		"Viper",
+		"Tuik",
+		"Mochi",
+		"Throw",
+		"Python"
+
 };
 
 std::vector< eSprite > const Snake::colors = {
