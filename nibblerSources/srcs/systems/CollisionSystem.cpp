@@ -84,17 +84,18 @@ void CollisionSystem::createAppleBySnake(KINU::Entity snake) {
 
 	SnakeClient::boost_shared_ptr ptr(univers_.getSnakeClient().lock());
 
-	if (ptr && ptr->getId_() != snake.getGroupIdByEntity())
-		return;
-	auto appleSnake = getWorld().getEntitiesManager().getEntitiesByGroupId(snake.getGroupIdByEntity());
-	auto positionHead = snake.getComponent<PositionComponent>();
-	for (auto snakeCheck : appleSnake) {
-		if (snakeCheck.hasComponent<PositionComponent>()) {
-			auto positionComponent = snakeCheck.getComponent<PositionComponent>();
-			if (positionComponent != positionHead && ptr) {
-				ptr->sendDataToServer(FoodInfo(positionComponent, true, -1), eHeader::kFood);
+	if ((ptr && ptr->getId_() == snake.getGroupIdByEntity()) || univers_.isOnlyIA()) {
+		auto appleSnake = getWorld().getEntitiesManager().getEntitiesByGroupId(snake.getGroupIdByEntity());
+		auto positionHead = snake.getComponent<PositionComponent>();
+		for (auto snakeCheck : appleSnake) {
+			if (snakeCheck.hasComponent<PositionComponent>()) {
+				auto positionComponent = snakeCheck.getComponent<PositionComponent>();
+				if (positionComponent != positionHead && ptr) {
+					ptr->sendDataToServer(FoodInfo(positionComponent, true, -1), eHeader::kFood);
+				}
 			}
 		}
 	}
+
 }
 
