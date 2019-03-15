@@ -31,6 +31,7 @@ Snake::Snake() :
 		isReady(false),
 		isIA(false),
 		isValid(false),
+		isInGame(false),
 		id(0),
 		indexConnection(0),
 		score_(0) {
@@ -132,6 +133,7 @@ Snake &Snake::operator=(Snake &snake) {
 		id = snake.id;
 		indexConnection = snake.indexConnection;
 		score_ = snake.score_;
+		isInGame = snake.isInGame;
 	}
 	return *this;
 }
@@ -144,6 +146,7 @@ Snake &Snake::operator=(Snake const &snake) {
 		id = snake.id;
 		indexConnection = snake.indexConnection;
 		score_ = snake.score_;
+		isInGame = snake.isInGame;
 	}
 	return *this;
 }

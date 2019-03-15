@@ -115,7 +115,7 @@ Univers::~Univers() {
 		snakeServer_->closeAcceptorServer();
 		snakeServer_ = nullptr;
 	}
-	std::for_each(vecBobby.begin(), vecBobby.end(), [](std::unique_ptr<Bobby> &bobby){
+	std::for_each(bobbyContainer.begin(), bobbyContainer.end(), [](std::unique_ptr<Bobby> &bobby){
 		if (bobby) {
 			bobby->getClientTCP_()->disconnect();
 			bobby = nullptr;
@@ -176,10 +176,15 @@ void Univers::postGameDataManagement() {
 	SnakeClient::boost_shared_ptr ptr(snakeClient_);
 	SnakeServer::b_ptr ptrServer(snakeServer_);
 
-	if (ptr)
-		ptr->killSnake(ptr->getId_());
-	if (ptrServer)
+	if (ptr) {
+		ptr->quitGame();
+	}
+	if (ptrServer) {
+		std::for_each(bobbyContainer.begin(), bobbyContainer.end(), [](std::unique_ptr<Bobby> &bob){
+			bob->getClientTCP_()->quitGame();
+		});
 		ptrServer->sendOpenGameToClient(false);
+	}
 	openGame_ = false;
 	gameManager->finishGame();
 	if (displayManager->hasLibraryLoaded())
@@ -246,7 +251,7 @@ void Univers::manageSwitchLibrary() {
 /** Snake **/
 
 bool Univers::isIASnake(uint16_t client_id) const {
-	return std::any_of(vecBobby.begin(), vecBobby.end(), [client_id](auto &bobby){ return bobby->getId() == client_id;});
+	return std::any_of(bobbyContainer.begin(), bobbyContainer.end(), [client_id](auto &bobby){ return bobby->getId() == client_id;});
 }
 
 /** Network **/
@@ -326,7 +331,7 @@ void Univers::createBobby() {
 		if (gui_)
 			gui_->addMessageChat(e.what());
 	}
-	vecBobby.push_back(std::move(bobby));
+	bobbyContainer.push_back(std::move(bobby));
 	if (gui_)
 		gui_->addMessageChat(eColorLog::kGreen, SuccessIAIsCreate);
 }
@@ -376,7 +381,7 @@ void Univers::deleteBobby(SnakeClient::boost_shared_ptr &ptr) {
 	}
 
 	ptr->disconnect();
-	vecBobby.erase(std::remove_if(vecBobby.begin(), vecBobby.end(),
+	bobbyContainer.erase(std::remove_if(bobbyContainer.begin(), bobbyContainer.end(),
 			[ptr](std::unique_ptr<Bobby> &bob) {
 		return bob->getId() == ptr->getId_();
 	}));
@@ -402,8 +407,8 @@ void Univers::deleteServer() {
 		snakeServer_ = nullptr;
 		if (gui_)
 			gui_->addMessageChat(eColorLog::kGreen, SuccessServerIsDelete);
-		std::for_each(vecBobby.begin(), vecBobby.end(), [](std::unique_ptr<Bobby> &bob){ bob->getClientTCP_()->disconnect(); });
-		vecBobby.clear();
+		std::for_each(bobbyContainer.begin(), bobbyContainer.end(), [](std::unique_ptr<Bobby> &bob){ bob->getClientTCP_()->disconnect(); });
+		bobbyContainer.clear();
 		if (ptr && ptr->isOpen())
 			disconnectClient();
 	} else if (gui_) {
@@ -487,8 +492,8 @@ boost::weak_ptr<ISnakeNetwork> Univers::getSnakeNetwork() const {
 
 	if (ptr && ptr->isOpen())
 		return ptr->shared_from_this();
-	else if (vecBobby.size() != 0)
-		return vecBobby.front()->getClientTCP_()->shared_from_this();
+	else if (bobbyContainer.size() != 0)
+		return bobbyContainer.front()->getClientTCP_()->shared_from_this();
 	else if (isServer())
 		return ptrServer->shared_from_this();
 	return boost::weak_ptr<SnakeClient>();
@@ -499,8 +504,8 @@ boost::weak_ptr<SnakeClient> Univers::getSnakeClient() const {
 
 	if (ptr && ((openGame_ && ptr->isOpen()) || !openGame_))
 		return ptr->shared_from_this();
-	else if (vecBobby.size() != 0)
-		return vecBobby.front()->getClientTCP_()->shared_from_this();
+	else if (bobbyContainer.size() != 0)
+		return bobbyContainer.front()->getClientTCP_()->shared_from_this();
 	return boost::weak_ptr<SnakeClient>();
 }
 
@@ -513,8 +518,8 @@ boost::weak_ptr<SnakeClient> Univers::getMySnakeClient() const {
 }
 
 boost::weak_ptr<SnakeClient> Univers::getBobbySnakeClient(int id) const {
-	auto itBobby = std::find_if(vecBobby.begin(), vecBobby.end(), [id](std::unique_ptr<Bobby> const &bob){ return bob->getId() == id; });
-	if (itBobby == vecBobby.end())
+	auto itBobby = std::find_if(bobbyContainer.begin(), bobbyContainer.end(), [id](std::unique_ptr<Bobby> const &bob){ return bob->getId() == id; });
+	if (itBobby == bobbyContainer.end())
 		return boost::weak_ptr<SnakeClient>();
 	return (*itBobby)->getClientTCP_()->shared_from_this();
 }
@@ -540,7 +545,7 @@ const bool &Univers::isBorderless() const {
 }
 
 bool Univers::isOnlyIA() const {
-	return (snakeClient_ == nullptr || !snakeClient_->isOpen()) && vecBobby.size() != 0;
+	return (snakeClient_ == nullptr || !snakeClient_->isOpen()) && bobbyContainer.size() != 0;
 }
 
 
@@ -602,7 +607,7 @@ DisplayDynamicLibrary &Univers::getDisplayManager() {
 }
 
 Univers::BobbyContainer &Univers::getBobbys() {
-	return vecBobby;
+	return bobbyContainer;
 }
 
 GameManager &Univers::getGameManager() {

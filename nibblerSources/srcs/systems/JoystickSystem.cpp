@@ -16,7 +16,7 @@ void JoystickSystem::update() {
 	getWorld().getEventsManager().destroy<DirectionArray>();
 	std::cout << "Begin" << std::endl;
 	std::cout << directions.size() << std::endl;
-	assert(directions.size() == 1);
+	assert(directions.size() > 0);
 	std::cout << directions.size() << std::endl;
 	assert(directions[0].size() == SNAKE_MAX);
 	for (int id = 0; id < SNAKE_MAX; ++id) {

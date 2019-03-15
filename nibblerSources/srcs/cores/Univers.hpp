@@ -224,7 +224,7 @@ private:
 	boost::shared_ptr<SnakeClient> snakeClient_;
 	std::shared_ptr<MutantGrid<eSprite>> grid_;
 	std::unique_ptr<Gui> gui_;
-	BobbyContainer vecBobby;
+	BobbyContainer bobbyContainer;
 
 	bool exit_;
 	bool switchLib_;

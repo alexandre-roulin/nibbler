@@ -76,6 +76,7 @@ public:
 
 	virtual void notifyGameSpeed();
 
+	void quitGame();
 private:
 	SnakeClient(Univers &univers, bool fromIA);
 

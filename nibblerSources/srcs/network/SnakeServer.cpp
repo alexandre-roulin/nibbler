@@ -17,8 +17,9 @@ void SnakeServer::updateInput() {
 	std::lock_guard<std::mutex> guard(mutex_);
 	unsigned int deltaTime = 10;
 	for (const auto &s : *snakeArray_) {
-		if (s.isValid)
-			std::cout << s << std::endl;
+		std::cout << "ID: "<< s.id << " - Update : " << s.isUpdate << " - IsInGame : " << s.isInGame << std::endl;
+
+
 	}
 	std::cout << __PRETTY_FUNCTION__ << "Conditions :> "<< pause_ << " : " << std::any_of((*snakeArray_).begin(), (*snakeArray_).end(), [](const Snake & snake){ return snake.isValid && snake.isInGame && !snake.isUpdate; } ) << std::endl;
 
@@ -151,15 +152,22 @@ void SnakeServer::callbackSnakeUX(const Snake &snakeUX) {
 		(*snakeArray_)[snakeUX.id] = static_cast<SnakeUX>(snakeUX);
 		serverTCP_->writeDataToOpenConnections(snakeUX, eHeader::kSnakeUX);
 	}
+	if (!(!snakeUX.isAlive && std::any_of((*snakeArray_).begin(), (*snakeArray_).end(), [](const Snake & snake){ return snake.isValid && snake.isInGame && snake.isAlive;})) && pause_)
+		pause_ = false;
 	updateInput();
 }
 
 void SnakeServer::callbackSnake(const Snake &snake) {
+	std::cout << __PRETTY_FUNCTION__ << "ID : " << snake.id << " - isInGame : " << snake.isInGame << std::endl;
+
 	if (snake.id >= 8) return;
 	{
 		std::lock_guard<std::mutex> guard(mutex_);
 		(*snakeArray_)[snake.id] = snake;
 		serverTCP_->writeDataToOpenConnections((*snakeArray_)[snake.id], eHeader::kSnake);
+	}
+	if (!(!snake.isInGame && std::any_of((*snakeArray_).begin(), (*snakeArray_).end(), [](const Snake & snake){ return snake.isValid && snake.isInGame && snake.isAlive;})) && pause_) {
+		pause_ = false;
 	}
 	updateInput();
 }
@@ -364,7 +372,7 @@ void SnakeServer::showScore() {
 
 	size_t n = 0;
 	std::for_each(vector.begin(), vector.end(), [&n, this](Snake &snake){ snake.deepCopy((*snakeArray_)[n++]);});
-	std::sort(vector.begin(), vector.end(), [](Snake const &lhs, Snake const &rhs){
+	std::sort(vector.begin(), vector.end(), [](Snake const &lhs, Snake const &rhs) {
 		return lhs.score_ > rhs.score_;
 	});
 	n = 0;

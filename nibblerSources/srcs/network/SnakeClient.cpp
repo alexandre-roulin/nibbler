@@ -136,6 +136,12 @@ bool SnakeClient::allSnakeIsReady() const {
 						});;
 }
 
+void SnakeClient::quitGame() {
+	std::cout << __PRETTY_FUNCTION__ << std::endl;
+	(*snakeArray)[id_].isInGame = false;
+	sendDataToServer((*snakeArray)[id_], eHeader::kSnake);
+}
+
 void SnakeClient::changeSprite(eSprite snakeSprite) {
 	spriteSet_ = true;
 	sprite_ = snakeSprite;
@@ -308,7 +314,7 @@ void SnakeClient::callbackFood(FoodInfo foodInfo) {
 void SnakeClient::callbackPock(uint32_t deltaTime) {
 
 	std::lock_guard<std::mutex> guard(mutex_);
-	if (acceptDataFromServer() && univers_.isOpenGame_()) {
+	if (acceptDataFromServer()) {
 		std::cout << __PRETTY_FUNCTION__ << std::endl;
 		univers_.setMicroSecDeltaTime(univers_.getMicroSecDeltaTime() - deltaTime);
 		const std::shared_ptr<KINU::World> &world = univers_.getGameManager().getWorld_();
