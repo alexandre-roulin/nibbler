@@ -200,8 +200,7 @@ void Univers::defaultAssignmentLibrary() {
 	try {
 		displayManager->loadDynamicLibrary(
 				mapSize_, mapSize_,
-				displayManager->getNextLibraryInfo().title.c_str(),
-				(client ? client->getSnake().direction : eDirection::kNorth));
+				displayManager->getNextLibraryInfo().title.c_str(), lastDirection_);
 		displayManager->getInstance()->setBackground(grid);
 		displayManager->getInstance()->registerCallbackAction(std::bind(&Univers::callbackAction, this, std::placeholders::_1));
 	} catch (std::exception const &e){
