@@ -86,6 +86,7 @@ void GameManager::loopGame() {
 	SnakeClient::boost_shared_ptr ptr(univers_.getSnakeClient().lock());
 
 	while (!ptr->allSnakeIsDead() && univers_.isOpenGame_() && univers_.displayIsAvailable()) {
+		std::cout << __PRETTY_FUNCTION__ << " dead : " << !ptr->allSnakeIsDead() << std::endl;
 		manageGlobalInput();
 		timer_loop.expires_from_now(boost::posix_time::microsec(univers_.getMicroSecDeltaTime()));
 		timer_loop.wait();
@@ -100,7 +101,6 @@ void GameManager::manageGlobalInput() {
 	SnakeClient::boost_shared_ptr ptr(univers_.getSnakeClient().lock());
 	if (!ptr)
 		return;
-	std::cout << __PRETTY_FUNCTION__ << std::endl;
 	{ /** Manage Input **/
 		Bobby::clearPriority();
 		if (univers_.isServer()) {
@@ -121,7 +121,6 @@ void GameManager::loopWorld() {
 
 	SnakeClient::boost_shared_ptr ptr(univers_.getSnakeClient().lock());
 	if (!ptr) return;
-	std::cout << __PRETTY_FUNCTION__ << std::endl;
 	{ /** Manage game **/
 		ptr->deliverEvents();
 		world_->getSystemsManager().getSystem<FollowSystem>().update();
