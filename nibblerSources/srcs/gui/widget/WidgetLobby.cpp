@@ -86,7 +86,6 @@ bool WidgetLobby::reload_() {
 			addSnake((*ptr_snakes)[i], WidgetSnake::kYour);
 		else
 			addSnake((*ptr_snakes)[i], WidgetSnake::kBasic);
-		//addSnake((*snake_)[i], (i == ptr->getId_() && !ptr->isIa() && ptr->isConnect()));
 	}
 	return true;
 }

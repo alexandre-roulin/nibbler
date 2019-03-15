@@ -72,6 +72,7 @@ void Univers::resetData() {
 		deleteClient();
 		borderless_ = false;
 		mapSize_ = MAP_DEFAULT;
+		lastDirection_ = kNorth;
 	}
 	grid_ = nullptr;
 }
@@ -136,6 +137,7 @@ void Univers::startNewGame() {
 	SnakeServer::b_ptr ptrServer(snakeServer_);
 	setMicroSecDeltaTime(static_cast<uint32_t >(baseSpeed));
 
+	lastDirection_ = kNorth;
 	try {
 		displayManager->loadDynamicConstructor();
 		deleteGui();
@@ -449,8 +451,9 @@ uint32_t Univers::getMicroSecDeltaTime() const {
 }
 
 void Univers::setMicroSecDeltaTime(uint32_t microSecDeltaTime) {
-	if (microSecDeltaTime < GameManager::Impossible || microSecDeltaTime > GameManager::Easy)
-		microSecDeltaTime_ = GameManager::Impossible;
+	uint32_t limitSpeed = (baseSpeed == GameManager::Impossible ? GameManager::Impossible : GameManager::Hard);
+	if (microSecDeltaTime < limitSpeed || microSecDeltaTime > GameManager::Easy)
+		microSecDeltaTime_ = limitSpeed;
 	else
 		microSecDeltaTime_ = microSecDeltaTime;
 }

@@ -7,24 +7,24 @@
 #include <boost/date_time/posix_time/ptime.hpp>
 
 enum class eHeader : uint16_t {
-	kChat = 1,			//1
-	kOpenGame,			//2
-	kStartGame,			//3
-	kResizeMap,			//4
-	kBorderless,		//5
-	kId,				//6
-	kPause,				//7
-	kInput,				//8
-	kFood,				//9
-	kForcePause,		//10
-	kPock,				//11
-	kSnake,				//12
-	kSnakeArray,		//13
-	kCloseConnection,	//14
-	kSnakeUI,			//15
-	kSnakeUX,			//16
-	kSnakeUN,			//17
-	kShowScore,			//18
+	kChat = 1,
+	kOpenGame,
+	kStartGame,
+	kResizeMap,
+	kBorderless,
+	kId,
+	kPause,
+	kInput,
+	kFood,
+	kForcePause,
+	kPock,
+	kSnake,
+	kSnakeArray,
+	kCloseConnection,
+	kSnakeUI,
+	kSnakeUX,
+	kSnakeUN,
+	kShowScore,
 	kGameSpeed,
 	kBarrier
 
@@ -157,4 +157,11 @@ public:
 		return message;
 	}
 };
+
+struct ScoreInfo {
+	std::string name;
+	uint16_t 	score;
+	ScoreInfo(std::string const &n, uint16_t s) : name(n), score(s) {};
+};
+
 #endif //NIBBLER_DATA_HPP

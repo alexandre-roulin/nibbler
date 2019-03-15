@@ -51,7 +51,6 @@ template<typename T>
 typename std::vector<T>::reference
 MutantGrid<T>::operator()(size_t x, size_t y) {
 	if (y * y_max_ + x >= std::vector<T>::size())
-//		log_error("Test : %d , x : %d  y : %d s : %d", y * size_ + x, x, y, size_);
 		assert(y * y_max_ + x < std::vector<T>::size());
 	return this->at(y * y_max_ + x);
 }

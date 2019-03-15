@@ -359,7 +359,7 @@ void SnakeServer::build(const std::string dns, unsigned short port) {
 }
 
 void SnakeServer::showScore() {
-
+	std::vector<ScoreInfo> vectorInfo;
 	const char position[4][3]{
 			"st",
 			"nd",
@@ -367,25 +367,25 @@ void SnakeServer::showScore() {
 			"th"
 	};
 
-	std::vector<Snake> vector(8);
+	std::for_each((*snakeArray_).begin(), (*snakeArray_).end(), [&vectorInfo](Snake const &snake){
+		if (snake.isValid)
+			vectorInfo.emplace_back(snake.name, snake.score_);
+	});
+
+	std::sort(vectorInfo.begin(), vectorInfo.end(), [](ScoreInfo const &lhs, ScoreInfo const &rhs) {
+		return lhs.score > rhs.score;
+	});
 
 	size_t n = 0;
-	std::for_each(vector.begin(), vector.end(), [&n, this](Snake &snake){ snake.deepCopy((*snakeArray_)[n++]); });
-	std::sort(vector.begin(), vector.end(), [](Snake const &lhs, Snake const &rhs) {
-		return lhs.score_ > rhs.score_;
-	});
-	n = 0;
-	std::for_each(vector.rbegin(), vector.rend(), [this, &n, &position](Snake const & snake){
-		if (snake.isValid) {
-			std::string s;
-			s = "is in ";
-			s += static_cast<char>(n + 49);
-			s += position[(n > 3 ? 3 : n)];
-			s += " position with ";
-			s += std::to_string(snake.score_);
-			s += " score.";
-			n++;
-			serverTCP_->writeDataToOpenConnections(ChatInfo(snake.name, s.c_str()), eHeader::kChat);
-		}
+	std::for_each(vectorInfo.begin(), vectorInfo.end(), [this, &n, &position](ScoreInfo const &si){
+		std::string s;
+		s = "is in ";
+		s += static_cast<char>(n + 49);
+		s += position[(n > 3 ? 3 : n)];
+		s += " position with ";
+		s += std::to_string(si.score);
+		s += " score.";
+		n++;
+		serverTCP_->writeDataToOpenConnections(ChatInfo(si.name, s.c_str()), eHeader::kChat);
 	});
 }

@@ -45,7 +45,7 @@ void AWidget::render(bool renderContentInWindow) {
 	}
 }
 
-bool AWidget::button_(std::string const &text, int sizeTextX,  eColor color, eColor power) const {
+bool AWidget::button_(std::string const &text, int sizeTextX, eColor color, eColor power) const {
 	if (color != eColor::kNone)
 		Gui::beginColor(color, power);
 	ImGui::SetCursorPosX((ImGui::GetWindowSize().x - sizeTextX) / 2);

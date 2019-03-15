@@ -36,8 +36,6 @@ void Factory::createSnake(Snake const &snake, int maxSnakes) {
 	KINU::Entity	new_snake;
 
 	std::shared_ptr<KINU::World> world = univers_.getGameManager().getWorld_();
-	// (0 + 1) * 35 / (2 + 1) = 11
-	// 35 / 2 = 17
 
 	int base_x = (snake.id + 1) * univers_.getMapSize() / (maxSnakes + 1);
 	int base_y = univers_.getMapSize() / 2;
@@ -47,7 +45,6 @@ void Factory::createSnake(Snake const &snake, int maxSnakes) {
 
 		if (index == 0) {
 			new_snake.tagByTagId(eTag::kHeadTag + snake.id);
-//			univers_.getWorld_().getEntitiesManager().addComponent<JoystickComponent>(new_snake, kNorth);
 			new_snake.addComponent<JoystickComponent>(kNorth);
 			new_snake.addComponent<MotionComponent>(kNorth);
 			new_snake.addComponent<CollisionComponent>();
