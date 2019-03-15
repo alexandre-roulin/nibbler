@@ -89,6 +89,8 @@ void GameManager::loopGame() {
 		manageGlobalInput();
 		timer_loop.expires_from_now(boost::posix_time::microsec(univers_.getMicroSecDeltaTime()));
 		timer_loop.wait();
+		if (!univers_.isOpenGame_())
+			break;
 		loopWorld();
 	}
 }

@@ -231,6 +231,7 @@ void SnakeServer::callbackForcePause(uint16_t id) {
 }
 
 void SnakeServer::callbackDeadConnection(size_t index) {
+	std::cout << __PRETTY_FUNCTION__ << std::endl;
 	if (index >= 8) return;
 	{
 		std::lock_guard<std::mutex> guard(mutex_);

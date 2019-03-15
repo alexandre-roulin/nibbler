@@ -91,7 +91,6 @@ void SnakeClient::deliverEvents() {
 		auto world = univers_.getGameManager().getWorld_();
 		if (world)
 			world->getEventsManager().emitEvent(foodCreation);
-		std::cout << __PRETTY_FUNCTION__ << " " << foodCreation.positionComponent_ << std::endl;
 	}
 	foodCreations.clear();
 }
