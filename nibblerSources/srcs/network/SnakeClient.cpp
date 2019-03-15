@@ -133,6 +133,8 @@ bool SnakeClient::allSnakeIsReady() const {
 
 void SnakeClient::quitGame() {
 	(*snakeArray)[id_].isInGame = false;
+	(*snakeArray)[id_].isAlive = false;
+	sendDataToServer((*snakeArray)[id_], eHeader::kSnakeUX);
 	sendDataToServer((*snakeArray)[id_], eHeader::kSnake);
 }
 
