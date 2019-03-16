@@ -5,7 +5,8 @@ project(${NAME})
 
 add_library(${NAME} MODULE
         src/DisplaySfml.cpp
-        src/DisplaySfml.hpp)
+        src/DisplaySfml.hpp
+        ../../nibblerSources/incs/Display2D.cpp)
 
 target_link_libraries(${NAME} PRIVATE Boost::filesystem)
 target_link_libraries(${NAME} PRIVATE sfml-graphics sfml-window sfml-system)

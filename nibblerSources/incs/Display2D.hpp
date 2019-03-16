@@ -10,7 +10,9 @@ public:
 	Display2D &operator=(const Display2D &) = delete;
 	Display2D(const Display2D &) = delete;
 
+	static int getSpriteSnake(eSprite sprite);
 	static int getSpriteSnakeByColor(eSprite color, int part);
+
 
 private:
 	static int direction_(eSprite to);

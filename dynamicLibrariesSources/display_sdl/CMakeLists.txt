@@ -5,7 +5,8 @@ project(${NAME})
 
 add_library(${NAME} MODULE
         src/DisplaySdl.cpp
-        src/DisplaySdl.hpp)
+        src/DisplaySdl.hpp
+        ../../nibblerSources/incs/Display2D.cpp)
 
 target_link_libraries(${NAME} PRIVATE Boost::filesystem)
 target_link_libraries(${NAME} PRIVATE ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARIES})

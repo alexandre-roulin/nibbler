@@ -1,6 +1,6 @@
 #include "Display2D.hpp"
 
-static int Display2D::getSpriteSnake(eSprite sprite) {
+int Display2D::getSpriteSnake(eSprite sprite) {
 	eSprite from = (sprite & eSprite::kMaskFrom) >> eSprite::kBitwiseFrom;
 	eSprite to = (sprite & eSprite::kMaskTo) >> eSprite::kBitwiseTo;
 
