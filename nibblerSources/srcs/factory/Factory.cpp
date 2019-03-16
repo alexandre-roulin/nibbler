@@ -23,21 +23,22 @@ void Factory::createAllSnake(std::shared_ptr<SnakeArrayContainer> snake_array, i
 	tempGrid.fill(false);
 	if (!snake_array)
 		return;
+	size_t n = 0;
 	std::for_each((*snake_array).begin(), (*snake_array).end(),
-			[this, nu](Snake const &snake){
-		if (snake.isValid) createSnake(snake, nu);
+			[this, nu, &n](Snake const &snake){
+		if (snake.isValid) createSnake(snake, nu, n++);
 	});
 	if (!univers_.isBorderless())
 		createWalls();
 }
 
-void Factory::createSnake(Snake const &snake, int maxSnakes) {
+void Factory::createSnake(Snake const &snake, int maxSnakes, size_t n) {
 	KINU::Entity	snake_follow;
 	KINU::Entity	new_snake;
 
 	std::shared_ptr<KINU::World> world = univers_.getGameManager().getWorld_();
 
-	int base_x = (snake.id + 1) * univers_.getMapSize() / (maxSnakes + 1);
+	int base_x = (n + 1) * univers_.getMapSize() / (maxSnakes + 1);
 	int base_y = univers_.getMapSize() / 2;
 	for (int index = 0; index < 4; ++index) {
 

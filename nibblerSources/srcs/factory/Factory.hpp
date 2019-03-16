@@ -17,7 +17,7 @@ public:
 
 private:
 
-	void createSnake(Snake const &snake, int maxSnakes);
+	void createSnake(Snake const &snake, int maxSnakes, size_t n);
 
 	void createWalls();
 
