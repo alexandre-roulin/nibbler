@@ -138,3 +138,6 @@ void WidgetChat::addLog_(eColorLog color, std::string const &log) {
 	log_.push_back(colorLog(color, log));
 	scrollChat_ = true;
 }
+
+WidgetChat::colorLog::colorLog(eColorLog acolor, std::string const &str)  :
+		color(acolor), log(str) {}

@@ -66,9 +66,11 @@ add_executable(${NAME}
 
         incs/IDisplay.hpp
         incs/Display2D.hpp
+        incs/Display2D.cpp
         incs/ISound.hpp
         incs/IWidget.hpp
         incs/nibbler.hpp
+
 
         srcs/network/Data.hpp
         srcs/network/SnakeClient.cpp

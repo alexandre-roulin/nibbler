@@ -10,8 +10,7 @@ public:
 		eColorLog color;
 		std::string log;
 
-		colorLog(eColorLog acolor, std::string const &str) :
-				color(acolor), log(str) {};
+		colorLog(eColorLog acolor, std::string const &str);
 	};
 
 	WidgetChat(Gui &);
