@@ -84,7 +84,7 @@ void CollisionSystem::createAppleBySnake(KINU::Entity snake) {
 
 	SnakeClient::boost_shared_ptr ptr(univers_.getSnakeClient().lock());
 
-	if ((ptr && ptr->getId_() == snake.getGroupIdByEntity()) || univers_.isOnlyIA()) {
+	if ((ptr && ptr->getId_() == snake.getGroupIdByEntity()) || univers_.isIASnake(snake.getGroupIdByEntity()) {
 		auto appleSnake = getWorld().getEntitiesManager().getEntitiesByGroupId(snake.getGroupIdByEntity());
 		auto positionHead = snake.getComponent<PositionComponent>();
 		for (auto snakeCheck : appleSnake) {
