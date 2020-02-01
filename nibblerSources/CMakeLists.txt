@@ -110,6 +110,7 @@ set_target_properties(${NAME}
 target_link_libraries(${NAME} PRIVATE Boost::filesystem)
 target_link_libraries(${NAME} PRIVATE Boost::thread)
 target_link_libraries(${NAME} PRIVATE Boost::program_options)
+target_link_libraries(${NAME} PRIVATE Boost::chrono)
 target_link_libraries(${NAME} PRIVATE ${SFML_LIBRARIES})
 target_link_libraries(${NAME} PRIVATE imgui-sfml)
 target_link_libraries(${NAME} PRIVATE KStar)
