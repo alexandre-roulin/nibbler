@@ -73,7 +73,7 @@ find_package(SFML REQUIRED COMPONENTS audio graphics window system)
 include_directories(${SFML_INCLUDE_DIR})
 
 set(BOOST_ROOT $ENV{HOME}/.brew/)
-find_package(Boost QUIET COMPONENTS program_options thread filesystem)
+find_package(Boost 1.40 QUIET COMPONENTS program_options thread filesystem chrono)
 if (Boost_FOUND)
     message("EXTERN : Boost finded")
 elseif (NOT TARGET Boost::boost)
